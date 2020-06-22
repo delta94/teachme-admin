@@ -1,25 +1,3 @@
-.courses-screen {
-  width: 100%;
-  height: 100%;
-  padding: 0 30px;
-  background-color: #f9fbfc;
-}
-
-.courses-title {
-  height: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.courses-title-text {
-  font-family: var(--font-secondary);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  line-height: 22px;
-}
-
 .analytics {
   display: flex;
   flex-direction: row;
@@ -27,13 +5,6 @@
   justify-items: stretch;
   height: 286px;
   margin-bottom: 38px;
-}
-
-.card-title {
-  font-family: var(--font-secondary);
-  font-size: 15px;
-  color: var(--neutral900);
-  font-weight: 600;
 }
 
 .graphs {
