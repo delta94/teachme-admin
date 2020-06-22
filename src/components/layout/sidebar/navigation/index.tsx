@@ -5,21 +5,9 @@ import { Link, useLocation } from 'react-router-dom';
 import Icon from '../../../common/icon';
 
 import './index.scss';
+import { IRoute } from '../../../../constants/routes';
 
-const routes = [
-  {
-    id: 'courses',
-    path: '/courses',
-    title: 'Courses',
-  },
-  {
-    id: 'users',
-    path: '/users',
-    title: 'Users',
-  },
-];
-
-export default function Navigation(): ReactElement {
+export default function Navigation({ routes }: { routes: IRoute[] }): ReactElement {
   const { pathname } = useLocation();
 
   return (
