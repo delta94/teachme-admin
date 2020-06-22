@@ -1,0 +1,41 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .nav-item {
+    color: var(--neutral900);
+
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+      color: inherit;
+      transition: color 0.3s;
+    }
+
+    .icon {
+      width: var(--navigationIconSize);
+      height: var(--navigationIconSize);
+      margin-bottom: 5px;
+    }
+
+    &.active {
+      color: var(--secondary);
+
+      .icon {
+        &:empty {
+          background-color: var(--secondary);
+        }
+
+        svg {
+          * {
+            fill: var(--secondary);
+          }
+        }
+      }
+    }
+  }
+}
