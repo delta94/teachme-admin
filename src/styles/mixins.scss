@@ -1,0 +1,7 @@
+@mixin horizontalSeparator {
+  content: '';
+  height: 1px;
+  width: 100%;
+  display: block;
+  background-color: var(--neutral100);
+}

@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap&subset=latin-ext');
+
+@mixin fLight {
+  font-family: 'Roboto';
+  font-weight: 300;
+}
+
+@mixin fRegular {
+  font-family: 'Roboto';
+  font-weight: 400;
+}
+
+@mixin fMedium {
+  font-family: 'Roboto';
+  font-weight: 500;
+}
+
+@mixin fBold {
+  font-family: 'Roboto';
+  font-weight: 700;
+}
+
+@mixin fItalic {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-style: italic;
+}
+
+@mixin fSecondaryLight {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+@mixin fSecondaryRegular() {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+@mixin fSecondaryMedium() {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+@mixin fSecondarySemiBold() {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}

@@ -1,0 +1,17 @@
+@import '../../../styles/globals.scss';
+
+.sidebar {
+  --navigationIconSize: 23px;
+
+  width: var(--sidebarWidth);
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: var(--background);
+  box-shadow: 4px 0 4px 0 rgba(204, 214, 215, 0.22);
+
+  z-index: 1;
+}
