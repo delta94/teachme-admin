@@ -13,13 +13,9 @@ export default function UserMenu(): ReactElement {
 
   const menu = (
     <Menu onClick={handleMenuClick} className="teachme-header-toolbar-menu user-menu">
-      <Menu.Item key="0">
-        <span className="email">Dan@walkme.com</span>
-      </Menu.Item>
+      <Menu.Item key="0">Dan@walkme.com</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="1">
-        <span className="impersonate">Impersonate</span>
-      </Menu.Item>
+      <Menu.Item key="1">Impersonate</Menu.Item>
       <Menu.Divider />
       <Menu.Item key="2">Log Out</Menu.Item>
     </Menu>

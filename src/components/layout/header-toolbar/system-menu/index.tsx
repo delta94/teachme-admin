@@ -13,6 +13,7 @@ export default function SystemMenu(): ReactElement {
     message.info(`System changed to ${e.item.node.innerHTML}`);
   };
 
+  // TODO: improve the code (I tried to use map but something makes it break)
   const menu = (
     <Menu onClick={handleMenuClick} className="teachme-header-toolbar-menu system-menu">
       <Menu.Item key="0">{options[0]}</Menu.Item>
