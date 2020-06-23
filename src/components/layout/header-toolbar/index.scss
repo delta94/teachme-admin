@@ -1,6 +1,8 @@
 @import '../../../styles/globals.scss';
 
 .header-toolbar {
+  --itemsSpacing: 25px;
+
   position: fixed;
   display: flex;
   justify-content: flex-start;
@@ -12,12 +14,20 @@
   min-height: var(--headerToolbarHeight);
   background-color: #f9fbfc;
 
-  &:after {
+  // &:after {
+  //   position: absolute;
+  //   bottom: 0;
+  //   right: 0;
+  //   left: 0;
+  //   @include horizontalSeparator();
+  // }
+
+  .header-toolbar-separator {
+    margin: 0;
     position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
-    @include horizontalSeparator();
   }
 
   .settings {
@@ -25,8 +35,28 @@
     align-items: center;
     margin-left: auto;
 
-    > * {
-      margin-left: 5px;
+    .setting-separator {
+      margin: 0 var(--itemsSpacing);
+      height: 2em;
+    }
+
+    .user {
+      margin-left: var(--itemsSpacing);
+
+      // TODO: wrong svg icon - ask for a new icon, without space around
+      .icon {
+        height: 30px;
+        width: 31px;
+        overflow: hidden;
+      }
+    }
+
+    .dropdown {
+      margin-left: var(--itemsSpacing);
+
+      &:last-child {
+        margin-left: 0;
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Divider } from 'antd';
 
 import { IconType } from '../../common/icon/icon.interface';
 
@@ -10,9 +11,13 @@ export default function HeaderToolbar(): ReactElement {
   return (
     <header className="header-toolbar">
       <div className="settings">
-        <div className="system-selection">
+        <div className="dropdown system-selection">
           <span>Salesforce</span>
         </div>
+        <div className="dropdown environment-selection">
+          <span>Production</span>
+        </div>
+        <Divider className="setting-separator" type="vertical" />
         <div className="help">
           <Icon type={IconType.HelpCircle} />
         </div>
@@ -20,6 +25,7 @@ export default function HeaderToolbar(): ReactElement {
           <Icon type={IconType.HeaderAvatar} />
         </div>
       </div>
+      <Divider className="header-toolbar-separator" />
     </header>
   );
 }

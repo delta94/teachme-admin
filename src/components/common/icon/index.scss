@@ -1,8 +1,8 @@
 .icon {
   --iconDefaultSize: 20px;
   color: var(--neutral800);
-  width: var(--iconDefaultSize);
-  height: var(--iconDefaultSize);
+  width: auto;
+  height: auto;
   display: flex;
 
   // TODO: After receiving the icons, remove the background color property and add styles to svg
