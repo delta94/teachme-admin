@@ -40,6 +40,10 @@
       width: var(--navigationIconSize);
       height: var(--navigationIconSize);
       margin-bottom: 5px;
+
+      svg * {
+        fill: var(--neutral800);
+      }
     }
 
     &.active {

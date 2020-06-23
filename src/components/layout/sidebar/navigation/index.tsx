@@ -15,7 +15,7 @@ export default function Navigation({ routes }: { routes: IRoute[] }): ReactEleme
     <nav className="navigation">
       <ul>
         {routes.map((route) => {
-          const { id, title, path } = route;
+          const { id, title, path, iconType } = route;
 
           return (
             <li
@@ -23,7 +23,7 @@ export default function Navigation({ routes }: { routes: IRoute[] }): ReactEleme
               className={cc(['nav-item', { active: pathname === path }])}
             >
               <Link to={path}>
-                <Icon type={id} />
+                {iconType && <Icon type={iconType} />}
                 <span className="text">{title}</span>
               </Link>
             </li>

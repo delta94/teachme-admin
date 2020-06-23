@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import { IconType } from '../../common/icon/icon.interface';
+
 import Icon from '../../common/icon';
 
 import './index.scss';
@@ -12,10 +14,10 @@ export default function HeaderToolbar(): ReactElement {
           <span>Salesforce</span>
         </div>
         <div className="help">
-          <Icon type="help" />
+          <Icon type={IconType.HelpCircle} />
         </div>
         <div className="user">
-          <Icon type="users" />
+          <Icon type={IconType.HeaderAvatar} />
         </div>
       </div>
     </header>
