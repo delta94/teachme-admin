@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
+
+import { IRoute } from '../../../../constants/routes';
 import { Link, useLocation } from 'react-router-dom';
 
 import Icon from '../../../common/icon';
 
 import './index.scss';
-import { IRoute } from '../../../../constants/routes';
 
 export default function Navigation({ routes }: { routes: IRoute[] }): ReactElement {
   const { pathname } = useLocation();
