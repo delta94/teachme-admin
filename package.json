@@ -2,7 +2,7 @@
   "name": "teachme-editor",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "https://cdn.walkme.com/apps/teachme-admin",
+  "homepage": "https://cdn.walkme.com/apps/teachme-admin",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -24,6 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "rm -rf dist && mv build dist",
     "test": "echo TBD",
     "eject": "react-scripts eject"
   },
