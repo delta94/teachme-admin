@@ -14,14 +14,6 @@
   min-height: var(--headerToolbarHeight);
   background-color: #f9fbfc;
 
-  // &:after {
-  //   position: absolute;
-  //   bottom: 0;
-  //   right: 0;
-  //   left: 0;
-  //   @include horizontalSeparator();
-  // }
-
   .header-toolbar-separator {
     margin: 0;
     position: absolute;
@@ -40,21 +32,10 @@
       height: 2em;
     }
 
-    .user {
+    > *:not(.help) {
       margin-left: var(--itemsSpacing);
 
-      // TODO: wrong svg icon - ask for a new icon, without space around
-      .icon {
-        height: 30px;
-        width: 31px;
-        overflow: hidden;
-      }
-    }
-
-    .dropdown {
-      margin-left: var(--itemsSpacing);
-
-      &:last-child {
+      &:first-child {
         margin-left: 0;
       }
     }

@@ -1,8 +1,10 @@
-<svg width="34" height="34" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+505 bytes → 289 bytes 57.23%
+<svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <rect id="a" x="0" y="0" width="28" height="28" rx="5"/>
   </defs>
-  <g transform="translate(3 3)" fill="none" fill-rule="evenodd">
+  <g fill="none" fill-rule="evenodd">
     <mask id="b" fill="#fff">
       <use xlink:href="#a"/>
     </mask>
