@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
-
 import Header from '../../common/header';
 import WMCard from '../../common/WMCard';
 
@@ -15,19 +14,19 @@ export default function CoursesScreen(): ReactElement {
       <div className={classes.analytics}>
         <div className={cc([classes.graphs, classes['left-graphs']])}>
           <WMCard>
-            <Header className={classes['WMCard-title']}>
+            <Header className={classes['card-title']}>
               <span className="text">Users Started / Completed Courses</span>
             </Header>
           </WMCard>
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
           <WMCard>
-            <Header className={classes['WMCard-title']}>
+            <Header className={classes['card-title']}>
               <span className="text">Avg. Completion Time</span>
             </Header>
           </WMCard>
           <WMCard>
-            <Header className={classes['WMCard-title']}>
+            <Header className={classes['card-title']}>
               <span className="text">Quiz Completion Rate</span>
             </Header>
           </WMCard>
@@ -35,7 +34,7 @@ export default function CoursesScreen(): ReactElement {
       </div>
       <div className={classes['courses-table']}>
         <WMCard>
-          <Header className={classes['WMCard-title']}>
+          <Header className={classes['card-title']}>
             <span className="text">8 courses</span>
           </Header>
         </WMCard>

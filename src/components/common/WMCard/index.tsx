@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
 import { Card } from 'antd';
 
-import './index.less';
+import classes from './style.module.css';
 
 export type PropTypes = { props?: any; children?: React.ReactNode };
 
-export default function WMCard({ props, children }: PropTypes): ReactElement {
+export default function App({ props, children }: PropTypes): ReactElement {
   return (
-    <Card className={'wm-card'} {...props}>
+    <Card className={classes['wm-card']} {...props}>
       {children}
     </Card>
   );
