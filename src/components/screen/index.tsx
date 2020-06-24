@@ -5,7 +5,7 @@ import { COURSES_ROUTE, USERS_ROUTE } from '../../constants/routes';
 import CoursesScreen from '../screen/courses-screen';
 import UsersScreen from '../screen/users-screen';
 
-import './index.scss';
+import './index.less';
 
 export default function Screen(): ReactElement {
   return (
