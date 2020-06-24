@@ -1,45 +1,52 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
+import { coursesMockData } from '../../../constants/mocks/courses-mock';
+
 import Header from '../../common/header';
 import WMCard from '../../common/WMCard';
 
+import screenClasses from '../style.module.css';
 import classes from './style.module.css';
 
 export default function CoursesScreen(): ReactElement {
+  const {
+    title: mainTitle,
+    analytics: { graph_1, graph_2, graph_3 },
+    CoursesTable,
+  } = coursesMockData;
+
   return (
-    <section className={classes['courses-screen']}>
-      <Header className={classes['courses-title']}>
-        <span className={classes['courses-title-text']}>Courses</span>
+    <section className={screenClasses['screen']}>
+      <Header className={screenClasses['screen-title']}>
+        <span className={screenClasses['screen-title-text']}>{mainTitle}</span>
       </Header>
       <div className={classes.analytics}>
         <div className={cc([classes.graphs, classes['left-graphs']])}>
           <WMCard>
-            <Header className={classes['WMCard-title']}>
-              <span className="text">Users Started / Completed Courses</span>
+            <Header className={screenClasses['WMCard-title']}>
+              <span className="text">{graph_1.title}</span>
             </Header>
           </WMCard>
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
           <WMCard>
-            <Header className={classes['WMCard-title']}>
-              <span className="text">Avg. Completion Time</span>
+            <Header className={screenClasses['WMCard-title']}>
+              <span className="text">{graph_2.title}</span>
             </Header>
           </WMCard>
           <WMCard>
-            <Header className={classes['WMCard-title']}>
-              <span className="text">Quiz Completion Rate</span>
+            <Header className={screenClasses['WMCard-title']}>
+              <span className="text">{graph_3.title}</span>
             </Header>
           </WMCard>
         </div>
       </div>
-      <div className={classes['courses-table']}>
-        <WMCard>
-          <Header className={classes['WMCard-title']}>
-            <span className="text">8 courses</span>
-          </Header>
-        </WMCard>
-      </div>
+      <WMCard>
+        <Header className={screenClasses['WMCard-title']}>
+          <span className="text">{`8 ${CoursesTable.title}`}</span>
+        </Header>
+      </WMCard>
     </section>
   );
 }

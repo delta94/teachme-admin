@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import { sidebarRoutes } from '../../../constants/routes';
+
 import Top from './top';
 import Navigation from './navigation';
 
@@ -9,7 +11,7 @@ export default function Sidebar(): ReactElement {
   return (
     <aside className="sidebar">
       <Top />
-      <Navigation />
+      <Navigation routes={sidebarRoutes} />
     </aside>
   );
 }
