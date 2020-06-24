@@ -3,9 +3,29 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-top: 20px;
+
+  > ul {
+    width: 100%;
+  }
 
   .nav-item {
+    position: relative;
     color: var(--neutral900);
+
+    // active line default styles
+    &:before {
+      content: '';
+      width: 0;
+      height: 100%;
+      background-color: transparent;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: 0 5px 5px 0;
+      transition: background-color 0.3s, width 0.3s;
+    }
 
     a {
       display: flex;
@@ -20,10 +40,20 @@
       width: var(--navigationIconSize);
       height: var(--navigationIconSize);
       margin-bottom: 5px;
+
+      svg * {
+        fill: var(--neutral800);
+      }
     }
 
     &.active {
       color: var(--secondary);
+
+      // active line
+      &:before {
+        width: 5px;
+        background-color: var(--secondary);
+      }
 
       .icon {
         &:empty {

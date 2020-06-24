@@ -5,8 +5,8 @@
   padding-bottom: 0;
   color: var(--primary);
 
-  &:after {
-    @include horizontalSeparator();
+  .top-separator {
+    margin: 15px 0;
   }
 
   .logo {
