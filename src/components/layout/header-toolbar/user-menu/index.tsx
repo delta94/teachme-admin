@@ -5,19 +5,19 @@ import { IconType } from '../../../common/icon/icon.interface';
 
 import Icon from '../../../common/icon';
 
+const options = ['Dan@walkme.com', 'Impersonate', 'Log Out'];
+
 export default function UserMenu(): ReactElement {
   const handleMenuClick = (e: any) => {
     console.log('click', e);
-    message.info(`User clicked on ${e.item.node.innerHTML}`);
+    message.info(`User clicked on ${options[e.key]}`);
   };
 
   const menu = (
     <Menu onClick={handleMenuClick} className="teachme-header-toolbar-menu user-menu">
-      <Menu.Item key="0">Dan@walkme.com</Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="1">Impersonate</Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="2">Log Out</Menu.Item>
+      {options.map((option, index) => (
+        <Menu.Item key={index}>{option}</Menu.Item>
+      ))}
     </Menu>
   );
   return (

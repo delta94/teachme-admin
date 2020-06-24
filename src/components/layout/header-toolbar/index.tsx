@@ -18,7 +18,7 @@ export default function HeaderToolbar(): ReactElement {
         <SystemMenu />
         <EnvironmentMenu />
         <Divider className="setting-separator" type="vertical" />
-        {/** TODO:  help href should change*/}
+        {/** TODO: help href should change*/}
         <Tooltip title="Help">
           <Button
             type="link"
