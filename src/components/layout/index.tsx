@@ -9,7 +9,7 @@ import './index.scss';
 
 export default function Layout(): ReactElement {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <section className="app">
         <Sidebar />
         <HeaderToolbar />

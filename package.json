@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://cdn.walkme.com/apps/teachme-admin",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postbuild": "rm -rf dist && mv build dist",
+    "test": "echo TBD",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -20,12 +27,6 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "echo TBD",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
