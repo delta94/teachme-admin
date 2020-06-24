@@ -1,4 +1,4 @@
-@import '../../../styles/globals.scss';
+@import '../../../styles/globals.less';
 
 .header-toolbar {
   position: fixed;
@@ -8,8 +8,8 @@
   padding: 0 15px;
   top: 0;
   right: 0;
-  left: var(--sidebarWidth);
-  min-height: var(--headerToolbarHeight);
+  left: @sidebarWidth;
+  min-height: @headerToolbarHeight;
   background-color: #f9fbfc;
 
   &:after {

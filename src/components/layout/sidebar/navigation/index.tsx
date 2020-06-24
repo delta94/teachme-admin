@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import Icon from '../../../common/icon';
 
-import './index.scss';
+import './index.less';
 
 const routes = [
   {

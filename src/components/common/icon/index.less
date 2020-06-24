@@ -1,19 +1,20 @@
+@import (reference) '../../../styles/variables.less';
+
 .icon {
-  --iconDefaultSize: 20px;
-  color: var(--neutral800);
-  width: var(--iconDefaultSize);
-  height: var(--iconDefaultSize);
+  color: @neutral800;
+  width: @iconDefaultSize;
+  height: @iconDefaultSize;
   display: flex;
 
   // TODO: After receiving the icons, remove the background color property and add styles to svg
   &:empty {
-    background-color: var(--neutral800);
+    background-color: @neutral800;
     transition: background-color 0.3s;
   }
 
   svg {
     * {
-      fill: var(--neutral800);
+      fill: @neutral800;
       transition: fill 0.3s;
     }
   }

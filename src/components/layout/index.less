@@ -1,21 +1,23 @@
+@import (reference) '../../styles/variables.less';
+
 .app {
   position: relative;
   width: 100%;
   height: auto;
-  background: var(--background);
+  background: @background;
   max-width: 100%;
   margin: 0 auto;
   opacity: 1;
 
   // sidebar slot
-  padding-left: var(--sidebarWidth);
+  padding-left: @sidebarWidth;
 
   transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
   transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
 }
 
 .content {
-  padding-top: var(--headerToolbarHeight);
+  padding-top: @headerToolbarHeight;
   height: 100vh;
   width: 100%;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconSVG } from './iconsSVG';
 
-import './index.scss';
+import './index.less';
 
 export default function Icon({ type }: { type: string }) {
   const Component = IconSVG[type as keyof typeof IconSVG];

@@ -1,3 +1,5 @@
+@import (reference) '../../../../styles/variables.less';
+
 .navigation {
   display: flex;
   flex-direction: column;
@@ -5,7 +7,7 @@
   text-align: center;
 
   .nav-item {
-    color: var(--neutral900);
+    color: @neutral900;
 
     a {
       display: flex;
@@ -17,22 +19,22 @@
     }
 
     .icon {
-      width: var(--navigationIconSize);
-      height: var(--navigationIconSize);
+      width: @navigationIconSize;
+      height: @navigationIconSize;
       margin-bottom: 5px;
     }
 
     &.active {
-      color: var(--secondary);
+      color: @secondary;
 
       .icon {
         &:empty {
-          background-color: var(--secondary);
+          background-color: @secondary;
         }
 
         svg {
           * {
-            fill: var(--secondary);
+            fill: @secondary;
           }
         }
       }

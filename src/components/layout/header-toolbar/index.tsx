@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import Icon from '../../common/icon';
 
-import './index.scss';
+import './index.less';
 
 export default function HeaderToolbar(): ReactElement {
   return (
