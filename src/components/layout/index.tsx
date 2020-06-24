@@ -6,7 +6,7 @@ import HeaderToolbar from './header-toolbar';
 
 import CoursesScreen from '../screen/courses-screen';
 
-import './index.scss';
+import './index.less';
 
 export default function Layout(): ReactElement {
   return (

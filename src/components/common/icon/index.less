@@ -1,0 +1,21 @@
+@import (reference) '../../../styles/variables.less';
+
+.icon {
+  color: @neutral800;
+  width: @iconDefaultSize;
+  height: @iconDefaultSize;
+  display: flex;
+
+  // TODO: After receiving the icons, remove the background color property and add styles to svg
+  &:empty {
+    background-color: @neutral800;
+    transition: background-color 0.3s;
+  }
+
+  svg {
+    * {
+      fill: @neutral800;
+      transition: fill 0.3s;
+    }
+  }
+}
