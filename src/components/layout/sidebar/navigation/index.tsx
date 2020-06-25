@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
+
+import { IRoute } from '../../../../constants/routes';
 import { Link, useLocation } from 'react-router-dom';
 
 import { IRoute } from '../../../../constants/routes';
@@ -14,7 +16,7 @@ export default function Navigation({ routes }: { routes: IRoute[] }): ReactEleme
     <nav className={classes.navigation}>
       <ul>
         {routes.map((route) => {
-          const { id, title, path } = route;
+          const { id, title, path, iconType } = route;
           const isActive = pathname === path;
 
           return (
@@ -23,7 +25,7 @@ export default function Navigation({ routes }: { routes: IRoute[] }): ReactEleme
               className={cc([classes['nav-item'], { [classes.active]: isActive }])}
             >
               <Link to={path}>
-                <Icon type={id} />
+                {iconType && <Icon type={iconType} />}
                 <span className={classes.text}>{title}</span>
               </Link>
             </li>

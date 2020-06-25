@@ -2,8 +2,8 @@
   --iconDefaultSize: 20px;
 
   color: var(--neutral800);
-  width: var(--iconDefaultSize);
-  height: var(--iconDefaultSize);
+  width: auto;
+  height: auto;
   display: flex;
 
   // TODO: After receiving the icons, remove the background color property and add styles to svg
@@ -12,10 +12,7 @@
     transition: background-color 0.3s;
   }
 
-  svg {
-    * {
-      fill: var(--neutral800);
-      transition: fill 0.3s;
-    }
+  svg * {
+    transition: stroke 0.3s, fill 0.3s;
   }
 }
