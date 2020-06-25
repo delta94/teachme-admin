@@ -1,0 +1,14 @@
+.screen-header {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .screen-header-title {
+    font-family: var(--font-secondary);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    line-height: 22px;
+  }
+}

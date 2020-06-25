@@ -5,11 +5,11 @@ import { COURSES_ROUTE, USERS_ROUTE } from '../../constants/routes';
 import CoursesScreen from '../screen/courses-screen';
 import UsersScreen from '../screen/users-screen';
 
-import './index.scss';
+import classes from './style.module.scss';
 
 export default function Screen(): ReactElement {
   return (
-    <section className="screen">
+    <section className={classes.screen}>
       <Switch>
         <Route path={COURSES_ROUTE.path}>
           <CoursesScreen />

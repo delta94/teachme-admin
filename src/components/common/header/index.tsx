@@ -1,18 +1,27 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
+
 import TimeFilter from '../filters/TimeFilter';
 
+import classes from './style.module.scss';
+
 export default function Header({
+  title,
   className,
-  showTimeFilter,
+  titleClassName,
   children,
+  showTimeFilter,
 }: {
-  className: string;
-  children: ReactElement;
+  title: ReactElement | string;
+  className?: string;
+  titleClassName?: string;
+  children?: string | ReactElement | undefined;
   showTimeFilter?: boolean;
 }) {
   return (
-    <header className={`header ${className}`}>
+    <header className={cc([classes.header, className])}>
       {showTimeFilter && <TimeFilter />}
+      <div className={cc([classes.title, titleClassName])}>{title}</div>
       {children}
     </header>
   );

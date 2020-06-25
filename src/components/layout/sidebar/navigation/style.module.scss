@@ -49,22 +49,16 @@
     &.active {
       color: var(--secondary);
 
+      svg {
+        * {
+          fill: var(--secondary);
+        }
+      }
+
       // active line
       &:before {
         width: 5px;
         background-color: var(--secondary);
-      }
-
-      .icon {
-        &:empty {
-          background-color: var(--secondary);
-        }
-
-        svg {
-          * {
-            fill: var(--secondary);
-          }
-        }
       }
     }
   }
