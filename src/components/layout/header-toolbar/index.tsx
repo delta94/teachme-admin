@@ -9,15 +9,15 @@ import UserMenu from './user-menu';
 
 import Icon from '../../common/icon';
 
-import './index.scss';
+import classes from './style.module.scss';
 
 export default function HeaderToolbar(): ReactElement {
   return (
-    <header className="header-toolbar">
-      <div className="header-toolbar-left">
+    <header className={classes['header-toolbar']}>
+      <div className={classes['header-toolbar-left']}>
         <SystemMenu />
         <EnvironmentMenu />
-        <Divider className="setting-separator" type="vertical" />
+        <Divider className={classes['setting-separator']} type="vertical" />
         {/** TODO: help href should change*/}
         <Tooltip title="Help">
           <Button
@@ -25,12 +25,12 @@ export default function HeaderToolbar(): ReactElement {
             href="https://walkme.com"
             target="_blank"
             icon={<Icon type={IconType.HelpCircle} />}
-            className="help"
+            className={classes.help}
           />
         </Tooltip>
         <UserMenu />
       </div>
-      <Divider className="header-toolbar-separator" />
+      <Divider className={classes['header-toolbar-separator']} />
     </header>
   );
 }

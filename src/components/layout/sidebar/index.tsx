@@ -5,11 +5,11 @@ import { sidebarRoutes } from '../../../constants/routes';
 import Top from './top';
 import Navigation from './navigation';
 
-import './index.scss';
+import classes from './style.module.scss';
 
 export default function Sidebar(): ReactElement {
   return (
-    <aside className="sidebar">
+    <aside className={classes.sidebar}>
       <Top />
       <Navigation routes={sidebarRoutes} />
     </aside>
