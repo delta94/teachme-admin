@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
-
-import { IRoute } from '../../../../constants/routes';
 import { Link, useLocation } from 'react-router-dom';
+
+import cc from 'classcat';
 
 import { IRoute } from '../../../../constants/routes';
 import Icon from '../../../common/icon';
