@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 import WMCard from '../../common/WMCard';
-
+import WMTable from '../../common/WMTable';
 import { usersMockData } from '../../../constants/mocks/users-mock';
+import { data as tableData ,columns } from '../../../mocks/tableMockUsersData';
 import ScreenHeader from '../../common/screenHeader';
 
 import screenClasses from '../style.module.scss';
@@ -11,7 +12,9 @@ export default function CoursesScreen(): ReactElement {
   return (
     <section className={screenClasses['screen']}>
       <ScreenHeader title={mainTitle} />
-      <WMCard title={`468 ${usersTable.title}`} />
+      <WMCard title={`${tableData.length} ${usersTable.title}`}>
+        <WMTable data={tableData} columns={columns} />
+      </WMCard>
     </section>
   );
 }
