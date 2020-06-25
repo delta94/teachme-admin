@@ -2,19 +2,19 @@ import React, { ReactElement } from 'react';
 
 import Icon from '../../common/icon';
 
-import './index.scss';
+import classes from './style.module.scss';
 
 export default function HeaderToolbar(): ReactElement {
   return (
-    <header className="header-toolbar">
-      <div className="settings">
-        <div className="system-selection">
+    <header className={classes['header-toolbar']}>
+      <div className={classes.settings}>
+        <div className={classes['system-selection']}>
           <span>Salesforce</span>
         </div>
-        <div className="help">
+        <div className={classes.help}>
           <Icon type="help" />
         </div>
-        <div className="user">
+        <div className={classes.user}>
           <Icon type="users" />
         </div>
       </div>
