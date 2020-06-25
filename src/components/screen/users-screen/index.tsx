@@ -2,8 +2,9 @@ import React, { ReactElement } from 'react';
 import Header from '../../common/header';
 import WMCard from '../../common/WMCard';
 
-import screenClasses from '../style.module.css';
 import { usersMockData } from '../../../constants/mocks/users-mock';
+
+import screenClasses from '../style.module.scss';
 
 export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
@@ -14,7 +15,7 @@ export default function CoursesScreen(): ReactElement {
       </Header>
       <WMCard>
         <Header className={screenClasses['card-title']}>
-          <span className="text">{`468 ${usersTable.title}`}</span>
+          <span className={screenClasses.title}>{`468 ${usersTable.title}`}</span>
         </Header>
       </WMCard>
     </section>

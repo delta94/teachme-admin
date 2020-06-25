@@ -1,8 +1,9 @@
 .screen {
   width: 100%;
   height: 100%;
-  padding: 0 30px;
+  padding: 0 30px 30px 30px;
   background-color: #f9fbfc;
+  overflow: auto;
 }
 
 .screen-title {
@@ -21,8 +22,20 @@
 }
 
 .card-title {
-  font-family: var(--font-secondary);
-  font-size: 15px;
   color: var(--neutral900);
-  font-weight: 600;
+
+  .title {
+    font-family: var(--font-secondary);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 13px;
+  }
+
+  .sub-title {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 23px;
+    margin-bottom: 23px;
+  }
 }
