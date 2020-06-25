@@ -18,7 +18,7 @@ export default function CoursesScreen(): ReactElement {
 
   return (
     <section className={screenClasses['screen']}>
-      <Header className={screenClasses['screen-title']}>
+      <Header className={screenClasses['screen-title']} showTimeFilter>
         <span className={screenClasses['screen-title-text']}>{mainTitle}</span>
       </Header>
       <div className={classes.analytics}>
