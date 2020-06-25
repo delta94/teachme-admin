@@ -1,14 +1,14 @@
 @import '../../../styles/globals.scss';
 
 .header-toolbar {
-  --itemsSpacing: 25px;
+  --spacing: 25px;
   --avatarShadowColor: rgba(121, 191, 253, 0.75);
 
   position: fixed;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 var(--spacing);
   top: 0;
   right: 0;
   left: var(--sidebarWidth);
@@ -29,7 +29,7 @@
     margin-left: auto;
 
     .setting-separator {
-      margin: 0 var(--itemsSpacing);
+      margin: 0 var(--spacing);
       height: 2em;
     }
 
@@ -39,68 +39,20 @@
       transition: box-shadow 0.3s;
     }
 
-    > *:not(.help) {
-      margin-left: var(--itemsSpacing);
+    > * {
+      margin-left: var(--spacing);
 
-      &:first-child {
+      &:first-child,
+      &.help {
         margin-left: 0;
       }
-    }
 
-    // override antd button
-    .ant-btn {
-      line-height: 1;
-      color: var(--neutral900);
-      transition: color 0.3s;
-
-      &.ant-btn-link {
-        padding: 0;
-        font-family: var(--font-primary);
-        font-weight: 500;
-
-        &.ant-dropdown-open {
-          color: var(--primary);
-        }
-      }
-
-      &.ant-btn-icon-only {
+      &.help {
         width: auto;
         height: auto;
+        line-height: 0;
         padding: 0;
-
-        > * {
-          font-size: 0;
-        }
-
-        &.ant-dropdown-open {
-          .icon.header-avatar {
-            box-shadow: 0 0 5px 2px var(--avatarShadowColor);
-          }
-        }
       }
-    }
-  }
-}
-
-ul.ant-dropdown-menu.teachme-header-toolbar-menu {
-  top: 10px;
-
-  li {
-    position: relative;
-
-    &.selected-item {
-      color: var(--primary);
-    }
-  }
-
-  &.user-menu {
-    li:first-child:after {
-      @include horizontalSeparator;
-      position: absolute;
-      bottom: 0;
-      right: 5px;
-      left: 5px;
-      width: calc(100% - 10px);
     }
   }
 }

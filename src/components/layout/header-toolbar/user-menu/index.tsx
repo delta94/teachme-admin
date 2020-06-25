@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
 import { Menu, Dropdown, Button, message } from 'antd';
 
 import { IconType } from '../../../common/icon/icon.interface';
@@ -16,10 +15,7 @@ export default function UserMenu(): ReactElement {
   };
 
   const menu = (
-    <Menu
-      onClick={handleMenuClick}
-      className={cc([classes['teachme-header-toolbar-menu'], classes['user-menu']])}
-    >
+    <Menu onClick={handleMenuClick} className="wm-dropdown-menu user-menu">
       {options.map((option, index) => (
         <Menu.Item key={index}>{option}</Menu.Item>
       ))}

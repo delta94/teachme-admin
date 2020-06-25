@@ -1,4 +1,4 @@
-export enum Time {
+export enum TimeOption {
   Yesterday = 'Yesterday',
   LastWeek = 'Last Week',
   LastMonth = 'Last Month',
@@ -9,8 +9,8 @@ export enum Time {
   Custom = 'Custom Dates',
 }
 
-export interface ITimeOptions {
-  id: Time;
+export interface ITimeFilterOptions {
+  id: TimeOption;
   dates?: {
     start?: Date;
     end?: Date;

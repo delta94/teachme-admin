@@ -3,8 +3,6 @@ import cc from 'classcat';
 import { Menu, Dropdown, Button, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
-import classes from '../style.module.scss';
-
 const systems = ['Salesforce', 'Option 2', 'Option 3'];
 
 export default function SystemMenu(): ReactElement {
@@ -17,15 +15,9 @@ export default function SystemMenu(): ReactElement {
   };
 
   const menu = (
-    <Menu
-      onClick={handleMenuClick}
-      className={cc([classes['teachme-header-toolbar-menu'], classes['system-menu']])}
-    >
+    <Menu onClick={handleMenuClick} className={'wm-dropdown-menu environment-menu'}>
       {systems.map((system, index) => (
-        <Menu.Item
-          className={cc([{ [classes['selected-item']]: selectedSystem === system }])}
-          key={index}
-        >
+        <Menu.Item className={cc([{ 'selected-item': selectedSystem === system }])} key={index}>
           {system}
         </Menu.Item>
       ))}
@@ -34,7 +26,7 @@ export default function SystemMenu(): ReactElement {
 
   return (
     <Dropdown overlay={menu}>
-      <Button type="link" className={classes['system-menu']}>
+      <Button type="link" className="wm-btn">
         {selectedSystem}
         <DownOutlined />
       </Button>
