@@ -5,12 +5,12 @@ import Sidebar from './sidebar';
 import HeaderToolbar from './header-toolbar';
 import Screen from '../screen';
 
-import './index.scss';
+import classes from './style.module.scss';
 
 export default function Layout(): ReactElement {
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <section className="app">
+      <section className={classes.app}>
         <Sidebar />
         <HeaderToolbar />
         <Screen />
