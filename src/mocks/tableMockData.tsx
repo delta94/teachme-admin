@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { Link } from 'react-router-dom';
 
 const labelColors: { [key: string]: string } = {
   published: 'green',
@@ -14,7 +15,7 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: (text: string) => <a>{text}</a>,
+    render: (text: string) => <Link to="/single-course">{text}</Link>, // TODO: we should set the specific route to this course
   },
   {
     title: 'Production Status',

@@ -1,9 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
-import { Menu, Dropdown, Button, message } from 'antd';
+import { Menu, Button, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-
-import classes from '../style.module.scss';
+import WMDropdown from '../../../common/WMDropdown';
 
 const systems = ['Salesforce', 'Option 2', 'Option 3'];
 
@@ -17,15 +16,9 @@ export default function SystemMenu(): ReactElement {
   };
 
   const menu = (
-    <Menu
-      onClick={handleMenuClick}
-      className={cc([classes['teachme-header-toolbar-menu'], classes['system-menu']])}
-    >
+    <Menu onClick={handleMenuClick} className={'wm-dropdown-menu environment-menu'}>
       {systems.map((system, index) => (
-        <Menu.Item
-          className={cc([{ [classes['selected-item']]: selectedSystem === system }])}
-          key={index}
-        >
+        <Menu.Item className={cc([{ 'selected-item': selectedSystem === system }])} key={index}>
           {system}
         </Menu.Item>
       ))}
@@ -33,11 +26,14 @@ export default function SystemMenu(): ReactElement {
   );
 
   return (
-    <Dropdown overlay={menu}>
-      <Button type="link" className={classes['system-menu']}>
+    <WMDropdown dropdownMenu={menu}>
+      {/**
+       * TODO - @dvir: replace Button with WMButton
+       */}
+      <Button type="link" className="wm-btn">
         {selectedSystem}
         <DownOutlined />
       </Button>
-    </Dropdown>
+    </WMDropdown>
   );
 }

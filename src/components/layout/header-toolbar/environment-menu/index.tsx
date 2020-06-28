@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
-import { Menu, Dropdown, Button, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { Menu, Button, message } from 'antd';
 
-import classes from '../style.module.scss';
+import WMDropdown from '../../../common/WMDropdown';
 
 const environments = ['Production', 'Test'];
 
@@ -17,10 +17,7 @@ export default function EnvironmentMenu(): ReactElement {
   };
 
   const menu = (
-    <Menu
-      onClick={handleMenuClick}
-      className={cc([classes['teachme-header-toolbar-menu'], classes['environment-menu']])}
-    >
+    <Menu onClick={handleMenuClick} className="wm-dropdown-menu environment-menu">
       {environments.map((env, index) => (
         <Menu.Item className={cc([{ 'selected-item': selectedEnvironment === env }])} key={index}>
           {env}
@@ -30,11 +27,14 @@ export default function EnvironmentMenu(): ReactElement {
   );
 
   return (
-    <Dropdown overlay={menu}>
-      <Button type="link" className={classes['environment-menu']}>
+    <WMDropdown dropdownMenu={menu}>
+      {/**
+       * TODO - @dvir: replace Button with WMButton
+       */}
+      <Button type="link" className="wm-btn">
         {selectedEnvironment}
         <DownOutlined />
       </Button>
-    </Dropdown>
+    </WMDropdown>
   );
 }

@@ -25,7 +25,7 @@ export default function HeaderToolbar(): ReactElement {
             href="https://walkme.com"
             target="_blank"
             icon={<Icon type={IconType.HelpCircle} />}
-            className={classes.help}
+            className={classes['help']}
           />
         </Tooltip>
         <UserMenu />

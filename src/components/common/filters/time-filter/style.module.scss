@@ -1,0 +1,15 @@
+.time-filter-container {
+  .wm-time-filter {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .wm-range-picker {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .ant-picker-ranges {
+    order: -1;
+  }
+}
