@@ -6,7 +6,7 @@ import { data as tableData, columns } from '../../../mocks/tableMockData';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
-import ScreenHeader from '../../common/screenHeader';
+import ScreenHeader from '../../common/ScreenHeader';
 
 import classes from './style.module.scss';
 

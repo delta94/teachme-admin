@@ -1,14 +1,17 @@
 import React, { ReactElement } from 'react';
 
-import Header from '../header';
+import TimeFilter from '../filters/TimeFilter';
+import Header from '../Header';
 
 import classes from './style.module.scss';
 
 export default function ScreenHeader({
   title,
   children,
+  hideTimeFilter,
 }: {
   title: ReactElement | string;
+  hideTimeFilter?: boolean;
   children?: ReactElement | undefined;
 }) {
   return (
@@ -17,7 +20,10 @@ export default function ScreenHeader({
       titleClassName={classes['screen-header-title']}
       title={title}
     >
-      {children}
+      <>
+        {!hideTimeFilter && <TimeFilter className={classes['screen-header-time-filter']} />}
+        {children}
+      </>
     </Header>
   );
 }

@@ -1,0 +1,14 @@
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.failure {
+    background-color: red;
+  }
+
+  &.success {
+    background-color: green;
+  }
+}
