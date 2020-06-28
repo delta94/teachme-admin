@@ -60,3 +60,21 @@
     }
   }
 }
+
+.wm-range-picker-dropdown {
+  .ant-picker-range-wrapper {
+    background-color: green;
+    .ant-picker-panel-container .ant-picker-footer {
+      display: flex;
+      flex-direction: column-reverse;
+
+      .ant-picker-footer-extra {
+        display: flex;
+        justify-content: flex-end;
+        border-bottom: none;
+        border-top: 1px solid var(--dividerColor);
+        padding: 5px 15px;
+      }
+    }
+  }
+}

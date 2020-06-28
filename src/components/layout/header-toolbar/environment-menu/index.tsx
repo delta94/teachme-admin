@@ -1,7 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 import { DownOutlined } from '@ant-design/icons';
-import { Menu, Dropdown, Button, message } from 'antd';
+import { Menu, Button, message } from 'antd';
+
+import WMDropdown from '../../../common/WMDropdown';
 
 const environments = ['Production', 'Test'];
 
@@ -25,11 +27,14 @@ export default function EnvironmentMenu(): ReactElement {
   );
 
   return (
-    <Dropdown overlay={menu}>
+    <WMDropdown dropdownMenu={menu}>
+      {/**
+       * TODO - @dvir: replace Button with WMButton
+       */}
       <Button type="link" className="wm-btn">
         {selectedEnvironment}
         <DownOutlined />
       </Button>
-    </Dropdown>
+    </WMDropdown>
   );
 }

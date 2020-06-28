@@ -24,16 +24,11 @@ const options: ITimeFilterOptions[] = [
     },
   },
 ];
+
 const { RangePicker } = DatePicker;
 
 export default function TimeFilter({ className = '' }: { className?: string }): ReactElement {
   const [time, setTime] = useState(options[0]);
-
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  useEffect(() => {
-    setShowDatePicker(time.id === TimeOption.Custom);
-  }, [time]);
 
   const handleMenuClick = (e: any) => {
     setTime(options[e.key]);
@@ -57,27 +52,31 @@ export default function TimeFilter({ className = '' }: { className?: string }): 
 
   return (
     <div className={cc([classes['time-filter-container'], className])}>
-      <div className={classes['wm-time-filter']}>
-        <span className="label">Time: </span>
-        <Dropdown overlay={menu}>
-          <Button type="link" className={`wm-btn filter-menu`}>
-            {time.id}
-            <DownOutlined />
-          </Button>
-        </Dropdown>
-      </div>
-      {showDatePicker && (
-        <RangePicker
-          className={classes['wm-range-picker']}
-          bordered={false}
-          ranges={{
-            Today: [moment(), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-          }}
-          format="YYYY/MM/DD HH:mm:ss"
-          onChange={onChange}
-        />
-      )}
+      <span className="label">Time: </span>
+      <RangePicker
+        className={classes['wm-range-picker']}
+        dropdownClassName="wm-range-picker-dropdown"
+        bordered={false}
+        ranges={{
+          // TODO: add here the other options
+          Today: [moment(), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Week': [moment().startOf('week'), moment().endOf('week')],
+        }}
+        format="YYYY/MM/DD"
+        renderExtraFooter={() => {
+          return (
+            <Button
+              type="default"
+              onClick={() => {
+                console.log('apply');
+              }}
+            >
+              Apply
+            </Button>
+          );
+        }}
+      />
     </div>
   );
 }
