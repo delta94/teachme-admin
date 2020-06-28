@@ -7,7 +7,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 
 import screenClasses from '../style.module.scss';
 
-export default function CoursesScreen(): ReactElement {
+export default function UsersScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
   return (
     <section className={screenClasses['screen']}>
