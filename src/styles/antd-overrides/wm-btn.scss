@@ -1,0 +1,35 @@
+.wm-btn {
+  line-height: 1;
+  color: var(--neutral900);
+  transition: color 0.3s;
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+
+  &.ant-btn-link {
+    padding: 0;
+    font-family: var(--font-primary);
+    font-weight: 500;
+
+    &.ant-dropdown-open {
+      color: var(--primary);
+    }
+  }
+
+  &.ant-btn-icon-only {
+    width: auto;
+    height: auto;
+    padding: 0;
+
+    > * {
+      font-size: 0;
+    }
+
+    &.ant-dropdown-open {
+      .icon.header-avatar {
+        box-shadow: 0 0 5px 2px var(--avatarShadowColor);
+      }
+    }
+  }
+}

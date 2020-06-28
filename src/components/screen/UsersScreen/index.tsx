@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import { usersMockData } from '../../../constants/mocks/users-mock';
-import { data as tableData ,columns } from '../../../mocks/tableMockUsersData';
-import ScreenHeader from '../../common/screenHeader';
+import { data as tableData, columns } from '../../../mocks/tableMockUsersData';
+import ScreenHeader from '../../common/ScreenHeader';
 
 import screenClasses from '../style.module.scss';
 

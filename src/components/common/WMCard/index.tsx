@@ -1,18 +1,19 @@
 import React, { ReactElement } from 'react';
 import { Card } from 'antd';
+import { CardInterface } from 'antd/lib/card';
 
-import Header from '../header';
+import Header from '../Header';
 
 import classes from './style.module.scss';
 
 export type PropTypes = {
   title?: ReactElement | string;
   subTitle?: ReactElement | string;
-  props?: any;
+  props?: CardInterface;
   children?: React.ReactNode;
 };
 
-export default function App({ title, subTitle, props, children }: PropTypes): ReactElement {
+export default function WMCard({ title, subTitle, props, children }: PropTypes): ReactElement {
   return (
     <Card className={classes['wm-card']} {...props}>
       {title && (

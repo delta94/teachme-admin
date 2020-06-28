@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Sidebar from './sidebar';
-import HeaderToolbar from './header-toolbar';
-import Screen from '../screen';
+import Sidebar from './Sidebar';
+import HeaderToolbar from './HeaderToolbar';
+import Screen from '../Screen';
 
 import classes from './style.module.scss';
 
