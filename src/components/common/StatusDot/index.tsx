@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './style.module.scss';
+import cc from 'classcat';
 
 export enum DotType {
   Success = 'success',
@@ -7,5 +8,5 @@ export enum DotType {
 }
 
 export default function StatusDot({ type }: { type: DotType }): JSX.Element {
-  return <span className={`${classes.dot} ${classes[type]}`} />;
+  return <span className={cc([classes.dot, classes[type]])} />;
 }
