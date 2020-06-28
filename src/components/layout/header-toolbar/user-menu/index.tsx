@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react';
-import { Menu, message, Button } from 'antd';
+import { Menu, message } from 'antd';
 
 import { IconType } from '../../../common/icon/icon.interface';
 import Icon from '../../../common/icon';
+import WMDropdown from '../../../common/WMDropdown';
+import WMButton from '../../../common/WMButton';
 
 import classes from '../style.module.scss';
-import WMDropdown from '../../../common/WMDropdown';
 
 const options = ['Dan@walkme.com', 'Impersonate', 'Log Out'];
 
@@ -25,10 +26,7 @@ export default function UserMenu(): ReactElement {
 
   return (
     <WMDropdown dropdownMenu={menu}>
-      {/**
-       * TODO - @dvir: replace Button with WMButton
-       */}
-      <Button className={classes.user} type={'link'} icon={<Icon type={IconType.HeaderAvatar} />} />
+      <WMButton className={classes.user} icon={<Icon type={IconType.HeaderAvatar} />} />
     </WMDropdown>
   );
 }

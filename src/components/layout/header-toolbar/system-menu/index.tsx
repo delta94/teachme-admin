@@ -1,8 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
-import { Menu, Button, message } from 'antd';
+import { Menu, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+
 import WMDropdown from '../../../common/WMDropdown';
+import WMButton from '../../../common/WMButton';
 
 const systems = ['Salesforce', 'Option 2', 'Option 3'];
 
@@ -27,13 +29,10 @@ export default function SystemMenu(): ReactElement {
 
   return (
     <WMDropdown dropdownMenu={menu}>
-      {/**
-       * TODO - @dvir: replace Button with WMButton
-       */}
-      <Button type="link" className="wm-btn">
+      <WMButton>
         {selectedSystem}
         <DownOutlined />
-      </Button>
+      </WMButton>
     </WMDropdown>
   );
 }
