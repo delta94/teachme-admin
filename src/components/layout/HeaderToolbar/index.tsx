@@ -1,13 +1,14 @@
 import React, { ReactElement } from 'react';
-import { Divider, Button, Tooltip } from 'antd';
+import { Divider, Tooltip } from 'antd';
 
-import { IconType } from '../../common/icon/icon.interface';
+import { IconType } from '../../common/Icon/icon.interface';
 
-import SystemMenu from './system-menu';
-import EnvironmentMenu from './environment-menu';
-import UserMenu from './user-menu';
+import WMButton from '../../common/WMButton';
+import SystemMenu from './SystemMenu';
+import EnvironmentMenu from './EnvironmentMenu';
+import UserMenu from './UserMenu';
 
-import Icon from '../../common/icon';
+import Icon from '../../common/Icon';
 
 import classes from './style.module.scss';
 
@@ -20,7 +21,7 @@ export default function HeaderToolbar(): ReactElement {
         <Divider className={classes['setting-separator']} type="vertical" />
         {/** TODO: help href should change*/}
         <Tooltip title="Help">
-          <Button
+          <WMButton
             type="link"
             href="https://walkme.com"
             target="_blank"

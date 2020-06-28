@@ -29,7 +29,7 @@ export default function SystemMenu(): ReactElement {
 
   return (
     <WMDropdown dropdownMenu={menu}>
-      <WMButton>
+      <WMButton type="link">
         {selectedSystem}
         <DownOutlined />
       </WMButton>

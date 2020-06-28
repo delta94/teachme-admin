@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { COURSES_ROUTE, USERS_ROUTE } from '../../constants/routes';
-import CoursesScreen from '../screen/courses-screen';
-import UsersScreen from '../screen/users-screen';
+import CoursesScreen from './CoursesScreen';
+import UsersScreen from './UsersScreen';
 
 import classes from './style.module.scss';
 

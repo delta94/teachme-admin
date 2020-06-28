@@ -1,6 +1,6 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
-import { Menu, DatePicker } from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
 
 import { TimeOption } from '../filters.interface';
@@ -10,12 +10,14 @@ import classes from './style.module.scss';
 const { RangePicker } = DatePicker;
 
 export default function TimeFilter({ className = '' }: { className?: string }): ReactElement {
-  const [time, setTime] = useState();
-
   const onChange = (dates: any, dateStrings: any) => {
     // set the selected dates after changes and call to SDK
-    console.log('From: ', dates[0], ', to: ', dates[1]);
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    if (dates) {
+      console.log('From: ', dates[0], ', to: ', dates[1]);
+    }
+    if (dateStrings) {
+      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    }
   };
 
   return (

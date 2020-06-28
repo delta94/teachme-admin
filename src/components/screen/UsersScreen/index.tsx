@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import WMCard from '../../common/WMCard';
 
 import { usersMockData } from '../../../constants/mocks/users-mock';
-import ScreenHeader from '../../common/screenHeader';
+import ScreenHeader from '../../common/ScreenHeader';
 
 import screenClasses from '../style.module.scss';
 

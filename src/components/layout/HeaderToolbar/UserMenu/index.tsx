@@ -1,13 +1,14 @@
 import React, { ReactElement } from 'react';
 import { Menu, message } from 'antd';
 
-import { IconType } from '../../../common/icon/icon.interface';
-import Icon from '../../../common/icon';
+import { IconType } from '../../../common/Icon/icon.interface';
+import Icon from '../../../common/Icon';
 import WMDropdown from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
 import classes from '../style.module.scss';
 
+// TODO: replace this mock with SDK's data
 const options = ['Dan@walkme.com', 'Impersonate', 'Log Out'];
 
 export default function UserMenu(): ReactElement {
@@ -26,7 +27,7 @@ export default function UserMenu(): ReactElement {
 
   return (
     <WMDropdown dropdownMenu={menu}>
-      <WMButton className={classes.user} icon={<Icon type={IconType.HeaderAvatar} />} />
+      <WMButton className={classes.user} type="link" icon={<Icon type={IconType.HeaderAvatar} />} />
     </WMDropdown>
   );
 }

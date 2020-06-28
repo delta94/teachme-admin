@@ -29,7 +29,7 @@ export default function EnvironmentMenu(): ReactElement {
 
   return (
     <WMDropdown dropdownMenu={menu}>
-      <WMButton>
+      <WMButton type="link">
         {selectedEnvironment}
         <DownOutlined />
       </WMButton>

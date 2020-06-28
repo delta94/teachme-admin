@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import cc from 'classcat';
 
 import { IRoute } from '../../../../constants/routes';
-import Icon from '../../../common/icon';
+import Icon from '../../../common/Icon';
 
 import classes from './style.module.scss';
 
