@@ -4,16 +4,14 @@ import { ButtonProps } from 'antd/lib/button';
 
 export type PropTypes = {
   className?: string;
+  icon?: ButtonProps['icon'];
   children?: React.ReactNode;
   props?: ButtonProps;
 };
 
-/**
- * TODO - @dvir - please check if it works
- */
-export default function WMButton({ className, props, children }: PropTypes): ReactElement {
+export default function WMButton({ className, icon, children, ...props }: PropTypes): ReactElement {
   return (
-    <Button className={`wm-btn ${className}`} {...props}>
+    <Button className={`wm-btn ${className}`} icon={icon} type={'link'} {...props}>
       {children}
     </Button>
   );
