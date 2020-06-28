@@ -11,7 +11,7 @@ export type PropTypes = {
 
 export default function WMButton({ className, icon, children, ...props }: PropTypes): ReactElement {
   return (
-    <Button className={`wm-btn ${className}`} icon={icon} type={'link'} {...props}>
+    <Button type="link" className={`wm-btn ${className}`} icon={icon} {...props}>
       {children}
     </Button>
   );
