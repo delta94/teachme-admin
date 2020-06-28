@@ -1,4 +1,5 @@
 import { ColumnsType } from 'antd/lib/table';
+import StatusDot, { DotType } from '../components/common/StatusDot/index';
 import React from 'react';
 
 export const columns: ColumnsType<any> = [
@@ -20,22 +21,35 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Completed',
     dataIndex: 'completed',
-    render: (text: string) => <span> {text}</span>,
+    render: (text: string) => {
+      return <span> {text ? text : '⊘ Did not complete'}</span>;
+    },
   },
   {
     title: 'Time to Complete',
     dataIndex: 'timeToComplete',
-    render: (text: string) => <span> {text}</span>,
+    render: (text: string) => {
+      return <span> {text ? text : '⊘ Did not complete'}</span>;
+    },
   },
   {
     title: 'Quiz Result',
     dataIndex: 'quizResult',
-    render: (text: string) => <span> {text}</span>,
+    render: (text: number) => {
+      return (
+        <>
+          {text && <StatusDot type={text > 65 ? DotType.Success : DotType.Failure} />}
+          <span> {text ? text : '⊘ Did not submit'}</span>
+        </>
+      );
+    },
   },
   {
     title: 'No. of quiz attempts',
     dataIndex: 'noOfQuizAttempts',
-    render: (text: string) => <span> {text}</span>,
+    render: (text: number) => {
+      return <span> {text ? text : '⊘ Did not complete'}</span>;
+    },
   },
 ];
 
@@ -87,7 +101,7 @@ export const data = [
     started: '1.1.2020',
     completed: '1.2.2020',
     timeToComplete: '1 day',
-    quizResult: 82,
+    quizResult: 65,
     noOfQuizAttempts: 1,
   },
   {
@@ -106,9 +120,9 @@ export const data = [
     courseName: 'Course 3',
     started: '1.1.2020',
     completed: undefined,
-    timeToComplete: 'Did not complete',
-    quizResult: 'Did not submit',
-    noOfQuizAttempts: 'Did not complete',
+    timeToComplete: '',
+    quizResult: '',
+    noOfQuizAttempts: '',
   },
   {
     key: '8',
@@ -116,8 +130,8 @@ export const data = [
     courseName: 'Course 4',
     started: '1.1.2020',
     completed: undefined,
-    timeToComplete: 'Did not complete',
-    quizResult: 'Did not submit',
-    noOfQuizAttempts: 'Did not complete',
+    timeToComplete: '',
+    quizResult: '',
+    noOfQuizAttempts: '',
   },
 ];
