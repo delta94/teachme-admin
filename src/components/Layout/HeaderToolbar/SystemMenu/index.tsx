@@ -6,9 +6,9 @@ import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
 const systems: IWMDropdownOption[] = [
-  { id: 'ddd', text: 'Salesforce' },
-  { id: 'xxxx', text: 'Option 2' },
-  { id: 'ccc', text: 'Option 3' },
+  { id: 0, text: 'Salesforce' },
+  { id: 1, text: 'Option 2' },
+  { id: 2, text: 'Option 3' },
 ];
 
 export default function SystemMenu(): ReactElement {
