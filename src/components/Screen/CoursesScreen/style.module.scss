@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: stretch;
   justify-items: stretch;
-  height: 286px;
+  height: auto;
   margin-bottom: 38px;
 
   .graphs {
@@ -12,7 +12,7 @@
 
     &.left-graphs {
       flex: 2;
-      height: 100%;
+      height: auto;
       margin-right: 20px;
     }
 
