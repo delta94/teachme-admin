@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 
 import { sidebarRoutes } from '../../../constants/routes';
 
-import Top from './Top';
-import Navigation from './Navigation';
+import Top from './top';
+import Navigation from './navigation';
 
 import classes from './style.module.scss';
 

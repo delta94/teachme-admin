@@ -8,7 +8,7 @@ import SystemMenu from './SystemMenu';
 import EnvironmentMenu from './EnvironmentMenu';
 import UserMenu from './UserMenu';
 
-import Icon from '../../common/Icon';
+import Icon from '../../common/icon';
 
 import classes from './style.module.scss';
 

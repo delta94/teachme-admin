@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Menu, message } from 'antd';
 
 import { IconType } from '../../../common/icon/icon.interface';
-import Icon from '../../../common/Icon';
+import Icon from '../../../common/icon';
 import WMDropdown from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
