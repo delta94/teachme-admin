@@ -7,6 +7,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import CoursesFilter from '../../common/filters/CoursesFilter';
 import StatusCourseFilter from '../../common/filters/StatusCourseFilter';
 import QuizResultsFilter from '../../common/filters/QuizResultsFilter';
+import classes from './style.module.scss';
 
 export default function UsersScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
@@ -14,9 +15,15 @@ export default function UsersScreen(): ReactElement {
     <>
       <ScreenHeader title={mainTitle} />
       <WMCard title={`${tableData.length} ${usersTable.title}`}>
-        <CoursesFilter />
-        <StatusCourseFilter />
-        <QuizResultsFilter />
+        <div className={classes.usersSubBar}>
+          <div className={classes.usersFilter}>
+            <CoursesFilter />
+            <StatusCourseFilter />
+            <QuizResultsFilter />
+          </div>
+          <div className={classes.usersSearch}>
+          </div>
+        </div>
         <WMTable data={tableData} columns={columns} />
       </WMCard>
     </>
