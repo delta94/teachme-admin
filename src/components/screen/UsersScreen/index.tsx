@@ -3,7 +3,7 @@ import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import { usersMockData } from '../../../constants/mocks/users-mock';
 import { data as tableData, columns } from '../../../mocks/tableMockUsersData';
-import ScreenHeader from '../../common/ScreenHeader';
+import ScreenHeader from '../../common/screenHeader'
 
 export default function UsersScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
