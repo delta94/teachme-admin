@@ -2,18 +2,21 @@ import React, { ReactElement, useState } from 'react';
 import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
-import WMDropdown from '../../../common/WMDropdown';
+import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
-const systems = ['Salesforce', 'Option 2', 'Option 3'];
+const systems: IWMDropdownOption[] = [
+  { id: 'ddd', text: 'Salesforce' },
+  { id: 'xxxx', text: 'Option 2' },
+  { id: 'ccc', text: 'Option 3' },
+];
 
 export default function SystemMenu(): ReactElement {
   const [selectedSystem, setSelectedSystem] = useState(systems[0]);
 
-  const handleMenuClick = (e: any) => {
-    setSelectedSystem(systems[e.key]);
-    console.log('click', e);
-    message.info(`System changed to ${e.item.node.innerHTML}`);
+  const handleMenuClick = (selected: IWMDropdownOption) => {
+    setSelectedSystem(selected);
+    message.info(`System changed to ${selected.text}`);
   };
 
   return (
@@ -24,7 +27,7 @@ export default function SystemMenu(): ReactElement {
       onSelectedChange={handleMenuClick}
     >
       <WMButton type="link">
-        {selectedSystem}
+        {selectedSystem.text}
         <DownOutlined />
       </WMButton>
     </WMDropdown>

@@ -1,6 +1,6 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
-import { Dropdown, message, Menu } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import { DropDownProps } from 'antd/lib/dropdown';
 
 export interface IWMDropdownOption {
@@ -8,10 +8,10 @@ export interface IWMDropdownOption {
   text: string;
 }
 export interface IWMDropdown extends Omit<DropDownProps, 'overlay'> {
-  options: string[]; //IWMDropdownOption[];
-  selected?: string;
+  options: IWMDropdownOption[];
+  selected?: IWMDropdownOption;
   className?: string;
-  onSelectedChange?: (e: any) => void;
+  onSelectedChange?: (selected: IWMDropdownOption) => void;
   children: React.ReactNode;
 }
 
@@ -24,15 +24,19 @@ export default function WMDropdown({
   ...otherProps
 }: IWMDropdown): ReactElement {
   const onMenuClick = (e: any) => {
+    const selected = options.find((option) => option.id === e.key);
     console.log('click', e);
-    onSelectedChange && onSelectedChange(e);
+    selected && onSelectedChange && onSelectedChange(selected);
   };
 
   const menu = (
     <Menu onClick={onMenuClick} className={cc(['wm-dropdown-menu', className])}>
-      {options.map((option, index) => (
-        <Menu.Item className={cc([{ 'selected-item': selected === option }])} key={index}>
-          {option}
+      {options.map((option) => (
+        <Menu.Item
+          className={cc([{ 'selected-item': selected?.id === option.id }])}
+          key={option.id}
+        >
+          {option.text}
         </Menu.Item>
       ))}
     </Menu>
