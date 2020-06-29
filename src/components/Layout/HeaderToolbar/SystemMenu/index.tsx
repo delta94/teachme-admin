@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import cc from 'classcat';
 import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
@@ -21,7 +22,7 @@ export default function SystemMenu(): ReactElement {
 
   return (
     <WMDropdown
-      className="system-menu"
+      className={cc(['system-menu', 'header-toolbar-menu'])}
       options={systems}
       selected={selectedSystem}
       onSelectedChange={handleMenuClick}

@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-
+import cc from 'classcat';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
@@ -21,7 +21,7 @@ export default function EnvironmentMenu(): ReactElement {
 
   return (
     <WMDropdown
-      className="environment-menu"
+      className={cc(['environment-menu', 'header-toolbar-menu'])}
       options={environments}
       selected={selectedEnvironment}
       onSelectedChange={handleMenuClick}

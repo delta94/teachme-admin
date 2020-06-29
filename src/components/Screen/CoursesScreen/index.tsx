@@ -22,7 +22,7 @@ export default function CoursesScreen(): ReactElement {
       <ScreenHeader title={mainTitle} />
       <div className={classes.analytics}>
         <div className={cc([classes.graphs, classes['left-graphs']])}>
-          <WMCard title={graph_1.title} />
+          <WMCard title={graph_1.title}></WMCard>
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
           <WMCard title={graph_2.title} />
