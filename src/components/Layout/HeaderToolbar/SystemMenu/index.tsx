@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import cc from 'classcat';
-import { Menu, message } from 'antd';
+import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 import WMDropdown from '../../../common/WMDropdown';
@@ -17,18 +16,13 @@ export default function SystemMenu(): ReactElement {
     message.info(`System changed to ${e.item.node.innerHTML}`);
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick} className={'wm-dropdown-menu environment-menu'}>
-      {systems.map((system, index) => (
-        <Menu.Item className={cc([{ 'selected-item': selectedSystem === system }])} key={index}>
-          {system}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
   return (
-    <WMDropdown dropdownMenu={menu}>
+    <WMDropdown
+      className="system-menu"
+      options={systems}
+      selected={selectedSystem}
+      onSelectedChange={handleMenuClick}
+    >
       <WMButton type="link">
         {selectedSystem}
         <DownOutlined />

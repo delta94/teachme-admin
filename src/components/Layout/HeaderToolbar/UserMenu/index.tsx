@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Menu, message } from 'antd';
+import { message } from 'antd';
 
 import { IconType } from '../../../common/Icon/icon.interface';
 import Icon from '../../../common/Icon';
@@ -17,16 +17,8 @@ export default function UserMenu(): ReactElement {
     message.info(`User clicked on ${options[e.key]}`);
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick} className="wm-dropdown-menu user-menu">
-      {options.map((option, index) => (
-        <Menu.Item key={index}>{option}</Menu.Item>
-      ))}
-    </Menu>
-  );
-
   return (
-    <WMDropdown dropdownMenu={menu}>
+    <WMDropdown className="user-menu" options={options} onSelectedChange={handleMenuClick}>
       <WMButton className={classes.user} type="link" icon={<Icon type={IconType.HeaderAvatar} />} />
     </WMDropdown>
   );
