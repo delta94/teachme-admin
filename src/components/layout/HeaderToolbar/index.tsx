@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Divider, Tooltip } from 'antd';
 
-import { IconType } from '../../common/Icon/icon.interface';
+import { IconType } from '../../common/icon/icon.interface';
 
 import WMButton from '../../common/WMButton';
 import SystemMenu from './SystemMenu';
