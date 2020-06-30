@@ -1,7 +1,7 @@
 import { coursesMockData } from './mocks/courses-mock';
 import { usersMockData } from './mocks/users-mock';
 
-import { IconType } from '../components/common/Icon/icon.interface';
+import { IconType } from '../components/common/icon/icon.interface';
 
 export interface IRoute {
   id: string;
