@@ -12,12 +12,14 @@ export enum DotType {
 export default function StatusDot({
   type,
   dotColor,
+  className,
 }: {
   type: DotType;
   dotColor?: string;
+  className?: string;
 }): JSX.Element {
   const isCustomDotStatus = type === DotType.Custom && dotColor;
   const customStyle = isCustomDotStatus ? { backgroundColor: dotColor } : undefined;
 
-  return <span style={customStyle} className={cc([classes.dot, classes[type]])} />;
+  return <span style={customStyle} className={cc([classes.dot, classes[type], className])} />;
 }
