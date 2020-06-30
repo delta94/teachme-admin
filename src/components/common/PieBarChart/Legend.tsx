@@ -15,7 +15,11 @@ function Legend({
 }): React.ReactElement {
   return (
     <div className={classes['legend']} {...otherProps}>
-      <StatusDot type={DotType.Success} />
+      <StatusDot
+        type={DotType.Custom}
+        dotColor={color}
+        className={classes['pie-bar-legend-status-dot']}
+      />
       <div>{content}</div>
     </div>
   );
