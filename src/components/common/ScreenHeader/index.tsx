@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import TimeFilter from '../filters/TimeFilter';
-import Header from '../header';
+import Header from '../Header';
 
 import classes from './style.module.scss';
 

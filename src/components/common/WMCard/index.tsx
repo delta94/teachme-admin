@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Card } from 'antd';
 import { CardInterface } from 'antd/lib/card';
 
-import Header from '../header';
+import Header from '../Header';
 
 import classes from './style.module.scss';
 

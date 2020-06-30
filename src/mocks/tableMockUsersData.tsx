@@ -2,12 +2,13 @@ import { ColumnsType } from 'antd/lib/table';
 import StatusDot, { DotType } from '../components/common/StatusDot/index';
 import React from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 export const columns: ColumnsType<any> = [
   {
     title: 'User',
     dataIndex: 'user',
-    render: (text: string) => <a>{text}</a>,
+    render: (text: string) => <strong>{text}</strong>, // TODO: we should set the specific route to this user
   },
   {
     title: 'Course Name',
