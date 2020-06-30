@@ -31,7 +31,10 @@ export default function WMLineChart<T extends {}>({
           <XAxis dataKey={xKey} />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
-          {/* TODO: use https://recharts.org/en-US/examples/CustomContentOfTooltip */}
+          {/* TODO: 
+            after getting the SDK and integrating with time-filter
+            use https://recharts.org/en-US/examples/CustomContentOfTooltip 
+          */}
           <Tooltip />
           {lines.map((line, index) => {
             const { dataKey, stroke } = line;
