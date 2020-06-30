@@ -16,3 +16,11 @@
     height: 12px;
   }
 }
+
+.legend {
+  display: flex;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  letter-spacing: 0;
+  line-height: 14px;
+}

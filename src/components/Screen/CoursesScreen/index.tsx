@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import { coursesMockData } from '../../../constants/mocks/courses-mock';
+import courseCompletionChartMock from '../../../mocks/courseCompletionChartMock';
+import courseCompletionRateChartMock from '../../../mocks/courseCompletionRateChartMock';
 import { data as tableData, columns } from '../../../mocks/tableMockData';
 
 import WMCard from '../../common/WMCard';
@@ -27,9 +29,17 @@ export default function CoursesScreen(): ReactElement {
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
           <WMCard title={graph_2.title}>
-            <PieBarChart />
+            <PieBarChart
+              bars={courseCompletionChartMock.bars}
+              totalValue={courseCompletionChartMock.totalValue}
+            />
           </WMCard>
-          <WMCard title={graph_3.title} />
+          <WMCard title={graph_3.title}>
+            <PieBarChart
+              bars={courseCompletionRateChartMock.bars}
+              totalValue={courseCompletionRateChartMock.totalValue}
+            />
+          </WMCard>
         </div>
       </div>
       <WMCard

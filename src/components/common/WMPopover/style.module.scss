@@ -1,0 +1,23 @@
+.wm-popover {
+  &:global(.ant-popover):global(.ant-popover-placement-top) {
+    padding-bottom: 0;
+  }
+
+  :global(.ant-popover-content) {
+    transform: translateY(8px);
+
+    :global(.ant-popover-arrow) {
+      display: none;
+    }
+
+    :global(.ant-popover-inner) {
+      box-shadow: none;
+    }
+
+    :global(.ant-popover-inner-content) {
+      border: 1px solid var(--borderLightGray);
+      border-radius: 2px;
+      padding: 10px;
+    }
+  }
+}
