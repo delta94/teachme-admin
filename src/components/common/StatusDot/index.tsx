@@ -1,12 +1,23 @@
 import React from 'react';
-import classes from './style.module.scss';
 import cc from 'classcat';
+
+import classes from './style.module.scss';
 
 export enum DotType {
   Success = 'success',
   Failure = 'failure',
+  Custom = 'custom',
 }
 
-export default function StatusDot({ type }: { type: DotType }): JSX.Element {
-  return <span className={cc([classes.dot, classes[type]])} />;
+export default function StatusDot({
+  type,
+  dotColor,
+}: {
+  type: DotType;
+  dotColor?: string;
+}): JSX.Element {
+  const isCustomDotStatus = type === DotType.Custom && dotColor;
+  const customStyle = isCustomDotStatus ? { backgroundColor: dotColor } : undefined;
+
+  return <span style={customStyle} className={cc([classes.dot, classes[type]])} />;
 }
