@@ -11,7 +11,7 @@ import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import PieBarChart from '../../common/PieBarChart';
 import AvgCompletionTimeLegend from '../../common/AvgCompletionTimeLegend';
-import QuizCompletionRateLegend from '../../common/QuizCompletionRate Legend';
+import QuizCompletionRateLegend from '../../common/QuizCompletionRateLegend';
 
 import classes from './style.module.scss';
 
