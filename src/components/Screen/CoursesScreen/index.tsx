@@ -7,7 +7,7 @@ import { data as tableData, columns } from '../../../mocks/tableMockData';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
-import CoursesStatusChart from './CoursesStatusChart';
+import CourseStatusChart from './CourseStatusChart';
 
 import classes from './style.module.scss';
 
@@ -23,7 +23,7 @@ export default function CoursesScreen(): ReactElement {
       <ScreenHeader title={mainTitle} />
       <div className={classes.analytics}>
         <div className={cc([classes.graphs, classes['left-graphs']])}>
-          <CoursesStatusChart title={graph_1.title} />
+          <CourseStatusChart title={graph_1.title} />
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
           <WMCard title={graph_2.title} />
