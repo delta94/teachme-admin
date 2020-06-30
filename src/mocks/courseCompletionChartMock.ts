@@ -1,5 +1,7 @@
 const courseCompletionChartMock = {
   totalValue: 1000,
+  summaryLegend: '10:02',
+  summaryUnit: 'min',
   bars: [
     { value: 400, legend: '0:00 - 5:59', color: '#AFD7FF' },
     { value: 350, legend: '6:00 - 13:59', color: '#5FA8F3' },

@@ -12,6 +12,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import PieBarChart from '../../common/PieBarChart';
 import AvgCompletionTimeLegend from '../../common/AvgCompletionTimeLegend';
 import QuizCompletionRateLegend from '../../common/QuizCompletionRateLegend';
+import PieBarSummary from '../../common/PieBarSummary';
 
 import classes from './style.module.scss';
 
@@ -31,6 +32,10 @@ export default function CoursesScreen(): ReactElement {
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
           <WMCard title={graph_2.title}>
+            <PieBarSummary
+              value={courseCompletionChartMock.summaryLegend}
+              unit={` ${courseCompletionChartMock.summaryUnit}`}
+            />
             <PieBarChart
               bars={courseCompletionChartMock.bars}
               totalValue={courseCompletionChartMock.totalValue}
@@ -38,6 +43,11 @@ export default function CoursesScreen(): ReactElement {
             />
           </WMCard>
           <WMCard title={graph_3.title}>
+            <PieBarSummary
+              value={courseCompletionRateChartMock.summaryLegend}
+              unit={courseCompletionRateChartMock.summaryUnit}
+              text={` (${courseCompletionRateChartMock.bars[0].value} of ${courseCompletionRateChartMock.totalValue} users)`}
+            />
             <PieBarChart
               bars={courseCompletionRateChartMock.bars}
               totalValue={courseCompletionRateChartMock.totalValue}
