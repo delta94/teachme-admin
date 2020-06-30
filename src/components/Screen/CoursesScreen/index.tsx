@@ -4,9 +4,9 @@ import cc from 'classcat';
 import { coursesMockData } from '../../../constants/mocks/courses-mock';
 import { data as tableData, columns } from '../../../mocks/tableMockData';
 
+import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
-import ScreenHeader from '../../common/ScreenHeader';
 import CourseStatusChart from './CourseStatusChart';
 
 import classes from './style.module.scss';

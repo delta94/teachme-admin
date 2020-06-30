@@ -3,13 +3,12 @@ import cc from 'classcat';
 import { Divider, Tooltip } from 'antd';
 
 import { IconType } from '../../common/Icon/icon.interface';
-
+import Icon from '../../common/Icon';
 import WMButton from '../../common/WMButton';
+
 import SystemMenu from './SystemMenu';
 import EnvironmentMenu from './EnvironmentMenu';
 import UserMenu from './UserMenu';
-
-import Icon from '../../common/Icon';
 
 import classes from './style.module.scss';
 import Header from '../../common/Header';
