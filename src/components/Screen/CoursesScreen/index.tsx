@@ -9,9 +9,11 @@ import { data as tableData, columns } from '../../../mocks/tableMockData';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
+import PieBarChart from '../../common/PieBarChart';
+import AvgCompletionTimeLegend from '../../common/AvgCompletionTimeLegend';
+import QuizCompletionRateLegend from '../../common/QuizCompletionRate Legend';
 
 import classes from './style.module.scss';
-import PieBarChart from '../../common/PieBarChart';
 
 export default function CoursesScreen(): ReactElement {
   const {
@@ -32,12 +34,14 @@ export default function CoursesScreen(): ReactElement {
             <PieBarChart
               bars={courseCompletionChartMock.bars}
               totalValue={courseCompletionChartMock.totalValue}
+              legendContent={AvgCompletionTimeLegend}
             />
           </WMCard>
           <WMCard title={graph_3.title}>
             <PieBarChart
               bars={courseCompletionRateChartMock.bars}
               totalValue={courseCompletionRateChartMock.totalValue}
+              legendContent={QuizCompletionRateLegend}
             />
           </WMCard>
         </div>

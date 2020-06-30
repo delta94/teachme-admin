@@ -3,16 +3,10 @@ import React from 'react';
 import StatusDot, { DotType } from '../StatusDot';
 import WMPopover from '../WMPopover';
 
+import { ILegend, IPieBarLegend } from './pieBarChart.interface';
 import classes from './style.module.scss';
 
-function Legend({
-  color,
-  content,
-  ...otherProps
-}: {
-  color: string;
-  content: React.ReactElement | string;
-}): React.ReactElement {
+function Legend({ color, content, ...otherProps }: ILegend): React.ReactElement {
   return (
     <div className={classes['legend']} {...otherProps}>
       <StatusDot
@@ -30,11 +24,7 @@ export default function PieBarChartLegend({
   content,
   children,
   ...otherProps
-}: {
-  color: string;
-  content: React.ReactElement | string;
-  children: React.ReactElement;
-}): React.ReactElement {
+}: IPieBarLegend): React.ReactElement {
   return (
     <WMPopover content={<Legend color={color} content={content} />} {...otherProps}>
       {children}
