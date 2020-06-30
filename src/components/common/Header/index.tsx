@@ -15,7 +15,7 @@ export default function Header({
   title?: ReactElement | string;
   className?: string;
   titleClassName?: string;
-  children?: string | ReactElement | undefined;
+  children?: string | ReactElement;
   showTimeFilter?: boolean;
 }) {
   return (

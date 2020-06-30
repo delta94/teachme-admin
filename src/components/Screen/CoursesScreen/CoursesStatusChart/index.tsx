@@ -2,8 +2,7 @@ import React, { ReactElement } from 'react';
 import { LineChart, XAxis, YAxis, CartesianGrid, Line, Tooltip } from 'recharts';
 
 import WMCard from '../../../common/WMCard';
-import Header from '../../../common/Header';
-import StatusDot, { DotType } from '../../../common/StatusDot';
+import WMLegend from '../../../common/WMLegend';
 
 import classes from './style.module.scss';
 
@@ -21,27 +20,19 @@ export default function CoursesStatusChart({ title }: { title?: ReactElement | s
   return (
     <WMCard title={title}>
       <div className={classes['courses-status']}>
-        <div className={classes.legend}>
-          <div className="legend-1">
-            <Header className="legend-title">
-              <>
-                <StatusDot type={DotType.Custom} dotColor="#F2B529" />
-                <span>User Started</span>
-              </>
-            </Header>
-            <span className="legend-number">{new Intl.NumberFormat().format(2580)}</span>
-            <span className="legend-description">52% of users with TeachMe access</span>
-          </div>
-          <div className="legend-2">
-            <Header className="legend-title">
-              <>
-                <StatusDot type={DotType.Custom} dotColor="#8812FF" />
-                <span>User Completed</span>
-                <span className="legend-number">{new Intl.NumberFormat().format(2130)}</span>
-                <span className="legend-description">47% of users who started courses</span>
-              </>
-            </Header>
-          </div>
+        <div className={classes['chart-legend']}>
+          <WMLegend
+            title="User Started"
+            dotStatusColor="#F2B529"
+            description="52% of users with TeachMe access"
+            number={2580}
+          />
+          <WMLegend
+            title="User Completed"
+            dotStatusColor="#8812FF"
+            description="47% of users who started courses"
+            number={2130}
+          />
         </div>
         <LineChart
           width={600}
