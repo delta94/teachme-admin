@@ -9,6 +9,7 @@ import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 
 import classes from './style.module.scss';
+import PieBarChart from '../../common/PieBarChart';
 
 export default function CoursesScreen(): ReactElement {
   const {
@@ -25,7 +26,9 @@ export default function CoursesScreen(): ReactElement {
           <WMCard title={graph_1.title} />
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
-          <WMCard title={graph_2.title} />
+          <WMCard title={graph_2.title}>
+            <PieBarChart />
+          </WMCard>
           <WMCard title={graph_3.title} />
         </div>
       </div>
