@@ -4,9 +4,11 @@ import cc from 'classcat';
 import { coursesMockData } from '../../../constants/mocks/courses-mock';
 import { data as tableData, columns } from '../../../mocks/tableMockData';
 
-import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
+import ScreenHeader from '../../common/ScreenHeader';
+import CoursesTimeCompletionChart from '../../common/CourseTimeCompletionChart';
+import QuizCompletionRateChart from '../../common/QuizCompletionRateChart';
 
 import classes from './style.module.scss';
 
@@ -25,8 +27,12 @@ export default function CoursesScreen(): ReactElement {
           <WMCard title={graph_1.title} />
         </div>
         <div className={cc([classes.graphs, classes['right-graphs']])}>
-          <WMCard title={graph_2.title} />
-          <WMCard title={graph_3.title} />
+          <WMCard title={graph_2.title}>
+            <CoursesTimeCompletionChart />
+          </WMCard>
+          <WMCard title={graph_3.title}>
+            <QuizCompletionRateChart />
+          </WMCard>
         </div>
       </div>
       <WMCard
