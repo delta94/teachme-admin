@@ -25,7 +25,7 @@ export default function WMCard({
     <Card className={cc([classes['wm-card'], className])} {...otherProps}>
       {title && (
         <Header title={title}>
-          <div className={classes['card-subtitle']}>{subTitle}</div>
+          {subTitle && <div className={classes['card-subtitle']}>{subTitle}</div>}
         </Header>
       )}
       {children}
