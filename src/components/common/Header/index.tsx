@@ -17,7 +17,7 @@ export default function Header({
   titleClassName?: string;
   children?: string | ReactElement | undefined;
   showTimeFilter?: boolean;
-}) {
+}): ReactElement {
   return (
     <header className={cc([classes.header, className])}>
       {showTimeFilter && <TimeFilter />}
