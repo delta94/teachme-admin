@@ -5,10 +5,10 @@
   display: inline-block;
 
   &.failure {
-    background-color: red;
+    background-color: var(--red);
   }
 
   &.success {
-    background-color: green;
+    background-color: var(--green);
   }
 }
