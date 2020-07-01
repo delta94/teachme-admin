@@ -5,7 +5,7 @@ export interface ITableCell {
 }
 
 export interface IDashCell extends ITableCell {
-  value: any;
+  value?: number | React.ReactNode;
   children: React.ReactNode;
   isRightAligned?: boolean;
 }
@@ -39,5 +39,5 @@ export interface ITextArrayCell extends ITableCell {
 }
 
 export interface ITextCell extends ITableCell {
-  value: string | React.ReactNode;
+  value: React.ReactNode;
 }
