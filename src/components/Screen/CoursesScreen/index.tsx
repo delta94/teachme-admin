@@ -37,7 +37,7 @@ export default function CoursesScreen(): ReactElement {
       </div>
       <WMCard
         title={`${tableData.length} ${CoursesTable.title}`}
-        subTitle="Courses will appear to your users in the order below."
+        subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
         <WMTable data={tableData} columns={columns} />
       </WMCard>

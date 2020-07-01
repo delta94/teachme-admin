@@ -44,8 +44,22 @@ html {
   // used for dropdown
   --borderLightGray: #e1e6e9;
 
+  // colors for warnings, tags, etc.
+  --red: #fc4040;
+  --green: #41c378;
+  --orange: #e9a11c;
+  --gray: #a7b3ba;
+  // light versions of above colors
+  --green-light: #ecfdf3;
+  --orange-light: #fff3dc;
+  --gray-light: #f5f5f5;
+
   // component colors
   --pie-bar-char-background-color: #dfe1e2;
+  // table
+  --table-header-color: #78868f;
+  --table-border-color: #dcdcdc;
+  --table-row-hover-color: #f7fbff;
 
   // fonts
   --font-primary: 'Roboto';

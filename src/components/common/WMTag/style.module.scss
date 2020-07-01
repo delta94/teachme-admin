@@ -1,0 +1,28 @@
+.wm-tag {
+  &:global(.ant-tag) {
+    border: none;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+  }
+
+  &.wm-tag {
+    color: var(--gray);
+    background-color: var(--gray-light);
+
+    &-green {
+      color: var(--green);
+      background-color: var(--green-light);
+    }
+
+    &-orange {
+      color: var(--orange);
+      background-color: var(--orange-light);
+    }
+
+    &-gray {
+      color: var(--gray);
+      background-color: var(--gray-light);
+    }
+  }
+}
