@@ -24,6 +24,11 @@ export interface IStatusDotCell extends ITableCell {
   passingValue: number;
 }
 
+export interface ISubtextCell extends ITableCell {
+  value: string;
+  subtext: string;
+}
+
 export interface ITagCell extends ITableCell {
   value: string;
   color: string;
@@ -34,5 +39,5 @@ export interface ITextArrayCell extends ITableCell {
 }
 
 export interface ITextCell extends ITableCell {
-  value: string;
+  value: string | React.ReactNode;
 }

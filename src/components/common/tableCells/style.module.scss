@@ -16,6 +16,18 @@ a.link-cell {
   }
 }
 
+.subtext-cell {
+  .text {
+    font-weight: 500;
+  }
+
+  .subtext {
+    color: var(--neutral500);
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
 .table-cell-dot {
   margin-right: 4px;
 }
