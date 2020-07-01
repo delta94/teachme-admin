@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import mix from 'mix-css-color';
 
 import PieBarChartLegend from './Legend';
-import { IPiebarChart } from './pieBarChart.interface';
+import { IPieBarChart } from './pieBarChart.interface';
 
 import classes from './style.module.scss';
 
@@ -23,7 +23,7 @@ export default function PieBarChart({
   colorStart = '#006af7',
   colorEnd = '#afd7ff',
   ...otherProps
-}: IPiebarChart): React.ReactElement {
+}: IPieBarChart): React.ReactElement {
   const generatedColors = useRef(generateColors(colorStart, colorEnd, bars.length));
 
   return (

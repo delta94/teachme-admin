@@ -6,7 +6,7 @@ export interface IBar {
   color?: string;
 }
 
-export interface IPiebarChart {
+export interface IPieBarChart {
   height?: number | string;
   width?: number | string;
   totalValue: number;
