@@ -1,5 +1,6 @@
-// temporary solution to override antd component styles
-// TODO: create a wrapper for antd's component and use 'wm-' prefix
+/** 
+* Create a wrapper for antd's component and use 'wm-' prefix 
+* see examples in components/common - WMCard / WMButton / WMDropdown
+*/
 @import './wm-btn.scss';
 @import './wm-dropdown.scss';
-@import './wm-range-picker.scss';

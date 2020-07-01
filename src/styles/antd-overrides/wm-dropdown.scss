@@ -1,22 +1,9 @@
 .wm-dropdown-menu {
-  top: 10px;
-
   li {
     position: relative;
 
     &.selected-item {
       color: var(--primary);
-    }
-  }
-
-  &.user-menu {
-    li:first-child:after {
-      @include horizontalSeparator;
-      position: absolute;
-      bottom: 0;
-      right: 5px;
-      left: 5px;
-      width: calc(100% - 10px);
     }
   }
 }
