@@ -2,7 +2,6 @@ import { ColumnsType } from 'antd/lib/table';
 import StatusDot, { DotType } from '../components/common/StatusDot/index';
 import React from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 
 export const columns: ColumnsType<any> = [
   {

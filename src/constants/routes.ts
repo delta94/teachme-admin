@@ -17,6 +17,11 @@ export const COURSES_ROUTE = {
   title: coursesMockData.title,
 };
 
+export const COURSE_ROUTE = {
+  id: 'course',
+  path: '/course/:id',
+};
+
 export const USERS_ROUTE = {
   id: 'users',
   iconType: IconType.SidebarUsers,
