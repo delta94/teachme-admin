@@ -1,0 +1,25 @@
+.number-cell {
+  font-variant-numeric: tabular-nums;
+}
+
+a.link-cell {
+  color: var(--primary);
+  font-weight: bold;
+  cursor: pointer;
+
+  &:visited {
+    color: var(--primary);
+  }
+
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+.table-cell-dot {
+  margin-right: 4px;
+}
+
+.bold {
+  font-weight: 500;
+}
