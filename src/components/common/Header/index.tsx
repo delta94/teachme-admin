@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactNode } from 'react';
 import cc from 'classcat';
 
 import TimeFilter from '../filters/TimeFilter';
@@ -12,10 +12,10 @@ export default function Header({
   children,
   showTimeFilter,
 }: {
-  title?: ReactElement | string;
+  title?: ReactNode;
   className?: string;
   titleClassName?: string;
-  children?: string | ReactElement;
+  children?: ReactNode;
   showTimeFilter?: boolean;
 }) {
   return (

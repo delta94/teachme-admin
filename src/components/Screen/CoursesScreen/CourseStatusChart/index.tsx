@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactNode } from 'react';
 
 import WMCard from '../../../common/WMCard';
 import WMLegend from '../../../common/WMLegend';
@@ -42,7 +42,7 @@ const LegendContent = ({ number, description }: { number: number; description?: 
   );
 };
 
-export default function CourseStatusChart({ title }: { title?: ReactElement | string }) {
+export default function CourseStatusChart({ title }: { title?: ReactNode }) {
   return (
     <WMCard title={title}>
       <div className={classes['courses-status']}>

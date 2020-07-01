@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 import { Card } from 'antd';
 import { CardProps } from 'antd/lib/card';
@@ -8,10 +8,10 @@ import Header from '../Header';
 import classes from './style.module.scss';
 
 export interface IWMCardProps extends CardProps {
-  title?: ReactElement | string;
+  title?: ReactNode;
   className?: string;
-  subTitle?: ReactElement | string;
-  children?: React.ReactNode;
+  subTitle?: ReactNode;
+  children?: ReactNode;
 }
 
 export default function WMCard({

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactNode } from 'react';
 import cc from 'classcat';
 
 import Header from '../Header';
@@ -10,7 +10,7 @@ export interface IWMLegend {
   className?: string;
   title: string;
   dotStatusColor: string;
-  children?: string | ReactElement;
+  children?: ReactNode;
 }
 
 export default function WMLegend({
@@ -23,13 +23,11 @@ export default function WMLegend({
     <div className={cc([classes['legend'], className])}>
       <Header className={classes['legend-header']}>
         <>
-          {dotStatusColor && (
-            <StatusDot
-              className={classes['legend-dot-status']}
-              type={DotType.Custom}
-              dotColor={dotStatusColor}
-            />
-          )}
+          <StatusDot
+            className={classes['legend-dot-status']}
+            type={DotType.Custom}
+            dotColor={dotStatusColor}
+          />
           <span className={classes['legend-title']}>{title}</span>
         </>
       </Header>
