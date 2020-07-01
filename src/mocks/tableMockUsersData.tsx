@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable react/display-name */
 import { ColumnsType } from 'antd/lib/table';
-import StatusDot, { DotType } from '../components/common/StatusDot/index';
 import React from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import StatusDot, { DotType } from '../components/common/StatusDot/index';
 
 export const columns: ColumnsType<any> = [
   {
@@ -19,7 +20,7 @@ export const columns: ColumnsType<any> = [
     title: 'Started',
     dataIndex: 'started',
     render: (text: Date) => {
-      let range = moment(`${text}`).fromNow();
+      const range = moment(`${text}`).fromNow();
       return (
         <div>
           <div>{range}</div>
@@ -32,7 +33,7 @@ export const columns: ColumnsType<any> = [
     title: 'Completed',
     dataIndex: 'completed',
     render: (text: Date) => {
-      let range = moment(`${text}`).fromNow();
+      const range = moment(`${text}`).fromNow();
       return (
         <div>
           <div>{text && range}</div>
@@ -44,31 +45,22 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Time to Complete',
     dataIndex: 'timeToComplete',
-    render: (text: string) => {
-      // var a = moment([2007, 0, 28]);
-      // var b = moment([2007, 0, 29]);
-      // a.from(b);
-      return <span> {text ? text : '⊘ Did not complete'}</span>;
-    },
+    render: (text: string) => <span> {text ? text : '⊘ Did not complete'}</span>,
   },
   {
     title: 'Quiz Result',
     dataIndex: 'quizResult',
-    render: (text: number) => {
-      return (
-        <>
-          {text && <StatusDot type={text > 65 ? DotType.Success : DotType.Failure} />}
-          <span> {text ? text : '⊘ Did not submit'}</span>
-        </>
-      );
-    },
+    render: (text: number) => (
+      <>
+        {text && <StatusDot type={text > 65 ? DotType.Success : DotType.Failure} />}
+        <span> {text ? text : '⊘ Did not submit'}</span>
+      </>
+    ),
   },
   {
     title: 'No. of quiz attempts',
     dataIndex: 'noOfQuizAttempts',
-    render: (text: number) => {
-      return <span> {text ? text : '⊘ Did not complete'}</span>;
-    },
+    render: (text: number) => <span> {text ? text : '⊘ Did not complete'}</span>,
   },
 ];
 
