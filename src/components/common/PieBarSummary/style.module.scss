@@ -1,0 +1,25 @@
+.pie-bar-summary {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 18px;
+
+  .value {
+    font-size: 28px;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+
+  .unit {
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+    white-space: pre;
+  }
+
+  .text {
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 14px;
+    white-space: pre;
+  }
+}

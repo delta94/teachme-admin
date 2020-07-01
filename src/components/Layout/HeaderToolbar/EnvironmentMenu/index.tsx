@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react';
-
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
@@ -11,7 +10,7 @@ const environments: IWMDropdownOption[] = [
   { id: 1, text: 'Test' },
 ];
 
-export default function EnvironmentMenu(): ReactElement {
+export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
   const [selectedEnvironment, setSelectedEnvironment] = useState(environments[0]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
@@ -21,7 +20,7 @@ export default function EnvironmentMenu(): ReactElement {
 
   return (
     <WMDropdown
-      className="environment-menu"
+      className={className}
       options={environments}
       selected={selectedEnvironment}
       onSelectedChange={handleMenuClick}

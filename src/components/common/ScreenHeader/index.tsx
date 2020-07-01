@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactNode } from 'react';
 
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
@@ -10,9 +10,9 @@ export default function ScreenHeader({
   children,
   hideTimeFilter,
 }: {
-  title: ReactElement | string;
+  title: ReactNode;
   hideTimeFilter?: boolean;
-  children?: ReactElement | undefined;
+  children?: ReactNode;
 }) {
   return (
     <Header

@@ -25,7 +25,7 @@ export default function TimeFilter({ className = '' }: { className?: string }): 
       <span className="label">Time: </span>
       <RangePicker
         className={classes['wm-range-picker']}
-        dropdownClassName="wm-range-picker-dropdown"
+        dropdownClassName={classes['wm-range-picker-dropdown']}
         bordered={false}
         ranges={{
           // TODO: add here the other options
