@@ -6,8 +6,6 @@ import Icon from '../../../common/Icon';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
-import classes from '../style.module.scss';
-
 // TODO: replace this mock with SDK's data
 const options: IWMDropdownOption[] = [
   { id: 0, text: 'Dan@walkme.com' },
@@ -15,14 +13,14 @@ const options: IWMDropdownOption[] = [
   { id: 2, text: 'Log Out' },
 ];
 
-export default function UserMenu(): ReactElement {
+export default function UserMenu({ className }: { className?: string }): ReactElement {
   const handleMenuClick = (selected: IWMDropdownOption) => {
     message.info(`User clicked on ${selected.text}`);
   };
 
   return (
-    <WMDropdown className="user-menu" options={options} onSelectedChange={handleMenuClick}>
-      <WMButton className={classes.user} type="link" icon={<Icon type={IconType.HeaderAvatar} />} />
+    <WMDropdown className={className} options={options} onSelectedChange={handleMenuClick}>
+      <WMButton type="link" icon={<Icon type={IconType.HeaderAvatar} />} />
     </WMDropdown>
   );
 }

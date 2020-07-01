@@ -11,7 +11,7 @@ const systems: IWMDropdownOption[] = [
   { id: 2, text: 'Option 3' },
 ];
 
-export default function SystemMenu(): ReactElement {
+export default function SystemMenu({ className }: { className?: string }): ReactElement {
   const [selectedSystem, setSelectedSystem] = useState(systems[0]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
@@ -21,7 +21,7 @@ export default function SystemMenu(): ReactElement {
 
   return (
     <WMDropdown
-      className="system-menu"
+      className={className}
       options={systems}
       selected={selectedSystem}
       onSelectedChange={handleMenuClick}

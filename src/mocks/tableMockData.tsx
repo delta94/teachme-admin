@@ -1,58 +1,80 @@
 import React from 'react';
-import { Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { Link } from 'react-router-dom';
+
+import TagCell from '../components/common/tableCells/TagCell';
+import LinkCell from '../components/common/tableCells/LinkCell';
+import TextArrayCell from '../components/common/tableCells/TextArrayCell';
+import DashCell from '../components/common/tableCells/DashCell';
+import NumberCell from '../components/common/tableCells/NumberCell';
+import StatusDotCell from '../components/common/tableCells/StatusDotCell';
+import { WMTagColor } from '../components/common/WMTag';
 
 const labelColors: { [key: string]: string } = {
-  published: 'green',
-  draft: 'orange',
-  archive: 'gray',
+  published: WMTagColor.Green,
+  modified: WMTagColor.Green,
+  draft: WMTagColor.Orange,
+  archived: WMTagColor.Gray,
+  undefined: WMTagColor.Gray,
 };
-const renderDash = (item: string) => item ?? `—`;
-const renderTextArray = (arr: Array<string>) => arr.join(', ');
 
 export const columns: ColumnsType<any> = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: (text: string) => <Link to="/single-course">{text}</Link>, // TODO: we should set the specific route to this course
+    render: (value: string) => <LinkCell value={value} to="/single-course" />, // TODO: we should set the specific route to this course
   },
   {
     title: 'Production Status',
     dataIndex: 'productionStatus',
-    render: (tag: string) => {
-      let color: string = labelColors[tag];
-      return (
-        <Tag color={color} key={tag}>
-          {tag.toUpperCase()}
-        </Tag>
-      );
+    render: (value: string) => {
+      let color: string = labelColors[value];
+      return <TagCell value={value} color={color} key={value} />;
     },
   },
   {
     title: 'Segment',
     dataIndex: 'segment',
-    render: renderTextArray,
+    render: (value: Array<string>) => <TextArrayCell value={value} />,
   },
   {
     title: 'Users Started',
     dataIndex: 'usersStarted',
-    render: renderDash,
+    align: 'right',
+    render: (value: string) => (
+      <DashCell value={value}>
+        <NumberCell value={value} />
+      </DashCell>
+    ),
   },
   {
     title: 'Users Completed',
     dataIndex: 'usersCompleted',
-    render: renderDash,
+    align: 'right',
+    render: (value: string) => (
+      <DashCell value={value}>
+        <NumberCell value={value} />
+      </DashCell>
+    ),
   },
   {
     title: 'Avg. Quiz Score',
     dataIndex: 'avgQuizScore',
-    render: renderDash,
+    align: 'right',
+    render: (value: number | string) => (
+      <DashCell value={value}>
+        <StatusDotCell value={value} passingValue={51} />
+      </DashCell>
+    ),
   },
   {
     title: 'Avg. Quiz attempts',
     dataIndex: 'avgQuizAttempts',
-    render: renderDash,
+    align: 'right',
+    render: (value: string) => (
+      <DashCell value={value}>
+        <NumberCell value={value} />
+      </DashCell>
+    ),
   },
 ];
 
