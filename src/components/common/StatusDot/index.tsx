@@ -17,7 +17,7 @@ export default function StatusDot({
   type: DotType;
   dotColor?: string;
   className?: string;
-}): JSX.Element {
+}): React.ReactElement {
   const isCustomDotStatus = type === DotType.Custom && dotColor;
   const customStyle = isCustomDotStatus ? { backgroundColor: dotColor } : undefined;
 
