@@ -1,12 +1,11 @@
+import { IconType } from '../components/common/Icon/icon.interface';
 import { coursesMockData } from './mocks/courses-mock';
 import { usersMockData } from './mocks/users-mock';
-
-import { IconType } from '../components/common/Icon/icon.interface';
 
 export interface IRoute {
   id: string;
   path: string;
-  title: string;
+  title?: string;
   iconType?: IconType;
 }
 
@@ -24,4 +23,10 @@ export const USERS_ROUTE = {
   title: usersMockData.title,
 };
 
+export const NEWCOURSE_ROUTE = {
+  id: 'new-course',
+  path: '/new-course',
+};
+
 export const sidebarRoutes = [COURSES_ROUTE, USERS_ROUTE];
+export const newCourse = [NEWCOURSE_ROUTE];

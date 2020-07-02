@@ -1,4 +1,7 @@
 .sidebar {
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+
   --navigationIconSize: 23px;
 
   width: var(--sidebarWidth);
