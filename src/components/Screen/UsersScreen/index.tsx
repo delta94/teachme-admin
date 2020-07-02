@@ -8,6 +8,10 @@ import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import DropdownFilter from '../../common/filters/DropdownFilter';
 import { IWMDropdownOption } from '../../common/WMDropdown';
+import SearchFilter from '../../common/filters/SearchFilter';
+import ExportButton from '../../common/buttons/ExportButton';
+
+import classes from './style.module.scss';
 
 interface IUserData {
   key: string;
@@ -51,9 +55,15 @@ export default function UsersScreen(): ReactElement {
       <ScreenHeader title={mainTitle} />
       <WMCard title={`${tableData.length} ${usersTable.title}`}>
         <WMTable data={tableData as Array<IUserData>} columns={columns}>
-          <DropdownFilter label="Course Name" options={courses} />
-          <DropdownFilter label="Completed" options={statuses} />
-          <DropdownFilter label="Quiz Results" options={results} />
+          <div className={classes['controls-wrapper']}>
+            <DropdownFilter label="Course Name" options={courses} />
+            <DropdownFilter label="Completed" options={statuses} />
+            <DropdownFilter label="Quiz Results" options={results} />
+          </div>
+          <div className={classes['controls-wrapper']}>
+            <ExportButton />
+            <SearchFilter placeholder="Search users" />
+          </div>
         </WMTable>
       </WMCard>
     </>
