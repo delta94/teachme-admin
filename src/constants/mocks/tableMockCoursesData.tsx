@@ -1,13 +1,13 @@
 import React from 'react';
 import { ColumnsType } from 'antd/lib/table';
 
-import TagCell from '../components/common/tableCells/TagCell';
-import LinkCell from '../components/common/tableCells/LinkCell';
-import TextArrayCell from '../components/common/tableCells/TextArrayCell';
-import DashCell from '../components/common/tableCells/DashCell';
-import NumberCell from '../components/common/tableCells/NumberCell';
-import StatusDotCell from '../components/common/tableCells/StatusDotCell';
-import { WMTagColor } from '../components/common/WMTag';
+import TagCell from '../../components/common/tableCells/TagCell';
+import LinkCell from '../../components/common/tableCells/LinkCell';
+import TextArrayCell from '../../components/common/tableCells/TextArrayCell';
+import DashCell from '../../components/common/tableCells/DashCell';
+import NumberCell from '../../components/common/tableCells/NumberCell';
+import StatusDotCell from '../../components/common/tableCells/StatusDotCell';
+import { WMTagColor } from '../../components/common/WMTag';
 
 const labelColors: { [key: string]: string } = {
   published: WMTagColor.Green,

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import courseCompletionChartMock from '../../../mocks/courseCompletionChartMock';
+import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 
 import PieBarChart from '../../common/PieBarChart';
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';

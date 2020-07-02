@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import { courseMockData } from '../../../constants/mocks/course-screen';
-import { data as tableData, columns } from '../../../mocks/tableMockData';
+import { data as tableData, columns } from '../../../constants/mocks/tableMockCoursesData';
 
 import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
