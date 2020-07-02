@@ -1,0 +1,15 @@
+.legend {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+
+  &-header {
+    font-size: 12px;
+    color: var(--neutral900);
+
+    .legend-dot-status {
+      margin-left: -20px;
+      margin-right: 12px;
+    }
+  }
+}

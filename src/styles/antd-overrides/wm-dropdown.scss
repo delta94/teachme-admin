@@ -1,6 +1,4 @@
 .wm-dropdown-menu {
-  top: 10px;
-
   li {
     position: relative;
 
@@ -10,8 +8,9 @@
   }
 
   &.user-menu {
-    li:first-child:after {
+    li:first-child::after {
       @include horizontalSeparator;
+
       position: absolute;
       bottom: 0;
       right: 5px;

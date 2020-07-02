@@ -56,3 +56,20 @@
     }
   }
 }
+
+.header-toolbar-menu {
+  top: 18px;
+
+  &.user-menu {
+    top: 10px;
+
+    > *:first-child:after {
+      @include horizontalSeparator;
+      position: absolute;
+      bottom: 0;
+      right: 5px;
+      left: 5px;
+      width: calc(100% - 10px);
+    }
+  }
+}

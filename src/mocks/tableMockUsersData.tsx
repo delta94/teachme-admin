@@ -1,73 +1,75 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable react/display-name */
 import { ColumnsType } from 'antd/lib/table';
-import StatusDot, { DotType } from '../components/common/StatusDot/index';
 import React from 'react';
 import moment from 'moment';
+
+import TextCell from '../components/common/tableCells/TextCell';
+import WarningCell from '../components/common/tableCells/WarningCell';
+import NumberCell from '../components/common/tableCells/NumberCell';
+import StatusDotCell from '../components/common/tableCells/StatusDotCell';
+import SubtextCell from '../components/common/tableCells/SubtextCell';
+
+const tableDateFormat = 'MMM. D, YYYY';
 
 export const columns: ColumnsType<any> = [
   {
     title: 'User',
     dataIndex: 'user',
-    render: (text: string) => <a>{text}</a>,
+    render: (value: string) => <TextCell value={<b>{value}</b>} />,
   },
   {
     title: 'Course Name',
     dataIndex: 'courseName',
-    render: (text: string) => <span> {text}</span>,
+    render: (value: string) => <TextCell value={value} />,
   },
   {
     title: 'Started',
     dataIndex: 'started',
-    render: (text: Date) => {
-      let range = moment(`${text}`).fromNow();
-      return (
-        <div>
-          <div>{range}</div>
-          <div> {text}</div>
-        </div>
-      );
+    render: (value: Date) => {
+      const range = moment(value).fromNow();
+      const formattedDate = moment(value).format(tableDateFormat);
+
+      return <SubtextCell value={range} subtext={formattedDate} />;
     },
   },
   {
     title: 'Completed',
     dataIndex: 'completed',
-    render: (text: Date) => {
-      let range = moment(`${text}`).fromNow();
-      return (
-        <div>
-          <div>{text && range}</div>
-          <div> {text ? text : '⊘ Did not complete'}</div>
-        </div>
+    render: (value: Date) => {
+      const range = moment(value).fromNow();
+      const formattedDate = moment(value).format(tableDateFormat);
+
+      return value ? (
+        <SubtextCell value={range} subtext={formattedDate} />
+      ) : (
+        <WarningCell value="Did not complete" />
       );
     },
   },
   {
     title: 'Time to Complete',
     dataIndex: 'timeToComplete',
-    render: (text: string) => {
-      // var a = moment([2007, 0, 28]);
-      // var b = moment([2007, 0, 29]);
-      // a.from(b);
-      return <span> {text ? text : '⊘ Did not complete'}</span>;
-    },
+    render: (value: string) =>
+      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
   },
   {
     title: 'Quiz Result',
     dataIndex: 'quizResult',
-    render: (text: number) => {
-      return (
-        <>
-          {text && <StatusDot type={text > 65 ? DotType.Success : DotType.Failure} />}
-          <span> {text ? text : '⊘ Did not submit'}</span>
-        </>
-      );
-    },
+    align: 'right',
+    render: (value: number) =>
+      value ? (
+        <StatusDotCell value={value} passingValue={66} />
+      ) : (
+        <WarningCell value="Did not submit" />
+      ),
   },
   {
     title: 'No. of quiz attempts',
     dataIndex: 'noOfQuizAttempts',
-    render: (text: number) => {
-      return <span> {text ? text : '⊘ Did not complete'}</span>;
-    },
+    align: 'right',
+    render: (value: string) =>
+      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
   },
 ];
 
