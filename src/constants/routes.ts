@@ -19,7 +19,7 @@ export const COURSES_ROUTE = {
 
 export const COURSE_ROUTE = {
   id: 'course',
-  path: '/course/:id',
+  path: '/course/:courseId',
 };
 
 export const USERS_ROUTE = {

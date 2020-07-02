@@ -6,7 +6,7 @@ import { data as tableData, columns } from '../../../constants/mocks/tableMockCo
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
-import CourseStatusChart from './CourseStatusChart';
+import CourseStatusChart from '../../common/CourseStatusChart';
 import ScreenHeader from '../../common/ScreenHeader';
 import CoursesTimeCompletionChart from '../../common/CourseTimeCompletionChart';
 import QuizCompletionRateChart from '../../common/QuizCompletionRateChart';

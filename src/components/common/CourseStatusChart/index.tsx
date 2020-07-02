@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 
-import WMCard from '../../../common/WMCard';
-import WMLegend from '../../../common/WMLegend';
-import { WMLineChart } from '../../../common/charts';
+import WMCard from '../WMCard';
+import WMLegend from '../WMLegend';
+import { WMLineChart } from '../charts';
 
 import classes from './style.module.scss';
 

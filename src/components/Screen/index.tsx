@@ -12,15 +12,9 @@ export default function Screen(): ReactElement {
   return (
     <section className={classes.screen}>
       <Switch>
-        <Route path={COURSES_ROUTE.path}>
-          <CoursesScreen />
-        </Route>
-        <Route path={COURSE_ROUTE.path}>
-          <CourseScreen />
-        </Route>
-        <Route path={USERS_ROUTE.path}>
-          <UsersScreen />
-        </Route>
+        <Route path={COURSES_ROUTE.path} component={CoursesScreen} />
+        <Route path={COURSE_ROUTE.path} component={CourseScreen} />
+        <Route path={USERS_ROUTE.path} component={UsersScreen} />
         <Route path="/">
           <Redirect to={COURSES_ROUTE.path} />
         </Route>

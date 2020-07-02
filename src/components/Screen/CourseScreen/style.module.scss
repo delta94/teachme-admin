@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: stretch;
   justify-items: stretch;
-  height: 286px;
+  height: auto;
   margin-bottom: 38px;
 
   .graphs {
@@ -12,27 +12,26 @@
 
     &.left-graphs {
       flex: 2;
-      height: 100%;
+      height: auto;
       margin-right: 20px;
-    }
 
-    &.left-graphs > * {
-      height: 100%;
+      > * {
+        height: 100%;
+      }
     }
 
     &.right-graphs {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100%;
-    }
 
-    &.right-graphs > * {
-      flex: 1;
-    }
+      > * {
+        flex: 1;
 
-    &.right-graphs > *:first-child {
-      margin-bottom: 20px;
+        &:first-child {
+          margin-bottom: 20px;
+        }
+      }
     }
   }
 }
