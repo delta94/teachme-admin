@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import cc from 'classcat';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { courseMockData } from '../../../constants/mocks/course-screen';
 import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
@@ -7,11 +7,9 @@ import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
 import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
 
-import classes from './style.module.scss';
-import { RouteComponentProps } from 'react-router-dom';
-import CourseStatusChart from '../../common/CourseStatusChart';
-import CoursesTimeCompletionChart from '../../common/CourseTimeCompletionChart';
-import QuizCompletionRateChart from '../../common/QuizCompletionRateChart';
+import AnalyticsCharts from '../../common/AnalyticsCharts';
+import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
+import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
 
 type TParams = { courseId: string };
 
@@ -22,21 +20,16 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
   const { courseId } = match.params;
   const [course, setCourse] = useState(null as any);
 
-  const {
-    analytics: { graph_1, graph_2, graph_3 },
-  } = courseMockData;
+  const { analytics } = courseMockData;
 
   useEffect(() => {
     setCourse(null);
 
-    // Using setTimeout for set fadeInUp animation
     const timer = setTimeout(() => {
       const selectedCourse = getCourseById({
         courses,
         id: courseId,
       });
-
-      console.log('selectedCourse ', selectedCourse);
 
       if (selectedCourse) {
         setCourse(selectedCourse);
@@ -50,20 +43,11 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
     course && (
       <>
         <ScreenHeader title={course.name.value} />
-        <div className={classes.analytics}>
-          <div className={cc([classes.graphs, classes['left-graphs']])}>
-            <CourseStatusChart title={graph_1.title} />
-          </div>
-          <div className={cc([classes.graphs, classes['right-graphs']])}>
-            <WMCard title={graph_2.title}>
-              <CoursesTimeCompletionChart />
-            </WMCard>
-            <WMCard title={graph_3.title}>
-              <QuizCompletionRateChart />
-            </WMCard>
-          </div>
-        </div>
-
+        <AnalyticsCharts
+          data={analytics}
+          courseTimeCompletionData={courseCompletionChartMock}
+          quizCompletionRateData={courseCompletionRateChartMock}
+        />
         <WMCard subTitle="Courses will appear to your users in the order below."></WMCard>
       </>
     )

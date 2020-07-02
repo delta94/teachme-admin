@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import cc from 'classcat';
@@ -10,10 +10,6 @@ import classes from './style.module.scss';
 
 export default function Navigation({ routes }: { routes: IRoute[] }): ReactElement {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    console.log('pathname ', pathname);
-  }, [pathname]);
 
   return (
     <nav className={classes.navigation}>

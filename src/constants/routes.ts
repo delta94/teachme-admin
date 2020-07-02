@@ -33,5 +33,3 @@ export const USERS_ROUTE = {
   matches: ['users'],
   title: usersMockData.title,
 };
-
-export const sidebarRoutes = [COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE];
