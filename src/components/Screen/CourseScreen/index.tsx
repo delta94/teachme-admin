@@ -6,7 +6,6 @@ import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
 
 import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
-import WMTable from '../../common/WMTable';
 
 import classes from './style.module.scss';
 import { RouteComponentProps } from 'react-router-dom';
@@ -24,9 +23,7 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
   const [course, setCourse] = useState(null as any);
 
   const {
-    title: mainTitle,
     analytics: { graph_1, graph_2, graph_3 },
-    CoursesTable,
   } = courseMockData;
 
   useEffect(() => {
@@ -36,7 +33,7 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
     const timer = setTimeout(() => {
       const selectedCourse = getCourseById({
         courses,
-        id: match.params.courseId,
+        id: courseId,
       });
 
       console.log('selectedCourse ', selectedCourse);

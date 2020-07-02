@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import cc from 'classcat';
@@ -18,25 +18,27 @@ export default function Navigation({ routes }: { routes: IRoute[] }): ReactEleme
   return (
     <nav className={classes.navigation}>
       <ul>
-        {routes.map((route) => {
-          const { id, title, path, iconType, matches, hideInSidebar } = route;
+        {routes
+          .filter((route) => !route.hideInSidebar && route)
+          .map(
+            (route): ReactNode => {
+              const { id, title, path, iconType, matches } = route;
 
-          const isActive = matches && matches.some((match) => pathname.indexOf(match) > -1);
+              const isActive = matches && matches.some((match) => pathname.indexOf(match) > -1);
 
-          if (!hideInSidebar) {
-            return (
-              <li
-                key={`sidebar-nav-item-${id}`}
-                className={cc([classes['nav-item'], { [classes.active]: isActive }])}
-              >
-                <Link to={path}>
-                  {iconType && <Icon type={iconType} />}
-                  <span className={classes.text}>{title}</span>
-                </Link>
-              </li>
-            );
-          }
-        })}
+              return (
+                <li
+                  key={`sidebar-nav-item-${id}`}
+                  className={cc([classes['nav-item'], { [classes.active]: isActive }])}
+                >
+                  <Link to={path}>
+                    {iconType && <Icon type={iconType} />}
+                    <span className={classes.text}>{title}</span>
+                  </Link>
+                </li>
+              );
+            },
+          )}
       </ul>
     </nav>
   );
