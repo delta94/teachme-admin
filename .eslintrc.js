@@ -56,7 +56,7 @@ module.exports = {
     'react/prefer-stateless-function': 1,
     'react/require-default-props': 0,
     'react/require-extension': 0,
-    'react/self-closing-comp': 0,
+    'react/self-closing-comp': [2, { component: true, html: true }],
     'react/sort-comp': 0,
     'react/static-property-placement': 0,
     'react/state-in-constructor': 0,

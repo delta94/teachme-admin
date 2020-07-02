@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable react/display-name */
 import { ColumnsType } from 'antd/lib/table';
 import React from 'react';
 import moment from 'moment';
