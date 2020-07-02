@@ -1,4 +1,9 @@
 .wm-table {
+  .toolbar {
+    display: flex;
+    margin: 30px 0;
+  }
+
   th:global(.ant-table-cell) {
     background-color: transparent;
     color: var(--table-header-color);
