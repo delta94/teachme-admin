@@ -1,6 +1,7 @@
 import walkme from '@walkme/editor-sdk';
-import { UICourse, mapCourse } from './course';
-import { WalkMeDataCourse } from '@walkme/types';
+import { UICourse, mapCourse } from './course/overview';
+import { WalkMeDataCourse, CourseItem, Course, BuildCourse } from '@walkme/types';
+import * as courses from './course/details';
 
 declare global {
   interface Window {
@@ -34,7 +35,9 @@ export async function getCourseList(environmentId: number): Promise<Array<UICour
   return uiCourses.filter(Boolean);
 }
 
-export async function getCourse() {}
+export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
+  return courses.getCourseData(id, environmentId);
+}
 
 export async function getItemsList() {}
 
@@ -46,4 +49,4 @@ export async function getSystems() {}
 
 export * from '@walkme/editor-sdk';
 
-window.test = { getCourseList };
+window.test = { getCourseList, getCourse };

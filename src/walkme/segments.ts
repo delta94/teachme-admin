@@ -1,20 +1,12 @@
 import { WalkMeDataTag, WalkMeLink } from '@walkme/types';
 import walkme, { TYPE_NAMES, TYPE_IDS } from '@walkme/editor-sdk';
+import { getData } from './data';
 
-let segments: Array<WalkMeDataTag> = [];
-let initializing: Promise<any>;
-
-async function init(environment_id: number) {
-  if (!initializing) {
-    initializing = walkme.data.getContent(walkme.data.TYPE_NAMES.TAG, environment_id);
-  }
-  segments = await initializing;
-}
 export async function getCourseSegments(
   course_id: number,
   environment_id: number
 ): Promise<Array<string>> {
-  await init(environment_id);
+  const segments = (await getData(TYPE_NAMES.TAG, environment_id)) as Array<WalkMeDataTag>;
   return segments
     .filter(segment => isInSegment(segment, walkme.data.TYPE_NAMES.COURSE, course_id))
     .map(segment => segment.Name);
