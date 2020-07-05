@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
 import TimeFilter from '../filters/TimeFilter';
@@ -18,7 +18,7 @@ export default function ScreenHeader({
   hideTimeFilter?: boolean;
   children?: ReactNode;
   breadcrumbs?: ReactNode;
-}) {
+}): ReactElement {
   return (
     <Header
       className={cc([classes['screen-header'], className])}
