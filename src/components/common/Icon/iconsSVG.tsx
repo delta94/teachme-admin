@@ -4,6 +4,7 @@ import { ReactComponent as HeaderAvatarIcon } from '../../../images/icons/user-a
 import { ReactComponent as HelpCircleIcon } from '../../../images/icons/help-circle.svg';
 import { ReactComponent as FileExportIcon } from '../../../images/icons/file-export.svg';
 import { ReactComponent as SearchIcon } from '../../../images/icons/search.svg';
+import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
 
 import { IconType } from './icon.interface';
 
@@ -14,4 +15,5 @@ export const IconSVG = {
   [IconType.HelpCircle]: HelpCircleIcon,
   [IconType.FileExport]: FileExportIcon,
   [IconType.Search]: SearchIcon,
+  [IconType.Quiz]: QuizIcon,
 };

@@ -5,4 +5,5 @@ export enum IconType {
   HelpCircle = 'help-circle',
   FileExport = 'file-export',
   Search = 'search',
+  Quiz = 'quiz',
 }

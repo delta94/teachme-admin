@@ -10,8 +10,6 @@ import CourseQuizTabCharts from '../../common/CourseQuizTabCharts';
 
 import WMCard from '../../common/WMCard';
 
-// import classes from './style.module.scss';
-
 export default function CourseTabs({ course }: { course: any }): ReactElement {
   return (
     <WMCard>
@@ -30,7 +28,7 @@ export default function CourseTabs({ course }: { course: any }): ReactElement {
         <WMTabPanel
           tab={
             <>
-              <Icon type={IconType.SidebarCourses} />
+              <Icon type={IconType.Quiz} />
               <span>
                 Quiz {quizBarChartMock.questions.length && `(${quizBarChartMock.questions.length})`}
               </span>
