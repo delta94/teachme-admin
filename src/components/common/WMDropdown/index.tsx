@@ -7,6 +7,7 @@ export interface IWMDropdownOption {
   id: string | number;
   text: string;
 }
+
 export interface IWMDropdown extends Omit<DropDownProps, 'overlay'> {
   options: IWMDropdownOption[];
   selected?: IWMDropdownOption;
