@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react';
 
-import { sidebarRoutes } from '../../../constants/routes';
+import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
 
 import Top from './Top';
 import Navigation from './Navigation';
 
 import classes from './style.module.scss';
+
+const sidebarRoutes = [COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE];
 
 export default function Sidebar(): ReactElement {
   return (

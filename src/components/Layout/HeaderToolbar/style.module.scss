@@ -55,6 +55,16 @@
       }
     }
   }
+
+  .user-btn {
+    overflow: hidden;
+    border-radius: 5px;
+    border: 0;
+
+    &:global(.ant-dropdown-open) {
+      box-shadow: 0 0 5px 2px var(--avatarShadowColor);
+    }
+  }
 }
 
 .header-toolbar-menu {
