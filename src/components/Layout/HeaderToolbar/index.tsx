@@ -33,7 +33,10 @@ export default function HeaderToolbar(): ReactElement {
               className={classes['help']}
             />
           </Tooltip>
-          <UserMenu className={cc([classes['user-menu'], menuClassName])} />
+          <UserMenu
+            buttonClassName={classes['user-btn']}
+            className={cc([classes['user-menu'], menuClassName])}
+          />
         </div>
         <Divider className={classes['header-toolbar-separator']} />
       </>
