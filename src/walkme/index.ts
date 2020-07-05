@@ -19,17 +19,17 @@ window.walkme = walkme;
 export async function getCourseList(environmentId: number): Promise<Array<UICourse | null>> {
   const courses: Array<WalkMeDataCourse> = await walkme.data.getContent(
     walkme.data.TYPE_NAMES.COURSE,
-    environmentId
+    environmentId,
   );
   const uiCourses = await Promise.all(
-    courses.map(course => {
+    courses.map((course) => {
       try {
         return mapCourse(course, environmentId);
       } catch (err) {
         walkme.error(err);
         return null;
       }
-    })
+    }),
   );
 
   return uiCourses.filter(Boolean);
@@ -46,6 +46,8 @@ export async function getUserData() {}
 export async function getEnvironments() {}
 
 export async function getSystems() {}
+
+// TODO: @dr15 @nunibaranes add require APIs
 
 export * from '@walkme/editor-sdk';
 
