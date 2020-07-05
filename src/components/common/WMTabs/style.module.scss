@@ -1,28 +1,23 @@
-.wm-tag {
-  &:global(.ant-tag) {
-    border: none;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 0.8px;
+.wm-tabs {
+  &:global(.ant-tabs) {
+    color: var(--primary);
   }
 
-  &.wm-tag {
-    color: var(--gray);
-    background-color: var(--gray-light);
+  :global(.ant-tabs-ink-bar) {
+    background: var(--primary);
+  }
 
-    &-green {
-      color: var(--green);
-      background-color: var(--green-light);
-    }
+  :global(.ant-tabs-tab) {
+    :global(.wm-icon) {
+      margin-right: 20px;
 
-    &-orange {
-      color: var(--orange);
-      background-color: var(--orange-light);
+      > svg path {
+        fill: var(--primary);
+      }
     }
+  }
 
-    &-gray {
-      color: var(--gray);
-      background-color: var(--gray-light);
-    }
+  .test {
+    font-size: 90px;
   }
 }
