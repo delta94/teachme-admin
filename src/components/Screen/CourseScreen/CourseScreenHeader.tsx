@@ -6,7 +6,6 @@ import { COURSES_ROUTE } from '../../../constants/routes';
 import { labelColors } from '../../../constants/mocks/tableMockCoursesData';
 
 import ScreenHeader from '../../common/ScreenHeader';
-
 import Icon from '../../common/Icon';
 import { IconType } from '../../common/Icon/icon.interface';
 import WMTag from '../../common/WMTag';
