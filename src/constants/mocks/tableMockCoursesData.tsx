@@ -9,7 +9,7 @@ import NumberCell from '../../components/common/tableCells/NumberCell';
 import StatusDotCell from '../../components/common/tableCells/StatusDotCell';
 import { WMTagColor } from '../../components/common/WMTag';
 
-const labelColors: { [key: string]: string } = {
+export const labelColors: { [key: string]: string } = {
   published: WMTagColor.Green,
   modified: WMTagColor.Green,
   draft: WMTagColor.Orange,

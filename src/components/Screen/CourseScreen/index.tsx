@@ -3,13 +3,12 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { courseMockData } from '../../../constants/mocks/course-screen';
 import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
-
-import ScreenHeader from '../../common/ScreenHeader';
-import WMCard from '../../common/WMCard';
-
-import AnalyticsCharts from '../../common/AnalyticsCharts';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
+
+import WMCard from '../../common/WMCard';
+import AnalyticsCharts from '../../common/AnalyticsCharts';
+import CourseScreenHeader from './CourseScreenHeader';
 
 type TParams = { courseId: string };
 
@@ -25,6 +24,10 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
   useEffect(() => {
     setCourse(null);
 
+    /**
+     * timer - used for fake async
+     * TODO: replace it with async request when the SDK ready.
+     */
     const timer = setTimeout(() => {
       const selectedCourse = getCourseById({
         courses,
@@ -42,7 +45,7 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
   return (
     course && (
       <>
-        <ScreenHeader title={course.name.value} />
+        <CourseScreenHeader course={course} />
         <AnalyticsCharts
           data={analytics}
           courseTimeCompletionData={courseCompletionChartMock}
