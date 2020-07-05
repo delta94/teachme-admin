@@ -2,11 +2,32 @@
   &:global(.ant-btn) {
     line-height: 1;
     color: var(--neutral900);
-    transition: color 0.3s;
     width: auto;
     height: auto;
     display: inline-flex;
     align-items: center;
+    transition: all 0.3s;
+
+    a {
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        transition: none;
+      }
+    }
+  }
+
+  &:global(.ant-btn-default) {
+    height: 32px;
+    padding: 0 25px;
+    border-color: var(--primary);
+    color: var(--primary);
+
+    &:hover {
+      color: var(--white);
+      background-color: var(--primary);
+    }
   }
 
   &:global(.ant-btn-link) {
