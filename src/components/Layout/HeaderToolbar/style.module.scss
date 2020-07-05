@@ -1,4 +1,4 @@
-@import '../../../styles/globals.scss';
+@import 'src/styles/mixins';
 
 .header-toolbar {
   --spacing: 25px;
@@ -73,8 +73,9 @@
   &.user-menu {
     top: 10px;
 
-    > *:first-child:after {
+    > *:first-child::after {
       @include horizontalSeparator;
+
       position: absolute;
       bottom: 0;
       right: 5px;
