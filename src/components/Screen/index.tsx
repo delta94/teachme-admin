@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { COURSES_ROUTE, USERS_ROUTE, COURSE_EDITOR_ROUTE } from '../../constants/routes';
+import { COURSES_ROUTE, USERS_ROUTE, NEW_COURSE_EDITOR_ROUTE } from '../../constants/routes';
 import CoursesScreen from './CoursesScreen';
 import UsersScreen from './UsersScreen';
-import EditorCourseScreen from './EditorCourseScreen';
+import EditorCourseScreen from './CourseEditorScreen';
 
 import classes from './style.module.scss';
 
@@ -18,7 +18,7 @@ export default function Screen(): ReactElement {
         <Route path={USERS_ROUTE.path}>
           <UsersScreen />
         </Route>
-        <Route path={COURSE_EDITOR_ROUTE.path}>
+        <Route path={NEW_COURSE_EDITOR_ROUTE.path}>
           <EditorCourseScreen />
         </Route>
         <Route path="/">
