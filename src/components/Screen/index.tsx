@@ -22,6 +22,9 @@ export default function Screen(): ReactElement {
           <EditorCourseScreen />
         </Route>
         <Route path="/">
+          <Redirect to="/course-editor/new" />
+        </Route>
+        <Route path="/">
           <Redirect to={COURSES_ROUTE.path} />
         </Route>
       </Switch>
