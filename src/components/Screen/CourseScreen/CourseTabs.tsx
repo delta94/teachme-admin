@@ -21,14 +21,14 @@ const courseTabs = [
     title: 'Outline',
     itemsLength: 16,
     icon: <Icon type={IconType.SidebarCourses} />,
-    content: <CourseQuizTabCharts data={quizBarChartMock} />,
+    content: 'Tab 1 content',
   },
   {
     id: TabId.Quiz,
     title: 'Quiz',
     itemsLength: quizBarChartMock.questions.length,
     icon: <Icon type={IconType.Quiz} />,
-    content: 'Tab 1 content',
+    content: <CourseQuizTabCharts data={quizBarChartMock} />,
   },
 ];
 
