@@ -1,14 +1,14 @@
 .icon {
   --iconDefaultSize: 20px;
 
-  color: var(--neutral800);
+  color: inherit;
   width: auto;
   height: auto;
   display: flex;
 
   // TODO: After receiving the icons, remove the background color property and add styles to svg
   &:empty {
-    background-color: var(--neutral800);
+    background-color: inherit;
     transition: background-color 0.3s;
   }
 

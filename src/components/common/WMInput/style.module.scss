@@ -1,0 +1,15 @@
+.wm-input {
+  &:global(.ant-input) {
+    height: 32px;
+    border: 1px solid var(--border-light);
+    border-radius: 2px;
+    background-color: var(--white);
+    font-family: var(--font-primary);
+
+    &:hover,
+    &:focus {
+      border-color: #cdced1;
+      box-shadow: none;
+    }
+  }
+}

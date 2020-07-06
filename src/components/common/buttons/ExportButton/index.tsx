@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { ExportOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
+import Icon, { IconType } from '../../Icon';
 import WMButton from '../../WMButton';
 
 import classes from './style.module.scss';
@@ -12,7 +12,7 @@ export default function ExportButton(): ReactElement {
       className={classes['export-button']}
       onClick={() => message.info('Exporting file')}
       type="link"
-      icon={<ExportOutlined />}
+      icon={<Icon type={IconType.FileExport} />}
     />
   );
 }

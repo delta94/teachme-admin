@@ -6,9 +6,9 @@ import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
 
-import WMCard from '../../common/WMCard';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
+import CourseTabs from './CourseTabs';
 
 type TParams = { courseId: string };
 
@@ -51,7 +51,7 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
           courseTimeCompletionData={courseCompletionChartMock}
           quizCompletionRateData={courseCompletionRateChartMock}
         />
-        <WMCard subTitle="Courses will appear to your users in the order below."></WMCard>
+        <CourseTabs course={course} />
       </>
     )
   );

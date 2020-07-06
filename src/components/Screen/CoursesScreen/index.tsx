@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { Divider, message } from 'antd';
-import { DownOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-mock';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
@@ -17,6 +17,7 @@ import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
 import WMButton from '../../common/WMButton';
+import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
 
@@ -104,7 +105,7 @@ export default function CoursesScreen(): ReactElement {
               </WMButton>
             </WMDropdown>
             <Divider className={classes['separator']} type="vertical" />
-            <WMButton className={classes['delete-btn']} icon={<DeleteOutlined />} />
+            <WMButton className={classes['delete-btn']} icon={<Icon type={IconType.Delete} />} />
             <ExportButton />
             <Divider className={classes['separator']} type="vertical" />
             <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>
