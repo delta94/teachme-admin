@@ -10,10 +10,8 @@ export default function NewCourseButton(): ReactElement {
   return (
     <div className={classes['create-btn']}>
       <Divider className={classes['bottom-separator']} />
-      <Link to={NEWCOURSE_ROUTE.path}>
-        <div className={classes.oval}>
-          <PlusOutlined className="plus-icon" />
-        </div>
+      <Link to={NEWCOURSE_ROUTE.path} className={classes.oval}>
+        <PlusOutlined className="plus-icon" />
       </Link>
       <span className={classes.text}>Create</span>
     </div>
