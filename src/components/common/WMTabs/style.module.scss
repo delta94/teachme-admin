@@ -1,23 +1,21 @@
 .wm-tabs {
   &:global(.ant-tabs) {
-    color: var(--primary);
+    color: var(--neutral700);
   }
 
   :global(.ant-tabs-ink-bar) {
     background: var(--primary);
   }
 
-  :global(.ant-tabs-tab) {
+  :global(button.ant-tabs-tab) {
+    color: var(--neutral700);
+
+    &:global(.ant-tabs-tab-active) {
+      color: var(--primary);
+    }
+
     :global(.wm-icon) {
       margin-right: 20px;
-
-      > svg path {
-        fill: var(--primary);
-      }
     }
-  }
-
-  .test {
-    font-size: 90px;
   }
 }

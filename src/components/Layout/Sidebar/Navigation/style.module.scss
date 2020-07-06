@@ -11,10 +11,10 @@
 
   .nav-item {
     position: relative;
-    color: var(--neutral900);
+    color: var(--neutral700);
 
     // active line default styles
-    &:before {
+    &::before {
       content: '';
       width: 0;
       height: 100%;
@@ -42,7 +42,7 @@
       margin-bottom: 5px;
 
       svg * {
-        fill: var(--neutral800);
+        fill: currentColor;
       }
     }
 
@@ -51,12 +51,12 @@
 
       svg {
         * {
-          fill: var(--secondary);
+          fill: currentColor;
         }
       }
 
       // active line
-      &:before {
+      &::before {
         width: 5px;
         background-color: var(--secondary);
       }
