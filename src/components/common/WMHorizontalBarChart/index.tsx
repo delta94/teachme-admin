@@ -35,7 +35,6 @@ const YAxisTick = ({
   coordinate: number;
   bars: Array<any>;
 }) => {
-  debugger;
   const isCorrect = bars[index].isCorrect;
 
   return (
