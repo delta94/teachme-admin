@@ -1,6 +1,9 @@
 .sidebar {
   --navigationIconSize: 23px;
 
+  display: grid;
+  grid-template-rows: 1fr auto;
+
   width: var(--sidebarWidth);
   height: 100%;
   position: fixed;
