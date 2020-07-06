@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { courseMockData } from '../../../constants/mocks/course-screen';
 import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
@@ -10,13 +10,11 @@ import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
 
-type TParams = { courseId: string };
-
 export const getCourseById = ({ courses, id }: { courses: any[]; id: string }): any =>
   courses.find((course) => course.key === id);
 
-export default function CourseScreen({ match }: RouteComponentProps<TParams>): ReactElement {
-  const { courseId } = match.params;
+export default function CourseScreen(): ReactElement {
+  const { courseId } = useParams();
   const [course, setCourse] = useState(null as any);
 
   const { analytics } = courseMockData;
