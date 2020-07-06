@@ -1,5 +1,5 @@
 @mixin primary-secondary-shared-styles {
-  height: 40px;
+  height: 32px;
   padding: 0 22px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -42,11 +42,11 @@
       &:hover {
         color: var(--gray);
         background-color: transparent;
-
-        &::after {
-          content: none;
-        }
       }
+    }
+
+    &::after {
+      content: none;
     }
   }
 
@@ -165,7 +165,7 @@
   &-link {
     &:global(.ant-btn) {
       height: 16px;
-      color: #348bd8;
+      color: var(--primary);
 
       font-size: 12px;
       font-weight: 500;
@@ -189,13 +189,6 @@
       &:disabled:hover {
         color: var(--gray);
         background-color: transparent;
-      }
-
-      &:link::after,
-      &:visited::after,
-      &:hover::after,
-      &:active::after {
-        transition: none;
       }
     }
   }

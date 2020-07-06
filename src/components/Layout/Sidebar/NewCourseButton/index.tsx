@@ -1,19 +1,22 @@
 import React, { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
-import { Divider } from 'antd';
 
 import { NEW_COURSE_EDITOR_ROUTE } from '../../../../constants/routes';
+import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
 import classes from './style.module.scss';
 
 export default function NewCourseButton(): ReactElement {
   return (
-    <div className={classes['create-btn']}>
-      <Divider className={classes['bottom-separator']} />
-      <Link to={NEW_COURSE_EDITOR_ROUTE.path} className={classes.oval}>
+    <div className={classes['create-button-wrapper']}>
+      <WMButton
+        shape="round"
+        variant={ButtonVariantEnum.Create}
+        className={classes['create-button']}
+        href={NEW_COURSE_EDITOR_ROUTE.path}
+      >
         <PlusOutlined className="plus-icon" />
-      </Link>
+      </WMButton>
       <span className={classes.text}>Create</span>
     </div>
   );

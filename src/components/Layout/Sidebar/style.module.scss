@@ -1,8 +1,9 @@
 .sidebar {
   --navigationIconSize: 23px;
 
-  display: grid;
-  grid-template-rows: 1fr auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   width: var(--sidebarWidth);
   height: 100%;
@@ -14,4 +15,10 @@
   background-color: var(--background);
   box-shadow: 4px 0 4px 0 rgba(204, 214, 215, 0.22);
   z-index: 1;
+
+  .sidebar-separator:global(.ant-divider) {
+    margin: 17px 19px 15px 19px;
+    width: calc(100% - 38px);
+    min-width: calc(100% - 38px);
+  }
 }

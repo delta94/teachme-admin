@@ -1,0 +1,21 @@
+.logo {
+  padding: 18px 0 0 21px;
+  color: var(--primary);
+
+  display: flex;
+
+  span {
+    font-family: var(--font-secondary), sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    margin-top: 4px;
+    margin-right: 3px;
+  }
+
+  svg {
+    height: 24px;
+    width: 30px;
+    filter: drop-shadow(0 0 2px #00000050);
+  }
+}
