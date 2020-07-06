@@ -6,4 +6,5 @@ export enum IconType {
   FileExport = 'file-export',
   Search = 'search',
   Quiz = 'quiz',
+  Delete = 'delete',
 }
