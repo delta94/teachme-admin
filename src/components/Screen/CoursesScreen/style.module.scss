@@ -1,37 +1,40 @@
-.analytics {
+.controls-wrapper {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-items: stretch;
-  height: auto;
-  margin-bottom: 38px;
+  align-items: center;
 
-  .graphs {
-    flex: 1;
-    align-self: stretch;
+  .prod-status {
+    color: var(--table-header-color);
+  }
 
-    &.left-graphs {
-      flex: 2;
-      height: auto;
-      margin-right: 20px;
+  .controls-separator {
+    height: 33px;
+    margin: 0 20px;
+  }
 
-      > * {
-        height: 100%;
-      }
+  .delete-btn {
+    height: 16px;
+    margin-right: 20px;
+  }
+
+  .create-btn {
+    height: 32px;
+    padding: 0 15px;
+    font-size: 12px;
+    letter-spacing: 0.42px;
+    text-transform: uppercase;
+    color: var(--white);
+    background-color: var(--secondary);
+    border-radius: 20px;
+    margin-right: 20px;
+
+    &:hover,
+    &:focus {
+      color: var(--white);
+      background-color: var(--secondary);
     }
 
-    &.right-graphs {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-
-      > * {
-        flex: 1;
-
-        &:first-child {
-          margin-bottom: 20px;
-        }
-      }
+    span:first-of-type {
+      height: 12px;
     }
   }
 }

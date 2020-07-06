@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IPieBarLegendContent } from '../PieBarChart/pieBarChart.interface';
+import { IPieBarLegendContent } from '../../PieBarChart/pieBarChart.interface';
 
 export default function QuizCompletionRateLegend({
   barValue,

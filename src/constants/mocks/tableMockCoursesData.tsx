@@ -1,15 +1,15 @@
 import React from 'react';
 import { ColumnsType } from 'antd/lib/table';
 
-import TagCell from '../components/common/tableCells/TagCell';
-import LinkCell from '../components/common/tableCells/LinkCell';
-import TextArrayCell from '../components/common/tableCells/TextArrayCell';
-import DashCell from '../components/common/tableCells/DashCell';
-import NumberCell from '../components/common/tableCells/NumberCell';
-import StatusDotCell from '../components/common/tableCells/StatusDotCell';
-import { WMTagColor } from '../components/common/WMTag';
+import TagCell from '../../components/common/tableCells/TagCell';
+import LinkCell from '../../components/common/tableCells/LinkCell';
+import TextArrayCell from '../../components/common/tableCells/TextArrayCell';
+import DashCell from '../../components/common/tableCells/DashCell';
+import NumberCell from '../../components/common/tableCells/NumberCell';
+import StatusDotCell from '../../components/common/tableCells/StatusDotCell';
+import { WMTagColor } from '../../components/common/WMTag';
 
-const labelColors: { [key: string]: string } = {
+export const labelColors: { [key: string]: string } = {
   published: WMTagColor.Green,
   modified: WMTagColor.Green,
   draft: WMTagColor.Orange,
@@ -21,7 +21,9 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: (value: string) => <LinkCell value={value} to="/single-course" />, // TODO: we should set the specific route to this course
+    render: ({ value, id }: { value: string; id: number }) => (
+      <LinkCell value={value} to={`/course/${id}`} />
+    ),
   },
   {
     title: 'Production Status',
@@ -81,7 +83,7 @@ export const columns: ColumnsType<any> = [
 export const data = [
   {
     key: '1',
-    name: 'Workday for Managers',
+    name: { value: 'Workday for Managers', id: 1 },
     productionStatus: 'published',
     segment: ['Sales'],
     usersStarted: 389,
@@ -91,7 +93,7 @@ export const data = [
   },
   {
     key: '2',
-    name: 'Builder Fundamentals',
+    name: { value: 'Builder Fundamentals', id: 2 },
     productionStatus: 'draft',
     segment: ['Product', 'Sales'],
     usersStarted: undefined,
@@ -101,7 +103,7 @@ export const data = [
   },
   {
     key: '3',
-    name: 'DAP Manager',
+    name: { value: 'DAP Manager', id: 3 },
     productionStatus: 'archived',
     segment: ['All Employees'],
     usersStarted: 389,
@@ -111,7 +113,7 @@ export const data = [
   },
   {
     key: '4',
-    name: 'WalkMe Workstation',
+    name: { value: 'WalkMe Workstation', id: 4 },
     productionStatus: 'draft',
     segment: ['HR', 'Sales'],
     usersStarted: undefined,
@@ -121,7 +123,7 @@ export const data = [
   },
   {
     key: '5',
-    name: 'Zendesk Fundamentals',
+    name: { value: 'Zendesk Fundamentals', id: 5 },
     productionStatus: 'published',
     segment: ['HR'],
     usersStarted: 879,
@@ -131,7 +133,7 @@ export const data = [
   },
   {
     key: '6',
-    name: 'DAP Manager 2',
+    name: { value: 'DAP Manager 2', id: 6 },
     productionStatus: 'published',
     segment: ['All Employees'],
     usersStarted: 120,
@@ -141,7 +143,7 @@ export const data = [
   },
   {
     key: '7',
-    name: 'WalkMe Workstation',
+    name: { value: 'WalkMe Workstation', id: 7 },
     productionStatus: 'modified',
     segment: ['All Employees'],
     usersStarted: 500,
@@ -151,7 +153,7 @@ export const data = [
   },
   {
     key: '8',
-    name: 'Zendesk Fundamentals',
+    name: { value: 'Zendesk Fundamentals', id: 8 },
     productionStatus: 'draft',
     segment: ['HR'],
     usersStarted: undefined,
