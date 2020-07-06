@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { Input, message } from 'antd';
-
-import Icon, { IconType } from '../../Icon';
+import { SearchOutlined } from '@ant-design/icons';
 
 import classes from './style.module.scss';
 
@@ -22,7 +21,7 @@ export default function SearchFilter({ placeholder }: ISearchFilter): ReactEleme
     <Input
       className={classes['search-filter']}
       placeholder={placeholder}
-      prefix={<Icon type={IconType.Search} />}
+      prefix={<SearchOutlined />}
       onChange={onSearch}
       value={value}
     />

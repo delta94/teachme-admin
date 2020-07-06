@@ -60,7 +60,9 @@ export default function UsersScreen(): ReactElement {
             <DropdownFilter label="Quiz Results" options={results} />
           </div>
           <div className={classes['controls-wrapper']}>
-            <ExportButton />
+            <div className={classes['export-btn-wrapper']}>
+              <ExportButton />
+            </div>
             <SearchFilter placeholder="Search users" />
           </div>
         </WMTable>
