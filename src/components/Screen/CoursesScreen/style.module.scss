@@ -7,8 +7,8 @@
   margin: 0 20px;
 }
 
-.delete-btn {
-  height: 16px;
+.delete-btn:global(.ant-btn) {
+  font-size: 18px;
   margin-right: 20px;
 }
 
