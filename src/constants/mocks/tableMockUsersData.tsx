@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable react/display-name */
 import { ColumnsType } from 'antd/lib/table';
 import React from 'react';
 import moment from 'moment';
 
-import TextCell from '../components/common/tableCells/TextCell';
-import WarningCell from '../components/common/tableCells/WarningCell';
-import NumberCell from '../components/common/tableCells/NumberCell';
-import StatusDotCell from '../components/common/tableCells/StatusDotCell';
-import SubtextCell from '../components/common/tableCells/SubtextCell';
+import TextCell from '../../components/common/tableCells/TextCell';
+import WarningCell from '../../components/common/tableCells/WarningCell';
+import NumberCell from '../../components/common/tableCells/NumberCell';
+import StatusDotCell from '../../components/common/tableCells/StatusDotCell';
+import SubtextCell from '../../components/common/tableCells/SubtextCell';
 
 const tableDateFormat = 'MMM. D, YYYY';
 
