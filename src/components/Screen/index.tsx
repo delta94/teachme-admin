@@ -4,12 +4,14 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import {
   COURSES_ROUTE,
+  COURSE_ROUTE,
   USERS_ROUTE,
   COURSE_EDITOR_ROUTE,
   NEW_COURSE_EDITOR_ROUTE,
 } from '../../constants/routes';
 
 import CoursesScreen from './CoursesScreen';
+import CourseScreen from './CourseScreen';
 import UsersScreen from './UsersScreen';
 import EditorCourseScreen from './CourseEditorScreen';
 
@@ -21,6 +23,9 @@ export default function Screen(): ReactElement {
       <Switch>
         <Route path={COURSES_ROUTE.path}>
           <CoursesScreen />
+        </Route>
+        <Route path={COURSE_ROUTE.path}>
+          <CourseScreen />
         </Route>
         <Route path={USERS_ROUTE.path}>
           <UsersScreen />
