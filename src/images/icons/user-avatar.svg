@@ -1,15 +1,10 @@
-
-505 bytes → 289 bytes 57.23%
 <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
-    <rect id="a" x="0" y="0" width="28" height="28" rx="5"/>
+    <rect id="user-avatar-a" x="0" y="0" width="28" height="28" rx="5"/>
   </defs>
   <g fill="none" fill-rule="evenodd">
-    <mask id="b" fill="#fff">
-      <use xlink:href="#a"/>
-    </mask>
     <rect stroke="#79BFFD" x=".5" y=".5" width="27" height="27" rx="5"/>
-    <circle fill="#79BFFD" mask="url(#b)" cx="14" cy="29" r="12"/>
+    <circle fill="#79BFFD" mask="url(#user-avatar-b)" cx="14" cy="29" r="12"/>
     <circle stroke="#FFF" stroke-width="1.5" fill="#79BFFD" cx="14" cy="12" r="6"/>
   </g>
 </svg>
