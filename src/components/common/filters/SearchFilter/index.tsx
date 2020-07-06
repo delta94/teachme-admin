@@ -1,7 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import { Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
 import cc from 'classcat';
+
+import Icon, { IconType } from '../../Icon';
 
 import classes from './style.module.scss';
 
@@ -27,7 +28,7 @@ export default function SearchFilter({
     <Input
       className={cc([classes['search-filter'], className])}
       placeholder={placeholder}
-      prefix={<SearchOutlined />}
+      prefix={<Icon type={IconType.Search} />}
       onChange={onChange}
       value={value}
     />
