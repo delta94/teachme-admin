@@ -1,0 +1,38 @@
+.create-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+
+  .bottom-separator {
+    margin: 30px 0;
+    width: 80px;
+  }
+
+  .oval {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #435aa6;
+    box-shadow: 0 2px 8px 0 rgba(43, 62, 127, 0.37);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.anticon) {
+    font-size: 22px;
+    color: #ffffff;
+  }
+
+  .text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #435aa6;
+    margin-top: 8px;
+    letter-spacing: 1.1px;
+    font-size: 11px;
+  }
+}
