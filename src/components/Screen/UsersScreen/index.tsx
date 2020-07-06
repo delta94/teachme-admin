@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import { usersMockData } from '../../../constants/mocks/users-mock';
-import { data as tableData, columns } from '../../../constants/mocks/tableMockUsersData';
+import { data, columns } from '../../../constants/mocks/tableMockUsersData';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
@@ -49,6 +49,14 @@ const results: IWMDropdownOption[] = [
 
 export default function UsersScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
+  const [tableData, setTableData] = useState(data);
+
+  const onSearch = (searchValue: string) => {
+    const newTableData = data.filter((user) =>
+      user.user.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setTableData(newTableData);
+  };
 
   return (
     <>
@@ -64,7 +72,7 @@ export default function UsersScreen(): ReactElement {
             <div className={classes['export-btn-wrapper']}>
               <ExportButton />
             </div>
-            <SearchFilter placeholder="Search users" />
+            <SearchFilter placeholder="Search users" onSearch={onSearch} />
           </ControlsWrapper>
         </WMTable>
       </WMCard>

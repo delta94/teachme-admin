@@ -5,7 +5,7 @@ import { DownOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { coursesMockData } from '../../../constants/mocks/courses-mock';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
-import { data as tableData, columns } from '../../../constants/mocks/tableMockCoursesData';
+import { data, columns } from '../../../constants/mocks/tableMockCoursesData';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
@@ -59,6 +59,14 @@ const prodStatuses: IWMDropdownOption[] = [
 
 export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, analytics, CoursesTable } = coursesMockData;
+  const [tableData, setTableData] = useState(data);
+
+  const onSearch = (searchValue: string) => {
+    const newTableData = data.filter((course) =>
+      course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setTableData(newTableData);
+  };
 
   const [selectedProdStatus, setSelectedProdStatus] = useState(prodStatuses[0]);
 
@@ -102,7 +110,7 @@ export default function CoursesScreen(): ReactElement {
             <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>
               Create Course
             </WMButton>
-            <SearchFilter placeholder="Search course name" />
+            <SearchFilter placeholder="Search course name" onSearch={onSearch} />
           </ControlsWrapper>
         </WMTable>
       </WMCard>
