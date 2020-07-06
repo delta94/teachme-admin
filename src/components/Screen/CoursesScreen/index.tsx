@@ -18,6 +18,7 @@ import ExportButton from '../../common/buttons/ExportButton';
 import WMButton from '../../common/WMButton';
 
 import classes from './style.module.scss';
+import Icon, { IconType } from '../../common/Icon';
 
 interface ICourseData {
   key: string;
@@ -95,7 +96,7 @@ export default function CoursesScreen(): ReactElement {
               </WMButton>
             </WMDropdown>
             <Divider className={classes['controls-separator']} type="vertical" />
-            <WMButton className={classes['delete-btn']} icon={<DeleteOutlined />} />
+            <WMButton className={classes['delete-btn']} icon={<Icon type={IconType.Delete} />} />
             <ExportButton />
             <Divider className={classes['controls-separator']} type="vertical" />
             <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>

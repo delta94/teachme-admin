@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
-import { IQuizQuestions, quizBarChartMock } from '../../../constants/mocks/quizBarChart-mock';
-
 import WMHorizontalBarChart from '../WMHorizontalBarChart';
 
 import classes from './style.module.scss';
+import { IQuizQuestions } from '../../../constants/mocks/quizBarChart-mock';
 
-export default function CourseQuizTabCharts(): ReactElement {
+export default function CourseQuizTabCharts({ data }: { data: any }): ReactElement {
   return (
     <div className={classes['course-quiz-tab-charts']}>
-      {quizBarChartMock.questions.map((question: IQuizQuestions, index: number) => {
-        const isLast = index === quizBarChartMock.questions.length - 1;
+      {data.questions.map((question: IQuizQuestions, index: number) => {
+        const isLast = index === data.questions.length - 1;
 
         return (
           <div key={question.title}>
