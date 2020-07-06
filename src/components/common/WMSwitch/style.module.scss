@@ -1,4 +1,4 @@
-.switch-container {
+.wm-switch {
   margin: 5px 0;
 
   :global(.ant-switch-checked) {
@@ -6,9 +6,13 @@
     margin-right: 7px;
   }
 
-  .switch-description {
-    height: 16px;
-    width: 172px;
+  :global(.ant-switch) {
+    margin-right: 7px;
+  }
+
+  .switch-label {
+    display: inline-block;
+    min-width: 260px;
     font-family: var(--font-primary), sans-serif;
     font-size: 14px;
     color: var(--neutral900);
