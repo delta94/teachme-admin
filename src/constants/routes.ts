@@ -23,9 +23,15 @@ export const USERS_ROUTE = {
   title: usersMockData.title,
 };
 
-export const NEWCOURSE_ROUTE = {
+export const COURSE_EDITOR_ROUTE = {
+  id: 'course-editor',
+  path: '/course-editor',
+  title: 'course-editor',
+};
+
+export const NEW_COURSE_EDITOR_ROUTE = {
   id: 'new-course',
-  path: '/new-course',
+  path: `${COURSE_EDITOR_ROUTE.path}/new`,
   title: 'new-course',
 };
 
