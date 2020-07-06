@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ButtonProps } from 'antd/lib/button';
 
-import WMButton from '../WMButton';
+import WMButton, { ButtonVariantEnum } from '../WMButton';
 
 export interface IWMButtonObject extends ButtonProps {
   label: React.ReactNode;
@@ -10,6 +10,7 @@ export interface IWMButtonObject extends ButtonProps {
   // a button should either have an onClickCallback or a be a link to somewhere
   onClickCallback?: (e: object) => void;
   href?: string;
+  variant?: ButtonVariantEnum;
 }
 
 export interface IWMButtonRenderer extends ButtonProps {

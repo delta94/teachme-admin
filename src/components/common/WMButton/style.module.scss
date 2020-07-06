@@ -1,3 +1,10 @@
+@mixin primary-secondary-shared-styles {
+  height: 40px;
+  padding: 0 22px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
 .wm-btn {
   &:global(.ant-btn) {
     line-height: 1;
@@ -9,6 +16,11 @@
     transition: all 0.3s;
     padding: 0;
     border: none;
+    box-shadow: none;
+
+    font-family: var(--font-primary);
+    font-size: 12px;
+    text-transform: uppercase;
 
     > span {
       height: 1em;
@@ -20,6 +32,20 @@
       &:hover,
       &:active {
         transition: none;
+      }
+    }
+
+    &:disabled {
+      color: var(--gray);
+      background-color: transparent;
+
+      &:hover {
+        color: var(--gray);
+        background-color: transparent;
+
+        &::after {
+          content: none;
+        }
       }
     }
   }
@@ -49,6 +75,129 @@
     > * {
       font-size: inherit;
       height: inherit;
+    }
+  }
+
+  &-primary {
+    &:global(.ant-btn) {
+      @include primary-secondary-shared-styles;
+
+      color: var(--white);
+      background-color: var(--primary);
+      border: 1px solid var(--primary);
+
+      &:hover {
+        color: var(--white);
+        background-color: var(--primaryLightnened);
+      }
+
+      &:focus {
+        color: var(--white);
+        background-color: var(--primaryDarkened);
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: var(--neutral100);
+        border: 1px solid var(--neutral100);
+      }
+    }
+  }
+
+  &-secondary {
+    &:global(.ant-btn) {
+      @include primary-secondary-shared-styles;
+
+      color: var(--primary);
+      background-color: var(--white);
+      border: 1px solid var(--primary);
+
+      &:hover {
+        color: var(--primaryLightnened);
+        border: 1px solid var(--primaryLightnened);
+      }
+
+      &:focus {
+        color: var(--primaryDarkened);
+        border: 1px solid var(--primaryDarkened);
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: var(--neutral100);
+        border: 1px solid var(--gray);
+      }
+    }
+  }
+
+  &-create {
+    &:global(.ant-btn) {
+      height: 32px;
+      padding: 0 18px;
+
+      color: var(--white);
+      background-color: var(--secondary);
+      border: 1px solid var(--secondary);
+
+      &:hover {
+        color: var(--white);
+        background-color: var(--secondaryLightnened);
+        border: 1px solid var(--secondaryLightnened);
+      }
+
+      &:focus {
+        color: var(--white);
+        background-color: var(--secondaryDarkened);
+        border: 1px solid var(--secondaryDarkened);
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: var(--neutral100);
+        border: 1px solid var(--neutral100);
+      }
+    }
+  }
+
+  &-default,
+  &-link {
+    &:global(.ant-btn) {
+      height: 16px;
+      color: #348bd8;
+
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      line-height: 16px;
+
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        color: var(--primaryLightnened);
+        background-color: transparent;
+      }
+
+      &:focus {
+        color: var(--primaryDarkened);
+        background-color: transparent;
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: transparent;
+      }
+
+      &:link::after,
+      &:visited::after,
+      &:hover::after,
+      &:active::after {
+        transition: none;
+      }
     }
   }
 }
