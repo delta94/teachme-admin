@@ -18,6 +18,19 @@
     border-bottom-color: var(--table-border-color);
   }
 
+  tr:global(.wm-expanded-default-hide-handler) {
+    :global(.ant-table-row-expand-icon) {
+      display: none;
+    }
+  }
+
+  tr:global(.wm-expandable-item) {
+    font-family: var(--font-secondary), sans-serif;
+    font-weight: 500;
+    color: var(--neutral900);
+    font-size: 15px;
+  }
+
   tr:global(.ant-table-row):hover,
   :global(.ant-table-tbody) > tr:global(.ant-table-row:hover) > td {
     background-color: var(--table-row-hover-color);

@@ -259,3 +259,32 @@ export const courseOutline = {
     UIVariationsIds: [],
   },
 };
+
+export const courseOutlineTableData = courseOutline.items.map((item) => {
+  const isLesson = item.type === 'lesson';
+  let itemData = {
+    key: item.id,
+    type: item.type,
+    className: `wm-expanded-default-hide-handler ${isLesson ? 'wm-expandable-item' : ''}`,
+    itemName: item.title,
+    usersCompletedItem: undefined,
+    dropOff: undefined,
+  };
+
+  if (!isLesson) {
+    return itemData;
+  } else {
+    return {
+      ...itemData,
+      children: item.childNodes.map((node) => {
+        return {
+          ...itemData,
+          className: '',
+          key: node.id,
+          icon: item.type,
+          itemName: node.title,
+        };
+      }),
+    };
+  }
+});
