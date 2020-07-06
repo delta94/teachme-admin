@@ -1,28 +1,35 @@
 import React, { ReactElement, useState } from 'react';
-import { Input, message } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import cc from 'classcat';
+
+import Icon, { IconType } from '../../Icon';
 
 import classes from './style.module.scss';
 
 export interface ISearchFilter {
   className?: string;
   placeholder?: string;
+  onSearch: (searchValue: string) => void;
 }
 
-export default function SearchFilter({ placeholder }: ISearchFilter): ReactElement {
+export default function SearchFilter({
+  className,
+  placeholder,
+  onSearch,
+}: ISearchFilter): ReactElement {
   const [value, setValue] = useState('');
 
-  const onSearch = (e: any) => {
+  const onChange = (e: any) => {
     setValue(e.target.value);
-    message.info(`Searching ${e.target.value}`);
+    onSearch(e.target.value);
   };
 
   return (
     <Input
-      className={classes['search-filter']}
+      className={cc([classes['search-filter'], className])}
       placeholder={placeholder}
-      prefix={<SearchOutlined />}
-      onChange={onSearch}
+      prefix={<Icon type={IconType.Search} />}
+      onChange={onChange}
       value={value}
     />
   );
