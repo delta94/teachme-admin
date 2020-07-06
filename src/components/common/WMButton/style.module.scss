@@ -1,0 +1,54 @@
+.wm-btn {
+  &:global(.ant-btn) {
+    line-height: 1;
+    color: var(--neutral900);
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s;
+    padding: 0;
+    border: none;
+
+    > span {
+      height: 1em;
+    }
+
+    a {
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        transition: none;
+      }
+    }
+  }
+
+  &:global(.ant-btn-default) {
+    height: 32px;
+    padding: 0 25px;
+    border-color: var(--primary);
+    color: var(--primary);
+
+    &:hover {
+      color: var(--white);
+      background-color: var(--primary);
+    }
+  }
+
+  &:global(.ant-btn-link) {
+    font-family: var(--font-primary);
+    font-weight: 500;
+
+    &:global(.ant-dropdown-open) {
+      color: var(--primary);
+    }
+  }
+
+  &:global(.ant-btn-icon-only) {
+    > * {
+      font-size: inherit;
+      height: inherit;
+    }
+  }
+}
