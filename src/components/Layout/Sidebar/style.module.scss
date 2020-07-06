@@ -1,6 +1,6 @@
 .sidebar {
   display: grid;
-  grid-template-rows: 3fr 1fr;
+  grid-template-rows: 1fr auto;
 
   --navigationIconSize: 23px;
 

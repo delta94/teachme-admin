@@ -5,7 +5,7 @@ import { usersMockData } from './mocks/users-mock';
 export interface IRoute {
   id: string;
   path: string;
-  title?: string;
+  title: string;
   iconType?: IconType;
 }
 
@@ -26,7 +26,7 @@ export const USERS_ROUTE = {
 export const NEWCOURSE_ROUTE = {
   id: 'new-course',
   path: '/new-course',
+  title: 'new-course',
 };
 
 export const sidebarRoutes = [COURSES_ROUTE, USERS_ROUTE];
-export const newCourse = [NEWCOURSE_ROUTE];

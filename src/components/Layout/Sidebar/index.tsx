@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { sidebarRoutes, newCourse } from '../../../constants/routes';
-import NewCourseBtn from './NewCourseBtn/index';
+import { sidebarRoutes } from '../../../constants/routes';
+import NewCourseBtn from './NewCourseButton';
 
 import Top from './Top';
 import Navigation from './Navigation';
@@ -15,7 +15,7 @@ export default function Sidebar(): ReactElement {
         <Navigation routes={sidebarRoutes} />
       </div>
       <div className={classes.bottom}>
-        <NewCourseBtn routes={newCourse} />
+        <NewCourseBtn />
       </div>
     </aside>
   );
