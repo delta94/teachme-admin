@@ -11,6 +11,7 @@ import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
+import ControlsWrapper from '../../common/ControlsWrapper';
 import DropdownFilter from '../../common/filters/DropdownFilter';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
@@ -79,11 +80,11 @@ export default function CoursesScreen(): ReactElement {
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
         <WMTable data={tableData as Array<ICourseData>} columns={columns}>
-          <div className={classes['controls-wrapper']}>
+          <ControlsWrapper>
             <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} />
-          </div>
-          <div className={classes['controls-wrapper']}>
+          </ControlsWrapper>
+          <ControlsWrapper>
             <WMDropdown
               options={prodStatuses}
               selected={selectedProdStatus}
@@ -94,15 +95,15 @@ export default function CoursesScreen(): ReactElement {
                 <DownOutlined />
               </WMButton>
             </WMDropdown>
-            <Divider className={classes['controls-separator']} type="vertical" />
+            <Divider className={classes['separator']} type="vertical" />
             <WMButton className={classes['delete-btn']} icon={<DeleteOutlined />} />
             <ExportButton />
-            <Divider className={classes['controls-separator']} type="vertical" />
+            <Divider className={classes['separator']} type="vertical" />
             <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>
               Create Course
             </WMButton>
             <SearchFilter placeholder="Search course name" />
-          </div>
+          </ControlsWrapper>
         </WMTable>
       </WMCard>
     </>

@@ -5,6 +5,7 @@ import { data as tableData, columns } from '../../../constants/mocks/tableMockUs
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
+import ControlsWrapper from '../../common/ControlsWrapper';
 import DropdownFilter from '../../common/filters/DropdownFilter';
 import { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
@@ -54,17 +55,17 @@ export default function UsersScreen(): ReactElement {
       <ScreenHeader title={mainTitle} />
       <WMCard title={`${tableData.length} ${usersTable.title}`}>
         <WMTable data={tableData as Array<IUserData>} columns={columns}>
-          <div className={classes['controls-wrapper']}>
+          <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
             <DropdownFilter label="Quiz Results" options={results} />
-          </div>
-          <div className={classes['controls-wrapper']}>
+          </ControlsWrapper>
+          <ControlsWrapper>
             <div className={classes['export-btn-wrapper']}>
               <ExportButton />
             </div>
             <SearchFilter placeholder="Search users" />
-          </div>
+          </ControlsWrapper>
         </WMTable>
       </WMCard>
     </>
