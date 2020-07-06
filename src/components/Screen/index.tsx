@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import {
@@ -7,6 +8,7 @@ import {
   COURSE_EDITOR_ROUTE,
   NEW_COURSE_EDITOR_ROUTE,
 } from '../../constants/routes';
+
 import CoursesScreen from './CoursesScreen';
 import UsersScreen from './UsersScreen';
 import EditorCourseScreen from './CourseEditorScreen';
