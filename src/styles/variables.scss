@@ -1,4 +1,4 @@
-html {
+:root {
   --sidebarWidth: 110px;
   --headerToolbarHeight: 60px;
   --dividerColor: #f0f0f0;
@@ -10,7 +10,7 @@ html {
   // should match logo color, used for hovered and active icons, progress bar,
   // active tab, active tab underline, when search input is focused
   --primary: #348bd8;
-  --primaryHover: #00aaff;
+  --primaryHover: #0af;
 
   // used as category background when hovered and unfilled progress bar background
   --primary100: #f4fafd;
@@ -19,7 +19,7 @@ html {
   --primary300: #9dd8f5;
 
   // used for active item in sidebar
-  --secondary: #415fc7;
+  --secondary: #435aa6;
 
   // used in unfocused icons, screen headlines, search input text
   --secondary500: #aac4d1;
@@ -32,6 +32,7 @@ html {
 
   // use in sidebar navigation items
   --neutral800: #0a2333;
+  --neutral700: #78868f;
 
   // regular text color, item descriptions, crossed off tasks
   --neutral500: #8d8d8d;
@@ -39,8 +40,9 @@ html {
   --neutral200: #b3b3b3;
   --neutral100: #e1e9ee;
 
-  // used for borders that seperate categories from other items
+  // used for borders that separate categories from other items
   --border100: rgba(170, 196, 209, 0.2);
+  --border-light: #cdced1;
   // used for dropdown
   --borderLightGray: #e1e6e9;
 

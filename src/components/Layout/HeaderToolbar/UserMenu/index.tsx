@@ -13,14 +13,24 @@ const options: IWMDropdownOption[] = [
   { id: 2, text: 'Log Out' },
 ];
 
-export default function UserMenu({ className }: { className?: string }): ReactElement {
+export default function UserMenu({
+  className,
+  buttonClassName,
+}: {
+  className?: string;
+  buttonClassName?: string;
+}): ReactElement {
   const handleMenuClick = (selected: IWMDropdownOption) => {
     message.info(`User clicked on ${selected.text}`);
   };
 
   return (
     <WMDropdown className={className} options={options} onSelectedChange={handleMenuClick}>
-      <WMButton type="link" icon={<Icon type={IconType.HeaderAvatar} />} />
+      <WMButton
+        className={buttonClassName}
+        type="link"
+        icon={<Icon type={IconType.HeaderAvatar} />}
+      />
     </WMDropdown>
   );
 }

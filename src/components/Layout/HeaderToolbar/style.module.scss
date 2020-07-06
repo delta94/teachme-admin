@@ -1,58 +1,40 @@
-@import '../../../styles/globals.scss';
+@import 'src/styles/mixins';
 
 .header-toolbar {
-  --spacing: 25px;
+  --spacing: 28px;
   --avatarShadowColor: rgba(121, 191, 253, 0.75);
 
   position: fixed;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 var(--spacing);
   top: 0;
   right: 0;
   left: var(--sidebarWidth);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   min-height: var(--headerToolbarHeight);
+  padding: 0 var(--spacing);
   background-color: #f9fbfc;
+  border-bottom: solid 1px var(--dividerColor);
 
-  .header-toolbar-separator {
-    margin: 0;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
+  > button {
+    margin-left: var(--spacing);
   }
 
-  .header-toolbar-left {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
+  .separator {
+    margin: 0 var(--spacing);
+    height: 33px;
+  }
 
-    .setting-separator {
-      margin: 0 var(--spacing);
-      height: 2em;
-    }
+  .help-btn {
+    font-size: 24px;
+  }
 
-    .icon.header-avatar {
+  .user-btn {
+    font-size: 28px;
+
+    &:global(.ant-dropdown-open) {
+      box-shadow: 0 0 5px 2px var(--avatarShadowColor);
       border-radius: 5px;
-      box-shadow: 0 0 0 0 var(--avatarShadowColor);
-      transition: box-shadow 0.3s;
-    }
-
-    > * {
-      margin-left: var(--spacing);
-
-      &:first-child,
-      &.help {
-        margin-left: 0;
-      }
-
-      &.help {
-        width: auto;
-        height: auto;
-        line-height: 0;
-        padding: 0;
-      }
     }
   }
 }
@@ -61,15 +43,20 @@
   top: 18px;
 
   &.user-menu {
-    top: 10px;
+    top: 12px;
+    right: -8px;
 
-    > *:first-child:after {
-      @include horizontalSeparator;
-      position: absolute;
-      bottom: 0;
-      right: 5px;
-      left: 5px;
-      width: calc(100% - 10px);
+    > * {
+      position: relative;
+      padding: 8px 16px;
+
+      &:first-of-type::after {
+        @include horizontalSeparator;
+
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
     }
   }
 }
