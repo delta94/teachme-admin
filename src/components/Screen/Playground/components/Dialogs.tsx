@@ -5,6 +5,7 @@ import WMConfirmationDialog from '../../../common/WMConfirmationDialog';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
 import WMInput from '../../../common/WMInput';
+import DialogPublishToEnvironment from '../../../common/dialogs/PublishToEnvironmentDialog';
 
 export default function Dialogs(): ReactElement {
   const [showPublish, setShowPublish] = useState(false);
@@ -21,19 +22,11 @@ export default function Dialogs(): ReactElement {
       <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setShowPublish(!showPublish)}>
         show Publish Dialog
       </WMButton>
-      <WMConfirmationDialog
+      <DialogPublishToEnvironment
         open={showPublish}
-        title="Publish to"
-        confirmLabel="Publish"
         onCancel={() => setShowPublish(false)}
         onConfirm={() => setShowPublish(false)}
-      >
-        You are about to publish the following courses. Please review before confirmation.
-        <ul>
-          <li>1 course</li>
-          <li>Global settings</li>
-        </ul>
-      </WMConfirmationDialog>
+      />
       <Divider />
       <WMButton
         variant={ButtonVariantEnum.Primary}
