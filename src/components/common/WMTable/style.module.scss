@@ -29,6 +29,11 @@
     font-weight: 500;
     color: var(--neutral900);
     font-size: 15px;
+
+    td:global(.ant-table-cell) {
+      border-bottom-width: 2px;
+      border-top: 1px solid var(--table-border-color);
+    }
   }
 
   tr:global(.ant-table-row):hover,
