@@ -1,18 +1,23 @@
-import { WalkMeLink, ContentItem, WalkMeDataCollectionItem, CourseItem } from '@walkme/types';
 import { getData } from './data';
-import { TYPE_IDS_TO_NAME } from '@walkme/editor-sdk';
-import { mapItem } from './item';
+import { mapItem, TYPE_IDS_TO_NAME, MapOptions } from './item';
+import { WalkMeLink, ContentItem } from '@walkme/types';
 
 export async function resolveLinks(
   links: Array<WalkMeLink>,
-  environmentId: number
-): Promise<Array<ContentItem>> {
-  return Promise.all(
-    links.map(async link => {
-      const [item] = await getData(TYPE_IDS_TO_NAME[link.DeployableType], environmentId, [
-        link.DeployableID,
-      ]);
-      return mapItem(item, TYPE_IDS_TO_NAME[link.DeployableType], environmentId);
-    })
-  );
+  environmentId: number,
+  options?: MapOptions
+): Promise<Array<ContentItem | null>> {
+  return (
+    await Promise.all(
+      links.map(async link => {
+        const type = TYPE_IDS_TO_NAME[link.DeployableType];
+        if (!options?.types?.includes(type)) return null;
+
+        const [item] = await getData(type, environmentId, [link.DeployableID]);
+        if (!item) return null;
+
+        return mapItem(item, type, environmentId);
+      })
+    )
+  ).filter(Boolean);
 }
