@@ -1,0 +1,21 @@
+.wm-tabs {
+  &:global(.ant-tabs) {
+    color: var(--neutral700);
+  }
+
+  :global(.ant-tabs-ink-bar) {
+    background: var(--primary);
+  }
+
+  :global(button.ant-tabs-tab) {
+    color: var(--neutral700);
+
+    &:global(.ant-tabs-tab-active) {
+      color: var(--primary);
+    }
+
+    :global(.wm-icon) {
+      margin-right: 20px;
+    }
+  }
+}

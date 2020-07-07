@@ -24,7 +24,7 @@ export default function DropdownFilter({
   return (
     <div className={classes['dropdown-filter']}>
       <WMDropdown options={options} selected={selectedOption} onSelectedChange={handleMenuClick}>
-        <WMButton type="link">
+        <WMButton>
           {label && <label>{label}:</label>}
           {selectedOption.text}
           <DownOutlined />

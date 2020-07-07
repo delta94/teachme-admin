@@ -11,6 +11,8 @@
   // active tab, active tab underline, when search input is focused
   --primary: #348bd8;
   --primaryHover: #0af;
+  --primaryLightnened: #54a5ed;
+  --primaryDarkened: #2571b5;
 
   // used as category background when hovered and unfilled progress bar background
   --primary100: #f4fafd;
@@ -20,6 +22,9 @@
 
   // used for active item in sidebar
   --secondary: #435aa6;
+  --secondaryLightnened: #4e67b9;
+  --secondaryDarkened: #364b8e;
+  --secondaryShadowColor: rgba(43, 62, 127, 0.37);
 
   // used in unfocused icons, screen headlines, search input text
   --secondary500: #aac4d1;
@@ -32,6 +37,7 @@
 
   // use in sidebar navigation items
   --neutral800: #0a2333;
+  --neutral700: #78868f;
 
   // regular text color, item descriptions, crossed off tasks
   --neutral500: #8d8d8d;
@@ -39,8 +45,9 @@
   --neutral200: #b3b3b3;
   --neutral100: #e1e9ee;
 
-  // used for borders that seperate categories from other items
+  // used for borders that separate categories from other items
   --border100: rgba(170, 196, 209, 0.2);
+  --border-light: #cdced1;
   // used for dropdown
   --borderLightGray: #e1e6e9;
 

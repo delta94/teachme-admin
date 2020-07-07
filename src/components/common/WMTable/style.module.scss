@@ -1,9 +1,9 @@
 .wm-table {
   .toolbar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    margin: 30px 0;
   }
 
   th:global(.ant-table-cell) {
@@ -16,6 +16,32 @@
 
   :global(.ant-table-cell) {
     border-bottom-color: var(--table-border-color);
+  }
+
+  tr:global(.wm-expanded-default-hide-handler) {
+    :global(.ant-table-row-expand-icon) {
+      display: none;
+    }
+  }
+
+  tr:global(.wm-expandable-item) {
+    font-family: var(--font-secondary), sans-serif;
+    font-weight: 500;
+    color: var(--neutral900);
+    font-size: 15px;
+
+    &:global(.only-first-cell) {
+      td:not(:first-child) {
+        > * {
+          display: none;
+        }
+      }
+    }
+
+    td:global(.ant-table-cell) {
+      border-bottom-width: 2px;
+      border-top: 1px solid var(--table-border-color);
+    }
   }
 
   tr:global(.ant-table-row):hover,

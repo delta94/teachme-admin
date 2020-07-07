@@ -1,40 +1,17 @@
-.controls-wrapper {
-  display: flex;
-  align-items: center;
+.prod-status {
+  color: var(--table-header-color);
+}
 
-  .prod-status {
-    color: var(--table-header-color);
-  }
+.separator:global(.ant-divider-vertical) {
+  height: 33px;
+  margin: 0 20px;
+}
 
-  .controls-separator {
-    height: 33px;
-    margin: 0 20px;
-  }
+.delete-btn:global(.ant-btn) {
+  font-size: 18px;
+  margin-right: 20px;
+}
 
-  .delete-btn {
-    height: 16px;
-    margin-right: 20px;
-  }
-
-  .create-btn {
-    height: 32px;
-    padding: 0 15px;
-    font-size: 12px;
-    letter-spacing: 0.42px;
-    text-transform: uppercase;
-    color: var(--white);
-    background-color: var(--secondary);
-    border-radius: 20px;
-    margin-right: 20px;
-
-    &:hover,
-    &:focus {
-      color: var(--white);
-      background-color: var(--secondary);
-    }
-
-    span:first-of-type {
-      height: 12px;
-    }
-  }
+.create-btn:global(.ant-btn) {
+  margin-right: 20px;
 }

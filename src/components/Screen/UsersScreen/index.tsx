@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import { usersMockData } from '../../../constants/mocks/users-mock';
-import { data as tableData, columns } from '../../../constants/mocks/tableMockUsersData';
+import { data, columns } from '../../../constants/mocks/tableMockUsersData';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
+import ControlsWrapper from '../../common/ControlsWrapper';
 import DropdownFilter from '../../common/filters/DropdownFilter';
 import { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
@@ -48,23 +49,29 @@ const results: IWMDropdownOption[] = [
 
 export default function UsersScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
+  const [tableData, setTableData] = useState(data);
+
+  const onSearch = (searchValue: string) => {
+    const newTableData = data.filter((user) =>
+      user.user.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setTableData(newTableData);
+  };
 
   return (
     <>
       <ScreenHeader title={mainTitle} />
       <WMCard title={`${tableData.length} ${usersTable.title}`}>
         <WMTable data={tableData as Array<IUserData>} columns={columns}>
-          <div className={classes['controls-wrapper']}>
+          <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
             <DropdownFilter label="Quiz Results" options={results} />
-          </div>
-          <div className={classes['controls-wrapper']}>
-            <div className={classes['export-btn-wrapper']}>
-              <ExportButton />
-            </div>
-            <SearchFilter placeholder="Search users" />
-          </div>
+          </ControlsWrapper>
+          <ControlsWrapper>
+            <ExportButton className={classes['export-btn']} />
+            <SearchFilter placeholder="Search users" onSearch={onSearch} />
+          </ControlsWrapper>
         </WMTable>
       </WMCard>
     </>

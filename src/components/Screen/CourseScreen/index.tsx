@@ -1,22 +1,20 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { courseMockData } from '../../../constants/mocks/course-screen';
 import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
 
-import WMCard from '../../common/WMCard';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
-
-type TParams = { courseId: string };
+import CourseTabs from './CourseTabs';
 
 export const getCourseById = ({ courses, id }: { courses: any[]; id: string }): any =>
   courses.find((course) => course.key === id);
 
-export default function CourseScreen({ match }: RouteComponentProps<TParams>): ReactElement {
-  const { courseId } = match.params;
+export default function CourseScreen(): ReactElement {
+  const { courseId } = useParams();
   const [course, setCourse] = useState(null as any);
 
   const { analytics } = courseMockData;
@@ -51,7 +49,7 @@ export default function CourseScreen({ match }: RouteComponentProps<TParams>): R
           courseTimeCompletionData={courseCompletionChartMock}
           quizCompletionRateData={courseCompletionRateChartMock}
         />
-        <WMCard subTitle="Courses will appear to your users in the order below."></WMCard>
+        <CourseTabs course={course} />
       </>
     )
   );

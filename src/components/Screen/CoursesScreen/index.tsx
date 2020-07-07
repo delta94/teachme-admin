@@ -1,21 +1,23 @@
 import React, { ReactElement, useState } from 'react';
 import { Divider, message } from 'antd';
-import { DownOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-mock';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
-import { data as tableData, columns } from '../../../constants/mocks/tableMockCoursesData';
+import { data, columns } from '../../../constants/mocks/tableMockCoursesData';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
+import ControlsWrapper from '../../common/ControlsWrapper';
 import DropdownFilter from '../../common/filters/DropdownFilter';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
-import WMButton from '../../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
+import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
 
@@ -58,6 +60,14 @@ const prodStatuses: IWMDropdownOption[] = [
 
 export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, analytics, CoursesTable } = coursesMockData;
+  const [tableData, setTableData] = useState(data);
+
+  const onSearch = (searchValue: string) => {
+    const newTableData = data.filter((course) =>
+      course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setTableData(newTableData);
+  };
 
   const [selectedProdStatus, setSelectedProdStatus] = useState(prodStatuses[0]);
 
@@ -79,30 +89,35 @@ export default function CoursesScreen(): ReactElement {
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
         <WMTable data={tableData as Array<ICourseData>} columns={columns}>
-          <div className={classes['controls-wrapper']}>
+          <ControlsWrapper>
             <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} />
-          </div>
-          <div className={classes['controls-wrapper']}>
+          </ControlsWrapper>
+          <ControlsWrapper>
             <WMDropdown
               options={prodStatuses}
               selected={selectedProdStatus}
               onSelectedChange={onProdStatusChange}
             >
-              <WMButton className={classes['prod-status']} type="link">
+              <WMButton className={classes['prod-status']}>
                 Change Status
                 <DownOutlined />
               </WMButton>
             </WMDropdown>
-            <Divider className={classes['controls-separator']} type="vertical" />
-            <WMButton className={classes['delete-btn']} icon={<DeleteOutlined />} />
+            <Divider className={classes['separator']} type="vertical" />
+            <WMButton className={classes['delete-btn']} icon={<Icon type={IconType.Delete} />} />
             <ExportButton />
-            <Divider className={classes['controls-separator']} type="vertical" />
-            <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>
+            <Divider className={classes['separator']} type="vertical" />
+            <WMButton
+              className={classes['create-btn']}
+              shape="round"
+              variant={ButtonVariantEnum.Create}
+              icon={<PlusOutlined />}
+            >
               Create Course
             </WMButton>
-            <SearchFilter placeholder="Search course name" />
-          </div>
+            <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+          </ControlsWrapper>
         </WMTable>
       </WMCard>
     </>
