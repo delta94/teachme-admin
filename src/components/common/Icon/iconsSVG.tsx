@@ -6,9 +6,9 @@ import { ReactComponent as FileExportIcon } from '../../../images/icons/file-exp
 import { ReactComponent as SearchIcon } from '../../../images/icons/search.svg';
 import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
 import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
-import { ReactComponent as WalkthruIcon } from '../../../images/icons/Walkthru.svg';
-import { ReactComponent as VideoIcon } from '../../../images/icons/Video.svg';
-import { ReactComponent as ArticleIcon } from '../../../images/icons/Article.svg';
+import { ReactComponent as WalkthruIcon } from '../../../images/icons/walkthru.svg';
+import { ReactComponent as VideoIcon } from '../../../images/icons/video.svg';
+import { ReactComponent as ArticleIcon } from '../../../images/icons/article.svg';
 
 import { IconType } from './icon.interface';
 
