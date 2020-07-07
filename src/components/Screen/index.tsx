@@ -8,12 +8,14 @@ import {
   USERS_ROUTE,
   COURSE_EDITOR_ROUTE,
   NEW_COURSE_EDITOR_ROUTE,
+  PLAYGROUND_ROUTE,
 } from '../../constants/routes';
 
 import CoursesScreen from './CoursesScreen';
 import CourseScreen from './CourseScreen';
 import UsersScreen from './UsersScreen';
 import EditorCourseScreen from './CourseEditorScreen';
+import Playground from './Playground';
 
 import classes from './style.module.scss';
 
@@ -35,6 +37,9 @@ export default function Screen(): ReactElement {
         </Route>
         <Route path={COURSE_EDITOR_ROUTE.path}>
           <Redirect to={NEW_COURSE_EDITOR_ROUTE.path} />
+        </Route>
+        <Route path={PLAYGROUND_ROUTE.path}>
+          <Playground />
         </Route>
         <Route path="/">
           <Redirect to={COURSES_ROUTE.path} />
