@@ -5,6 +5,8 @@ import { DownOutlined } from '@ant-design/icons';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
+import classes from '../style.module.scss';
+
 const systems: IWMDropdownOption[] = [
   { id: 0, text: 'Salesforce' },
   { id: 1, text: 'Option 2' },
@@ -26,7 +28,7 @@ export default function SystemMenu({ className }: { className?: string }): React
       selected={selectedSystem}
       onSelectedChange={handleMenuClick}
     >
-      <WMButton type="link">
+      <WMButton className={classes['dropdown-menu-button']}>
         {selectedSystem.text}
         <DownOutlined />
       </WMButton>
