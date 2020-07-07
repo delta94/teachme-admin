@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, forwardRef } from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 import { InputProps } from 'antd/lib/input';
 
 import classes from './style.module.scss';
 
-export interface IWMInputProps extends InputProps {
+export interface IWMInput extends InputProps {
   value?: string | ReadonlyArray<string> | number;
   placeholder?: string;
   className?: string;
@@ -14,21 +14,21 @@ export interface IWMInputProps extends InputProps {
   allowClear?: boolean;
 }
 
-export default function WMInput({
-  value,
-  placeholder,
-  className,
-  prefix,
-  suffix,
-  allowClear,
-  ...otherProps
-}: IWMInputProps) {
-  return (
+const WMInput = forwardRef(
+  (
+    { value, placeholder, className, prefix, suffix, allowClear, ...otherProps }: IWMInput,
+    ref: any,
+  ) => (
     <Input
+      ref={ref}
       value={value}
       placeholder={placeholder}
       className={cc([classes['wm-input'], className])}
       {...otherProps}
     />
-  );
-}
+  ),
+);
+
+WMInput.displayName = 'WMInput';
+
+export default WMInput;

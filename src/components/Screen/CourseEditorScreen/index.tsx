@@ -1,12 +1,18 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import WMCard from '../../common/WMCard';
-import ScreenHeader from '../../common/ScreenHeader';
+import EditableTitle from '../../common/  EditableTitle';
 
 export default function CourseEditorScreen(): ReactElement {
+  const [courseTitle, setCourseTitle] = useState('Untitled Course');
+
+  const onBlur = (text: string) => {
+    setCourseTitle(text);
+  };
+
   return (
     <>
-      <ScreenHeader title="new-course" />
+      <EditableTitle onBlur={onBlur} value={courseTitle} />
       <WMCard title="items" />
       <WMCard title="course" />
     </>
