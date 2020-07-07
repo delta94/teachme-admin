@@ -1,7 +1,8 @@
-import walkme from '@walkme/editor-sdk';
+import walkme, { TYPE_NAMES } from '@walkme/editor-sdk';
 import { UICourse, mapCourse } from './course/overview';
-import { WalkMeDataCourse, CourseItem, Course, BuildCourse } from '@walkme/types';
+import { WalkMeDataCourse, ContentItem, Course, BuildCourse } from '@walkme/types';
 import * as courses from './course/details';
+import { mapItem } from './item';
 
 declare global {
   interface Window {
@@ -39,7 +40,17 @@ export async function getCourse(id: number, environmentId: number): Promise<Buil
   return courses.getCourseData(id, environmentId);
 }
 
-export async function getItemsList() {}
+export async function getItemsList(environmentId: number): Promise<ContentItem[]> {
+  const nestedItems = await Promise.all(
+    [TYPE_NAMES.SWT, TYPE_NAMES.CONTENT].map(async (type) => {
+      const items = await walkme.data.getContent(type, environmentId);
+
+      return items.map((item: any) => mapItem(item, type, environmentId));
+    }),
+  );
+
+  return nestedItems.flat();
+}
 
 export async function getUserData() {}
 
