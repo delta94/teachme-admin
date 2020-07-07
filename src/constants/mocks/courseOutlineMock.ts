@@ -262,13 +262,15 @@ export const courseOutline = {
 
 export const courseOutlineTableData = courseOutline.items.map((item) => {
   const isLesson = item.type === 'lesson';
+
   let itemData = {
     key: item.id,
+    title: item.title,
     type: item.type,
+    itemName: { value: item.title, icon: !isLesson ? item.type : undefined },
     className: `wm-expanded-default-hide-handler ${isLesson ? 'wm-expandable-item' : ''}`,
-    itemName: item.title,
-    usersCompletedItem: undefined,
-    dropOff: undefined,
+    usersCompletedItem: undefined, // TODO: update this property from the data
+    dropOff: undefined, // TODO: update this property from the data
   };
 
   if (!isLesson) {
@@ -281,8 +283,7 @@ export const courseOutlineTableData = courseOutline.items.map((item) => {
           ...itemData,
           className: '',
           key: node.id,
-          icon: item.type,
-          itemName: node.title,
+          itemName: { value: node.title, icon: node.type },
         };
       }),
     };

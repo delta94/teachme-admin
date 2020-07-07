@@ -35,3 +35,24 @@ a.link-cell {
 .bold {
   font-weight: 500;
 }
+
+.icon-text-cell {
+  display: flex;
+
+  :global(.text) {
+    font-weight: 500;
+    color: var(--neutral900);
+  }
+
+  :global(.wm-icon) {
+    margin-right: 15px;
+    color: var(--neutral700);
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}

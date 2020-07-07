@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { IconType } from '../Icon';
 
 export interface ITableCell {
@@ -45,5 +45,5 @@ export interface ITextCell extends ITableCell {
 
 export interface IIconTextCell extends ITableCell {
   value: string;
-  iconType?: IconType;
+  icon?: ReactNode;
 }

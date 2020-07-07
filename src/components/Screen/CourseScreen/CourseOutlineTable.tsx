@@ -6,8 +6,8 @@ import TextCell from '../../common/tableCells/TextCell';
 import WMTable from '../../common/WMTable';
 import DashCell from '../../common/tableCells/DashCell';
 import NumberCell from '../../common/tableCells/NumberCell';
-import Icon, { IconType } from '../../common/Icon';
 import IconTextCell from '../../common/tableCells/IconTextCell';
+import Icon, { IconType } from '../../common/Icon';
 
 export default function CourseOutlineTable({ course }: { course: any }): ReactElement {
   const columns = [
@@ -15,9 +15,8 @@ export default function CourseOutlineTable({ course }: { course: any }): ReactEl
       title: 'Item Name',
       dataIndex: 'itemName',
       key: 'item-name',
-      render: (value: string) => {
-        // TODO: render icon
-        return <TextCell value={value} />;
+      render: ({ value, icon }: { value: string; icon?: string }) => {
+        return <IconTextCell value={value} icon={icon && <Icon type={icon} />} />;
       },
     },
     {
@@ -43,6 +42,8 @@ export default function CourseOutlineTable({ course }: { course: any }): ReactEl
       ),
     },
   ];
+
+  console.log('courseOutlineTableData ', courseOutlineTableData);
 
   return (
     <WMTable

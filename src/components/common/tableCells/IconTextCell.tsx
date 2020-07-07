@@ -1,15 +1,15 @@
 import React from 'react';
+import cc from 'classcat';
 
 import { IIconTextCell } from './tableCells.interface';
-import Icon from '../Icon';
 
-export default function IconTextCell({ value, iconType, className, ...otherProps }: IIconTextCell) {
+import classes from './style.module.scss';
+
+export default function IconTextCell({ value, icon, className, ...otherProps }: IIconTextCell) {
   return (
-    <>
-      {iconType && <Icon type={iconType} />}
-      <span className={className} {...otherProps}>
-        {value}
-      </span>
-    </>
+    <span className={cc([classes['icon-text-cell'], className])} {...otherProps}>
+      {icon}
+      <span className="text">{value}</span>
+    </span>
   );
 }

@@ -6,6 +6,10 @@ import { ReactComponent as FileExportIcon } from '../../../images/icons/file-exp
 import { ReactComponent as SearchIcon } from '../../../images/icons/search.svg';
 import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
 import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
+// TODO: after fixing the data uncomment the import for VideoIcon
+import { ReactComponent as WalkthruIcon } from '../../../images/icons/Walkthru.svg';
+import { ReactComponent as VideoIcon } from '../../../images/icons/Video.svg';
+// import { ReactComponent as ArticleIcon } from '../../../images/icons/Article.svg';
 
 import { IconType } from './icon.interface';
 
@@ -18,4 +22,6 @@ export const IconSVG = {
   [IconType.Search]: SearchIcon,
   [IconType.Quiz]: QuizIcon,
   [IconType.Delete]: DeleteIcon,
+  [IconType.SmartWalkthru]: WalkthruIcon,
+  [IconType.Content]: VideoIcon,
 };

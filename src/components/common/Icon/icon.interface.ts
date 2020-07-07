@@ -7,4 +7,6 @@ export enum IconType {
   Search = 'search',
   Quiz = 'quiz',
   Delete = 'delete',
+  SmartWalkthru = 'smartwalkthru',
+  Content = 'content',
 }
