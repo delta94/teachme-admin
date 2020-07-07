@@ -45,4 +45,10 @@ export const NEW_COURSE_EDITOR_ROUTE = {
   title: 'new-course',
 };
 
+export const PLAYGROUND_ROUTE = {
+  id: 'Playground',
+  path: `/playground`,
+  title: 'Playground',
+};
+
 export const sidebarRoutes = [COURSES_ROUTE, USERS_ROUTE];
