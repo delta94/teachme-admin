@@ -1,22 +1,16 @@
 import React, { ReactElement, useState } from 'react';
 
-import WMConfirmationDialog from '../../WMConfirmationDialog';
+import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 
 import EnvironmentDropdown from './EnvironmentDropdown';
 import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
 
-export interface IDialogPublishToEnvironment {
-  open: boolean;
-  onCancel: () => void;
-  onConfirm: () => void;
-}
-
 export default function PublishToEnvironmentDialog({
   open,
   onCancel,
   onConfirm,
-}: IDialogPublishToEnvironment): ReactElement {
+}: IWMConfirmationDialogWrapper): ReactElement {
   const [environment, setEnvironment] = useState<string | undefined>(undefined);
 
   return (

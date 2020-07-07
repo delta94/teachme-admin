@@ -1,11 +1,15 @@
 import React, { ReactElement, useState } from 'react';
 
 import { Divider } from 'antd';
-import WMConfirmationDialog from '../../../common/WMConfirmationDialog';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
-import WMInput from '../../../common/WMInput';
 import DialogPublishToEnvironment from '../../../common/dialogs/PublishToEnvironmentDialog';
+import ExportToCSVDialog from '../../../common/dialogs/ExportToCSVDialog';
+import DeleteCourseDialog from '../../../common/dialogs/DeleteCourseDialog';
+import CantDeleteDialog from '../../../common/dialogs/CantDeleteDialog';
+import DuplicateCourseDialog from '../../../common/dialogs/DuplicateCourseDialog';
+import ImpersonateDialog from '../../../common/dialogs/ImpersonateDialog';
+import DeleteLessonDialog from '../../../common/dialogs/DeleteLessonDialog';
 
 export default function Dialogs(): ReactElement {
   const [showPublish, setShowPublish] = useState(false);
@@ -39,20 +43,11 @@ export default function Dialogs(): ReactElement {
       <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setShowExport(!showExport)}>
         show Export Dialog
       </WMButton>
-      <WMConfirmationDialog
+      <ExportToCSVDialog
         open={showExport}
-        title="Export data"
         onCancel={() => setShowExport(false)}
         onConfirm={() => setShowExport(false)}
-      >
-        You are about to export data of 8 courses.
-        <ul>
-          <li>Download CSV file</li>
-          <li>
-            Send via email <WMInput />
-          </li>
-        </ul>
-      </WMConfirmationDialog>
+      />
       <Divider />
       <WMButton
         variant={ButtonVariantEnum.Primary}
@@ -60,15 +55,11 @@ export default function Dialogs(): ReactElement {
       >
         show Delete Dialog
       </WMButton>
-      <WMConfirmationDialog
+      <DeleteCourseDialog
         open={showDeleteCourse}
-        title="Delete Lesson"
-        confirmLabel="Delete"
         onCancel={() => setShowDeleteCourse(false)}
         onConfirm={() => setShowDeleteCourse(false)}
-      >
-        This lesson contains items. Are you sure you want to delete it?
-      </WMConfirmationDialog>
+      />
       <Divider />
       <WMButton
         variant={ButtonVariantEnum.Primary}
@@ -76,15 +67,11 @@ export default function Dialogs(): ReactElement {
       >
         show Cant Delete Course
       </WMButton>
-      <WMConfirmationDialog
+      <CantDeleteDialog
         open={showCantDeleteCourse}
-        title="You can’t delete this course"
-        confirmLabel="Delete"
         onCancel={() => setShowCantDeleteCourse(false)}
         onConfirm={() => setShowCantDeleteCourse(false)}
-      >
-        You must first archive a published course in order to delete it
-      </WMConfirmationDialog>
+      />
       <Divider />
       <WMButton
         variant={ButtonVariantEnum.Primary}
@@ -92,14 +79,12 @@ export default function Dialogs(): ReactElement {
       >
         show Duplicate Course
       </WMButton>
-      <WMConfirmationDialog
+      <DuplicateCourseDialog
         open={showDuplicateCourse}
-        title="Duplicate this course"
         onCancel={() => setShowDuplicateCourse(false)}
         onConfirm={() => setShowDuplicateCourse(false)}
-      >
-        <WMInput value="Copy of Zendesk Fundamentals" />
-      </WMConfirmationDialog>
+        value="Copy of Zendesk Fundamentals"
+      />
       <Divider />
       <WMButton
         variant={ButtonVariantEnum.Primary}
@@ -107,14 +92,11 @@ export default function Dialogs(): ReactElement {
       >
         show Impersonate
       </WMButton>
-      <WMConfirmationDialog
+      <ImpersonateDialog
         open={showImpersonate}
-        title="Impersonate user"
         onCancel={() => setShowImpersonate(false)}
         onConfirm={() => setShowImpersonate(false)}
-      >
-        <WMInput placeholder="Enter email address" />
-      </WMConfirmationDialog>
+      />
       <Divider />
       <WMButton
         variant={ButtonVariantEnum.Primary}
@@ -122,16 +104,11 @@ export default function Dialogs(): ReactElement {
       >
         show Delete Lesson
       </WMButton>
-      <WMConfirmationDialog
+      <DeleteLessonDialog
         open={showDeleteLesson}
-        title="Delete lesson"
         onCancel={() => setShowDeleteLesson(false)}
         onConfirm={() => setShowDeleteLesson(false)}
-      >
-        This lesson contains items.
-        <br />
-        Are you sure you want to delete it?
-      </WMConfirmationDialog>
+      />
     </>
   );
 }
