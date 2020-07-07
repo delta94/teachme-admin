@@ -268,7 +268,9 @@ export const courseOutlineTableData = courseOutline.items.map((item) => {
     title: item.title,
     type: item.type,
     itemName: { value: item.title, icon: !isLesson ? item.type : undefined },
-    className: `wm-expanded-default-hide-handler ${isLesson ? 'wm-expandable-item' : ''}`,
+    className: `wm-expanded-default-hide-handler ${
+      isLesson ? 'wm-expandable-item only-first-cell' : ''
+    }`,
     usersCompletedItem: undefined, // TODO: update this property from the data
     dropOff: undefined, // TODO: update this property from the data
   };

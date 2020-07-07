@@ -2,12 +2,11 @@ import React, { ReactElement } from 'react';
 
 import { courseOutlineTableData } from '../../../constants/mocks/courseOutlineMock';
 
-import TextCell from '../../common/tableCells/TextCell';
 import WMTable from '../../common/WMTable';
 import DashCell from '../../common/tableCells/DashCell';
 import NumberCell from '../../common/tableCells/NumberCell';
 import IconTextCell from '../../common/tableCells/IconTextCell';
-import Icon, { IconType } from '../../common/Icon';
+import Icon from '../../common/Icon';
 
 export default function CourseOutlineTable({ course }: { course: any }): ReactElement {
   const columns = [
@@ -42,8 +41,6 @@ export default function CourseOutlineTable({ course }: { course: any }): ReactEl
       ),
     },
   ];
-
-  console.log('courseOutlineTableData ', courseOutlineTableData);
 
   return (
     <WMTable

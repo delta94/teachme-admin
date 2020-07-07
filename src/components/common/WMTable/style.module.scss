@@ -30,6 +30,14 @@
     color: var(--neutral900);
     font-size: 15px;
 
+    &:global(.only-first-cell) {
+      td:not(:first-child) {
+        > * {
+          display: none;
+        }
+      }
+    }
+
     td:global(.ant-table-cell) {
       border-bottom-width: 2px;
       border-top: 1px solid var(--table-border-color);

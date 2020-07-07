@@ -15,8 +15,6 @@ export default function Icon({
   className?: string;
 }): ReactElement {
   const Component = IconSVG[type as keyof typeof IconSVG];
-  console.log('type ', type);
-  console.log('Component ', Component);
 
   return (
     <span className={cc(['wm-icon', classes.icon, type, className])}>
