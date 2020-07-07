@@ -2,11 +2,11 @@ import courseSummaryMock from './courseSummaryChartMock';
 import courseCompletionChartMock from './courseCompletionChartMock';
 import courseCompletionRateChartMock from './courseCompletionRateChartMock';
 
-export const courseMockData = {
-  title: 'Course',
+export const coursesMockData = {
+  title: 'Courses',
   analytics: {
     summary: {
-      title: 'Users Started / Completed Course',
+      title: 'Users Started / Completed Courses',
       data: courseSummaryMock,
     },
     completion: {

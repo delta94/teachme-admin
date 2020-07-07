@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { Divider, message } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { coursesMockData } from '../../../constants/mocks/courses-mock';
+import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
 import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
 import { data, columns } from '../../../constants/mocks/tableMockCoursesData';
