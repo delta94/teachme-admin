@@ -1,27 +1,44 @@
 import React, { ReactElement } from 'react';
 import { Switch } from 'antd';
 import { SwitchProps } from 'react-router-dom';
+
 import classes from './style.module.scss';
 
-export interface IWMSwitch extends SwitchProps {
-  label: string;
-  infoText?: string;
-  size: 'small' | 'default';
+enum SwitchSizeType {
+  Small = 'small',
+  Default = 'default',
 }
 
-export default function IWMSwitch({
+export interface IWMSwitch extends Omit<SwitchProps, 'size'> {
+  label: string;
+  infoText?: string;
+  size?: SwitchSizeType;
+  defaultChecked?: boolean;
+  checked?: boolean;
+  onChange?: () => void;
+}
+
+export default function WMSwitch({
   label,
   infoText,
-  size = 'small',
+  size = SwitchSizeType.Small,
+  defaultChecked = true,
+  checked,
+  onChange,
   ...otherProps
 }: IWMSwitch): ReactElement {
   return (
     <div className={classes['wm-switch']}>
       <span className={classes['wm-switch-wrap']}>
-        <Switch size={size} className={classes['switch-btn']} defaultChecked {...otherProps} />
+        <Switch
+          size={size}
+          className={classes['switch-btn']}
+          defaultChecked={defaultChecked}
+          {...otherProps}
+        />
         <span className={classes['switch-label']}>{label}</span>
       </span>
-      <p className={classes['switch-info']}>{infoText}</p>
+      {infoText && <p className={classes['switch-info']}>{infoText}</p>}
     </div>
   );
 }
