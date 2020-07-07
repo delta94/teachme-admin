@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
+
 import { NEW_COURSE_EDITOR_ROUTE } from '../../../../constants/routes';
 
 import classes from './style.module.scss';

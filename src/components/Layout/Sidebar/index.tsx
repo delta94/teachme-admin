@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
-import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
-import NewCourseBtn from './NewCourseButton';
 
+import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
+
+import NewCourseBtn from './NewCourseButton';
 import Top from './Top';
 import Navigation from './Navigation';
 

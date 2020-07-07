@@ -46,4 +46,3 @@ export const NEW_COURSE_EDITOR_ROUTE = {
 };
 
 export const sidebarRoutes = [COURSES_ROUTE, USERS_ROUTE];
-
