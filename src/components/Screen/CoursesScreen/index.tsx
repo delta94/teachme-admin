@@ -3,9 +3,6 @@ import { Divider, message } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
-import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
-import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
-import { data, columns } from '../../../constants/mocks/tableMockCoursesData';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
@@ -59,11 +56,16 @@ const prodStatuses: IWMDropdownOption[] = [
 ];
 
 export default function CoursesScreen(): ReactElement {
-  const { title: mainTitle, analytics, CoursesTable } = coursesMockData;
-  const [tableData, setTableData] = useState(data);
+  const {
+    title: mainTitle,
+    analytics,
+    CoursesTable: { title: CoursesTableTitle, table },
+  } = coursesMockData;
+
+  const [tableData, setTableData] = useState(table.data);
 
   const onSearch = (searchValue: string) => {
-    const newTableData = data.filter((course) =>
+    const newTableData = table.data.filter((course) =>
       course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
     );
     setTableData(newTableData);
@@ -79,16 +81,12 @@ export default function CoursesScreen(): ReactElement {
   return (
     <>
       <ScreenHeader title={mainTitle} />
-      <AnalyticsCharts
-        data={analytics}
-        courseTimeCompletionData={courseCompletionChartMock}
-        quizCompletionRateData={courseCompletionRateChartMock}
-      />
+      <AnalyticsCharts data={analytics} />
       <WMCard
-        title={`${tableData.length} ${CoursesTable.title}`}
+        title={`${table.data.length} ${CoursesTableTitle}`}
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <WMTable data={tableData as Array<ICourseData>} columns={columns}>
+        <WMTable data={table.data as Array<ICourseData>} columns={table.columns}>
           <ControlsWrapper>
             <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} />

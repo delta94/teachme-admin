@@ -18,7 +18,4 @@ export const courseMockData = {
       data: courseCompletionRateChartMock,
     },
   },
-  CoursesTable: {
-    title: 'Courses',
-  },
 };

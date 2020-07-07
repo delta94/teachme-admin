@@ -1,8 +1,6 @@
 // TODO: create a properly interface instead of using any
 export interface IAnalyticsCharts {
   data: any;
-  courseTimeCompletionData: any;
-  quizCompletionRateData: any;
 }
 
 // TODO: create a properly interface instead of using any

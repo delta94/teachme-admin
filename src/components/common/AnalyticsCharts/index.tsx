@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
-import WMCard from '../../common/WMCard';
 import { IAnalyticsCharts } from './analytics.interface';
 import CourseStatusChart from './CourseSummaryChart';
 import CourseTimeCompletionChart from './CourseTimeCompletionChart';
