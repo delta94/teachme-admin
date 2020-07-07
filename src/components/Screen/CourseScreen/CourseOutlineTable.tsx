@@ -49,9 +49,7 @@ export default function CourseOutlineTable({ course }: { course: any }): ReactEl
       expandable={{
         defaultExpandAllRows: true,
       }}
-      rowClassName={(record) => {
-        return record.className;
-      }}
-    ></WMTable>
+      rowClassName={(record) => record.className}
+    />
   );
 }
