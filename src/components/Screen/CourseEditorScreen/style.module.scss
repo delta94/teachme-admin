@@ -1,0 +1,25 @@
+.cards-wrapper {
+  display: flex;
+  color: var(--neutral900);
+
+  .items,
+  .course-outline {
+    color: inherit;
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+  }
+
+  .items {
+    width: 340px;
+    margin-right: 10px;
+    background-color: #fafafa;
+  }
+
+  .course-outline {
+    flex-grow: 1;
+  }
+}

@@ -11,4 +11,5 @@ export enum IconType {
   Video = 'video',
   Article = 'article',
   Content = 'content', // TODO: should remove after fixing course item type
+  Refresh = 'refresh',
 }
