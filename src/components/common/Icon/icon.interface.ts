@@ -7,4 +7,8 @@ export enum IconType {
   Search = 'search',
   Quiz = 'quiz',
   Delete = 'delete',
+  SmartWalkthru = 'smartwalkthru',
+  Video = 'video',
+  Article = 'article',
+  Content = 'content', // TODO: should remove after fixing course item type
 }

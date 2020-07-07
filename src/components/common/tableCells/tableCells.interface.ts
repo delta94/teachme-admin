@@ -1,12 +1,12 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 export interface ITableCell {
   className?: string;
 }
 
 export interface IDashCell extends ITableCell {
-  value?: number | React.ReactNode;
-  children: React.ReactNode;
+  value?: number | ReactNode;
+  children: ReactNode;
   isRightAligned?: boolean;
 }
 
@@ -39,5 +39,10 @@ export interface ITextArrayCell extends ITableCell {
 }
 
 export interface ITextCell extends ITableCell {
-  value: React.ReactNode;
+  value: ReactNode;
+}
+
+export interface IIconTextCell extends ITableCell {
+  value: string;
+  icon?: ReactNode;
 }

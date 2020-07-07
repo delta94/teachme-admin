@@ -7,6 +7,7 @@ import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import Icon from '../../common/Icon';
 import { IconType } from '../../common/Icon/icon.interface';
 import CourseQuizTabCharts from '../../common/CourseQuizTabCharts';
+import CourseOutlineTable from './CourseOutlineTable';
 
 import WMCard from '../../common/WMCard';
 
@@ -21,7 +22,7 @@ const courseTabs = [
     title: 'Outline',
     itemsLength: 16,
     icon: <Icon type={IconType.SidebarCourses} />,
-    content: 'Tab 1 content',
+    content: <CourseOutlineTable course={quizBarChartMock} />,
   },
   {
     id: TabId.Quiz,
