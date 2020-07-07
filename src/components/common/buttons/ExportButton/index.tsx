@@ -12,7 +12,6 @@ export default function ExportButton({ className }: { className?: string }): Rea
     <WMButton
       className={cc([classes['export-button'], className])}
       onClick={() => message.info('Exporting file')}
-      type="link"
       icon={<Icon type={IconType.FileExport} />}
     />
   );

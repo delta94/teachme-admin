@@ -9,7 +9,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import Icon from '../../common/Icon';
 import { IconType } from '../../common/Icon/icon.interface';
 import WMTag from '../../common/WMTag';
-import WMButton from '../../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 
 import classes from './style.module.scss';
 
@@ -22,7 +22,7 @@ export default function CourseScreenHeader({ course }: { course: any }): ReactEl
           <Icon className={classes['course-details-icon']} type={IconType.SidebarCourses} />
           <span className={classes['course-name']}>{course.name.value}</span>
           <WMTag value={course.productionStatus} color={labelColors[course.productionStatus]} />
-          <WMButton type="default" shape="round" className={classes.edit}>
+          <WMButton shape="round" variant={ButtonVariantEnum.Secondary} className={classes.edit}>
             <Link to="/new-course">Edit</Link>
           </WMButton>
           <div className={classes['course-details-sub-title']}>

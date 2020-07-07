@@ -26,11 +26,7 @@ export default function UserMenu({
 
   return (
     <WMDropdown className={className} options={options} onSelectedChange={handleMenuClick}>
-      <WMButton
-        className={buttonClassName}
-        type="link"
-        icon={<Icon type={IconType.HeaderAvatar} />}
-      />
+      <WMButton className={buttonClassName} icon={<Icon type={IconType.HeaderAvatar} />} />
     </WMDropdown>
   );
 }

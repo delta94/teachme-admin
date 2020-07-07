@@ -28,7 +28,7 @@ export default function Navigation({ routes }: { routes: IRoute[] }): ReactEleme
                   className={cc([classes['nav-item'], { [classes.active]: isActive }])}
                 >
                   <Link to={path}>
-                    {iconType && <Icon type={iconType} />}
+                    {iconType && <Icon type={iconType} className={classes.icon} />}
                     <span className={classes.text}>{title}</span>
                   </Link>
                 </li>

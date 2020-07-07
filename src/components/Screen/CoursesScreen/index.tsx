@@ -16,7 +16,7 @@ import DropdownFilter from '../../common/filters/DropdownFilter';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
-import WMButton from '../../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
@@ -99,7 +99,7 @@ export default function CoursesScreen(): ReactElement {
               selected={selectedProdStatus}
               onSelectedChange={onProdStatusChange}
             >
-              <WMButton className={classes['prod-status']} type="link">
+              <WMButton className={classes['prod-status']}>
                 Change Status
                 <DownOutlined />
               </WMButton>
@@ -108,7 +108,12 @@ export default function CoursesScreen(): ReactElement {
             <WMButton className={classes['delete-btn']} icon={<Icon type={IconType.Delete} />} />
             <ExportButton />
             <Divider className={classes['separator']} type="vertical" />
-            <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>
+            <WMButton
+              className={classes['create-btn']}
+              shape="round"
+              variant={ButtonVariantEnum.Create}
+              icon={<PlusOutlined />}
+            >
               Create Course
             </WMButton>
             <SearchFilter placeholder="Search course name" onSearch={onSearch} />

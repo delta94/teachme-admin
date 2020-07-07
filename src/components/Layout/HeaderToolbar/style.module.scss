@@ -60,3 +60,7 @@
     }
   }
 }
+
+.dropdown-menu-button:global(.ant-btn) {
+  font-weight: 500;
+}
