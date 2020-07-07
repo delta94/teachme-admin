@@ -83,10 +83,10 @@ export default function CoursesScreen(): ReactElement {
       <ScreenHeader title={mainTitle} />
       <AnalyticsCharts data={analytics} />
       <WMCard
-        title={`${table.data.length} ${CoursesTableTitle}`}
+        title={`${tableData.length} ${CoursesTableTitle}`}
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <WMTable data={table.data as Array<ICourseData>} columns={table.columns}>
+        <WMTable data={tableData as Array<ICourseData>} columns={table.columns}>
           <ControlsWrapper>
             <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} />

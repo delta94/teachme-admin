@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { quizBarChartMock } from '../../../constants/mocks/quizBarChart-mock';
+import { courseMockData } from '../../../constants/mocks/course-screen';
 
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
@@ -17,20 +17,21 @@ enum TabId {
 }
 
 export default function CourseTabs({ course }: ICourseTabs): ReactElement {
+  const { courseOutlineTableData, quizData } = courseMockData;
   const courseTabs = [
     {
       id: TabId.Outline,
       title: 'Outline',
       itemsLength: 16,
       icon: <Icon type={IconType.SidebarCourses} />,
-      content: <CourseOutlineTable course={quizBarChartMock} />, // TODO: after integration replace mock data with prop course
+      content: <CourseOutlineTable course={courseOutlineTableData} />, // TODO: after integration replace mock data with prop course
     },
     {
       id: TabId.Quiz,
       title: 'Quiz',
-      itemsLength: quizBarChartMock.questions.length,
+      itemsLength: quizData.questions.length,
       icon: <Icon type={IconType.Quiz} />,
-      content: <CourseQuizTabCharts data={quizBarChartMock} />, // TODO: after integration replace mock data with prop course
+      content: <CourseQuizTabCharts data={quizData} />, // TODO: after integration replace mock data with prop course
     },
   ];
 
@@ -39,6 +40,7 @@ export default function CourseTabs({ course }: ICourseTabs): ReactElement {
       <WMTabs defaultActiveKey={TabId.Outline}>
         {courseTabs.map((tab) => {
           const { id, title, itemsLength, icon, content } = tab;
+
           return (
             <WMTabPanel
               tab={

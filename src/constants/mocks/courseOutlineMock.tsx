@@ -289,9 +289,10 @@ export const courseOutlineTableMockData = courseOutline.items.map((item) => {
       ...itemData,
       children: item.childNodes.map((node) => {
         return {
-          ...itemData,
           className: '',
           key: node.id,
+          title: node.title,
+          type: node.type,
           itemName: { value: node.title, icon: node.type },
         };
       }),
@@ -331,3 +332,10 @@ export const courseOutlineTableMockColumns = [
     ),
   },
 ];
+
+const courseOutlineTable = {
+  data: courseOutlineTableMockData,
+  columns: courseOutlineTableMockColumns,
+};
+
+export default courseOutlineTable;
