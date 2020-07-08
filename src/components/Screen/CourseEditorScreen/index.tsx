@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { message } from 'antd';
 import { ContentItem } from '@walkme/types';
 
 import { getFlatItemsList } from '../../../walkme';
@@ -15,24 +14,33 @@ export default function CourseEditorScreen(): ReactElement {
   const [courseItems, setCourseItems] = useState<ContentItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<ContentItem[]>([]);
 
+  const fetchItemList = async () => {
+    try {
+      const items = await getFlatItemsList(0);
+      setCourseItems(items);
+      setFilteredItems(items);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const items = await getFlatItemsList(0);
-        setCourseItems(items);
-        setFilteredItems(items);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
+    fetchItemList();
   }, []);
 
-  const onSearch = (searchValue: string) => {
-    const newCourseItems = courseItems.filter((item) => {
-      const str = `${item.title} ${item.description}`;
-      return str.toLowerCase().includes(searchValue.toLowerCase());
-    });
+  const [searchValue, setSearchValue] = useState('');
+
+  const onSearch = (newSearchValue: string) => {
+    const newCourseItems = courseItems.filter(({ title, description }) =>
+      `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
+    );
+    setSearchValue(newSearchValue);
     setFilteredItems(newCourseItems);
+  };
+
+  const onRefresh = async () => {
+    await fetchItemList();
+    onSearch(searchValue);
   };
 
   console.log(courseItems);
@@ -46,12 +54,17 @@ export default function CourseEditorScreen(): ReactElement {
           title={
             <div className={classes['title']}>
               <span>Items</span>
-              <RefreshButton onRefresh={() => message.info('Refreshing...')} />
+              <RefreshButton onRefresh={onRefresh} />
             </div>
           }
         >
           <div className={classes['filter-bar']}>
-            <SearchFilter className={classes['search']} placeholder="Search" onSearch={onSearch} />
+            <SearchFilter
+              className={classes['search']}
+              placeholder="Search"
+              value={searchValue}
+              onSearch={onSearch}
+            />
           </div>
           {filteredItems.map((item, i) => (
             <div key={i} className={classes['item']}>
