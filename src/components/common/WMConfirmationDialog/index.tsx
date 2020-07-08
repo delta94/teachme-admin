@@ -1,6 +1,5 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
-import { CardProps } from 'antd/lib/card';
 
 import WMDialog from '../WMDialog';
 import { IWMButtonObject } from '../WMButtonRenderer';

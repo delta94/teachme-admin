@@ -6,28 +6,27 @@ import WMButton from '../../WMButton';
 
 import classes from './style.module.scss';
 
-const environments: IWMDropdownOption[] = [
-  { id: 0, text: 'Production' },
-  { id: 1, text: 'Test' },
-];
-
 export default function EnvironmentDropdown({
   className,
   onChange,
+  intialSelectedEnvironment,
+  environments,
 }: {
   className?: string;
-  onChange: (selected: string) => void;
+  onChange: (selected: IWMDropdownOption) => void;
+  intialSelectedEnvironment: IWMDropdownOption;
+  environments: IWMDropdownOption[];
 }): ReactElement {
-  const [selectedEnvironment, setSelectedEnvironment] = useState(environments[0]);
+  const [selectedEnvironment, setSelectedEnvironment] = useState(intialSelectedEnvironment);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedEnvironment(selected);
-    onChange(selected.text);
+    onChange(selected);
   };
 
   useEffect(() => {
-    onChange(selectedEnvironment.text);
-  }, []);
+    onChange(selectedEnvironment);
+  }, [onChange, selectedEnvironment]);
 
   return (
     <WMDropdown

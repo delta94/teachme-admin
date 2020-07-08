@@ -2,16 +2,22 @@ import React, { ReactElement, useState } from 'react';
 
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 
+import { IWMDropdownOption } from '../../WMDropdown';
 import EnvironmentDropdown from './EnvironmentDropdown';
 import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
+
+const environments: IWMDropdownOption[] = [
+  { id: 0, text: 'Production' },
+  { id: 1, text: 'Test' },
+];
 
 export default function PublishToEnvironmentDialog({
   open,
   onCancel,
   onConfirm,
 }: IWMConfirmationDialogWrapper): ReactElement {
-  const [environment, setEnvironment] = useState<string | undefined>(undefined);
+  const [environment, setEnvironment] = useState<IWMDropdownOption>(environments[0]);
 
   return (
     <>
@@ -20,10 +26,14 @@ export default function PublishToEnvironmentDialog({
         title={
           <div className={classes['publish-dialog-title']}>
             <div>Publish to </div>
-            <EnvironmentDropdown onChange={(selected) => setEnvironment(selected)} />
+            <EnvironmentDropdown
+              environments={environments}
+              intialSelectedEnvironment={environment}
+              onChange={(selected) => setEnvironment(selected)}
+            />
           </div>
         }
-        confirmLabel={`Publish to ${environment}`}
+        confirmLabel={`Publish to ${environment.text}`}
         onCancel={onCancel}
         onConfirm={onConfirm}
       >
