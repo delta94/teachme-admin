@@ -3,22 +3,21 @@ import React, { ReactElement } from 'react';
 import PieBarChart from '../../PieBarChart';
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 import PieBarSummary from '../../PieBarSummary';
-
-export interface ICoursesTimeCompletionChart {
-  data: any; // TODO: create a properly interface instead of using any
-}
+import WMCard from '../../WMCard';
+import { ICoursesTimeCompletionChart } from '../analytics.interface';
 
 export default function CoursesTimeCompletionChart({
-  data,
+  completionData,
 }: ICoursesTimeCompletionChart): ReactElement {
+  const {
+    title,
+    data: { summaryLegend, summaryUnit, bars, totalValue },
+  } = completionData;
+
   return (
-    <>
-      <PieBarSummary value={data.summaryLegend} unit={` ${data.summaryUnit}`} />
-      <PieBarChart
-        bars={data.bars}
-        totalValue={data.totalValue}
-        legendContent={AvgCompletionTimeLegend}
-      />
-    </>
+    <WMCard title={title}>
+      <PieBarSummary value={summaryLegend} unit={` ${summaryUnit}`} />
+      <PieBarChart bars={bars} totalValue={totalValue} legendContent={AvgCompletionTimeLegend} />
+    </WMCard>
   );
 }
