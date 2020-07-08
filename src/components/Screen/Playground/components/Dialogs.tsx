@@ -10,6 +10,7 @@ import CantDeleteDialog from '../../../common/dialogs/CantDeleteDialog';
 import DuplicateCourseDialog from '../../../common/dialogs/DuplicateCourseDialog';
 import ImpersonateDialog from '../../../common/dialogs/ImpersonateDialog';
 import DeleteLessonDialog from '../../../common/dialogs/DeleteLessonDialog';
+import LoadingPublishingDialog from '../../../common/dialogs/LoadingPublishingDialog';
 
 export default function Dialogs(): ReactElement {
   const [showPublish, setShowPublish] = useState(false);
@@ -20,6 +21,14 @@ export default function Dialogs(): ReactElement {
   const [showDuplicateCourse, setShowDuplicateCourse] = useState(false);
   const [showImpersonate, setShowImpersonate] = useState(false);
   const [showDeleteLesson, setShowDeleteLesson] = useState(false);
+
+  function showLoadingPublishingDialog() {
+    setShowPublishing(true);
+
+    setTimeout(() => {
+      setShowPublishing(false);
+    }, 3000);
+  }
 
   return (
     <>
@@ -32,13 +41,14 @@ export default function Dialogs(): ReactElement {
         onConfirm={() => setShowPublish(false)}
       />
       <Divider />
-      <WMButton
-        variant={ButtonVariantEnum.Primary}
-        onClick={() => setShowPublishing(!showPublishing)}
-        disabled
-      >
+      <WMButton variant={ButtonVariantEnum.Primary} onClick={showLoadingPublishingDialog}>
         show Publishing
       </WMButton>
+      <LoadingPublishingDialog
+        open={showPublishing}
+        onClose={() => setShowPublishing(false)}
+        environment="Test"
+      />
       <Divider />
       <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setShowExport(!showExport)}>
         show Export Dialog
