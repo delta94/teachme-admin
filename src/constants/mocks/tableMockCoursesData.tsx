@@ -162,3 +162,10 @@ export const data = [
     avgQuizAttempts: undefined,
   },
 ];
+
+const coursesTableMockData = {
+  columns,
+  data,
+};
+
+export default coursesTableMockData;

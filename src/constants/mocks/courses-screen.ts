@@ -1,14 +1,13 @@
 import courseSummaryMock from './courseSummaryChartMock';
 import courseCompletionChartMock from './courseCompletionChartMock';
 import courseCompletionRateChartMock from './courseCompletionRateChartMock';
-import courseOutlineTable from './courseOutlineMock';
-import { quizBarChartMock } from './quizBarChart-mock';
+import coursesTableMockData, { data, columns } from './tableMockCoursesData';
 
-export const courseMockData = {
-  title: 'Course',
+export const coursesMockData = {
+  title: 'Courses',
   analytics: {
     summary: {
-      title: 'Users Started / Completed Course',
+      title: 'Users Started / Completed Courses',
       data: courseSummaryMock,
     },
     completion: {
@@ -20,6 +19,8 @@ export const courseMockData = {
       data: courseCompletionRateChartMock,
     },
   },
-  courseOutlineTableData: courseOutlineTable,
-  quizData: quizBarChartMock,
+  CoursesTable: {
+    title: 'Courses',
+    table: coursesTableMockData,
+  },
 };

@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { courseMockData } from '../../../constants/mocks/course-screen';
 import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
-import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
-import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
@@ -44,11 +42,7 @@ export default function CourseScreen(): ReactElement {
     course && (
       <>
         <CourseScreenHeader course={course} />
-        <AnalyticsCharts
-          data={analytics}
-          courseTimeCompletionData={courseCompletionChartMock}
-          quizCompletionRateData={courseCompletionRateChartMock}
-        />
+        <AnalyticsCharts data={analytics} />
         <CourseTabs course={course} />
       </>
     )
