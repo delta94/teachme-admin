@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
 import { IQuizScoreData } from '../analytics.interface';
 import WMProgress from '../../charts/WMProgress';
@@ -18,11 +19,11 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
         <WMProgress
           className={classes['course-average-chart']}
           percent={average}
-          type="circle"
+          type={ProgressType.Circle}
           format={() => average}
           width={80}
           strokeWidth={10}
-          status={average > passmark ? 'success' : 'exception'}
+          status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
         />
         <span className={classes['passmark']}>
           Passmark: <b>{passmark}</b>
