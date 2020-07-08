@@ -6,6 +6,8 @@ import ControlsWrapper from '../../common/ControlsWrapper';
 import ExportButton from '../../common/buttons/ExportButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 
+import classes from './style.module.scss';
+
 export default function CourseOutlineTable({ course }: ICourseOutlineTable): ReactElement {
   const [tableData, setTableData] = useState(course.data);
 
@@ -21,9 +23,7 @@ export default function CourseOutlineTable({ course }: ICourseOutlineTable): Rea
           const someChildrenAreMatch = item.children.some((child: any) => isMatch(child));
           const filteredLesson = { ...item, children: getFilteredLessonChildren(item.children) };
 
-          if (isMatch(item)) {
-            return filteredLesson;
-          } else if (someChildrenAreMatch) {
+          if (isMatch(item) || someChildrenAreMatch) {
             return filteredLesson;
           }
         } else {
@@ -41,10 +41,15 @@ export default function CourseOutlineTable({ course }: ICourseOutlineTable): Rea
       columns={course.columns}
       expandable={{ defaultExpandAllRows: true }}
       rowClassName={(record) => record.className}
+      className={classes['course-table']}
     >
-      <ControlsWrapper>
-        <ExportButton />
-        <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+      <ControlsWrapper className={classes['course-table-toolbar']}>
+        <ExportButton className={classes['export']} />
+        <SearchFilter
+          className={classes['search']}
+          placeholder="Search item name"
+          onSearch={onSearch}
+        />
       </ControlsWrapper>
     </WMTable>
   );
