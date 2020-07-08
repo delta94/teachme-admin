@@ -5,11 +5,12 @@ import { IAnalyticsCharts } from './analytics.interface';
 import CourseStatusChart from './CourseSummaryChart';
 import CourseTimeCompletionChart from './CourseTimeCompletionChart';
 import QuizCompletionRateChart from './QuizCompletionRateChart';
+import QuizScoreChart from './QuizScoreChart';
 
 import classes from './style.module.scss';
 
 export default function AnalyticsCharts({ data }: IAnalyticsCharts): ReactElement {
-  const { summary, completion, quizCompletion } = data;
+  const { summary, completion, quizCompletion, quizScore } = data;
 
   return (
     <div className={classes.analytics}>
@@ -18,7 +19,10 @@ export default function AnalyticsCharts({ data }: IAnalyticsCharts): ReactElemen
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
         <CourseTimeCompletionChart completionData={completion} />
-        <QuizCompletionRateChart quizCompletionData={quizCompletion} />
+        <div className={classes['quiz-graphs']}>
+          <QuizCompletionRateChart quizCompletionData={quizCompletion} />
+          {quizScore && <QuizScoreChart quizScoreData={quizScore} />}
+        </div>
       </div>
     </div>
   );
