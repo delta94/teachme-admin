@@ -1,14 +1,14 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 import { Modal } from 'antd';
-import { CardProps } from 'antd/lib/card';
+import { ModalProps } from 'antd/lib/modal';
 
 import WMButtonRenderer, { IWMButtonObject } from '../WMButtonRenderer';
 
 import { ReactComponent as CloseButton } from './closeButton.svg';
 import classes from './style.module.scss';
 
-export interface IWMCardProps extends CardProps {
+export interface IWMDialog extends ModalProps {
   open: boolean;
   title?: ReactNode;
   className?: string;
@@ -28,7 +28,7 @@ export default function WMDialog({
   buttons,
   onClose,
   ...otherProps
-}: IWMCardProps): ReactElement {
+}: IWMDialog): ReactElement {
   return (
     <Modal
       visible={open}

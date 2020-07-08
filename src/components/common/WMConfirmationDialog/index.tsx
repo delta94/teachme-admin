@@ -1,6 +1,5 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
-import { CardProps } from 'antd/lib/card';
 
 import WMDialog from '../WMDialog';
 import { IWMButtonObject } from '../WMButtonRenderer';
@@ -8,13 +7,19 @@ import { ButtonVariantEnum } from '../WMButton';
 
 import classes from './style.module.scss';
 
-export interface IWMCardProps extends CardProps {
+export interface IWMConfirmationDialogWrapper {
+  open?: boolean;
+  onCancel: () => void;
+  onConfirm: (data?: any) => void;
+}
+
+export interface IWMConfirmationDialog {
   open?: boolean;
   title?: ReactNode;
   cancelLabel?: string;
   confirmLabel?: string;
   onCancel: () => void;
-  onConfirm: () => void;
+  onConfirm: (data?: any) => void;
   className?: string;
   children?: ReactNode;
 }
@@ -29,7 +34,7 @@ export default function WMConfirmationDialog({
   className,
   children,
   ...otherProps
-}: IWMCardProps): ReactElement {
+}: IWMConfirmationDialog): ReactElement {
   const cancelConfirmButtons: Array<IWMButtonObject> = [
     {
       label: cancelLabel ?? 'Cancel',
