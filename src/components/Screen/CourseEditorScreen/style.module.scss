@@ -5,21 +5,12 @@
   color: var(--neutral900);
 
   .items,
-  .course-outline {
+  .course-structure {
     height: 560px;
     color: inherit;
 
     :global(.ant-card-body) {
       padding: 0;
-    }
-
-    .title {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      height: 60px;
-      padding: 20px;
-      border-bottom: var(--cards-border);
     }
   }
 
@@ -28,25 +19,73 @@
     margin-right: 10px;
     background-color: #fafafa;
 
-    .filter-bar {
-      padding: 0 20px 13px;
+    .title {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-secondary), sans-serif;
+      font-size: 14px;
+      height: 60px;
+      padding: 20px;
       border-bottom: var(--cards-border);
+    }
+
+    .filters-bar {
+      padding: 0 20px 13px;
 
       .search {
         width: 100%;
       }
     }
 
-    .item {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 9px 20px;
-      border-bottom: var(--cards-border);
+    .item-list {
+      margin: 0 20px 0 0;
+      overflow: auto;
+
+      .item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 9px 20px;
+        border-top: var(--cards-border);
+
+        &:last-of-type {
+          border-bottom: var(--cards-border);
+        }
+      }
     }
   }
 
-  .course-outline {
+  .course-structure {
     flex-grow: 1;
+
+    .tabs {
+      font-family: var(--font-secondary), sans-serif;
+      color: inherit;
+
+      > :global(.ant-tabs-nav) {
+        margin: 0 20px 15px 0;
+
+        :global(button.ant-tabs-tab) {
+          justify-content: center;
+          font-family: inherit;
+          color: inherit;
+          padding: 20px;
+          margin: 0;
+
+          &:first-of-type {
+            width: 145px;
+          }
+
+          &:last-of-type {
+            width: 99px;
+          }
+
+          &:global(.ant-tabs-tab-active) {
+            font-weight: 600;
+            color: var(--primary);
+          }
+        }
+      }
+    }
   }
 }

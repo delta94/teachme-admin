@@ -7,8 +7,27 @@ import WMCard from '../../common/WMCard';
 import ScreenHeader from '../../common/ScreenHeader';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
+import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 
 import classes from './style.module.scss';
+
+enum TabId {
+  CourseOutline = 'course-outline',
+  Settings = 'settings',
+}
+
+const cardTabs = [
+  {
+    id: TabId.CourseOutline,
+    title: 'Course Outline',
+    content: null, // TODO: add content
+  },
+  {
+    id: TabId.Settings,
+    title: 'Settings',
+    content: null, // TODO: add content
+  },
+];
 
 export default function CourseEditorScreen(): ReactElement {
   const [courseItems, setCourseItems] = useState<ContentItem[]>([]);
@@ -58,7 +77,7 @@ export default function CourseEditorScreen(): ReactElement {
             </div>
           }
         >
-          <div className={classes['filter-bar']}>
+          <div className={classes['filters-bar']}>
             <SearchFilter
               className={classes['search']}
               placeholder="Search"
@@ -66,16 +85,23 @@ export default function CourseEditorScreen(): ReactElement {
               onSearch={onSearch}
             />
           </div>
-          {filteredItems.map((item, i) => (
-            <div key={i} className={classes['item']}>
-              {item.title}
-            </div>
-          ))}
+          <ul className={classes['item-list']}>
+            {filteredItems.map((item, i) => (
+              <li key={i} className={classes['item']}>
+                {item.title}
+              </li>
+            ))}
+          </ul>
         </WMCard>
-        <WMCard
-          className={classes['course-outline']}
-          title={<div className={classes['title']}>Course Outline</div>}
-        />
+        <WMCard className={classes['course-structure']}>
+          <WMTabs className={classes['tabs']} defaultActiveKey={TabId.CourseOutline}>
+            {cardTabs.map(({ id, title, content }) => (
+              <WMTabPanel tab={title} key={id}>
+                {content}
+              </WMTabPanel>
+            ))}
+          </WMTabs>
+        </WMCard>
       </div>
     </>
   );
