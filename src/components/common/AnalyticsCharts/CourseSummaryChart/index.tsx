@@ -1,17 +1,11 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
-import { days, lines } from '../../../../constants/mocks/courseSummaryChartMock';
+import { ICourseStatusChart, ICourseByDay } from '../analytics.interface';
 
 import classes from './style.module.scss';
-
-interface ICourseByDay {
-  day: string | number;
-  'Users Started'?: number;
-  'Users Completed'?: number;
-}
 
 const LegendContent = ({ number, description }: { number: number; description?: string }) => {
   return (
@@ -22,7 +16,12 @@ const LegendContent = ({ number, description }: { number: number; description?: 
   );
 };
 
-export default function CourseStatusChart({ title }: { title?: ReactNode }) {
+export default function CourseStatusChart({ summaryData }: ICourseStatusChart) {
+  const {
+    title,
+    data: { days, lines },
+  } = summaryData;
+
   return (
     <WMCard title={title}>
       <div className={classes['courses-status']}>

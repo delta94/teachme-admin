@@ -1,0 +1,12 @@
+.loading-publishing-dialog:global(.ant-modal) {
+  :global(.ant-modal-content) {
+    :global(.ant-modal-body) {
+      text-align: center;
+      padding: 24px;
+    }
+  }
+
+  img {
+    padding: 5px 32px;
+  }
+}
