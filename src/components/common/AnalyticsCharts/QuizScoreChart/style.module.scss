@@ -7,16 +7,12 @@
     width: 100%;
   }
 
-  &-content {
-    display: flex;
-  }
-
   .passmark {
     margin-left: auto;
   }
 
-  :global(header) {
-    flex: 0 0 100%;
+  :global(.wm-card-content) {
+    display: flex;
   }
 
   .text {
