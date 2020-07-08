@@ -7,7 +7,7 @@ import { AutoSizeType } from 'antd/lib/input/ResizableTextArea';
 import classes from './style.module.scss';
 const { TextArea } = Input;
 
-export interface IWMInputProps extends TextAreaProps {
+export interface IWMTextareaProps extends TextAreaProps {
   className?: string;
   autosize?: boolean | AutoSizeType;
 }
@@ -16,7 +16,7 @@ export default function WMTextarea({
   className,
   autosize = { minRows: 3, maxRows: 5 },
   ...otherProps
-}: IWMInputProps) {
+}: IWMTextareaProps) {
   return (
     <TextArea
       className={cc([classes['wm-textarea'], className])}
