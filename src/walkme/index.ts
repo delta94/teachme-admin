@@ -71,6 +71,10 @@ export async function getEnvironments() {}
 
 export async function getSystems() {}
 
+export function logout() {
+  walkme.auth.logout();
+}
+
 export * from '@walkme/editor-sdk';
 
 window.test = { getCourseList, getCourse, getItemsList, getFlatItemsList };
