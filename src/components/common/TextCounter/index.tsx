@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 import WMInput from '../WMInput';
 
+import classes from './style.module.scss';
 interface ITextCounter {
-  value?: string | undefined;
+  placeholder?: string | undefined;
   label?: string | undefined;
   maxLength?: number | undefined;
+  size?: string | undefined;
 }
 
-export default function TextCounter({ value, label, maxLength }: ITextCounter): JSX.Element {
-  const [content, setContent] = useState(value as string);
+export default function TextCounter({ placeholder, label, maxLength }: ITextCounter): JSX.Element {
+  const [content, setContent] = useState('' as string);
 
   const setFormattedContent = (text: string) => {
     if (maxLength === undefined) return;
     setContent(text);
   };
 
-  useEffect(() => {
-    setFormattedContent(content);
-  }, []);
-
   return (
-    <div>
-      <label>{label}</label>
+    <div className={classes['text-counter']}>
+      <label className={classes['input-label']}>{label}</label>
       <WMInput
+        className={classes['input-text']}
         onChange={(e: any) => setFormattedContent(e.target.value)}
         value={content}
+        placeholder={placeholder}
         maxLength={maxLength}
       />
-      <p>
+      <p className={classes['input-counter']}>
         {content.length}/{maxLength}
       </p>
     </div>
