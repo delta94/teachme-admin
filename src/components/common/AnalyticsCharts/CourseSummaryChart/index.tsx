@@ -3,7 +3,7 @@ import React from 'react';
 import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
-import { ICourseStatusChart, ICourseByDay } from '../analytics.interface';
+import { ICourseSummaryChart, ICourseByDay } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
@@ -16,7 +16,7 @@ const LegendContent = ({ number, description }: { number: number; description?: 
   );
 };
 
-export default function CourseStatusChart({ summaryData }: ICourseStatusChart) {
+export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart) {
   const {
     title,
     data: { days, lines },
