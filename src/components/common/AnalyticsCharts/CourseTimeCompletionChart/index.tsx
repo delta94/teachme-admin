@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 
-import PieBarChart from '../../PieBarChart';
+import { PieBarChart } from '../../charts';
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
-import PieBarSummary from '../../PieBarSummary';
+import { PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
 

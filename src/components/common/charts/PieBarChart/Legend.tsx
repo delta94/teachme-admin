@@ -1,7 +1,7 @@
 import React from 'react';
 
-import StatusDot, { DotType } from '../StatusDot';
-import WMPopover from '../WMPopover';
+import StatusDot, { DotType } from '../../StatusDot';
+import WMPopover from '../../WMPopover';
 
 import { ILegend, IPieBarLegend } from './pieBarChart.interface';
 import classes from './style.module.scss';

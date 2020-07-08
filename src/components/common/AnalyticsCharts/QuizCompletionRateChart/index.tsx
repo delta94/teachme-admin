@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import PieBarChart from '../../PieBarChart';
-import PieBarSummary from '../../PieBarSummary';
+import { PieBarChart, PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import { IQuizCompletionRateChart } from '../analytics.interface';
 import QuizCompletionRateLegend from './QuizCompletionRateLegend';

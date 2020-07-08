@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
 import { IQuizScoreData } from '../analytics.interface';
-import WMProgress from '../../charts/WMProgress';
+import { WMProgress } from '../../charts';
 
 import classes from './style.module.scss';
 
