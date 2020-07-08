@@ -1,15 +1,25 @@
 .cards-wrapper {
+  --cards-border: solid 1px #e6edf1;
+
   display: flex;
   color: var(--neutral900);
 
   .items,
   .course-outline {
+    height: 560px;
     color: inherit;
+
+    :global(.ant-card-body) {
+      padding: 0;
+    }
 
     .title {
       display: flex;
       justify-content: space-between;
       font-size: 14px;
+      height: 60px;
+      padding: 20px;
+      border-bottom: var(--cards-border);
     }
   }
 
@@ -17,6 +27,23 @@
     width: 340px;
     margin-right: 10px;
     background-color: #fafafa;
+
+    .filter-bar {
+      padding: 0 20px 13px;
+      border-bottom: var(--cards-border);
+
+      .search {
+        width: 100%;
+      }
+    }
+
+    .item {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 9px 20px;
+      border-bottom: var(--cards-border);
+    }
   }
 
   .course-outline {
