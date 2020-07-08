@@ -7,6 +7,7 @@ import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import WMCard from '../../common/WMCard';
 
 import Dialogs from './components/Dialogs';
+import Counter from './components/Counter';
 
 import classes from './style.module.scss';
 
@@ -16,6 +17,12 @@ const tabs = [
     title: 'Dialogs',
     icon: undefined,
     content: <Dialogs />,
+  },
+  {
+    id: 'counter',
+    title: 'Counter',
+    icon: undefined,
+    content: <Counter />,
   },
 ];
 
