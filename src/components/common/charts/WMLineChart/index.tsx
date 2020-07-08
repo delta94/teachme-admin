@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   LineChart,
   XAxis,
@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import LineChartTooltip from './LineChartTooltip';
 
 export interface IWMLineChartProps<T> {
   className?: string;
@@ -35,7 +36,21 @@ export default function WMLineChart<T extends {}>({
             after getting the SDK and integrating with time-filter
             use https://recharts.org/en-US/examples/CustomContentOfTooltip 
           */}
-          <Tooltip />
+          <Tooltip
+            content={({ active }: { active: boolean }): ReactElement => {
+              return (
+                <LineChartTooltip
+                  chartItems={lines.map((line) => {
+                    const { dataKey, stroke } = line;
+                    return {
+                      label: dataKey,
+                      color: stroke,
+                    };
+                  })}
+                />
+              );
+            }}
+          />
           {lines.map((line, index) => {
             const { dataKey, stroke } = line;
             return (
