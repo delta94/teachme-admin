@@ -3,15 +3,16 @@ import WMInput from '../WMInput';
 
 interface ITextCounter {
   value?: string | undefined;
-  limit?: number | undefined;
+  label?: string | undefined;
+  maxLength?: number | undefined;
 }
 
-export default function TextCounter({ value, limit }: ITextCounter): JSX.Element {
+export default function TextCounter({ value, label, maxLength }: ITextCounter): JSX.Element {
   const [content, setContent] = useState(value as string);
 
   const setFormattedContent = (text: string) => {
-    if (limit === undefined) return;
-    text.length > limit ? setContent(text.slice(0, limit)) : setContent(text);
+    if (maxLength === undefined) return;
+    setContent(text);
   };
 
   useEffect(() => {
@@ -20,9 +21,14 @@ export default function TextCounter({ value, limit }: ITextCounter): JSX.Element
 
   return (
     <div>
-      <WMInput onChange={(event) => setFormattedContent(event.target.value)} value={content} />
+      <label>{label}</label>
+      <WMInput
+        onChange={(e: any) => setFormattedContent(e.target.value)}
+        value={content}
+        maxLength={maxLength}
+      />
       <p>
-        {content.length}/{limit}
+        {content.length}/{maxLength}
       </p>
     </div>
   );

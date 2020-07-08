@@ -6,7 +6,7 @@ import TextCounter from '../../../common/TextCounter';
 export default function Counter(): ReactElement {
   return (
     <>
-      <TextCounter limit={32} value="Hello!" />
+      <TextCounter maxLength={15} value="Hello!" />
       <Divider />
     </>
   );
