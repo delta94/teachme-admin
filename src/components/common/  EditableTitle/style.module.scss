@@ -16,7 +16,7 @@
     background-color: transparent;
     font-size: 22px;
     font-weight: 600;
-    line-height: 40px;
+    line-height: 39px;
     padding: 0;
 
     &.hidden {
@@ -35,8 +35,11 @@
   }
 
   .input-title {
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+
     &:focus {
-      border-bottom: 1px solid var(--neutral900);
+      border-color: var(--neutral900);
     }
   }
 }

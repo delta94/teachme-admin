@@ -1,4 +1,4 @@
-import React, { useState, ReactElement, useRef } from 'react';
+import React, { useState, ReactElement, useRef, ChangeEvent } from 'react';
 import cc from 'classcat';
 
 import WMInput from '../WMInput';
@@ -21,8 +21,8 @@ export default function EditableTitle({
     onBlur(value);
   };
 
-  const onChange = (e: any) => {
-    setInputValue(e.target.value);
+  const onChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(ev.target.value);
   };
 
   const [showInputText, setShowInputText] = useState(false);
@@ -41,7 +41,7 @@ export default function EditableTitle({
         className={cc([classes['text-title'], { [classes['hidden']]: showInputText }])}
         onClick={showInput}
       >
-        Untitled Course
+        {inputValue}
         <Icon type={IconType.Pencil} className={classes['pencil-icon']} />
       </div>
       <WMInput
