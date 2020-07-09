@@ -39,6 +39,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           xKey="day"
           lines={lines}
           lineKeyPrefix="course-status"
+          isWMTooltip
         />
       </div>
     </WMCard>

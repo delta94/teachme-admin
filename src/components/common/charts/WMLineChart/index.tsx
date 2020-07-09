@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import {
   LineChart,
   XAxis,
@@ -8,14 +8,16 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import LineChartTooltip from './LineChartTooltip';
+
+import WMChartTooltip from '../WMChartTooltip';
 
 export interface IWMLineChartProps<T> {
-  className?: string;
   data: T[];
   xKey: string;
   lineKeyPrefix: string;
   lines: { dataKey: string; stroke: string; tooltipLabel: string }[];
+  className?: string;
+  isWMTooltip?: boolean;
 }
 
 export default function WMLineChart<T extends {}>({
@@ -24,8 +26,9 @@ export default function WMLineChart<T extends {}>({
   xKey,
   lineKeyPrefix,
   lines,
+  isWMTooltip,
 }: IWMLineChartProps<T>) {
-  const CustomTooltip = ({
+  const renderWMTooltip = ({
     payload,
     label,
     active,
@@ -36,28 +39,25 @@ export default function WMLineChart<T extends {}>({
   }) => {
     if (active) {
       return (
-        <LineChartTooltip
+        <WMChartTooltip
           data={{
             payload,
             label,
             active,
           }}
           chartItems={lines.map((line, index) => {
-            const { dataKey, stroke, tooltipLabel } = line;
+            const { stroke, tooltipLabel } = line;
             return {
-              title: label,
-              label: `${payload[index].value} ${tooltipLabel}`,
+              value: payload[index].value,
+              label: tooltipLabel,
               color: stroke,
             };
           })}
         />
       );
     }
-
-    return null;
   };
 
-  console.log('xKey ', xKey);
   return (
     <div className={className}>
       <ResponsiveContainer>
@@ -65,11 +65,7 @@ export default function WMLineChart<T extends {}>({
           <XAxis dataKey={xKey} />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
-          {/* TODO: 
-            after getting the SDK and integrating with time-filter
-            use https://recharts.org/en-US/examples/CustomContentOfTooltip 
-          */}
-          <Tooltip content={(data: any) => <CustomTooltip {...data} />} />
+          {isWMTooltip ? <Tooltip content={(data: any) => renderWMTooltip(data)} /> : <Tooltip />}
           {lines.map((line, index) => {
             const { dataKey, stroke } = line;
             return (
