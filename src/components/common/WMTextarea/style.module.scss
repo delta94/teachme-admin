@@ -6,13 +6,13 @@
     background-color: var(--white);
     font-family: var(--font-primary);
 
-    min-height: 60px;
-    max-height: 110px;
-    resize: none;
+    &.no-resize {
+      resize: none;
+    }
 
     &:hover,
     &:focus {
-      border-color: #cdced1;
+      border-color: var(--border-light);
       box-shadow: none;
     }
   }
