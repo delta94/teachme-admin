@@ -15,6 +15,7 @@ import ExportButton from '../../common/buttons/ExportButton';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import Icon, { IconType } from '../../common/Icon';
 
+import WMTag from '../../common/WMTag';
 import classes from './style.module.scss';
 
 interface ICourseData {
@@ -32,26 +33,38 @@ interface ICourseData {
 }
 
 const statuses: IWMDropdownOption[] = [
-  { id: 0, text: 'All Status' },
-  { id: 1, text: 'Published' },
-  { id: 2, text: 'Modified' },
-  { id: 3, text: 'Draft' },
-  { id: 4, text: 'Archived' },
+  { id: 0, value: 'All Status' },
+  { id: 1, value: 'Published' },
+  { id: 2, value: 'Modified' },
+  { id: 3, value: 'Draft' },
+  { id: 4, value: 'Archived' },
 ];
 
 const segments: IWMDropdownOption[] = [
-  { id: 0, text: 'All Segments' },
-  { id: 1, text: 'All Employees' },
-  { id: 2, text: 'HR' },
-  { id: 3, text: 'Sales' },
-  { id: 4, text: 'Product' },
-  { id: 5, text: 'R&D' },
+  { id: 0, value: 'All Segments' },
+  { id: 1, value: 'All Employees' },
+  { id: 2, value: 'HR' },
+  { id: 3, value: 'Sales' },
+  { id: 4, value: 'Product' },
+  { id: 5, value: 'R&D' },
 ];
 
 const prodStatuses: IWMDropdownOption[] = [
-  { id: 0, text: 'Published' },
-  { id: 1, text: 'Draft' },
-  { id: 2, text: 'Archived' },
+  {
+    id: 0,
+    value: 'Published',
+    label: <WMTag value="Published" color="green" className={classes['dropdown-tag']} />,
+  },
+  {
+    id: 1,
+    value: 'Draft',
+    label: <WMTag value="Draft" color="orange" className={classes['dropdown-tag']} />,
+  },
+  {
+    id: 2,
+    value: 'Archived',
+    label: <WMTag value="Archived" color="gray" className={classes['dropdown-tag']} />,
+  },
 ];
 
 export default function CoursesScreen(): ReactElement {
@@ -76,7 +89,7 @@ export default function CoursesScreen(): ReactElement {
 
   const onProdStatusChange = (selected: IWMDropdownOption) => {
     setSelectedProdStatus(selected);
-    message.info(`Production status changed to ${selected.text}`);
+    message.info(`Production status changed to ${selected.value}`);
   };
 
   const onMultiSelectChange = (selectedRowKeys: any) => {

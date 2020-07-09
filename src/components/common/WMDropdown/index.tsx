@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import cc from 'classcat';
 import { Dropdown, Menu } from 'antd';
 import { DropDownProps } from 'antd/lib/dropdown';
@@ -7,7 +7,8 @@ import classes from './style.module.scss';
 
 export interface IWMDropdownOption {
   id: string | number;
-  text: string;
+  value: string | number;
+  label?: ReactNode;
 }
 
 export interface IWMDropdown extends Omit<DropDownProps, 'overlay'> {
@@ -15,7 +16,7 @@ export interface IWMDropdown extends Omit<DropDownProps, 'overlay'> {
   selected?: IWMDropdownOption;
   className?: string;
   onSelectedChange?: (selected: IWMDropdownOption) => void;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function WMDropdown({
@@ -27,7 +28,6 @@ export default function WMDropdown({
   ...otherProps
 }: IWMDropdown): ReactElement {
   const onMenuClick = (e: any) => {
-    console.log('click', e);
     const selected = options.find((option) => option.id.toString() === e.key);
     selected && onSelectedChange && onSelectedChange(selected);
   };
@@ -42,7 +42,7 @@ export default function WMDropdown({
           ])}
           key={option.id}
         >
-          {option.text}
+          {option.label ?? option.value}
         </Menu.Item>
       ))}
     </Menu>
