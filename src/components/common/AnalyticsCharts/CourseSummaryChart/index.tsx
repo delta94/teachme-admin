@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
@@ -6,7 +7,6 @@ import { WMLineChart } from '../../charts';
 import { ICourseSummaryChart, ICourseByDay } from '../analytics.interface';
 
 import classes from './style.module.scss';
-import moment from 'moment';
 
 const LegendContent = ({ number, description }: { number: number; description?: string }) => {
   return (

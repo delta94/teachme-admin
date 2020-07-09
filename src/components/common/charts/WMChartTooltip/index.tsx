@@ -27,9 +27,9 @@ export default function WMChartTooltip({ chartItems, data }: IWMChartTooltip) {
           <StatusDot
             type={DotType.Custom}
             dotColor={item.color}
-            className={classes['wm-tooltip-legend-status-dot']}
+            className={classes['status-dot']}
           />
-          <span className={classes['wm-chart-tooltip-label']}>
+          <span>
             <b>{item.value} </b>
             {item.label}
           </span>
