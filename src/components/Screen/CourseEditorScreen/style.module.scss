@@ -2,6 +2,7 @@
   --cards-border: solid 1px #e6edf1;
 
   display: flex;
+  font-family: var(--font-primary);
   color: var(--neutral900);
 
   .items,
@@ -34,6 +35,10 @@
 
       .search {
         width: 100%;
+
+        ::placeholder {
+          font-weight: 400;
+        }
       }
     }
 
@@ -42,14 +47,31 @@
       overflow: auto;
 
       .item {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 9px 20px;
+        display: flex;
+        align-items: center;
+        height: 35px;
+        color: #1c2332;
+        padding: 0 20px;
         border-top: var(--cards-border);
 
         &:last-of-type {
           border-bottom: var(--cards-border);
+        }
+
+        &:hover {
+          cursor: move;
+        }
+
+        &-icon {
+          color: #aac5d1;
+          margin-right: 11px;
+        }
+
+        &-title {
+          font-size: 13px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }

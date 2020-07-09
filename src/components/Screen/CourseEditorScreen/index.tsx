@@ -7,9 +7,16 @@ import WMCard from '../../common/WMCard';
 import ScreenHeader from '../../common/ScreenHeader';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
+import Icon, { IconType } from '../../common/Icon';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 
 import classes from './style.module.scss';
+
+const ItemIcon = {
+  smartwalkthru: IconType.SmartWalkthruSmall,
+  article: IconType.ArticleSmall,
+  video: IconType.VideoSmall,
+};
 
 enum TabId {
   CourseOutline = 'course-outline',
@@ -86,9 +93,12 @@ export default function CourseEditorScreen(): ReactElement {
             />
           </div>
           <ul className={classes['item-list']}>
-            {filteredItems.map((item, i) => (
+            {filteredItems.map(({ title, type }, i) => (
               <li key={i} className={classes['item']}>
-                {item.title}
+                <span className={classes['item-icon']}>
+                  {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
+                </span>
+                <span className={classes['item-title']}>{title}</span>
               </li>
             ))}
           </ul>
