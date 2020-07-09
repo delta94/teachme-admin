@@ -18,19 +18,20 @@
 
   .items,
   .details-panel {
-    width: 340px;
-
     .title {
       display: flex;
       justify-content: space-between;
       font-family: var(--font-secondary), sans-serif;
       font-size: 14px;
+      white-space: nowrap;
       height: 60px;
       padding: 20px;
     }
   }
 
   .items {
+    min-width: 340px;
+    width: 340px;
     margin-right: 10px;
     background-color: #fafafa;
 
@@ -87,7 +88,6 @@
 
   .course-structure {
     flex-grow: 1;
-    z-index: 1;
 
     .tabs {
       font-family: var(--font-secondary), sans-serif;
@@ -137,11 +137,16 @@
   }
 
   .details-panel {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
+    min-width: 0;
+    width: 0;
+    border-width: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
 
     &.open {
-      transform: translateX(0%);
+      min-width: 340px;
+      width: 340px;
+      border-width: 1px;
     }
   }
 }
