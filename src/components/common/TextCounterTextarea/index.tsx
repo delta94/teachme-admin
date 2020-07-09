@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, ReactElement, ChangeEvent } from 'react';
 
 import WMTextarea from '../WMTextarea';
 
 import classes from './style.module.scss';
 
 interface ITextCounterTextarea {
-  placeholder?: string | undefined;
-  label?: string | undefined;
-  maxLength?: number | undefined;
+  placeholder: string | undefined;
+  label: string | undefined;
+  maxLength: number | undefined;
   minRows?: number | undefined;
   maxRows?: number | undefined;
+  onChange: (value: string) => void;
 }
 
 export default function TextCounterTextarea({
@@ -18,25 +19,29 @@ export default function TextCounterTextarea({
   maxLength,
   minRows,
   maxRows,
-}: ITextCounterTextarea): JSX.Element {
+  onChange,
+}: ITextCounterTextarea): ReactElement {
   const [content, setContent] = useState('' as string);
 
-  const setFormattedContent = (text: string) => {
+  const onInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (maxLength === undefined) return;
-    setContent(text);
+    setContent(e.target.value);
+    onChange(e.target.value);
   };
 
   return (
-    <div className={classes['text-counter']}>
-      <label className={classes['input-label']}>{label}</label>
-      <WMTextarea
-        className={classes['input-text']}
-        onChange={(e: any) => setFormattedContent(e.target.value)}
-        value={content}
-        placeholder={placeholder}
-        maxLength={maxLength}
-        autosize={{ minRows, maxRows }}
-      />
+    <div className={classes['text-counter-text-area']}>
+      <label className={classes['input-label']}>
+        {label}
+        <WMTextarea
+          className={classes['input-text']}
+          onChange={onInputChange}
+          value={content}
+          placeholder={placeholder}
+          maxLength={maxLength}
+          autosize={{ minRows, maxRows }}
+        />
+      </label>
       <p className={classes['input-counter']}>
         {content.length}/{maxLength}
       </p>

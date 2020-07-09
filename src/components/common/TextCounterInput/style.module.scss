@@ -1,12 +1,10 @@
-.text-counter {
-  display: grid;
-  width: 300px;
+.text-counter-input {
+  display: flex;
+  flex-direction: column;
 
   .input-label {
     color: var(--neutral900);
     font-family: var(--font-primary), sans-serif;
-    height: 15px;
-    width: 131.69px;
     font-size: 14px;
     line-height: 16px;
   }
@@ -16,8 +14,6 @@
     background-color: var(--white);
     font-family: var(--font-primary), sans-serif;
     color: var(--neutral900);
-    box-sizing: border-box;
-    width: 300px;
     border-radius: 2px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -35,6 +31,6 @@
     font-weight: bold;
     line-height: 11px;
     text-align: right;
-    justify-self: right;
+    align-self: flex-end;
   }
 }

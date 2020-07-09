@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 import { TextAreaProps } from 'antd/lib/input';
@@ -16,7 +16,7 @@ export default function WMTextarea({
   className,
   autosize = { minRows: 3, maxRows: 5 },
   ...otherProps
-}: IWMTextareaProps) {
+}: IWMTextareaProps): ReactElement {
   return (
     <TextArea
       className={cc([classes['wm-textarea'], className])}
