@@ -4,18 +4,22 @@ import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 
-import WMCard from '../../common/WMCard';
-import WMTable from '../../common/WMTable';
-import ScreenHeader from '../../common/ScreenHeader';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
-import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
-import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import Icon, { IconType } from '../../common/Icon';
-
+import ScreenHeader from '../../common/ScreenHeader';
+import SearchFilter from '../../common/filters/SearchFilter';
+import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
+import WMCard from '../../common/WMCard';
+import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
+import WMTable from '../../common/WMTable';
 import WMTag from '../../common/WMTag';
+// dialogs
+import DeleteCourseDialog from '../../common/dialogs/DeleteCourseDialog';
+import DialogPublishToEnvironment from '../../common/dialogs/PublishToEnvironmentDialog';
+import ExportToCSVDialog from '../../common/dialogs/ExportToCSVDialog';
+
 import classes from './style.module.scss';
 
 interface ICourseData {
@@ -78,6 +82,11 @@ export default function CoursesScreen(): ReactElement {
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
   const [selectedRows, setSelectedRows] = useState<Array<any>>([]);
 
+  // dialogs
+  const [showPublish, setShowPublish] = useState(false);
+  const [showExport, setShowExport] = useState(false);
+  const [showDeleteCourse, setShowDeleteCourse] = useState(false);
+
   const onSearch = (searchValue: string) => {
     const newTableData = table.data.filter((course) =>
       course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
@@ -85,21 +94,14 @@ export default function CoursesScreen(): ReactElement {
     setTableData(newTableData);
   };
 
-  const [selectedProdStatus, setSelectedProdStatus] = useState(prodStatuses[0]);
-
   const onProdStatusChange = (selected: IWMDropdownOption) => {
-    setSelectedProdStatus(selected);
-    message.info(`Production status changed to ${selected.value}`);
+    if (selected.value === 'Published') setShowPublish(true);
+    else message.info(`Production status was changed to ${selected.value}`);
   };
 
   const onMultiSelectChange = (selectedRowKeys: any) => {
     setSelectedRowKeys(selectedRowKeys);
     setSelectedRows(table.data.filter((row) => selectedRowKeys.includes(row.key)));
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onMultiSelectChange,
   };
 
   const hasSelected = selectedRowKeys.length > 0;
@@ -112,7 +114,10 @@ export default function CoursesScreen(): ReactElement {
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
         <WMTable
-          rowSelection={rowSelection}
+          rowSelection={{
+            selectedRowKeys,
+            onChange: onMultiSelectChange,
+          }}
           data={tableData as Array<ICourseData>}
           columns={table.columns}
         >
@@ -123,7 +128,6 @@ export default function CoursesScreen(): ReactElement {
           <ControlsWrapper>
             <WMDropdown
               options={prodStatuses}
-              selected={selectedProdStatus}
               onSelectedChange={onProdStatusChange}
               disabled={!hasSelected}
             >
@@ -137,8 +141,15 @@ export default function CoursesScreen(): ReactElement {
               className={classes['delete-btn']}
               icon={<Icon type={IconType.Delete} />}
               disabled={!hasSelected}
+              onClick={() => {
+                setShowDeleteCourse(true);
+              }}
             />
-            <ExportButton />
+            <ExportButton
+              onClick={() => {
+                setShowExport(true);
+              }}
+            />
             <Divider className={classes['separator']} type="vertical" />
             <WMButton
               className={classes['create-btn']}
@@ -152,6 +163,31 @@ export default function CoursesScreen(): ReactElement {
           </ControlsWrapper>
         </WMTable>
       </WMCard>
+      {/* Dialogs */}
+      <DialogPublishToEnvironment
+        open={showPublish}
+        onCancel={() => setShowPublish(false)}
+        onConfirm={() => {
+          setShowPublish(false);
+          message.info(`Production status changed to Published`);
+        }}
+      />
+      <DeleteCourseDialog
+        open={showDeleteCourse}
+        onCancel={() => setShowDeleteCourse(false)}
+        onConfirm={() => {
+          setShowDeleteCourse(false);
+          message.info('Deleting courses');
+        }}
+      />
+      <ExportToCSVDialog
+        open={showExport}
+        onCancel={() => setShowExport(false)}
+        onConfirm={() => {
+          setShowExport(false);
+          message.info('Exporting file');
+        }}
+      />
     </>
   );
 }
