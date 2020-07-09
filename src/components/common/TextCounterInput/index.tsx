@@ -3,14 +3,17 @@ import React, { useState } from 'react';
 import WMInput from '../WMInput';
 
 import classes from './style.module.scss';
-interface ITextCounter {
+interface ITextCounterInput {
   placeholder?: string | undefined;
   label?: string | undefined;
   maxLength?: number | undefined;
-  size?: string | undefined;
 }
 
-export default function TextCounter({ placeholder, label, maxLength }: ITextCounter): JSX.Element {
+export default function TextCounterInput({
+  placeholder,
+  label,
+  maxLength,
+}: ITextCounterInput): JSX.Element {
   const [content, setContent] = useState('' as string);
 
   const setFormattedContent = (text: string) => {
