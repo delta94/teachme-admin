@@ -13,7 +13,7 @@ export interface IWMSwitch extends SwitchProps {
 export default function WMSwitch({
   label,
   infoText,
-  size,
+  size = 'small',
   checked,
   className,
   ...otherProps
@@ -29,11 +29,7 @@ export default function WMSwitch({
       ])}
     >
       <label className={classes['wm-switch-wrap']}>
-        <Switch
-          size={size || 'small'}
-          className={cc([classes['switch-btn'], className])}
-          {...otherProps}
-        />
+        <Switch size={size} className={cc([classes['switch-btn'], className])} {...otherProps} />
         <span className={classes['switch-label']}>{label}</span>
       </label>
       {infoText && <p className={classes['switch-info']}>{infoText}</p>}
