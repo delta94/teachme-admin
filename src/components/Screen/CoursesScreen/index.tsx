@@ -9,7 +9,6 @@ import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import DropdownFilter from '../../common/filters/DropdownFilter';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
@@ -63,6 +62,8 @@ export default function CoursesScreen(): ReactElement {
   } = coursesMockData;
 
   const [tableData, setTableData] = useState(table.data);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
+  const [selectedRows, setSelectedRows] = useState<Array<any>>([]);
 
   const onSearch = (searchValue: string) => {
     const newTableData = table.data.filter((course) =>
@@ -78,6 +79,17 @@ export default function CoursesScreen(): ReactElement {
     message.info(`Production status changed to ${selected.text}`);
   };
 
+  const onMultiSelectChange = (selectedRowKeys: any) => {
+    setSelectedRowKeys(selectedRowKeys);
+    setSelectedRows(table.data.filter((row) => selectedRowKeys.includes(row.key)));
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onMultiSelectChange,
+  };
+
+  const hasSelected = selectedRowKeys.length > 0;
   return (
     <>
       <ScreenHeader title={mainTitle} />
@@ -86,16 +98,21 @@ export default function CoursesScreen(): ReactElement {
         title={`${tableData.length} ${CoursesTableTitle}`}
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <WMTable data={tableData as Array<ICourseData>} columns={table.columns}>
+        <WMTable
+          rowSelection={rowSelection}
+          data={tableData as Array<ICourseData>}
+          columns={table.columns}
+        >
           <ControlsWrapper>
-            <DropdownFilter label="Status" options={statuses} />
-            <DropdownFilter label="Segments" options={segments} />
+            {/* <DropdownFilter label="Status" options={statuses} />
+            <DropdownFilter label="Segments" options={segments} /> */}
           </ControlsWrapper>
           <ControlsWrapper>
             <WMDropdown
               options={prodStatuses}
               selected={selectedProdStatus}
               onSelectedChange={onProdStatusChange}
+              disabled={!hasSelected}
             >
               <WMButton className={classes['prod-status']}>
                 Change Status
@@ -103,7 +120,11 @@ export default function CoursesScreen(): ReactElement {
               </WMButton>
             </WMDropdown>
             <Divider className={classes['separator']} type="vertical" />
-            <WMButton className={classes['delete-btn']} icon={<Icon type={IconType.Delete} />} />
+            <WMButton
+              className={classes['delete-btn']}
+              icon={<Icon type={IconType.Delete} />}
+              disabled={!hasSelected}
+            />
             <ExportButton />
             <Divider className={classes['separator']} type="vertical" />
             <WMButton
