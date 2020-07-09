@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import moment from 'moment';
 
 import WMCard from '../../WMCard';
@@ -17,7 +17,7 @@ const LegendContent = ({ number, description }: { number: number; description?: 
   );
 };
 
-export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart) {
+export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart): ReactElement {
   const {
     title,
     data: { days, lines },
@@ -64,7 +64,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           xKey="day"
           lines={lines}
           lineKeyPrefix="course-summary"
-          isWMTooltip
+          hasWMTooltip
         />
       </div>
     </WMCard>

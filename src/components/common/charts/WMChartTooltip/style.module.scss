@@ -1,28 +1,30 @@
 .wm-chart-tooltip {
-  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-primary), sans-serif;
   background-color: var(--white);
   box-shadow: 0 2px 0 0 #f2f2f2;
-  border: 1px solid var(--wmBorderColor);
+  border: var(--wm-border);
   border-radius: 2px;
   padding: 10px;
 
-  &-title {
+  .title {
     color: var(--neutral500);
     font-weight: 500;
+    margin-bottom: 5px;
   }
-}
 
-.wm-chart-tooltip-legend {
-  display: flex;
-  font-family: inherit;
-  font-size: 12px;
-  letter-spacing: 0;
-  line-height: 14px;
-  align-items: center;
-  color: var(--neutral900);
+  .legend {
+    display: flex;
+    font-family: inherit;
+    font-size: 12px;
+    align-items: center;
+    color: var(--neutral900);
+    margin-bottom: 5px;
 
-  .status-dot {
-    margin-right: 5px;
-    flex-shrink: 0;
+    .status-dot {
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
   }
 }

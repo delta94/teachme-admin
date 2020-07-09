@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import StatusDot, { DotType } from '../../StatusDot';
+
 import classes from './style.module.scss';
 
 interface IChartItem {
@@ -15,15 +16,12 @@ interface IWMChartTooltip {
   data: any;
 }
 
-export default function WMChartTooltip({ chartItems, data }: IWMChartTooltip) {
+export default function WMChartTooltip({ chartItems, data }: IWMChartTooltip): ReactElement {
   return (
     <div className={cc([classes['wm-chart-tooltip']])}>
-      <span className={classes['wm-chart-tooltip-title']}>{data.label}</span>
+      <span className={classes['title']}>{data.label}</span>
       {chartItems.map((item: IChartItem, index: number) => (
-        <div
-          key={`wm-chart-tooltip-legend-${index}`}
-          className={classes['wm-chart-tooltip-legend']}
-        >
+        <div key={`wm-chart-tooltip-legend-${index}`} className={classes['legend']}>
           <StatusDot
             type={DotType.Custom}
             dotColor={item.color}

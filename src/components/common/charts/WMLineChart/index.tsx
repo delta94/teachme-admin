@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   LineChart,
   XAxis,
@@ -9,16 +9,29 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+import { ITooltipContent } from '../charts.interface';
 import WMChartTooltip from '../WMChartTooltip';
+import { IWMLineChartItem, IWMLineChartProps } from './wmLineChart.interface';
 
-export interface IWMLineChartProps<T> {
-  data: T[];
-  xKey: string;
-  lineKeyPrefix: string;
-  lines: { dataKey: string; stroke: string; tooltipLabel: string }[];
-  className?: string;
-  isWMTooltip?: boolean;
-}
+const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLineChartItem[] }) => {
+  const { payload, label, active } = data;
+  if (active) {
+    return (
+      <WMChartTooltip
+        data={{
+          payload,
+          label,
+          active,
+        }}
+        chartItems={lines.map(({ stroke, tooltipLabel }, index) => ({
+          value: payload[index].value,
+          label: tooltipLabel,
+          color: stroke,
+        }))}
+      />
+    );
+  }
+};
 
 export default function WMLineChart<T extends {}>({
   className = '',
@@ -26,38 +39,8 @@ export default function WMLineChart<T extends {}>({
   xKey,
   lineKeyPrefix,
   lines,
-  isWMTooltip,
-}: IWMLineChartProps<T>) {
-  const renderWMTooltip = ({
-    payload,
-    label,
-    active,
-  }: {
-    payload: any[];
-    label: string;
-    active: boolean;
-  }) => {
-    if (active) {
-      return (
-        <WMChartTooltip
-          data={{
-            payload,
-            label,
-            active,
-          }}
-          chartItems={lines.map((line, index) => {
-            const { stroke, tooltipLabel } = line;
-            return {
-              value: payload[index].value,
-              label: tooltipLabel,
-              color: stroke,
-            };
-          })}
-        />
-      );
-    }
-  };
-
+  hasWMTooltip,
+}: IWMLineChartProps<T>): ReactElement {
   return (
     <div className={className}>
       <ResponsiveContainer>
@@ -65,18 +48,19 @@ export default function WMLineChart<T extends {}>({
           <XAxis dataKey={xKey} />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
-          {isWMTooltip ? <Tooltip content={(data: any) => renderWMTooltip(data)} /> : <Tooltip />}
-          {lines.map((line, index) => {
-            const { dataKey, stroke } = line;
-            return (
-              <Line
-                key={`${lineKeyPrefix}-${index}`}
-                type="monotone"
-                dataKey={dataKey}
-                stroke={stroke}
-              />
-            );
-          })}
+          {hasWMTooltip ? (
+            <Tooltip content={(data: any) => renderWMTooltip({ data, lines })} />
+          ) : (
+            <Tooltip />
+          )}
+          {lines.map(({ dataKey, stroke }, index) => (
+            <Line
+              key={`${lineKeyPrefix}-${index}`}
+              type="monotone"
+              dataKey={dataKey}
+              stroke={stroke}
+            />
+          ))}
         </LineChart>
       </ResponsiveContainer>
     </div>
