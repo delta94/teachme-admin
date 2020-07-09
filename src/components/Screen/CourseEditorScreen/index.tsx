@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { ContentItem } from '@walkme/types';
+import cc from 'classcat';
 
 import { getFlatItemsList } from '../../../walkme';
 
@@ -23,19 +24,6 @@ enum TabId {
   CourseOutline = 'course-outline',
   Settings = 'settings',
 }
-
-const cardTabs = [
-  {
-    id: TabId.CourseOutline,
-    title: 'Course Outline',
-    content: <WMButton className={classes['add-btn']} icon={<Icon type={IconType.Plus} />} />,
-  },
-  {
-    id: TabId.Settings,
-    title: 'Settings',
-    content: null, // TODO: add content
-  },
-];
 
 export default function CourseEditorScreen(): ReactElement {
   const [courseItems, setCourseItems] = useState<ContentItem[]>([]);
@@ -69,6 +57,27 @@ export default function CourseEditorScreen(): ReactElement {
     await fetchItemList();
     onSearch(searchValue);
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const cardTabs = [
+    {
+      id: TabId.CourseOutline,
+      title: 'Course Outline',
+      content: (
+        <WMButton
+          className={classes['add-btn']}
+          icon={<Icon type={IconType.Plus} />}
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      ),
+    },
+    {
+      id: TabId.Settings,
+      title: 'Settings',
+      content: null, // TODO: add content
+    },
+  ];
 
   return (
     <>
@@ -111,6 +120,10 @@ export default function CourseEditorScreen(): ReactElement {
             ))}
           </WMTabs>
         </WMCard>
+        <WMCard
+          className={cc([classes['details-panel'], { [classes['open']]: isOpen }])}
+          title={<div className={classes['title']}>Some Details</div>}
+        />
       </div>
     </>
   );

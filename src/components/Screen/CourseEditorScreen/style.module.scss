@@ -6,7 +6,8 @@
   color: var(--neutral900);
 
   .items,
-  .course-structure {
+  .course-structure,
+  .details-panel {
     height: 560px;
     color: inherit;
 
@@ -15,10 +16,9 @@
     }
   }
 
-  .items {
+  .items,
+  .details-panel {
     width: 340px;
-    margin-right: 10px;
-    background-color: #fafafa;
 
     .title {
       display: flex;
@@ -27,6 +27,14 @@
       font-size: 14px;
       height: 60px;
       padding: 20px;
+    }
+  }
+
+  .items {
+    margin-right: 10px;
+    background-color: #fafafa;
+
+    .title {
       border-bottom: var(--cards-border);
     }
 
@@ -79,6 +87,7 @@
 
   .course-structure {
     flex-grow: 1;
+    z-index: 1;
 
     .tabs {
       font-family: var(--font-secondary), sans-serif;
@@ -124,6 +133,15 @@
       box-shadow: 0 2px 0 0 #f2f2f2;
       font-size: 8px;
       color: var(--primary);
+    }
+  }
+
+  .details-panel {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: translateX(0%);
     }
   }
 }
