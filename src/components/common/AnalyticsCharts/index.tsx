@@ -18,9 +18,12 @@ export default function AnalyticsCharts({ data }: IAnalyticsCharts): ReactElemen
         <CourseStatusChart summaryData={summary} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
-        <CourseTimeCompletionChart completionData={completion} />
+        <CourseTimeCompletionChart className={classes['line-graph']} completionData={completion} />
         <div className={classes['quiz-graphs']}>
-          <QuizCompletionRateChart quizCompletionData={quizCompletion} />
+          <QuizCompletionRateChart
+            className={classes['line-graph']}
+            quizCompletionData={quizCompletion}
+          />
           {quizScore && <QuizScoreChart quizScoreData={quizScore} />}
         </div>
       </div>

@@ -7,10 +7,12 @@ export interface ICourseStatusChart {
 }
 
 export interface ICoursesTimeCompletionChart {
+  className?: string;
   completionData: any;
 }
 
 export interface IQuizCompletionRateChart {
+  className?: string;
   quizCompletionData: any;
 }
 

@@ -28,7 +28,7 @@ export default function WMCard({
           {subTitle && <div className={classes['card-subtitle']}>{subTitle}</div>}
         </Header>
       )}
-      <div className="wm-card-content">{children}</div>
+      {children}
     </Card>
   );
 }

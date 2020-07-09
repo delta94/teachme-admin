@@ -11,14 +11,15 @@
     margin-left: auto;
   }
 
-  :global(.wm-card-content) {
-    display: flex;
-  }
-
   .text {
     font-size: 12px;
     letter-spacing: 0;
     line-height: 14px;
     white-space: pre;
   }
+}
+
+.course-average-content {
+  display: flex;
+  margin-top: 0;
 }
