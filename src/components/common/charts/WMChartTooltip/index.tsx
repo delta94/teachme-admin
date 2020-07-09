@@ -19,8 +19,11 @@ export default function WMChartTooltip({ chartItems, data }: IWMChartTooltip) {
   return (
     <div className={cc([classes['wm-chart-tooltip']])}>
       <span className={classes['wm-chart-tooltip-title']}>{data.label}</span>
-      {chartItems.map((item: IChartItem) => (
-        <div className={classes['wm-chart-tooltip-legend']}>
+      {chartItems.map((item: IChartItem, index: number) => (
+        <div
+          key={`wm-chart-tooltip-legend-${index}`}
+          className={classes['wm-chart-tooltip-legend']}
+        >
           <StatusDot
             type={DotType.Custom}
             dotColor={item.color}

@@ -6,6 +6,7 @@ import { WMLineChart } from '../../charts';
 import { ICourseSummaryChart, ICourseByDay } from '../analytics.interface';
 
 import classes from './style.module.scss';
+import moment from 'moment';
 
 const LegendContent = ({ number, description }: { number: number; description?: string }) => {
   return (
@@ -22,6 +23,30 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
     data: { days, lines },
   } = summaryData;
 
+  // TODO: remove this method and the usages after getting the data from the SDK
+  const getLast7Days = () => {
+    let result = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date();
+      d.setDate(d.getDate() - i);
+      result.push(d);
+    }
+    return result;
+  };
+
+  // TODO: remove this method and the usages after getting the data from the SDK
+  const daysToDates = () => {
+    return days.map((dayData: ICourseByDay) => {
+      const last7Days = getLast7Days();
+      let date = moment(last7Days[dayData.day as number]).format('D/DD') as string;
+
+      return {
+        ...dayData,
+        day: date,
+      };
+    });
+  };
+
   return (
     <WMCard title={title}>
       <div className={classes['courses-status']}>
@@ -35,7 +60,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
         </div>
         <WMLineChart
           className={classes['course-status-chart']}
-          data={days as ICourseByDay[]}
+          data={daysToDates() as ICourseByDay[]}
           xKey="day"
           lines={lines}
           lineKeyPrefix="course-status"

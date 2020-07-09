@@ -15,10 +15,11 @@
 .wm-chart-tooltip-legend {
   display: flex;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0;
   line-height: 14px;
   align-items: center;
+  color: var(--neutral900);
 
   .wm-tooltip-legend-status-dot {
     margin-right: 5px;
