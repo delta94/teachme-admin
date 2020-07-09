@@ -8,6 +8,7 @@ import WMCard from '../../common/WMCard';
 
 import Dialogs from './components/Dialogs';
 import Switches from './components/Switches';
+import List from './components/List';
 
 import classes from './style.module.scss';
 
@@ -23,6 +24,12 @@ const tabs = [
     title: 'Switches',
     icon: undefined,
     content: <Switches />,
+  },
+  {
+    id: 'list',
+    title: 'List',
+    icon: undefined,
+    content: <List />,
   },
 ];
 
