@@ -1,17 +1,25 @@
+import courseSummaryMock from './courseSummaryChartMock';
+import courseCompletionChartMock from './courseCompletionChartMock';
+import courseCompletionRateChartMock from './courseCompletionRateChartMock';
+import courseOutlineTable from './courseOutlineMock';
+import { quizBarChartMock } from './quizBarChart-mock';
+
 export const courseMockData = {
   title: 'Course',
   analytics: {
-    graph_1: {
+    summary: {
       title: 'Users Started / Completed Course',
+      data: courseSummaryMock,
     },
-    graph_2: {
+    completion: {
       title: 'Avg. Completion Time',
+      data: courseCompletionChartMock,
     },
-    graph_3: {
+    quizCompletion: {
       title: 'Quiz Completion Rate',
+      data: courseCompletionRateChartMock,
     },
   },
-  CoursesTable: {
-    title: 'Courses',
-  },
+  courseOutlineTableData: courseOutlineTable,
+  quizData: quizBarChartMock,
 };

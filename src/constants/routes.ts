@@ -1,5 +1,5 @@
 import { IconType } from '../components/common/Icon/icon.interface';
-import { coursesMockData } from './mocks/courses-mock';
+import { coursesMockData } from './mocks/courses-screen';
 import { usersMockData } from './mocks/users-mock';
 
 export interface IRoute {
@@ -43,6 +43,12 @@ export const NEW_COURSE_EDITOR_ROUTE = {
   id: 'new-course',
   path: `${COURSE_EDITOR_ROUTE.path}/new`,
   title: 'new-course',
+};
+
+export const PLAYGROUND_ROUTE = {
+  id: 'Playground',
+  path: `/playground`,
+  title: 'Playground',
 };
 
 export const sidebarRoutes = [COURSES_ROUTE, USERS_ROUTE];

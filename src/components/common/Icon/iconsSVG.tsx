@@ -8,6 +8,9 @@ import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
 import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
 import { ReactComponent as PencilIcon } from '../../../images/icons/pencil.svg';
 import { ReactComponent as EventCourseIcon } from '../../../images/icons/event-course.svg';
+import { ReactComponent as SmartWalkthruIcon } from '../../../images/icons/smart-walkthru.svg';
+import { ReactComponent as VideoIcon } from '../../../images/icons/video.svg';
+import { ReactComponent as ArticleIcon } from '../../../images/icons/article.svg';
 
 import { IconType } from './icon.interface';
 
@@ -22,4 +25,8 @@ export const IconSVG = {
   [IconType.Delete]: DeleteIcon,
   [IconType.Pencil]: PencilIcon,
   [IconType.EventCourse]: EventCourseIcon,
+  [IconType.SmartWalkthru]: SmartWalkthruIcon,
+  [IconType.Article]: ArticleIcon,
+  [IconType.Video]: VideoIcon,
+  [IconType.Content]: VideoIcon, // TODO: should remove after fixing course item type
 };

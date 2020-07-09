@@ -5,6 +5,8 @@ import { message } from 'antd';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
+import classes from '../style.module.scss';
+
 const environments: IWMDropdownOption[] = [
   { id: 0, text: 'Production' },
   { id: 1, text: 'Test' },
@@ -25,7 +27,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       selected={selectedEnvironment}
       onSelectedChange={handleMenuClick}
     >
-      <WMButton type="link">
+      <WMButton className={classes['dropdown-menu-button']}>
         {selectedEnvironment.text}
         <DownOutlined />
       </WMButton>

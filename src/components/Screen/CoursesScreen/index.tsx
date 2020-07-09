@@ -2,10 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { Divider, message } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { coursesMockData } from '../../../constants/mocks/courses-mock';
-import courseCompletionChartMock from '../../../constants/mocks/courseCompletionChartMock';
-import courseCompletionRateChartMock from '../../../constants/mocks/courseCompletionRateChartMock';
-import { data, columns } from '../../../constants/mocks/tableMockCoursesData';
+import { coursesMockData } from '../../../constants/mocks/courses-screen';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
@@ -16,7 +13,7 @@ import DropdownFilter from '../../common/filters/DropdownFilter';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
-import WMButton from '../../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
@@ -59,11 +56,16 @@ const prodStatuses: IWMDropdownOption[] = [
 ];
 
 export default function CoursesScreen(): ReactElement {
-  const { title: mainTitle, analytics, CoursesTable } = coursesMockData;
-  const [tableData, setTableData] = useState(data);
+  const {
+    title: mainTitle,
+    analytics,
+    CoursesTable: { title: CoursesTableTitle, table },
+  } = coursesMockData;
+
+  const [tableData, setTableData] = useState(table.data);
 
   const onSearch = (searchValue: string) => {
-    const newTableData = data.filter((course) =>
+    const newTableData = table.data.filter((course) =>
       course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
     );
     setTableData(newTableData);
@@ -79,16 +81,12 @@ export default function CoursesScreen(): ReactElement {
   return (
     <>
       <ScreenHeader title={mainTitle} />
-      <AnalyticsCharts
-        data={analytics}
-        courseTimeCompletionData={courseCompletionChartMock}
-        quizCompletionRateData={courseCompletionRateChartMock}
-      />
+      <AnalyticsCharts data={analytics} />
       <WMCard
-        title={`${tableData.length} ${CoursesTable.title}`}
+        title={`${tableData.length} ${CoursesTableTitle}`}
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <WMTable data={tableData as Array<ICourseData>} columns={columns}>
+        <WMTable data={tableData as Array<ICourseData>} columns={table.columns}>
           <ControlsWrapper>
             <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} />
@@ -99,7 +97,7 @@ export default function CoursesScreen(): ReactElement {
               selected={selectedProdStatus}
               onSelectedChange={onProdStatusChange}
             >
-              <WMButton className={classes['prod-status']} type="link">
+              <WMButton className={classes['prod-status']}>
                 Change Status
                 <DownOutlined />
               </WMButton>
@@ -108,7 +106,12 @@ export default function CoursesScreen(): ReactElement {
             <WMButton className={classes['delete-btn']} icon={<Icon type={IconType.Delete} />} />
             <ExportButton />
             <Divider className={classes['separator']} type="vertical" />
-            <WMButton className={classes['create-btn']} type="link" icon={<PlusOutlined />}>
+            <WMButton
+              className={classes['create-btn']}
+              shape="round"
+              variant={ButtonVariantEnum.Create}
+              icon={<PlusOutlined />}
+            >
               Create Course
             </WMButton>
             <SearchFilter placeholder="Search course name" onSearch={onSearch} />

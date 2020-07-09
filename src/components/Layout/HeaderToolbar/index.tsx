@@ -25,7 +25,6 @@ export default function HeaderToolbar(): ReactElement {
       <Tooltip title="Help">
         <WMButton
           className={classes['help-btn']}
-          type="link"
           href="https://walkme.com"
           target="_blank"
           icon={<Icon type={IconType.HelpCircle} />}
