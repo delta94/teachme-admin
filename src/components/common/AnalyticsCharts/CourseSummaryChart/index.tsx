@@ -49,7 +49,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
 
   return (
     <WMCard title={title}>
-      <div className={classes['courses-status']}>
+      <div className={classes['course-summary']}>
         <div className={classes['chart-legend']}>
           <WMLegend title="User Started" dotStatusColor="#F2B529">
             <LegendContent number={2580} description="52% of users with TeachMe access" />
@@ -59,11 +59,11 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           </WMLegend>
         </div>
         <WMLineChart
-          className={classes['course-status-chart']}
+          className={classes['course-summary-chart']}
           data={daysToDates() as ICourseByDay[]}
           xKey="day"
           lines={lines}
-          lineKeyPrefix="course-status"
+          lineKeyPrefix="course-summary"
           isWMTooltip
         />
       </div>
