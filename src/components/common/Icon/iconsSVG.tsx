@@ -13,6 +13,7 @@ import { ReactComponent as VideoSmallIcon } from '../../../images/icons/video-sm
 import { ReactComponent as ArticleIcon } from '../../../images/icons/article.svg';
 import { ReactComponent as ArticleSmallIcon } from '../../../images/icons/article-small.svg';
 import { ReactComponent as RefreshIcon } from '../../../images/icons/refresh.svg';
+import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 
 import { IconType } from './icon.interface';
 
@@ -33,4 +34,5 @@ export const IconSVG = {
   [IconType.VideoSmall]: VideoSmallIcon,
   [IconType.Content]: VideoIcon, // TODO: should remove after fixing course item type
   [IconType.Refresh]: RefreshIcon,
+  [IconType.Plus]: PlusIcon,
 };

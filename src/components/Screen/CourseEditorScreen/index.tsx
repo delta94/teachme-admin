@@ -9,6 +9,7 @@ import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
+import WMButton from '../../common/WMButton';
 
 import classes from './style.module.scss';
 
@@ -27,7 +28,7 @@ const cardTabs = [
   {
     id: TabId.CourseOutline,
     title: 'Course Outline',
-    content: null, // TODO: add content
+    content: <WMButton className={classes['add-btn']} icon={<Icon type={IconType.Plus} />} />,
   },
   {
     id: TabId.Settings,
@@ -68,8 +69,6 @@ export default function CourseEditorScreen(): ReactElement {
     await fetchItemList();
     onSearch(searchValue);
   };
-
-  console.log(courseItems);
 
   return (
     <>

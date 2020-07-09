@@ -15,4 +15,5 @@ export enum IconType {
   ArticleSmall = 'article-small',
   Content = 'content', // TODO: should remove after fixing course item type
   Refresh = 'refresh',
+  Plus = 'plus',
 }
