@@ -1,3 +1,10 @@
+import React from 'react';
+
+import IconTextCell from '../../components/common/tableCells/IconTextCell';
+import Icon from '../../components/common/Icon';
+import DashCell from '../../components/common/tableCells/DashCell';
+import NumberCell from '../../components/common/tableCells/NumberCell';
+
 export const courseOutline = {
   id: 1284870,
   title: 'Really Good Course!',
@@ -260,7 +267,7 @@ export const courseOutline = {
   },
 };
 
-export const courseOutlineTableData = courseOutline.items.map((item) => {
+export const courseOutlineTableMockData = courseOutline.items.map((item) => {
   const isLesson = item.type === 'lesson';
 
   let itemData = {
@@ -282,12 +289,53 @@ export const courseOutlineTableData = courseOutline.items.map((item) => {
       ...itemData,
       children: item.childNodes.map((node) => {
         return {
-          ...itemData,
           className: '',
           key: node.id,
+          title: node.title,
+          type: node.type,
           itemName: { value: node.title, icon: node.type },
         };
       }),
     };
   }
 });
+
+export const courseOutlineTableMockColumns = [
+  {
+    title: 'Item Name',
+    dataIndex: 'itemName',
+    key: 'item-name',
+    render: ({ value, icon }: { value: string; icon?: string }) => {
+      return <IconTextCell value={value} icon={icon && <Icon type={icon} />} />;
+    },
+  },
+  {
+    title: 'Users Completed Item',
+    dataIndex: 'usersCompletedItem',
+    key: 'users-completed-item',
+    width: '15%',
+    render: (value: number) => (
+      <DashCell value={value}>
+        <NumberCell value={value} />
+      </DashCell>
+    ),
+  },
+  {
+    title: 'Drop-off',
+    dataIndex: 'dropOff',
+    key: 'drop-off',
+    width: '15%',
+    render: (value: number) => (
+      <DashCell value={value}>
+        <NumberCell value={value} />
+      </DashCell>
+    ),
+  },
+];
+
+const courseOutlineTable = {
+  data: courseOutlineTableMockData,
+  columns: courseOutlineTableMockColumns,
+};
+
+export default courseOutlineTable;

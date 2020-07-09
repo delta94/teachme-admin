@@ -8,6 +8,7 @@ import WMCard from '../../common/WMCard';
 
 import Dialogs from './components/Dialogs';
 import Counter from './components/Counter';
+import Switches from './components/Switches';
 
 import classes from './style.module.scss';
 
@@ -23,6 +24,12 @@ const tabs = [
     title: 'Counter',
     icon: undefined,
     content: <Counter />,
+  },
+  {
+    id: 'switches',
+    title: 'Switches',
+    icon: undefined,
+    content: <Switches />,
   },
 ];
 

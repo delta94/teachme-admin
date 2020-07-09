@@ -1,55 +1,56 @@
-import React, { ReactElement } from 'react';
-
-import { courseOutlineTableData } from '../../../constants/mocks/courseOutlineMock';
+import React, { ReactElement, useState } from 'react';
 
 import WMTable from '../../common/WMTable';
-import DashCell from '../../common/tableCells/DashCell';
-import NumberCell from '../../common/tableCells/NumberCell';
-import IconTextCell from '../../common/tableCells/IconTextCell';
-import Icon from '../../common/Icon';
+import { ICourseOutlineTable } from './courseScreen.interface';
+import ControlsWrapper from '../../common/ControlsWrapper';
+import ExportButton from '../../common/buttons/ExportButton';
+import SearchFilter from '../../common/filters/SearchFilter';
 
-export default function CourseOutlineTable({ course }: { course: any }): ReactElement {
-  const columns = [
-    {
-      title: 'Item Name',
-      dataIndex: 'itemName',
-      key: 'item-name',
-      render: ({ value, icon }: { value: string; icon?: string }) => {
-        return <IconTextCell value={value} icon={icon && <Icon type={icon} />} />;
-      },
-    },
-    {
-      title: 'Users Completed Item',
-      dataIndex: 'usersCompletedItem',
-      key: 'users-completed-item',
-      width: '15%',
-      render: (value: number) => (
-        <DashCell value={value}>
-          <NumberCell value={value} />
-        </DashCell>
-      ),
-    },
-    {
-      title: 'Drop-off',
-      dataIndex: 'dropOff',
-      key: 'drop-off',
-      width: '15%',
-      render: (value: number) => (
-        <DashCell value={value}>
-          <NumberCell value={value} />
-        </DashCell>
-      ),
-    },
-  ];
+import classes from './style.module.scss';
+
+export default function CourseOutlineTable({ course }: ICourseOutlineTable): ReactElement {
+  const [tableData, setTableData] = useState(course.data);
+
+  const onSearch = (searchValue: string) => {
+    const isMatch = (item: any) => item.title.toLowerCase().includes(searchValue.toLowerCase());
+
+    const getFilteredLessonChildren = (items: any[]) =>
+      items.filter((child: any) => isMatch(child));
+
+    const newTableData = course.data
+      .map((item: any) => {
+        if (item.type === 'lesson') {
+          const someChildrenAreMatch = item.children.some((child: any) => isMatch(child));
+          const filteredLesson = { ...item, children: getFilteredLessonChildren(item.children) };
+
+          if (isMatch(item) || someChildrenAreMatch) {
+            return filteredLesson;
+          }
+        } else {
+          return isMatch(item) && item;
+        }
+      })
+      .filter((item: any) => Boolean(item));
+
+    setTableData(newTableData);
+  };
 
   return (
     <WMTable
-      data={courseOutlineTableData as Array<any>}
-      columns={columns}
-      expandable={{
-        defaultExpandAllRows: true,
-      }}
+      data={tableData as Array<any>}
+      columns={course.columns}
+      expandable={{ defaultExpandAllRows: true }}
       rowClassName={(record) => record.className}
-    />
+      className={classes['course-table']}
+    >
+      <ControlsWrapper className={classes['course-table-toolbar']}>
+        <ExportButton className={classes['export']} />
+        <SearchFilter
+          className={classes['search']}
+          placeholder="Search item name"
+          onSearch={onSearch}
+        />
+      </ControlsWrapper>
+    </WMTable>
   );
 }
