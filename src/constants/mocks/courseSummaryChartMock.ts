@@ -12,10 +12,12 @@ const courseSummaryMock = {
     {
       dataKey: 'Users Started',
       stroke: '#F2B529',
+      tooltipLabel: 'Users started this course',
     },
     {
       dataKey: 'Users Completed',
       stroke: '#8812FF',
+      tooltipLabel: 'Users completed this course',
     },
   ],
 };

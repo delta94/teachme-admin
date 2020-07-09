@@ -15,7 +15,7 @@ export interface IWMLineChartProps<T> {
   data: T[];
   xKey: string;
   lineKeyPrefix: string;
-  lines: { dataKey: string; stroke: string }[];
+  lines: { dataKey: string; stroke: string; tooltipLabel: string }[];
 }
 
 export default function WMLineChart<T extends {}>({
@@ -25,6 +25,39 @@ export default function WMLineChart<T extends {}>({
   lineKeyPrefix,
   lines,
 }: IWMLineChartProps<T>) {
+  const CustomTooltip = ({
+    payload,
+    label,
+    active,
+  }: {
+    payload: any[];
+    label: string;
+    active: boolean;
+  }) => {
+    if (active) {
+      return (
+        <LineChartTooltip
+          data={{
+            payload,
+            label,
+            active,
+          }}
+          chartItems={lines.map((line, index) => {
+            const { dataKey, stroke, tooltipLabel } = line;
+            return {
+              title: label,
+              label: `${payload[index].value} ${tooltipLabel}`,
+              color: stroke,
+            };
+          })}
+        />
+      );
+    }
+
+    return null;
+  };
+
+  console.log('xKey ', xKey);
   return (
     <div className={className}>
       <ResponsiveContainer>
@@ -36,21 +69,7 @@ export default function WMLineChart<T extends {}>({
             after getting the SDK and integrating with time-filter
             use https://recharts.org/en-US/examples/CustomContentOfTooltip 
           */}
-          <Tooltip
-            content={({ active }: { active: boolean }): ReactElement => {
-              return (
-                <LineChartTooltip
-                  chartItems={lines.map((line) => {
-                    const { dataKey, stroke } = line;
-                    return {
-                      label: dataKey,
-                      color: stroke,
-                    };
-                  })}
-                />
-              );
-            }}
-          />
+          <Tooltip content={(data: any) => <CustomTooltip {...data} />} />
           {lines.map((line, index) => {
             const { dataKey, stroke } = line;
             return (
