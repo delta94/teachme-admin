@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import { IAnalyticsCharts } from './analytics.interface';
-import CourseStatusChart from './CourseSummaryChart';
+import CourseSummaryChart from './CourseSummaryChart';
 import CourseTimeCompletionChart from './CourseTimeCompletionChart';
 import QuizCompletionRateChart from './QuizCompletionRateChart';
 
@@ -14,7 +14,7 @@ export default function AnalyticsCharts({ data }: IAnalyticsCharts): ReactElemen
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
-        <CourseStatusChart summaryData={summary} />
+        <CourseSummaryChart summaryData={summary} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
         <CourseTimeCompletionChart completionData={completion} />
