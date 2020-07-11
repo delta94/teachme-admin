@@ -104,7 +104,8 @@ export default function CoursesScreen(): ReactElement {
     setSelectedRows(table.data.filter((row) => selectedRowKeys.includes(row.key)));
   };
 
-  const hasSelected = selectedRowKeys.length > 0;
+  const hasSelected = !!selectedRowKeys.length;
+
   return (
     <>
       <ScreenHeader title={mainTitle} />
@@ -141,15 +142,9 @@ export default function CoursesScreen(): ReactElement {
               className={classes['delete-btn']}
               icon={<Icon type={IconType.Delete} />}
               disabled={!hasSelected}
-              onClick={() => {
-                setShowDeleteCourse(true);
-              }}
+              onClick={() => setShowDeleteCourse(true)}
             />
-            <ExportButton
-              onClick={() => {
-                setShowExport(true);
-              }}
-            />
+            <ExportButton onClick={() => setShowExport(true)} />
             <Divider className={classes['separator']} type="vertical" />
             <WMButton
               className={classes['create-btn']}
