@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import WMList, { WMListItem } from '../../../common/WMList';
+import { WMList, WMListItem, WMCollapsibleList } from '../../../common/WMList';
 import Header from '../../../common/Header';
 import { Divider } from 'antd';
 
@@ -27,7 +27,16 @@ export default function ListPlayground(): ReactElement {
         renderItem={(item) => <WMListItem>{item}</WMListItem>}
       />
       <Divider />
-      <Header title="WMTable ..." />
+      <Header title="WMTable Collapsible - WIP" />
+      <WMCollapsibleList
+        items={data.map((item, index) => {
+          return {
+            key: `collapsible-item-${index}`,
+            header: <span>header {item}</span>,
+            children: <span>content {item}</span>,
+          };
+        })}
+      />
     </>
   );
 }
