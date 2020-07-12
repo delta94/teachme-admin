@@ -25,26 +25,26 @@ interface IUserData {
 }
 
 const courses: IWMDropdownOption[] = [
-  { id: 0, text: 'All Courses' },
-  { id: 1, text: 'Course 1' },
-  { id: 2, text: 'Course 2' },
-  { id: 3, text: 'Course 3' },
-  { id: 4, text: 'Course 4' },
-  { id: 5, text: 'Course 5' },
+  { id: 0, value: 'All Courses' },
+  { id: 1, value: 'Course 1' },
+  { id: 2, value: 'Course 2' },
+  { id: 3, value: 'Course 3' },
+  { id: 4, value: 'Course 4' },
+  { id: 5, value: 'Course 5' },
 ];
 
 const statuses: IWMDropdownOption[] = [
-  { id: 0, text: 'All' },
-  { id: 1, text: 'Completed' },
-  { id: 2, text: 'Did not complete' },
+  { id: 0, value: 'All' },
+  { id: 1, value: 'Completed' },
+  { id: 2, value: 'Did not complete' },
 ];
 
 const results: IWMDropdownOption[] = [
-  { id: 0, text: 'All Results' },
-  { id: 1, text: 'Passed' },
-  { id: 2, text: 'Failed' },
-  { id: 3, text: 'Did not submit' },
-  { id: 4, text: 'No quiz' },
+  { id: 0, value: 'All Results' },
+  { id: 1, value: 'Passed' },
+  { id: 2, value: 'Failed' },
+  { id: 3, value: 'Did not submit' },
+  { id: 4, value: 'No quiz' },
 ];
 
 export default function UsersScreen(): ReactElement {

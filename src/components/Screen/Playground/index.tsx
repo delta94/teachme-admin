@@ -7,6 +7,7 @@ import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import WMCard from '../../common/WMCard';
 
 import Dialogs from './components/Dialogs';
+import Switches from './components/Switches';
 
 import classes from './style.module.scss';
 
@@ -16,6 +17,12 @@ const tabs = [
     title: 'Dialogs',
     icon: undefined,
     content: <Dialogs />,
+  },
+  {
+    id: 'switches',
+    title: 'Switches',
+    icon: undefined,
+    content: <Switches />,
   },
 ];
 

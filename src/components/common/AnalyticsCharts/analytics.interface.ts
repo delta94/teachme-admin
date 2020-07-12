@@ -2,7 +2,8 @@ export interface IAnalyticsCharts {
   data: any;
 }
 
-export interface ICourseStatusChart {
+// TODO: create a properly interface instead of using any
+export interface ICourseSummaryChart {
   summaryData: any;
 }
 

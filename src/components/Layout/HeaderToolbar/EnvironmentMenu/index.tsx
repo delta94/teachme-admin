@@ -8,8 +8,8 @@ import WMButton from '../../../common/WMButton';
 import classes from '../style.module.scss';
 
 const environments: IWMDropdownOption[] = [
-  { id: 0, text: 'Production' },
-  { id: 1, text: 'Test' },
+  { id: 0, value: 'Production' },
+  { id: 1, value: 'Test' },
 ];
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
@@ -17,7 +17,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedEnvironment(selected);
-    message.info(`Environment changed to ${selected.text}`);
+    message.info(`Environment changed to ${selected.value}`);
   };
 
   return (
@@ -28,7 +28,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       onSelectedChange={handleMenuClick}
     >
       <WMButton className={classes['dropdown-menu-button']}>
-        {selectedEnvironment.text}
+        {selectedEnvironment.value}
         <DownOutlined />
       </WMButton>
     </WMDropdown>

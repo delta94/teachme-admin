@@ -1,7 +1,7 @@
 import courseSummaryMock from './courseSummaryChartMock';
 import courseCompletionChartMock from './courseCompletionChartMock';
 import courseCompletionRateChartMock from './courseCompletionRateChartMock';
-import coursesTableMockData, { data, columns } from './tableMockCoursesData';
+import coursesTableMockData from './tableMockCoursesData';
 
 export const coursesMockData = {
   title: 'Courses',
