@@ -1,14 +1,11 @@
 import React, { useState, ChangeEvent, ReactElement } from 'react';
 
-import WMInput from '../WMInput';
+import WMInput, { IWMInputProps } from '../WMInput';
 
 import classes from './style.module.scss';
 
-interface ITextCounterInput {
-  placeholder?: string;
+export interface ITextCounterInput extends IWMInputProps {
   label?: string;
-  maxLength: number;
-  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function TextCounterInput({
@@ -22,7 +19,7 @@ export default function TextCounterInput({
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
-    onChange(event);
+    onChange && onChange(event);
   };
 
   return (

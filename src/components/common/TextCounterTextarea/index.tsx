@@ -1,16 +1,14 @@
 import React, { useState, ReactElement, ChangeEvent } from 'react';
 
+import { TextAreaProps } from 'antd/lib/input';
 import WMTextarea from '../WMTextarea';
 
 import classes from './style.module.scss';
 
-interface ITextCounterTextarea {
-  placeholder?: string;
+export interface ITextCounterTextarea extends TextAreaProps {
   label?: string;
-  maxLength: number;
   minRows?: number;
   maxRows?: number;
-  onChange: (value: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export default function TextCounterTextarea({
@@ -25,9 +23,8 @@ export default function TextCounterTextarea({
   const [content, setContent] = useState<string>('');
 
   const onInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    if (maxLength === undefined) return;
     setContent(event.target.value);
-    onChange(event);
+    onChange && onChange(event);
   };
 
   return (
