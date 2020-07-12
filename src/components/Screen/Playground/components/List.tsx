@@ -1,9 +1,10 @@
 import React, { ReactElement, ReactNode } from 'react';
+import { Divider } from 'antd';
 
+import Icon, { IconType } from '../../../common/Icon';
 import { WMList, WMListItem, WMCollapsibleList } from '../../../common/WMList';
 import Header from '../../../common/Header';
-import { Divider } from 'antd';
-import Icon, { IconType } from '../../../common/Icon';
+import { CollapsibleContentType } from '../../../common/WMList/WMCollapsibleList';
 
 export default function ListPlayground(): ReactElement {
   const data = [
@@ -29,7 +30,10 @@ export default function ListPlayground(): ReactElement {
     },
   ];
 
-  const parseToCollapsibleItems = (arr: { text: string; icon: ReactNode }[]) =>
+  const parseToCollapsibleItems = (
+    arr: { text: string; icon: ReactNode }[],
+    isNested: boolean = false,
+  ) =>
     arr.map((item, index) => {
       return {
         key: `collapsible-item-${index}`,
@@ -37,8 +41,14 @@ export default function ListPlayground(): ReactElement {
           children: item.text,
           icon: item.icon,
         },
-        children: item.text,
-        ...item,
+        children: isNested ? (
+          <WMList
+            dataSource={data}
+            renderItem={(item) => <WMListItem icon={item.icon}>{item.text}</WMListItem>}
+          />
+        ) : (
+          'content'
+        ),
       };
     });
 
@@ -64,9 +74,10 @@ export default function ListPlayground(): ReactElement {
       <Divider />
       <Header title="WM-List Collapsible + header + footer" />
       <WMCollapsibleList
+        contentType={CollapsibleContentType.WMList}
         header={<div>List Collapsible with Header</div>}
         footer={<div>List Collapsible with Footer</div>}
-        items={parseToCollapsibleItems(data)}
+        items={parseToCollapsibleItems(data, true)}
       />
     </>
   );

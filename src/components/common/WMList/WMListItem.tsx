@@ -22,7 +22,7 @@ export default function WMListItem({
       className={cc([
         classes['wm-list-item'],
         className,
-        { [classes['item-icon']]: Boolean(icon) },
+        { [classes['wm-list-item-icon']]: Boolean(icon) },
       ])}
       {...otherProps}
     >
