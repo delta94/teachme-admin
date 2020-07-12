@@ -5,28 +5,29 @@ import WMTextarea from '../WMTextarea';
 import classes from './style.module.scss';
 
 interface ITextCounterTextarea {
-  placeholder: string | undefined;
-  label: string | undefined;
-  maxLength: number | undefined;
-  minRows?: number | undefined;
-  maxRows?: number | undefined;
-  onChange: (value: string) => void;
+  placeholder?: string;
+  label?: string;
+  maxLength: number;
+  minRows?: number;
+  maxRows?: number;
+  onChange: (value: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export default function TextCounterTextarea({
   placeholder,
   label,
-  maxLength,
+  maxLength = 100,
   minRows,
   maxRows,
   onChange,
+  ...otherProps
 }: ITextCounterTextarea): ReactElement {
-  const [content, setContent] = useState('' as string);
+  const [content, setContent] = useState<string>('');
 
-  const onInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     if (maxLength === undefined) return;
-    setContent(e.target.value);
-    onChange(e.target.value);
+    setContent(event.target.value);
+    onChange(event);
   };
 
   return (
@@ -40,6 +41,7 @@ export default function TextCounterTextarea({
           placeholder={placeholder}
           maxLength={maxLength}
           autosize={{ minRows, maxRows }}
+          {...otherProps}
         />
       </label>
       <p className={classes['input-counter']}>

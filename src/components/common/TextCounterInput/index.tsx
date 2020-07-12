@@ -1,28 +1,28 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, ReactElement } from 'react';
 
 import WMInput from '../WMInput';
 
 import classes from './style.module.scss';
 
 interface ITextCounterInput {
-  placeholder?: string | undefined;
-  label?: string | undefined;
-  maxLength?: number | undefined;
-  onChange: (value: string) => void;
+  placeholder?: string;
+  label?: string;
+  maxLength: number;
+  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function TextCounterInput({
   placeholder,
   label,
-  maxLength,
+  maxLength = 30,
   onChange,
-}: ITextCounterInput): JSX.Element {
-  const [content, setContent] = useState('' as string);
+  ...otherProps
+}: ITextCounterInput): ReactElement {
+  const [content, setContent] = useState<string>('');
 
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (maxLength === undefined) return;
-    setContent(e.target.value);
-    onChange(e.target.value);
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setContent(event.target.value);
+    onChange(event);
   };
 
   return (
@@ -35,6 +35,7 @@ export default function TextCounterInput({
           value={content}
           placeholder={placeholder}
           maxLength={maxLength}
+          {...otherProps}
         />
       </label>
       <p className={classes['input-counter']}>
