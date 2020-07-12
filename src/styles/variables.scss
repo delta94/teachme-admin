@@ -1,8 +1,9 @@
 :root {
   --sidebarWidth: 110px;
   --headerToolbarHeight: 60px;
-  --dividerColor: #f0f0f0;
+  --divider-color: #f0f0f0;
   --wm-border: 1px solid #e6edf1;
+  --wm-box-shadow: var(--wm-box-shadow);
 
   // background color of the app
   --white: #fff;
@@ -71,8 +72,8 @@
   --table-row-hover-color: #f7fbff;
 
   // fonts
-  --font-primary: 'Roboto';
-  --font-secondary: 'Poppins';
+  --font-primary: 'Roboto', sans-serif;
+  --font-secondary: 'Poppins', sans-serif;
 
   // switch
   --switch-off: #9ba1b0;

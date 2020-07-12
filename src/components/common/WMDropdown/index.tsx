@@ -9,6 +9,7 @@ export interface IWMDropdownOption {
   id: string | number;
   value: string | number;
   label?: ReactNode;
+  onClick?: () => void;
 }
 
 export interface IWMDropdown extends Omit<DropDownProps, 'overlay'> {
@@ -36,11 +37,12 @@ export default function WMDropdown({
     <Menu onClick={onMenuClick} className={cc([classes['wm-dropdown-menu'], className])}>
       {options.map((option) => (
         <Menu.Item
+          key={option.id}
           className={cc([
             classes['wm-dropdown-menu-item'],
             { [classes['selected-item']]: selected?.id === option.id },
           ])}
-          key={option.id}
+          onClick={option.onClick}
         >
           {option.label ?? option.value}
         </Menu.Item>

@@ -1,5 +1,5 @@
 .wm-card {
-  box-shadow: 0 2px 0 0 #f2f2f2;
+  box-shadow: var(--wm-box-shadow);
   border: var(--wm-border);
   border-radius: 2px;
   background-color: var(--white);

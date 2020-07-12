@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import { message } from 'antd';
 
+import { logout } from '../../../../walkme';
+
 import { IconType } from '../../../common/Icon/icon.interface';
 import Icon from '../../../common/Icon';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
@@ -10,7 +12,7 @@ import WMButton from '../../../common/WMButton';
 const options: IWMDropdownOption[] = [
   { id: 0, value: 'Dan@walkme.com' },
   { id: 1, value: 'Impersonate' },
-  { id: 2, value: 'Log Out' },
+  { id: 2, value: 'Log Out', onClick: () => logout() },
 ];
 
 export default function UserMenu({
