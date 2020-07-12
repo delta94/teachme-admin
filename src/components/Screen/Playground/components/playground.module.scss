@@ -1,0 +1,7 @@
+.purple-switch {
+  :global(.ant-switch-handle) {
+    &::before {
+      background: rebeccapurple;
+    }
+  }
+}
