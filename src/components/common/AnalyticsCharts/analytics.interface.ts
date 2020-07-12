@@ -1,21 +1,24 @@
-// TODO: create a properly interface instead of using any
 export interface IAnalyticsCharts {
   data: any;
 }
 
 // TODO: create a properly interface instead of using any
-export interface ICourseStatusChart {
+export interface ICourseSummaryChart {
   summaryData: any;
 }
 
-// TODO: create a properly interface instead of using any
 export interface ICoursesTimeCompletionChart {
+  className?: string;
   completionData: any;
 }
 
-// TODO: create a properly interface instead of using any
 export interface IQuizCompletionRateChart {
+  className?: string;
   quizCompletionData: any;
+}
+
+export interface IQuizScoreData {
+  quizScoreData: any;
 }
 
 export interface ICourseByDay {

@@ -15,3 +15,7 @@
 .create-btn:global(.ant-btn) {
   margin-right: 20px;
 }
+
+.dropdown-tag:global(.ant-tag) {
+  cursor: pointer;
+}
