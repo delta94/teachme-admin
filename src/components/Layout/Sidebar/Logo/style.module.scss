@@ -1,11 +1,10 @@
 .logo {
   padding: 18px 0 0 21px;
   color: var(--primary);
-
   display: flex;
 
   span {
-    font-family: var(--font-secondary), sans-serif;
+    font-family: var(--font-secondary);
     font-weight: bold;
     font-size: 10px;
     letter-spacing: 0.4px;
