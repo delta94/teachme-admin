@@ -18,7 +18,7 @@ export default function DropdownFilter({
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedOption(selected);
-    message.info(`${label ?? 'The'} filter changed to ${selected.text}`);
+    message.info(`${label ?? 'The'} filter changed to ${selected.value}`);
   };
 
   return (
@@ -26,7 +26,7 @@ export default function DropdownFilter({
       <WMDropdown options={options} selected={selectedOption} onSelectedChange={handleMenuClick}>
         <WMButton>
           {label && <label>{label}:</label>}
-          {selectedOption.text}
+          {selectedOption.label ?? selectedOption.value}
           <DownOutlined />
         </WMButton>
       </WMDropdown>

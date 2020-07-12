@@ -1,6 +1,13 @@
 import walkme from '@walkme/editor-sdk';
 import { UICourse, mapCourse } from './course/overview';
-import { WalkMeDataCourse, TypeName, Course, BuildCourse, ContentItem } from '@walkme/types';
+import {
+  WalkMeDataCourse,
+  TypeName,
+  Course,
+  BuildCourse,
+  ContentItem,
+  TypeId,
+} from '@walkme/types';
 import * as courses from './course/details';
 import { mapItem } from './item';
 
@@ -49,7 +56,7 @@ export async function getItemsList(environmentId: number): Promise<Array<Content
   const items = await Promise.all(
     nestedItems.map((item) =>
       mapItem(item, TypeName.Folder, environmentId, {
-        types: [TypeName.SmartWalkThru, TypeName.Article, TypeName.Video],
+        types: [TypeName.SmartWalkThru, TypeName.Content],
       }),
     ),
   );
@@ -71,6 +78,9 @@ export async function getEnvironments() {}
 
 export async function getSystems() {}
 
+/**
+ * Logs the user out and redirects to the url configured in walkme.auth.init call
+ */
 export function logout() {
   walkme.auth.logout();
 }

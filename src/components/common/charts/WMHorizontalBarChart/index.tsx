@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
 import classes from './style.module.scss';
-import { IQuizAnswers } from '../../../constants/mocks/quizBarChart-mock';
+import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
 
 const colors = [
   '#006AF7',

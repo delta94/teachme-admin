@@ -1,6 +1,6 @@
 import { getData } from './data';
 import { mapItem, TYPE_IDS_TO_NAME, MapOptions } from './item';
-import { WalkMeLink, ContentItem } from '@walkme/types';
+import { WalkMeLink, ContentItem, TypeName } from '@walkme/types';
 
 export async function resolveLinks(
   links: Array<WalkMeLink>,

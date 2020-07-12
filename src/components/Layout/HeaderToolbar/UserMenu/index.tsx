@@ -10,9 +10,9 @@ import WMButton from '../../../common/WMButton';
 
 // TODO: replace this mock with SDK's data
 const options: IWMDropdownOption[] = [
-  { id: 0, text: 'Dan@walkme.com' },
-  { id: 1, text: 'Impersonate' },
-  { id: 2, text: 'Log Out', onClick: () => logout() },
+  { id: 0, value: 'Dan@walkme.com' },
+  { id: 1, value: 'Impersonate' },
+  { id: 2, value: 'Log Out', onClick: () => logout() },
 ];
 
 export default function UserMenu({
@@ -23,7 +23,7 @@ export default function UserMenu({
   buttonClassName?: string;
 }): ReactElement {
   const handleMenuClick = (selected: IWMDropdownOption) => {
-    message.info(`User clicked on ${selected.text}`);
+    message.info(`User clicked on ${selected.value}`);
   };
 
   return (

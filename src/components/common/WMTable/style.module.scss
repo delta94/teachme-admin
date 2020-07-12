@@ -25,7 +25,7 @@
   }
 
   tr:global(.wm-expandable-item) {
-    font-family: var(--font-secondary), sans-serif;
+    font-family: var(--font-secondary);
     font-weight: 500;
     color: var(--neutral900);
     font-size: 15px;
@@ -36,11 +36,6 @@
           display: none;
         }
       }
-    }
-
-    td:global(.ant-table-cell) {
-      border-bottom-width: 2px;
-      border-top: 1px solid var(--table-border-color);
     }
   }
 

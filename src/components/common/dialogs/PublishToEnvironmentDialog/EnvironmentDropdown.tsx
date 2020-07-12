@@ -36,7 +36,7 @@ export default function EnvironmentDropdown({
       onSelectedChange={handleMenuClick}
     >
       <WMButton className={classes['environment-dropdown-button']} icon={<DownOutlined />}>
-        {selectedEnvironment.text}
+        {selectedEnvironment.label ?? selectedEnvironment.value}
       </WMButton>
     </WMDropdown>
   );
