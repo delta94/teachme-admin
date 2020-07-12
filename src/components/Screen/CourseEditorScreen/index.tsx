@@ -1,8 +1,7 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { ContentItem } from '@walkme/types';
+import React, { ReactElement, useEffect } from 'react';
 import cc from 'classcat';
 
-import { getFlatItemsList } from '../../../walkme';
+import { useCourseEditor, fetchItemsList } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import ScreenHeader from '../../common/ScreenHeader';
@@ -26,39 +25,35 @@ enum TabId {
 }
 
 export default function CourseEditorScreen(): ReactElement {
-  const [courseItems, setCourseItems] = useState<ContentItem[]>([]);
-  const [filteredItems, setFilteredItems] = useState<ContentItem[]>([]);
-
-  const fetchItemList = async () => {
-    try {
-      const items = await getFlatItemsList(0);
-      setCourseItems(items);
-      setFilteredItems(items);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [
+    { courseItems, itemsSearchValue, filteredItems, isDetailsPanelOpen },
+    dispatch,
+  ] = useCourseEditor();
 
   useEffect(() => {
-    fetchItemList();
-  }, []);
+    fetchItemsList(dispatch);
 
-  const [searchValue, setSearchValue] = useState('');
+    return () => dispatch({ type: 'RESET_COURSE_EDITOR' });
+  }, [dispatch]);
 
   const onSearch = (newSearchValue: string) => {
+    if (!courseItems) return;
+
     const newCourseItems = courseItems.filter(({ title, description }) =>
       `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
     );
-    setSearchValue(newSearchValue);
-    setFilteredItems(newCourseItems);
+
+    dispatch({
+      type: 'SET_ITEMS_SEARCH_VALUE',
+      itemsSearchValue: newSearchValue,
+      items: newCourseItems,
+    });
   };
 
   const onRefresh = async () => {
-    await fetchItemList();
-    onSearch(searchValue);
+    await fetchItemsList(dispatch);
+    onSearch(itemsSearchValue ?? '');
   };
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const cardTabs = [
     {
@@ -68,7 +63,7 @@ export default function CourseEditorScreen(): ReactElement {
         <WMButton
           className={classes['add-btn']}
           icon={<Icon type={IconType.Plus} />}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch({ type: 'TOGGLE_DETAILS_PANEL' })}
         />
       ),
     },
@@ -96,19 +91,20 @@ export default function CourseEditorScreen(): ReactElement {
             <SearchFilter
               className={classes['search']}
               placeholder="Search"
-              value={searchValue}
+              value={itemsSearchValue}
               onSearch={onSearch}
             />
           </div>
           <ul className={classes['item-list']}>
-            {filteredItems.map(({ title, type }, i) => (
-              <li key={i} className={classes['item']}>
-                <span className={classes['item-icon']}>
-                  {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
-                </span>
-                <span className={classes['item-title']}>{title}</span>
-              </li>
-            ))}
+            {filteredItems &&
+              filteredItems.map(({ title, type }, i) => (
+                <li key={i} className={classes['item']}>
+                  <span className={classes['item-icon']}>
+                    {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
+                  </span>
+                  <span className={classes['item-title']}>{title}</span>
+                </li>
+              ))}
           </ul>
         </WMCard>
         <WMCard className={classes['course-structure']}>
@@ -121,7 +117,7 @@ export default function CourseEditorScreen(): ReactElement {
           </WMTabs>
         </WMCard>
         <WMCard
-          className={cc([classes['details-panel'], { [classes['open']]: isOpen }])}
+          className={cc([classes['details-panel'], { [classes['open']]: isDetailsPanelOpen }])}
           title={<div className={classes['title']}>Some Details</div>}
         />
       </div>
