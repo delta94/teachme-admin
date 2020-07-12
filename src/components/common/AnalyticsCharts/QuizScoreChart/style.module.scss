@@ -1,0 +1,25 @@
+.course-average {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  :global(.ant-card-body) {
+    width: 100%;
+  }
+
+  .passmark {
+    margin-left: auto;
+  }
+
+  .text {
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 14px;
+    white-space: pre;
+  }
+}
+
+.course-average-content {
+  display: flex;
+  margin-top: 0;
+}
