@@ -3,6 +3,7 @@ import React, { ReactElement, ReactNode } from 'react';
 import { WMList, WMListItem, WMCollapsibleList } from '../../../common/WMList';
 import Header from '../../../common/Header';
 import { Divider } from 'antd';
+import Icon, { IconType } from '../../../common/Icon';
 
 export default function ListPlayground(): ReactElement {
   const data = [
@@ -25,7 +26,15 @@ export default function ListPlayground(): ReactElement {
   return (
     <>
       <Header title="WM-List" />
-      <WMList dataSource={data} renderItem={(item) => <WMListItem>{item}</WMListItem>} />
+      <WMList
+        dataSource={data}
+        renderItem={(item) => (
+          <WMListItem>
+            <Icon type={IconType.Article} />
+            {item}
+          </WMListItem>
+        )}
+      />
       <Divider />
       <Header title="WM-List + border + header + footer" />
       <WMList
