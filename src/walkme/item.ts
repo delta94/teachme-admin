@@ -3,13 +3,25 @@ import {
   ContentItem,
   WalkMeDataCollectionItem,
   TypeName,
+  ResourceDataItem,
   TypeId,
+  ResourceType,
 } from '@walkme/types';
 import { resolveLinks } from './collection';
+import { getData } from './data';
 
 export interface MapOptions {
   types?: Array<TypeName>;
 }
+
+const resolvers: { [key in TypeName]?: (item: WalkMeDataItem) => any } = {
+  [TypeName.Content](item) {
+    return {
+      type:
+        (<ResourceDataItem>item).Type == ResourceType.Article ? TypeName.Article : TypeName.Video,
+    };
+  },
+};
 
 export async function mapItem(
   item: WalkMeDataItem,
@@ -17,7 +29,7 @@ export async function mapItem(
   environmentId: number,
   options?: MapOptions
 ): Promise<ContentItem> {
-  // const { properties } = resolvers[collection.GroupType].resolve(collection);
+  const customObj = resolvers[type]?.(item) || {};
   const childNodes = await getChildNodes(item as WalkMeDataCollectionItem, environmentId, options);
   return {
     id: item.Id,
@@ -26,6 +38,7 @@ export async function mapItem(
     title: item.Name,
     type,
     childNodes: childNodes.filter<ContentItem | null>(isNotNull) as ContentItem[],
+    ...customObj,
   };
 }
 
@@ -37,7 +50,6 @@ export function getTypeNames(typeId: TypeId): Array<TypeName> {
   if ((typeId = TypeId.BusinessSolution)) {
     return [TypeName.SmartWalkThru, TypeName.SmartTipSet];
   }
-  const a = TypeId[19];
   // @ts-ignore
   return [TypeName[TypeId[typeId]]];
 }
