@@ -45,7 +45,6 @@ export default function EditableTitle({
         <Icon type={IconType.Pencil} className={classes['pencil-icon']} />
       </div>
       <WMInput
-        placeholder="Untitled Course"
         className={cc([classes['input-title'], { [classes['hidden']]: !showInputText }])}
         onBlur={onInputBlur}
         onChange={onChange}

@@ -10,7 +10,6 @@
     left: 40px;
     color: var(--neutral900);
     font-family: var(--font-secondary), sans-serif;
-    width: 400px;
     height: 30px;
     border: none;
     background-color: transparent;
@@ -35,6 +34,7 @@
   }
 
   .input-title {
+    width: 400px;
     border-bottom: 1px solid transparent;
     border-radius: 0;
 

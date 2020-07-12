@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-
 import { Switch, Route, Redirect } from 'react-router-dom';
+
 import {
   COURSES_ROUTE,
   COURSE_ROUTE,
