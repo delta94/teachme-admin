@@ -2,4 +2,16 @@
   &:global(.ant-collapse) {
     margin-bottom: 25px;
   }
+
+  :global(.ant-collapse-item) {
+    :global(.ant-collapse-header),
+    :global(.ant-collapse-footer) {
+      display: flex;
+      justify-content: flex-start;
+
+      :global(.wm-icon) {
+        margin-right: 20px;
+      }
+    }
+  }
 }

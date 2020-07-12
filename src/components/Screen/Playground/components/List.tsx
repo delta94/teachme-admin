@@ -7,19 +7,38 @@ import Icon, { IconType } from '../../../common/Icon';
 
 export default function ListPlayground(): ReactElement {
   const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
+    {
+      text: 'Racing car sprays burning fuel into crowd.',
+      icon: <Icon type={IconType.Article} />,
+    },
+    {
+      text: 'Japanese princess to wed commoner.',
+      icon: <Icon type={IconType.Video} />,
+    },
+    {
+      text: 'Australian walks 100km after outback crash.',
+      icon: <Icon type={IconType.SmartWalkthru} />,
+    },
+    {
+      text: 'Man charged over missing wedding girl.',
+      icon: <Icon type={IconType.Article} />,
+    },
+    {
+      text: 'Los Angeles battles huge wildfires.',
+      icon: <Icon type={IconType.Video} />,
+    },
   ];
 
-  const parseToCollapsibleItems = (arr: string[]) =>
+  const parseToCollapsibleItems = (arr: { text: string; icon: ReactNode }[]) =>
     arr.map((item, index) => {
       return {
         key: `collapsible-item-${index}`,
-        header: <span>header {item}</span>,
-        children: <span>content {item}</span>,
+        header: {
+          children: item.text,
+          icon: item.icon,
+        },
+        children: item.text,
+        ...item,
       };
     });
 
@@ -28,12 +47,7 @@ export default function ListPlayground(): ReactElement {
       <Header title="WM-List" />
       <WMList
         dataSource={data}
-        renderItem={(item) => (
-          <WMListItem>
-            <Icon type={IconType.Article} />
-            {item}
-          </WMListItem>
-        )}
+        renderItem={(item) => <WMListItem icon={item.icon}>{item.text}</WMListItem>}
       />
       <Divider />
       <Header title="WM-List + border + header + footer" />
@@ -42,7 +56,7 @@ export default function ListPlayground(): ReactElement {
         footer={<div>List with Footer</div>}
         bordered
         dataSource={data}
-        renderItem={(item) => <WMListItem>{item}</WMListItem>}
+        renderItem={(item) => <WMListItem icon={item.icon}>{item.text}</WMListItem>}
       />
       <Divider />
       <Header title="WM-List Collapsible" />

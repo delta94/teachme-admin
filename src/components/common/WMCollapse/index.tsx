@@ -10,7 +10,7 @@ export interface IWMCollapse extends CollapseProps {
   children: ReactNode;
 }
 
-export default function WMCollapse({ className, children, ...otherProps }: IWMCollapse) {
+export default function WMCollapse({ className = '', children, ...otherProps }: IWMCollapse) {
   return (
     <Collapse className={cc([classes['wm-collapse'], className])} {...otherProps}>
       {children}

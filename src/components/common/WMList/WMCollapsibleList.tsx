@@ -7,11 +7,13 @@ import WMCollapsePanel from '../WMCollapse/WMCollapsePanel';
 import WMList, { IWMListProps } from './WMList';
 import WMListItem from './WMListItem';
 import classes from './style.module.scss';
+import Header from '../Header';
 
 export interface IWMCollapsibleListItem {
-  header: ReactNode;
+  header: { children: ReactNode; icon?: ReactNode };
   key: string;
   children: ReactNode;
+  icon?: ReactNode;
 }
 
 export interface IWMCollapsibleList<T> extends Omit<IWMListProps<T>, 'dataSource'> {
@@ -21,7 +23,7 @@ export interface IWMCollapsibleList<T> extends Omit<IWMListProps<T>, 'dataSource
 }
 
 export default function WMCollapsibleList<T>({
-  className,
+  className = '',
   items,
   wmCollapseProps,
   ...otherProps
@@ -32,8 +34,21 @@ export default function WMCollapsibleList<T>({
       dataSource={items}
       renderItem={(item) => (
         <WMCollapse {...wmCollapseProps}>
-          <WMCollapsePanel header={item.header} key={item.key}>
-            <WMListItem>{item.children}</WMListItem>
+          <WMCollapsePanel
+            header={
+              <Header
+                className={cc([
+                  classes['header'],
+                  { [classes['header-icon']]: Boolean(item.header.icon) },
+                ])}
+              >
+                {item.header.icon}
+                {item.header.children}
+              </Header>
+            }
+            key={item.key}
+          >
+            <WMListItem icon={item.icon}>{item.children}</WMListItem>
           </WMCollapsePanel>
         </WMCollapse>
       )}

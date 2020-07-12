@@ -12,7 +12,11 @@ export interface IWMCollapsePanel extends CollapsePanelProps {
   children: ReactNode;
 }
 
-export default function WMCollapsePanel({ className, children, ...otherProps }: IWMCollapsePanel) {
+export default function WMCollapsePanel({
+  className = '',
+  children,
+  ...otherProps
+}: IWMCollapsePanel) {
   return (
     <Panel className={cc([classes['wm-collapse-panel'], className])} {...otherProps}>
       {children}

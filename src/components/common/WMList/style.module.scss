@@ -1,5 +1,35 @@
+@mixin wm-icon {
+  :global(.wm-icon) {
+    margin-right: 20px;
+    color: var(--icon-bg);
+    width: 20px;
+  }
+}
+
 .wm-list {
   &:global(.ant-list) {
     margin-bottom: 25px;
+  }
+}
+
+.wm-list-item {
+  &:global(.ant-list-item) {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &.item-icon {
+    @include wm-icon;
+  }
+}
+
+.wm-collapsible-list {
+  .header {
+    display: flex;
+    justify-content: flex-start;
+
+    &-icon {
+      @include wm-icon;
+    }
   }
 }

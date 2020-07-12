@@ -7,16 +7,26 @@ import classes from './style.module.scss';
 
 export interface IWMListItemProps extends ListItemProps {
   className?: string;
+  icon?: ReactNode;
   children: ReactNode;
 }
 
 export default function WMListItem({
-  className,
+  className = '',
+  icon,
   children,
   ...otherProps
 }: IWMListItemProps): ReactElement {
   return (
-    <List.Item className={cc([classes['wm-list-item'], className])} {...otherProps}>
+    <List.Item
+      className={cc([
+        classes['wm-list-item'],
+        className,
+        { [classes['item-icon']]: Boolean(icon) },
+      ])}
+      {...otherProps}
+    >
+      {icon}
       {children}
     </List.Item>
   );
