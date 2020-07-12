@@ -14,8 +14,8 @@ export interface IWMCollapsePanel extends CollapsePanelProps {
 
 export default function WMCollapsePanel({ className, children, ...otherProps }: IWMCollapsePanel) {
   return (
-    <Collapse.Panel className={cc([classes['wm-collapse-panel'], className])} {...otherProps}>
+    <Panel className={cc([classes['wm-collapse-panel'], className])} {...otherProps}>
       {children}
-    </Collapse.Panel>
+    </Panel>
   );
 }

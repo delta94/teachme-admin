@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import { WMList, WMListItem, WMCollapsibleList } from '../../../common/WMList';
 import Header from '../../../common/Header';
@@ -13,12 +13,21 @@ export default function ListPlayground(): ReactElement {
     'Los Angeles battles huge wildfires.',
   ];
 
+  const parseToCollapsibleItems = (arr: string[]) =>
+    arr.map((item, index) => {
+      return {
+        key: `collapsible-item-${index}`,
+        header: <span>header {item}</span>,
+        children: <span>content {item}</span>,
+      };
+    });
+
   return (
     <>
-      <Header title="WMTable" />
+      <Header title="WM-List" />
       <WMList dataSource={data} renderItem={(item) => <WMListItem>{item}</WMListItem>} />
       <Divider />
-      <Header title="WMTable + header + footer" />
+      <Header title="WM-List + border + header + footer" />
       <WMList
         header={<div>List with Header</div>}
         footer={<div>List with Footer</div>}
@@ -27,15 +36,14 @@ export default function ListPlayground(): ReactElement {
         renderItem={(item) => <WMListItem>{item}</WMListItem>}
       />
       <Divider />
-      <Header title="WMTable Collapsible - WIP" />
+      <Header title="WM-List Collapsible" />
+      <WMCollapsibleList items={parseToCollapsibleItems(data)} />
+      <Divider />
+      <Header title="WM-List Collapsible + header + footer" />
       <WMCollapsibleList
-        items={data.map((item, index) => {
-          return {
-            key: `collapsible-item-${index}`,
-            header: <span>header {item}</span>,
-            children: <span>content {item}</span>,
-          };
-        })}
+        header={<div>List Collapsible with Header</div>}
+        footer={<div>List Collapsible with Footer</div>}
+        items={parseToCollapsibleItems(data)}
       />
     </>
   );
