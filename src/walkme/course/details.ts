@@ -12,7 +12,7 @@ import { mapItem } from '../item';
 
 export async function getCourseData(
   id: number,
-  environmentId: number
+  environmentId: number,
 ): Promise<BuildCourse | null> {
   const [course] = (await getData(TypeName.Course, environmentId, [id])) as Array<WalkMeDataCourse>;
   if (!course) return null;
@@ -21,13 +21,21 @@ export async function getCourseData(
 
 export async function mapToFullCourse(
   course: WalkMeDataCourse,
-  environmentId: number
+  environmentId: number,
 ): Promise<BuildCourse> {
   const courseItem = await mapItem(course, TypeName.Course, environmentId);
   return {
     id: courseItem.id as number,
     title: courseItem.title,
     items: courseItem.childNodes as CourseItem[],
-    quiz: course.Quiz,
+    quiz: {
+      failScreen: course.Quiz.FailSummeryPage,
+      successScreen: course.Quiz.SuccessSummeryPage,
+      id: course.Quiz.Id,
+      properties: {
+        forceCourseCompletion: course.Quiz.Settings.isLimited,
+        passmark: course.
+      }
+    },
   };
 }
