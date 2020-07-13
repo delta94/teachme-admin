@@ -15,28 +15,3 @@
 
   @include default-wm-icon-in-row;
 }
-
-.wm-collapsible-list {
-  .header {
-    @include default-wm-icon-in-row;
-
-    :global(.wm-icon) {
-      color: var(--neutral500);
-    }
-  }
-
-  &.wm-list-collapsible-content {
-    :global(.ant-collapse-content > .ant-collapse-content-box) {
-      padding: 0;
-
-      .wm-list {
-        width: 100%;
-        margin-bottom: 0;
-      }
-
-      .wm-list-item {
-        padding: 10px 15px;
-      }
-    }
-  }
-}

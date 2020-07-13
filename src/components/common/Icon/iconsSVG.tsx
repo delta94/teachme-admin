@@ -9,6 +9,7 @@ import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
 import { ReactComponent as SmartWalkthruIcon } from '../../../images/icons/smart-walkthru.svg';
 import { ReactComponent as VideoIcon } from '../../../images/icons/video.svg';
 import { ReactComponent as ArticleIcon } from '../../../images/icons/article.svg';
+import { ReactComponent as LessonIcon } from '../../../images/icons/lesson.svg';
 
 import { IconType } from './icon.interface';
 
@@ -25,4 +26,5 @@ export const IconSVG = {
   [IconType.Article]: ArticleIcon,
   [IconType.Video]: VideoIcon,
   [IconType.Content]: VideoIcon, // TODO: should remove after fixing course item type
+  [IconType.Lesson]: LessonIcon,
 };

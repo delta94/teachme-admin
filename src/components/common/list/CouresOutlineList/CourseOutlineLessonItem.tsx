@@ -23,7 +23,7 @@ export default function CourseOutlineLessonItem({
       <WMCollapsePanel
         header={
           <Header className={classes['lesson-header']}>
-            <Icon type={IconType.Article} />
+            <Icon type={IconType.Lesson} />
             {item.title}
           </Header>
         }
