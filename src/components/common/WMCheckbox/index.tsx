@@ -1,9 +1,11 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { CheckboxProps } from 'antd/lib/checkbox';
+import { Checkbox } from 'antd';
 import cc from 'classcat';
 
+import { WMCheckboxGroup } from './WMCheckboxGroup';
+
 import classes from './style.module.scss';
-import { Checkbox } from 'antd';
 
 export interface IWMCheckbox extends CheckboxProps {
   className?: string;
@@ -21,3 +23,5 @@ export default function WMCheckbox({
     </Checkbox>
   );
 }
+
+export { WMCheckboxGroup };
