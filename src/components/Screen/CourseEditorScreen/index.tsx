@@ -5,7 +5,7 @@ import cc from 'classcat';
 import { getFlatItemsList } from '../../../walkme';
 
 import WMCard from '../../common/WMCard';
-import EditableTitle from '../../common/ EditableTitle';
+import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
