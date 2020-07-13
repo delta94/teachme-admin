@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
-import WMHorizontalBarChart from '../WMHorizontalBarChart';
+import { WMHorizontalBarChart } from '../charts';
 
 import classes from './style.module.scss';
 import { IQuizQuestions } from '../../../constants/mocks/quizBarChart-mock';

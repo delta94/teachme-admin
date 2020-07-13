@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
 
@@ -9,28 +9,30 @@ import classes from './style.module.scss';
 export interface ISearchFilter {
   className?: string;
   placeholder?: string;
+  value?: string;
   onSearch: (searchValue: string) => void;
 }
 
 export default function SearchFilter({
   className,
   placeholder,
+  value,
   onSearch,
 }: ISearchFilter): ReactElement {
-  const [value, setValue] = useState('');
+  const [searchValue, setSearchValue] = useState(value ?? '');
 
-  const onChange = (e: any) => {
-    setValue(e.target.value);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
     onSearch(e.target.value);
   };
 
   return (
     <Input
+      prefix={<Icon type={IconType.Search} />}
       className={cc([classes['search-filter'], className])}
       placeholder={placeholder}
-      prefix={<Icon type={IconType.Search} />}
+      value={searchValue}
       onChange={onChange}
-      value={value}
     />
   );
 }

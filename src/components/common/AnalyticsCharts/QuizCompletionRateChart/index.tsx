@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 
-import PieBarChart from '../../PieBarChart';
-import PieBarSummary from '../../PieBarSummary';
+import { PieBarChart, PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import { IQuizCompletionRateChart } from '../analytics.interface';
 import QuizCompletionRateLegend from './QuizCompletionRateLegend';
 
 export default function QuizCompletionRateChart({
+  className,
   quizCompletionData,
 }: IQuizCompletionRateChart): ReactElement {
   const {
@@ -16,12 +16,14 @@ export default function QuizCompletionRateChart({
 
   return (
     <WMCard title={title}>
-      <PieBarSummary
-        value={summaryLegend}
-        unit={summaryUnit}
-        text={` (${bars[0].value} of ${totalValue} users)`}
-      />
-      <PieBarChart bars={bars} totalValue={totalValue} legendContent={QuizCompletionRateLegend} />
+      <div className={className}>
+        <PieBarSummary
+          value={summaryLegend}
+          unit={summaryUnit}
+          text={` (${bars[0].value} of ${totalValue} users)`}
+        />
+        <PieBarChart bars={bars} totalValue={totalValue} legendContent={QuizCompletionRateLegend} />
+      </div>
     </WMCard>
   );
 }

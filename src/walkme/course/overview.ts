@@ -17,12 +17,12 @@ export enum PublishStatus {
 
 export async function mapCourse(
   wmCourse: wm.WalkMeDataCourse,
-  environmentId: number,
+  environmentId: number
 ): Promise<UICourse> {
   const publishData = wmCourse.PublishDataByEnvs[environmentId];
   if (!publishData)
     throw new Error(
-      `Could not find publish data for item [${wmCourse.Name}] environment id [${environmentId}]`,
+      `Could not find publish data for item [${wmCourse.Name}] environment id [${environmentId}]`
     );
 
   return {

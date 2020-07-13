@@ -1,12 +1,13 @@
 import React, { ReactElement } from 'react';
 
-import PieBarChart from '../../PieBarChart';
+import { PieBarChart } from '../../charts';
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
-import PieBarSummary from '../../PieBarSummary';
+import { PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
 
 export default function CoursesTimeCompletionChart({
+  className,
   completionData,
 }: ICoursesTimeCompletionChart): ReactElement {
   const {
@@ -16,8 +17,10 @@ export default function CoursesTimeCompletionChart({
 
   return (
     <WMCard title={title}>
-      <PieBarSummary value={summaryLegend} unit={` ${summaryUnit}`} />
-      <PieBarChart bars={bars} totalValue={totalValue} legendContent={AvgCompletionTimeLegend} />
+      <div className={className}>
+        <PieBarSummary value={summaryLegend} unit={` ${summaryUnit}`} />
+        <PieBarChart bars={bars} totalValue={totalValue} legendContent={AvgCompletionTimeLegend} />
+      </div>
     </WMCard>
   );
 }

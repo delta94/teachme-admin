@@ -8,8 +8,8 @@ import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
 
 const environments: IWMDropdownOption[] = [
-  { id: 0, text: 'Production' },
-  { id: 1, text: 'Test' },
+  { id: 0, value: 'Production' },
+  { id: 1, value: 'Test' },
 ];
 
 export default function PublishToEnvironmentDialog({
@@ -32,7 +32,7 @@ export default function PublishToEnvironmentDialog({
           />
         </div>
       }
-      confirmLabel={`Publish to ${environment.text}`}
+      confirmLabel={`Publish to ${environment.value}`}
       onCancel={onCancel}
       onConfirm={onConfirm}
     >

@@ -1,0 +1,23 @@
+.wm-textarea {
+  &:global(.ant-input) {
+    height: 32px;
+    border: 1px solid var(--border-light);
+    border-radius: 2px;
+    background-color: var(--white);
+    font-family: var(--font-primary);
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+
+    &.no-resize {
+      resize: none;
+    }
+
+    &:hover,
+    &:focus {
+      border-color: var(--border-light);
+      box-shadow: none;
+    }
+  }
+}
