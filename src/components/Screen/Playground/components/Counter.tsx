@@ -2,7 +2,10 @@ import React, { ReactElement } from 'react';
 
 import { Divider } from 'antd';
 import TextCounter from '../../../common/TextCounterInput';
+
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
+
+import classes from '../../../common/TextCounterInput/style.module.scss';
 
 export default function Counter(): ReactElement {
   return (
@@ -14,12 +17,12 @@ export default function Counter(): ReactElement {
         onChange={(text) => console.log(text)}
       />
       <Divider />
-      <TextCounter
-        maxLength={25}
-        placeholder="Start Quiz"
-        label="Button"
-        onChange={(text) => console.log(text)}
-      />
+      <div className={classes['text-counter-input']}>
+        <label htmlFor="input-with-counter" className={classes['input-label']}>
+          Minimal (label is external)
+        </label>
+      </div>
+      <TextCounter id="input-with-counter" />
       <Divider />
       <TextCounterTextarea
         maxLength={32}
