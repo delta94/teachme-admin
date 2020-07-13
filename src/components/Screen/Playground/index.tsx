@@ -11,6 +11,7 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 
 import classes from './style.module.scss';
+import Checkboxes from './components/Checkboxes';
 
 const tabs = [
   {
@@ -30,6 +31,12 @@ const tabs = [
     title: 'Switches',
     icon: undefined,
     content: <Switches />,
+  },
+  {
+    id: 'checkboxes',
+    title: 'Checkboxes',
+    icon: undefined,
+    content: <Checkboxes />,
   },
 ];
 
