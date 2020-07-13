@@ -22,7 +22,7 @@ export default function EnvironmentDropdown({
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedEnvironment(selected);
     onChange(selected);
-  };
+  }; 
 
   useEffect(() => {
     onChange(selectedEnvironment);
