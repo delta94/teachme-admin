@@ -1,8 +1,11 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
 
-import { getFlatItemsList } from '../../../walkme';
+import {
+  useCourseEditorContext,
+  fetchItemsList,
+  ActionType,
+} from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import EditableTitle from '../../common/EditableTitle';
@@ -27,45 +30,40 @@ enum TabId {
 }
 
 export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
+  const [
+    { courseItems, itemsSearchValue, filteredItems, isDetailsPanelOpen },
+    dispatch,
+  ] = useCourseEditorContext();
   const [courseTitle, setCourseTitle] = useState('Untitled Course');
 
   const onBlur = (text: string) => {
     setCourseTitle(text);
   };
 
-  const [courseItems, setCourseItems] = useState<ContentItem[]>([]);
-  const [filteredItems, setFilteredItems] = useState<ContentItem[]>([]);
-
-  const fetchItemList = async () => {
-    try {
-      const items = await getFlatItemsList(0);
-      setCourseItems(items);
-      setFilteredItems(items);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    fetchItemList();
-  }, []);
+    fetchItemsList(dispatch);
 
-  const [searchValue, setSearchValue] = useState('');
+    return () => dispatch({ type: ActionType.ResetCourseEditor });
+  }, [dispatch]);
 
   const onSearch = (newSearchValue: string) => {
+    if (!courseItems) return;
+
     const newCourseItems = courseItems.filter(({ title, description }) =>
       `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
     );
-    setSearchValue(newSearchValue);
-    setFilteredItems(newCourseItems);
+
+    dispatch({
+      type: ActionType.SetItemsSearchValue,
+      itemsSearchValue: newSearchValue,
+      items: newCourseItems,
+    });
   };
 
   const onRefresh = async () => {
-    await fetchItemList();
-    onSearch(searchValue);
+    await fetchItemsList(dispatch);
+    onSearch(itemsSearchValue ?? '');
   };
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const cardTabs = [
     {
@@ -75,7 +73,7 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
         <WMButton
           className={classes['add-btn']}
           icon={<Icon type={IconType.Plus} />}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
         />
       ),
     },
@@ -106,19 +104,20 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
             <SearchFilter
               className={classes['search']}
               placeholder="Search"
-              value={searchValue}
+              value={itemsSearchValue}
               onSearch={onSearch}
             />
           </div>
           <ul className={classes['item-list']}>
-            {filteredItems.map(({ title, type }, i) => (
-              <li key={i} className={classes['item']}>
-                <span className={classes['item-icon']}>
-                  {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
-                </span>
-                <span className={classes['item-title']}>{title}</span>
-              </li>
-            ))}
+            {filteredItems &&
+              filteredItems.map(({ title, type }, i) => (
+                <li key={i} className={classes['item']}>
+                  <span className={classes['item-icon']}>
+                    {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
+                  </span>
+                  <span className={classes['item-title']}>{title}</span>
+                </li>
+              ))}
           </ul>
         </WMCard>
         <WMCard className={classes['course-structure']}>
@@ -131,7 +130,7 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
           </WMTabs>
         </WMCard>
         <WMCard
-          className={cc([classes['details-panel'], { [classes['open']]: isOpen }])}
+          className={cc([classes['details-panel'], { [classes['open']]: isDetailsPanelOpen }])}
           title={<div className={classes['title']}>Some Details</div>}
         />
       </div>
