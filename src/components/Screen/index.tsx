@@ -32,7 +32,7 @@ export default function Screen(): ReactElement {
           <UsersScreen />
         </Route>
         <Route path={NEW_COURSE_EDITOR_ROUTE.path}>
-          <EditorCourseScreen />
+          <EditorCourseScreen isNew />
         </Route>
         <Route path={COURSE_EDITOR_ROUTE.path}>
           <Redirect to={NEW_COURSE_EDITOR_ROUTE.path} />

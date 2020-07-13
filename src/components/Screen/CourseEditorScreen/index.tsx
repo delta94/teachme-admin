@@ -26,7 +26,7 @@ enum TabId {
   Settings = 'settings',
 }
 
-export default function CourseEditorScreen(): ReactElement {
+export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
   const [courseTitle, setCourseTitle] = useState('Untitled Course');
 
   const onBlur = (text: string) => {
@@ -88,8 +88,10 @@ export default function CourseEditorScreen(): ReactElement {
 
   return (
     <>
-      <EditableTitle onBlur={onBlur} value={courseTitle} />
-      <ScreenHeader title="new-course" />
+      <ScreenHeader
+        title={<EditableTitle onBlur={onBlur} value={courseTitle} isNew={isNew} />}
+        hideTimeFilter={true}
+      />
       <div className={classes['cards-wrapper']}>
         <WMCard
           className={classes['items']}

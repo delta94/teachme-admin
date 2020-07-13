@@ -1,4 +1,4 @@
-import React, { useState, ReactElement, useRef, ChangeEvent } from 'react';
+import React, { useState, ReactElement, useRef, ChangeEvent, useEffect } from 'react';
 import cc from 'classcat';
 
 import WMInput from '../WMInput';
@@ -9,13 +9,26 @@ import classes from './style.module.scss';
 export default function EditableTitle({
   onBlur,
   value,
+  isNew,
 }: {
   onBlur: (inputValue: string) => void;
   value: string;
+  isNew: boolean;
 }): ReactElement {
   const [inputValue, setInputValue] = useState(value);
+  const [showInputText, setShowInputText] = useState(false);
 
   const inputTitle = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    isNewCourse();
+  }, []);
+
+  const isNewCourse = () => {
+    if (isNew) {
+      setShowInputText(true);
+    }
+  };
 
   const onInputBlur = () => {
     onBlur(value);
@@ -24,8 +37,6 @@ export default function EditableTitle({
   const onChange = (ev: ChangeEvent<HTMLInputElement>) => {
     setInputValue(ev.target.value);
   };
-
-  const [showInputText, setShowInputText] = useState(false);
 
   const showInput = () => {
     if (!inputTitle.current) return;
