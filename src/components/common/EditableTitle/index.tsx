@@ -1,5 +1,6 @@
 import React, { useState, ReactElement, useRef, ChangeEvent, useEffect } from 'react';
 import cc from 'classcat';
+import { Input } from 'antd';
 
 import WMInput from '../WMInput';
 import Icon, { IconType } from '../Icon';
@@ -18,16 +19,14 @@ export default function EditableTitle({
   const [inputValue, setInputValue] = useState(value);
   const [showInputText, setShowInputText] = useState(false);
 
-  const inputTitle = useRef<HTMLInputElement>(null);
+  const inputTitle = useRef<Input>(null);
 
   useEffect(() => {
-    if (isNew) {
-      if (inputTitle.current != null && inputTitle.current != null) {
-        inputTitle.current.select();
-        setShowInputText(true);
-      }
+    if (isNew && inputTitle.current && inputTitle.current) {
+      inputTitle.current.select();
+      setShowInputText(true);
     }
-  }, []);
+  }, [isNew]);
 
   const onInputBlur = () => {
     onBlur(value);

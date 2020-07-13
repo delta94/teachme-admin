@@ -1,4 +1,4 @@
-import React, { ReactNode, forwardRef } from 'react';
+import React, { ReactNode, forwardRef, Ref } from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 import { InputProps } from 'antd/lib/input';
@@ -17,7 +17,7 @@ export interface IWMInput extends InputProps {
 const WMInput = forwardRef(
   (
     { value, placeholder, className, prefix, suffix, allowClear, ...otherProps }: IWMInput,
-    ref: any,
+    ref: Ref<Input>,
   ) => (
     <Input
       ref={ref}
