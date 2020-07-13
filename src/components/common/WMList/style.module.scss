@@ -10,6 +10,7 @@
   &:global(.ant-list-item) {
     display: flex;
     justify-content: flex-start;
+    padding: 10px 15px;
   }
 
   @include default-wm-icon-in-row;
