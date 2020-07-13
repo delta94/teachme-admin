@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import { NEW_COURSE_EDITOR_ROUTE } from '../../../../constants/routes';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
 import classes from './style.module.scss';
-import { Link } from 'react-router-dom';
 
 export default function NewCourseButton(): ReactElement {
   return (
