@@ -13,7 +13,7 @@ export default function NewCourseButton(): ReactElement {
         shape="round"
         variant={ButtonVariantEnum.Create}
         className={classes['create-button']}
-        href={NEW_COURSE_EDITOR_ROUTE.path}
+        href={`/apps/teachme-admin${NEW_COURSE_EDITOR_ROUTE.path}`}
       >
         <PlusOutlined className="plus-icon" />
       </WMButton>
