@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-
 import { Divider } from 'antd';
-import TextCounter from '../../../common/TextCounterInput';
 
+import TextCounter from '../../../common/TextCounterInput';
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
 
 import classes from '../../../common/TextCounterInput/style.module.scss';

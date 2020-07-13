@@ -5,6 +5,7 @@ import { TextAreaProps } from 'antd/lib/input';
 import { AutoSizeType } from 'antd/lib/input/ResizableTextArea';
 
 import classes from './style.module.scss';
+
 const { TextArea } = Input;
 
 export interface IWMTextareaProps extends TextAreaProps {

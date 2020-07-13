@@ -1,17 +1,17 @@
-.text-counter-text-area {
+.text-counter-textarea {
   display: flex;
   flex-direction: column;
 
   .input-label {
     color: var(--neutral900);
-    font-family: var(--font-primary), sans-serif;
+    font-family: var(--font-primary);
     font-size: 14px;
     line-height: 16px;
   }
 
   .input-counter {
     color: var(--neutral500);
-    font-family: var(--font-primary), sans-serif;
+    font-family: var(--font-primary);
     height: 11px;
     font-size: 10px;
     font-weight: bold;

@@ -1,6 +1,6 @@
 import React, { useState, ReactElement, ChangeEvent } from 'react';
-
 import { TextAreaProps } from 'antd/lib/input';
+
 import WMTextarea from '../WMTextarea';
 
 import classes from './style.module.scss';
@@ -27,7 +27,7 @@ export default function TextCounterTextarea({
   };
 
   return (
-    <div className={classes['text-counter-text-area']}>
+    <div className={classes['text-counter-textarea']}>
       <label className={classes['input-label']}>
         {label}
         <WMTextarea
