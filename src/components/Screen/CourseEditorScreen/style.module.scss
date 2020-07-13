@@ -1,0 +1,150 @@
+.cards-wrapper {
+  display: flex;
+  font-family: var(--font-primary);
+  color: var(--neutral900);
+
+  .items,
+  .course-structure,
+  .details-panel {
+    height: 560px;
+    color: inherit;
+
+    :global(.ant-card-body) {
+      padding: 0;
+    }
+  }
+
+  .items,
+  .details-panel {
+    .title {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      white-space: nowrap;
+      height: 60px;
+      padding: 20px;
+    }
+  }
+
+  .items {
+    min-width: 340px;
+    width: 340px;
+    margin-right: 10px;
+    background-color: var(--divider-color);
+
+    .title {
+      border-bottom: var(--wm-border);
+    }
+
+    .filters-bar {
+      padding: 0 20px 13px;
+
+      .search {
+        width: 100%;
+
+        ::placeholder {
+          font-weight: 400;
+        }
+      }
+    }
+
+    .item-list {
+      margin: 0 20px 0 0;
+      overflow: auto;
+
+      .item {
+        display: flex;
+        align-items: center;
+        height: 35px;
+        color: var(--neutral800);
+        padding: 0 20px;
+        border-top: var(--wm-border);
+
+        &:last-of-type {
+          border-bottom: var(--wm-border);
+        }
+
+        &:hover {
+          cursor: move;
+        }
+
+        &-icon {
+          color: var(--secondary500);
+          margin-right: 11px;
+        }
+
+        &-title {
+          font-size: 13px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  .course-structure {
+    flex-grow: 1;
+
+    .tabs {
+      font-family: var(--font-secondary);
+      color: inherit;
+
+      > :global(.ant-tabs-nav) {
+        margin: 0 20px 15px 0;
+
+        :global(button.ant-tabs-tab) {
+          justify-content: center;
+          font-family: inherit;
+          color: inherit;
+          padding: 20px;
+          margin: 0;
+
+          &:first-of-type {
+            width: 145px;
+          }
+
+          &:last-of-type {
+            width: 99px;
+          }
+
+          &:global(.ant-tabs-tab-active) {
+            font-weight: 600;
+            color: var(--primary);
+          }
+        }
+      }
+    }
+
+    .add-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border: var(--wm-border);
+      border-radius: 50%;
+      box-shadow: var(--wm-box-shadow);
+      font-size: 8px;
+      color: var(--primary);
+    }
+  }
+
+  .details-panel {
+    min-width: 0;
+    width: 0;
+    border-width: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+
+    &.open {
+      min-width: 340px;
+      width: 340px;
+      border-width: 1px;
+    }
+  }
+}

@@ -10,7 +10,12 @@ export enum IconType {
   Pencil = 'pencilIcon',
   EventCourse = 'event-course',
   SmartWalkthru = 'smartwalkthru',
+  SmartWalkthruSmall = 'smartwalkthru-small',
   Video = 'video',
+  VideoSmall = 'video-small',
   Article = 'article',
+  ArticleSmall = 'article-small',
   Content = 'content', // TODO: should remove after fixing course item type
+  Refresh = 'refresh',
+  Plus = 'plus',
 }
