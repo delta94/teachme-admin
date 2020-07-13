@@ -18,7 +18,7 @@ export default function CourseOutlineLessonItem({
   item: ICourseOutlineItem;
 }): ReactElement {
   return (
-    <WMCollapse className={classes.lesson}>
+    <WMCollapse className={classes['lesson']}>
       <WMCollapsePanel
         header={
           <Header className={classes['lesson-header']}>
@@ -30,9 +30,10 @@ export default function CourseOutlineLessonItem({
       >
         {item.childNodes && (
           <CourseItemsList
-            items={item.childNodes.map(({ title, type }) => {
-              return { text: title, icon: <Icon type={type} /> };
-            })}
+            items={item.childNodes.map(({ title, type }) => ({
+              text: title,
+              icon: <Icon type={type} />,
+            }))}
           />
         )}
       </WMCollapsePanel>

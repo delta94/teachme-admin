@@ -22,13 +22,13 @@ const renderCourseOutlineItem = (item: ICourseOutlineItem): ReactElement => {
         <CourseOutlineLessonItem item={item} />
       </WMListItem>
     );
-  } else {
-    return (
-      <WMListItem className={classes['course-item']} icon={<Icon type={type} />}>
-        {item.title}
-      </WMListItem>
-    );
   }
+
+  return (
+    <WMListItem className={classes['course-item']} icon={<Icon type={type} />}>
+      {item.title}
+    </WMListItem>
+  );
 };
 
 export default function CourseOutlineList<T extends {}>({

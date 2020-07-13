@@ -23,7 +23,7 @@
       border: var(--wm-border);
       border-radius: 5px;
       padding: 6px 15px;
-      box-shadow: var(--wm-list-box-shadow);
+      box-shadow: var(--wm-box-shadow);
     }
 
     &.lesson-item {
@@ -35,7 +35,7 @@
     border: var(--wm-border);
     width: 100%;
     margin-bottom: 0;
-    box-shadow: var(--wm-list-box-shadow);
+    box-shadow: var(--wm-box-shadow);
     border-radius: 5px;
 
     & > .ant-collapse-item {
