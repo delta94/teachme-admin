@@ -2,9 +2,11 @@ import React, { ReactElement, ReactNode } from 'react';
 import { Divider } from 'antd';
 
 import Icon, { IconType } from '../../../common/Icon';
-import { WMList, WMListItem, WMCollapsibleList } from '../../../common/WMList';
+import { WMList, WMListItem } from '../../../common/WMList';
 import Header from '../../../common/Header';
-import { CollapsibleContentType } from '../../../common/WMList/WMCollapsibleList';
+import { CourseItemsList } from '../../../common/list';
+import CourseOutlineList from '../../../common/list/CouresOutlineList';
+import { courseOutline } from '../../../../constants/mocks/courseOutlineMock';
 
 export default function ListPlayground(): ReactElement {
   const data = [
@@ -30,55 +32,29 @@ export default function ListPlayground(): ReactElement {
     },
   ];
 
-  const parseToCollapsibleItems = (
-    arr: { text: string; icon: ReactNode }[],
-    isNested: boolean = false,
-  ) =>
-    arr.map((item, index) => {
-      return {
-        key: `collapsible-item-${index}`,
-        header: {
-          children: item.text,
-          icon: item.icon,
-        },
-        children: isNested ? (
-          <WMList
-            dataSource={data}
-            renderItem={(item) => <WMListItem icon={item.icon}>{item.text}</WMListItem>}
-          />
-        ) : (
-          'content'
-        ),
-      };
-    });
-
   return (
     <>
-      <Header title="WM-List" />
-      <WMList
-        dataSource={data}
-        renderItem={(item) => <WMListItem icon={item.icon}>{item.text}</WMListItem>}
+      <Header title="CourseItemsList: use it in CourseEditorScreen for items list" />
+      <CourseItemsList items={data} />
+      <Divider />
+      <Header title="CourseOutlineList: use it in CourseEditorScreen for course-outline section" />
+      <CourseOutlineList
+        items={courseOutline.items.map((item) => {
+          return {
+            courseId: courseOutline.id,
+            ...item,
+          };
+        })}
       />
       <Divider />
-      <Header title="WM-List + border + header + footer" />
-      <WMList
+      <Header title="Example WM-List + border + header + footer" />
+      <CourseItemsList
         header={<div>List with Header</div>}
         footer={<div>List with Footer</div>}
         bordered
-        dataSource={data}
-        renderItem={(item) => <WMListItem icon={item.icon}>{item.text}</WMListItem>}
+        items={data}
       />
       <Divider />
-      <Header title="WM-List Collapsible" />
-      <WMCollapsibleList items={parseToCollapsibleItems(data)} />
-      <Divider />
-      <Header title="WM-List Collapsible + header + footer" />
-      <WMCollapsibleList
-        contentType={CollapsibleContentType.WMList}
-        header={<div>List Collapsible with Header</div>}
-        footer={<div>List Collapsible with Footer</div>}
-        items={parseToCollapsibleItems(data, true)}
-      />
     </>
   );
 }
