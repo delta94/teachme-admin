@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { TypeName } from '@walkme/types';
 import cc from 'classcat';
 
+import { CourseItemType } from '../../../../interfaces/course.interfaces';
 import { WMList, WMListItem } from '../../WMList';
 import { IWMListProps } from '../../WMList/WMList';
 import Icon from '../../Icon';
@@ -16,7 +17,7 @@ export interface ICourseOutlineList<T> extends IWMListProps<T> {
 const renderCourseOutlineItem = (item: ICourseOutlineItem): ReactElement => {
   const { type, childNodes } = item;
 
-  if (type === TypeName.Lesson && childNodes && childNodes.length) {
+  if (type === CourseItemType.Lesson && childNodes && childNodes.length) {
     return (
       <WMListItem className={cc([classes['course-item'], classes['lesson-item']])}>
         <CourseOutlineLessonItem item={item} />
