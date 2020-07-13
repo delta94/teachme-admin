@@ -1,14 +1,12 @@
 import { ReactNode } from 'react';
 import { ContentItem } from '@walkme/types';
 
+import { ActionType } from './actions';
+
+export { ActionType };
+
 export interface IAction {
-  type:
-    | 'FETCH_ITEMS'
-    | 'FETCH_ITEMS_SUCCESS'
-    | 'FETCH_ITEMS_ERROR'
-    | 'SET_ITEMS_SEARCH_VALUE'
-    | 'TOGGLE_DETAILS_PANEL'
-    | 'RESET_COURSE_EDITOR';
+  type: ActionType;
   items?: Array<ContentItem>;
   itemsSearchValue?: string;
 }

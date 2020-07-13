@@ -1,7 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
 import cc from 'classcat';
 
-import { useCourseEditorContext, fetchItemsList } from '../../../providers/CourseEditorContext';
+import {
+  useCourseEditorContext,
+  fetchItemsList,
+  ActionType,
+} from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import ScreenHeader from '../../common/ScreenHeader';
@@ -33,7 +37,7 @@ export default function CourseEditorScreen(): ReactElement {
   useEffect(() => {
     fetchItemsList(dispatch);
 
-    return () => dispatch({ type: 'RESET_COURSE_EDITOR' });
+    return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch]);
 
   const onSearch = (newSearchValue: string) => {
@@ -44,7 +48,7 @@ export default function CourseEditorScreen(): ReactElement {
     );
 
     dispatch({
-      type: 'SET_ITEMS_SEARCH_VALUE',
+      type: ActionType.SetItemsSearchValue,
       itemsSearchValue: newSearchValue,
       items: newCourseItems,
     });
@@ -63,7 +67,7 @@ export default function CourseEditorScreen(): ReactElement {
         <WMButton
           className={classes['add-btn']}
           icon={<Icon type={IconType.Plus} />}
-          onClick={() => dispatch({ type: 'TOGGLE_DETAILS_PANEL' })}
+          onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
         />
       ),
     },

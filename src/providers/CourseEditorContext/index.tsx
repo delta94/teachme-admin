@@ -1,6 +1,7 @@
 import React, { useReducer, ReactElement } from 'react';
 
 import {
+  ActionType,
   IAction,
   IState,
   IDispatch,
@@ -16,7 +17,7 @@ import { reducer, initialState } from './reducer';
 
 export type { IAction, IState, IDispatch, ICourseEditorProvider };
 
-export { useCourseEditorContext, fetchItemsList, reducer, initialState };
+export { useCourseEditorContext, fetchItemsList, reducer, initialState, ActionType };
 
 export default function CourseEditorProvider({ children }: ICourseEditorProvider): ReactElement {
   const [state, dispatch] = useReducer(reducer, initialState as IState);

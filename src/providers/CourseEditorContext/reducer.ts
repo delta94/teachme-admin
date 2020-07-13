@@ -1,4 +1,4 @@
-import { IState, IAction } from './course-editor-context.interface';
+import { ActionType, IState, IAction } from './course-editor-context.interface';
 
 export const initialState = {
   isFetchingItems: false,
@@ -11,13 +11,13 @@ export const initialState = {
 
 export const reducer = (state: IState, action: IAction): IState => {
   switch (action.type) {
-    case 'FETCH_ITEMS':
+    case ActionType.FetchItems:
       return {
         ...state,
         isFetchingItems: true,
         isFetchingItemsError: false,
       };
-    case 'FETCH_ITEMS_SUCCESS':
+    case ActionType.FetchItemsSuccess:
       return {
         ...state,
         isFetchingItems: false,
@@ -25,24 +25,24 @@ export const reducer = (state: IState, action: IAction): IState => {
         courseItems: action.items,
         filteredItems: action.items,
       };
-    case 'FETCH_ITEMS_ERROR':
+    case ActionType.FetchItemsError:
       return {
         ...state,
         isFetchingItems: false,
         isFetchingItemsError: true,
       };
-    case 'SET_ITEMS_SEARCH_VALUE':
+    case ActionType.SetItemsSearchValue:
       return {
         ...state,
         itemsSearchValue: action.itemsSearchValue,
         filteredItems: action.items,
       };
-    case 'TOGGLE_DETAILS_PANEL':
+    case ActionType.ToggleDetailsPanel:
       return {
         ...state,
         isDetailsPanelOpen: !state.isDetailsPanelOpen,
       };
-    case 'RESET_COURSE_EDITOR':
+    case ActionType.ResetCourseEditor:
       return { ...initialState };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
