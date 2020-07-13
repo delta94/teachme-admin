@@ -5,7 +5,7 @@ import { ListItemProps } from 'antd/lib/list/Item';
 
 import classes from './style.module.scss';
 
-export interface IWMListItemProps extends ListItemProps {
+export interface IWMListItem extends ListItemProps {
   className?: string;
   icon?: ReactNode;
   children: ReactNode;
@@ -16,7 +16,7 @@ export default function WMListItem({
   icon,
   children,
   ...otherProps
-}: IWMListItemProps): ReactElement {
+}: IWMListItem): ReactElement {
   return (
     <List.Item
       className={cc([

@@ -3,9 +3,11 @@ import cc from 'classcat';
 import { Collapse } from 'antd';
 import { CollapseProps } from 'antd/lib/collapse/Collapse';
 
+import WMCollapsePanel, { IWMCollapsePanel } from './WMCollapsePanel';
+
 import classes from './style.module.scss';
 
-export interface IWMCollapse extends CollapseProps {
+interface IWMCollapse extends CollapseProps {
   className?: string;
   children: ReactNode;
 }
@@ -21,3 +23,6 @@ export default function WMCollapse({
     </Collapse>
   );
 }
+
+export { WMCollapsePanel };
+export type { IWMCollapse, IWMCollapsePanel };

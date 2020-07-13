@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import { ContentItem } from '@walkme/types';
 
-import WMCollapse from '../../WMCollapse';
-import WMCollapsePanel from '../../WMCollapse/WMCollapsePanel';
+import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
 import Header from '../../Header';
 import Icon, { IconType } from '../../Icon';
 import CourseItemsList from '../CourseItemsList';

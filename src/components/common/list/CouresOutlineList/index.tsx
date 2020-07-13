@@ -3,14 +3,13 @@ import { TypeName } from '@walkme/types';
 import cc from 'classcat';
 
 import { CourseItemType } from '../../../../interfaces/course.interfaces';
-import { WMList, WMListItem } from '../../WMList';
-import { IWMListProps } from '../../WMList/WMList';
+import WMList, { WMListItem, IWMList } from '../../WMList';
 import Icon from '../../Icon';
 import CourseOutlineLessonItem, { ICourseOutlineItem } from './CourseOutlineLessonItem';
 
 import classes from './style.module.scss';
 
-export interface ICourseOutlineList<T> extends IWMListProps<T> {
+export interface ICourseOutlineList<T> extends IWMList<T> {
   items: ICourseOutlineItem[];
 }
 

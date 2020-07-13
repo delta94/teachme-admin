@@ -1,13 +1,12 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { WMList, WMListItem } from '../WMList';
-import { IWMListProps } from '../WMList/WMList';
+import WMList, { WMListItem, IWMList } from '../WMList';
 
 export interface ICourseItem {
   text: string;
   icon: ReactNode;
 }
 
-export interface ICourseItemsList<T> extends Omit<IWMListProps<T>, 'dataSource' | 'renderItem'> {
+export interface ICourseItemsList<T> extends Omit<IWMList<T>, 'dataSource' | 'renderItem'> {
   items: T[];
 }
 

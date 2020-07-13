@@ -1,16 +1,16 @@
-import React, { ReactNode, ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import cc from 'classcat';
 import { Collapse } from 'antd';
-import { CollapsePanelProps } from 'antd/lib/collapse/CollapsePanel';
+import { CollapsePanelProps } from 'antd/lib/collapse';
 
 import classes from './style.module.scss';
-
-const { Panel } = Collapse;
 
 export interface IWMCollapsePanel extends CollapsePanelProps {
   className?: string;
   children: ReactNode;
 }
+
+const { Panel } = Collapse;
 
 export default function WMCollapsePanel({
   className = '',
