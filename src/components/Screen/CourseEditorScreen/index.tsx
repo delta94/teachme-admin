@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import cc from 'classcat';
 
-import { useCourseEditor, fetchItemsList } from '../../../providers/CourseEditorContext';
+import { useCourseEditorContext, fetchItemsList } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import ScreenHeader from '../../common/ScreenHeader';
@@ -28,7 +28,7 @@ export default function CourseEditorScreen(): ReactElement {
   const [
     { courseItems, itemsSearchValue, filteredItems, isDetailsPanelOpen },
     dispatch,
-  ] = useCourseEditor();
+  ] = useCourseEditorContext();
 
   useEffect(() => {
     fetchItemsList(dispatch);

@@ -9,14 +9,14 @@ import {
 import {
   CourseEditorStateContext,
   CourseEditorDispatchContext,
-  useCourseEditor,
+  useCourseEditorContext,
   fetchItemsList,
 } from './utils';
 import { reducer, initialState } from './reducer';
 
 export type { IAction, IState, IDispatch, ICourseEditorProvider };
 
-export { useCourseEditor, fetchItemsList, reducer, initialState };
+export { useCourseEditorContext, fetchItemsList, reducer, initialState };
 
 export default function CourseEditorProvider({ children }: ICourseEditorProvider): ReactElement {
   const [state, dispatch] = useReducer(reducer, initialState as IState);

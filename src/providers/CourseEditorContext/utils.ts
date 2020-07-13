@@ -27,7 +27,7 @@ const useCourseEditorDispatch = () => {
   return context;
 };
 
-export const useCourseEditor = (): [IState, IDispatch] => [
+export const useCourseEditorContext = (): [IState, IDispatch] => [
   useCourseEditorState(),
   useCourseEditorDispatch(),
 ];
