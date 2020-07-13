@@ -25,7 +25,7 @@ async function run() {
 }
 
 function getRedirectURI(): string {
-  switch (location.hostname) {
+  switch (window.location.hostname) {
     case 'localhost':
       return 'http://localhost:7000/#&';
     case 'teachme.walkme.com':
@@ -33,7 +33,7 @@ function getRedirectURI(): string {
     case 'cdn.walkme.com':
       return 'https://cdn.walkme.com/apps/teachme-admin/index.html/#&';
     default:
-      return location.href;
+      return window.location.href;
   }
 }
 
