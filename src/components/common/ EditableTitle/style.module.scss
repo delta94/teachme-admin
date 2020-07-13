@@ -41,5 +41,10 @@
     &:focus {
       border-color: var(--neutral900);
     }
+
+    &::selection {
+      color: var(--neutral900);
+      background: var(--selected);
+    }
   }
 }

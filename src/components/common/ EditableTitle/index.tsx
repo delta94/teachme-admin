@@ -18,17 +18,16 @@ export default function EditableTitle({
   const [inputValue, setInputValue] = useState(value);
   const [showInputText, setShowInputText] = useState(false);
 
-  const inputTitle = useRef<HTMLDivElement>(null);
+  const inputTitle = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    isNewCourse();
-  }, []);
-
-  const isNewCourse = () => {
     if (isNew) {
-      setShowInputText(true);
+      if (inputTitle.current != null && inputTitle.current != null) {
+        inputTitle.current.select();
+        setShowInputText(true);
+      }
     }
-  };
+  }, []);
 
   const onInputBlur = () => {
     onBlur(value);
