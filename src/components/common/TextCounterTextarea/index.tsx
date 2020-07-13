@@ -12,7 +12,6 @@ export interface ITextCounterTextarea extends TextAreaProps {
 }
 
 export default function TextCounterTextarea({
-  placeholder,
   label,
   maxLength = 100,
   minRows,
@@ -32,10 +31,8 @@ export default function TextCounterTextarea({
       <label className={classes['input-label']}>
         {label}
         <WMTextarea
-          className={classes['input-text']}
           onChange={onInputChange}
           value={content}
-          placeholder={placeholder}
           maxLength={maxLength}
           autosize={{ minRows, maxRows }}
           {...otherProps}

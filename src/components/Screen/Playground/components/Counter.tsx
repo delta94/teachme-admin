@@ -14,7 +14,7 @@ export default function Counter(): ReactElement {
         maxLength={12}
         placeholder="Text"
         label="Title"
-        onChange={(text) => console.log(text)}
+        onChange={(eventhandler) => console.log(eventhandler)}
       />
       <Divider />
       <div className={classes['text-counter-input']}>
@@ -30,7 +30,7 @@ export default function Counter(): ReactElement {
         label="Description"
         minRows={15}
         maxRows={25}
-        onChange={(text) => console.log(text)}
+        onChange={(eventhandler) => console.log(eventhandler)}
       />
     </>
   );

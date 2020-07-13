@@ -9,7 +9,6 @@ export interface ITextCounterInput extends IWMInputProps {
 }
 
 export default function TextCounterInput({
-  placeholder,
   label,
   maxLength = 30,
   onChange,
@@ -26,14 +25,7 @@ export default function TextCounterInput({
     <div className={classes['text-counter-input']}>
       <label className={classes['input-label']}>
         {label}
-        <WMInput
-          className={classes['input-text']}
-          onChange={onInputChange}
-          value={content}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          {...otherProps}
-        />
+        <WMInput onChange={onInputChange} value={content} maxLength={maxLength} {...otherProps} />
       </label>
       <p className={classes['input-counter']}>
         {content.length}/{maxLength}
