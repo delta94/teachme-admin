@@ -31,7 +31,7 @@ function getRedirectURI(): string {
     case 'teachme.walkme.com':
       return 'http://teachme.walkme.com/#&';
     case 'cdn.walkme.com':
-      return 'https://cdn.walkme.com/apps/teachme-admin/index.html/#&';
+      return 'https://cdn.walkme.com/apps/teachme-admin/index.html#&';
     default:
       return window.location.href;
   }
