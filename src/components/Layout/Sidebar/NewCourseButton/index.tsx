@@ -5,19 +5,19 @@ import { NEW_COURSE_EDITOR_ROUTE } from '../../../../constants/routes';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
 import classes from './style.module.scss';
+import { Link } from 'react-router-dom';
 
 export default function NewCourseButton(): ReactElement {
   return (
-    <div className={classes['create-button-wrapper']}>
+    <Link className={classes['create-button-wrapper']} to={NEW_COURSE_EDITOR_ROUTE.path}>
       <WMButton
         shape="round"
         variant={ButtonVariantEnum.Create}
         className={classes['create-button']}
-        href={`/apps/teachme-admin${NEW_COURSE_EDITOR_ROUTE.path}`}
       >
         <PlusOutlined className="plus-icon" />
       </WMButton>
       <span className={classes.text}>Create</span>
-    </div>
+    </Link>
   );
 }
