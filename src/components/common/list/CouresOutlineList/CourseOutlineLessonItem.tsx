@@ -1,6 +1,5 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { ContentItem } from '@walkme/types';
-import cc from 'classcat';
 
 import WMCollapse from '../../WMCollapse';
 import WMCollapsePanel from '../../WMCollapse/WMCollapsePanel';

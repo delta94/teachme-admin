@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 import { Collapse } from 'antd';
 import { CollapsePanelProps } from 'antd/lib/collapse/CollapsePanel';
@@ -16,7 +16,7 @@ export default function WMCollapsePanel({
   className = '',
   children,
   ...otherProps
-}: IWMCollapsePanel) {
+}: IWMCollapsePanel): ReactElement {
   return (
     <Panel className={cc([classes['wm-collapse-panel'], className])} {...otherProps}>
       {children}
