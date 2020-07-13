@@ -1,6 +1,6 @@
 .screen {
   padding: 0 30px 30px 30px;
-  background-color: #f9fbfc;
+  background-color: var(--secondary100);
   margin-top: var(--headerToolbarHeight);
   height: calc(100vh - var(--headerToolbarHeight));
   width: 100%;

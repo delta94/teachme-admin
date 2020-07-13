@@ -8,6 +8,7 @@
   // background color of the app
   --white: #fff;
   --background: #fff;
+  --selected: #d0e8ff;
 
   // should match logo color, used for hovered and active icons, progress bar,
   // active tab, active tab underline, when search input is focused
@@ -31,6 +32,9 @@
 
   // used in unfocused icons, screen headlines, search input text
   --secondary500: #aac4d1;
+
+  // used as course editor items background
+  --secondary200: #fafafa;
 
   // background of search input and tabs panel
   --secondary100: #f9fbfc;
