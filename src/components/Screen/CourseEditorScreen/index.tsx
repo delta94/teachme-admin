@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import cc from 'classcat';
 
 import {
@@ -8,6 +8,7 @@ import {
 } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
+import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
@@ -28,11 +29,16 @@ enum TabId {
   Settings = 'settings',
 }
 
-export default function CourseEditorScreen(): ReactElement {
+export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
   const [
     { courseItems, itemsSearchValue, filteredItems, isDetailsPanelOpen },
     dispatch,
   ] = useCourseEditorContext();
+  const [courseTitle, setCourseTitle] = useState('Untitled Course');
+
+  const onBlur = (text: string) => {
+    setCourseTitle(text);
+  };
 
   useEffect(() => {
     fetchItemsList(dispatch);
@@ -80,7 +86,10 @@ export default function CourseEditorScreen(): ReactElement {
 
   return (
     <>
-      <ScreenHeader title="new-course" />
+      <ScreenHeader
+        title={<EditableTitle onBlur={onBlur} value={courseTitle} isNew={isNew} />}
+        hideTimeFilter={true}
+      />
       <div className={classes['cards-wrapper']}>
         <WMCard
           className={classes['items']}

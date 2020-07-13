@@ -1,10 +1,10 @@
 import React, { useState, ChangeEvent, ReactElement } from 'react';
 
-import WMInput, { IWMInputProps } from '../WMInput';
+import WMInput, { IWMInput } from '../WMInput';
 
 import classes from './style.module.scss';
 
-export interface ITextCounterInput extends IWMInputProps {
+export interface ITextCounterInput extends IWMInput {
   label?: string;
 }
 
