@@ -1,0 +1,45 @@
+.wm-switch {
+  margin: 15px 0 20px;
+
+  &.switch-size-default {
+    .switch-label {
+      margin-top: 2px;
+    }
+  }
+
+  &.switch-size-small {
+  }
+
+  :global(.ant-switch-checked) {
+    background-color: var(--green);
+    margin-right: 11px;
+  }
+
+  :global(.ant-switch) {
+    margin-right: 11px;
+
+    &:not(:global(.ant-switch-checked)) {
+      background-color: var(--switch-off);
+    }
+  }
+
+  .wm-switch-wrap {
+    display: flex;
+  }
+
+  .switch-label {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--neutral900);
+    line-height: 18px;
+  }
+
+  .switch-info {
+    opacity: 0.7;
+    color: var(--neutral900);
+    font-family: var(--font-primary);
+    font-size: 12px;
+    line-height: 18px;
+    margin: 11px 0 0;
+  }
+}

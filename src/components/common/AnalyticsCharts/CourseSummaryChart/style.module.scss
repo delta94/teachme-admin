@@ -1,0 +1,29 @@
+.course-summary {
+  width: 100%;
+  display: flex;
+
+  .chart-legend {
+    flex: 1 2;
+  }
+
+  .chart-legend-content {
+    display: flex;
+    flex-direction: column;
+    color: var(--neutral900);
+    margin-bottom: 50px;
+
+    .legend-number {
+      font-size: 28px;
+    }
+
+    .legend-description {
+      font-size: 12px;
+      color: var(--neutral500);
+    }
+  }
+
+  .course-summary-chart {
+    width: 70%;
+    height: 250px;
+  }
+}

@@ -5,9 +5,11 @@ import { message } from 'antd';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
+import classes from '../style.module.scss';
+
 const environments: IWMDropdownOption[] = [
-  { id: 0, text: 'Production' },
-  { id: 1, text: 'Test' },
+  { id: 0, value: 'Production' },
+  { id: 1, value: 'Test' },
 ];
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
@@ -15,7 +17,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedEnvironment(selected);
-    message.info(`Environment changed to ${selected.text}`);
+    message.info(`Environment changed to ${selected.value}`);
   };
 
   return (
@@ -25,8 +27,8 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       selected={selectedEnvironment}
       onSelectedChange={handleMenuClick}
     >
-      <WMButton type="link">
-        {selectedEnvironment.text}
+      <WMButton className={classes['dropdown-menu-button']}>
+        {selectedEnvironment.value}
         <DownOutlined />
       </WMButton>
     </WMDropdown>

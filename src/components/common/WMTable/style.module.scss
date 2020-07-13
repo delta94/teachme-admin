@@ -1,4 +1,11 @@
 .wm-table {
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   th:global(.ant-table-cell) {
     background-color: transparent;
     color: var(--table-header-color);
@@ -9,6 +16,27 @@
 
   :global(.ant-table-cell) {
     border-bottom-color: var(--table-border-color);
+  }
+
+  tr:global(.wm-expanded-default-hide-handler) {
+    :global(.ant-table-row-expand-icon) {
+      display: none;
+    }
+  }
+
+  tr:global(.wm-expandable-item) {
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    color: var(--neutral900);
+    font-size: 15px;
+
+    &:global(.only-first-cell) {
+      td:not(:first-child) {
+        > * {
+          display: none;
+        }
+      }
+    }
   }
 
   tr:global(.ant-table-row):hover,

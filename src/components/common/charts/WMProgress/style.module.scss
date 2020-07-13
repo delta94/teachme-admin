@@ -1,0 +1,21 @@
+@mixin pathStatusColor($color) {
+  :global(.ant-progress-text) {
+    color: var(--neutral900);
+  }
+
+  :global(.ant-progress-inner:not(.ant-progress-circle-gradient)) {
+    :global(.ant-progress-circle-path) {
+      stroke: $color;
+    }
+  }
+}
+
+.wm-progress {
+  &:global(.ant-progress.ant-progress-status-success) {
+    @include pathStatusColor(var(--green));
+  }
+
+  &:global(.ant-progress.ant-progress-status-exception) {
+    @include pathStatusColor(var(--red));
+  }
+}

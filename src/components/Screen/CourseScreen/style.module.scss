@@ -1,0 +1,45 @@
+.course-details {
+  &-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &-title-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .course-details-icon {
+      .svg path {
+        fill: currentColor;
+      }
+    }
+
+    .course-name {
+      margin: 0 25px;
+    }
+
+    .edit {
+      margin-left: auto;
+    }
+
+    .course-details-sub-title {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--neutral500);
+      flex: 0 0 100%;
+      font-family: var(--font-primary);
+      font-weight: 400;
+    }
+  }
+}
+
+.course-table-toolbar {
+  margin-left: auto;
+
+  .export {
+    margin-right: 20px;
+  }
+}

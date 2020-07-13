@@ -1,0 +1,30 @@
+.wm-chart-tooltip {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-primary);
+  background-color: var(--white);
+  box-shadow: var(--wm-box-shadow);
+  border: var(--wm-border);
+  border-radius: 2px;
+  padding: 10px;
+
+  .title {
+    color: var(--neutral500);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .legend {
+    display: flex;
+    font-family: inherit;
+    font-size: 12px;
+    align-items: center;
+    color: var(--neutral900);
+    margin-bottom: 5px;
+
+    .status-dot {
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
+  }
+}

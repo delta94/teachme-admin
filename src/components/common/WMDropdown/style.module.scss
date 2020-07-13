@@ -1,0 +1,9 @@
+.wm-dropdown-menu {
+  :global(.ant-dropdown-menu-item) {
+    position: relative;
+  }
+
+  .selected-item {
+    color: var(--primary);
+  }
+}

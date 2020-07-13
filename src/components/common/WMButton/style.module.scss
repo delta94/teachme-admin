@@ -1,0 +1,196 @@
+@mixin primary-secondary-shared-styles {
+  height: 32px;
+  padding: 0 22px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.wm-btn {
+  &:global(.ant-btn) {
+    line-height: 1;
+    color: var(--neutral900);
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+
+    font-family: var(--font-primary);
+    font-size: 12px;
+
+    > span {
+      height: 1em;
+    }
+
+    a {
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        transition: none;
+      }
+    }
+
+    &:disabled {
+      color: var(--gray);
+      background-color: transparent;
+
+      &:hover {
+        color: var(--gray);
+        background-color: transparent;
+      }
+    }
+
+    &::after {
+      content: none;
+    }
+  }
+
+  &:global(.ant-btn-default) {
+    height: 32px;
+    padding: 0 25px;
+    border-color: var(--primary);
+    color: var(--primary);
+
+    &:hover {
+      color: var(--white);
+      background-color: var(--primary);
+    }
+  }
+
+  &:global(.ant-btn-link) {
+    font-family: var(--font-primary);
+    font-weight: 500;
+
+    &:global(.ant-dropdown-open) {
+      color: var(--primary);
+    }
+  }
+
+  &:global(.ant-btn-icon-only) {
+    > * {
+      font-size: inherit;
+      height: inherit;
+    }
+  }
+
+  &-primary {
+    &:global(.ant-btn) {
+      @include primary-secondary-shared-styles;
+
+      color: var(--white);
+      background-color: var(--primary);
+      border: 1px solid var(--primary);
+
+      &:hover {
+        color: var(--white);
+        background-color: var(--primaryLightnened);
+      }
+
+      &:focus {
+        color: var(--white);
+        background-color: var(--primaryDarkened);
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: var(--neutral100);
+        border: 1px solid var(--neutral100);
+      }
+    }
+  }
+
+  &-secondary {
+    &:global(.ant-btn) {
+      @include primary-secondary-shared-styles;
+
+      color: var(--primary);
+      background-color: var(--white);
+      border: 1px solid var(--primary);
+
+      &:hover {
+        color: var(--primaryLightnened);
+        border: 1px solid var(--primaryLightnened);
+      }
+
+      &:focus {
+        color: var(--primaryDarkened);
+        border: 1px solid var(--primaryDarkened);
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: var(--neutral100);
+        border: 1px solid var(--gray);
+      }
+    }
+  }
+
+  &-create {
+    &:global(.ant-btn) {
+      height: 32px;
+      padding: 0 18px;
+      text-transform: uppercase;
+
+      color: var(--white);
+      background-color: var(--secondary);
+      border: 1px solid var(--secondary);
+
+      &:hover {
+        color: var(--white);
+        background-color: var(--secondaryLightnened);
+        border: 1px solid var(--secondaryLightnened);
+      }
+
+      &:focus {
+        color: var(--white);
+        background-color: var(--secondaryDarkened);
+        border: 1px solid var(--secondaryDarkened);
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: var(--neutral100);
+        border: 1px solid var(--neutral100);
+      }
+    }
+  }
+
+  &-link {
+    &:global(.ant-btn) {
+      height: 16px;
+      color: var(--primary);
+
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      line-height: 16px;
+
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        color: var(--primaryLightnened);
+        background-color: transparent;
+      }
+
+      &:focus {
+        color: var(--primaryDarkened);
+        background-color: transparent;
+      }
+
+      &:disabled,
+      &:disabled:hover {
+        color: var(--gray);
+        background-color: transparent;
+      }
+    }
+  }
+}
