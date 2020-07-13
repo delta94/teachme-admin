@@ -1,0 +1,51 @@
+.editable-title {
+  position: relative;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+
+  .input-title,
+  .text-title {
+    position: absolute;
+    left: 40px;
+    color: var(--neutral900);
+    font-family: var(--font-secondary);
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 39px;
+    padding: 0;
+    margin: unset;
+
+    &.hidden {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+
+  .text-title {
+    display: flex;
+    align-items: center;
+
+    .pencil-icon {
+      margin-left: 15px;
+    }
+  }
+
+  .input-title {
+    width: 400px;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+
+    &:focus {
+      border-color: var(--neutral900);
+    }
+
+    &::selection {
+      color: var(--neutral900);
+      background: var(--selected);
+    }
+  }
+}

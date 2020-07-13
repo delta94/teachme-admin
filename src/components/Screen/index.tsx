@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import {
@@ -35,7 +34,7 @@ export default function Screen(): ReactElement {
         </Route>
         <Route path={NEW_COURSE_EDITOR_ROUTE.path}>
           <CourseEditorProvider>
-            <CourseEditorScreen />
+            <CourseEditorScreen isNew />
           </CourseEditorProvider>
         </Route>
         <Route path={COURSE_EDITOR_ROUTE.path}>
