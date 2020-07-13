@@ -31,8 +31,8 @@ export default function CourseOutlineLessonItem({
       >
         {item.childNodes && (
           <CourseItemsList
-            items={item.childNodes.map((child) => {
-              return { text: child.title, icon: <Icon type={child.type} /> };
+            items={item.childNodes.map(({ title, type }) => {
+              return { text: title, icon: <Icon type={type} /> };
             })}
           />
         )}

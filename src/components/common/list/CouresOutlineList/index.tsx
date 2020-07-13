@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { TypeName } from '@walkme/types';
 import cc from 'classcat';
 
 import { WMList, WMListItem } from '../../WMList';
@@ -15,7 +16,7 @@ export interface ICourseOutlineList<T> extends IWMListProps<T> {
 const renderCourseOutlineItem = (item: ICourseOutlineItem): ReactElement => {
   const { type, childNodes } = item;
 
-  if (type === 'lesson' && childNodes && childNodes.length) {
+  if (type === TypeName.Lesson && childNodes && childNodes.length) {
     return (
       <WMListItem className={cc([classes['course-item'], classes['lesson-item']])}>
         <CourseOutlineLessonItem item={item} />

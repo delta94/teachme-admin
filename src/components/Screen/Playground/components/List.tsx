@@ -1,12 +1,11 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
+import { courseOutline } from '../../../../constants/mocks/courseOutlineMock';
 import Icon, { IconType } from '../../../common/Icon';
-import { WMList, WMListItem } from '../../../common/WMList';
 import Header from '../../../common/Header';
 import { CourseItemsList } from '../../../common/list';
 import CourseOutlineList from '../../../common/list/CouresOutlineList';
-import { courseOutline } from '../../../../constants/mocks/courseOutlineMock';
 
 export default function ListPlayground(): ReactElement {
   const data = [
