@@ -121,6 +121,9 @@ export default function CoursesScreen(): ReactElement {
           }}
           data={tableData as Array<ICourseData>}
           columns={table.columns}
+          onSortEnd={(sortedData) => {
+            setTableData(sortedData);
+          }}
         >
           <ControlsWrapper>
             {/* <DropdownFilter label="Status" options={statuses} />
