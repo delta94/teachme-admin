@@ -13,7 +13,7 @@ interface IWMCollapse extends CollapseProps {
 }
 
 export default function WMCollapse({
-  className = '',
+  className,
   children,
   ...otherProps
 }: IWMCollapse): ReactElement {

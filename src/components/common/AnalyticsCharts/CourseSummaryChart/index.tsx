@@ -59,7 +59,6 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           </WMLegend>
         </div>
         <WMLineChart
-          className={classes['course-summary-chart']}
           data={daysToDates() as ICourseByDay[]}
           xKey="day"
           lines={lines}

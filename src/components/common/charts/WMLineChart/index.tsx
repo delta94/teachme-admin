@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
 import {
   LineChart,
   XAxis,
@@ -34,7 +35,7 @@ const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLin
 };
 
 export default function WMLineChart<T extends {}>({
-  className = '',
+  className,
   data,
   xKey,
   lineKeyPrefix,
