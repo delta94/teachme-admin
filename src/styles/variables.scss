@@ -3,7 +3,7 @@
   --headerToolbarHeight: 60px;
   --divider-color: #f0f0f0;
   --wm-border: 1px solid #e6edf1;
-  --wm-box-shadow: var(--wm-box-shadow);
+  --wm-box-shadow: 0 2px 0 0 #f2f2f2;
 
   // background color of the app
   --white: #fff;
@@ -23,6 +23,7 @@
 
   // used for back button
   --primary300: #9dd8f5;
+  --icon-bg: #adc4d2;
 
   // used for active item in sidebar
   --secondary: #435aa6;

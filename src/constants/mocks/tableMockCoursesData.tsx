@@ -1,13 +1,17 @@
 import React from 'react';
 import { ColumnsType } from 'antd/lib/table';
+import { SortableHandle } from 'react-sortable-hoc';
 
-import TagCell from '../../components/common/tableCells/TagCell';
-import LinkCell from '../../components/common/tableCells/LinkCell';
-import TextArrayCell from '../../components/common/tableCells/TextArrayCell';
+import { WMTagColor } from '../../components/common/WMTag';
 import DashCell from '../../components/common/tableCells/DashCell';
+import DragHandleCell from '../../components/common/tableCells/DragHandleCell';
+import LinkCell from '../../components/common/tableCells/LinkCell';
 import NumberCell from '../../components/common/tableCells/NumberCell';
 import StatusDotCell from '../../components/common/tableCells/StatusDotCell';
-import { WMTagColor } from '../../components/common/WMTag';
+import TagCell from '../../components/common/tableCells/TagCell';
+import TextArrayCell from '../../components/common/tableCells/TextArrayCell';
+
+const DragHandle = SortableHandle(() => <DragHandleCell />);
 
 export const labelColors: { [key: string]: string } = {
   published: WMTagColor.Green,
@@ -19,6 +23,12 @@ export const labelColors: { [key: string]: string } = {
 
 export const columns: ColumnsType<any> = [
   {
+    title: '',
+    dataIndex: 'sort',
+    className: 'drag-visible',
+    render: () => <DragHandle />,
+  },
+  {
     title: 'Name',
     dataIndex: 'name',
     render: ({ value, id }: { value: string; id: number }) => (
@@ -29,7 +39,7 @@ export const columns: ColumnsType<any> = [
     title: 'Production Status',
     dataIndex: 'productionStatus',
     render: (value: string) => {
-      let color: string = labelColors[value];
+      const color: string = labelColors[value];
       return <TagCell value={value} color={color} key={value} />;
     },
   },
