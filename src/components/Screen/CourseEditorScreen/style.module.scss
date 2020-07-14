@@ -11,6 +11,8 @@
     :global(.ant-card-body) {
       height: 560px;
       padding: 0;
+      display: flex;
+      flex-direction: column;
     }
   }
 
@@ -79,6 +81,19 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .items-container {
+      &.empty-state-items {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .item-list {
+          margin: unset;
         }
       }
     }

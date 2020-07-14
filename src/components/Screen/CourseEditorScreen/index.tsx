@@ -122,17 +122,35 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
               onSearch={onSearch}
             />
           </div>
-          <ul className={classes['item-list']}>
-            {filteredItems &&
-              filteredItems.map(({ title, type }, i) => (
-                <li key={i} className={classes['item']}>
-                  <span className={classes['item-icon']}>
-                    {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
-                  </span>
-                  <span className={classes['item-title']}>{title}</span>
-                </li>
-              ))}
-          </ul>
+          <div
+            className={cc([
+              classes['items-container'],
+              { [classes['empty-state-items']]: filteredItems?.length === 0 },
+            ])}
+          >
+            <ul className={classes['item-list']}>
+              {filteredItems?.length ? (
+                filteredItems.map(({ title, type }, i) => (
+                  <li key={i} className={classes['item']}>
+                    <span className={classes['item-icon']}>
+                      {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
+                    </span>
+                    <span className={classes['item-title']}>{title}</span>
+                  </li>
+                ))
+              ) : (
+                <WMEmpty
+                  description={
+                    <>
+                      <div>There are no items available.</div>
+                      <div>Create Walk-thrus and resources from the WalkMe Editor.</div>
+                    </>
+                  }
+                  image={null}
+                />
+              )}
+            </ul>
+          </div>
         </WMCard>
         <WMCard className={classes['course-structure']}>
           <WMTabs className={classes['tabs']} defaultActiveKey={TabId.CourseOutline}>
