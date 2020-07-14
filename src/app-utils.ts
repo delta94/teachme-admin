@@ -6,7 +6,7 @@ interface IAppStatus {
   hasError: boolean;
 }
 
-export function getRedirectURI(): string {
+function getRedirectURI(): string {
   switch (window.location.hostname) {
     case 'localhost':
       return 'http://localhost:7000/#&';
@@ -34,7 +34,7 @@ export async function appInitiator(): Promise<IAppStatus> {
       post_logout_redirect_uri: redirect_uri,
     });
 
-    // appStatus.isLoading = false;
+    appStatus.isLoading = false;
   } catch (err) {
     console.log(err);
     appStatus.isLoading = false;

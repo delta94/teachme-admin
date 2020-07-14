@@ -14,8 +14,8 @@ import './styles/index.scss';
     <StrictMode>
       {/* TODO: Create a loading screen + error screen */}
       {isLoading && <div>LOADING</div>}
-      {!hasError && !isLoading && <App />}
       {hasError && <div>ERROR</div>}
+      {!hasError && !isLoading && <App />}
     </StrictMode>,
     document.getElementById('root'),
   );
