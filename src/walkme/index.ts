@@ -1,4 +1,5 @@
 import walkme from '@walkme/editor-sdk';
+import { UserData } from '@walkme/editor-sdk/dist/user';
 import { UICourse, mapCourse } from './course/overview';
 import {
   WalkMeDataCourse,
@@ -19,6 +20,19 @@ declare global {
 }
 // For debug purposes
 window.walkme = walkme;
+
+export function getRedirectURI(): string {
+  switch (window.location.hostname) {
+    case 'localhost':
+      return 'http://localhost:7000/#&';
+    case 'teachme.walkme.com':
+      return 'http://teachme.walkme.com/#&';
+    case 'cdn.walkme.com':
+      return 'https://cdn.walkme.com/apps/teachme-admin/index.html#&';
+    default:
+      return window.location.href;
+  }
+}
 
 /**
  * Returns a list of courses metadata
@@ -72,7 +86,9 @@ export async function getFlatItemsList(environmentId: number): Promise<Array<Con
   return nestedItems.flatMap((item) => item.childNodes) as Array<ContentItem>;
 }
 
-export async function getUserData() {}
+export async function getUserData(): Promise<UserData> {
+  return await walkme.user.getOriginalUserData();
+}
 
 export async function getEnvironments() {}
 
@@ -83,6 +99,14 @@ export async function getSystems() {}
  */
 export function logout() {
   walkme.auth.logout();
+}
+
+export async function authInit(params: {
+  client_id: any;
+  redirect_uri: any;
+  post_logout_redirect_uri: any;
+}): Promise<void> {
+  await walkme.auth.init(params);
 }
 
 export * from '@walkme/editor-sdk';

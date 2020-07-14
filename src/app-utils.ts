@@ -1,5 +1,4 @@
-import walkme from '@walkme/editor-sdk';
-import './walkme';
+import * as walkme from './walkme';
 
 interface IAppStatus {
   isLoading: boolean;
@@ -7,21 +6,8 @@ interface IAppStatus {
   walkmeSDK: any;
 }
 
-function getRedirectURI(): string {
-  switch (window.location.hostname) {
-    case 'localhost':
-      return 'http://localhost:7000/#&';
-    case 'teachme.walkme.com':
-      return 'http://teachme.walkme.com/#&';
-    case 'cdn.walkme.com':
-      return 'https://cdn.walkme.com/apps/teachme-admin/index.html#&';
-    default:
-      return window.location.href;
-  }
-}
-
 export async function appInitiator(): Promise<IAppStatus> {
-  const redirect_uri = getRedirectURI();
+  const redirect_uri = walkme.getRedirectURI();
 
   const appStatus = {
     isLoading: true,
@@ -30,7 +16,7 @@ export async function appInitiator(): Promise<IAppStatus> {
   };
 
   try {
-    await walkme.auth.init({
+    await walkme.authInit({
       client_id: '9df1e0b762fd4e87bb271fcd88124323',
       redirect_uri: redirect_uri,
       post_logout_redirect_uri: redirect_uri,

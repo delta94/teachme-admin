@@ -14,7 +14,21 @@ import './styles/index.scss';
   ReactDOM.render(
     <StrictMode>
       {/* TODO: Create a loading screen + error screen */}
-      {isLoading && <div>LOADING</div>}
+      {isLoading && (
+        <div
+          style={{
+            background: '#fff',
+            width: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '100%',
+          }}
+        >
+          LOADING
+        </div>
+      )}
       {hasError && <div>ERROR</div>}
       {!hasError && !isLoading && (
         <AppProvider walkmeSDK={walkmeSDK}>
