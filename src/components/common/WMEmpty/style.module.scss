@@ -1,0 +1,19 @@
+.wm-empty {
+  &:global(.ant-empty) {
+    width: 320px;
+
+    :global(.ant-empty-image) {
+      height: auto;
+      margin-bottom: 12px;
+    }
+
+    :global(.ant-empty-description) {
+      color: var(--emptytext);
+      font-family: var(--font-primary);
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      line-height: 21px;
+      text-align: center;
+    }
+  }
+}

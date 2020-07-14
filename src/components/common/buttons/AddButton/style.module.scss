@@ -1,0 +1,20 @@
+.add-button {
+  &:global(.ant-btn) {
+    height: 28px;
+    width: 28px;
+    box-shadow: 0 2px 0 0 var(--shadow);
+    background-color: var(--white);
+    justify-content: center;
+    border: var(--wm-border);
+    border-radius: 50%;
+    color: var(--primary);
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+
+  &:global(.anticon) {
+    font-size: 10px;
+  }
+}

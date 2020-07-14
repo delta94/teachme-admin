@@ -9,6 +9,7 @@ import WMCard from '../../common/WMCard';
 import Dialogs from './components/Dialogs';
 import Counter from './components/Counter';
 import Switches from './components/Switches';
+import Empty from './components/Empty';
 
 import classes from './style.module.scss';
 
@@ -31,6 +32,12 @@ const tabs = [
     icon: undefined,
     content: <Switches />,
   },
+  {
+    id: 'empty',
+    title: 'Empty',
+    icon: undefined,
+    content: <Empty />,
+  },
 ];
 
 export default function Playground(): ReactElement {
@@ -38,7 +45,8 @@ export default function Playground(): ReactElement {
     <div className={classes.playground}>
       <ScreenHeader hideTimeFilter title="Playground" />
       <WMCard>
-        <WMTabs defaultActiveKey={'dialogs'}>
+        {/* TODO:Change back to dialogs */}
+        <WMTabs defaultActiveKey={'empty'}>
           {tabs.map((tab) => {
             const { id, title, icon, content } = tab;
             return (

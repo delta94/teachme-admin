@@ -18,4 +18,6 @@ export enum IconType {
   Content = 'content', // TODO: should remove after fixing course item type
   Refresh = 'refresh',
   Plus = 'plus',
+  CourseEmpty = 'course-empty',
+  LessonEmpty = 'lesson-empty',
 }
