@@ -1,9 +1,9 @@
 import { getData } from './data';
 import { mapItem, TYPE_IDS_TO_NAME, MapOptions } from './item';
-import { WalkMeLink, ContentItem, WalkMeNewLink, TypeId, TypeName } from '@walkme/types';
+import { ContentItem, WalkMeNewLink, TypeId } from '@walkme/types';
 
 export async function resolveLinks(
-  links: Array<WalkMeLink>,
+  links: Array<WalkMeNewLink>,
   environmentId: number,
   options?: MapOptions,
 ): Promise<Array<ContentItem | null>> {
@@ -11,7 +11,7 @@ export async function resolveLinks(
     await Promise.all(
       links.map(async (link) => {
         const type = TYPE_IDS_TO_NAME[link.DeployableType];
-        if (!options?.types?.includes(type)) return null;
+        if (options?.types && !options?.types?.includes(type)) return null;
 
         const [item] = await getData(type, environmentId, [link.DeployableID]);
         if (!item) return null;

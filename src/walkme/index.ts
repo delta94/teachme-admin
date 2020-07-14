@@ -1,5 +1,5 @@
 import walkme from '@walkme/editor-sdk';
-import { UICourse, mapCourse, mapToDataCourse } from './course/overview';
+import { UICourse, mapCourse } from './course/overview';
 import {
   WalkMeDataCourse,
   TypeName,
@@ -47,12 +47,12 @@ export async function getCourse(id: number, environmentId: number): Promise<Buil
   return courses.getCourseData(id, environmentId);
 }
 
-export async function saveQuiz(course: BuildCourse): Promise<number> {
-  const data = mapToDataCourse(course);
-  await walkme.data.saveContent(TypeName.Lesson, data.lessons);
-  const { Id } = await walkme.data.saveContent(TypeName.Course, data.course);
-  return Id;
-}
+// export async function saveQuiz(course: BuildCourse): Promise<number> {
+//   const data = mapToDataCourse(course);
+//   await walkme.data.saveContent(TypeName.Lesson, data.lessons);
+//   const { Id } = await walkme.data.saveContent(TypeName.Course, data.course);
+//   return Id;
+// }
 
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos

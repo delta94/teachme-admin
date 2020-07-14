@@ -52,16 +52,16 @@ function getPublishStatus(status: wm.PublishData): PublishStatus {
   }
 }
 
-export async function mapToDataCourse(
-  course: BuildCourse,
-): Promise<{ course: WalkMeDataCourse; lessons: Array<WalkMeDataLesson> }> {
-  const dataCourse = (await getData(TypeName.Course, 0, [course.id]))[0] as WalkMeDataCourse;
-  dataCourse.Name = course.title;
-  dataCourse.Settings = {
-    onlyPreviousDone: convertToStringBoolean(course.properties.enableIfPreviousDone),
-    enforceOrder: convertToStringBoolean(course.properties.enforceOrder),
-  };
-  dataCourse.LinkedDeployables = course.items.map((item) => createLink(course, item));
-  // dataCourse.Quiz;
-  return { course: dataCourse, lessons: [] };
-}
+// export async function mapToDataCourse(
+//   course: BuildCourse,
+// ): Promise<{ course: WalkMeDataCourse; lessons: Array<WalkMeDataLesson> }> {
+//   const dataCourse = (await getData(TypeName.Course, 0, [course.id]))[0] as WalkMeDataCourse;
+//   dataCourse.Name = course.title;
+//   dataCourse.Settings = {
+//     onlyPreviousDone: convertToStringBoolean(course.properties.enableIfPreviousDone),
+//     enforceOrder: convertToStringBoolean(course.properties.enforceOrder),
+//   };
+//   dataCourse.LinkedDeployables = course.items.map((item) => createLink(course, item));
+//   // dataCourse.Quiz;
+//   return { course: dataCourse, lessons: [] };
+// }
