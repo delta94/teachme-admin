@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ClassAttributes, HTMLAttributes, ReactElement } from 'react';
 import {
   SortableContainer,
   SortEnd,
@@ -11,12 +11,12 @@ import cc from 'classcat';
 
 import classes from './style.module.scss';
 
+type DraggableContainerType = JSX.IntrinsicAttributes &
+  ClassAttributes<HTMLTableSectionElement> &
+  HTMLAttributes<HTMLTableSectionElement>;
+
 const DraggableContainer = SortableContainer(
-  (
-    props: JSX.IntrinsicAttributes &
-      React.ClassAttributes<HTMLTableSectionElement> &
-      React.HTMLAttributes<HTMLTableSectionElement>,
-  ): ReactElement => <tbody {...props} />,
+  (props: DraggableContainerType): ReactElement => <tbody {...props} />,
 );
 
 export default function SortableTableBody({
