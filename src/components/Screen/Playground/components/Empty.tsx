@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
-import { PlusOutlined } from '@ant-design/icons';
 import WMEmpty from '../../../common/WMEmpty';
 import Icon, { IconType } from '../../../common/Icon';
 import AddButton from '../../../common/buttons/AddButton';
