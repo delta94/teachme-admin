@@ -125,11 +125,13 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
           <div
             className={cc([
               classes['items-container'],
-              { [classes['empty-state-items']]: filteredItems?.length === 0 },
+              {
+                [classes['empty-state-items']]: filteredItems?.length === 0,
+              },
             ])}
           >
             <ul className={classes['item-list']}>
-              {filteredItems?.length ? (
+              {courseItems?.length && filteredItems?.length ? (
                 filteredItems.map(({ title, type }, i) => (
                   <li key={i} className={classes['item']}>
                     <span className={classes['item-icon']}>
@@ -138,7 +140,7 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
                     <span className={classes['item-title']}>{title}</span>
                   </li>
                 ))
-              ) : (
+              ) : courseItems?.length ? (
                 <WMEmpty
                   description={
                     <>
@@ -148,6 +150,8 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
                   }
                   image={null}
                 />
+              ) : (
+                <WMEmpty description="No results found" image={null} />
               )}
             </ul>
           </div>
