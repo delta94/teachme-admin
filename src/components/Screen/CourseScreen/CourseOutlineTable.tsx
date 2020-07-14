@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 
+import { CourseItemType } from '../../../interfaces/course.interfaces';
 import WMTable from '../../common/WMTable';
 import { ICourseOutlineTable } from './courseScreen.interface';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -19,7 +20,7 @@ export default function CourseOutlineTable({ course }: ICourseOutlineTable): Rea
 
     const newTableData = course.data
       .map((item: any) => {
-        if (item.type === 'lesson') {
+        if (item.type === CourseItemType.Lesson) {
           const someChildrenAreMatch = item.children.some((child: any) => isMatch(child));
           const filteredLesson = { ...item, children: getFilteredLessonChildren(item.children) };
 

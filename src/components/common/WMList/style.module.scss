@@ -1,0 +1,17 @@
+@import 'src/styles/mixins';
+
+.wm-list {
+  &:global(.ant-list) {
+    margin-bottom: 25px;
+  }
+}
+
+.wm-list-item {
+  &:global(.ant-list-item) {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 15px;
+  }
+
+  @include default-wm-icon-in-row;
+}
