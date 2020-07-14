@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { TypeName } from '@walkme/types';
 import cc from 'classcat';
 
 import { CourseItemType } from '../../../../interfaces/course.interfaces';

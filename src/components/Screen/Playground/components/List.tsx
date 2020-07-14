@@ -4,8 +4,7 @@ import { Divider } from 'antd';
 import { courseOutline } from '../../../../constants/mocks/courseOutlineMock';
 import Icon, { IconType } from '../../../common/Icon';
 import Header from '../../../common/Header';
-import { CourseItemsList } from '../../../common/lists';
-import CourseOutlineList from '../../../common/lists/CourseOutlineList';
+import { CourseItemsList, CourseOutlineList } from '../../../common/lists';
 
 export default function ListPlayground(): ReactElement {
   const data = [
