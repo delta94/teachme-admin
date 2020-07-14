@@ -9,6 +9,7 @@ import WMCard from '../../common/WMCard';
 import Dialogs from './components/Dialogs';
 import Counter from './components/Counter';
 import Switches from './components/Switches';
+import Checkboxes from './components/Checkboxes';
 
 import classes from './style.module.scss';
 
@@ -30,6 +31,12 @@ const tabs = [
     title: 'Switches',
     icon: undefined,
     content: <Switches />,
+  },
+  {
+    id: 'checkboxes',
+    title: 'Checkboxes',
+    icon: undefined,
+    content: <Checkboxes />,
   },
 ];
 
