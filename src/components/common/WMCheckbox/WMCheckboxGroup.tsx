@@ -11,7 +11,7 @@ export interface IWMCheckboxGroup extends CheckboxGroupProps {
 }
 
 export function WMCheckboxGroup({
-  className = '',
+  className,
   isVertical,
   ...otherProps
 }: IWMCheckboxGroup): ReactElement {

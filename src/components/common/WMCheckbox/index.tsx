@@ -13,7 +13,7 @@ export interface IWMCheckbox extends CheckboxProps {
 }
 
 export default function WMCheckbox({
-  className = '',
+  className,
   children,
   ...otherProps
 }: IWMCheckbox): ReactElement {

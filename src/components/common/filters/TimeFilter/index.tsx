@@ -9,7 +9,7 @@ import classes from './style.module.scss';
 
 const { RangePicker } = DatePicker;
 
-export default function TimeFilter({ className = '' }: { className?: string }): ReactElement {
+export default function TimeFilter({ className }: { className?: string }): ReactElement {
   const onChange = (dates: any, dateStrings: any) => {
     // set the selected dates after changes and call to SDK
     if (dates) {

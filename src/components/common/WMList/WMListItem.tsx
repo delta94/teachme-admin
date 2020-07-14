@@ -12,7 +12,7 @@ export interface IWMListItem extends ListItemProps {
 }
 
 export default function WMListItem({
-  className = '',
+  className,
   icon,
   children,
   ...otherProps

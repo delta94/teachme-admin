@@ -45,7 +45,11 @@ export default function Checkboxes(): ReactElement {
       <Header title="wm-checkbox-group" />
       <WMCheckboxGroup options={options} defaultValue={['Apple']} onChange={onChange} />
       <Divider />
-      <WMCheckboxGroup options={optionsWithDisabled} defaultValue={['Pear']} onChange={onChange} />
+      <WMCheckboxGroup
+        options={optionsWithDisabled}
+        defaultValue={['Pear', 'Orange']}
+        onChange={onChange}
+      />
       <Divider />
       <WMCheckboxGroup options={options} disabled defaultValue={['Pear']} onChange={onChange} />
       <Divider />

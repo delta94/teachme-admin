@@ -13,7 +13,7 @@ export interface IWMCollapsePanel extends CollapsePanelProps {
 const { Panel } = Collapse;
 
 export default function WMCollapsePanel({
-  className = '',
+  className,
   children,
   ...otherProps
 }: IWMCollapsePanel): ReactElement {
