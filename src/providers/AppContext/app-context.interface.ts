@@ -7,6 +7,7 @@ export { ActionType };
 export interface IAction {
   type: ActionType;
   currentScreen?: any;
+  walkmeSDK: any;
 }
 
 export interface IDispatch {
@@ -14,9 +15,8 @@ export interface IDispatch {
 }
 
 export interface IState {
+  walkmeSDK: any;
   screenProvider: any;
-  isLoading: boolean;
-  hasLoadingError: boolean;
   isUpdating: boolean;
   hasUpdateError: boolean;
   errorMessage: string;
@@ -24,4 +24,5 @@ export interface IState {
 
 export interface IAppProvider {
   children: ReactNode;
+  walkmeSDK: any;
 }

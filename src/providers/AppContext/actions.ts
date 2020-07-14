@@ -1,7 +1,5 @@
 export enum ActionType {
-  Loading = 'LOADING',
-  LoadingSuccess = 'LOADING_SUCCESS',
-  LoadingError = 'LOADING_ERROR',
+  SetWalkmeSDK = 'SET_WALKME_SDK',
   Updating = 'UPDATING',
   UpdateSuccess = 'UPDATE_SUCCESS',
   UpdateError = 'UPDATE_ERROR',

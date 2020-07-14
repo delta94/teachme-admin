@@ -4,6 +4,7 @@ import './walkme';
 interface IAppStatus {
   isLoading: boolean;
   hasError: boolean;
+  walkmeSDK: any;
 }
 
 function getRedirectURI(): string {
@@ -25,6 +26,7 @@ export async function appInitiator(): Promise<IAppStatus> {
   const appStatus = {
     isLoading: true,
     hasError: false,
+    walkmeSDK: walkme,
   };
 
   try {
