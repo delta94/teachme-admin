@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
 import {
   LineChart,
   XAxis,
