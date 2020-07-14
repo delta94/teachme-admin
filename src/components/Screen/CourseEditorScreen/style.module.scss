@@ -6,10 +6,10 @@
   .items,
   .course-structure,
   .details-panel {
-    height: 560px;
     color: inherit;
 
     :global(.ant-card-body) {
+      height: 560px;
       padding: 0;
     }
   }
@@ -90,6 +90,7 @@
     .tabs {
       font-family: var(--font-secondary);
       color: inherit;
+      height: 100%;
 
       > :global(.ant-tabs-nav) {
         margin: 0 20px 15px 0;
@@ -114,6 +115,18 @@
             color: var(--primary);
           }
         }
+      }
+
+      :global(.ant-tabs-content-holder),
+      :global(.ant-tabs-content),
+      :global(.ant-tabs-tabpane) {
+        height: 100%;
+      }
+
+      :global(.ant-tabs-tabpane) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
 

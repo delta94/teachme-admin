@@ -15,6 +15,8 @@ import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 import WMButton from '../../common/WMButton';
+import WMEmpty from '../../common/WMEmpty';
+import AddButton from '../../common/buttons/AddButton';
 
 import classes from './style.module.scss';
 
@@ -65,16 +67,28 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
     onSearch(itemsSearchValue ?? '');
   };
 
+  const courseOutlineMock = null;
+
   const cardTabs = [
     {
       id: TabId.CourseOutline,
       title: 'Course Outline',
       content: (
-        <WMButton
-          className={classes['add-btn']}
-          icon={<Icon type={IconType.Plus} />}
-          onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
-        />
+        <>
+          {(isNew || !courseOutlineMock) && (
+            <WMEmpty
+              description="Start building your course by creating lessons and draging items from the Items List"
+              image={<Icon type={IconType.CourseEmpty} />}
+            >
+              <AddButton />
+            </WMEmpty>
+          )}
+          <WMButton
+            className={classes['add-btn']}
+            icon={<Icon type={IconType.Plus} />}
+            onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
+          />
+        </>
       ),
     },
     {

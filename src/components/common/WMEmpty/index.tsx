@@ -11,7 +11,10 @@ export interface IWMEmpty extends EmptyProps {
 
 export default function WMEmpty({ className, children, ...otherProps }: IWMEmpty): ReactElement {
   return (
-    <Empty className={cc([classes['wm-empty'], className])} {...otherProps}>
+    <Empty
+      className={cc([classes['wm-empty'], { [classes['horizontal']]: !children }, className])}
+      {...otherProps}
+    >
       {children}
     </Empty>
   );

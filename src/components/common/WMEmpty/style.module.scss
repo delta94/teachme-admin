@@ -16,4 +16,15 @@
       text-align: center;
     }
   }
+
+  &.horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    :global(.ant-empty-image) {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
+  }
 }
