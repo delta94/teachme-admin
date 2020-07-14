@@ -73,23 +73,6 @@ const prodStatuses: IWMDropdownOption[] = [
 ];
 
 export default function CoursesScreen(): ReactElement {
-  const [state, dispatch] = useAppContext();
-
-  const getCourses = useCallback(async () => {
-    try {
-      const courses = await state.walkmeSDK.getCourseList(0);
-
-      console.log('courses ', courses);
-      return courses;
-    } catch (error) {
-      console.error(error);
-    }
-  }, [state.walkmeSDK]);
-
-  useEffect(() => {
-    getCourses();
-  }, [getCourses]);
-
   const {
     title: mainTitle,
     analytics,

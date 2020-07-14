@@ -3,7 +3,6 @@ import * as walkme from './walkme';
 interface IAppStatus {
   isLoading: boolean;
   hasError: boolean;
-  walkmeSDK: any;
 }
 
 export async function appInitiator(): Promise<IAppStatus> {
@@ -12,7 +11,6 @@ export async function appInitiator(): Promise<IAppStatus> {
   const appStatus = {
     isLoading: true,
     hasError: false,
-    walkmeSDK: walkme,
   };
 
   try {

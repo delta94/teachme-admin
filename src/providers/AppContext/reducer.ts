@@ -1,7 +1,6 @@
 import { ActionType, IState, IAction } from './app-context.interface';
 
 export const initialState = {
-  walkmeSDK: null,
   screenProvider: null,
   isLoading: false,
   hasLoadingError: false,
@@ -12,11 +11,6 @@ export const initialState = {
 
 export const reducer = (state: IState, action: IAction): IState => {
   switch (action.type) {
-    case ActionType.SetWalkmeSDK:
-      return {
-        ...state,
-        walkmeSDK: action.walkmeSDK,
-      };
     case ActionType.Updating:
       return {
         ...state,

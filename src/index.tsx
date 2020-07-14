@@ -9,29 +9,15 @@ import * as serviceWorker from './serviceWorker';
 import './styles/index.scss';
 
 (async () => {
-  const { isLoading, hasError, walkmeSDK } = await appInitiator();
+  const { isLoading, hasError } = await appInitiator();
 
   ReactDOM.render(
     <StrictMode>
       {/* TODO: Create a loading screen + error screen */}
-      {isLoading && (
-        <div
-          style={{
-            background: '#fff',
-            width: '100%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '100%',
-          }}
-        >
-          LOADING
-        </div>
-      )}
+      {isLoading && <div>LOADING</div>}
       {hasError && <div>ERROR</div>}
       {!hasError && !isLoading && (
-        <AppProvider walkmeSDK={walkmeSDK}>
+        <AppProvider>
           <App />
         </AppProvider>
       )}

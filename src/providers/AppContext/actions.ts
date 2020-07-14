@@ -1,5 +1,4 @@
 export enum ActionType {
-  SetWalkmeSDK = 'SET_WALKME_SDK',
   Updating = 'UPDATING',
   UpdateSuccess = 'UPDATE_SUCCESS',
   UpdateError = 'UPDATE_ERROR',
