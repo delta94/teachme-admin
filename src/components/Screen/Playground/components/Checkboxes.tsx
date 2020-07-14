@@ -19,7 +19,7 @@ export default function Checkboxes(): ReactElement {
   const optionsWithDisabled = [
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
-    { label: 'Orange', value: 'Orange', disabled: true, defaultChecked: true },
+    { label: 'Orange', value: 'Orange', disabled: true },
   ];
 
   return (
