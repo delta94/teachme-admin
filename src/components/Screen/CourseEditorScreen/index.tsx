@@ -17,6 +17,7 @@ import { CourseItemsList } from '../../common/lists';
 import Icon, { IconType } from '../../common/Icon';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 import WMButton from '../../common/WMButton';
+import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 
 import classes from './style.module.scss';
 
@@ -36,6 +37,29 @@ enum TabId {
   CourseOutline = 'course-outline',
   Settings = 'settings',
 }
+
+const options: IWMDropdownOption[] = [
+  {
+    id: 0,
+    value: 'new-lesson',
+    label: (
+      <div className={classes['option']}>
+        <Icon type={IconType.LessonSmall} />
+        Add Lesson
+      </div>
+    ),
+  },
+  {
+    id: 1,
+    value: 'new-quiz',
+    label: (
+      <div className={classes['option']}>
+        <Icon type={IconType.LessonSmall} />
+        Add Quiz
+      </div>
+    ),
+  },
+];
 
 export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -88,6 +112,14 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
     });
   };
 
+  const onActionSelect = (selected: IWMDropdownOption) => {
+    if (selected.value === 'new-lesson') {
+      console.log('lesson added');
+    } else {
+      console.log('quiz added');
+    }
+  };
+
   console.log(filteredCourseOutline);
 
   const cardTabs = [
@@ -96,11 +128,13 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
       title: 'Course Outline',
       content: (
         <>
-          <WMButton
-            className={classes['add-btn']}
-            icon={<Icon type={IconType.Plus} />}
-            onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
-          />
+          <WMDropdown options={options} onSelectedChange={onActionSelect}>
+            <WMButton
+              className={classes['add-btn']}
+              icon={<Icon type={IconType.Plus} />}
+              // onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
+            />
+          </WMDropdown>
           <SearchFilter
             className={classes['search']}
             placeholder="Search"
