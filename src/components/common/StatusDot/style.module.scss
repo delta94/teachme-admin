@@ -11,4 +11,8 @@
   &.success {
     background-color: var(--green);
   }
+
+  &.disable {
+    background-color: var(--disable-dot);
+  }
 }

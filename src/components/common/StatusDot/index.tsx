@@ -6,6 +6,7 @@ import classes from './style.module.scss';
 export enum DotType {
   Success = 'success',
   Failure = 'failure',
+  Disable = 'disable',
   Custom = 'custom',
 }
 

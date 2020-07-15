@@ -47,15 +47,28 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
     });
   };
 
+  const usersStarted = 20;
+  const usersCompleted = 0;
+
   return (
     <WMCard title={title}>
       <div className={classes['course-summary']}>
         <div className={classes['chart-legend']}>
-          <WMLegend title="User Started" dotStatusColor="#F2B529">
-            <LegendContent number={2580} description="52% of users with TeachMe access" />
+          <WMLegend
+            usersStarted={usersStarted}
+            usersCompleted={usersCompleted}
+            title="User Started"
+            dotStatusColor="#F2B529"
+          >
+            <LegendContent number={usersStarted} description="52% of users with TeachMe access" />
           </WMLegend>
-          <WMLegend title="User Completed" dotStatusColor="#8812FF">
-            <LegendContent number={2130} description="47% of users who started courses" />
+          <WMLegend
+            usersStarted={usersStarted}
+            usersCompleted={usersCompleted}
+            title="User Completed"
+            dotStatusColor="#8812FF"
+          >
+            <LegendContent number={usersCompleted} description="47% of users who started courses" />
           </WMLegend>
         </div>
         <WMLineChart
