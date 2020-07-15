@@ -1,6 +1,6 @@
-.course-items-list {
-  margin: 0 20px 0 0;
-  overflow: auto;
+.course-items-list:global(.ant-list) {
+  flex-grow: 1;
+  margin: 0;
 
   .item {
     &:global(.ant-list-item) {
