@@ -5,6 +5,7 @@ export const initialState = {
   isFetchingItemsError: false,
   courseItems: [],
   filteredItems: [],
+  courseTitle: 'Untitled Course',
   itemsSearchValue: '',
   isDetailsPanelOpen: false,
 };
@@ -30,6 +31,11 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         isFetchingItems: false,
         isFetchingItemsError: true,
+      };
+    case ActionType.SetCourseTitle:
+      return {
+        ...state,
+        courseTitle: action.courseTitle ?? initialState.courseTitle,
       };
     case ActionType.SetItemsSearchValue:
       return {

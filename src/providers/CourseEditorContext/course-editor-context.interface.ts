@@ -8,6 +8,7 @@ export { ActionType };
 export interface IAction {
   type: ActionType;
   items?: Array<ContentItem>;
+  courseTitle?: string;
   itemsSearchValue?: string;
 }
 
@@ -20,6 +21,7 @@ export interface IState {
   isFetchingItemsError: boolean;
   courseItems: Array<ContentItem>;
   filteredItems: Array<ContentItem>;
+  courseTitle: string;
   itemsSearchValue: string;
   isDetailsPanelOpen: boolean;
 }

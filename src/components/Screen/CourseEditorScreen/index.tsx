@@ -39,20 +39,18 @@ enum TabId {
 
 export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
   const [
-    { courseItems, itemsSearchValue, filteredItems, isDetailsPanelOpen },
+    { courseItems, filteredItems, courseTitle, itemsSearchValue, isDetailsPanelOpen },
     dispatch,
   ] = useCourseEditorContext();
-  const [courseTitle, setCourseTitle] = useState('Untitled Course');
-
-  const onBlur = (text: string) => {
-    setCourseTitle(text);
-  };
 
   useEffect(() => {
     fetchItemsList(dispatch);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch]);
+
+  const onBlur = (courseTitle: string) =>
+    dispatch({ type: ActionType.SetCourseTitle, courseTitle });
 
   const onSearch = (newSearchValue: string) => {
     if (!courseItems) return;
