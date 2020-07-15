@@ -1,6 +1,5 @@
 import walkme from '@walkme/editor-sdk';
 import { UserData } from '@walkme/editor-sdk/dist/user';
-import { UICourse, mapCourse } from './course/overview';
 import {
   WalkMeDataCourse,
   TypeName,
@@ -9,6 +8,9 @@ import {
   ContentItem,
   TypeId,
 } from '@walkme/types';
+import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
+
+import { UICourse, mapCourse } from './course/overview';
 import * as courses from './course/details';
 import { mapItem } from './item';
 
@@ -86,13 +88,21 @@ export async function getFlatItemsList(environmentId: number): Promise<Array<Con
   return nestedItems.flatMap((item) => item.childNodes) as Array<ContentItem>;
 }
 
-export async function getUserData(): Promise<UserData> {
+export async function getUserData(): Promise<UserData | null> {
   return await walkme.user.getOriginalUserData();
 }
 
-export async function getEnvironments() {}
+/**
+ * return walkme environments
+ * (setting the environment should happen in client side)
+ */
+export async function getEnvironments(): Promise<Array<WalkMeEnvironment | null>> {
+  return await walkme.environment.getEnvironments();
+}
 
-export async function getSystems() {}
+export async function getSystems() {
+  return await walkme.environment.getEnvironments();
+}
 
 /**
  * Logs the user out and redirects to the url configured in walkme.auth.init call

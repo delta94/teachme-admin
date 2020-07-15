@@ -7,6 +7,9 @@ export const initialState = {
   isUpdating: false,
   hasUpdateError: false,
   errorMessage: '',
+  user: null,
+  environment: null,
+  system: null,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -36,6 +39,21 @@ export const reducer = (state: IState, action: IAction): IState => {
       return {
         ...state,
         screenProvider: action.currentScreen,
+      };
+    case ActionType.SetUser:
+      return {
+        ...state,
+        user: action.user,
+      };
+    case ActionType.SetEnvironment:
+      return {
+        ...state,
+        environment: action.environment,
+      };
+    case ActionType.SetSystem:
+      return {
+        ...state,
+        system: action.system,
       };
     case ActionType.ResetAppState:
       return { ...initialState };
