@@ -8,6 +8,7 @@ import {
   ContentItem,
   TypeId,
 } from '@walkme/types';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
 import { UICourse, mapCourse } from './course/overview';
@@ -88,7 +89,7 @@ export async function getFlatItemsList(environmentId: number): Promise<Array<Con
   return nestedItems.flatMap((item) => item.childNodes) as Array<ContentItem>;
 }
 
-export async function getUserData(): Promise<UserData | null> {
+export async function getUserData(): Promise<UserData> {
   return await walkme.user.getOriginalUserData();
 }
 
@@ -96,12 +97,16 @@ export async function getUserData(): Promise<UserData | null> {
  * return walkme environments
  * (setting the environment should happen in client side)
  */
-export async function getEnvironments(): Promise<Array<WalkMeEnvironment | null>> {
+export async function getEnvironments(): Promise<Array<WalkMeEnvironment>> {
   return await walkme.environment.getEnvironments();
 }
 
-export async function getSystems() {
-  return await walkme.environment.getEnvironments();
+export async function getSystems(): Promise<SystemData[]> {
+  return await walkme.system.getSystems();
+}
+
+export async function getSystem(): Promise<SystemData> {
+  return await walkme.system.getSystemData();
 }
 
 /**

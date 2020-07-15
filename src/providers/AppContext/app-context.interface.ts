@@ -7,12 +7,21 @@ import { ActionType } from './actions';
 
 export { ActionType };
 
+export interface IGlobalItemData<T extends WalkMeEnvironment | SystemData> {
+  active: T;
+  options: Array<T>;
+}
+
+export interface IGlobals {
+  user: UserData | null;
+  environment: IGlobalItemData<WalkMeEnvironment>;
+  system: IGlobalItemData<SystemData>;
+}
 export interface IAction {
   type: ActionType;
   currentScreen?: any;
-  user: UserData;
-  environment: WalkMeEnvironment;
-  system: SystemData;
+  globals?: IGlobals;
+  errorMsg?: string;
 }
 
 export interface IDispatch {
@@ -23,10 +32,8 @@ export interface IState {
   screenProvider: any;
   isUpdating: boolean;
   hasUpdateError: boolean;
-  errorMessage: string;
-  user: UserData | null;
-  environment: WalkMeEnvironment | null;
-  system: SystemData | null;
+  errorMessage?: string;
+  globals?: IGlobals;
 }
 
 export interface IAppProvider {

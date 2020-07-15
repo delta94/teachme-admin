@@ -2,12 +2,9 @@ import { ActionType, IState, IAction } from './app-context.interface';
 
 export const initialState = {
   screenProvider: null,
-  isUpdating: false,
+  isUpdating: true,
   hasUpdateError: false,
   errorMessage: '',
-  user: null,
-  environment: null,
-  system: null,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -31,27 +28,17 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         isUpdating: false,
         hasUpdateError: true,
-        errorMessage: 'Update Error',
+        errorMessage: action.errorMsg,
       };
     case ActionType.CurrentScreenProvider:
       return {
         ...state,
         screenProvider: action.currentScreen,
       };
-    case ActionType.SetUser:
+    case ActionType.SetGlobals:
       return {
         ...state,
-        user: action.user,
-      };
-    case ActionType.SetEnvironment:
-      return {
-        ...state,
-        environment: action.environment,
-      };
-    case ActionType.SetSystem:
-      return {
-        ...state,
-        system: action.system,
+        globals: action.globals,
       };
     case ActionType.ResetAppState:
       return { ...initialState };
