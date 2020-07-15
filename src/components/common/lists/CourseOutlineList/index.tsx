@@ -8,6 +8,8 @@ import CourseOutlineLessonItem, { ICourseOutlineItem } from './CourseOutlineLess
 
 import classes from './style.module.scss';
 
+export { CourseOutlineLessonItem };
+
 export interface ICourseOutlineList<T> extends IWMList<T> {
   items: ICourseOutlineItem[];
 }

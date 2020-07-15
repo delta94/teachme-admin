@@ -18,10 +18,10 @@ export interface IDispatch {
 export interface IState {
   isFetchingItems: boolean;
   isFetchingItemsError: boolean;
-  courseItems?: Array<ContentItem>;
-  filteredItems?: Array<ContentItem>;
-  itemsSearchValue?: string;
-  isDetailsPanelOpen?: boolean;
+  courseItems: Array<ContentItem>;
+  filteredItems: Array<ContentItem>;
+  itemsSearchValue: string;
+  isDetailsPanelOpen: boolean;
 }
 
 export interface ICourseEditorProvider {

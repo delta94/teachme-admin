@@ -22,8 +22,8 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         isFetchingItems: false,
         isFetchingItemsError: false,
-        courseItems: action.items,
-        filteredItems: action.items,
+        courseItems: action.items ?? initialState.courseItems,
+        filteredItems: action.items ?? initialState.filteredItems,
       };
     case ActionType.FetchItemsError:
       return {
@@ -34,8 +34,8 @@ export const reducer = (state: IState, action: IAction): IState => {
     case ActionType.SetItemsSearchValue:
       return {
         ...state,
-        itemsSearchValue: action.itemsSearchValue,
-        filteredItems: action.items,
+        itemsSearchValue: action.itemsSearchValue ?? initialState.itemsSearchValue,
+        filteredItems: action.items ?? initialState.filteredItems,
       };
     case ActionType.ToggleDetailsPanel:
       return {

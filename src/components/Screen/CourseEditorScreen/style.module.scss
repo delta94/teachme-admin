@@ -48,40 +48,6 @@
         }
       }
     }
-
-    .item-list {
-      margin: 0 20px 0 0;
-      overflow: auto;
-
-      .item {
-        display: flex;
-        align-items: center;
-        height: 35px;
-        color: var(--neutral800);
-        padding: 0 20px;
-        border-top: var(--wm-border);
-
-        &:last-of-type {
-          border-bottom: var(--wm-border);
-        }
-
-        &:hover {
-          cursor: move;
-        }
-
-        &-icon {
-          color: var(--secondary500);
-          margin-right: 11px;
-        }
-
-        &-title {
-          font-size: 13px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-    }
   }
 
   .course-structure {

@@ -1,5 +1,4 @@
 import CourseItemsList from './CourseItemsList';
-import CourseOutlineList from './CourseOutlineList';
-import CourseOutlineLessonItem from './CourseOutlineList/CourseOutlineLessonItem';
+import CourseOutlineList, { CourseOutlineLessonItem } from './CourseOutlineList';
 
 export { CourseItemsList, CourseOutlineList, CourseOutlineLessonItem };

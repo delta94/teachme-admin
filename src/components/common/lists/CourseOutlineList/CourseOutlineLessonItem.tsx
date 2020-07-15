@@ -4,7 +4,7 @@ import { ContentItem } from '@walkme/types';
 import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
 import Header from '../../Header';
 import Icon, { IconType } from '../../Icon';
-import CourseItemsList from '../CourseItemsList';
+import { CourseItemsList } from '../../lists';
 
 import classes from './style.module.scss';
 

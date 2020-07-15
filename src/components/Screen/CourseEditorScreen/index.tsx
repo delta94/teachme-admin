@@ -5,6 +5,7 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   ActionType,
+  IState,
 } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
@@ -12,6 +13,7 @@ import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
+import { CourseItemsList } from '../../common/lists';
 import Icon, { IconType } from '../../common/Icon';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 import WMButton from '../../common/WMButton';
@@ -23,6 +25,12 @@ const ItemIcon = {
   article: IconType.ArticleSmall,
   video: IconType.VideoSmall,
 };
+
+const getCourseItems = (items: IState['filteredItems']) =>
+  items.map(({ title, type }) => ({
+    text: title,
+    icon: <Icon type={ItemIcon[type as keyof typeof ItemIcon]} />,
+  }));
 
 enum TabId {
   CourseOutline = 'course-outline',
@@ -108,17 +116,7 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
               onSearch={onSearch}
             />
           </div>
-          <ul className={classes['item-list']}>
-            {filteredItems &&
-              filteredItems.map(({ title, type }, i) => (
-                <li key={i} className={classes['item']}>
-                  <span className={classes['item-icon']}>
-                    {<Icon type={ItemIcon[type as keyof typeof ItemIcon]} />}
-                  </span>
-                  <span className={classes['item-title']}>{title}</span>
-                </li>
-              ))}
-          </ul>
+          <CourseItemsList items={getCourseItems(filteredItems)} />
         </WMCard>
         <WMCard className={classes['course-structure']}>
           <WMTabs className={classes['tabs']} defaultActiveKey={TabId.CourseOutline}>
