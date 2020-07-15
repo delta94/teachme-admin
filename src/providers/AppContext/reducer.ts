@@ -2,8 +2,6 @@ import { ActionType, IState, IAction } from './app-context.interface';
 
 export const initialState = {
   screenProvider: null,
-  isLoading: false,
-  hasLoadingError: false,
   isUpdating: false,
   hasUpdateError: false,
   errorMessage: '',
