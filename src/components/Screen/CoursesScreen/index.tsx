@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Divider, message } from 'antd';
+import { Divider, message, ConfigProvider } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
@@ -78,7 +78,7 @@ export default function CoursesScreen(): ReactElement {
     CoursesTable: { title: CoursesTableTitle, table },
   } = coursesMockData;
 
-  const [tableData, setTableData] = useState(table.data);
+  const [tableData, setTableData] = useState<Array<any>>(table.data);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
   const [selectedRows, setSelectedRows] = useState<Array<any>>([]);
 
@@ -106,6 +106,22 @@ export default function CoursesScreen(): ReactElement {
 
   const hasSelected = !!selectedRowKeys.length;
 
+  const customizeRenderEmpty = () => (
+    <div className={classes['empty-state']}>
+      <Icon className={classes['empty-icon']} type={IconType.CourseEmpty} />
+      <span>No courses yet</span>
+      <p>Start creating courses by clicking the button below</p>
+      <WMButton
+        className={classes['create-btn']}
+        shape="round"
+        variant={ButtonVariantEnum.Create}
+        icon={<PlusOutlined />}
+      >
+        Create Course
+      </WMButton>
+    </div>
+  );
+
   return (
     <>
       <ScreenHeader title={mainTitle} />
@@ -114,49 +130,51 @@ export default function CoursesScreen(): ReactElement {
         title={`${tableData.length} ${CoursesTableTitle}`}
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <WMTable
-          rowSelection={{
-            selectedRowKeys,
-            onChange: onMultiSelectChange,
-          }}
-          data={tableData as Array<ICourseData>}
-          columns={table.columns}
-        >
-          <ControlsWrapper>
-            {/* <DropdownFilter label="Status" options={statuses} />
+        <ConfigProvider renderEmpty={customizeRenderEmpty}>
+          <WMTable
+            rowSelection={{
+              selectedRowKeys,
+              onChange: onMultiSelectChange,
+            }}
+            data={tableData as Array<ICourseData>}
+            columns={table.columns}
+          >
+            <ControlsWrapper>
+              {/* <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} /> */}
-          </ControlsWrapper>
-          <ControlsWrapper>
-            <WMDropdown
-              options={prodStatuses}
-              onSelectedChange={onProdStatusChange}
-              disabled={!hasSelected}
-            >
-              <WMButton className={classes['prod-status']}>
-                Change Status
-                <DownOutlined />
+            </ControlsWrapper>
+            <ControlsWrapper>
+              <WMDropdown
+                options={prodStatuses}
+                onSelectedChange={onProdStatusChange}
+                disabled={!hasSelected}
+              >
+                <WMButton className={classes['prod-status']}>
+                  Change Status
+                  <DownOutlined />
+                </WMButton>
+              </WMDropdown>
+              <Divider className={classes['separator']} type="vertical" />
+              <WMButton
+                className={classes['delete-btn']}
+                icon={<Icon type={IconType.Delete} />}
+                disabled={!hasSelected}
+                onClick={() => setShowDeleteCourse(true)}
+              />
+              <ExportButton onClick={() => setShowExport(true)} />
+              <Divider className={classes['separator']} type="vertical" />
+              <WMButton
+                className={classes['create-btn']}
+                shape="round"
+                variant={ButtonVariantEnum.Create}
+                icon={<PlusOutlined />}
+              >
+                Create Course
               </WMButton>
-            </WMDropdown>
-            <Divider className={classes['separator']} type="vertical" />
-            <WMButton
-              className={classes['delete-btn']}
-              icon={<Icon type={IconType.Delete} />}
-              disabled={!hasSelected}
-              onClick={() => setShowDeleteCourse(true)}
-            />
-            <ExportButton onClick={() => setShowExport(true)} />
-            <Divider className={classes['separator']} type="vertical" />
-            <WMButton
-              className={classes['create-btn']}
-              shape="round"
-              variant={ButtonVariantEnum.Create}
-              icon={<PlusOutlined />}
-            >
-              Create Course
-            </WMButton>
-            <SearchFilter placeholder="Search course name" onSearch={onSearch} />
-          </ControlsWrapper>
-        </WMTable>
+              <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+            </ControlsWrapper>
+          </WMTable>
+        </ConfigProvider>
       </WMCard>
       {/* Dialogs */}
       <DialogPublishToEnvironment
