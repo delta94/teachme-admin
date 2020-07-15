@@ -1,6 +1,6 @@
 {
   "name": "teachme-editor",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://cdn.walkme.com/apps/teachme-admin",
   "scripts": {
@@ -31,6 +31,7 @@
     "react-hotkeys-hook": "^2.1.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-sortable-hoc": "^1.11.0",
     "recharts": "^1.8.5",
     "typescript": "^3.7.5"
   },
