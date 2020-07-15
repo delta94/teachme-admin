@@ -8,18 +8,16 @@ import Icon, { IconType } from '../Icon';
 import classes from './style.module.scss';
 
 export default function EditableTitle({
-  onBlur,
-  value,
   isNew,
+  value,
+  onBlur,
 }: {
-  onBlur: (inputValue: string) => void;
-  value: string;
   isNew: boolean;
+  value: string;
+  onBlur: (inputValue: string) => void;
 }): ReactElement {
-  const [inputValue, setInputValue] = useState(value);
-  const [showInputText, setShowInputText] = useState(false);
-
   const inputTitle = useRef<Input>(null);
+  const [showInputText, setShowInputText] = useState(false);
 
   useEffect(() => {
     if (isNew && inputTitle.current && inputTitle.current) {
@@ -28,20 +26,18 @@ export default function EditableTitle({
     }
   }, [isNew]);
 
-  const onInputBlur = () => {
-    onBlur(value);
-  };
-
-  const onChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(ev.target.value);
-  };
-
   const showInput = () => {
     if (!inputTitle.current) return;
 
     inputTitle.current.focus();
     setShowInputText(true);
   };
+
+  const [inputValue, setInputValue] = useState(value);
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+
+  const onInputBlur = () => onBlur(inputValue);
 
   return (
     <div className={classes['editable-title']}>
@@ -55,10 +51,10 @@ export default function EditableTitle({
       </div>
       <WMInput
         className={cc([classes['input-title'], { [classes['hidden']]: !showInputText }])}
-        onBlur={onInputBlur}
-        onChange={onChange}
-        value={inputValue}
         ref={inputTitle}
+        value={inputValue}
+        onChange={onChange}
+        onBlur={onInputBlur}
       />
     </div>
   );
