@@ -1,12 +1,15 @@
 import { ActionType, IState, IAction } from './course-editor-context.interface';
 
 export const initialState = {
+  courseTitle: 'Untitled Course',
   isFetchingItems: false,
   isFetchingItemsError: false,
   courseItems: [],
-  filteredItems: [],
-  courseTitle: 'Untitled Course',
-  itemsSearchValue: '',
+  filteredCourseItems: [],
+  courseItemsSearchValue: '',
+  courseOutline: [],
+  filteredCourseOutline: [],
+  courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
 };
 
@@ -23,8 +26,8 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         isFetchingItems: false,
         isFetchingItemsError: false,
-        courseItems: action.items ?? initialState.courseItems,
-        filteredItems: action.items ?? initialState.filteredItems,
+        courseItems: action.courseItems ?? initialState.courseItems,
+        filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
       };
     case ActionType.FetchItemsError:
       return {
@@ -37,11 +40,19 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         courseTitle: action.courseTitle ?? initialState.courseTitle,
       };
-    case ActionType.SetItemsSearchValue:
+    case ActionType.SetCourseItemsSearchValue:
       return {
         ...state,
-        itemsSearchValue: action.itemsSearchValue ?? initialState.itemsSearchValue,
-        filteredItems: action.items ?? initialState.filteredItems,
+        courseItemsSearchValue:
+          action.courseItemsSearchValue ?? initialState.courseItemsSearchValue,
+        filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
+      };
+    case ActionType.SetCourseOutlineSearchValue:
+      return {
+        ...state,
+        courseOutlineSearchValue:
+          action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue,
+        filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
       };
     case ActionType.ToggleDetailsPanel:
       return {

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import cc from 'classcat';
 
 import {
@@ -26,7 +26,7 @@ const ItemIcon = {
   video: IconType.VideoSmall,
 };
 
-const getCourseItems = (items: IState['filteredItems']) =>
+const getCourseItems = (items: IState['filteredCourseItems']) =>
   items.map(({ title, type }) => ({
     text: title,
     icon: <Icon type={ItemIcon[type as keyof typeof ItemIcon]} />,
@@ -38,10 +38,17 @@ enum TabId {
 }
 
 export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
-  const [
-    { courseItems, filteredItems, courseTitle, itemsSearchValue, isDetailsPanelOpen },
-    dispatch,
-  ] = useCourseEditorContext();
+  const [state, dispatch] = useCourseEditorContext();
+  const {
+    courseTitle,
+    courseItems,
+    filteredCourseItems,
+    courseItemsSearchValue,
+    courseOutline,
+    filteredCourseOutline,
+    courseOutlineSearchValue,
+    isDetailsPanelOpen,
+  } = state;
 
   useEffect(() => {
     fetchItemsList(dispatch);
@@ -52,35 +59,56 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
   const onBlur = (courseTitle: string) =>
     dispatch({ type: ActionType.SetCourseTitle, courseTitle });
 
-  const onSearch = (newSearchValue: string) => {
-    if (!courseItems) return;
-
+  const onCourseItemsSearch = (newSearchValue: string) => {
     const newCourseItems = courseItems.filter(({ title, description }) =>
       `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
     );
 
     dispatch({
-      type: ActionType.SetItemsSearchValue,
-      itemsSearchValue: newSearchValue,
-      items: newCourseItems,
+      type: ActionType.SetCourseItemsSearchValue,
+      courseItemsSearchValue: newSearchValue,
+      courseItems: newCourseItems,
     });
   };
 
-  const onRefresh = async () => {
+  const onCourseItemsRefresh = async () => {
     await fetchItemsList(dispatch);
-    onSearch(itemsSearchValue ?? '');
+    onCourseItemsSearch(courseItemsSearchValue ?? '');
   };
+
+  const onCourseOutlineSearch = (newSearchValue: string) => {
+    const newCourseOutline = courseOutline.filter(({ title, description }) =>
+      `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
+    );
+
+    dispatch({
+      type: ActionType.SetCourseOutlineSearchValue,
+      courseOutlineSearchValue: newSearchValue,
+      courseOutline: newCourseOutline,
+    });
+  };
+
+  console.log(filteredCourseOutline);
 
   const cardTabs = [
     {
       id: TabId.CourseOutline,
       title: 'Course Outline',
       content: (
-        <WMButton
-          className={classes['add-btn']}
-          icon={<Icon type={IconType.Plus} />}
-          onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
-        />
+        <>
+          <WMButton
+            className={classes['add-btn']}
+            icon={<Icon type={IconType.Plus} />}
+            onClick={() => dispatch({ type: ActionType.ToggleDetailsPanel })}
+          />
+          <SearchFilter
+            className={classes['search']}
+            placeholder="Search"
+            value={courseOutlineSearchValue}
+            onSearch={onCourseOutlineSearch}
+          />
+          {filteredCourseOutline.length ? 'some items' : <div>nothing here yet</div>}
+        </>
       ),
     },
     {
@@ -102,7 +130,7 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
           title={
             <div className={classes['title']}>
               <span>Items</span>
-              <RefreshButton onRefresh={onRefresh} />
+              <RefreshButton onClick={onCourseItemsRefresh} />
             </div>
           }
         >
@@ -110,11 +138,11 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
             <SearchFilter
               className={classes['search']}
               placeholder="Search"
-              value={itemsSearchValue}
-              onSearch={onSearch}
+              value={courseItemsSearchValue}
+              onSearch={onCourseItemsSearch}
             />
           </div>
-          <CourseItemsList items={getCourseItems(filteredItems)} />
+          <CourseItemsList items={getCourseItems(filteredCourseItems)} />
         </WMCard>
         <WMCard className={classes['course-structure']}>
           <WMTabs className={classes['tabs']} defaultActiveKey={TabId.CourseOutline}>

@@ -7,9 +7,11 @@ export { ActionType };
 
 export interface IAction {
   type: ActionType;
-  items?: Array<ContentItem>;
   courseTitle?: string;
-  itemsSearchValue?: string;
+  courseItems?: Array<ContentItem>;
+  courseItemsSearchValue?: string;
+  courseOutline?: Array<ContentItem>;
+  courseOutlineSearchValue?: string;
 }
 
 export interface IDispatch {
@@ -17,12 +19,15 @@ export interface IDispatch {
 }
 
 export interface IState {
+  courseTitle: string;
   isFetchingItems: boolean;
   isFetchingItemsError: boolean;
   courseItems: Array<ContentItem>;
-  filteredItems: Array<ContentItem>;
-  courseTitle: string;
-  itemsSearchValue: string;
+  filteredCourseItems: Array<ContentItem>;
+  courseItemsSearchValue: string;
+  courseOutline: Array<ContentItem>;
+  filteredCourseOutline: Array<ContentItem>;
+  courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
 }
 

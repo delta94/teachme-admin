@@ -6,11 +6,19 @@
   .items,
   .course-structure,
   .details-panel {
-    height: 560px;
     color: inherit;
 
     :global(.ant-card-body) {
+      height: 560px;
       padding: 0;
+    }
+
+    .search {
+      width: 100%;
+
+      ::placeholder {
+        font-weight: 400;
+      }
     }
   }
 
@@ -39,14 +47,6 @@
 
     .filters-bar {
       padding: 0 20px 13px;
-
-      .search {
-        width: 100%;
-
-        ::placeholder {
-          font-weight: 400;
-        }
-      }
     }
   }
 
@@ -54,10 +54,11 @@
     flex-grow: 1;
 
     .tabs {
-      font-family: var(--font-secondary);
+      height: inherit;
       color: inherit;
 
       > :global(.ant-tabs-nav) {
+        font-family: var(--font-secondary);
         margin: 0 20px 15px 0;
 
         :global(button.ant-tabs-tab) {
@@ -79,6 +80,14 @@
             font-weight: 600;
             color: var(--primary);
           }
+        }
+      }
+
+      :global(.ant-tabs-content) {
+        height: 100%;
+
+        :global(.ant-tabs-tabpane) {
+          padding: 0 20px 15px;
         }
       }
     }
