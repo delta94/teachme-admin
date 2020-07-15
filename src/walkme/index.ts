@@ -94,7 +94,7 @@ export async function getUserData(): Promise<UserData> {
 }
 
 /**
- * return walkme environments
+ * returns walkme environments
  * (setting the environment should happen in client side)
  */
 export async function getEnvironments(): Promise<Array<WalkMeEnvironment>> {

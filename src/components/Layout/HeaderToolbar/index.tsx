@@ -12,9 +12,14 @@ import EnvironmentMenu from './EnvironmentMenu';
 import UserMenu from './UserMenu';
 
 import classes from './style.module.scss';
+import { useAppContext } from '../../../providers/AppContext';
 
 export default function HeaderToolbar(): ReactElement {
+  const [state, dispatch] = useAppContext();
+
   const menuClassName = classes['header-toolbar-menu'];
+
+  console.log('HeaderToolbar state ', state);
 
   return (
     <Header className={classes['header-toolbar']}>
