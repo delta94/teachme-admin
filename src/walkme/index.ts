@@ -114,6 +114,15 @@ export async function saveCourse(course: BuildCourse) {
 }
 
 /**
+ * Publishes courses to a customer's environment
+ * @param environmentId
+ * @param coursesIds Array of course ids
+ */
+export async function publishCourses(environmentId: number, coursesIds: Array<number>) {
+  await walkme.publish.publish(environmentId, TypeName.Course, TypeId.Course, coursesIds);
+}
+
+/**
  * Logs the user out and redirects to the url configured in walkme.auth.init call
  */
 export function logout() {
@@ -131,6 +140,7 @@ window.test = {
   getEnvironments,
   getSystems,
   saveCourse,
+  publishCourses,
   // for debug
   getCourseDataModel: courses.getCourseDataModel,
 };
