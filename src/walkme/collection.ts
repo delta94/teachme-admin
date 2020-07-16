@@ -1,12 +1,14 @@
 import { getData } from './data';
-import { mapItem, TYPE_IDS_TO_NAME, MapOptions } from './item';
-import { ContentItem, WalkMeNewLink, TypeId } from '@walkme/types';
+import { mapItem, TYPE_IDS_TO_NAME, MapOptions, getTypeId } from './item';
+import { ContentItem, WalkMeNewLink, TypeId, TypeName } from '@walkme/types';
+import { getTimeProps } from 'antd/es/date-picker/generatePicker';
+import { notEmpty } from './utils';
 
-export async function resolveLinks(
+export async function resolveLinks<T extends ContentItem>(
   links: Array<WalkMeNewLink>,
-  environmentId: number,
-  options?: MapOptions,
-): Promise<Array<ContentItem | null>> {
+  environmentId: number = 0,
+  options?: MapOptions<T>,
+): Promise<Array<ContentItem>> {
   return (
     await Promise.all(
       links.map(async (link) => {
@@ -16,22 +18,21 @@ export async function resolveLinks(
         const [item] = await getData(type, environmentId, [link.DeployableID]);
         if (!item) return null;
 
-        return mapItem(item, type, environmentId);
+        return mapItem(item, type, environmentId, options);
       }),
     )
-  ).filter(Boolean);
+  ).filter(notEmpty);
 }
 
 export function createLink(
-  father: ContentItem,
   child: ContentItem,
   index: number,
-  getSettings: (item: ContentItem) => any,
+  getSettings?: (item: ContentItem) => any,
 ): WalkMeNewLink {
   return {
     DeployableID: child.id as number,
-    DeployableType: parseInt(TypeId[(child.type as any) as number]),
+    DeployableType: getTypeId(child.type),
     OrderIndex: index,
-    Settings: getSettings(child),
+    Settings: getSettings?.(child),
   };
 }
