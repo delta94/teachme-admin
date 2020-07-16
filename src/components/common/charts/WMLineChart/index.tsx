@@ -12,6 +12,7 @@ import {
 import { ITooltipContent } from '../charts.interface';
 import WMChartTooltip from '../WMChartTooltip';
 import { IWMLineChartItem, IWMLineChartProps } from './wmLineChart.interface';
+import EmptyLineChart from './emptyLineChart';
 
 const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLineChartItem[] }) => {
   const { payload, label, active } = data;
@@ -43,26 +44,30 @@ export default function WMLineChart<T extends {}>({
 }: IWMLineChartProps<T>): ReactElement {
   return (
     <div className={className}>
-      <ResponsiveContainer>
-        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey={xKey} />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          {hasWMTooltip ? (
-            <Tooltip content={(data: any) => renderWMTooltip({ data, lines })} />
-          ) : (
-            <Tooltip />
-          )}
-          {lines.map(({ dataKey, stroke }, index) => (
-            <Line
-              key={`${lineKeyPrefix}-${index}`}
-              type="monotone"
-              dataKey={dataKey}
-              stroke={stroke}
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+      {data ? (
+        <ResponsiveContainer>
+          <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <XAxis dataKey={xKey} />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            {hasWMTooltip ? (
+              <Tooltip content={(data: any) => renderWMTooltip({ data, lines })} />
+            ) : (
+              <Tooltip />
+            )}
+            {lines.map(({ dataKey, stroke }, index) => (
+              <Line
+                key={`${lineKeyPrefix}-${index}`}
+                type="monotone"
+                dataKey={dataKey}
+                stroke={stroke}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      ) : (
+        <EmptyLineChart className={className} />
+      )}
     </div>
   );
 }
