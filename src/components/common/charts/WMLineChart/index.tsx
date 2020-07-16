@@ -35,7 +35,7 @@ const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLin
 };
 
 export default function WMLineChart<T extends {}>({
-  className = '',
+  className,
   data,
   xKey,
   lineKeyPrefix,

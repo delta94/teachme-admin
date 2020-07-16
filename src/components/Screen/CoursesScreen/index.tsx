@@ -141,6 +141,17 @@ export default function CoursesScreen(): ReactElement {
           >
             <ControlsWrapper>
               {/* <DropdownFilter label="Status" options={statuses} />
+        <WMTable
+          rowSelection={{
+            selectedRowKeys,
+            onChange: onMultiSelectChange,
+          }}
+          data={tableData as Array<ICourseData>}
+          columns={table.columns}
+          onSortEnd={(sortedData) => setTableData(sortedData)}
+        >
+          <ControlsWrapper>
+            {/* <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} /> */}
             </ControlsWrapper>
             <ControlsWrapper>

@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="currentColor" fill-rule="evenodd">
+    <path d="M17 0v18H3c-1.10457 0-2-.89543-2-2V2c0-1.10457.89543-2 2-2h14zm-1.06667 15.88235H3.66275c-.2924 0-.52942.23703-.52942.52941 0 .2924.23703.52942.52942.52942h12.27058v-1.05883zm0-14.82353h-11.8c-.55228 0-1 .44772-1 1v11.7647c0 .5523.44772 1 1 1h11.8V1.05883z"/>
+    <text font-family="Roboto-Bold, Roboto" font-size="10" font-weight="bold" letter-spacing=".25">
+      <tspan x="7" y="11">L</tspan>
+    </text>
+  </g>
+</svg>
