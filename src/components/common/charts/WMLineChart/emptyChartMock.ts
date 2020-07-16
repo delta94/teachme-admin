@@ -14,7 +14,7 @@ const emptyChartMockData = [
   {
     name: '2',
     uv: 2000,
-    pv: 9800,
+    pv: 2800,
     amt: 2290,
   },
   {
@@ -26,7 +26,7 @@ const emptyChartMockData = [
   {
     name: '4',
     uv: 1890,
-    pv: 4800,
+    pv: 4000,
     amt: 2181,
   },
   {
