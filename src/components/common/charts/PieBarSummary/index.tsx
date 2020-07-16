@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import classes from './style.module.scss';
 
@@ -10,12 +10,18 @@ export default function PieBarSummary({
   value: string | number;
   unit?: string;
   text?: string;
-}): JSX.Element {
+}): ReactElement {
   return (
     <div className={classes['pie-bar-summary']}>
-      <span className={classes.value}>{value}</span>
-      {unit && <span className={classes.unit}>{unit}</span>}
-      {text && <span className={classes.text}>{text}</span>}
+      {value ? (
+        <>
+          <span className={classes.value}>{value}</span>
+          {unit && <span className={classes.unit}>{unit}</span>}
+          {text && <span className={classes.text}>{text}</span>}
+        </>
+      ) : (
+        <span className={classes.value}>- - : - -</span>
+      )}
     </div>
   );
 }
