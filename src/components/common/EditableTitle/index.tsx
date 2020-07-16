@@ -37,7 +37,10 @@ export default function EditableTitle({
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
-  const onInputBlur = () => onBlur(inputValue);
+  const onInputBlur = () => {
+    onBlur(inputValue);
+    setShowInputText(false);
+  };
 
   return (
     <div className={classes['editable-title']}>
