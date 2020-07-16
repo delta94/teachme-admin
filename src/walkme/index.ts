@@ -8,8 +8,8 @@ import {
   ContentItem,
   TypeId,
 } from '@walkme/types';
-import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
 
 import { UICourse, mapCourse } from './course/overview';
 import * as courses from './course/details';
@@ -94,7 +94,7 @@ export async function getUserData(): Promise<UserData> {
 }
 
 /**
- * returns walkme environments
+ * return walkme environments
  * (setting the environment should happen in client side)
  */
 export async function getEnvironments(): Promise<Array<WalkMeEnvironment>> {

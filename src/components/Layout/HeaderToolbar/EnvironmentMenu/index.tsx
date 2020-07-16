@@ -1,36 +1,57 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
+
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
+import { getEnvironments } from '../../../../walkme';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
 import classes from '../style.module.scss';
-
-const environments: IWMDropdownOption[] = [
-  { id: 0, value: 'Production' },
-  { id: 1, value: 'Test' },
-];
+import { parseEnvironmentsToDropdownOptions } from '../headerToolbar.utils';
+import { useAppContext } from '../../../../providers/AppContext';
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
-  const [selectedEnvironment, setSelectedEnvironment] = useState(environments[0]);
+  const [appState, appDispatch] = useAppContext();
+  const { environment } = appState;
+  const [selectedEnv, setSelectedEnv] = useState(
+    parseEnvironmentsToDropdownOptions([environment]) as IWMDropdownOption,
+  );
+  const [options, setOptions] = useState([] as IWMDropdownOption[]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
-    setSelectedEnvironment(selected);
+    setSelectedEnv(selected);
     message.info(`Environment changed to ${selected.value}`);
   };
 
-  return (
+  const getEnvironmentsOptions = async () => {
+    const environments = await getEnvironments();
+    const options = parseEnvironmentsToDropdownOptions(environments);
+
+    setOptions(options as IWMDropdownOption[]);
+  };
+
+  useEffect(() => {
+    getEnvironmentsOptions();
+  }, []);
+
+  useEffect(() => {
+    setSelectedEnv(parseEnvironmentsToDropdownOptions([environment]) as IWMDropdownOption);
+  }, [environment]);
+
+  return Boolean(selectedEnv) && Boolean(options) ? (
     <WMDropdown
       className={className}
-      options={environments}
-      selected={selectedEnvironment}
+      options={options}
+      selected={selectedEnv}
       onSelectedChange={handleMenuClick}
     >
       <WMButton className={classes['dropdown-menu-button']}>
-        {selectedEnvironment.value}
+        {selectedEnv.value}
         <DownOutlined />
       </WMButton>
     </WMDropdown>
+  ) : (
+    <></>
   );
 }
