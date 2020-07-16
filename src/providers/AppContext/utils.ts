@@ -2,8 +2,7 @@ import { createContext, useContext } from 'react';
 
 import * as walkme from '../../walkme';
 
-import { ActionType, IState, IDispatch } from './app-context.interface';
-import { EnvironmentType } from '../../interfaces/app.interfaces';
+import { EnvironmentType, ActionType, IState, IDispatch } from './app-context.interface';
 
 export const AppStateContext = createContext<IState | undefined>(undefined);
 export const AppDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -46,6 +45,6 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
     dispatch({ type: ActionType.UpdateSuccess });
   } catch (error) {
     console.error(error);
-    dispatch({ type: ActionType.UpdateError, errorMsg: error });
+    dispatch({ type: ActionType.UpdateError, errorMessage: error });
   }
 };

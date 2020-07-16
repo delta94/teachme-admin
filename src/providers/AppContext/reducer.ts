@@ -35,7 +35,7 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         isUpdating: false,
         hasUpdateError: true,
-        errorMessage: action.errorMsg,
+        errorMessage: action.errorMessage ?? initialState.errorMessage,
       };
     case ActionType.SetUser:
       return {

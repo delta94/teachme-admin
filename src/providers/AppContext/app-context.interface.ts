@@ -3,14 +3,16 @@ import { UserData } from '@walkme/editor-sdk/dist/user';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
+import { EnvironmentType } from '../../interfaces/app.interfaces';
+
 import { ActionType } from './actions';
 
-export { ActionType };
+export { EnvironmentType, ActionType };
 
 export interface IAction {
   type: ActionType;
   currentScreen?: any;
-  errorMsg?: string;
+  errorMessage?: string;
   user?: UserData;
   system?: SystemData;
   environment?: WalkMeEnvironment;
@@ -24,7 +26,7 @@ export interface IState {
   screenProvider: any;
   isUpdating: boolean;
   hasUpdateError: boolean;
-  errorMessage?: string;
+  errorMessage: string;
   user: UserData;
   system: SystemData;
   environment: WalkMeEnvironment;
