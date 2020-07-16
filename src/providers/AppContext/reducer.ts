@@ -1,4 +1,7 @@
-import { IAppGlobals } from '../../utils/app-utils';
+import { UserData } from '@walkme/editor-sdk/dist/user';
+import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
+
 import { ActionType, IState, IAction } from './app-context.interface';
 
 export const initialState = {
@@ -6,7 +9,9 @@ export const initialState = {
   isUpdating: true,
   hasUpdateError: false,
   errorMessage: '',
-  globals: (null as unknown) as IAppGlobals,
+  user: {} as UserData,
+  system: {} as SystemData,
+  environment: {} as WalkMeEnvironment,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -32,16 +37,25 @@ export const reducer = (state: IState, action: IAction): IState => {
         hasUpdateError: true,
         errorMessage: action.errorMsg,
       };
+    case ActionType.SetUser:
+      return {
+        ...state,
+        user: action.user ?? initialState.user,
+      };
+    case ActionType.SetSystem:
+      return {
+        ...state,
+        system: action.system ?? initialState.system,
+      };
+    case ActionType.SetEnvironment:
+      return {
+        ...state,
+        environment: action.environment ?? initialState.environment,
+      };
     case ActionType.CurrentScreenProvider:
       return {
         ...state,
         screenProvider: action.currentScreen,
-      };
-    case ActionType.UpdateGlobalsSuccess:
-      return {
-        ...state,
-        isUpdating: false,
-        globals: action.globals,
       };
     case ActionType.ResetAppState:
       return { ...initialState };

@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
 
-import { IAppGlobals } from '../../utils/app-utils';
+import * as walkme from '../../walkme';
 
 import { ActionType, IState, IDispatch } from './app-context.interface';
-import { allPropertiesAreNull } from '../../utils';
+import { EnvironmentType } from '../../interfaces/app.interfaces';
 
 export const AppStateContext = createContext<IState | undefined>(undefined);
 export const AppDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -30,14 +30,22 @@ const useAppDispatch = () => {
 
 export const useAppContext = (): [IState, IDispatch] => [useAppState(), useAppDispatch()];
 
-export const setAppGlobals = (dispatch: IDispatch, globals: IAppGlobals): void => {
-  if (!globals) return;
-  const { errorMsg, hasError, ...dataOnly } = globals;
-  const isDataEmpty = allPropertiesAreNull(dataOnly);
+export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
+  dispatch({ type: ActionType.Updating });
 
-  if (globals && globals.hasError) {
-    dispatch({ type: ActionType.UpdateError, globals: globals, errorMsg: globals.errorMsg });
-  } else if (!isDataEmpty) {
-    dispatch({ type: ActionType.UpdateGlobalsSuccess, globals });
+  try {
+    const user = await walkme.getUserData();
+    const system = await walkme.getSystem();
+    const environments = await walkme.getEnvironments();
+    const defaultEnv = environments.find((env) => env.id === EnvironmentType.Production);
+
+    dispatch({ type: ActionType.SetUser, user });
+    dispatch({ type: ActionType.SetSystem, system });
+    dispatch({ type: ActionType.SetEnvironment, environment: defaultEnv });
+
+    dispatch({ type: ActionType.UpdateSuccess });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.UpdateError, errorMsg: error });
   }
 };
