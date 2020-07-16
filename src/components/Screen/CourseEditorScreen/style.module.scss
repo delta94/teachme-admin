@@ -1,9 +1,10 @@
 .cards-wrapper {
+  flex-grow: 1;
   display: flex;
   font-family: var(--font-primary);
   color: var(--neutral900);
 
-  .items,
+  .resources-list,
   .course-structure,
   .details-panel {
     color: inherit;
@@ -11,7 +12,8 @@
     :global(.ant-card-body) {
       display: flex;
       flex-direction: column;
-      height: 560px;
+      min-height: 560px;
+      height: 100%;
       padding: 0;
     }
 
@@ -24,7 +26,7 @@
     }
   }
 
-  .items,
+  .resources-list,
   .details-panel {
     .title {
       display: flex;
@@ -37,7 +39,7 @@
     }
   }
 
-  .items {
+  .resources-list {
     min-width: 340px;
     width: 340px;
     margin-right: 10px;
