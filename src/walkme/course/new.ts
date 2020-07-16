@@ -11,7 +11,7 @@ import {
   WalkMeDataQuiz,
   WalkMeDataQuizSettings,
   BooleanStringOption,
-  WalkMeDataEditedCourse,
+  WalkMeDataNewLesson,
   TypeId,
   WalkMeDataNewCourse,
 } from '@walkme/types';
@@ -34,9 +34,26 @@ export function getNewCourse(index: number): WalkMeDataNewCourse {
   };
 }
 
+export function getNewLesson(index: number): WalkMeDataNewLesson {
+  return {
+    GroupType: GroupType.Lesson,
+    Guid: null,
+    Id: -index - 1,
+    IsModified: true,
+    LinkedDeployables: [],
+    Name: `Lesson ${index}`,
+    OrderIndex: index,
+    PublishStatus: 0,
+    ResourceId: getGuid(),
+    Settings: {},
+    deployableType: TypeId.Lesson,
+    Description: '',
+  };
+}
+
 export function getNewQuestion(index: number): WalkMeDataQuizQuestion {
   return {
-    Id: -1,
+    Id: -index - 1,
     Question: defaults.QUESTION_TEXT,
     Description: defaults.QUESTION_DESCRIPTION,
     Answers: [
@@ -44,7 +61,7 @@ export function getNewQuestion(index: number): WalkMeDataQuizQuestion {
       getNewAnswer(defaults.INCORRECT_ANSWER_TEXT, false, 1),
     ],
     QuestionType: defaults.QUESTION_TYPE,
-    OrderIndex: 1,
+    OrderIndex: index,
   };
 }
 
@@ -59,10 +76,9 @@ function getNewAnswer(Text: string, IsCorrect: boolean, OrderIndex: number): Wal
 
 function getNewQuiz(): WalkMeDataQuiz {
   return {
-    Id: defaults.NEW_ITEM_ID,
     IsEnabled: defaults.QUIZ_IS_ENABLED,
     Passmark: defaults.QUIZ_PASSMARK,
-    Questions: [getNewQuestion(0)],
+    Questions: [],
     FailSummeryPage: getQuizFailScreen(),
     SuccessSummeryPage: getQuizSuccessScreen(),
     WelcomePage: getQuizWelcomeScreen(),
@@ -125,7 +141,6 @@ function getQuizScreen(
   UiComponentId: QUIZ_COMPONENTS_IDS,
 ): WalkMeDataQuizScreen {
   return {
-    Id: defaults.NEW_ITEM_ID,
     ButtonText,
     Description,
     Title,

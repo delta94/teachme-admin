@@ -8,6 +8,7 @@ import {
   TypeId,
   WalkMeDataLesson,
   WalkMeDataItem,
+  WalkMeDataNewLesson,
 } from '@walkme/types';
 import * as courses from './course/details';
 import { mapItem } from './item';
@@ -109,7 +110,16 @@ export async function switchSystem(id: number) {
  */
 export async function saveCourse(course: BuildCourse) {
   const courseToSave = await courses.getCourseDataModel(course);
-  await walkme.data.saveContent(TypeName.Lesson, courseToSave.lessons, TypeId.Lesson);
+  const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
+    TypeName.Lesson,
+    courseToSave.lessons,
+    TypeId.Lesson,
+  );
+  courseToSave.course.LinkedDeployables.filter(
+    (item) => item.DeployableType == TypeId.Lesson,
+  ).forEach((item) => {
+    item.DeployableID = lessons[item.DeployableID].Id;
+  });
   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
 }
 

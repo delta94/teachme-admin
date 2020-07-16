@@ -30,7 +30,7 @@ export function createLink(
   getSettings?: (item: ContentItem) => any,
 ): WalkMeNewLink {
   return {
-    DeployableID: child.id as number,
+    DeployableID: <number>child.id > 0 ? <number>child.id : -(index + 1),
     DeployableType: getTypeId(child.type),
     OrderIndex: index,
     Settings: getSettings?.(child),

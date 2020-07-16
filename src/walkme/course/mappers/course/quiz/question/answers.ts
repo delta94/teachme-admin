@@ -14,7 +14,7 @@ export function toDataModel(
 ): Array<WalkMeDataQuizAnswer> {
   return answers.map<WalkMeDataQuizAnswer>(
     (answer, index): WalkMeDataQuizAnswer => ({
-      Id: answer.id,
+      Id: answer.id > 0 ? -(index + 1) : answer.id,
       IsCorrect: answer.isCorrect,
       OrderIndex: index,
       Text: answer.text,
