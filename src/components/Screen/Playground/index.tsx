@@ -45,8 +45,7 @@ export default function Playground(): ReactElement {
     <div className={classes.playground}>
       <ScreenHeader hideTimeFilter title="Playground" />
       <WMCard>
-        {/* TODO:Change back to dialogs */}
-        <WMTabs defaultActiveKey={'empty'}>
+        <WMTabs defaultActiveKey={'dialogs'}>
           {tabs.map((tab) => {
             const { id, title, icon, content } = tab;
             return (
