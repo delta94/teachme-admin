@@ -17,10 +17,14 @@ export async function getCourseData(
   return courseMap.toUIModel(course, environmentId);
 }
 
-export function getCourseDataModel(
+export async function getCourseDataModel(
   course: BuildCourse,
-  dataCourse: WalkMeDataCourse,
-  dataLessons: Array<WalkMeDataLesson>,
-): { course: WalkMeDataEditedCourse; lessons: Array<WalkMeDataLesson> } {
-  return courseMap.toDataModel(course, dataCourse, dataLessons);
+): Promise<{ course: WalkMeDataEditedCourse; lessons: Array<WalkMeDataLesson> }> {
+  const courseData = (await getData(TypeName.Course, 0, [course.id])) as Array<WalkMeDataCourse>;
+  const lessons = (await getData(
+    TypeName.Lesson,
+    0,
+    course.items.filter((i) => i.type == TypeName.Lesson).map((i) => i.id as number),
+  )) as Array<WalkMeDataLesson>;
+  return courseMap.toDataModel(course, courseData[0], lessons);
 }

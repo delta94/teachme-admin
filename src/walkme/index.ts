@@ -46,6 +46,11 @@ export async function getCourseList(environmentId: number): Promise<Array<UICour
   return uiCourses.filter(notEmpty);
 }
 
+/**
+ * Returns a UI model for the given course id or null if it does not exist
+ * @param id
+ * @param environmentId
+ */
 export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
   return courses.getCourseData(id, environmentId);
 }
@@ -98,26 +103,14 @@ export async function switchSystem(id: number) {
   return walkme.system.switchSystem(id);
 }
 
+/**
+ * Saves the course to the server
+ * @param course
+ */
 export async function saveCourse(course: BuildCourse) {
-  const courseData = (await getData(TypeName.Course, 0, [course.id])) as Array<WalkMeDataCourse>;
-  const lessons = (await getData(
-    TypeName.Lesson,
-    0,
-    course.items.filter((i) => i.type == TypeName.Lesson).map((i) => i.id as number),
-  )) as Array<WalkMeDataLesson>;
-  const courseToSave = courses.getCourseDataModel(course, courseData[0], lessons);
+  const courseToSave = await courses.getCourseDataModel(course);
   await walkme.data.saveContent(TypeName.Lesson, courseToSave.lessons, TypeId.Lesson);
   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
-}
-
-export async function getCourseDataModel(course: BuildCourse) {
-  const courseData = (await getData(TypeName.Course, 0, [course.id])) as Array<WalkMeDataCourse>;
-  const lessons = (await getData(
-    TypeName.Lesson,
-    0,
-    course.items.filter((i) => i.type == TypeName.Lesson).map((i) => i.id as number),
-  )) as Array<WalkMeDataLesson>;
-  return courses.getCourseDataModel(course, courseData[0], lessons);
 }
 
 /**
@@ -137,6 +130,7 @@ window.test = {
   getUserData,
   getEnvironments,
   getSystems,
-  getCourseDataModel,
   saveCourse,
+  // for debug
+  getCourseDataModel: courses.getCourseDataModel,
 };
