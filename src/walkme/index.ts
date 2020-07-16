@@ -3,13 +3,16 @@ import { UICourse, mapCourse } from './course/overview';
 import {
   WalkMeDataCourse,
   TypeName,
-  Course,
   BuildCourse,
   ContentItem,
   TypeId,
+  WalkMeDataLesson,
+  WalkMeDataItem,
 } from '@walkme/types';
 import * as courses from './course/details';
 import { mapItem } from './item';
+import { getData } from './data';
+import { notEmpty } from './utils';
 
 declare global {
   interface Window {
@@ -24,7 +27,7 @@ window.walkme = walkme;
  * Returns a list of courses metadata
  * @param environmentId the current selected environment id
  */
-export async function getCourseList(environmentId: number): Promise<Array<UICourse | null>> {
+export async function getCourseList(environmentId: number): Promise<Array<UICourse>> {
   const courses = (await walkme.data.getContent(
     TypeName.Course,
     environmentId,
@@ -40,26 +43,19 @@ export async function getCourseList(environmentId: number): Promise<Array<UICour
     }),
   );
 
-  return uiCourses.filter(Boolean);
+  return uiCourses.filter(notEmpty);
 }
 
 export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
   return courses.getCourseData(id, environmentId);
 }
 
-// export async function saveQuiz(course: BuildCourse): Promise<number> {
-//   const data = mapToDataCourse(course);
-//   await walkme.data.saveContent(TypeName.Lesson, data.lessons);
-//   const { Id } = await walkme.data.saveContent(TypeName.Course, data.course);
-//   return Id;
-// }
-
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
  * @param environmentId
  */
 export async function getItemsList(environmentId: number): Promise<Array<ContentItem>> {
-  const nestedItems = await walkme.data.getFolders(environmentId);
+  const nestedItems: Array<WalkMeDataItem> = await walkme.data.getFolders(environmentId);
   const items = await Promise.all(
     nestedItems.map((item) =>
       mapItem(item, TypeName.Folder, environmentId, {
@@ -102,6 +98,28 @@ export async function switchSystem(id: number) {
   return walkme.system.switchSystem(id);
 }
 
+export async function saveCourse(course: BuildCourse) {
+  const courseData = (await getData(TypeName.Course, 0, [course.id])) as Array<WalkMeDataCourse>;
+  const lessons = (await getData(
+    TypeName.Lesson,
+    0,
+    course.items.filter((i) => i.type == TypeName.Lesson).map((i) => i.id as number),
+  )) as Array<WalkMeDataLesson>;
+  const courseToSave = courses.getCourseDataModel(course, courseData[0], lessons);
+  await walkme.data.saveContent(TypeName.Lesson, courseToSave.lessons, TypeId.Lesson);
+  return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
+}
+
+export async function getCourseDataModel(course: BuildCourse) {
+  const courseData = (await getData(TypeName.Course, 0, [course.id])) as Array<WalkMeDataCourse>;
+  const lessons = (await getData(
+    TypeName.Lesson,
+    0,
+    course.items.filter((i) => i.type == TypeName.Lesson).map((i) => i.id as number),
+  )) as Array<WalkMeDataLesson>;
+  return courses.getCourseDataModel(course, courseData[0], lessons);
+}
+
 /**
  * Logs the user out and redirects to the url configured in walkme.auth.init call
  */
@@ -119,4 +137,6 @@ window.test = {
   getUserData,
   getEnvironments,
   getSystems,
+  getCourseDataModel,
+  saveCourse,
 };

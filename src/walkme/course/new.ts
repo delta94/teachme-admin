@@ -13,10 +13,11 @@ import {
   BooleanStringOption,
   WalkMeDataEditedCourse,
   TypeId,
+  WalkMeDataNewCourse,
 } from '@walkme/types';
 import defaults from './defaults';
 
-export function getNewCourse(index: number): WalkMeDataEditedCourse {
+export function getNewCourse(index: number): WalkMeDataNewCourse {
   return {
     Id: -1,
     Name: defaults.COURSE_NAME,
