@@ -3,13 +3,16 @@ import { UICourse, mapCourse } from './course/overview';
 import {
   WalkMeDataCourse,
   TypeName,
-  Course,
   BuildCourse,
   ContentItem,
   TypeId,
+  WalkMeDataLesson,
+  WalkMeDataItem,
 } from '@walkme/types';
 import * as courses from './course/details';
 import { mapItem } from './item';
+import { getData } from './data';
+import { notEmpty } from './utils';
 
 declare global {
   interface Window {
@@ -24,7 +27,7 @@ window.walkme = walkme;
  * Returns a list of courses metadata
  * @param environmentId the current selected environment id
  */
-export async function getCourseList(environmentId: number): Promise<Array<UICourse | null>> {
+export async function getCourseList(environmentId: number): Promise<Array<UICourse>> {
   const courses = (await walkme.data.getContent(
     TypeName.Course,
     environmentId,
@@ -40,9 +43,14 @@ export async function getCourseList(environmentId: number): Promise<Array<UICour
     }),
   );
 
-  return uiCourses.filter(Boolean);
+  return uiCourses.filter(notEmpty);
 }
 
+/**
+ * Returns a UI model for the given course id or null if it does not exist
+ * @param id
+ * @param environmentId
+ */
 export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
   return courses.getCourseData(id, environmentId);
 }
@@ -52,7 +60,7 @@ export async function getCourse(id: number, environmentId: number): Promise<Buil
  * @param environmentId
  */
 export async function getItemsList(environmentId: number): Promise<Array<ContentItem>> {
-  const nestedItems = await walkme.data.getFolders(environmentId);
+  const nestedItems: Array<WalkMeDataItem> = await walkme.data.getFolders(environmentId);
   const items = await Promise.all(
     nestedItems.map((item) =>
       mapItem(item, TypeName.Folder, environmentId, {
@@ -72,11 +80,38 @@ export async function getFlatItemsList(environmentId: number): Promise<Array<Con
   return nestedItems.flatMap((item) => item.childNodes) as Array<ContentItem>;
 }
 
-export async function getUserData() {}
+/**
+ * Returns Data for logged-in user
+ */
+export async function getUserData() {
+  return walkme.user.getUserData();
+}
 
-export async function getEnvironments() {}
+export async function getEnvironments() {
+  return walkme.environment.getEnvironments();
+}
 
-export async function getSystems() {}
+export async function getSystems() {
+  return walkme.system.getSystems();
+}
+
+export async function getSystemData() {
+  return walkme.system.getSystemData();
+}
+
+export async function switchSystem(id: number) {
+  return walkme.system.switchSystem(id);
+}
+
+/**
+ * Saves the course to the server
+ * @param course
+ */
+export async function saveCourse(course: BuildCourse) {
+  const courseToSave = await courses.getCourseDataModel(course);
+  await walkme.data.saveContent(TypeName.Lesson, courseToSave.lessons, TypeId.Lesson);
+  return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
+}
 
 /**
  * Logs the user out and redirects to the url configured in walkme.auth.init call
@@ -87,4 +122,15 @@ export function logout() {
 
 export * from '@walkme/editor-sdk';
 
-window.test = { getCourseList, getCourse, getItemsList, getFlatItemsList };
+window.test = {
+  getCourseList,
+  getCourse,
+  getItemsList,
+  getFlatItemsList,
+  getUserData,
+  getEnvironments,
+  getSystems,
+  saveCourse,
+  // for debug
+  getCourseDataModel: courses.getCourseDataModel,
+};
