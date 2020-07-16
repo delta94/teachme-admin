@@ -1,6 +1,9 @@
 import { createContext, useContext } from 'react';
 
+import { IAppGlobals } from '../../utils/app-utils';
+
 import { ActionType, IState, IDispatch } from './app-context.interface';
+import { allPropertiesAreNull } from '../../utils';
 
 export const AppStateContext = createContext<IState | undefined>(undefined);
 export const AppDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -26,3 +29,15 @@ const useAppDispatch = () => {
 };
 
 export const useAppContext = (): [IState, IDispatch] => [useAppState(), useAppDispatch()];
+
+export const setAppGlobals = (dispatch: IDispatch, globals: IAppGlobals): void => {
+  if (!globals) return;
+  const { errorMsg, hasError, ...dataOnly } = globals;
+  const isDataEmpty = allPropertiesAreNull(dataOnly);
+
+  if (globals && globals.hasError) {
+    dispatch({ type: ActionType.UpdateError, globals: globals, errorMsg: globals.errorMsg });
+  } else if (!isDataEmpty) {
+    dispatch({ type: ActionType.UpdateGlobalsSuccess, globals });
+  }
+};

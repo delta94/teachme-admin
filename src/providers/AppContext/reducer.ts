@@ -1,3 +1,4 @@
+import { IAppGlobals } from '../../utils/app-utils';
 import { ActionType, IState, IAction } from './app-context.interface';
 
 export const initialState = {
@@ -5,6 +6,7 @@ export const initialState = {
   isUpdating: true,
   hasUpdateError: false,
   errorMessage: '',
+  globals: (null as unknown) as IAppGlobals,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -35,9 +37,10 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         screenProvider: action.currentScreen,
       };
-    case ActionType.SetGlobals:
+    case ActionType.UpdateGlobalsSuccess:
       return {
         ...state,
+        isUpdating: false,
         globals: action.globals,
       };
     case ActionType.ResetAppState:

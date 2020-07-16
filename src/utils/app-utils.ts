@@ -15,6 +15,8 @@ export interface IAppGlobals {
   user: UserData;
   system: SystemData;
   environment: WalkMeEnvironment;
+  hasError: boolean;
+  errorMsg: string;
 }
 
 export const defaultAppStatus = {
@@ -28,6 +30,8 @@ export const defaultAppGlobals = {
   user: (null as unknown) as UserData,
   system: (null as unknown) as SystemData,
   environment: (null as unknown) as WalkMeEnvironment,
+  hasError: false,
+  errorMsg: '',
 };
 
 export async function appInitiator(): Promise<IAppStatus> {
@@ -65,8 +69,11 @@ export async function getAppGlobals(): Promise<IAppGlobals> {
     globals.user = user;
     globals.system = system;
     globals.environment = environments[0];
+    globals.hasError = false;
   } catch (err) {
     console.log(err);
+    globals.hasError = true;
+    globals.errorMsg = err;
   }
 
   return globals;

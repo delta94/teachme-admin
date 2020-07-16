@@ -1,8 +1,5 @@
 import { ReactNode } from 'react';
 
-import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
-import { SystemData } from '@walkme/editor-sdk/dist/system';
-
 import { IAppGlobals } from '../../utils/app-utils';
 import { ActionType } from './actions';
 
@@ -12,7 +9,7 @@ export interface IAction {
   type: ActionType;
   currentScreen?: any;
   errorMsg?: string;
-  globals?: IAppGlobals;
+  globals: IAppGlobals;
 }
 
 export interface IDispatch {

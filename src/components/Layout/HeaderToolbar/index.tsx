@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { Divider, Tooltip } from 'antd';
 
+import { useAppContext } from '../../../providers/AppContext';
 import { IconType } from '../../common/Icon/icon.interface';
 import Icon from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -12,7 +13,6 @@ import EnvironmentMenu from './EnvironmentMenu';
 import UserMenu from './UserMenu';
 
 import classes from './style.module.scss';
-import { useAppContext } from '../../../providers/AppContext';
 
 export default function HeaderToolbar(): ReactElement {
   const [state, dispatch] = useAppContext();
