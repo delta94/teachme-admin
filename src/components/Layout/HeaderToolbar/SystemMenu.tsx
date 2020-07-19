@@ -3,20 +3,18 @@ import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
-import { setAppSystem } from '../../../providers/AppContext/utils';
-import { useAppContext, ActionType } from '../../../providers/AppContext';
+import { useAppContext, setAppSystem } from '../../../providers/AppContext';
 import { getSystems } from '../../../walkme';
 
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMButton from '../../common/WMButton';
 
-import { parseSystems } from './headerToolbar.utils';
+import { parseSystems } from './utils';
 
 import classes from './style.module.scss';
 
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { system } = appState;
+  const [{ system }, dispatch] = useAppContext();
 
   const [selectedSystem, setSelectedSystem] = useState(parseSystems([system]) as IWMDropdownOption);
 
@@ -25,7 +23,7 @@ export default function SystemMenu({ className }: { className?: string }): React
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setAppSystem({
-      dispatch: appDispatch,
+      dispatch,
       systems,
       systemId: parseInt(selected.id as string),
     });

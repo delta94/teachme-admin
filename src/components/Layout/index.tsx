@@ -30,7 +30,7 @@ export default function Layout(): ReactElement {
         Version: {process.env.REACT_APP_VERSION}
       </WMDialog>
       <Router basename={process.env.PUBLIC_URL}>
-        <section className={classes.app}>
+        <section className={classes['app']}>
           <Sidebar />
           <HeaderToolbar />
           <Screen />

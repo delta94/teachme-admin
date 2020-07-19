@@ -2,7 +2,6 @@ import React, { ReactElement, useState, useEffect, useCallback } from 'react';
 import { Divider, message } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { useAppContext } from '../../../providers/AppContext';
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';

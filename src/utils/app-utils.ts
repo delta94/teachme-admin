@@ -3,13 +3,13 @@ import * as walkme from '../walkme';
 export interface IAppStatus {
   isLoading: boolean;
   hasError: boolean;
-  errorMsg: string;
+  errorMessage: string;
 }
 
 export const defaultAppStatus = {
   isLoading: true,
   hasError: false,
-  errorMsg: '',
+  errorMessage: '',
 };
 
 export async function appInitiator(): Promise<IAppStatus> {
@@ -28,7 +28,7 @@ export async function appInitiator(): Promise<IAppStatus> {
     console.log(err);
     appStatus.isLoading = false;
     appStatus.hasError = true;
-    appStatus.errorMsg = err;
+    appStatus.errorMessage = err;
   }
 
   return appStatus;

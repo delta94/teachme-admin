@@ -1,12 +1,19 @@
 import React, { useReducer, ReactElement, useEffect } from 'react';
 
 import { ActionType, IAction, IState, IDispatch, IAppProvider } from './app-context.interface';
-import { AppStateContext, AppDispatchContext, useAppContext, setInitialGlobals } from './utils';
+import {
+  AppStateContext,
+  AppDispatchContext,
+  useAppContext,
+  setInitialGlobals,
+  setAppEnvironment,
+  setAppSystem,
+} from './utils';
 import { reducer, initialState } from './reducer';
 
 export type { IAction, IState, IDispatch, IAppProvider };
 
-export { useAppContext, reducer, initialState, ActionType };
+export { useAppContext, reducer, initialState, ActionType, setAppEnvironment, setAppSystem };
 
 export default function AppProvider({ children }: IAppProvider): ReactElement {
   const [state, dispatch] = useReducer(reducer, initialState as IState);

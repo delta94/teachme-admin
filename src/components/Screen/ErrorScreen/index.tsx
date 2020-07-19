@@ -4,7 +4,7 @@ import classes from './style.module.scss';
 
 export default function ErrorScreen({ error }: { error?: string }): ReactElement {
   const [errorMessage, setErrorMessage] = useState(
-    error && Boolean(error) ? error : 'Something Wrong',
+    error && Boolean(error) ? error : 'Something went wrong',
   );
 
   return (

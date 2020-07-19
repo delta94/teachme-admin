@@ -3,20 +3,18 @@ import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
-import { setAppEnvironment } from '../../../providers/AppContext/utils';
-import { useAppContext, ActionType } from '../../../providers/AppContext';
+import { useAppContext, setAppEnvironment } from '../../../providers/AppContext';
 import { getEnvironments } from '../../../walkme';
 
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMButton from '../../common/WMButton';
 
-import { parseEnvironments } from './headerToolbar.utils';
+import { parseEnvironments } from './utils';
 
 import classes from './style.module.scss';
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { environment } = appState;
+  const [{ environment }, dispatch] = useAppContext();
 
   const [selectedEnv, setSelectedEnv] = useState(
     parseEnvironments([environment]) as IWMDropdownOption,
@@ -26,7 +24,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setAppEnvironment({
-      dispatch: appDispatch,
+      dispatch,
       environments,
       envId: parseInt(selected.id as string),
     });

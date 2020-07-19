@@ -8,7 +8,7 @@ import Layout from './components/Layout';
 export default function App(): ReactElement {
   const [status, setStatus] = useState(defaultAppStatus);
 
-  const { isLoading, hasError, errorMsg } = status;
+  const { isLoading, hasError, errorMessage } = status;
 
   const setApp = async () => {
     const appInitStatus = await appInitiator();
@@ -25,7 +25,7 @@ export default function App(): ReactElement {
       {isLoading ? (
         <SplashScreen />
       ) : hasError ? (
-        <ErrorScreen error={errorMsg} />
+        <ErrorScreen error={errorMessage} />
       ) : (
         <AppProvider>
           <Layout />
