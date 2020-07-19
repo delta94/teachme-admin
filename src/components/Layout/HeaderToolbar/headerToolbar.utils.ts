@@ -1,10 +1,18 @@
+import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
+
 import { IWMDropdownOption } from '../../common/WMDropdown';
 
-export function parseEnvironmentsToDropdownOptions(
+function getOptions(options: any[]): IWMDropdownOption | IWMDropdownOption[] {
+  return options.length > 1 ? options : options[0];
+}
+
+export function parseEnvironments(
   environments: WalkMeEnvironment[],
 ): IWMDropdownOption | IWMDropdownOption[] {
-  const options = environments.map(({ id, name }) => ({ id, value: name }));
+  return getOptions(environments.map(({ id, name }) => ({ id, value: name })));
+}
 
-  return options.length > 1 ? options : options[0];
+export function parseSystems(systems: SystemData[]): IWMDropdownOption | IWMDropdownOption[] {
+  return getOptions(systems.map(({ userId, name }) => ({ id: userId, value: name })));
 }
