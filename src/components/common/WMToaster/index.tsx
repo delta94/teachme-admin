@@ -15,7 +15,7 @@ export default function Toaster({
   const success = () => {
     message.success({
       content: `${course} ${text}`,
-      className: classes['publish-message'],
+      className: classes['toaster-message'],
       icon: <Icon type={IconType.Message} className={classes['icon-message']} />,
     });
   };
