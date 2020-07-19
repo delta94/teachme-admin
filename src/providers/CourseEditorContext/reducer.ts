@@ -7,6 +7,9 @@ export const initialState = {
   courseItems: [],
   filteredCourseItems: [],
   courseItemsSearchValue: '',
+  isFetchingCourse: false,
+  isFetchingCourseError: false,
+  course: null,
   courseOutline: [],
   filteredCourseOutline: [],
   courseOutlineSearchValue: '',
@@ -47,10 +50,30 @@ export const reducer = (state: IState, action: IAction): IState => {
           action.courseItemsSearchValue ?? initialState.courseItemsSearchValue,
         filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
       };
+    case ActionType.FetchCourse:
+      return {
+        ...state,
+        isFetchingCourse: true,
+        isFetchingCourseError: false,
+      };
+    case ActionType.FetchCourseSuccess:
+      return {
+        ...state,
+        isFetchingCourse: false,
+        isFetchingCourseError: false,
+        course: action.course ?? initialState.course,
+      };
+    case ActionType.FetchCourseError:
+      return {
+        ...state,
+        isFetchingCourse: false,
+        isFetchingCourseError: true,
+      };
     case ActionType.UpdateCourseOutline:
       return {
         ...state,
-        courseOutline: action.courseOutline ?? initialState.courseOutline,
+        courseOutline:
+          action.courseOutline ?? (state.course ? state.course.items : initialState.courseOutline),
         filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
       };
     case ActionType.SetCourseOutlineSearchValue:
