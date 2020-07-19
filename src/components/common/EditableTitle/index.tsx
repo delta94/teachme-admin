@@ -50,6 +50,10 @@ export default function EditableTitle({
 
   const [inputValue, setInputValue] = useState(value);
 
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
   const onInputBlur = () => {
