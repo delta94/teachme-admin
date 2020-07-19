@@ -9,7 +9,7 @@ import {
   WalkMeNewLink,
   WalkMeLink,
 } from '@walkme/types';
-import { resolveLinks } from './collection';
+import { resolveLinks, resolveLinksSync } from './collection';
 import { getData } from './data';
 import { Consumer } from 'react';
 
@@ -55,6 +55,30 @@ export async function mapItem<T extends ContentItem>(
   );
 }
 
+export function mapItemSync<T extends ContentItem>(
+  item: WalkMeDataItem,
+  type: TypeName,
+  environmentId: number,
+  options?: MapOptions<T>,
+): ContentItem {
+  const customObj = resolvers[type]?.(item) || {};
+  const childNodes = getChildNodesSync(item as WalkMeDataCollectionItem, environmentId, options);
+  const postMapper = options?.mapper ?? idMapper;
+  return postMapper(
+    {
+      id: item.Id,
+      description: item.Description || '',
+      properties: {},
+      title: item.Name,
+      type,
+      childNodes: childNodes.filter<ContentItem | null>(isNotNull) as ContentItem[],
+      ...customObj,
+    },
+    item,
+    options?.link,
+  );
+}
+
 function isNotNull<T>(item: T | null): item is null {
   return !!item;
 }
@@ -65,6 +89,16 @@ async function getChildNodes<T extends ContentItem>(
   options?: MapOptions<T>,
 ): Promise<Array<ContentItem | null>> {
   return item.LinkedDeployables ? resolveLinks(item.LinkedDeployables, environmentId, options) : [];
+}
+
+function getChildNodesSync<T extends ContentItem>(
+  item: WalkMeDataCollectionItem,
+  environmentId: number,
+  options?: MapOptions<T>,
+): Array<ContentItem | null> {
+  return item.LinkedDeployables
+    ? resolveLinksSync(item.LinkedDeployables, environmentId, options)
+    : [];
 }
 
 export const TYPE_IDS_TO_NAME: { [typeId: number]: TypeName } = (function () {

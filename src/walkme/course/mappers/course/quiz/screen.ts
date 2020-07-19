@@ -1,4 +1,12 @@
-import { WalkMeDataQuizScreen, QuizScreen, QUIZ_ITEM_TYPES } from '@walkme/types';
+import {
+  WalkMeDataQuizScreen,
+  QuizScreen,
+  QUIZ_ITEM_TYPES,
+  DISPLAYER_ID,
+  QUIZ_TEMPLATE_IDS,
+  QUIZ_COMPONENTS_IDS,
+} from '@walkme/types';
+import defaults from '../../../defaults';
 
 export function toUIModel(screen: WalkMeDataQuizScreen): QuizScreen {
   return {
@@ -28,7 +36,23 @@ export function newDataModel(type: QUIZ_ITEM_TYPES): WalkMeDataQuizScreen {
       return getQuizSuccessScreen();
     case QUIZ_ITEM_TYPES.WelcomePage:
       return getQuizWelcomeScreen();
+    default:
+      throw new Error(`Unknown quiz screen type ${type}`);
   }
+}
+
+export class BuildQuizScreen implements QuizScreen {
+  public title: string;
+  public description: string;
+  public buttons: Array<{ text: string; id: string }>;
+
+  constructor(private screen: WalkMeDataQuizScreen) {
+    this.title = screen.Title;
+    this.description = screen.Description;
+    this.buttons = [{ text: screen.ButtonText, id: `${screen.Type}-0` }];
+  }
+
+  toDataModel = () => toDataModel(this, this.screen);
 }
 
 function getQuizWelcomeScreen(): WalkMeDataQuizScreen {

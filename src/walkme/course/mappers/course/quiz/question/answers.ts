@@ -1,4 +1,6 @@
-import { WalkMeDataQuizAnswer, QuizAnswer } from '@walkme/types';
+import { WalkMeDataQuizAnswer, QuizAnswer, NewAnswerData } from '@walkme/types';
+import { Container } from '../../../../itemsContainer';
+import defaults from '../../../../defaults';
 
 export function toUIModel(answersData: Array<WalkMeDataQuizAnswer>): Array<QuizAnswer> {
   return answersData.map((answersData) => ({
@@ -22,15 +24,39 @@ export function toDataModel(
   );
 }
 
-export function newDataModel(
-  Text: string,
-  IsCorrect: boolean,
-  OrderIndex: number,
-): WalkMeDataQuizAnswer {
+export function newDataModel(OrderIndex: number, data: NewAnswerData): WalkMeDataQuizAnswer {
   return {
     Id: -1,
-    Text,
-    IsCorrect,
+    Text: data.text || defaults.NEW_ANSWER_TEXT,
+    IsCorrect: data.isCorrect || defaults.NEW_ANSWER_IS_CORRECT,
     OrderIndex,
   };
+}
+
+export const getQuizAnswers = (answersData: Array<WalkMeDataQuizAnswer>) =>
+  new Container<BuildQuizAnswer, NewAnswerData, WalkMeDataQuizAnswer>(
+    answersData,
+    (data) => new BuildQuizAnswer(data),
+    newDataModel,
+  );
+
+export class BuildQuizAnswer implements QuizAnswer {
+  public id: number;
+  public isCorrect: boolean;
+  public text: string;
+
+  constructor(private answer: WalkMeDataQuizAnswer) {
+    this.id = answer.Id;
+    this.isCorrect = answer.IsCorrect;
+    this.text = answer.Text;
+  }
+
+  public toDataModel(index: number): WalkMeDataQuizAnswer {
+    return {
+      Id: this.id > 0 ? -(index + 1) : this.id,
+      IsCorrect: this.isCorrect,
+      OrderIndex: index,
+      Text: this.text,
+    };
+  }
 }

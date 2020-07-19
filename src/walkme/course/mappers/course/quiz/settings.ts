@@ -27,3 +27,21 @@ export function toDataModel(
 export function newDataModel(): WalkMeDataQuizSettings {
   return { overlay: {}, position: 8, isQuizResults: BooleanStringOption.TRUE };
 }
+
+export class QuizProperties implements BuildQuizProperties {
+  public forceCourseCompletion: boolean;
+  public randAnswers: boolean;
+  public randQuestions: boolean;
+  public showSummary: boolean;
+  public passmark: number;
+
+  constructor(private settings: WalkMeDataQuizSettings, passmark: number) {
+    this.forceCourseCompletion = isTrue(settings.isLimited);
+    this.randQuestions = isTrue(settings.randQuestions);
+    this.randAnswers = isTrue(settings.randAnswers);
+    this.showSummary = isTrue(settings.isQuizResults);
+    this.passmark = passmark;
+  }
+
+  getDataModel = () => toDataModel(this, this.settings);
+}

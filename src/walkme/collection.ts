@@ -1,5 +1,5 @@
-import { getData } from './data';
-import { mapItem, TYPE_IDS_TO_NAME, MapOptions, getTypeId } from './item';
+import { getData, getDataSync } from './data';
+import { mapItem, TYPE_IDS_TO_NAME, MapOptions, getTypeId, mapItemSync } from './item';
 import { ContentItem, WalkMeNewLink, TypeId, TypeName } from '@walkme/types';
 import { getTimeProps } from 'antd/es/date-picker/generatePicker';
 import { notEmpty } from './utils';
@@ -22,6 +22,24 @@ export async function resolveLinks<T extends ContentItem>(
       }),
     )
   ).filter(notEmpty);
+}
+
+export function resolveLinksSync<T extends ContentItem>(
+  links: Array<WalkMeNewLink>,
+  environmentId: number = 0,
+  options?: MapOptions<T>,
+): Array<ContentItem> {
+  return links
+    .map((link) => {
+      const type = TYPE_IDS_TO_NAME[link.DeployableType];
+      if (options?.types && !options?.types?.includes(type)) return null;
+
+      const [item] = getDataSync(link.DeployableType, [link.DeployableID]);
+      if (!item) return null;
+
+      return mapItemSync(item, type, environmentId, options);
+    })
+    .filter(notEmpty);
 }
 
 export function createLink(

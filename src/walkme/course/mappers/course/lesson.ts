@@ -8,18 +8,18 @@ import {
 import * as item from './item';
 import { getGuid } from '../../../guid';
 
-export function toDataModel(
-  lesson: BuildLesson,
-  dataLesson: WalkMeDataNewLesson,
-  index: number,
-): WalkMeDataNewLesson {
-  return {
-    ...dataLesson,
-    Name: lesson.title,
-    OrderIndex: index,
-    LinkedDeployables: lesson.childNodes?.map(item.toDataModel) || [],
-  };
-}
+// export function toDataModel(
+//   lesson: BuildLesson,
+//   dataLesson: WalkMeDataNewLesson,
+//   index: number,
+// ): WalkMeDataNewLesson {
+//   return {
+//     ...dataLesson,
+//     Name: lesson.title,
+//     OrderIndex: index,
+//     LinkedDeployables: lesson.childNodes?.map(item.toDataModel) || [],
+//   };
+// }
 
 export function newDataModel(index: number): WalkMeDataNewLesson {
   return {
