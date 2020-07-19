@@ -11,11 +11,13 @@ import {
   CourseTaskCompletionType,
   WalkMeDataCourseTaskSettings,
   WalkMeDataLesson,
+  WalkMeDataNewLesson,
 } from '@walkme/types';
 import { resolveLinks, createLink } from '../../../collection';
 import * as lessonMap from './lesson';
 import * as itemMap from './item';
 import { notEmpty } from '../../../utils';
+import { getNewLesson } from '../../new';
 
 export async function toUIModel(
   items: Array<WalkMeDataCourseItem>,
@@ -49,14 +51,18 @@ function mapItem(
 
 export function toDataModel(
   items: Array<BuildCourseTask>,
-  dataLessons: Array<WalkMeDataLesson>,
-): { courseItems: Array<WalkMeDataCourseNewItem>; lessons: Array<WalkMeDataLesson> } {
+  dataLessons: Array<WalkMeDataNewLesson>,
+): {
+  courseItems: Array<WalkMeDataCourseNewItem>;
+  lessons: Array<WalkMeDataNewLesson>;
+} {
   const courseItems: Array<WalkMeDataCourseNewItem> = [];
-  const lessons: Array<WalkMeDataLesson> = [];
+  const lessons: Array<WalkMeDataNewLesson> = [];
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     if (item.type == TypeName.Lesson) {
-      const lesson = dataLessons.find((lesson) => lesson.Id == item.id);
+      const lesson =
+        item.id > 0 ? dataLessons.find((lesson) => lesson.Id == item.id) : getNewLesson(i);
       if (!lesson) throw new Error("Can't map to non-existing  lesson");
 
       lessons.push(lessonMap.toDataModel(item, lesson, i));

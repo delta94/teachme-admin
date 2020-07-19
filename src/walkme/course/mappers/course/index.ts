@@ -6,6 +6,8 @@ import {
   BuildQuiz,
   WalkMeDataLesson,
   WalkMeDataEditedCourse,
+  WalkMeDataNewCourse,
+  WalkMeDataNewLesson,
 } from '@walkme/types';
 import * as quiz from './quiz';
 import * as settings from './settings';
@@ -17,7 +19,7 @@ export async function toUIModel(
   environmentId: number,
 ): Promise<BuildCourse> {
   return {
-    id: course.Id as number,
+    id: course.Id,
     title: course.Name,
     items: await items.toUIModel(course.LinkedDeployables),
     quiz: quiz.toUIModel(course.Quiz),
@@ -28,9 +30,12 @@ export async function toUIModel(
 
 export function toDataModel(
   course: BuildCourse,
-  dataCourse: WalkMeDataCourse,
-  dataLessons: Array<WalkMeDataLesson>,
-): { course: WalkMeDataEditedCourse; lessons: Array<WalkMeDataLesson> } {
+  dataCourse: WalkMeDataCourse | WalkMeDataNewCourse,
+  dataLessons: Array<WalkMeDataNewLesson>,
+): {
+  course: WalkMeDataEditedCourse | WalkMeDataNewCourse;
+  lessons: Array<WalkMeDataNewLesson>;
+} {
   const { courseItems, lessons } = items.toDataModel(course.items, dataLessons);
   const mappedCourse = {
     ...dataCourse,

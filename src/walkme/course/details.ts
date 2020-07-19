@@ -4,9 +4,12 @@ import {
   TypeName,
   WalkMeDataLesson,
   WalkMeDataEditedCourse,
+  WalkMeDataNewCourse,
+  WalkMeDataNewLesson,
 } from '@walkme/types';
 import { getData } from '../data';
 import * as courseMap from './mappers/course';
+import { getNewCourse } from './new';
 
 export async function getCourseData(
   id: number,
@@ -19,12 +22,19 @@ export async function getCourseData(
 
 export async function getCourseDataModel(
   course: BuildCourse,
-): Promise<{ course: WalkMeDataEditedCourse; lessons: Array<WalkMeDataLesson> }> {
+): Promise<{
+  course: WalkMeDataEditedCourse | WalkMeDataNewCourse;
+  lessons: Array<WalkMeDataNewLesson>;
+}> {
+  if (course.id < 0) {
+    return courseMap.toDataModel(course, getNewCourse(course.index), []);
+  }
+
   const courseData = (await getData(TypeName.Course, 0, [course.id])) as Array<WalkMeDataCourse>;
-  const lessons = (await getData(
+  const lessons = ((await getData(
     TypeName.Lesson,
     0,
     course.items.filter((i) => i.type == TypeName.Lesson).map((i) => i.id as number),
-  )) as Array<WalkMeDataLesson>;
+  )) as unknown) as Array<WalkMeDataNewLesson>;
   return courseMap.toDataModel(course, courseData[0], lessons);
 }

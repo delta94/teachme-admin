@@ -8,6 +8,7 @@ import {
   TypeId,
   WalkMeDataLesson,
   WalkMeDataItem,
+  WalkMeDataNewLesson,
 } from '@walkme/types';
 import * as courses from './course/details';
 import { mapItem } from './item';
@@ -109,8 +110,26 @@ export async function switchSystem(id: number) {
  */
 export async function saveCourse(course: BuildCourse) {
   const courseToSave = await courses.getCourseDataModel(course);
-  await walkme.data.saveContent(TypeName.Lesson, courseToSave.lessons, TypeId.Lesson);
+  const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
+    TypeName.Lesson,
+    courseToSave.lessons,
+    TypeId.Lesson,
+  );
+  courseToSave.course.LinkedDeployables.filter(
+    (item) => item.DeployableType == TypeId.Lesson,
+  ).forEach((item) => {
+    item.DeployableID = lessons[item.DeployableID].Id;
+  });
   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
+}
+
+/**
+ * Publishes courses to a customer's environment
+ * @param environmentId
+ * @param coursesIds Array of course ids
+ */
+export async function publishCourses(environmentId: number, coursesIds: Array<number>) {
+  await walkme.publish.publish(environmentId, TypeName.Course, TypeId.Course, coursesIds);
 }
 
 /**
@@ -131,6 +150,7 @@ window.test = {
   getEnvironments,
   getSystems,
   saveCourse,
+  publishCourses,
   // for debug
   getCourseDataModel: courses.getCourseDataModel,
 };
