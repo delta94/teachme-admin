@@ -6,15 +6,17 @@ import Icon, { IconType } from '../../common/Icon';
 import classes from './style.module.scss';
 
 export default function Toaster({
-  course = '',
+  number = '',
   text,
+  buttonName,
 }: {
-  course?: string;
+  number?: string;
   text: string;
+  buttonName: string;
 }): ReactElement {
   const success = () => {
     message.success({
-      content: `${course} ${text}`,
+      content: `${number} ${text}`,
       className: classes['toaster-message'],
       icon: <Icon type={IconType.Message} className={classes['icon-message']} />,
     });
@@ -23,7 +25,7 @@ export default function Toaster({
   return (
     <>
       <Space>
-        <Button onClick={success}>Button</Button>
+        <Button onClick={success}>{buttonName}</Button>
       </Space>
     </>
   );
