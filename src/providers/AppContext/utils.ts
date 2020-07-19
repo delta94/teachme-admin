@@ -36,9 +36,11 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
 
   try {
     const user = await walkme.getUserData();
-    const system = await walkme.getSystem();
+    const system = await walkme.getSystemData();
     const environments = await walkme.getEnvironments();
-    const defaultEnv = environments.find((env) => env.id === EnvironmentType.Production);
+    const defaultEnv = environments.find(
+      (env: WalkMeEnvironment) => env.id === EnvironmentType.Production,
+    );
 
     dispatch({ type: ActionType.SetUser, user });
     dispatch({ type: ActionType.SetSystem, system });
