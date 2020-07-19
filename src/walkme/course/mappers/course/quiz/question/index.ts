@@ -2,6 +2,7 @@ import { WalkMeDataQuizQuestion, BuildQuizQuestion } from '@walkme/types';
 import * as settings from './settings';
 import * as answers from './answers';
 import { getNewQuestion } from '../../../../new';
+import defaults from '../../../../defaults';
 
 export function toUIModel(question: WalkMeDataQuizQuestion): BuildQuizQuestion {
   return {
@@ -37,4 +38,18 @@ export function toDataModel(
     });
   }
   return mappedQuestions;
+}
+
+export function newDataModel(index: number): WalkMeDataQuizQuestion {
+  return {
+    Id: -index - 1,
+    Question: defaults.QUESTION_TEXT,
+    Description: defaults.QUESTION_DESCRIPTION,
+    Answers: [
+      answers.newDataModel(defaults.CORRECT_ANSWER_TEXT, true, 0),
+      answers.newDataModel(defaults.INCORRECT_ANSWER_TEXT, false, 1),
+    ],
+    QuestionType: defaults.QUESTION_TYPE,
+    OrderIndex: index,
+  };
 }

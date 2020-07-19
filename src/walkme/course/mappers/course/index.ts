@@ -8,11 +8,15 @@ import {
   WalkMeDataEditedCourse,
   WalkMeDataNewCourse,
   WalkMeDataNewLesson,
+  GroupType,
+  TypeId,
 } from '@walkme/types';
 import * as quiz from './quiz';
 import * as settings from './settings';
 import * as items from './courseItems';
 import { mapItem } from '../../../item';
+import defaults from '../../defaults';
+import { getGuid } from '../../../guid';
 
 export async function toUIModel(
   course: WalkMeDataCourse,
@@ -46,4 +50,21 @@ export function toDataModel(
     Settings: settings.toDataModel(course.properties, dataCourse.Settings),
   };
   return { course: mappedCourse, lessons };
+}
+
+export function newDataModel(index: number): WalkMeDataNewCourse {
+  return {
+    Id: -1,
+    Name: defaults.COURSE_NAME,
+    OrderIndex: index,
+    PublishStatus: 0,
+    IsModified: false,
+    Settings: {},
+    LinkedDeployables: [],
+    GroupType: GroupType.Course,
+    Quiz: quiz.newDataModel(),
+    Guid: getGuid(),
+    ResourceId: getGuid(),
+    deployableType: TypeId.Course,
+  };
 }

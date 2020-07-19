@@ -1,4 +1,4 @@
-import { WalkMeDataQuizSettings, BuildQuizProperties } from '@walkme/types';
+import { WalkMeDataQuizSettings, BuildQuizProperties, BooleanStringOption } from '@walkme/types';
 import { convertToNumberBoolean, isTrue } from '../../../../utils';
 
 export function toUIModel(settings: WalkMeDataQuizSettings, passmark: number): BuildQuizProperties {
@@ -22,4 +22,8 @@ export function toDataModel(
     randAnswers: convertToNumberBoolean(properties.randAnswers),
     randQuestions: convertToNumberBoolean(properties.randQuestions),
   };
+}
+
+export function newDataModel(): WalkMeDataQuizSettings {
+  return { overlay: {}, position: 8, isQuizResults: BooleanStringOption.TRUE };
 }

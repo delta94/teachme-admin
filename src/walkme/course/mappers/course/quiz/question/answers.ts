@@ -21,3 +21,16 @@ export function toDataModel(
     }),
   );
 }
+
+export function newDataModel(
+  Text: string,
+  IsCorrect: boolean,
+  OrderIndex: number,
+): WalkMeDataQuizAnswer {
+  return {
+    Id: -1,
+    Text,
+    IsCorrect,
+    OrderIndex,
+  };
+}
