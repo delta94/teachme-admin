@@ -32,7 +32,6 @@ export default function Counter(): ReactElement {
         description="Drag content into the lesson"
         image={<Icon type={IconType.LessonEmpty} />}
       />
-      <CourseSummaryChart summaryData={null} />
     </>
   );
 }
