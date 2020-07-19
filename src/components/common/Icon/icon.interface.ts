@@ -19,5 +19,5 @@ export enum IconType {
   Lesson = 'lesson',
   Refresh = 'refresh',
   Plus = 'plus',
-  Message = 'v-message',
+  Check = 'check',
 }

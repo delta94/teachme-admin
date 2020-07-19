@@ -5,7 +5,7 @@ import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
 
-export default function Toaster({
+export default function WMToaster({
   number = '',
   text,
   buttonName,
@@ -14,19 +14,17 @@ export default function Toaster({
   text: string;
   buttonName: string;
 }): ReactElement {
-  const success = () => {
+  const onClick = () => {
     message.success({
       content: `${number} ${text}`,
-      className: classes['toaster-message'],
-      icon: <Icon type={IconType.Message} className={classes['icon-message']} />,
+      className: classes['wm-toaster'],
+      icon: <Icon type={IconType.Check} className={classes['icon-message']} />,
     });
   };
 
   return (
-    <>
-      <Space>
-        <Button onClick={success}>{buttonName}</Button>
-      </Space>
-    </>
+    <Space>
+      <Button onClick={onClick}>{buttonName}</Button>
+    </Space>
   );
 }
