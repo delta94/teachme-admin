@@ -47,7 +47,7 @@ export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<vo
 
 export const fetchCourse = async (
   dispatch: IDispatch,
-  courseId = 1284870, // TODO: remove this after sdk integration
+  courseId: number,
   envId = 0,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });
@@ -56,7 +56,11 @@ export const fetchCourse = async (
     const course = await getCourse(courseId, envId);
 
     dispatch({ type: ActionType.FetchCourseSuccess, course });
-    dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: course?.items });
+
+    if (course) {
+      dispatch({ type: ActionType.SetCourseTitle, courseTitle: course.title });
+      dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: course.items });
+    }
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCourseError });

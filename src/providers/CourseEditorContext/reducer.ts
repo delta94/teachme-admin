@@ -72,8 +72,7 @@ export const reducer = (state: IState, action: IAction): IState => {
     case ActionType.UpdateCourseOutline:
       return {
         ...state,
-        courseOutline:
-          action.courseOutline ?? (state.course ? state.course.items : initialState.courseOutline),
+        courseOutline: action.courseOutline ?? initialState.courseOutline,
         filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
       };
     case ActionType.SetCourseOutlineSearchValue:
