@@ -12,26 +12,46 @@
     width: 340px;
     border-width: 1px;
   }
+}
 
-  .quiz-settings-header {
+.quiz-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  white-space: nowrap;
+
+  .title {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: var(--font-secondary);
-    font-size: 14px;
-    white-space: nowrap;
 
-    .title {
-      display: flex;
+    :global(.wm-icon) {
+      margin-right: 10px;
+    }
+  }
 
-      :global(.wm-icon) {
-        margin-right: 10px;
-      }
+  .close {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.quiz-settings-form {
+  .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .form-group-title {
+      flex: 0 0 100%;
+      font-weight: 500;
     }
 
-    .close {
-      width: 25px;
-      height: 25px;
+    &.passmark {
+      :global(.ant-input) {
+        margin: 0 5px;
+        width: 50px;
+      }
     }
   }
 }
