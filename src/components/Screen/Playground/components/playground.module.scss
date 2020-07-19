@@ -5,3 +5,13 @@
     }
   }
 }
+
+.cards-wrapper {
+  display: flex;
+  font-family: var(--font-primary);
+  color: var(--neutral900);
+
+  .quiz-settings-buttons {
+    flex-grow: 1;
+  }
+}

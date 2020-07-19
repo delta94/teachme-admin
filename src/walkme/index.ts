@@ -78,6 +78,7 @@ export async function getItemsList(environmentId: number): Promise<Array<Content
  */
 export async function getFlatItemsList(environmentId: number): Promise<Array<ContentItem>> {
   const nestedItems = await getItemsList(environmentId);
+  console.log('nestedItems ', nestedItems);
   return nestedItems.flatMap((item) => item.childNodes) as Array<ContentItem>;
 }
 

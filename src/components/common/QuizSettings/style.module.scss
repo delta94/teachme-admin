@@ -1,0 +1,29 @@
+.quiz-settings {
+  height: 560px;
+  color: inherit;
+  min-width: 0;
+  width: 0;
+  border-width: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+
+  &.open {
+    min-width: 340px;
+    width: 340px;
+    border-width: 1px;
+  }
+
+  .quiz-settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    white-space: nowrap;
+
+    .close {
+      width: 25px;
+      height: 25px;
+    }
+  }
+}

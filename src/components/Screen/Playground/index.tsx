@@ -11,6 +11,7 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 import List from './components/List';
 import Checkboxes from './components/Checkboxes';
+import Quiz from './components/Quiz';
 
 import classes from './style.module.scss';
 
@@ -45,14 +46,22 @@ const tabs = [
     icon: undefined,
     content: <Checkboxes />,
   },
+  {
+    id: 'quiz',
+    title: 'Quiz',
+    icon: undefined,
+    content: <Quiz />,
+  },
 ];
 
 export default function Playground(): ReactElement {
+  const defaultTabId = 'quiz'; //TODO: before opening the PR return value 'dialogs'
+
   return (
     <div className={classes.playground}>
       <ScreenHeader hideTimeFilter title="Playground" />
       <WMCard>
-        <WMTabs defaultActiveKey={'dialogs'}>
+        <WMTabs defaultActiveKey={defaultTabId}>
           {tabs.map((tab) => {
             const { id, title, icon, content } = tab;
             return (
