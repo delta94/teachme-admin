@@ -21,6 +21,8 @@
 
     &.lesson {
       left: 0;
+      font-size: 10px;
+      line-height: 1em;
     }
 
     &.hidden {
@@ -50,6 +52,13 @@
     &::selection {
       color: var(--neutral900);
       background: var(--selected);
+    }
+
+    &.lesson {
+      flex-grow: 1;
+      width: unset;
+      height: 26px;
+      border: var(--wm-border);
     }
   }
 }

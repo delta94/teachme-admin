@@ -83,6 +83,7 @@ export default function EditableTitle({
         value={inputValue}
         onChange={onChange}
         onBlur={onInputBlur}
+        onClick={(e) => e.stopPropagation()}
       />
     </div>
   );
