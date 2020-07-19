@@ -3,6 +3,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
+import { setAppEnvironment } from '../../../providers/AppContext/utils';
 import { useAppContext, ActionType } from '../../../providers/AppContext';
 import { getEnvironments } from '../../../walkme';
 
@@ -24,8 +25,11 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
   const [options, setOptions] = useState([] as IWMDropdownOption[]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
-    const selectedItem = environments.find(({ id }) => selected.id === id);
-    selectedEnv && appDispatch({ type: ActionType.SetEnvironment, environment: selectedItem });
+    setAppEnvironment({
+      dispatch: appDispatch,
+      environments,
+      envId: parseInt(selected.id as string),
+    });
 
     message.info(`Environment changed to ${selected.value}`);
   };

@@ -109,6 +109,10 @@ export async function getSystem(): Promise<SystemData> {
   return await walkme.system.getSystemData();
 }
 
+export async function switchSystem(id: number): Promise<void> {
+  walkme.system.switchSystem(id);
+}
+
 /**
  * Logs the user out and redirects to the url configured in walkme.auth.init call
  */

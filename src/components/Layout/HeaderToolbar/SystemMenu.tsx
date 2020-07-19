@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
+import { setAppSystem } from '../../../providers/AppContext/utils';
 import { useAppContext, ActionType } from '../../../providers/AppContext';
 import { getSystems } from '../../../walkme';
 
@@ -23,9 +24,11 @@ export default function SystemMenu({ className }: { className?: string }): React
   const [options, setOptions] = useState([] as IWMDropdownOption[]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
-    // TODO: I'm guessing userId is a mistake.
-    const selectedItem = systems.find(({ userId }) => selected.id === userId);
-    selectedItem && appDispatch({ type: ActionType.SetSystem, system: selectedItem });
+    setAppSystem({
+      dispatch: appDispatch,
+      systems,
+      systemId: parseInt(selected.id as string),
+    });
 
     message.info(`System changed to ${selected.value}`);
   };
