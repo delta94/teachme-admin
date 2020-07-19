@@ -1,11 +1,15 @@
 import { ActionType, IState, IAction } from './course-editor-context.interface';
 
 export const initialState = {
+  courseTitle: 'Untitled Course',
   isFetchingItems: false,
   isFetchingItemsError: false,
   courseItems: [],
-  filteredItems: [],
-  itemsSearchValue: '',
+  filteredCourseItems: [],
+  courseItemsSearchValue: '',
+  courseOutline: [],
+  filteredCourseOutline: [],
+  courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
 };
 
@@ -22,8 +26,8 @@ export const reducer = (state: IState, action: IAction): IState => {
         ...state,
         isFetchingItems: false,
         isFetchingItemsError: false,
-        courseItems: action.items,
-        filteredItems: action.items,
+        courseItems: action.courseItems ?? initialState.courseItems,
+        filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
       };
     case ActionType.FetchItemsError:
       return {
@@ -31,11 +35,30 @@ export const reducer = (state: IState, action: IAction): IState => {
         isFetchingItems: false,
         isFetchingItemsError: true,
       };
-    case ActionType.SetItemsSearchValue:
+    case ActionType.SetCourseTitle:
       return {
         ...state,
-        itemsSearchValue: action.itemsSearchValue,
-        filteredItems: action.items,
+        courseTitle: action.courseTitle ?? initialState.courseTitle,
+      };
+    case ActionType.SetCourseItemsSearchValue:
+      return {
+        ...state,
+        courseItemsSearchValue:
+          action.courseItemsSearchValue ?? initialState.courseItemsSearchValue,
+        filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
+      };
+    case ActionType.UpdateCourseOutline:
+      return {
+        ...state,
+        courseOutline: action.courseOutline ?? initialState.courseOutline,
+        filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
+      };
+    case ActionType.SetCourseOutlineSearchValue:
+      return {
+        ...state,
+        courseOutlineSearchValue:
+          action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue,
+        filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
       };
     case ActionType.ToggleDetailsPanel:
       return {

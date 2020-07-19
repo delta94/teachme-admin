@@ -1,4 +1,6 @@
 .screen {
+  display: flex;
+  flex-direction: column;
   padding: 0 30px 30px 30px;
   background-color: var(--secondary100);
   margin-top: var(--headerToolbarHeight);

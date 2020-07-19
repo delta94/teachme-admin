@@ -3,4 +3,5 @@ export enum CourseItemType {
   Video = 'video',
   SmartWalkThru = 'smartwalkthru',
   Lesson = 'lesson',
+  Quiz = 'quiz',
 }
