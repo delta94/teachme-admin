@@ -31,14 +31,14 @@ export default function ResourcesList(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { courseItems, filteredCourseItems, courseItemsSearchValue } = state;
 
-  const onSearch = (newSearchValue: string) => {
+  const onSearch = (searchValue: string) => {
     const newCourseItems = courseItems.filter(({ title, description }) =>
-      `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
+      `${title} ${description}`.toLowerCase().includes(searchValue.toLowerCase()),
     );
 
     dispatch({
       type: ActionType.SetCourseItemsSearchValue,
-      courseItemsSearchValue: newSearchValue,
+      courseItemsSearchValue: searchValue,
       courseItems: newCourseItems,
     });
   };
