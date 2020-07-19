@@ -5,6 +5,7 @@ import { BuildCourse } from '@walkme/types';
 
 import { getCourse } from '../../../walkme';
 
+import Icon, { IconType } from '../Icon';
 import WMButton from '../WMButton';
 import Header from '../Header';
 import WMCard from '../WMCard';
@@ -12,7 +13,14 @@ import WMCard from '../WMCard';
 import classes from './style.module.scss';
 
 const QuizSettingsHeader = ({ onClose }: { onClose: () => void }) => (
-  <Header className={classes['quiz-settings-header']} title="Quiz Settings">
+  <Header
+    className={classes['quiz-settings-header']}
+    title={
+      <span className={classes['title']}>
+        <Icon type={IconType.QuizSettings} /> Quiz Settings
+      </span>
+    }
+  >
     <WMButton className={classes['close']} onClick={onClose}>
       <CloseOutlined />
     </WMButton>

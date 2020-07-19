@@ -19,4 +19,5 @@ export enum IconType {
   Lesson = 'lesson',
   Refresh = 'refresh',
   Plus = 'plus',
+  QuizSettings = 'quiz-settings',
 }
