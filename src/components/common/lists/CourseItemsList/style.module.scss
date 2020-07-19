@@ -1,32 +1,33 @@
-.course-items-list:global(.ant-list) {
+.course-items-list {
   flex-grow: 1;
   margin: 0;
 
-  .item {
-    &:global(.ant-list-item) {
-      display: flex;
-      align-items: center;
-      height: 35px;
-      color: var(--neutral800);
-      padding: 0 20px;
+  .item-wrapper {
+    border-bottom: var(--wm-border);
+    &:first-of-type {
       border-top: var(--wm-border);
-      border-bottom: none;
     }
+  }
 
-    &:last-of-type {
-      border-bottom: var(--wm-border);
-    }
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
-    &:hover {
-      cursor: move;
-    }
+  .item {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    color: var(--neutral800);
+    padding: 0 20px;
+    cursor: grab;
 
-    > :global(.wm-icon) {
+    .icon {
       color: var(--secondary500);
       margin-right: 11px;
     }
 
-    &-text {
+    .item-title {
       font-size: 13px;
       white-space: nowrap;
       overflow: hidden;

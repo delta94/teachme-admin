@@ -35,14 +35,7 @@ export default function CourseOutlineLessonItem({
         }
         key={item.id}
       >
-        {item.childNodes && (
-          <CourseItemsList
-            items={item.childNodes.map(({ title, type }) => ({
-              text: title,
-              icon: <Icon type={type} />,
-            }))}
-          />
-        )}
+        {item.childNodes && <CourseItemsList items={item.childNodes} />}
       </WMCollapsePanel>
     </WMCollapse>
   );

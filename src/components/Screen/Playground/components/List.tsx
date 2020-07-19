@@ -32,17 +32,17 @@ export default function ListPlayground(): ReactElement {
   return (
     <>
       <Header title="CourseItemsList: use it in CourseEditorScreen for items list" />
-      <CourseItemsList items={data} />
+      {/* <CourseItemsList items={data} /> */}
       <Divider />
       <Header title="CourseOutlineList: use it in CourseEditorScreen for course-outline section" />
       <Divider />
       <Header title="Example WM-List + border + header + footer" />
-      <CourseItemsList
+      {/* <CourseItemsList
         header={<div>List with Header</div>}
         footer={<div>List with Footer</div>}
         bordered
         items={data}
-      />
+      /> */}
       <Divider />
     </>
   );
