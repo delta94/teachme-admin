@@ -64,18 +64,20 @@ export default function EditableTitle({
       )}
       <div
         className={cc([
-          classes['text-title'],
+          classes['text'],
           classes[titleType[type as keyof typeof titleType]],
           { [classes['hidden']]: showInputText },
         ])}
         onClick={showInput}
       >
         {inputValue}
-        <Icon type={IconType.Pencil} className={classes['pencil-icon']} />
+        {type === EditableTitleType.Course && (
+          <Icon type={IconType.Pencil} className={classes['pencil-icon']} />
+        )}
       </div>
       <WMInput
         className={cc([
-          classes['input-title'],
+          classes['input'],
           classes[titleType[type as keyof typeof titleType]],
           { [classes['hidden']]: !showInputText },
         ])}
