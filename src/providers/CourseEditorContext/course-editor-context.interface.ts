@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { ContentItem } from '@walkme/types';
 
+import { ICourseOutlineItem } from '../../components/common/lists';
+
 import { ActionType } from './actions';
 
 export { ActionType };
@@ -10,7 +12,7 @@ export interface IAction {
   courseTitle?: string;
   courseItems?: Array<ContentItem>;
   courseItemsSearchValue?: string;
-  courseOutline?: Array<ContentItem>;
+  courseOutline?: Array<ICourseOutlineItem>;
   courseOutlineSearchValue?: string;
 }
 
@@ -25,8 +27,8 @@ export interface IState {
   courseItems: Array<ContentItem>;
   filteredCourseItems: Array<ContentItem>;
   courseItemsSearchValue: string;
-  courseOutline: Array<ContentItem>;
-  filteredCourseOutline: Array<ContentItem>;
+  courseOutline: Array<ICourseOutlineItem>;
+  filteredCourseOutline: Array<ICourseOutlineItem>;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
 }

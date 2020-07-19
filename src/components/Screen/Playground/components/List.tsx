@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
-import { courseOutline } from '../../../../constants/mocks/courseOutlineMock';
 import Icon, { IconType } from '../../../common/Icon';
 import Header from '../../../common/Header';
-import { CourseItemsList, CourseOutlineList } from '../../../common/lists';
+import { CourseItemsList } from '../../../common/lists';
 
 export default function ListPlayground(): ReactElement {
   const data = [
@@ -36,14 +35,6 @@ export default function ListPlayground(): ReactElement {
       <CourseItemsList items={data} />
       <Divider />
       <Header title="CourseOutlineList: use it in CourseEditorScreen for course-outline section" />
-      <CourseOutlineList
-        items={courseOutline.items.map((item) => {
-          return {
-            courseId: courseOutline.id,
-            ...item,
-          };
-        })}
-      />
       <Divider />
       <Header title="Example WM-List + border + header + footer" />
       <CourseItemsList

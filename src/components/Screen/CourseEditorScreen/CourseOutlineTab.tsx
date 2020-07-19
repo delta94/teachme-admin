@@ -1,24 +1,29 @@
 import React, { ReactElement } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
+import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
+import { CourseOutlineList, ICourseOutlineItem } from '../../common/lists';
 
 import classes from './style.module.scss';
 
-const ItemIcon = {
-  smartwalkthru: IconType.SmartWalkthruSmall,
-  article: IconType.ArticleSmall,
-  video: IconType.VideoSmall,
-};
+export interface IProperties {
+  isAvailable?: boolean;
+  isDisabled?: boolean;
+  isEnabled?: boolean;
+  passmark?: number;
+  resultsViewActive?: boolean;
+  isCompleted?: boolean;
+}
 
 const options: IWMDropdownOption[] = [
   {
     id: 0,
-    value: 'new-lesson',
+    value: CourseItemType.Lesson,
     label: (
       <div className={classes['option']}>
         <Icon type={IconType.LessonSmall} />
@@ -28,7 +33,7 @@ const options: IWMDropdownOption[] = [
   },
   {
     id: 1,
-    value: 'new-quiz',
+    value: CourseItemType.Quiz,
     label: (
       <div className={classes['option']}>
         <Icon type={IconType.LessonSmall} />
@@ -42,27 +47,70 @@ export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { courseOutline, filteredCourseOutline, courseOutlineSearchValue } = state;
 
-  const onSearch = (newSearchValue: string) => {
-    const newCourseOutline = courseOutline.filter(({ title, description }) =>
-      `${title} ${description}`.toLowerCase().includes(newSearchValue.toLowerCase()),
-    );
+  const onSearch = (searchValue: string) => {
+    const isMatch = (item: any) =>
+      `${item.title} ${item.description}`.toLowerCase().includes(searchValue.toLowerCase());
+
+    const getFilteredLessonChildren = (items: any[]) =>
+      items.filter((child: any) => isMatch(child));
+
+    const newCourseOutline = courseOutline
+      .map((item: any) => {
+        if (item.type === CourseItemType.Lesson) {
+          const someChildrenAreMatch = item.childNodes.some((child: any) => isMatch(child));
+          const filteredLesson = {
+            ...item,
+            childNodes: getFilteredLessonChildren(item.childNodes),
+          };
+
+          if (isMatch(item) || someChildrenAreMatch) {
+            return filteredLesson;
+          }
+        } else {
+          return isMatch(item) && item;
+        }
+      })
+      .filter((item: any) => Boolean(item));
 
     dispatch({
       type: ActionType.SetCourseOutlineSearchValue,
-      courseOutlineSearchValue: newSearchValue,
+      courseOutlineSearchValue: searchValue,
       courseOutline: newCourseOutline,
     });
   };
 
   const onActionSelect = (selected: IWMDropdownOption) => {
-    if (selected.value === 'new-lesson') {
-      console.log('lesson added');
+    const newCourseOutline = [...courseOutline];
+
+    if (selected.value === CourseItemType.Lesson) {
+      // Add new lesson
+      newCourseOutline.push({
+        id: -1,
+        type: CourseItemType.Lesson,
+        title: 'New Lesson',
+        description: '',
+        properties: {} as IProperties,
+        childNodes: [],
+        isNew: true,
+      });
     } else {
+      // Add new quiz
+      // TODO: add new quiz
       console.log('quiz added');
     }
+
+    dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: newCourseOutline });
   };
 
-  console.log(filteredCourseOutline);
+  const onItemChange = (item: ICourseOutlineItem) => {
+    const newCourseOutline = courseOutline.map((coi) => {
+      if (item.id === coi.id) return item;
+
+      return coi;
+    });
+
+    dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: newCourseOutline });
+  };
 
   return (
     <>
@@ -75,7 +123,11 @@ export default function CourseOutlineTab(): ReactElement {
         value={courseOutlineSearchValue}
         onSearch={onSearch}
       />
-      {filteredCourseOutline.length ? 'some items' : <div>nothing here yet</div>}
+      {filteredCourseOutline.length ? (
+        <CourseOutlineList items={filteredCourseOutline} onItemChange={onItemChange} />
+      ) : (
+        <div>nothing here yet</div>
+      )}
     </>
   );
 }
