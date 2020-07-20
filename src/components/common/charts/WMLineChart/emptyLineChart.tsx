@@ -5,7 +5,7 @@ import emptyChartMockData from './emptyChartMock';
 
 import classes from './style.module.scss';
 
-export default function EmptyLineChart({ className = '' }: { className: string }): ReactElement {
+export default function EmptyLineChart({ className }: { className?: string }): ReactElement {
   return (
     <div className={className}>
       <ResponsiveContainer width="100%" height={250}>

@@ -66,7 +66,7 @@ export default function WMLineChart<T extends {}>({
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        <EmptyLineChart className={''} />
+        <EmptyLineChart />
       )}
     </div>
   );
