@@ -1,10 +1,13 @@
 import React, { ReactElement, useState, useEffect, useCallback, ChangeEvent } from 'react';
+import { Divider } from 'antd';
 import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
 import { getCourse } from '../../../walkme';
 
 import WMInput from '../WMInput';
+import FormGroup from '../FormGroup';
+import WMSwitch from '../WMSwitch';
 
 import classes from './style.module.scss';
 
@@ -64,17 +67,29 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   return (
     <div className={classes['quiz-settings-form']}>
       {quizProperties && (
-        <div className={cc([classes['form-group'], classes['passmark']])}>
-          <span className={classes['form-group-title']}>Passmark</span>
-          <label htmlFor="passmark">What is the passmark for your quiz?</label>
-          <WMInput
-            id="passmark"
+        <>
+          <FormGroup
             className={classes['passmark']}
-            value={quizPassmark}
-            onChange={onPassmarkChange}
-          />{' '}
-          %
-        </div>
+            title="Passmark"
+            label="What is the passmark for your quiz?"
+            labelHtmlFor="passmark"
+          >
+            <WMInput
+              id="passmark"
+              className={classes['passmark-field']}
+              value={quizPassmark}
+              onChange={onPassmarkChange}
+            />
+            {'%'}
+          </FormGroup>
+          <Divider />
+          <FormGroup className={classes['passmark']} title="Minimal course progress limitations">
+            <WMSwitch
+              defaultChecked={isForceCourseCompletion}
+              label="Enable quiz after all course work is completed"
+            />
+          </FormGroup>
+        </>
       )}
     </div>
   );
