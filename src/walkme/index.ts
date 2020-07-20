@@ -1,5 +1,5 @@
 import walkme from '@walkme/editor-sdk';
-import { UICourse, mapCourse } from './course/overview';
+import { UserData } from '@walkme/editor-sdk/dist/user';
 import {
   WalkMeDataCourse,
   TypeName,
@@ -10,6 +10,10 @@ import {
   WalkMeDataItem,
   WalkMeDataNewLesson,
 } from '@walkme/types';
+import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
+
+import { UICourse, mapCourse } from './course/overview';
 import * as courses from './course/details';
 import { mapItem } from './item';
 import { getData } from './data';
@@ -23,6 +27,19 @@ declare global {
 }
 // For debug purposes
 window.walkme = walkme;
+
+export function getRedirectURI(): string {
+  switch (window.location.hostname) {
+    case 'localhost':
+      return 'http://localhost:7000/#&';
+    case 'teachme.walkme.com':
+      return 'http://teachme.walkme.com/#&';
+    case 'cdn.walkme.com':
+      return 'https://cdn.walkme.com/apps/teachme-admin/index.html#&';
+    default:
+      return window.location.href;
+  }
+}
 
 /**
  * Returns a list of courses metadata
@@ -137,6 +154,14 @@ export async function publishCourses(environmentId: number, coursesIds: Array<nu
  */
 export function logout() {
   walkme.auth.logout();
+}
+
+export async function authInit(params: {
+  client_id: any;
+  redirect_uri: any;
+  post_logout_redirect_uri: any;
+}): Promise<void> {
+  await walkme.auth.init(params);
 }
 
 export * from '@walkme/editor-sdk';

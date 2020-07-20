@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import { ReactComponent as LogoIcon } from '../../../../images/logo.svg';
+import { ReactComponent as LogoIcon } from '../../../images/logo.svg';
 
 import classes from './style.module.scss';
 
-export default function Top(): ReactElement {
+export default function Logo(): ReactElement {
   return (
     <div className={classes.logo}>
       <span>TEACH</span>

@@ -1,13 +1,14 @@
 import React, { ReactElement } from 'react';
+import { Divider } from 'antd';
 
 import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
 
+import Logo from '../../common/Logo';
+
 import NewCourseBtn from './NewCourseButton';
-import Logo from './Logo';
 import Navigation from './Navigation';
 
 import classes from './style.module.scss';
-import { Divider } from 'antd';
 
 const sidebarRoutes = [COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE];
 
