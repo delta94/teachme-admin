@@ -34,13 +34,10 @@ export default function Screen(): ReactElement {
         <Route path={USERS_ROUTE.path}>
           <UsersScreen />
         </Route>
-        <Route path={NEW_COURSE_EDITOR_ROUTE.path}>
+        <Route path={[NEW_COURSE_EDITOR_ROUTE.path, COURSE_EDITOR_ROUTE.path]}>
           <CourseEditorProvider>
-            <CourseEditorScreen isNew />
+            <CourseEditorScreen />
           </CourseEditorProvider>
-        </Route>
-        <Route path={COURSE_EDITOR_ROUTE.path}>
-          <Redirect to={NEW_COURSE_EDITOR_ROUTE.path} />
         </Route>
         <Route path={PLAYGROUND_ROUTE.path}>
           <Playground />
