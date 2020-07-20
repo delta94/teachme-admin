@@ -16,11 +16,6 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
     (null as unknown) as BuildQuizProperties,
   );
   const [quizProperties, setQuizProperties] = useState((null as unknown) as BuildQuizProperties);
-  const [quizPassmark, setQuizPassmark] = useState(0);
-  const [isRandAnswers, setIsRandAnswers] = useState(false);
-  const [isRandQuestions, setIsRandQuestions] = useState(false);
-  const [isForceCourseCompletion, setIsForceCourseCompletion] = useState(false);
-  const [isShowSummary, setIsShowSummary] = useState(false);
 
   // Creating list of quiz for playground
   const getCourseOutline = useCallback(async () => {
@@ -35,34 +30,37 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
     getCourseOutline();
   }, [courseId, getCourseOutline]);
 
+  const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
+    setQuizProperties((prevState: BuildQuizProperties) => ({
+      ...prevState,
+      ...updatedData,
+    }));
+  };
+
   const onPassmarkChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const reg = /^-?\d*(\.\d*)?$/;
     if ((!isNaN(parseInt(value)) && reg.test(value)) || value === '' || value === '-') {
-      setQuizPassmark(
-        value === '' || value === '-' ? 0 : parseInt(value) > 100 ? 100 : parseInt(value),
-      );
+      const quizPassmark =
+        value === '' || value === '-' ? 0 : parseInt(value) > 100 ? 100 : parseInt(value);
+
+      updateQuizProperties({ passmark: quizPassmark });
     }
   };
 
   useEffect(() => {
-    if (originalQuizProperties) {
-      const {
-        passmark,
-        randAnswers,
-        randQuestions,
-        forceCourseCompletion,
-        showSummary,
-      } = originalQuizProperties;
-
-      setQuizProperties(originalQuizProperties);
-      setQuizPassmark(passmark);
-      setIsRandQuestions(randQuestions);
-      setIsRandAnswers(randAnswers);
-      setIsForceCourseCompletion(forceCourseCompletion);
-      setIsShowSummary(showSummary);
-    }
+    if (originalQuizProperties) setQuizProperties(originalQuizProperties);
   }, [originalQuizProperties]);
+
+  useEffect(() => {
+    if (
+      quizProperties &&
+      JSON.stringify(originalQuizProperties) !== JSON.stringify(quizProperties)
+    ) {
+      // TODO: here we should call to dispatch to update course quiz
+      console.log('*** quizProperties changed ', quizProperties);
+    }
+  }, [quizProperties, originalQuizProperties]);
 
   return (
     <div className={classes['quiz-settings-form']}>
@@ -77,16 +75,47 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
             <WMInput
               id="passmark"
               className={classes['passmark-field']}
-              value={quizPassmark}
+              value={quizProperties.passmark}
               onChange={onPassmarkChange}
             />
             {'%'}
           </FormGroup>
           <Divider />
-          <FormGroup className={classes['passmark']} title="Minimal course progress limitations">
+          <FormGroup
+            className={classes['force-course-completion']}
+            title="Minimal course progress limitations"
+          >
             <WMSwitch
-              defaultChecked={isForceCourseCompletion}
+              checked={quizProperties.forceCourseCompletion}
               label="Enable quiz after all course work is completed"
+              onChange={(checked: boolean) =>
+                updateQuizProperties({ forceCourseCompletion: checked })
+              }
+            />
+          </FormGroup>
+          <Divider />
+          <FormGroup className={classes['random-questions']} title="Randomize">
+            <WMSwitch
+              checked={quizProperties.randQuestions}
+              label="Randomize questions order"
+              infoText="Toggling this option on will randomize the questions in the quiz for every quiz attempt."
+              onChange={(checked: boolean) => updateQuizProperties({ randQuestions: checked })}
+            />
+          </FormGroup>
+          <FormGroup className={classes['random-answers']}>
+            <WMSwitch
+              checked={quizProperties.randAnswers}
+              label="Randomize answers order"
+              infoText="Toggling this option on will randomize the answers of each question in the quiz for every quiz attempt."
+              onChange={(checked: boolean) => updateQuizProperties({ randAnswers: checked })}
+            />
+          </FormGroup>
+          <Divider />
+          <FormGroup className={classes['show-summary']} title="Full quiz results view">
+            <WMSwitch
+              checked={quizProperties.showSummary}
+              label="Toggle on to allow users to view the correct answers and compare them to the answers they selected"
+              onChange={(checked: boolean) => updateQuizProperties({ showSummary: checked })}
             />
           </FormGroup>
         </>

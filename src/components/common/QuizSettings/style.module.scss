@@ -1,5 +1,4 @@
 .quiz-settings {
-  height: 560px;
   color: inherit;
   min-width: 0;
   width: 0;
@@ -7,22 +6,36 @@
   overflow: hidden;
   transition: all 0.3s ease-in-out;
 
+  :global(.ant-card-body) {
+    height: 560px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    > header > * {
+      margin-bottom: 0;
+    }
+  }
+
   &.open {
-    min-width: 340px;
-    width: 340px;
+    min-width: 350px;
+    width: 350px;
     border-width: 1px;
   }
 }
 
 .quiz-settings-header {
+  flex-shrink: 0;
+  min-height: 35px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   font-family: var(--font-secondary);
   font-size: 14px;
   white-space: nowrap;
+  padding: 15px 20px;
 
-  .title {
+  .quiz-settings-title {
     display: flex;
 
     :global(.wm-icon) {
@@ -37,8 +50,20 @@
 }
 
 .quiz-settings-form {
+  padding: 18px 20px;
+  flex-grow: 1;
+  overflow: auto;
+
   .passmark-field {
     margin: 0 5px;
     width: 50px;
+  }
+
+  :global(.form-group + .ant-divider.ant-divider-horizontal) {
+    margin-top: 0;
+  }
+
+  :global(.ant-divider.ant-divider-horizontal) {
+    margin: 15px 0;
   }
 }
