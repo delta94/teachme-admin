@@ -7,6 +7,8 @@ export default {
   QUESTION_TYPE: QuestionType.Single,
   CORRECT_ANSWER_TEXT: 'Correct answer',
   INCORRECT_ANSWER_TEXT: 'Distractor option',
+  NEW_ANSWER_IS_CORRECT: false,
+  NEW_ANSWER_TEXT: '',
   QUIZ_WELCOME_SCREEN_TITLE: 'Course Assessment',
   QUIZ_WELCOME_SCREEN_DESCRIPTION:
     'Did you master this course? Use this quiz to assess your knowledge',
@@ -22,4 +24,5 @@ export default {
   QUIZ_PASSMARK: 100,
   QUIZ_POSITION: 8,
   COURSE_NAME: 'Untitled Course',
+  NEW_LESON_NAME: 'New Lesson',
 };
