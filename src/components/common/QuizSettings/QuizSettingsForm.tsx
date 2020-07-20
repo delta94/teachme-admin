@@ -4,6 +4,7 @@ import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
 import { getCourse } from '../../../walkme';
+import { propsAreEqual } from '../../../utils';
 
 import WMInput from '../WMInput';
 import FormGroup from '../FormGroup';
@@ -53,10 +54,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   }, [originalQuizProperties]);
 
   useEffect(() => {
-    if (
-      quizProperties &&
-      JSON.stringify(originalQuizProperties) !== JSON.stringify(quizProperties)
-    ) {
+    if (quizProperties && !propsAreEqual(originalQuizProperties, quizProperties)) {
       // TODO: here we should call to dispatch to update course quiz
       console.log('*** quizProperties changed ', quizProperties);
     }

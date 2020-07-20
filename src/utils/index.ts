@@ -5,3 +5,6 @@ export const allPropertiesAreNull = (obj: any) => {
 
   return true;
 };
+
+export const propsAreEqual = (first: any, second: any): boolean =>
+  JSON.stringify(first) === JSON.stringify(second);
