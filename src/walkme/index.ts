@@ -15,7 +15,7 @@ import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
 import { UICourse, mapCourse } from './course/overview';
-import * as courses from './course/details';
+import * as courses from './course/defaults';
 import { mapItem } from './item';
 import { getData } from './data';
 import { notEmpty } from './utils';

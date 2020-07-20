@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { ContentItem } from '@walkme/types';
 
 import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
 import Header from '../../Header';
@@ -37,7 +38,7 @@ export default function CourseOutlineLessonItem({
       >
         {item.childNodes && (
           <CourseItemsList
-            items={item.childNodes.map(({ title, type }) => ({
+            items={(item.childNodes as Array<ContentItem>).map(({ title, type }) => ({
               text: title,
               icon: <Icon type={type} />,
             }))}
