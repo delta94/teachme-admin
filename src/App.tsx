@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 
-import { SplashScreen, ErrorScreen } from './components/Screen/';
+import { SplashScreen, ErrorScreen } from './components/Screen';
 import { appInitiator, defaultAppStatus } from './utils/app-utils';
 import AppProvider from './providers/AppContext';
 import Layout from './components/Layout';
@@ -20,17 +20,13 @@ export default function App(): ReactElement {
     setApp();
   }, []);
 
-  return (
-    <>
-      {isLoading ? (
-        <SplashScreen />
-      ) : hasError ? (
-        <ErrorScreen error={errorMessage} />
-      ) : (
-        <AppProvider>
-          <Layout />
-        </AppProvider>
-      )}
-    </>
+  return isLoading ? (
+    <SplashScreen />
+  ) : hasError ? (
+    <ErrorScreen error={errorMessage} />
+  ) : (
+    <AppProvider>
+      <Layout />
+    </AppProvider>
   );
 }

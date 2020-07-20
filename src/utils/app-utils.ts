@@ -25,7 +25,7 @@ export async function appInitiator(): Promise<IAppStatus> {
 
     appStatus.isLoading = false;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     appStatus.isLoading = false;
     appStatus.hasError = true;
     appStatus.errorMessage = err;
