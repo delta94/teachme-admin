@@ -2,50 +2,50 @@ import { TypeContainer } from '@walkme/types';
 
 export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataModel>
   implements TypeContainer<UIModel, NewItemData> {
-  private items: Array<UIModel>;
+  private _items: Array<UIModel>;
   public [Symbol.iterator]: () => Iterator<UIModel>;
   constructor(
     itemsData: Array<DataModel>,
-    private getUIModel: (data: DataModel) => UIModel,
-    private newDataModel: (index: number, data: NewItemData) => DataModel,
+    private _getUIModel: (data: DataModel) => UIModel,
+    private _newDataModel: (index: number, data?: NewItemData) => DataModel,
   ) {
-    this.items = itemsData.map((item) => {
-      return this.getUIModel(item);
+    this._items = itemsData.map((item) => {
+      return this._getUIModel(item);
     });
-    this[Symbol.iterator] = this.items[Symbol.iterator];
+    this[Symbol.iterator] = this._items[Symbol.iterator];
   }
 
   public toDataModel(): Array<DataModel> {
-    return this.items.map((item, index) => {
+    return this._items.map((item, index) => {
       return item.toDataModel(index);
     });
   }
 
   public toArray(): Array<UIModel> {
-    return this.items;
+    return this._items;
   }
 
   public getItem(index: number): UIModel {
-    return this.items[index];
+    return this._items[index];
   }
 
   public changeIndex(item: UIModel, index: number): void {
     this.removeItem(item);
-    this.items.splice(index, 0);
+    this._items.splice(index, 0, item);
   }
 
-  public addNewItem(data: NewItemData): UIModel {
-    const itemData = this.newDataModel(this.items.length, data);
-    const item = this.getUIModel(itemData);
-    this.items.push(item);
+  public addNewItem(index: number = this._items.length, data?: NewItemData): UIModel {
+    const itemData = this._newDataModel(index, data);
+    const item = this._getUIModel(itemData);
+    this._items.splice(index, 0, item);
     return item;
   }
 
   public removeItem(item: UIModel): void {
-    const index = this.items.findIndex((i) => i.id == item.id);
+    const index = this._items.findIndex((i) => i.id == item.id);
     if (index == -1) return;
 
-    this.items.splice(index, 1);
+    this._items.splice(index, 1);
   }
 }
 

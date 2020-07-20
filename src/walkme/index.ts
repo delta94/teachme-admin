@@ -11,7 +11,6 @@ import {
   WalkMeDataNewLesson,
   WalkMeDataNewCourse,
 } from '@walkme/types';
-import * as courses from './course/details';
 import { mapItem } from './item';
 import { getData } from './data';
 import { notEmpty } from './utils';
@@ -124,17 +123,22 @@ export async function switchSystem(id: number) {
 //   });
 //   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
 // }
-
-export function getNewCourse(): Course {
-  return new Course();
-}
-
-export async function getCourse(id: number, environmentId: number): Promise<Course> {
+async function initData(environmentId: number) {
   await Promise.all(
     [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>
       getData(type, environmentId),
     ),
   );
+}
+
+export async function getNewCourse(): Promise<Course> {
+  await initData(0);
+  return new Course();
+}
+
+export async function getCourse(id: number, environmentId: number): Promise<Course> {
+  await initData(environmentId);
+
   const [course] = ((await getData(TypeName.Course, environmentId, [id])) as unknown) as Array<
     WalkMeDataNewCourse
   >;

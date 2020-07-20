@@ -131,7 +131,7 @@ export function getTypeName(type: number) {
     case TypeId.ShoutOut:
       return TypeName.ShoutOut;
     case TypeId.BusinessSolution:
-      return TypeName.BusinessSolution;
+      return TypeName.SmartWalkThru;
     case TypeId.SmartTipSet:
       return TypeName.SmartTipSet;
     case TypeId.SmartWalkThru:

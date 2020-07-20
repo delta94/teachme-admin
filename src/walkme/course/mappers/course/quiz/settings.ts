@@ -35,13 +35,13 @@ export class QuizProperties implements BuildQuizProperties {
   public showSummary: boolean;
   public passmark: number;
 
-  constructor(private settings: WalkMeDataQuizSettings, passmark: number) {
-    this.forceCourseCompletion = isTrue(settings.isLimited);
-    this.randQuestions = isTrue(settings.randQuestions);
-    this.randAnswers = isTrue(settings.randAnswers);
-    this.showSummary = isTrue(settings.isQuizResults);
+  constructor(private _settings: WalkMeDataQuizSettings, passmark: number) {
+    this.forceCourseCompletion = isTrue(_settings.isLimited);
+    this.randQuestions = isTrue(_settings.randQuestions);
+    this.randAnswers = isTrue(_settings.randAnswers);
+    this.showSummary = isTrue(_settings.isQuizResults);
     this.passmark = passmark;
   }
 
-  getDataModel = () => toDataModel(this, this.settings);
+  getDataModel = () => toDataModel(this, this._settings);
 }

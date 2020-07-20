@@ -45,16 +45,16 @@ export class Quiz implements BuildQuiz {
   public id: number;
   public properties: BuildQuizProperties;
   public questions: Container<QuizQuestion, NewQuestionData, WalkMeDataQuizQuestion>;
-  constructor(private quiz: WalkMeDataQuiz) {
-    this.welcomeScreen = new BuildQuizScreen(quiz.WelcomePage);
-    this.failScreen = new BuildQuizScreen(quiz.FailSummeryPage);
-    this.successScreen = new BuildQuizScreen(quiz.SuccessSummeryPage);
-    this.id = quiz.Id!;
-    this.properties = new QuizProperties(quiz.Settings, quiz.Passmark);
-    this.questions = question.getQuizQuestions(quiz.Questions);
+  constructor(private _quiz: WalkMeDataQuiz) {
+    this.welcomeScreen = new BuildQuizScreen(_quiz.WelcomePage);
+    this.failScreen = new BuildQuizScreen(_quiz.FailSummeryPage);
+    this.successScreen = new BuildQuizScreen(_quiz.SuccessSummeryPage);
+    this.id = _quiz.Id!;
+    this.properties = new QuizProperties(_quiz.Settings, _quiz.Passmark);
+    this.questions = question.getQuizQuestions(_quiz.Questions);
   }
 
-  toDataModel = () => toDataModel(this, this.quiz);
+  toDataModel = () => toDataModel(this, this._quiz);
 
   addQuestion() {}
 }

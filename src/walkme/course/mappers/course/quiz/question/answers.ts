@@ -24,11 +24,11 @@ export function toDataModel(
   );
 }
 
-export function newDataModel(OrderIndex: number, data: NewAnswerData): WalkMeDataQuizAnswer {
+export function newDataModel(OrderIndex: number, data?: NewAnswerData): WalkMeDataQuizAnswer {
   return {
     Id: -1,
-    Text: data.text || defaults.NEW_ANSWER_TEXT,
-    IsCorrect: data.isCorrect || defaults.NEW_ANSWER_IS_CORRECT,
+    Text: data?.text ?? defaults.NEW_ANSWER_TEXT,
+    IsCorrect: data?.isCorrect ?? defaults.NEW_ANSWER_IS_CORRECT,
     OrderIndex,
   };
 }
@@ -45,10 +45,10 @@ export class BuildQuizAnswer implements QuizAnswer {
   public isCorrect: boolean;
   public text: string;
 
-  constructor(private answer: WalkMeDataQuizAnswer) {
-    this.id = answer.Id;
-    this.isCorrect = answer.IsCorrect;
-    this.text = answer.Text;
+  constructor(private _answer: WalkMeDataQuizAnswer) {
+    this.id = _answer.Id;
+    this.isCorrect = _answer.IsCorrect;
+    this.text = _answer.Text;
   }
 
   public toDataModel(index: number): WalkMeDataQuizAnswer {

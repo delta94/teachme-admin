@@ -5,21 +5,8 @@ import {
   GroupType,
   TypeId,
 } from '@walkme/types';
-import * as item from './item';
+import defaults from '../../defaults';
 import { getGuid } from '../../../guid';
-
-// export function toDataModel(
-//   lesson: BuildLesson,
-//   dataLesson: WalkMeDataNewLesson,
-//   index: number,
-// ): WalkMeDataNewLesson {
-//   return {
-//     ...dataLesson,
-//     Name: lesson.title,
-//     OrderIndex: index,
-//     LinkedDeployables: lesson.childNodes?.map(item.toDataModel) || [],
-//   };
-// }
 
 export function newDataModel(index: number): WalkMeDataNewLesson {
   return {
@@ -28,7 +15,7 @@ export function newDataModel(index: number): WalkMeDataNewLesson {
     Id: -index - 1,
     IsModified: true,
     LinkedDeployables: [],
-    Name: `Lesson ${index}`,
+    Name: `${defaults.NEW_LESON_NAME}`,
     OrderIndex: index,
     PublishStatus: 0,
     ResourceId: getGuid(),

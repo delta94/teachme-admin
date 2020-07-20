@@ -46,13 +46,13 @@ export class BuildQuizScreen implements QuizScreen {
   public description: string;
   public buttons: Array<{ text: string; id: string }>;
 
-  constructor(private screen: WalkMeDataQuizScreen) {
-    this.title = screen.Title;
-    this.description = screen.Description;
-    this.buttons = [{ text: screen.ButtonText, id: `${screen.Type}-0` }];
+  constructor(private _screen: WalkMeDataQuizScreen) {
+    this.title = _screen.Title;
+    this.description = _screen.Description;
+    this.buttons = [{ text: _screen.ButtonText, id: `${_screen.Type}-0` }];
   }
 
-  toDataModel = () => toDataModel(this, this.screen);
+  toDataModel = () => toDataModel(this, this._screen);
 }
 
 function getQuizWelcomeScreen(): WalkMeDataQuizScreen {
