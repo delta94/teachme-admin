@@ -1,15 +1,26 @@
-import { BuildLesson, WalkMeDataLesson, WalkMeDataNewLesson } from '@walkme/types';
-import * as item from './item';
+import {
+  BuildLesson,
+  WalkMeDataLesson,
+  WalkMeDataNewLesson,
+  GroupType,
+  TypeId,
+} from '@walkme/types';
+import defaults from '../../defaults';
+import { getGuid } from '../../../guid';
 
-export function toDataModel(
-  lesson: BuildLesson,
-  dataLesson: WalkMeDataNewLesson,
-  index: number,
-): WalkMeDataNewLesson {
+export function newDataModel(index: number): WalkMeDataNewLesson {
   return {
-    ...dataLesson,
-    Name: lesson.title,
+    GroupType: GroupType.Lesson,
+    Guid: null,
+    Id: -index - 1,
+    IsModified: true,
+    LinkedDeployables: [],
+    Name: `${defaults.NEW_LESON_NAME}`,
     OrderIndex: index,
-    LinkedDeployables: lesson.childNodes?.map(item.toDataModel) || [],
+    PublishStatus: 0,
+    ResourceId: getGuid(),
+    Settings: {},
+    deployableType: TypeId.Lesson,
+    Description: '',
   };
 }

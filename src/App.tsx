@@ -1,29 +1,32 @@
-import React, { ReactElement, useState } from 'react';
-import { useHotkeys } from 'react-hotkeys-hook';
+import React, { ReactElement, useState, useEffect } from 'react';
 
+import { SplashScreen, ErrorScreen } from './components/Screen';
+import { appInitiator, defaultAppStatus } from './utils/app-utils';
+import AppProvider from './providers/AppContext';
 import Layout from './components/Layout';
-import WMDialog from './components/common/WMDialog';
-import { ButtonVariantEnum } from './components/common/WMButton';
 
 export default function App(): ReactElement {
-  const [openAbout, setOpenAbout] = useState(false);
-  const openAboutDialog = () => setOpenAbout(true);
-  const closeAboutDialog = () => setOpenAbout(false);
-  useHotkeys('ctrl+shift+up', openAboutDialog);
+  const [status, setStatus] = useState(defaultAppStatus);
 
-  return (
-    <>
-      <WMDialog
-        title="About TeachMe"
-        open={openAbout}
-        onClose={closeAboutDialog}
-        buttons={[
-          { label: 'Ok', onClickCallback: closeAboutDialog, variant: ButtonVariantEnum.Primary },
-        ]}
-      >
-        Version: {process.env.REACT_APP_VERSION}
-      </WMDialog>
+  const { isLoading, hasError, errorMessage } = status;
+
+  const setApp = async () => {
+    const appInitStatus = await appInitiator();
+
+    setStatus(appInitStatus);
+  };
+
+  useEffect(() => {
+    setApp();
+  }, []);
+
+  return isLoading ? (
+    <SplashScreen />
+  ) : hasError ? (
+    <ErrorScreen error={errorMessage} />
+  ) : (
+    <AppProvider>
       <Layout />
-    </>
+    </AppProvider>
   );
 }

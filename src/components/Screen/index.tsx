@@ -11,6 +11,8 @@ import {
 } from '../../constants/routes';
 import CourseEditorProvider from '../../providers/CourseEditorContext';
 
+import SplashScreen from './SplashScreen';
+import ErrorScreen from './ErrorScreen';
 import CoursesScreen from './CoursesScreen';
 import CourseScreen from './CourseScreen';
 import UsersScreen from './UsersScreen';
@@ -32,13 +34,10 @@ export default function Screen(): ReactElement {
         <Route path={USERS_ROUTE.path}>
           <UsersScreen />
         </Route>
-        <Route path={NEW_COURSE_EDITOR_ROUTE.path}>
+        <Route path={[NEW_COURSE_EDITOR_ROUTE.path, COURSE_EDITOR_ROUTE.path]}>
           <CourseEditorProvider>
-            <CourseEditorScreen isNew />
+            <CourseEditorScreen />
           </CourseEditorProvider>
-        </Route>
-        <Route path={COURSE_EDITOR_ROUTE.path}>
-          <Redirect to={NEW_COURSE_EDITOR_ROUTE.path} />
         </Route>
         <Route path={PLAYGROUND_ROUTE.path}>
           <Playground />
@@ -50,3 +49,5 @@ export default function Screen(): ReactElement {
     </section>
   );
 }
+
+export { SplashScreen, ErrorScreen };

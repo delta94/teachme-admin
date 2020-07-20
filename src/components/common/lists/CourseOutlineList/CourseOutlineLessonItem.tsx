@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { ContentItem } from '@walkme/types';
 
 import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
 import Header from '../../Header';
