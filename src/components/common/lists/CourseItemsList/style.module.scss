@@ -1,0 +1,36 @@
+.course-items-list:global(.ant-list) {
+  flex-grow: 1;
+  margin: 0;
+
+  .item {
+    &:global(.ant-list-item) {
+      display: flex;
+      align-items: center;
+      height: 35px;
+      color: var(--neutral800);
+      padding: 0 20px;
+      border-top: var(--wm-border);
+      border-bottom: none;
+    }
+
+    &:last-of-type {
+      border-bottom: var(--wm-border);
+    }
+
+    &:hover {
+      cursor: move;
+    }
+
+    > :global(.wm-icon) {
+      color: var(--secondary500);
+      margin-right: 11px;
+    }
+
+    &-text {
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

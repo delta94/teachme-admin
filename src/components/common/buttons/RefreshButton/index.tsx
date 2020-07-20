@@ -8,15 +8,15 @@ import classes from './style.module.scss';
 
 export default function RefreshButton({
   className,
-  onRefresh,
+  onClick,
 }: {
   className?: string;
-  onRefresh: () => void;
+  onClick: () => void;
 }): ReactElement {
   return (
     <WMButton
       className={cc([classes['refresh-button'], className])}
-      onClick={onRefresh}
+      onClick={onClick}
       icon={<Icon type={IconType.Refresh} />}
     />
   );
