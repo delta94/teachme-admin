@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
+import { getRandomString } from '../../../utils';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
@@ -45,7 +46,7 @@ const options: IWMDropdownOption[] = [
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { courseOutline, filteredCourseOutline, courseOutlineSearchValue } = state;
+  const { course, courseOutline, filteredCourseOutline, courseOutlineSearchValue } = state;
 
   const onSearch = (searchValue: string) => {
     const isMatch = (item: any) =>
@@ -54,6 +55,7 @@ export default function CourseOutlineTab(): ReactElement {
     const getFilteredLessonChildren = (items: any[]) =>
       items.filter((child: any) => isMatch(child));
 
+    // TODO: support filtering quiz
     const newCourseOutline = courseOutline
       .map((item: any) => {
         if (item.type === CourseItemType.Lesson) {
@@ -92,6 +94,7 @@ export default function CourseOutlineTab(): ReactElement {
         properties: {} as IProperties,
         childNodes: [],
         isNew: true,
+        localId: getRandomString(),
       });
     } else {
       // Add new quiz
@@ -110,6 +113,7 @@ export default function CourseOutlineTab(): ReactElement {
     });
 
     dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: newCourseOutline });
+    onSearch(courseOutlineSearchValue);
   };
 
   return (
