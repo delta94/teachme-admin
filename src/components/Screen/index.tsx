@@ -11,6 +11,8 @@ import {
 } from '../../constants/routes';
 import CourseEditorProvider from '../../providers/CourseEditorContext';
 
+import SplashScreen from './SplashScreen';
+import ErrorScreen from './ErrorScreen';
 import CoursesScreen from './CoursesScreen';
 import CourseScreen from './CourseScreen';
 import UsersScreen from './UsersScreen';
@@ -50,3 +52,5 @@ export default function Screen(): ReactElement {
     </section>
   );
 }
+
+export { SplashScreen, ErrorScreen };
