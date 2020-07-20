@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import { ActionType, IState, IAction } from './course-editor-context.interface';
 
 export const initialState = {
@@ -16,80 +18,63 @@ export const initialState = {
   isDetailsPanelOpen: false,
 };
 
-export const reducer = (state: IState, action: IAction): IState => {
-  switch (action.type) {
-    case ActionType.FetchItems:
-      return {
-        ...state,
-        isFetchingItems: true,
-        isFetchingItemsError: false,
-      };
-    case ActionType.FetchItemsSuccess:
-      return {
-        ...state,
-        isFetchingItems: false,
-        isFetchingItemsError: false,
-        courseItems: action.courseItems ?? initialState.courseItems,
-        filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
-      };
-    case ActionType.FetchItemsError:
-      return {
-        ...state,
-        isFetchingItems: false,
-        isFetchingItemsError: true,
-      };
-    case ActionType.SetCourseTitle:
-      return {
-        ...state,
-        courseTitle: action.courseTitle ?? initialState.courseTitle,
-      };
-    case ActionType.SetCourseItemsSearchValue:
-      return {
-        ...state,
-        courseItemsSearchValue:
-          action.courseItemsSearchValue ?? initialState.courseItemsSearchValue,
-        filteredCourseItems: action.courseItems ?? initialState.filteredCourseItems,
-      };
-    case ActionType.FetchCourse:
-      return {
-        ...state,
-        isFetchingCourse: true,
-        isFetchingCourseError: false,
-      };
-    case ActionType.FetchCourseSuccess:
-      return {
-        ...state,
-        isFetchingCourse: false,
-        isFetchingCourseError: false,
-        course: action.course ?? initialState.course,
-      };
-    case ActionType.FetchCourseError:
-      return {
-        ...state,
-        isFetchingCourse: false,
-        isFetchingCourseError: true,
-      };
-    case ActionType.UpdateCourseOutline:
-      return {
-        ...state,
-        courseOutline: action.courseOutline ?? initialState.courseOutline,
-        filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
-      };
-    case ActionType.SetCourseOutlineSearchValue:
-      return {
-        ...state,
-        courseOutlineSearchValue:
-          action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue,
-        filteredCourseOutline: action.courseOutline ?? initialState.filteredCourseOutline,
-      };
-    case ActionType.ToggleDetailsPanel:
-      return {
-        ...state,
-        isDetailsPanelOpen: !state.isDetailsPanelOpen,
-      };
-    case ActionType.ResetCourseEditor:
-      return { ...initialState };
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
-};
+export const reducer = produce(
+  (draft: IState, action: IAction): IState => {
+    switch (action.type) {
+      case ActionType.FetchItems:
+        draft.isFetchingItems = true;
+        draft.isFetchingItemsError = false;
+        break;
+      case ActionType.FetchItemsSuccess:
+        draft.isFetchingItems = false;
+        draft.isFetchingItemsError = false;
+        draft.courseItems = action.courseItems ?? initialState.courseItems;
+        draft.filteredCourseItems = action.courseItems ?? initialState.filteredCourseItems;
+        break;
+      case ActionType.FetchItemsError:
+        draft.isFetchingItems = false;
+        draft.isFetchingItemsError = true;
+        break;
+      case ActionType.SetCourseTitle:
+        draft.courseTitle = action.courseTitle ?? initialState.courseTitle;
+        break;
+      case ActionType.SetCourseItemsSearchValue:
+        draft.courseItemsSearchValue =
+          action.courseItemsSearchValue ?? initialState.courseItemsSearchValue;
+        draft.filteredCourseItems = action.courseItems ?? initialState.filteredCourseItems;
+        break;
+      case ActionType.FetchCourse:
+        draft.isFetchingCourse = true;
+        draft.isFetchingCourseError = false;
+        break;
+      case ActionType.FetchCourseSuccess:
+        draft.isFetchingCourse = false;
+        draft.isFetchingCourseError = false;
+        draft.course = action.course ?? initialState.course;
+        break;
+      case ActionType.FetchCourseError:
+        draft.isFetchingCourse = false;
+        draft.isFetchingCourseError = true;
+        break;
+      case ActionType.UpdateCourseOutline:
+        draft.courseOutline = action.courseOutline ?? initialState.courseOutline;
+        draft.filteredCourseOutline = action.courseOutline ?? initialState.filteredCourseOutline;
+        break;
+      case ActionType.SetCourseOutlineSearchValue:
+        draft.courseOutlineSearchValue =
+          action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue;
+        draft.filteredCourseOutline = action.courseOutline ?? initialState.filteredCourseOutline;
+        break;
+      case ActionType.ToggleDetailsPanel:
+        draft.isDetailsPanelOpen = !draft.isDetailsPanelOpen;
+        break;
+      case ActionType.ResetCourseEditor:
+        draft = { ...initialState };
+        break;
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`);
+    }
+
+    return draft;
+  },
+);

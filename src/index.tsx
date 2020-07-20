@@ -1,10 +1,13 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import { enableAllPlugins } from 'immer';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import './styles/index.scss';
+
+enableAllPlugins();
 
 ReactDOM.render(
   <StrictMode>
