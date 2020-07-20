@@ -184,6 +184,10 @@ export async function authInit(params: {
   redirect_uri: any;
   post_logout_redirect_uri: any;
 }): Promise<void> {
+  walkme.auth.onTokenExpired(() => {
+    console.log('Token expired - redirecting to login');
+    walkme.auth.init(params);
+  });
   await walkme.auth.init(params);
 }
 
