@@ -1,0 +1,22 @@
+.quiz-settings-form {
+  padding: 18px 20px;
+  flex-grow: 1;
+  overflow: auto;
+
+  .passmark-field {
+    margin: 0 5px;
+    width: 50px;
+  }
+
+  .switch-field {
+    margin: 10px 0 0;
+
+    &.space-bottom {
+      margin-bottom: 10px;
+    }
+  }
+
+  :global(.ant-divider.ant-divider-horizontal) {
+    margin: 15px 0;
+  }
+}

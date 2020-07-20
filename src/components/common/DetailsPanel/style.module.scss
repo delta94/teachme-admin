@@ -1,4 +1,4 @@
-.quiz-settings {
+.details-panel {
   color: inherit;
   min-width: 0;
   width: 0;
@@ -24,7 +24,7 @@
   }
 }
 
-.quiz-settings-header {
+.details-panel-header {
   flex-shrink: 0;
   min-height: 35px;
   display: flex;
@@ -35,7 +35,7 @@
   white-space: nowrap;
   padding: 15px 20px;
 
-  .quiz-settings-title {
+  .details-panel-title {
     display: flex;
 
     :global(.wm-icon) {
@@ -46,28 +46,5 @@
   .close {
     width: 25px;
     height: 25px;
-  }
-}
-
-.quiz-settings-form {
-  padding: 18px 20px;
-  flex-grow: 1;
-  overflow: auto;
-
-  .passmark-field {
-    margin: 0 5px;
-    width: 50px;
-  }
-
-  .switch-field {
-    margin: 10px 0 0;
-
-    &.space-bottom {
-      margin-bottom: 10px;
-    }
-  }
-
-  :global(.ant-divider.ant-divider-horizontal) {
-    margin: 15px 0;
   }
 }

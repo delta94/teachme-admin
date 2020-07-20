@@ -2,12 +2,14 @@ import React, { ReactElement, useState } from 'react';
 import { Divider } from 'antd';
 
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
-import QuizSettings from '../../../common/QuizSettings';
 import WMCard from '../../../common/WMCard';
+import DetailsPanel from '../../../common/DetailsPanel';
+import Icon, { IconType } from '../../../common/Icon';
+import QuizSettingsForm from '../../../common/QuizSettingsForm';
 
 import classes from './playground.module.scss';
 
-export default function Quiz(): ReactElement {
+export default function QuizSettings(): ReactElement {
   const [courseId, setCourseId] = useState(0);
 
   return (
@@ -26,7 +28,17 @@ export default function Quiz(): ReactElement {
         </WMButton>
         <Divider />
       </WMCard>
-      <QuizSettings courseId={courseId} isOpen={Boolean(courseId)} onClose={() => setCourseId(0)} />
+      <DetailsPanel
+        title={
+          <>
+            <Icon type={IconType.QuizSettings} /> Quiz Settings
+          </>
+        }
+        isOpen={Boolean(courseId)}
+        onClose={() => setCourseId(0)}
+      >
+        <QuizSettingsForm courseId={courseId} />
+      </DetailsPanel>
     </div>
   );
 }

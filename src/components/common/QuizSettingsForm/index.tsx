@@ -27,6 +27,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   }, [courseId]);
 
   useEffect(() => {
+    // TODO: use useCourseEditorContext
     getCourseOutline();
   }, [courseId, getCourseOutline]);
 

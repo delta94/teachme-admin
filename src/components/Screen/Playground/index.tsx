@@ -11,7 +11,7 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 import List from './components/List';
 import Checkboxes from './components/Checkboxes';
-import Quiz from './components/Quiz';
+import QuizSettings from './components/QuizSettings';
 
 import classes from './style.module.scss';
 
@@ -47,10 +47,10 @@ const tabs = [
     content: <Checkboxes />,
   },
   {
-    id: 'quiz',
-    title: 'Quiz',
+    id: 'quiz-settings',
+    title: 'Quiz Settings',
     icon: undefined,
-    content: <Quiz />,
+    content: <QuizSettings />,
   },
 ];
 
