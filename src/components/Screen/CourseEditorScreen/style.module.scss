@@ -1,20 +1,32 @@
 .cards-wrapper {
+  flex-grow: 1;
   display: flex;
   font-family: var(--font-primary);
   color: var(--neutral900);
 
-  .items,
+  .resources-list,
   .course-structure,
   .details-panel {
-    height: 560px;
     color: inherit;
 
     :global(.ant-card-body) {
+      display: flex;
+      flex-direction: column;
+      min-height: 560px;
+      height: 100%;
       padding: 0;
+    }
+
+    .search {
+      width: 100%;
+
+      ::placeholder {
+        font-weight: 400;
+      }
     }
   }
 
-  .items,
+  .resources-list,
   .details-panel {
     .title {
       display: flex;
@@ -27,7 +39,7 @@
     }
   }
 
-  .items {
+  .resources-list {
     min-width: 340px;
     width: 340px;
     margin-right: 10px;
@@ -39,48 +51,6 @@
 
     .filters-bar {
       padding: 0 20px 13px;
-
-      .search {
-        width: 100%;
-
-        ::placeholder {
-          font-weight: 400;
-        }
-      }
-    }
-
-    .item-list {
-      margin: 0 20px 0 0;
-      overflow: auto;
-
-      .item {
-        display: flex;
-        align-items: center;
-        height: 35px;
-        color: var(--neutral800);
-        padding: 0 20px;
-        border-top: var(--wm-border);
-
-        &:last-of-type {
-          border-bottom: var(--wm-border);
-        }
-
-        &:hover {
-          cursor: move;
-        }
-
-        &-icon {
-          color: var(--secondary500);
-          margin-right: 11px;
-        }
-
-        &-title {
-          font-size: 13px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
     }
   }
 
@@ -88,10 +58,11 @@
     flex-grow: 1;
 
     .tabs {
-      font-family: var(--font-secondary);
+      height: inherit;
       color: inherit;
 
       > :global(.ant-tabs-nav) {
+        font-family: var(--font-secondary);
         margin: 0 20px 15px 0;
 
         :global(button.ant-tabs-tab) {
@@ -113,6 +84,14 @@
             font-weight: 600;
             color: var(--primary);
           }
+        }
+      }
+
+      :global(.ant-tabs-content) {
+        height: 100%;
+
+        :global(.ant-tabs-tabpane) {
+          padding: 0 20px 15px;
         }
       }
     }
@@ -146,5 +125,17 @@
       width: 340px;
       border-width: 1px;
     }
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--neutral900);
+  height: 30px;
+
+  > span {
+    margin-right: 10px;
   }
 }

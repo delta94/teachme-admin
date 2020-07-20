@@ -1,6 +1,6 @@
 {
   "name": "teachme-editor",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "homepage": "https://cdn.walkme.com/apps/teachme-admin",
   "scripts": {
@@ -20,8 +20,8 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.13",
-    "@walkme/editor-sdk": "0.0.1-8",
-    "@walkme/types": "0.0.2-7",
+    "@walkme/editor-sdk": "0.0.1-10",
+    "@walkme/types": "0.0.2-10",
     "antd": "^4.3.5",
     "classcat": "^4.1.0",
     "mix-css-color": "^0.1.1",
