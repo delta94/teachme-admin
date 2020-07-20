@@ -55,7 +55,7 @@ const tabs = [
 ];
 
 export default function Playground(): ReactElement {
-  const defaultTabId = 'quiz'; //TODO: before opening the PR return value 'dialogs'
+  const defaultTabId = 'dialogs';
 
   return (
     <div className={classes.playground}>
