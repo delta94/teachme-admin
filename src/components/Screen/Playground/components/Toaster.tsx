@@ -1,14 +1,12 @@
 import React, { ReactElement } from 'react';
 
-import { Divider } from 'antd';
-import WMToaster from '../../../common/WMToaster';
+import { Button, Space } from 'antd';
+import { wmMessageSuccess } from '../../../common/wmMessage';
 
 export default function Toaster(): ReactElement {
   return (
-    <>
-      <WMToaster number={'1'} text={'course published to Production'} buttonName={'Publish'} />
-      <Divider />
-      <WMToaster text={'Export completed'} buttonName={'Export'} />
-    </>
+    <Space>
+      <Button onClick={() => wmMessageSuccess('1 course published to production')}>Button</Button>
+    </Space>
   );
 }
