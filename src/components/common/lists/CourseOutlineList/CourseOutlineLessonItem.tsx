@@ -36,7 +36,7 @@ export default function CourseOutlineLessonItem({
         }
         key={item.id}
       >
-        {item.childNodes && <CourseItemsList items={item.childNodes} />}
+        {item.childNodes && <CourseItemsList items={item.childNodes as ContentItem[]} />}
       </WMCollapsePanel>
     </WMCollapse>
   );
