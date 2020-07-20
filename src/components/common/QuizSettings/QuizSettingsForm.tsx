@@ -18,7 +18,6 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   );
   const [quizProperties, setQuizProperties] = useState((null as unknown) as BuildQuizProperties);
 
-  // Creating list of quiz for playground
   const getCourseOutline = useCallback(async () => {
     const course = await getCourse(courseId, 0);
 
