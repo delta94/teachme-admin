@@ -41,10 +41,13 @@ export default function WMLineChart<T extends {}>({
   lineKeyPrefix,
   lines,
   hasWMTooltip,
+  isEmpty,
 }: IWMLineChartProps<T>): ReactElement {
   return (
     <div className={className}>
-      {data ? (
+      {isEmpty ? (
+        <EmptyLineChart />
+      ) : (
         <ResponsiveContainer>
           <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <XAxis dataKey={xKey} />
@@ -65,8 +68,6 @@ export default function WMLineChart<T extends {}>({
             ))}
           </LineChart>
         </ResponsiveContainer>
-      ) : (
-        <EmptyLineChart />
       )}
     </div>
   );

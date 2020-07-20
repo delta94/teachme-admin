@@ -5,6 +5,7 @@ import Header from '../Header';
 import StatusDot, { DotType } from '../StatusDot';
 
 import classes from './style.module.scss';
+import EmptyLegend from './EmptyLegend';
 
 export interface IWMLegend {
   className?: string;
@@ -13,6 +14,7 @@ export interface IWMLegend {
   children?: ReactNode;
   usersStarted?: number;
   usersCompleted?: number;
+  isEmpty?: boolean;
 }
 
 export default function WMLegend({
@@ -20,28 +22,12 @@ export default function WMLegend({
   title,
   dotStatusColor,
   children,
-  usersStarted,
-  usersCompleted,
+  isEmpty,
 }: IWMLegend): JSX.Element {
-  const isEmpty = usersStarted === 0 || (usersStarted === 0 && usersCompleted === 0);
-
   return (
     <>
       {isEmpty ? (
-        <div className={cc([classes['legend'], className])}>
-          <Header className={classes['legend-header']}>
-            <>
-              <StatusDot className={classes['legend-dot-status']} type={DotType.Disable} />
-              <span className={classes['legend-title']}>{title}</span>
-            </>
-          </Header>
-          {
-            <>
-              <span className={classes['empty-number']}>- -</span>
-              <span className={classes['legend-description']}> </span>
-            </>
-          }
-        </div>
+        <EmptyLegend title={title} />
       ) : (
         <div className={cc([classes['legend'], className])}>
           <Header className={classes['legend-header']}>

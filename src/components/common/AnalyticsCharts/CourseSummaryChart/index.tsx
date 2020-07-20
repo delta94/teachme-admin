@@ -50,6 +50,8 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
   const usersStarted = 20;
   const usersCompleted = 0;
 
+  const isEmpty = summaryData.data.days === [] ? true : false;
+
   return (
     <WMCard title={title}>
       <div className={classes['course-summary']}>
@@ -59,6 +61,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
             usersCompleted={usersCompleted}
             title="User Started"
             dotStatusColor="#F2B529"
+            isEmpty={isEmpty}
           >
             <LegendContent number={usersStarted} description="52% of users with TeachMe access" />
           </WMLegend>
@@ -67,6 +70,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
             usersCompleted={usersCompleted}
             title="User Completed"
             dotStatusColor="#8812FF"
+            isEmpty={isEmpty}
           >
             <LegendContent number={usersCompleted} description="47% of users who started courses" />
           </WMLegend>
@@ -78,6 +82,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           lines={lines}
           lineKeyPrefix="course-summary"
           hasWMTooltip
+          isEmpty={isEmpty}
         />
       </div>
     </WMCard>
