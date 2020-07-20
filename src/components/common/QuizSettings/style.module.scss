@@ -59,6 +59,14 @@
     width: 50px;
   }
 
+  .switch-field {
+    margin: 10px 0 0;
+
+    &.space-bottom {
+      margin-bottom: 10px;
+    }
+  }
+
   :global(.form-group + .ant-divider.ant-divider-horizontal) {
     margin-top: 0;
   }

@@ -86,6 +86,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
             title="Minimal course progress limitations"
           >
             <WMSwitch
+              className={classes['switch-field']}
               checked={quizProperties.forceCourseCompletion}
               label="Enable quiz after all course work is completed"
               onChange={(checked: boolean) =>
@@ -96,6 +97,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           <Divider />
           <FormGroup className={classes['random-questions']} title="Randomize">
             <WMSwitch
+              className={cc([classes['switch-field'], classes['space-bottom']])}
               checked={quizProperties.randQuestions}
               label="Randomize questions order"
               infoText="Toggling this option on will randomize the questions in the quiz for every quiz attempt."
@@ -104,6 +106,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           </FormGroup>
           <FormGroup className={classes['random-answers']}>
             <WMSwitch
+              className={classes['switch-field']}
               checked={quizProperties.randAnswers}
               label="Randomize answers order"
               infoText="Toggling this option on will randomize the answers of each question in the quiz for every quiz attempt."
@@ -113,6 +116,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           <Divider />
           <FormGroup className={classes['show-summary']} title="Full quiz results view">
             <WMSwitch
+              className={classes['switch-field']}
               checked={quizProperties.showSummary}
               label="Toggle on to allow users to view the correct answers and compare them to the answers they selected"
               onChange={(checked: boolean) => updateQuizProperties({ showSummary: checked })}
