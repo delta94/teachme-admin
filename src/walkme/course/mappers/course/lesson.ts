@@ -1,11 +1,11 @@
-import { BuildLesson, WalkMeDataLesson } from '@walkme/types';
+import { BuildLesson, WalkMeDataLesson, WalkMeDataNewLesson } from '@walkme/types';
 import * as item from './item';
 
 export function toDataModel(
   lesson: BuildLesson,
-  dataLesson: WalkMeDataLesson,
+  dataLesson: WalkMeDataNewLesson,
   index: number,
-): WalkMeDataLesson {
+): WalkMeDataNewLesson {
   return {
     ...dataLesson,
     Name: lesson.title,

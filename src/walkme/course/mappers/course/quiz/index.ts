@@ -8,7 +8,7 @@ export function toUIModel(quiz: WalkMeDataQuiz): BuildQuiz {
     welcomeScreen: screen.toUIModel(quiz.WelcomePage),
     failScreen: screen.toUIModel(quiz.FailSummeryPage),
     successScreen: screen.toUIModel(quiz.SuccessSummeryPage),
-    id: quiz.Id,
+    id: quiz.Id!,
     properties: settings.toUIModel(quiz.Settings, quiz.Passmark),
     questions: quiz.Questions.map(question.toUIModel),
   };

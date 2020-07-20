@@ -1,6 +1,7 @@
 import { WalkMeDataQuizQuestion, BuildQuizQuestion } from '@walkme/types';
 import * as settings from './settings';
 import * as answers from './answers';
+import { getNewQuestion } from '../../../../new';
 
 export function toUIModel(question: WalkMeDataQuizQuestion): BuildQuizQuestion {
   return {
@@ -21,7 +22,8 @@ export function toDataModel(
   const mappedQuestions: Array<WalkMeDataQuizQuestion> = [];
   for (let i = 0; i < questions.length; i++) {
     const question = questions[i];
-    const dataQuestion = dataQuestions.find((q) => q.Id == question.id);
+    const dataQuestion =
+      question.id > 0 ? dataQuestions.find((q) => q.Id == question.id) : getNewQuestion(i);
     if (!dataQuestion) throw new Error("Can't map non-existing question");
     mappedQuestions.push({
       ...dataQuestion,
