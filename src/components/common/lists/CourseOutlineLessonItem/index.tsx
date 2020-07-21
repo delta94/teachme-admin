@@ -1,13 +1,11 @@
 import React, { ReactElement } from 'react';
-import { Container, Draggable } from 'react-smooth-dnd';
+import { Draggable } from 'react-smooth-dnd';
 
+import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
 import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
 import Header from '../../Header';
 import Icon, { IconType } from '../../Icon';
-import { CourseItemsList } from '../../lists';
-import EditableTitle, { EditableTitleType } from '../../EditableTitle';
-
-import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
+import { CourseItemsList } from '../index';
 
 import classes from './style.module.scss';
 
@@ -15,7 +13,7 @@ export interface INewLesson extends CourseLesson {
   isNew?: boolean;
 }
 
-export default function CourseOutlineLessonItem({
+export default function Index({
   item,
   forceRerender,
 }: {
