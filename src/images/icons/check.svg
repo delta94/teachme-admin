@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15" height="13">
+  <defs>
+    <filter id="a">
+      <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.266667 0 0 0 0 0.737255 0 0 0 0 0.403922 0 0 0 1.000000 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd" filter="url(#a)" transform="translate(-16 -12)">
+    <path fill="#FFF" d="M28.604 12l-7.193 8.446-3.277-3.026L16 19.753 21.683 25 31 14.06z"/>
+  </g>
+</svg>
