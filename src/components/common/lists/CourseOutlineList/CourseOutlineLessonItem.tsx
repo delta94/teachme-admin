@@ -4,7 +4,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
 import Header from '../../Header';
 import Icon, { IconType } from '../../Icon';
-import { CourseItemsList, ICourseOutlineItem } from '../../lists';
+import { CourseItemsList } from '../../lists';
 import EditableTitle, { EditableTitleType } from '../../EditableTitle';
 
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
@@ -23,11 +23,23 @@ export default function CourseOutlineLessonItem({
   forceRerender: () => void;
 }): ReactElement {
   const onInnerDrop = (e: any, destinationItemID: string | undefined) => {
-    if (e.addedIndex !== undefined && e.addedIndex !== null) {
-      console.log('on inner drop', e, destinationItemID);
+    console.log('on inner drop', e, destinationItemID);
+
+    const isReorder =
+      e.addedIndex !== undefined &&
+      e.addedIndex !== null &&
+      e.removedIndex !== undefined &&
+      e.removedIndex !== null;
+
+    const isAdded = e.addedIndex !== undefined && e.addedIndex !== null;
+
+    if (isReorder) {
+      item.childNodes.changeIndex(e.addedIndex, e.payload);
+    } else if (isAdded) {
       item.childNodes.addNewItem(e.addedIndex, e.payload);
-      forceRerender();
     }
+
+    forceRerender();
   };
 
   return (

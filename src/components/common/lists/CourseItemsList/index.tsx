@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
-import { Container, Draggable } from 'react-smooth-dnd';
+import { Container } from 'react-smooth-dnd';
 import { ContentItem } from '@walkme/types';
-import Icon, { IconType } from '../../Icon';
+import cc from 'classcat';
+
+import TaskItem from '../TaskItem';
 
 import classes from './style.module.scss';
 
@@ -12,12 +13,6 @@ export interface ICourseItemsList {
   [key: string]: any;
 }
 
-const ItemIcon = {
-  smartwalkthru: IconType.SmartWalkthruSmall,
-  article: IconType.ArticleSmall,
-  video: IconType.VideoSmall,
-};
-
 export default function CourseItemsList({
   items,
   className,
@@ -26,15 +21,7 @@ export default function CourseItemsList({
   return (
     <div className={cc([classes['course-items-list'], className])}>
       <Container {...otherProps} getChildPayload={(i) => items && items[i]}>
-        {items &&
-          items.map(({ title, type }, i) => (
-            <Draggable key={i} className={cc([classes['item-wrapper']])}>
-              <div key={i} className={classes['item']}>
-                <Icon type={ItemIcon[type as keyof typeof ItemIcon]} className={classes['icon']} />
-                <span className={classes['item-title']}>{title}</span>
-              </div>
-            </Draggable>
-          ))}
+        {items && items.map((item, i) => <TaskItem key={i} index={i} item={item} />)}
       </Container>
     </div>
   );

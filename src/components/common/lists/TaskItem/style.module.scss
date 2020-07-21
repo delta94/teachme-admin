@@ -1,0 +1,33 @@
+.item-wrapper {
+  border-bottom: var(--wm-border);
+
+  &:first-of-type {
+    border-top: var(--wm-border);
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    color: var(--neutral800);
+    padding: 0 20px;
+    cursor: grab;
+
+    .icon {
+      color: var(--secondary500);
+      margin-right: 11px;
+    }
+
+    .item-title {
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

@@ -1,16 +1,14 @@
 import React, { ReactElement } from 'react';
-import { ContentItem, TypeName } from '@walkme/types';
 import { Container } from 'react-smooth-dnd';
-import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
 import { CourseChild } from '../../../../walkme/course/mappers/course/courseItems';
-
-import WMList, { WMListItem, IWMList } from '../../WMList';
-import Icon from '../../Icon';
-
 import { Course } from '../../../../walkme/course/mappers/course';
+import { IWMList } from '../../WMList';
+import TaskItem from '../TaskItem';
+
 import CourseOutlineLessonItem from './CourseOutlineLessonItem';
+
 import classes from './style.module.scss';
 
 export { CourseOutlineLessonItem };
@@ -66,13 +64,11 @@ export default function CourseOutlineList<T>({
         shouldAcceptDrop={() => true}
       >
         {items.length ? (
-          (items as any[]).map((item) =>
+          (items as any[]).map((item, i) =>
             item.type === 'lesson' ? (
               <CourseOutlineLessonItem item={item} key={item.id} forceRerender={forceRerender} />
             ) : (
-              <WMListItem className={classes['course-item']} icon={<Icon type={item.type} />}>
-                {item.title}
-              </WMListItem>
+              <TaskItem key={i} index={i} item={item} />
             ),
           )
         ) : (
