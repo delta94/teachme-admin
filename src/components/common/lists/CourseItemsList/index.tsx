@@ -7,6 +7,7 @@ import classes from './style.module.scss';
 export interface ICourseItem {
   text: string;
   icon: ReactNode;
+  onClick?: () => void;
 }
 
 export interface ICourseItemsList<T> extends Omit<IWMList<T>, 'dataSource' | 'renderItem'> {
@@ -22,7 +23,7 @@ export default function CourseItemsList<T extends ICourseItem>({
       className={classes['course-items-list']}
       dataSource={items}
       renderItem={(item: T) => (
-        <WMListItem className={classes['item']} icon={item.icon}>
+        <WMListItem className={classes['item']} icon={item.icon} onClick={item.onClick}>
           <span className={classes['item-text']}>{item.text}</span>
         </WMListItem>
       )}

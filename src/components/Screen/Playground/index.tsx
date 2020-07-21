@@ -12,7 +12,7 @@ import Switches from './components/Switches';
 import List from './components/List';
 import Checkboxes from './components/Checkboxes';
 import QuizSettings from './components/QuizSettings';
-import QuizEdit from './components/QuizEdit';
+import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
 
 import classes from './style.module.scss';
 
@@ -48,16 +48,16 @@ const tabs = [
     content: <Checkboxes />,
   },
   {
+    id: 'course-item-details-panel',
+    title: 'Course Item Details Panel',
+    icon: undefined,
+    content: <CourseItemDetailsPanel />,
+  },
+  {
     id: 'quiz-settings',
     title: 'Quiz Settings',
     icon: undefined,
     content: <QuizSettings />,
-  },
-  {
-    id: 'quiz-edit',
-    title: 'Quiz Edit',
-    icon: undefined,
-    content: <QuizEdit />,
   },
 ];
 

@@ -30,11 +30,8 @@ export default function QuizSettings(): ReactElement {
         <Divider />
       </WMCard>
       <DetailsPanel
-        title={
-          <>
-            <Icon type={IconType.QuizSettings} /> Quiz Settings
-          </>
-        }
+        title="Quiz Settings"
+        titleIcon={<Icon type={IconType.QuizSettings} />}
         isOpen={Boolean(courseId)}
         onClose={() => setCourseId(0)}
       >

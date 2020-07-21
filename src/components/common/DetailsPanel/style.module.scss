@@ -1,3 +1,5 @@
+@import 'src/styles/mixins';
+
 .details-panel {
   color: inherit;
   min-width: 0;
@@ -35,16 +37,28 @@
   white-space: nowrap;
   padding: 15px 20px;
 
-  .details-panel-title {
+  :global(.wm-icon) {
+    margin-right: 10px;
     display: flex;
+    width: 20px;
+  }
 
-    :global(.wm-icon) {
-      margin-right: 10px;
-    }
+  .details-panel-title {
+    max-width: 270px;
+
+    @include ellipsis();
   }
 
   .close {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
   }
+}
+
+.details-panel-content {
+  padding: 18px 20px;
+  flex-grow: 1;
+  overflow: auto;
 }

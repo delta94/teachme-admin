@@ -9,25 +9,27 @@ import DetailsPanelHeader from './DetailsPanelHeader';
 export default function DetailsPanel({
   isOpen,
   title,
+  titleIcon,
   children,
   onClose,
 }: {
   isOpen: boolean;
-  title: ReactElement;
+  title: ReactNode;
+  titleIcon?: ReactNode;
   children: ReactNode;
   onClose: () => void;
 }): ReactElement {
-  const [showContent, setShowContent] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     if (isOpen) {
       // Using setTimeout to prevent rendering the content while the quiz-setting container's animation done
       timer = setTimeout(() => {
-        setShowContent(isOpen);
+        setIsVisible(isOpen);
       }, 300);
     } else {
-      setShowContent(isOpen);
+      setIsVisible(isOpen);
     }
 
     return () => clearTimeout(timer);
@@ -36,9 +38,9 @@ export default function DetailsPanel({
   return (
     <WMCard
       className={cc([classes['details-panel'], { [classes['open']]: isOpen }])}
-      title={<DetailsPanelHeader onClose={onClose} title={title} />}
+      title={isVisible && <DetailsPanelHeader onClose={onClose} title={title} icon={titleIcon} />}
     >
-      {showContent && children}
+      {isVisible && <div className={classes['details-panel-content']}>{children}</div>}
     </WMCard>
   );
 }
