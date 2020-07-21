@@ -37,3 +37,14 @@ export function join<T, S>(arr1: T[], arr2: S[], prop1: string, prop2: string): 
   console.timeEnd('join');
   return joined;
 }
+
+export function index<T>(arr: T[], prop: string): { [key: string]: T } {
+  const ret: any = {};
+  for (const val of arr) {
+    //@ts-ignore
+    const key = val[prop].toString();
+    ret[key] = val;
+  }
+
+  return ret;
+}

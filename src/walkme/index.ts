@@ -16,12 +16,20 @@ import { SystemData } from '@walkme/editor-sdk/dist/system';
 
 import { UICourse, mapCourse } from './course/overview';
 import * as courses from './course/defaults';
-import { mapItem } from './item';
+import { mapItem, getTypeId } from './item';
 import { getData } from './data';
-import { notEmpty } from './utils';
+import { notEmpty, index } from './utils';
 import { Course } from './course/mappers/course';
-import { getCourseListData } from './analytics';
+import {
+  getCourseListData,
+  getCourseOutlineData,
+  CourseOutlineData,
+  CourseOutlineItem,
+} from './analytics';
 import { join } from './utils';
+import { CourseTask } from './course/mappers/course/courseItems/task';
+import { CourseChild } from './course/mappers/course/courseItems';
+import { CourseLesson } from './course/mappers/course/courseItems/lesson';
 
 declare global {
   interface Window {
@@ -75,15 +83,6 @@ export async function getCourseList(
   return uiCourses.filter(notEmpty);
 }
 
-// /**
-//  * Returns a UI model for the given course id or null if it does not exist
-//  * @param id
-//  * @param environmentId
-//  */
-// export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
-//   return courses.getCourseData(id, environmentId);
-// }
-
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
  * @param environmentId
@@ -132,24 +131,74 @@ export async function switchSystem(id: number) {
   return walkme.system.switchSystem(id);
 }
 
-// /**
-//  * Saves the course to the server
-//  * @param course
-//  */
-// export async function saveCourse(course: BuildCourse) {
-//   const courseToSave = await courses.getCourseDataModel(course);
-//   const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
-//     TypeName.Lesson,
-//     courseToSave.lessons,
-//     TypeId.Lesson,
-//   );
-//   courseToSave.course.LinkedDeployables.filter(
-//     (item) => item.DeployableType == TypeId.Lesson,
-//   ).forEach((item) => {
-//     item.DeployableID = lessons[item.DeployableID].Id;
-//   });
-//   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
-// }
+export type CourseOutlineUIModel = Array<CourseOutlineUIModelItem | CourseOutlineUIModelLesson>;
+
+export enum CourseChildType {
+  Lesson,
+  Task,
+}
+
+export type CourseOutlineUIModelLesson = {
+  type: CourseChildType.Lesson;
+  items: CourseOutlineUIModelItem[];
+};
+
+export type CourseOutlineUIModelItem = {
+  type: CourseChildType.Task;
+  title: string;
+  users_completed: number | null;
+  drop_off: number;
+};
+
+function mapUIOutlineItem(
+  item: CourseChild,
+  itemData?: CourseOutlineItem,
+): CourseOutlineUIModelItem {
+  return {
+    type: CourseChildType.Task,
+    drop_off: 0,
+    title: item.title,
+    users_completed: itemData?.users_completed || null,
+  };
+}
+
+function getCourseOutlineItem(
+  type: TypeName,
+  id: number,
+  allData: CourseOutlineData,
+): CourseOutlineItem | undefined {
+  // need to do this in a more performant way
+  return allData.find((item) => item.type == getTypeId(type) && item.id == id);
+}
+
+export async function getCourseOutline(
+  courseId: number,
+  environmentId: number,
+  from: string,
+  to: string,
+): Promise<CourseOutlineUIModel> {
+  const [course, outlineData] = await Promise.all([
+    getCourse(courseId, environmentId),
+    getCourseOutlineData(courseId, environmentId, from, to),
+  ]);
+
+  return course.items.toArray().map((item) => {
+    return item.type == TypeName.Lesson
+      ? {
+          type: CourseChildType.Lesson,
+          items: (<CourseLesson>item).childNodes
+            .toArray()
+            .map((item) =>
+              mapUIOutlineItem(
+                item,
+                getCourseOutlineItem(item.type as TypeName, item.id, outlineData),
+              ),
+            ),
+        }
+      : mapUIOutlineItem(item, getCourseOutlineItem(item.type as TypeName, item.id, outlineData));
+  });
+}
+
 async function initData(environmentId: number) {
   await Promise.all(
     [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>
@@ -214,6 +263,7 @@ window.test = {
   getNewCourse,
   publishCourses,
   getCourseListData,
+  getCourseOutline,
   // for debug
   // getCourseDataModel: courses.getCourseDataModel,
 };
