@@ -1,11 +1,12 @@
 .editable-title {
   position: relative;
   margin: 20px 0;
+  flex-grow: 1;
   display: flex;
   align-items: center;
 
-  .input-title,
-  .text-title {
+  .input,
+  .text {
     position: absolute;
     left: 40px;
     color: var(--neutral900);
@@ -19,22 +20,33 @@
     padding: 0;
     margin: unset;
 
+    &.lesson {
+      left: 0;
+      flex-grow: 1;
+      width: 100%;
+      font-size: 10px;
+      line-height: 1em;
+    }
+
     &.hidden {
       opacity: 0;
       z-index: -1;
     }
   }
 
-  .text-title {
+  .text {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 
     .pencil-icon {
       margin-left: 15px;
     }
   }
 
-  .input-title {
+  .input {
     width: 400px;
     border-bottom: 1px solid transparent;
     border-radius: 0;
@@ -46,6 +58,11 @@
     &::selection {
       color: var(--neutral900);
       background: var(--selected);
+    }
+
+    &.lesson {
+      height: 26px;
+      border: var(--wm-border);
     }
   }
 }

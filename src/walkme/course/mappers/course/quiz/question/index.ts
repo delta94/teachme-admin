@@ -1,38 +1,66 @@
-import { WalkMeDataQuizQuestion, BuildQuizQuestion } from '@walkme/types';
-import * as settings from './settings';
+import {
+  WalkMeDataQuizQuestion,
+  BuildQuizQuestion,
+  QuestionType,
+  WalkMeDataQuizAnswer,
+  NewQuestionData,
+} from '@walkme/types';
 import * as answers from './answers';
+import defaults from '../../../../defaults';
+import { QuizQuestionProperties } from './settings';
+import { BuildQuizAnswer } from './answers';
+import { Container } from '../../../../itemsContainer';
 
-export function toUIModel(question: WalkMeDataQuizQuestion): BuildQuizQuestion {
+export const getQuizQuestions = (questionsData: Array<WalkMeDataQuizQuestion>) =>
+  new Container<QuizQuestion, NewQuestionData, WalkMeDataQuizQuestion>(
+    questionsData,
+    (data) => new QuizQuestion(data),
+    newDataModel,
+  );
+
+export function newDataModel(index: number, data?: NewQuestionData): WalkMeDataQuizQuestion {
   return {
-    id: question.Id,
-    answers: answers.toUIModel(question.Answers),
-    description: question.Description,
-    title: question.Question,
-    type: question.QuestionType,
-    explanation: question.Explanation,
-    properties: settings.toUIModel(question.Settings),
+    Id: -index - 1,
+    Question: defaults.QUESTION_TEXT,
+    Description: defaults.QUESTION_DESCRIPTION,
+    Answers: [
+      answers.newDataModel(0, { text: defaults.CORRECT_ANSWER_TEXT, isCorrect: true }),
+      answers.newDataModel(1, { text: defaults.INCORRECT_ANSWER_TEXT, isCorrect: false }),
+    ],
+    QuestionType: defaults.QUESTION_TYPE,
+    OrderIndex: index,
   };
 }
 
-export function toDataModel(
-  questions: Array<BuildQuizQuestion>,
-  dataQuestions: Array<WalkMeDataQuizQuestion>,
-): Array<WalkMeDataQuizQuestion> {
-  const mappedQuestions: Array<WalkMeDataQuizQuestion> = [];
-  for (let i = 0; i < questions.length; i++) {
-    const question = questions[i];
-    const dataQuestion = dataQuestions.find((q) => q.Id == question.id);
-    if (!dataQuestion) throw new Error("Can't map non-existing question");
-    mappedQuestions.push({
-      ...dataQuestion,
-      Answers: answers.toDataModel(question.answers, dataQuestion.Answers),
-      Description: question.description,
-      Question: question.title,
-      QuestionType: question.type,
-      Explanation: question.explanation,
-      Settings: settings.toDataModel(question.properties),
-      OrderIndex: i,
-    });
+export class QuizQuestion implements BuildQuizQuestion {
+  public id: number;
+  public answers: Container<BuildQuizAnswer, NewQuestionData, WalkMeDataQuizAnswer>;
+  public description: string;
+  public title: string;
+  public type: QuestionType;
+  public explanation?: string;
+  public properties?: QuizQuestionProperties;
+
+  constructor(private _question: WalkMeDataQuizQuestion) {
+    this.id = _question.Id;
+    this.answers = answers.getQuizAnswers(_question.Answers);
+    this.description = _question.Description;
+    this.title = _question.Question;
+    this.type = _question.QuestionType;
+    this.explanation = _question.Explanation;
+    this.properties = new QuizQuestionProperties(_question.Settings);
   }
-  return mappedQuestions;
+
+  public toDataModel(index: number) {
+    return {
+      ...this._question,
+      Answers: this.answers.toDataModel(),
+      Description: this.description,
+      Question: this.title,
+      QuestionType: this.type,
+      Explanation: this.explanation,
+      Settings: this.properties?.getDataModel(),
+      OrderIndex: index,
+    };
+  }
 }

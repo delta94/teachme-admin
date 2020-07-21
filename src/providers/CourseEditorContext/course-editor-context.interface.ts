@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
-import { ContentItem } from '@walkme/types';
+import { ContentItem, BuildCourse } from '@walkme/types';
+
+import { ICourseOutlineItem } from '../../components/common/lists';
 
 import { ActionType } from './actions';
 
@@ -7,8 +9,12 @@ export { ActionType };
 
 export interface IAction {
   type: ActionType;
-  items?: Array<ContentItem>;
-  itemsSearchValue?: string;
+  courseTitle?: string;
+  courseItems?: Array<ContentItem>;
+  courseItemsSearchValue?: string;
+  course?: BuildCourse | null;
+  courseOutline?: Array<ICourseOutlineItem>;
+  courseOutlineSearchValue?: string;
 }
 
 export interface IDispatch {
@@ -16,12 +22,19 @@ export interface IDispatch {
 }
 
 export interface IState {
+  courseTitle: string;
   isFetchingItems: boolean;
   isFetchingItemsError: boolean;
-  courseItems?: Array<ContentItem>;
-  filteredItems?: Array<ContentItem>;
-  itemsSearchValue?: string;
-  isDetailsPanelOpen?: boolean;
+  courseItems: Array<ContentItem>;
+  filteredCourseItems: Array<ContentItem>;
+  courseItemsSearchValue: string;
+  isFetchingCourse: boolean;
+  isFetchingCourseError: boolean;
+  course: BuildCourse | null;
+  courseOutline: Array<ICourseOutlineItem>;
+  filteredCourseOutline: Array<ICourseOutlineItem>;
+  courseOutlineSearchValue: string;
+  isDetailsPanelOpen: boolean;
 }
 
 export interface ICourseEditorProvider {

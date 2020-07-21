@@ -1,8 +1,14 @@
 export enum ActionType {
+  SetCourseTitle = 'SET_COURSE_TITLE',
   FetchItems = 'FETCH_ITEMS',
   FetchItemsSuccess = 'FETCH_ITEMS_SUCCESS',
   FetchItemsError = 'FETCH_ITEMS_ERROR',
-  SetItemsSearchValue = 'SET_ITEMS_SEARCH_VALUE',
+  SetCourseItemsSearchValue = 'SET_COURSE_ITEMS_SEARCH_VALUE',
+  FetchCourse = 'FETCH_COURSE',
+  FetchCourseSuccess = 'FETCH_COURSE_SUCCESS',
+  FetchCourseError = 'FETCH_COURSE_ERROR',
+  UpdateCourseOutline = 'UPDATE_COURSE_OUTLINE',
+  SetCourseOutlineSearchValue = 'SET_COURSE_OUTLINE_SEARCH_VALUE',
   ToggleDetailsPanel = 'TOGGLE_DETAILS_PANEL',
   ResetCourseEditor = 'RESET_COURSE_EDITOR',
 }
