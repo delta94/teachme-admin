@@ -1,8 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { getRandomString } from '../../../utils';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
@@ -10,6 +9,8 @@ import WMButton from '../../common/WMButton';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import { CourseOutlineList, ICourseOutlineItem } from '../../common/lists';
 
+import { getRandomString } from '../../../utils';
+import { getRandomNumber } from '../../../utils/getRandomString';
 import classes from './style.module.scss';
 
 export interface IProperties {
@@ -46,73 +47,26 @@ const options: IWMDropdownOption[] = [
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { course, courseOutline, filteredCourseOutline, courseOutlineSearchValue } = state;
+  const { course, filteredCourseOutline, courseOutlineSearchValue } = state;
 
-  const onSearch = (searchValue: string) => {
-    const isMatch = (item: any) =>
-      `${item.title} ${item.description}`.toLowerCase().includes(searchValue.toLowerCase());
-
-    const getFilteredLessonChildren = (items: any[]) =>
-      items.filter((child: any) => isMatch(child));
-
-    // TODO: support filtering quiz
-    const newCourseOutline = courseOutline
-      .map((item: any) => {
-        if (item.type === CourseItemType.Lesson) {
-          const someChildrenAreMatch = item.childNodes.some((child: any) => isMatch(child));
-          const filteredLesson = {
-            ...item,
-            childNodes: getFilteredLessonChildren(item.childNodes),
-          };
-
-          if (isMatch(item) || someChildrenAreMatch) {
-            return filteredLesson;
-          }
-        } else {
-          return isMatch(item) && item;
-        }
-      })
-      .filter((item: any) => Boolean(item));
-
-    dispatch({
-      type: ActionType.SetCourseOutlineSearchValue,
-      courseOutlineSearchValue: searchValue,
-      courseOutline: newCourseOutline,
-    });
-  };
+  const [mockState, setMockState] = useState(new Date());
+  const forceRerender = () => setMockState(new Date());
 
   const onActionSelect = (selected: IWMDropdownOption) => {
-    const newCourseOutline = [...courseOutline];
-
     if (selected.value === CourseItemType.Lesson) {
       // Add new lesson
-      newCourseOutline.push({
-        id: `temp-${getRandomString()}`,
-        type: CourseItemType.Lesson,
-        title: 'New Lesson',
-        description: '',
-        properties: {} as IProperties,
-        childNodes: [],
-        isNew: true,
-      });
+      const newLesson = course?.items.addNewItem();
+      if (newLesson) {
+        newLesson.id = getRandomNumber();
+      }
+      forceRerender();
     } else {
       // Add new quiz
       // TODO: add new quiz
       console.log('quiz added');
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: newCourseOutline });
-  };
-
-  const onItemChange = (item: ICourseOutlineItem) => {
-    const newCourseOutline = courseOutline.map((coi) => {
-      if (item.id === coi.id) return item;
-
-      return coi;
-    });
-
-    dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: newCourseOutline });
-    onSearch(courseOutlineSearchValue);
+    dispatch({ type: ActionType.UpdateCourseOutline });
   };
 
   return (
@@ -124,12 +78,16 @@ export default function CourseOutlineTab(): ReactElement {
         className={classes['search']}
         placeholder="Search"
         value={courseOutlineSearchValue}
-        onSearch={onSearch}
+        onSearch={() => {
+          console.log('searching');
+        }}
       />
-      {filteredCourseOutline.length ? (
-        <CourseOutlineList items={filteredCourseOutline} onItemChange={onItemChange} />
-      ) : (
-        <div>nothing here yet</div>
+      {course && (
+        <CourseOutlineList
+          items={course?.items.toArray() ?? []}
+          course={course}
+          forceRerender={forceRerender}
+        />
       )}
     </>
   );

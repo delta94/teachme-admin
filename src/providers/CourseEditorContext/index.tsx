@@ -21,7 +21,7 @@ export type { IAction, IState, IDispatch, ICourseEditorProvider };
 export { useCourseEditorContext, fetchItemsList, fetchCourse, reducer, initialState, ActionType };
 
 export default function CourseEditorProvider({ children }: ICourseEditorProvider): ReactElement {
-  const [state, dispatch] = useReducer(reducer, initialState as IState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <CourseEditorStateContext.Provider value={state}>

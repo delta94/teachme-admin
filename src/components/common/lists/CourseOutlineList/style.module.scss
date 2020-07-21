@@ -1,12 +1,10 @@
 .course-outline-list {
-  :global(.ant-list-item) {
-    width: 100%;
-    margin-top: 15px;
-    margin-bottom: 0;
-    padding: 0;
-  }
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 0;
+  padding: 0;
 
-  :global(.ant-collapse > .ant-collapse-item) {
+  :global(.ant-collapse-item) {
     border-bottom: none;
   }
 
@@ -83,7 +81,6 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      width: 100%;
       margin-left: 35px;
       color: var(--neutral500);
       text-transform: uppercase;
@@ -95,4 +92,23 @@
       }
     }
   }
+}
+
+.drop-preview {
+  border: 1px dashed var(--primary);
+  border-radius: 4px;
+  margin: 8px;
+  min-height: 16px;
+}
+
+.dnd {
+  width: calc(100% - 16px);
+  height: calc(100% - 36px);
+  border: 1px dashed var(--primary);
+  padding: 8px;
+  margin: 8px;
+  border-radius: 4px;
+}
+
+.placeholder {
 }

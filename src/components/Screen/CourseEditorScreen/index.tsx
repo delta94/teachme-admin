@@ -11,6 +11,7 @@ import {
 import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
 
+import { fetchNewCourse } from '../../../providers/CourseEditorContext/utils';
 import ResourcesList from './ResourcesList';
 import CourseOutline from './CourseOutline';
 import classes from './style.module.scss';
@@ -23,7 +24,11 @@ export default function CourseEditorScreen(): ReactElement {
     fetchItemsList(dispatch);
 
     // TODO: replace hard-coded courseId with variable
-    if (courseId) fetchCourse(dispatch, 1284870);
+    if (courseId) {
+      fetchCourse(dispatch, 1284870);
+    } else {
+      fetchNewCourse(dispatch);
+    }
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);

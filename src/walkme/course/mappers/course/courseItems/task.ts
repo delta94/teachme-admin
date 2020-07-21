@@ -53,3 +53,5 @@ export function newDataModel(index: number, data?: NewCourseItemData): WalkMeDat
     },
   };
 }
+
+export type CourseItemContainer = Container<CourseTask, NewCourseItemData, WalkMeDataNewCourseTask>;
