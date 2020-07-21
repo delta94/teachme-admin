@@ -133,7 +133,7 @@ export default function CourseOutlineTab(): ReactElement {
         <CourseOutlineList items={filteredCourseOutline} onItemChange={onItemChange} />
       ) : (
         <WMEmpty
-          description="Start building your course by creating lessons and draging items from the Items List"
+          description="Start building your course by creating lessons and dragging items from the Items List"
           image={<Icon type={IconType.CourseEmpty} />}
         >
           <AddButton />

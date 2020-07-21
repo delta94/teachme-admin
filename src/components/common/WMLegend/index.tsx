@@ -12,9 +12,7 @@ export interface IWMLegend {
   title: string;
   dotStatusColor: string;
   children?: ReactNode;
-  usersStarted?: number;
-  usersCompleted?: number;
-  isEmpty?: boolean;
+  hasData?: boolean;
 }
 
 export default function WMLegend({
@@ -22,13 +20,11 @@ export default function WMLegend({
   title,
   dotStatusColor,
   children,
-  isEmpty,
+  hasData,
 }: IWMLegend): JSX.Element {
   return (
     <>
-      {isEmpty ? (
-        <EmptyLegend title={title} />
-      ) : (
+      {hasData ? (
         <div className={cc([classes['legend'], className])}>
           <Header className={classes['legend-header']}>
             <>
@@ -42,6 +38,8 @@ export default function WMLegend({
           </Header>
           {children}
         </div>
+      ) : (
+        <EmptyLegend title={title} />
       )}
     </>
   );

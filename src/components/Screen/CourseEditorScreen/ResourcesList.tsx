@@ -89,10 +89,9 @@ export default function ResourcesList(): ReactElement {
                 <div>Create Walk-thrus and resources from the WalkMe Editor.</div>
               </>
             }
-            image={null}
           />
         ) : (
-          <WMEmpty description="No results found" image={null} />
+          <WMEmpty description="No results found" />
         )}
       </div>
     </WMCard>

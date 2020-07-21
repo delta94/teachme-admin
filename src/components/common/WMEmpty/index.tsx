@@ -6,10 +6,15 @@ import cc from 'classcat';
 import classes from './style.module.scss';
 
 export interface IWMEmpty extends EmptyProps {
-  children?: ReactNode;
+  image?: ReactNode | null;
 }
 
-export default function WMEmpty({ className, children, ...otherProps }: IWMEmpty): ReactElement {
+export default function WMEmpty({
+  className,
+  children,
+  image = null,
+  ...otherProps
+}: IWMEmpty): ReactElement {
   return (
     <div className={classes['wm-empty']}>
       <Empty
@@ -18,6 +23,7 @@ export default function WMEmpty({ className, children, ...otherProps }: IWMEmpty
           { [classes['horizontal']]: !children },
           className,
         ])}
+        image={image}
         {...otherProps}
       >
         {children}

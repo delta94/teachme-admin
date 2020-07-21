@@ -53,16 +53,14 @@
       padding: 0 20px 13px;
     }
 
-    .items-container {
-      &.empty-state-items {
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .empty-state-items {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .item-list {
-          margin: unset;
-        }
+      .item-list {
+        margin: unset;
       }
     }
   }

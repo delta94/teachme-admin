@@ -4,13 +4,12 @@ import { Divider } from 'antd';
 import WMEmpty from '../../../common/WMEmpty';
 import Icon, { IconType } from '../../../common/Icon';
 import AddButton from '../../../common/buttons/AddButton';
-import CourseSummaryChart from '../../../common/AnalyticsCharts/CourseSummaryChart';
 
 export default function Counter(): ReactElement {
   return (
     <>
       <WMEmpty
-        description="Start building your course by creating lessons and draging items from the Items List"
+        description="Start building your course by creating lessons and dragging items from the Items List"
         image={<Icon type={IconType.CourseEmpty} />}
       >
         <AddButton />
@@ -23,10 +22,9 @@ export default function Counter(): ReactElement {
             <div>Create Walk-thrus and resources from the WalkMe Editor.</div>
           </>
         }
-        image={null}
       />
       <Divider />
-      <WMEmpty description="No results found" image={null} />
+      <WMEmpty description="No results found" />
       <Divider />
       <WMEmpty
         description="Drag content into the lesson"

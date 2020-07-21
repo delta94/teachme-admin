@@ -13,7 +13,6 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
     data: { average = 0, passmark = 0 },
   } = quizScoreData;
 
-  const hasData = quizScoreData.data;
 
   return (
     <WMCard title={title} className={classes['course-average']}>
@@ -22,12 +21,12 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
           className={classes['course-average-chart']}
           percent={average}
           type={ProgressType.Circle}
-          format={hasData ? () => average : () => '- -'}
+          format={quizScoreData.data ? () => average : () => '- -'}
           width={80}
           strokeWidth={10}
           status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
         />
-        {hasData && (
+        {quizScoreData.data && (
           <span className={classes['passmark']}>
             Passmark: <b>{passmark}</b>
           </span>

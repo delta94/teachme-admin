@@ -22,7 +22,7 @@
 
 .empty-state {
   text-align: center;
-  color: var(--emptytext);
+  color: var(--empty-text);
   font-family: var(--font-primary);
   font-size: 14px;
   letter-spacing: 0.43px;
@@ -37,8 +37,11 @@
     font-size: 12px;
   }
 
-  span {
+  h1 {
     font-size: 20px;
+    color: var(--empty-text);
+    margin-bottom: unset;
+    font-weight: unset;
   }
 
   .create-btn:global(.ant-btn) {

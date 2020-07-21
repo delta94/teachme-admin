@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
-
 import { PlusOutlined } from '@ant-design/icons';
+
 import WMButton from '../../WMButton';
 
 import classes from './style.module.scss';
