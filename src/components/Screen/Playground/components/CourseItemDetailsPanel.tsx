@@ -53,6 +53,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
         titleIcon={selectedItem && <Icon type={selectedItem.type} />}
         isOpen={Boolean(selectedItem)}
         onClose={() => setSelectedItem((null as unknown) as ContentItem)}
+        titleIsEllipsis
       >
         {selectedItem && <CourseItemDetails courseItem={selectedItem} />}
       </DetailsPanel>

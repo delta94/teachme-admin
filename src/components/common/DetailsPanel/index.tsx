@@ -9,15 +9,17 @@ import DetailsPanelHeader from './DetailsPanelHeader';
 export default function DetailsPanel({
   isOpen,
   title,
-  titleIcon,
   children,
   onClose,
+  titleIcon,
+  titleIsEllipsis,
 }: {
   isOpen: boolean;
   title: ReactNode;
-  titleIcon?: ReactNode;
   children: ReactNode;
   onClose: () => void;
+  titleIcon?: ReactNode;
+  titleIsEllipsis?: boolean;
 }): ReactElement {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -38,7 +40,16 @@ export default function DetailsPanel({
   return (
     <WMCard
       className={cc([classes['details-panel'], { [classes['open']]: isOpen }])}
-      title={isVisible && <DetailsPanelHeader onClose={onClose} title={title} icon={titleIcon} />}
+      title={
+        isVisible && (
+          <DetailsPanelHeader
+            onClose={onClose}
+            title={title}
+            icon={titleIcon}
+            isEllipsis={titleIsEllipsis}
+          />
+        )
+      }
     >
       {isVisible && <div className={classes['details-panel-content']}>{children}</div>}
     </WMCard>
