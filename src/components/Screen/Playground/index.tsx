@@ -11,6 +11,7 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 import List from './components/List';
 import Checkboxes from './components/Checkboxes';
+import Toaster from './components/Toaster';
 
 import classes from './style.module.scss';
 
@@ -44,6 +45,12 @@ const tabs = [
     title: 'Checkboxes',
     icon: undefined,
     content: <Checkboxes />,
+  },
+  {
+    id: 'toaster',
+    title: 'Toaster',
+    icon: undefined,
+    content: <Toaster />,
   },
 ];
 
