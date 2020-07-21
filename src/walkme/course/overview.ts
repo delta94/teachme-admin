@@ -1,10 +1,15 @@
 import * as wm from '@walkme/types';
 import { getCourseSegments } from '../segments';
+import { CourseListItem } from '../analytics';
 export interface UICourse {
   id: number;
   title: string;
   publishStatus: PublishStatus;
   segments: Array<string>;
+  users_started: number | null;
+  users_completed: number | null;
+  avg_quiz_score: number | null;
+  avg_quiz_attempts: number | null;
 }
 
 export enum PublishStatus {
@@ -16,7 +21,7 @@ export enum PublishStatus {
 }
 
 export async function mapCourse(
-  wmCourse: wm.WalkMeDataCourse,
+  wmCourse: wm.WalkMeDataCourse & CourseListItem,
   environmentId: number,
 ): Promise<UICourse> {
   const publishData = wmCourse.PublishDataByEnvs[environmentId];
@@ -30,6 +35,10 @@ export async function mapCourse(
     title: wmCourse.Name,
     publishStatus: getPublishStatus(publishData),
     segments: await getCourseSegments(wmCourse.Id, environmentId),
+    avg_quiz_attempts: wmCourse.avg_quiz_attempts,
+    avg_quiz_score: wmCourse.avg_quiz_score,
+    users_completed: wmCourse.users_completed,
+    users_started: wmCourse.users_started,
   };
 }
 

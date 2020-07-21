@@ -20,6 +20,8 @@ import { mapItem } from './item';
 import { getData } from './data';
 import { notEmpty } from './utils';
 import { Course } from './course/mappers/course';
+import { getCourseListData } from './analytics';
+import { join } from './utils';
 
 declare global {
   interface Window {
@@ -44,16 +46,23 @@ export function getRedirectURI(): string {
 }
 
 /**
- * Returns a list of courses metadata
+ * Returns a list of courses data
  * @param environmentId the current selected environment id
+ * @param from date, format (YYYY-MM-DD)
+ * @param to date, format (YYYY-MM-DD)
  */
-export async function getCourseList(environmentId: number): Promise<Array<UICourse>> {
-  const courses = (await walkme.data.getContent(
-    TypeName.Course,
-    environmentId,
-  )) as WalkMeDataCourse[];
+export async function getCourseList(
+  environmentId: number,
+  from: string,
+  to: string,
+): Promise<Array<UICourse>> {
+  const [coursesMetadata, coursesData] = await Promise.all([
+    walkme.data.getContent(TypeName.Course, environmentId),
+    getCourseListData(environmentId, from, to),
+  ]);
+  const mergedData = join(coursesMetadata as WalkMeDataCourse[], coursesData, 'Id', 'course_id');
   const uiCourses = await Promise.all(
-    courses.map((course) => {
+    mergedData.map((course) => {
       try {
         return mapCourse(course, environmentId);
       } catch (err) {
@@ -204,6 +213,7 @@ window.test = {
   // saveCourse,
   getNewCourse,
   publishCourses,
+  getCourseListData,
   // for debug
   // getCourseDataModel: courses.getCourseDataModel,
 };
