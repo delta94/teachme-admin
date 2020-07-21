@@ -11,7 +11,16 @@
   font-family: var(--font-primary);
   color: var(--neutral900);
 
-  .quiz-settings-buttons {
+  .course-outline-demo {
+    min-width: 700px;
+  }
+
+  .buttons {
+    width: 500px;
+  }
+
+  .buttons.grow,
+  .course-outline-demo {
     flex-grow: 1;
   }
 }
