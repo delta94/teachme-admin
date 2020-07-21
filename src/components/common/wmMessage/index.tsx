@@ -19,7 +19,6 @@ export const wmMessage = (content: ReactNode, type?: string): void => {
         className: classes['wm-message-error'],
       });
       break;
-
     default:
       message.success({
         content,

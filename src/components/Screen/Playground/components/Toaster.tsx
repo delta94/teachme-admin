@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-
 import { Button, Space } from 'antd';
+
 import { wmMessage } from '../../../common/wmMessage';
 
 export default function Toaster(): ReactElement {
