@@ -1,5 +1,5 @@
 import walkme from '@walkme/editor-sdk';
-import { UICourse, mapCourse } from './course/overview';
+import { UserData } from '@walkme/editor-sdk/dist/user';
 import {
   WalkMeDataCourse,
   TypeName,
@@ -9,11 +9,17 @@ import {
   WalkMeDataLesson,
   WalkMeDataItem,
   WalkMeDataNewLesson,
+  WalkMeDataNewCourse,
 } from '@walkme/types';
-import * as courses from './course/details';
+import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
+
+import { UICourse, mapCourse } from './course/overview';
+import * as courses from './course/defaults';
 import { mapItem } from './item';
 import { getData } from './data';
 import { notEmpty } from './utils';
+import { Course } from './course/mappers/course';
 
 declare global {
   interface Window {
@@ -23,6 +29,19 @@ declare global {
 }
 // For debug purposes
 window.walkme = walkme;
+
+export function getRedirectURI(): string {
+  switch (window.location.hostname) {
+    case 'localhost':
+      return 'http://localhost:7000/#&';
+    case 'teachme.walkme.com':
+      return 'http://teachme.walkme.com/#&';
+    case 'cdn.walkme.com':
+      return 'https://cdn.walkme.com/apps/teachme-admin/index.html#&';
+    default:
+      return window.location.href;
+  }
+}
 
 /**
  * Returns a list of courses metadata
@@ -47,14 +66,14 @@ export async function getCourseList(environmentId: number): Promise<Array<UICour
   return uiCourses.filter(notEmpty);
 }
 
-/**
- * Returns a UI model for the given course id or null if it does not exist
- * @param id
- * @param environmentId
- */
-export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
-  return courses.getCourseData(id, environmentId);
-}
+// /**
+//  * Returns a UI model for the given course id or null if it does not exist
+//  * @param id
+//  * @param environmentId
+//  */
+// export async function getCourse(id: number, environmentId: number): Promise<BuildCourse | null> {
+//   return courses.getCourseData(id, environmentId);
+// }
 
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
@@ -78,7 +97,7 @@ export async function getItemsList(environmentId: number): Promise<Array<Content
  */
 export async function getFlatItemsList(environmentId: number): Promise<Array<ContentItem>> {
   const nestedItems = await getItemsList(environmentId);
-  return nestedItems.flatMap((item) => item.childNodes) as Array<ContentItem>;
+  return nestedItems.flatMap((item) => item.childNodes as ContentItem[]) as Array<ContentItem>;
 }
 
 /**
@@ -104,23 +123,44 @@ export async function switchSystem(id: number) {
   return walkme.system.switchSystem(id);
 }
 
-/**
- * Saves the course to the server
- * @param course
- */
-export async function saveCourse(course: BuildCourse) {
-  const courseToSave = await courses.getCourseDataModel(course);
-  const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
-    TypeName.Lesson,
-    courseToSave.lessons,
-    TypeId.Lesson,
+// /**
+//  * Saves the course to the server
+//  * @param course
+//  */
+// export async function saveCourse(course: BuildCourse) {
+//   const courseToSave = await courses.getCourseDataModel(course);
+//   const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
+//     TypeName.Lesson,
+//     courseToSave.lessons,
+//     TypeId.Lesson,
+//   );
+//   courseToSave.course.LinkedDeployables.filter(
+//     (item) => item.DeployableType == TypeId.Lesson,
+//   ).forEach((item) => {
+//     item.DeployableID = lessons[item.DeployableID].Id;
+//   });
+//   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
+// }
+async function initData(environmentId: number) {
+  await Promise.all(
+    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>
+      getData(type, environmentId),
+    ),
   );
-  courseToSave.course.LinkedDeployables.filter(
-    (item) => item.DeployableType == TypeId.Lesson,
-  ).forEach((item) => {
-    item.DeployableID = lessons[item.DeployableID].Id;
-  });
-  return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
+}
+
+export async function getNewCourse(): Promise<Course> {
+  await initData(0);
+  return new Course();
+}
+
+export async function getCourse(id: number, environmentId: number): Promise<Course> {
+  await initData(environmentId);
+
+  const [course] = ((await getData(TypeName.Course, environmentId, [id])) as unknown) as Array<
+    WalkMeDataNewCourse
+  >;
+  return new Course(course);
 }
 
 /**
@@ -139,6 +179,18 @@ export function logout() {
   walkme.auth.logout();
 }
 
+export async function authInit(params: {
+  client_id: any;
+  redirect_uri: any;
+  post_logout_redirect_uri: any;
+}): Promise<void> {
+  walkme.auth.onTokenExpired(() => {
+    console.log('Token expired - redirecting to login');
+    walkme.auth.init(params);
+  });
+  await walkme.auth.init(params);
+}
+
 export * from '@walkme/editor-sdk';
 
 window.test = {
@@ -149,8 +201,9 @@ window.test = {
   getUserData,
   getEnvironments,
   getSystems,
-  saveCourse,
+  // saveCourse,
+  getNewCourse,
   publishCourses,
   // for debug
-  getCourseDataModel: courses.getCourseDataModel,
+  // getCourseDataModel: courses.getCourseDataModel,
 };

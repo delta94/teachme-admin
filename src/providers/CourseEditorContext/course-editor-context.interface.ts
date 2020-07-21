@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ContentItem } from '@walkme/types';
+import { ContentItem, BuildCourse } from '@walkme/types';
 
 import { ICourseOutlineItem } from '../../components/common/lists';
 
@@ -12,6 +12,7 @@ export interface IAction {
   courseTitle?: string;
   courseItems?: Array<ContentItem>;
   courseItemsSearchValue?: string;
+  course?: BuildCourse | null;
   courseOutline?: Array<ICourseOutlineItem>;
   courseOutlineSearchValue?: string;
 }
@@ -27,6 +28,9 @@ export interface IState {
   courseItems: Array<ContentItem>;
   filteredCourseItems: Array<ContentItem>;
   courseItemsSearchValue: string;
+  isFetchingCourse: boolean;
+  isFetchingCourseError: boolean;
+  course: BuildCourse | null;
   courseOutline: Array<ICourseOutlineItem>;
   filteredCourseOutline: Array<ICourseOutlineItem>;
   courseOutlineSearchValue: string;

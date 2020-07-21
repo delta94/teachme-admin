@@ -3,6 +3,7 @@ import cc from 'classcat';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
+import { getRandomString } from '../../../utils';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
@@ -48,7 +49,7 @@ const options: IWMDropdownOption[] = [
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { courseOutline, filteredCourseOutline, courseOutlineSearchValue } = state;
+  const { course, courseOutline, filteredCourseOutline, courseOutlineSearchValue } = state;
 
   const onSearch = (searchValue: string) => {
     const isMatch = (item: any) =>
@@ -57,6 +58,7 @@ export default function CourseOutlineTab(): ReactElement {
     const getFilteredLessonChildren = (items: any[]) =>
       items.filter((child: any) => isMatch(child));
 
+    // TODO: support filtering quiz
     const newCourseOutline = courseOutline
       .map((item: any) => {
         if (item.type === CourseItemType.Lesson) {
@@ -88,7 +90,7 @@ export default function CourseOutlineTab(): ReactElement {
     if (selected.value === CourseItemType.Lesson) {
       // Add new lesson
       newCourseOutline.push({
-        id: -1,
+        id: `temp-${getRandomString()}`,
         type: CourseItemType.Lesson,
         title: 'New Lesson',
         description: '',
@@ -113,6 +115,7 @@ export default function CourseOutlineTab(): ReactElement {
     });
 
     dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: newCourseOutline });
+    onSearch(courseOutlineSearchValue);
   };
 
   return (

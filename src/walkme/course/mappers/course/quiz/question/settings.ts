@@ -18,3 +18,12 @@ export function toDataModel(
     hasExplanation: convertToNumberBoolean(!!settings.hasExplanation),
   };
 }
+
+export class QuizQuestionProperties implements BuildQuizQuestionSettings {
+  public hasExplanation: boolean;
+  constructor(settings?: WalkMeDataQuizQuestionSettings) {
+    this.hasExplanation = isTrue(settings?.hasExplanation);
+  }
+
+  getDataModel = () => toDataModel(this);
+}
