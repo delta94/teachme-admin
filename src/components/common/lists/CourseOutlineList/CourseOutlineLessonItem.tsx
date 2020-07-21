@@ -22,25 +22,27 @@ export default function CourseOutlineLessonItem({
   item: INewLesson;
   forceRerender: () => void;
 }): ReactElement {
-  const onInnerDrop = (e: any, destinationItemID: string | undefined) => {
-    console.log('on inner drop', e, destinationItemID);
+  const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
+    console.log('on inner drop', e, destinationItemID, element);
 
-    const isReorder =
-      e.addedIndex !== undefined &&
-      e.addedIndex !== null &&
-      e.removedIndex !== undefined &&
-      e.removedIndex !== null;
-
-    const isAdded = e.addedIndex !== undefined && e.addedIndex !== null;
+    const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
+    const isRemove = e.removedIndex !== undefined && e.removedIndex !== null;
+    const isReorder = isAdd && isRemove;
 
     if (isReorder) {
-      item.childNodes.changeIndex(e.addedIndex, e.payload);
-    } else if (isAdded) {
+      item.childNodes.changeIndex(e.payload, e.addedIndex);
+    } else if (isAdd) {
       item.childNodes.addNewItem(e.addedIndex, e.payload);
+    } else if (isRemove) {
+      item.childNodes.removeItem(e.payload);
     }
 
     forceRerender();
   };
+
+  function shouldAcceptDrop(e: any, payload: any) {
+    return payload.type !== 'lesson';
+  }
 
   return (
     <Draggable className={classes['course-outline-list']}>
@@ -49,47 +51,24 @@ export default function CourseOutlineLessonItem({
           header={
             <Header className={classes['lesson-header']}>
               <Icon type={IconType.Lesson} />
-              <EditableTitle
-                type={EditableTitleType.Lesson}
-                isNew={Boolean(item.isNew)}
-                onBlur={(value: string) => {
-                  const { isNew, ...newItem } = item;
-                  console.log('new lesson name should be', value);
-                }}
-                value={item.title}
-              />
+              {item.title}
             </Header>
           }
           key={item.id}
         >
-          <Container
-            groupName="col"
-            // onDragStart={(e) => console.log('drag started', e)}
-            // onDragEnd={(e) => console.log('drag end', e)}
-            onDrop={(e) => onInnerDrop(e, item.id.toString())}
-            getChildPayload={(index) => item}
+          <CourseItemsList
+            items={item.childNodes.toArray()}
+            onDrop={(e: any) => onInnerDrop(e, item.id.toString(), e.element)}
+            getChildPayload={(index: number) => item.childNodes?.toArray()[index]}
             dragClass="card-ghost"
             dropClass="card-ghost-drop"
-            /* onDragEnter={() => {
-              console.log('drag enter:', item.id.toString());
-            }}
-            onDragLeave={() => {
-              console.log('drag leave:', item.id.toString());
-            }}
-            onDropReady={(p) => console.log('Drop ready: ', p)} */
             dropPlaceholder={{
               animationDuration: 150,
               showOnTop: true,
               className: classes['drop-preview'],
             }}
-            shouldAcceptDrop={() => true}
-          >
-            {item.childNodes?.toArray().length ? (
-              <CourseItemsList items={item.childNodes.toArray()} behaviour="copy" groupName="col" />
-            ) : (
-              <div>Drop things here</div>
-            )}
-          </Container>
+            shouldAcceptDrop={shouldAcceptDrop}
+          />
         </WMCollapsePanel>
       </WMCollapse>
     </Draggable>

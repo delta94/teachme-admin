@@ -34,28 +34,33 @@ export default function CourseOutlineList<T>({
     destinationItemID: string | undefined,
     payload: any,
   ) => {
-    if (addedIndex !== undefined && addedIndex !== null) {
-      course?.items.addNewItem(addedIndex, { type: payload.type, id: payload.id });
-      forceRerender();
+    const isAdd = addedIndex !== undefined && addedIndex !== null;
+    const isRemove = removedIndex !== undefined && removedIndex !== null;
+    const isReorder = isAdd && isRemove;
+
+    // ts doesn't seem to recognize that the `if` statement protects against missing indexes
+    if (isReorder) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      course?.items.changeIndex(payload, addedIndex);
+    } else if (isAdd) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      course?.items.addNewItem(addedIndex, payload);
+    } else if (isRemove) {
+      course?.items.removeItem(payload);
     }
+
+    forceRerender();
   };
 
   return (
     <div className={classes['dnd']}>
       <Container
-        onDragStart={(e) => console.log('drag started', e)}
-        onDragEnd={(e) => console.log('drag end', e)}
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
-        dragClass="card-ghost"
-        dropClass="card-ghost-drop"
-        onDragEnter={() => {
-          console.log('drag enter:');
-        }}
-        onDragLeave={() => {
-          console.log('drag leave:');
-        }}
-        onDropReady={(p) => console.log('Drop ready: ', p)}
+        dragClass={classes['card-ghost']}
+        dropClass={classes['card-ghost-drop']}
         dropPlaceholder={{
           animationDuration: 150,
           showOnTop: true,

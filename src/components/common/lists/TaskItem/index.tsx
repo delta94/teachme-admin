@@ -21,13 +21,11 @@ const ItemIcon = {
 };
 
 export default function TaskItem({
-  item,
+  item: { title, type },
   index,
   className,
   ...otherProps
 }: ITaskItem): ReactElement {
-  const { title, type } = item;
-
   return (
     <Draggable key={index} className={cc([classes['item-wrapper']])} {...otherProps}>
       <div key={index} className={classes['item']}>
