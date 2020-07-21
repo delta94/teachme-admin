@@ -22,4 +22,5 @@ export enum IconType {
   Plus = 'plus',
   CourseEmpty = 'course-empty',
   LessonEmpty = 'lesson-empty',
+  Check = 'check',
 }

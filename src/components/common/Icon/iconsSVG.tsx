@@ -20,6 +20,7 @@ import { ReactComponent as RefreshIcon } from '../../../images/icons/refresh.svg
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 import { ReactComponent as CourseEmptyIcon } from '../../../images/icons/course-empty.svg';
 import { ReactComponent as LessonEmptyIcon } from '../../../images/icons/lesson-empty.svg';
+import { ReactComponent as CheckIcon } from '../../../images/icons/check.svg';
 
 import { IconType } from './icon.interface';
 
@@ -47,4 +48,5 @@ export const IconSVG = {
   [IconType.Plus]: PlusIcon,
   [IconType.CourseEmpty]: CourseEmptyIcon,
   [IconType.LessonEmpty]: LessonEmptyIcon,
+  [IconType.Check]: CheckIcon,
 };
