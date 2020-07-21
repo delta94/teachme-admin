@@ -9,7 +9,7 @@ import { CourseLesson, newDataModel as getNewLesson } from './lesson';
 import { CourseTask, newDataModel as getNewItem } from './task';
 
 function isLessonData<TValue>(value: TValue): value is TValue {
-  return !value || !(value as any).type != null;
+  return !value || !(value as any).type;
 }
 
 export function isLesson<TValue>(value: TValue): value is TValue {
