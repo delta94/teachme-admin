@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
 
 import {
   useCourseEditorContext,
@@ -12,6 +13,7 @@ import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 import { CourseItemsList } from '../../common/lists';
 import Icon, { IconType } from '../../common/Icon';
+import WMEmpty from '../../common/WMEmpty';
 
 import classes from './style.module.scss';
 
@@ -48,6 +50,9 @@ export default function ResourcesList(): ReactElement {
     onSearch(courseItemsSearchValue);
   };
 
+  const isCourseItems = courseItems?.length === 0 ? false : true;
+  const isFilteredCourseItems = filteredCourseItems?.length === 0 ? false : true;
+
   return (
     <WMCard
       className={classes['resources-list']}
@@ -66,7 +71,30 @@ export default function ResourcesList(): ReactElement {
           onSearch={onSearch}
         />
       </div>
-      <CourseItemsList items={getCourseItems(filteredCourseItems)} />
+      <div
+        className={cc([
+          classes['items-container'],
+          {
+            [classes['empty-state-items']]: !isFilteredCourseItems,
+          },
+        ])}
+      >
+        {isCourseItems && isFilteredCourseItems ? (
+          <CourseItemsList items={getCourseItems(filteredCourseItems)} />
+        ) : isCourseItems ? (
+          <WMEmpty
+            description={
+              <>
+                <div>There are no items available.</div>
+                <div>Create Walk-thrus and resources from the WalkMe Editor.</div>
+              </>
+            }
+            image={null}
+          />
+        ) : (
+          <WMEmpty description="No results found" image={null} />
+        )}
+      </div>
     </WMCard>
   );
 }

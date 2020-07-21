@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
@@ -8,6 +9,8 @@ import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import { CourseOutlineList, ICourseOutlineItem } from '../../common/lists';
+import WMEmpty from '../../common/WMEmpty';
+import AddButton from '../../common/buttons/AddButton';
 
 import classes from './style.module.scss';
 
@@ -126,7 +129,12 @@ export default function CourseOutlineTab(): ReactElement {
       {filteredCourseOutline.length ? (
         <CourseOutlineList items={filteredCourseOutline} onItemChange={onItemChange} />
       ) : (
-        <div>nothing here yet</div>
+        <WMEmpty
+          description="Start building your course by creating lessons and draging items from the Items List"
+          image={<Icon type={IconType.CourseEmpty} />}
+        >
+          <AddButton />
+        </WMEmpty>
       )}
     </>
   );
