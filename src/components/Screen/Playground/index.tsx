@@ -12,6 +12,7 @@ import Switches from './components/Switches';
 import List from './components/List';
 import Checkboxes from './components/Checkboxes';
 import Toaster from './components/Toaster';
+import Skeleton from './components/Skeleton';
 
 import classes from './style.module.scss';
 
@@ -51,6 +52,12 @@ const tabs = [
     title: 'Toaster',
     icon: undefined,
     content: <Toaster />,
+  },
+  {
+    id: 'skeleton',
+    title: 'Skeleton',
+    icon: undefined,
+    content: <Skeleton />,
   },
 ];
 
