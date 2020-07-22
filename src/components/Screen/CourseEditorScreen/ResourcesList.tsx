@@ -50,8 +50,8 @@ export default function ResourcesList(): ReactElement {
     onSearch(courseItemsSearchValue);
   };
 
-  const hasCourseItems = courseItems?.length === 0 ? false : true;
-  const hasFilteredCourseItems = filteredCourseItems?.length === 0 ? false : true;
+  const hasCourseItems = courseItems?.length;
+  const hasFilteredCourseItems = filteredCourseItems?.length;
 
   return (
     <WMCard
