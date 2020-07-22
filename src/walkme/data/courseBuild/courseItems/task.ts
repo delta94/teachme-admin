@@ -4,10 +4,14 @@ import {
   BuildCourseTaskProperties,
   CourseTaskCompletionType,
   NewCourseItemData,
+  TypeId,
+  TypeName,
+  WalkMeDataItem,
+  ResourceDataItem,
 } from '@walkme/types';
 import { Container } from '../itemsContainer';
 import { getDataSync } from '../../../wmData';
-import { getTypeName, getTypeId } from '../../../item';
+import { getTypeName, getTypeId, getResourceType } from '../../../item';
 
 export const getCourseItems = (itemsData: Array<WalkMeDataNewCourseTask>) =>
   new Container(itemsData, (data) => new CourseTask(data), newDataModel);
@@ -26,6 +30,9 @@ export class CourseTask implements BuildCourseTask {
     this.keywords = [];
     this.title = item.Name;
     this.type = getTypeName(_data.DeployableType);
+    if (this.type == TypeName.Content) {
+      this.type = getResourceType((item as ResourceDataItem).Type);
+    }
     this.properties = {
       completionType: _data?.Settings?.cmplType ?? CourseTaskCompletionType.Completed,
     };

@@ -5,15 +5,7 @@ import { UICourse } from './data/courseList';
 import { mapItem } from './item';
 import * as data from './data';
 import * as courses from './data/courseBuild';
-import {
-  getCourseListData,
-  getCourseOutlineData,
-  CourseOutlineData,
-  CourseOutlineItem,
-  mapServerType,
-} from './analytics';
-import { CourseChild } from './data/courseBuild/courseItems';
-import { CourseLesson } from './data/courseBuild/courseItems/lesson';
+import { getCourseListData } from './analytics';
 import { Course } from './data/courseBuild';
 import { CourseOutlineUIModel } from './data';
 import { getUIQuiz, QuizOutlineUI } from './data/quizOutline';

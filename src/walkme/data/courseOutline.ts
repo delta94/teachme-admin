@@ -2,8 +2,8 @@ import { CourseChild } from './courseBuild/courseItems';
 import {
   CourseOutlineItem,
   CourseOutlineData,
-  mapServerType,
   getCourseOutlineData,
+  matchesServerType,
 } from '../analytics';
 import { TypeName } from '@walkme/types';
 import { getCourse } from './courseBuild';
@@ -18,15 +18,19 @@ export enum CourseChildType {
 }
 
 export type CourseOutlineUIModelLesson = {
-  type: CourseChildType.Lesson;
+  childType: CourseChildType.Lesson;
   items: CourseOutlineUIModelItem[];
+  id: number;
+  title: string;
 };
 
 export type CourseOutlineUIModelItem = {
-  type: CourseChildType.Task;
+  childType: CourseChildType.Task;
   title: string;
   users_completed: number | null;
   drop_off: number;
+  type: TypeName;
+  id: number;
 };
 
 function mapUIOutlineItem(
@@ -34,10 +38,12 @@ function mapUIOutlineItem(
   itemData?: CourseOutlineItem,
 ): CourseOutlineUIModelItem {
   return {
-    type: CourseChildType.Task,
+    childType: CourseChildType.Task,
     drop_off: 0,
     title: item.title,
     users_completed: itemData?.users_complete || null,
+    id: item.id,
+    type: item.type as TypeName,
   };
 }
 
@@ -48,7 +54,7 @@ function getCourseOutlineItem(
 ): CourseOutlineItem | undefined {
   // need to do this in a more performant way
   return allData.find(function (item) {
-    return mapServerType(item.item_type) == type && item.item_id == id;
+    return matchesServerType(type, item.item_type) && item.item_id == id;
   });
 }
 
@@ -65,10 +71,7 @@ export async function getCourseOutline(
 
   return course.items.toArray().map((item) => {
     return item.type == TypeName.Lesson
-      ? {
-          type: CourseChildType.Lesson,
-          items: getLessonItems(<CourseLesson>item, outlineData),
-        }
+      ? getLesson(<CourseLesson>item, outlineData)
       : getTaskItem(<CourseTask>item, outlineData);
   });
 }
@@ -78,12 +81,17 @@ function getTaskItem(item: CourseTask, outlineData: CourseOutlineData) {
   return mapUIOutlineItem(item, outlineItem);
 }
 
-function getLessonItems(
+function getLesson(
   lesson: CourseLesson,
   outlineData: CourseOutlineData,
-): Array<CourseOutlineUIModelItem> {
+): CourseOutlineUIModelLesson {
   const items = lesson.childNodes.toArray().map((item) => getTaskItem(item, outlineData));
-  return calculateDropOff(items);
+  return {
+    childType: CourseChildType.Lesson,
+    items: calculateDropOff(items),
+    id: lesson.id,
+    title: lesson.title,
+  };
 }
 
 function calculateDropOff(items: Array<CourseOutlineUIModelItem>): Array<CourseOutlineUIModelItem> {

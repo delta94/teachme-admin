@@ -107,6 +107,15 @@ export const TYPE_IDS_TO_NAME: { [typeId: number]: TypeName } = (function () {
   return map;
 })();
 
+export function getResourceType(type: ResourceType): TypeName {
+  switch (type) {
+    case ResourceType.Article:
+      return TypeName.Article;
+    case ResourceType.Video:
+      return TypeName.Video;
+  }
+}
+
 export function getTypeName(type: number) {
   switch (type) {
     case TypeId.Walkthru:

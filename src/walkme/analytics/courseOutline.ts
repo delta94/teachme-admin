@@ -33,11 +33,11 @@ export function getCourseOutlineData(
   return endpoint.get(`course/outline/${course_id}?${query.toString()}`);
 }
 
-export function mapServerType(type: APITypes): TypeName {
-  switch (type) {
+export function matchesServerType(itemType: TypeName, serverType: APITypes): boolean {
+  switch (serverType) {
     case APITypes.Content:
-      return TypeName.Content;
+      return [TypeName.Content, TypeName.Video, TypeName.Article].includes(itemType);
     case APITypes.SWT:
-      return TypeName.SmartWalkThru;
+      return itemType == TypeName.SmartWalkThru;
   }
 }
