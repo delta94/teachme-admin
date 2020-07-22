@@ -2,13 +2,6 @@
   flex-grow: 1;
   margin: 0;
 
-  .item-wrapper {
-    border-bottom: var(--wm-border);
-    &:first-of-type {
-      border-top: var(--wm-border);
-    }
-  }
-
   .disabled {
     pointer-events: none;
     opacity: 0.5;

@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import Header from '../../Header';
+import Icon from '../../Icon';
 
-import Icon, { IconType } from '../../Icon';
 import classes from './style.module.scss';
 
 export interface ILessonHeader {

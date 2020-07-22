@@ -55,12 +55,11 @@ export default function CourseOutlineList<T>({
   };
 
   return (
-    <div className={classes['dnd']}>
+    <div className={classes['course-outline-list']}>
       <Container
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
         dragClass={classes['card-ghost']}
-        dropClass={classes['card-ghost-drop']}
         dropPlaceholder={{
           animationDuration: 150,
           showOnTop: true,

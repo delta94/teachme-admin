@@ -16,7 +16,6 @@
     width: 49px;
     height: 100%;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,10 +32,6 @@
     &.is-open {
       transform: rotate(0deg);
     }
-  }
-
-  .wm-icon {
-    margin-right: 20px;
   }
 
   .collapse-content {

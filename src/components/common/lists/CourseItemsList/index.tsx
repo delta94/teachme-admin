@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
+
 import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
 
@@ -24,11 +25,13 @@ export default function CourseItemsList({
     <div className={cc([classes['course-items-list'], className])}>
       <Container
         {...otherProps}
-        getChildPayload={(i) => items && items[i]}
+        getChildPayload={(i) => items[i]}
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
       >
-        {items && items.map((item, i) => <TaskItem key={i} index={i} item={item} />)}
+        {items.map((item, i) => (
+          <TaskItem key={i} index={i} item={item} />
+        ))}
       </Container>
     </div>
   );

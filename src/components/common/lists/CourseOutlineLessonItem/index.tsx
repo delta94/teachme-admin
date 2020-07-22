@@ -39,12 +39,10 @@ export default function CourseOutlineLessonItem({
     forceRerender();
   };
 
-  function shouldAcceptDrop(e: any, payload: any) {
-    return payload.type !== 'lesson';
-  }
+  const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson';
 
   return (
-    <Draggable className={cc([classes['course-outline-list'], className])}>
+    <Draggable className={cc([classes['course-outline-list-item'], className])}>
       <WMCollapse
         className={classes['lesson']}
         headerClassName={classes['lesson-header']}
@@ -55,7 +53,6 @@ export default function CourseOutlineLessonItem({
           onDrop={(e: any) => onInnerDrop(e, item.id.toString(), e.element)}
           getChildPayload={(index: number) => item.childNodes?.toArray()[index]}
           dragClass={classes['card-ghost']}
-          dropClass={classes['card-ghost-drop']}
           dropPlaceholder={{
             animationDuration: 150,
             showOnTop: false,

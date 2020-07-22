@@ -5,13 +5,13 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   fetchCourse,
+  fetchNewCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
 
 import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
 
-import { fetchNewCourse } from '../../../providers/CourseEditorContext/utils';
 import ResourcesList from './ResourcesList';
 import CourseOutline from './CourseOutline';
 import classes from './style.module.scss';

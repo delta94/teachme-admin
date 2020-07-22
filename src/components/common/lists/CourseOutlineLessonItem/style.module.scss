@@ -1,34 +1,8 @@
-.course-outline-list {
+.course-outline-list-item {
   width: 100%;
   margin-top: 15px;
   margin-bottom: 0;
   padding: 0;
-
-  :global(.ant-collapse-item) {
-    border-bottom: none;
-  }
-
-  &:global(.ant-list-split .ant-list-item) {
-    &.course-item:last-child {
-      border-bottom: var(--wm-border);
-    }
-  }
-
-  .course-item {
-    font-size: 13px;
-    font-weight: 500;
-
-    &:not(.lesson-item) {
-      border: var(--wm-border);
-      border-radius: 5px;
-      padding: 6px 15px;
-      box-shadow: var(--wm-box-shadow);
-    }
-
-    &.lesson-item {
-      border-bottom: none;
-    }
-  }
 
   .lesson {
     width: 100%;
@@ -54,33 +28,14 @@
   cursor: grabbing;
 }
 
-.card-ghost-drop {
-}
-
 .is-empty {
   height: 70px;
   position: relative;
 
-  :global(.smooth-dnd-stretcher-element) {
-    position: absolute;
-  }
-
   &::after {
     content: 'Drag content into the lesson';
-    width: 100%;
-    height: 100%;
-    transform: translateX(-50%);
-    /* text-align: center;
-    width: 100%;
-    height: 100%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -37px;
-
-    z-index: 0;*/
+    top: 0;
+    left: 0;
   }
 }

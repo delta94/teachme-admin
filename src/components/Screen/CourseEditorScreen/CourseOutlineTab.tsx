@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { getRandomFractionNumber } from '../../../utils/getRandomString';
+import { getRandomFractionNumber } from '../../../utils/';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
