@@ -11,6 +11,7 @@ import { CourseOutlineUIModel } from './data';
 import { getUIQuiz, QuizOutlineUI } from './data/quizOutline';
 import { getList, UserListUIResponse } from './data/users';
 import { UsersListQueryOptions, getUsersCount } from './analytics/users';
+import { getAllCoursesOverview, getSingleCourseOverview } from './analytics/courseOverviewPanels';
 
 declare global {
   interface Window {
@@ -176,6 +177,8 @@ window.test = {
   getQuizData,
   getUsersList,
   getUsersCount,
+  getAllCoursesOverview,
+  getSingleCourseOverview,
   // for debug
   // getCourseDataModel: courses.getCourseDataModel,
 };

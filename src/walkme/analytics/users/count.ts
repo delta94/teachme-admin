@@ -17,7 +17,7 @@ export function getUsersCount(
   from: string,
   to: string,
   options?: UsersCountQueryOptions,
-) {
+): Promise<UsersCountResponse> {
   const combinedOptions = { ...DEFAULT_OPTIONS, ...options };
   const query = new URLSearchParams();
   query.append('environment', `${environment}`);
