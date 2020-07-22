@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
-import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
+import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMCollapse from '../../../common/WMCollapse';

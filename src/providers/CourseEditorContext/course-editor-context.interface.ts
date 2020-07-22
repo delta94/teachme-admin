@@ -8,7 +8,7 @@ import {
 } from '@walkme/types/dist/general/apps/teachme/course';
 
 import { ICourseOutlineItem } from '../../components/Screen/CourseEditorScreen/CourseOutlineList';
-import { Course } from '../../walkme/course/mappers/course';
+import { Course } from '../../walkme/data/courseBuild';
 
 import { ActionType } from './actions';
 

@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
 
-import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
-import { CourseChild } from '../../../../walkme/course/mappers/course/courseItems';
-import { Course } from '../../../../walkme/course/mappers/course';
+import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
+import { CourseChild } from '../../../../walkme/data/courseBuild/courseItems';
+import { Course } from '../../../../walkme/data/courseBuild';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import { IWMList } from '../../../common/WMList';
