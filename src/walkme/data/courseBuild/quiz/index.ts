@@ -37,6 +37,7 @@ export function newDataModel(): WalkMeDataQuiz {
     UITemplateVersion: 1,
   };
 }
+export type BuildQuizQuestions = Container<QuizQuestion, NewQuestionData, WalkMeDataQuizQuestion>;
 
 export class Quiz implements BuildQuiz {
   public welcomeScreen: BuildQuizScreen;
@@ -44,7 +45,7 @@ export class Quiz implements BuildQuiz {
   public successScreen: BuildQuizScreen;
   public id: number;
   public properties: BuildQuizProperties;
-  public questions: Container<QuizQuestion, NewQuestionData, WalkMeDataQuizQuestion>;
+  public questions: BuildQuizQuestions;
   constructor(private _quiz: WalkMeDataQuiz) {
     this.welcomeScreen = new BuildQuizScreen(_quiz.WelcomePage);
     this.failScreen = new BuildQuizScreen(_quiz.FailSummeryPage);
@@ -59,17 +60,6 @@ export class Quiz implements BuildQuiz {
   addQuestion() {}
 }
 
-// export function toUIModel(quiz: WalkMeDataQuiz): BuildQuiz {
-//   return {
-//     welcomeScreen: screen.toUIModel(quiz.WelcomePage),
-//     failScreen: screen.toUIModel(quiz.FailSummeryPage),
-//     successScreen: screen.toUIModel(quiz.SuccessSummeryPage),
-//     id: quiz.Id!,
-//     properties: settings.toUIModel(quiz.Settings, quiz.Passmark),
-//     questions: quiz.Questions.map(question.toUIModel),
-//   };
-// }
-
 export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDataQuiz {
   return {
     ...dataQuiz,
@@ -78,10 +68,6 @@ export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDa
     WelcomePage: screen.toDataModel(quiz.welcomeScreen, dataQuiz.WelcomePage),
     Settings: settings.toDataModel(quiz.properties, dataQuiz.Settings),
     Passmark: quiz.properties.passmark,
-    Questions: (quiz.questions as Container<
-      QuizQuestion,
-      NewQuestionData,
-      WalkMeDataQuizQuestion
-    >).toDataModel(),
+    Questions: (quiz.questions as BuildQuizQuestions).toDataModel(),
   };
 }

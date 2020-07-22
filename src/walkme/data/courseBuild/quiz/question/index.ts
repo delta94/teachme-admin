@@ -32,9 +32,11 @@ export function newDataModel(index: number, data?: NewQuestionData): WalkMeDataQ
   };
 }
 
+export type QuizQuestionAnswers = Container<BuildQuizAnswer, NewQuestionData, WalkMeDataQuizAnswer>;
+
 export class QuizQuestion implements BuildQuizQuestion {
   public id: number;
-  public answers: Container<BuildQuizAnswer, NewQuestionData, WalkMeDataQuizAnswer>;
+  public answers: QuizQuestionAnswers;
   public description: string;
   public title: string;
   public type: QuestionType;

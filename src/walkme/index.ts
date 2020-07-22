@@ -16,6 +16,7 @@ import { CourseChild } from './data/courseBuild/courseItems';
 import { CourseLesson } from './data/courseBuild/courseItems/lesson';
 import { Course } from './data/courseBuild';
 import { CourseOutlineUIModel } from './data';
+import { getUIQuiz, QuizOutlineUI } from './data/quizOutline';
 
 declare global {
   interface Window {
@@ -60,6 +61,15 @@ export async function getCourseOutline(
   to: string,
 ): Promise<CourseOutlineUIModel> {
   return data.getCourseOutline(courseId, environmentId, from, to);
+}
+
+export async function getQuizData(
+  course_id: number,
+  environment: number,
+  from: string,
+  to: string,
+): Promise<QuizOutlineUI | undefined> {
+  return getUIQuiz(course_id, environment, from, to);
 }
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
@@ -160,6 +170,7 @@ window.test = {
   publishCourses,
   getCourseListData,
   getCourseOutline,
+  getQuizData,
   // for debug
   // getCourseDataModel: courses.getCourseDataModel,
 };
