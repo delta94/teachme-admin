@@ -141,6 +141,7 @@ export async function switchSystem(id: number) {
 //   });
 //   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
 // }
+
 async function initData(environmentId: number) {
   await Promise.all(
     [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>
@@ -184,6 +185,10 @@ export async function authInit(params: {
   redirect_uri: any;
   post_logout_redirect_uri: any;
 }): Promise<void> {
+  walkme.auth.onTokenExpired(() => {
+    console.log('Token expired - redirecting to login');
+    walkme.auth.init(params);
+  });
   await walkme.auth.init(params);
 }
 

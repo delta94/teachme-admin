@@ -27,9 +27,17 @@ export default function WMButton({
   variant = ButtonVariantEnum.Default,
   ...props
 }: IWMButtonProps): ReactElement {
+  const buttonIncludesIcon =
+    icon && (variant === ButtonVariantEnum.Default || variant === ButtonVariantEnum.Link);
+
   return (
     <Button
-      className={cc([classes['wm-btn'], classes[`wm-btn-${variant}`], className])}
+      className={cc([
+        classes['wm-btn'],
+        classes[`wm-btn-${variant}`],
+        className,
+        { [classes[`wm-btn-with-icon`]]: buttonIncludesIcon },
+      ])}
       icon={icon}
       {...props}
     >

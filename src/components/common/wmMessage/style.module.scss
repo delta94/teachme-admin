@@ -1,0 +1,25 @@
+.wm-message-success {
+  align-content: center;
+  justify-content: center;
+
+  :global(.ant-message-notice-content) {
+    border-radius: 8px;
+    box-shadow: 0 0 7px 2px rgba(204, 214, 215, 0.41);
+  }
+
+  :global(.ant-message-success) {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    color: var(--neutral900);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    line-height: 16px;
+
+    .icon-message {
+      margin-right: 5px;
+      margin-top: 2px;
+    }
+  }
+}

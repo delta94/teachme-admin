@@ -1,8 +1,15 @@
 import { ReactNode } from 'react';
-import { ContentItem } from '@walkme/types';
+import { ContentItem, BuildCourse } from '@walkme/types';
 
+import { TypeContainer } from '@walkme/types/dist/general/apps';
+import {
+  CourseTaskBase,
+  NewCourseItemData,
+  NewCourseLessonData,
+} from '@walkme/types/dist/general/apps/teachme/course';
 import { ICourseOutlineItem } from '../../components/common/lists';
 
+import { Course } from '../../walkme/course/mappers/course';
 import { ActionType } from './actions';
 
 export { ActionType };
@@ -12,6 +19,7 @@ export interface IAction {
   courseTitle?: string;
   courseItems?: Array<ContentItem>;
   courseItemsSearchValue?: string;
+  course?: Course | null;
   courseOutline?: Array<ICourseOutlineItem>;
   courseOutlineSearchValue?: string;
 }
@@ -27,8 +35,12 @@ export interface IState {
   courseItems: Array<ContentItem>;
   filteredCourseItems: Array<ContentItem>;
   courseItemsSearchValue: string;
-  courseOutline: Array<ICourseOutlineItem>;
-  filteredCourseOutline: Array<ICourseOutlineItem>;
+  isFetchingCourse: boolean;
+  isFetchingCourseError: boolean;
+  course: Course | null;
+  filteredCourseOutline:
+    | TypeContainer<CourseTaskBase, NewCourseItemData | NewCourseLessonData>
+    | [];
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
 }

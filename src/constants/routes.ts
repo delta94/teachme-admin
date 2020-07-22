@@ -35,13 +35,13 @@ export const USERS_ROUTE = {
 
 export const COURSE_EDITOR_ROUTE = {
   id: 'course-editor',
-  path: '/course-editor',
+  path: '/course-editor/:courseId?',
   title: 'course-editor',
 };
 
 export const NEW_COURSE_EDITOR_ROUTE = {
   id: 'new-course',
-  path: `${COURSE_EDITOR_ROUTE.path}/new`,
+  path: '/course-editor/new',
   title: 'new-course',
 };
 
