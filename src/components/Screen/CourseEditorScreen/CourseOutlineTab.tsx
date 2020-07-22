@@ -46,7 +46,7 @@ const options: IWMDropdownOption[] = [
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { course, filteredCourseOutline, courseOutlineSearchValue } = state;
+  const { course, quiz, courseOutlineSearchValue } = state;
 
   const [mockState, setMockState] = useState(new Date());
   const forceRerender = () => setMockState(new Date());
@@ -58,14 +58,13 @@ export default function CourseOutlineTab(): ReactElement {
       if (newLesson) {
         newLesson.id = getRandomFractionNumber();
       }
-      forceRerender();
     } else {
       // Add new quiz
-      // TODO: add new quiz
-      console.log('quiz added');
+      dispatch({ type: ActionType.AddQuiz });
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline });
+    forceRerender();
   };
 
   return (
@@ -88,6 +87,7 @@ export default function CourseOutlineTab(): ReactElement {
           forceRerender={forceRerender}
         />
       )}
+      {quiz && <div>HAS QUIZ</div>}
     </>
   );
 }

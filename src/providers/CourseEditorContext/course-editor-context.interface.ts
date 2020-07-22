@@ -10,6 +10,7 @@ import {
 import { ICourseOutlineItem } from '../../components/common/lists';
 
 import { Course } from '../../walkme/course/mappers/course';
+import { Quiz } from '../../walkme/course/mappers/course/quiz';
 import { ActionType } from './actions';
 
 export { ActionType };
@@ -38,6 +39,7 @@ export interface IState {
   isFetchingCourse: boolean;
   isFetchingCourseError: boolean;
   course: Course | null;
+  quiz: Quiz | null;
   filteredCourseOutline:
     | TypeContainer<CourseTaskBase, NewCourseItemData | NewCourseLessonData>
     | [];

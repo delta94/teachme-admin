@@ -9,16 +9,16 @@ import {
   BooleanStringOption,
 } from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
-import * as quiz from './quiz';
-import * as items from './courseItems/index';
 import defaults from '../../defaults';
 import { getGuid } from '../../../guid';
-import { Quiz } from './quiz';
-import { CourseChildContainer, isLesson } from './courseItems/index';
-import { CourseProperties } from './settings';
 import { createLink } from '../../../collection';
 import { getDataSync } from '../../../data';
 import { notEmpty } from '../../../utils';
+import * as quiz from './quiz';
+import * as items from './courseItems/index';
+import { Quiz } from './quiz';
+import { CourseChildContainer, isLesson } from './courseItems';
+import { CourseProperties } from './settings';
 
 function getUniqueCourseName(): string {
   const courseNames = getDataSync(TypeId.Course).map((course) => course.Name);
@@ -66,11 +66,11 @@ export class Course implements BuildCourse {
     this.id = this._course.Id;
     this.title = this._course.Name;
     this.items = items.getCourseChildren(
-      this._course.LinkedDeployables!.map((item) => {
-        return item.DeployableType == TypeId.Lesson
+      this._course.LinkedDeployables!.map((item) =>
+        item.DeployableType == TypeId.Lesson
           ? ((getDataSync(TypeId.Lesson, [item.DeployableID])[0] as unknown) as WalkMeDataNewLesson)
-          : item;
-      }),
+          : item,
+      ),
     );
     this._quiz = new Quiz(this._course.Quiz);
     this.properties = new CourseProperties(this._course.Settings);
@@ -111,12 +111,12 @@ export class Course implements BuildCourse {
     };
   }
 
-  addQuiz() {
+  addQuiz(): Quiz | undefined {
     this.properties.hasQuiz = true;
     return this.quiz;
   }
 
-  deleteQuiz() {
+  deleteQuiz(): void {
     this.properties.hasQuiz = false;
   }
 }
