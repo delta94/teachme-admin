@@ -1,8 +1,7 @@
 import { UsersColumn, UsersOrder } from '../analytics/users';
 import * as users from '../analytics/users';
-import { ResourceType } from '@walkme/types';
 import { index, notEmpty } from '../utils';
-import { getCourse, getCourseMetadata } from './courseBuild';
+import { getCourseMetadata } from './courseBuild';
 
 export type UserListUILineItem = {
   id: string;
@@ -31,7 +30,7 @@ export async function getList(
   environment: number,
   from: string,
   to: string,
-  options: users.UsersQueryOptions,
+  options: users.UsersListQueryOptions,
 ): Promise<UserListUIResponse> {
   const usersData = await users.getList(environment, from, to, options);
   return {

@@ -10,7 +10,7 @@ import { Course } from './data/courseBuild';
 import { CourseOutlineUIModel } from './data';
 import { getUIQuiz, QuizOutlineUI } from './data/quizOutline';
 import { getList, UserListUIResponse } from './data/users';
-import { UsersQueryOptions } from './analytics/users';
+import { UsersListQueryOptions, getUsersCount } from './analytics/users';
 
 declare global {
   interface Window {
@@ -70,7 +70,7 @@ export function getUsersList(
   environment: number,
   from: string,
   to: string,
-  options: UsersQueryOptions,
+  options: UsersListQueryOptions,
 ): Promise<UserListUIResponse> {
   return getList(environment, from, to, options);
 }
@@ -175,6 +175,7 @@ window.test = {
   getCourseOutline,
   getQuizData,
   getUsersList,
+  getUsersCount,
   // for debug
   // getCourseDataModel: courses.getCourseDataModel,
 };

@@ -1,11 +1,4 @@
-import * as endpoint from './endpoint';
-import { TypeId, TypeName } from '@walkme/types';
-import { types } from 'util';
-
-export enum APITypes {
-  Content = 'resource',
-  SWT = 'bizFlow',
-}
+import * as endpoint from '../endpoint';
 
 export type UsersResponse = {
   num_of_records: number;
@@ -42,7 +35,7 @@ export enum UsersOrder {
   DESC = 'DESC',
 }
 
-export type UsersQueryOptions = {
+export type UsersListQueryOptions = {
   first_item_index: number;
   num_of_records: number;
   sort_by: UsersColumn;
@@ -50,7 +43,7 @@ export type UsersQueryOptions = {
   user_name?: string;
 };
 
-const DEFAULT_OPTIONS: UsersQueryOptions = {
+const DEFAULT_OPTIONS: UsersListQueryOptions = {
   first_item_index: 0,
   num_of_records: 100,
   sort_by: UsersColumn.ID,
@@ -67,7 +60,7 @@ export function getList(
   environment: number,
   from: string,
   to: string,
-  options: UsersQueryOptions,
+  options: UsersListQueryOptions,
 ): Promise<UsersResponse> {
   const combinedOptions = { ...DEFAULT_OPTIONS, ...options };
   const query = new URLSearchParams();
@@ -79,6 +72,6 @@ export function getList(
   query.append('sort_by', combinedOptions.sort_by);
   query.append('sort_by_order', combinedOptions.sort_by_order);
   if (combinedOptions.user_name) query.append('user_name', combinedOptions.user_name);
-  
+
   return endpoint.get(`users/list?${query.toString()}`);
 }
