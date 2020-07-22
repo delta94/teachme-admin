@@ -1,5 +1,6 @@
 import walkme from '@walkme/editor-sdk';
 import * as screens from './screens';
+export * from './screens';
 declare global {
   interface Window {
     walkme: any;

@@ -27,7 +27,7 @@ export async function getSystems() {
  * Returns data on the current system
  * Returns an empty string if the user has no systems
  */
-export async function getSystemData(): Promise<SystemData | ''> {
+export async function getSystemData() {
   return walkme.system.getSystemData();
 }
 
