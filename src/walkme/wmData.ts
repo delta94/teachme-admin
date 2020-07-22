@@ -9,9 +9,10 @@ export async function getData(
   type: TypeName,
   environmentId: number,
   ids?: Array<number>,
+  light?: boolean,
 ): Promise<Array<WalkMeDataItem>> {
   if (!data[type]) {
-    data[type] = walkme.data.getContent(type, environmentId);
+    data[type] = walkme.data.getContent(type, environmentId, light);
   }
   const items = (await data[type]) as Array<WalkMeDataItem>;
   syncData[getTypeId(type)] = items;

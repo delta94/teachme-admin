@@ -9,6 +9,8 @@ import { getCourseListData } from './analytics';
 import { Course } from './data/courseBuild';
 import { CourseOutlineUIModel } from './data';
 import { getUIQuiz, QuizOutlineUI } from './data/quizOutline';
+import { getList, UserListUIResponse } from './data/users';
+import { UsersQueryOptions } from './analytics/users';
 
 declare global {
   interface Window {
@@ -62,6 +64,15 @@ export async function getQuizData(
   to: string,
 ): Promise<QuizOutlineUI | undefined> {
   return getUIQuiz(course_id, environment, from, to);
+}
+
+export function getUsersList(
+  environment: number,
+  from: string,
+  to: string,
+  options: UsersQueryOptions,
+): Promise<UserListUIResponse> {
+  return getList(environment, from, to, options);
 }
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
@@ -163,6 +174,7 @@ window.test = {
   getCourseListData,
   getCourseOutline,
   getQuizData,
+  getUsersList,
   // for debug
   // getCourseDataModel: courses.getCourseDataModel,
 };

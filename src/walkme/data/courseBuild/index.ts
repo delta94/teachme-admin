@@ -8,6 +8,16 @@ export async function getNewCourse(): Promise<Course> {
   return new Course();
 }
 
+export async function getCourseMetadata(id: number, environmentId: number): Promise<Course> {
+  const [course] = ((await getData(
+    TypeName.Course,
+    environmentId,
+    [id],
+    true,
+  )) as unknown) as Array<WalkMeDataNewCourse>;
+  return new Course(course, { light: true });
+}
+
 export async function getCourse(id: number, environmentId: number): Promise<Course> {
   await initData(environmentId);
 

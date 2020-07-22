@@ -48,7 +48,9 @@ function newDataModel(index: number): WalkMeDataNewCourse {
     deployableType: TypeId.Course,
   };
 }
-
+export type CourseOptions = {
+  light: boolean;
+};
 export class Course implements BuildCourse {
   public index: number;
   public id: number;
@@ -59,18 +61,22 @@ export class Course implements BuildCourse {
   }
   public properties: CourseProperties;
   private _quiz: Quiz;
-  constructor(private _course?: WalkMeDataNewCourse) {
+  constructor(private _course?: WalkMeDataNewCourse, options?: CourseOptions) {
     if (!this._course) {
       this._course = newDataModel(0);
     }
     this.id = this._course.Id;
     this.title = this._course.Name;
     this.items = items.getCourseChildren(
-      this._course.LinkedDeployables!.map((item) => {
-        return item.DeployableType == TypeId.Lesson
-          ? ((getDataSync(TypeId.Lesson, [item.DeployableID])[0] as unknown) as WalkMeDataNewLesson)
-          : item;
-      }),
+      options?.light
+        ? []
+        : this._course.LinkedDeployables!.map((item) => {
+            return item.DeployableType == TypeId.Lesson
+              ? ((getDataSync(TypeId.Lesson, [
+                  item.DeployableID,
+                ])[0] as unknown) as WalkMeDataNewLesson)
+              : item;
+          }),
     );
     this._quiz = new Quiz(this._course.Quiz);
     this.properties = new CourseProperties(this._course.Settings);
