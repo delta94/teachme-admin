@@ -4,6 +4,7 @@
   --divider-color: #f0f0f0;
   --wm-border: 1px solid #e6edf1;
   --wm-box-shadow: 0 2px 0 0 #f2f2f2;
+  --drag-shadow: 3px 3px 7px 0 #dfdfdf;
 
   // background color of the app
   --white: #fff;
@@ -71,11 +72,13 @@
   --gray-light: #f5f5f5;
 
   // component colors
+  --hover-color: #f7fbff;
+
   --pie-bar-char-background-color: #dfe1e2;
   // table
   --table-header-color: #78868f;
   --table-border-color: #dcdcdc;
-  --table-row-hover-color: #f7fbff;
+  --table-row-hover-color: var(--hover-color);
 
   // fonts
   --font-primary: 'Roboto', sans-serif;

@@ -1,33 +1,17 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
 
 import {
   useCourseEditorContext,
   fetchItemsList,
   ActionType,
-  IState,
 } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 import { CourseItemsList } from '../../common/lists';
-import Icon, { IconType } from '../../common/Icon';
-import WMEmpty from '../../common/WMEmpty';
 
 import classes from './style.module.scss';
-
-const ItemIcon = {
-  smartwalkthru: IconType.SmartWalkthruSmall,
-  article: IconType.ArticleSmall,
-  video: IconType.VideoSmall,
-};
-
-const getCourseItems = (items: IState['filteredCourseItems']) =>
-  items.map(({ title, type }) => ({
-    text: title,
-    icon: <Icon type={ItemIcon[type as keyof typeof ItemIcon]} />,
-  }));
 
 export default function ResourcesList(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -50,9 +34,6 @@ export default function ResourcesList(): ReactElement {
     onSearch(courseItemsSearchValue);
   };
 
-  const hasCourseItems = courseItems?.length;
-  const hasFilteredCourseItems = filteredCourseItems?.length;
-
   return (
     <WMCard
       className={classes['resources-list']}
@@ -71,27 +52,7 @@ export default function ResourcesList(): ReactElement {
           onSearch={onSearch}
         />
       </div>
-      <div
-        className={cc([
-          classes['items-container'],
-          { [classes['empty-state-items']]: !hasFilteredCourseItems },
-        ])}
-      >
-        {hasCourseItems || hasFilteredCourseItems ? (
-          <CourseItemsList items={getCourseItems(filteredCourseItems)} />
-        ) : hasCourseItems ? (
-          <WMEmpty description="No results found" />
-        ) : (
-          <WMEmpty
-            description={
-              <>
-                <div>There are no items available.</div>
-                <div>Create Walk-thrus and resources from the WalkMe Editor.</div>
-              </>
-            }
-          />
-        )}
-      </div>
+      <CourseItemsList items={filteredCourseItems} behaviour="copy" />
     </WMCard>
   );
 }
