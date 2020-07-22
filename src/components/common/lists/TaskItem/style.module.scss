@@ -16,6 +16,11 @@
     .icon {
       color: var(--secondary500);
       margin-right: 11px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
 
     .item-title {

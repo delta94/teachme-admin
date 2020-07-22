@@ -3,7 +3,7 @@ import { Draggable } from 'react-smooth-dnd';
 import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
 
-import Icon, { IconType } from '../../Icon';
+import Icon from '../../Icon';
 
 import classes from './style.module.scss';
 
@@ -14,12 +14,6 @@ export interface ITaskItem {
   [key: string]: any;
 }
 
-const ItemIcon = {
-  smartwalkthru: IconType.SmartWalkthruSmall,
-  article: IconType.ArticleSmall,
-  video: IconType.VideoSmall,
-};
-
 export default function TaskItem({
   item: { title, type },
   index,
@@ -29,7 +23,7 @@ export default function TaskItem({
   return (
     <Draggable key={index} className={cc([classes['item-wrapper'], className])} {...otherProps}>
       <div key={index} className={classes['item']}>
-        <Icon type={ItemIcon[type as keyof typeof ItemIcon]} className={classes['icon']} />
+        <Icon type={type} className={classes['icon']} />
         <span className={classes['item-title']}>{title}</span>
       </div>
     </Draggable>
