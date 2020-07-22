@@ -1,9 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
 
-import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
-import { CourseChild } from '../../../../walkme/course/mappers/course/courseItems';
-import { Course } from '../../../../walkme/course/mappers/course';
 import { IWMList } from '../../WMList';
 import TaskItem from '../TaskItem';
 
@@ -11,6 +8,9 @@ import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
 
 import CourseOutlineTabEmptyState from '../CourseOutlineTabEmptyState';
 import classes from './style.module.scss';
+import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
+import { CourseChild } from '../../../../walkme/data/courseBuild/courseItems';
+import { Course } from '../../../../walkme/data/courseBuild';
 
 export { CourseOutlineLessonItem };
 
