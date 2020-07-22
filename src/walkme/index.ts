@@ -141,6 +141,7 @@ export async function switchSystem(id: number) {
 //   });
 //   return walkme.data.saveContent(TypeName.Course, courseToSave.course, TypeId.Course);
 // }
+
 async function initData(environmentId: number) {
   await Promise.all(
     [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>

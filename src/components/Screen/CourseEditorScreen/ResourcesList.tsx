@@ -4,28 +4,14 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   ActionType,
-  IState,
 } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import RefreshButton from '../../common/buttons/RefreshButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 import { CourseItemsList } from '../../common/lists';
-import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
-
-const ItemIcon = {
-  smartwalkthru: IconType.SmartWalkthruSmall,
-  article: IconType.ArticleSmall,
-  video: IconType.VideoSmall,
-};
-
-const getCourseItems = (items: IState['filteredCourseItems']) =>
-  items.map(({ title, type }) => ({
-    text: title,
-    icon: <Icon type={ItemIcon[type as keyof typeof ItemIcon]} />,
-  }));
 
 export default function ResourcesList(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -66,7 +52,7 @@ export default function ResourcesList(): ReactElement {
           onSearch={onSearch}
         />
       </div>
-      <CourseItemsList items={getCourseItems(filteredCourseItems)} />
+      <CourseItemsList items={filteredCourseItems} behaviour="copy" />
     </WMCard>
   );
 }

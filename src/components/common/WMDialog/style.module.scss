@@ -28,14 +28,13 @@
   :global(.ant-modal-content) {
     border: 1px solid rgba(216, 219, 227, 0.61);
     border-radius: 3px;
-    background-color: var(--background);
+    background-color: var(--wm-background-color);
     box-shadow: 6px 5px 12px 0 rgba(155, 161, 176, 0.73);
   }
 
   :global(.ant-modal-body) {
     padding-top: 9px;
     padding-bottom: 9px;
-
     color: #616775;
     font-family: var(--font-primary);
     font-size: 15px;

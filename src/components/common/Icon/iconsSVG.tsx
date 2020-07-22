@@ -18,6 +18,7 @@ import { ReactComponent as LessonSmallIcon } from '../../../images/icons/lesson-
 import { ReactComponent as ArticleSmallIcon } from '../../../images/icons/article-small.svg';
 import { ReactComponent as RefreshIcon } from '../../../images/icons/refresh.svg';
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
+import { ReactComponent as QuizSettingsIcon } from '../../../images/icons/quiz-settings.svg';
 import { ReactComponent as CheckIcon } from '../../../images/icons/check.svg';
 
 import { IconType } from './icon.interface';
@@ -44,5 +45,6 @@ export const IconSVG = {
   [IconType.LessonSmall]: LessonSmallIcon,
   [IconType.Refresh]: RefreshIcon,
   [IconType.Plus]: PlusIcon,
+  [IconType.QuizSettings]: QuizSettingsIcon,
   [IconType.Check]: CheckIcon,
 };

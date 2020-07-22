@@ -1,28 +1,51 @@
-import React, { ReactNode, ReactElement } from 'react';
+import React, { ReactNode, ReactElement, useState, useEffect } from 'react';
+import SmoothCollapse from 'react-smooth-collapse';
 import cc from 'classcat';
-import { Collapse } from 'antd';
-import { CollapseProps } from 'antd/lib/collapse/Collapse';
 
-import WMCollapsePanel, { IWMCollapsePanel } from './WMCollapsePanel';
-
+import { ReactComponent as DownArrowIcon } from './down-arrow.svg';
 import classes from './style.module.scss';
 
-interface IWMCollapse extends CollapseProps {
-  className?: string;
+interface IWMCollapse {
   children: ReactNode;
+  className?: string;
+  header: ReactNode;
+  headerClassName?: string;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 export default function WMCollapse({
-  className,
   children,
+  className,
+  header,
+  headerClassName,
+  isOpen = true,
   ...otherProps
 }: IWMCollapse): ReactElement {
+  const [open, setOpen] = useState(isOpen);
+
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen, setOpen]);
+
   return (
-    <Collapse className={cc([classes['wm-collapse'], className])} {...otherProps}>
-      {children}
-    </Collapse>
+    <div className={cc([classes['wm-collapse'], className])}>
+      <div className={cc([classes['collapse-header'], headerClassName])}>
+        <div
+          className={cc([classes['collapse-button'], { [classes['is-open']]: open }])}
+          onClick={() => setOpen(!open)}
+        >
+          <DownArrowIcon />
+        </div>
+        {header}
+      </div>
+      <div className={classes['collapse-content']}>
+        <SmoothCollapse expanded={open} {...otherProps}>
+          {children}
+        </SmoothCollapse>
+      </div>
+    </div>
   );
 }
 
-export { WMCollapsePanel };
-export type { IWMCollapse, IWMCollapsePanel };
+export type { IWMCollapse };
