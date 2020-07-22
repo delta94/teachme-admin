@@ -11,8 +11,9 @@
   font-family: var(--font-primary);
   color: var(--neutral900);
 
-  .course-outline-demo {
+  .outline-demo {
     min-width: 700px;
+    padding: 20px;
   }
 
   .buttons {
@@ -20,7 +21,7 @@
   }
 
   .buttons.grow,
-  .course-outline-demo {
+  .outline-demo {
     flex-grow: 1;
   }
 }

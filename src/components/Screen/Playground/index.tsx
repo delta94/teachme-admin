@@ -76,7 +76,7 @@ const tabs = [
 ];
 
 export default function Playground(): ReactElement {
-  const defaultTabId = 'dialogs';
+  const defaultTabId = 'quiz-edit'; //'dialogs';
 
   return (
     <div className={classes.playground}>

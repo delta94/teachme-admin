@@ -1,18 +1,27 @@
-import React, { ReactElement, useState, useEffect, useCallback } from 'react';
-import { Quiz, QuizScreen, QuizQuestion } from '@walkme/types';
+import React, { ReactElement, useState } from 'react';
+import {
+  Quiz,
+  QuizScreen,
+  QuizQuestion,
+  BaseQuiz,
+  BuildQuiz,
+  BaseQuizQuestion,
+} from '@walkme/types';
 import cc from 'classcat';
 
 import classes from './style.module.scss';
 
 export default function QuizEditForm({
   quizData,
+  quizPropertyName,
   quizPropertyData,
 }: {
-  quizData: Quiz;
-  quizPropertyData: QuizScreen | QuizQuestion;
+  quizData: BuildQuiz;
+  quizPropertyName: string;
+  quizPropertyData: QuizScreen | BaseQuizQuestion;
 }): ReactElement {
-  const [originalQuiz, setOriginalQuiz] = useState<Quiz>(quizData);
-  const [quiz, setQuiz] = useState<QuizScreen | QuizQuestion>(quizPropertyData);
+  const [originalQuiz, setOriginalQuiz] = useState<BuildQuiz>(quizData);
+  const [quiz, setQuiz] = useState<QuizScreen | BaseQuizQuestion>(quizPropertyData);
 
   // useEffect(() => {
   //   if (originalQuiz) setQuiz(originalQuiz);
