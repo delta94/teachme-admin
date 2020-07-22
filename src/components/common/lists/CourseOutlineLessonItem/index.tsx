@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
+import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
@@ -18,10 +19,12 @@ export default function CourseOutlineLessonItem({
   item,
   className,
   forceRerender,
+  handleItemClick,
 }: {
   item: INewLesson;
   className: string;
   forceRerender: () => void;
+  handleItemClick: (item: any) => void;
 }): ReactElement {
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -60,6 +63,7 @@ export default function CourseOutlineLessonItem({
           }}
           shouldAcceptDrop={shouldAcceptDrop}
           className={cc([{ [classes['is-empty']]: !item.childNodes.toArray().length }])}
+          handleItemClick={(item) => handleItemClick && handleItemClick(item)}
         />
       </WMCollapse>
     </Draggable>

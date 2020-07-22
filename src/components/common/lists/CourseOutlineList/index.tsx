@@ -10,6 +10,7 @@ import TaskItem from '../TaskItem';
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
 
 import classes from './style.module.scss';
+import { ContentItem } from '@walkme/types';
 
 export { CourseOutlineLessonItem };
 
@@ -21,12 +22,14 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   items: CourseLesson[] | CourseChild[];
   course: Course;
   forceRerender: () => void;
+  handleItemClick?: (item: any) => void;
 }
 
 export default function CourseOutlineList<T>({
   items,
   course,
   forceRerender,
+  handleItemClick,
 }: ICourseOutlineList<T>): ReactElement {
   const onDrop = (
     addedIndex: number | undefined | null,
@@ -75,9 +78,16 @@ export default function CourseOutlineList<T>({
                 key={item.id}
                 forceRerender={forceRerender}
                 className={classes['outline-lesson']}
+                handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
               />
             ) : (
-              <TaskItem key={i} index={i} item={item} className={classes['outline-task']} />
+              <TaskItem
+                key={i}
+                index={i}
+                item={item}
+                className={classes['outline-task']}
+                onClick={(e: any) => handleItemClick && handleItemClick(item)}
+              />
             ),
           )
         ) : (

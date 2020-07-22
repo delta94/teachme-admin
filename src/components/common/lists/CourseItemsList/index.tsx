@@ -13,12 +13,14 @@ export interface ICourseItemsList {
   className?: string;
   onDrop?: any;
   [key: string]: any;
+  handleItemClick?: (item: ContentItem) => void;
 }
 
 export default function CourseItemsList({
   items,
   onDrop,
   className,
+  handleItemClick,
   ...otherProps
 }: ICourseItemsList): ReactElement {
   return (
@@ -30,7 +32,12 @@ export default function CourseItemsList({
         dragClass={classes['card-ghost']}
       >
         {items.map((item, i) => (
-          <TaskItem key={i} index={i} item={item} />
+          <TaskItem
+            key={i}
+            index={i}
+            item={item}
+            onClick={() => handleItemClick && handleItemClick(item)}
+          />
         ))}
       </Container>
     </div>

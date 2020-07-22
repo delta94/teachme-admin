@@ -16,6 +16,7 @@ import QuizEdit from './components/QuizEdit';
 import Toaster from './components/Toaster';
 
 import classes from './style.module.scss';
+import CourseEditorProvider from '../../../providers/CourseEditorContext';
 
 const tabs = [
   {
@@ -46,7 +47,11 @@ const tabs = [
     id: 'course-item-details-panel',
     title: 'Course Item Details Panel',
     icon: undefined,
-    content: <CourseItemDetailsPanel />,
+    content: (
+      <CourseEditorProvider>
+        <CourseItemDetailsPanel />
+      </CourseEditorProvider>
+    ),
   },
   {
     id: 'quiz-settings',

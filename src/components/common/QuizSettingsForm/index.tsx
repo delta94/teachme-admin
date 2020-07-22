@@ -26,7 +26,6 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   useEffect(() => {
     fetchItemsList(dispatch);
 
-    // TODO: replace hard-coded courseId with variable
     if (courseId) {
       fetchCourse(dispatch, courseId);
     } else {
