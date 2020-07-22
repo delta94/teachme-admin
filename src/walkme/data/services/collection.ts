@@ -1,7 +1,7 @@
 import { mapItem, TYPE_IDS_TO_NAME, MapOptions, getTypeId, mapItemSync } from './item';
 import { ContentItem, WalkMeNewLink, TypeId, TypeName } from '@walkme/types';
 import { getTimeProps } from 'antd/es/date-picker/generatePicker';
-import { notEmpty } from './utils';
+import { notEmpty } from '../../utils';
 import { getDataSync, getData } from './wmData';
 
 export async function resolveLinks<T extends ContentItem>(

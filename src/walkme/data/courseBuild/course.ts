@@ -12,13 +12,13 @@ import walkme from '@walkme/editor-sdk';
 import * as quiz from './quiz';
 import * as items from './courseItems/index';
 import defaults from './defaults';
-import { getGuid } from '../../guid';
+import { getGuid } from '../services/guid';
 import { Quiz } from './quiz';
 import { CourseChildContainer, isLesson } from './courseItems/index';
 import { CourseProperties } from './settings';
-import { createLink } from '../../collection';
+import { createLink } from '../services/collection';
 import { notEmpty } from '../../utils';
-import { getDataSync } from '../../wmData';
+import { getDataSync } from '../services/wmData';
 
 function getUniqueCourseName(): string {
   const courseNames = getDataSync(TypeId.Course).map((course) => course.Name);

@@ -2,11 +2,6 @@ import * as endpoint from './endpoint';
 import { TypeId, TypeName } from '@walkme/types';
 import { types } from 'util';
 
-export enum APITypes {
-  Content = 'resource',
-  SWT = 'bizFlow',
-}
-
 export type QuizOutlineAnswerData = {
   id: number;
   count_answers: number;

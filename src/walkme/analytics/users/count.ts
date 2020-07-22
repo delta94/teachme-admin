@@ -1,14 +1,5 @@
 import * as endpoint from '../endpoint';
-
-export type UsersCountResponse = {
-  total_rows: number;
-  totals_unique_users: number;
-  options: UsersCountQueryOptions;
-};
-
-export type UsersCountQueryOptions = {
-  user_name?: string;
-};
+import { UsersCountQueryOptions, UsersCountResponse } from '../../models/users';
 
 const DEFAULT_OPTIONS: UsersCountQueryOptions = {};
 

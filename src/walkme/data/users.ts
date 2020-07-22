@@ -1,24 +1,8 @@
-import { UsersColumn, UsersOrder } from '../analytics/users';
 import * as users from '../analytics/users';
 import { index, notEmpty } from '../utils';
 import { getCourseMetadata } from './courseBuild';
+import { UsersListQueryOptions, UserListUIResponse, UserListUILineItem } from '../models/users';
 
-export type UserListUILineItem = {
-  id: string;
-  title: string;
-  started_date: Date | null;
-  completed_date: Date | null;
-  quiz_result: boolean;
-  quiz_passed: boolean;
-  quiz_attempts: number;
-};
-
-export type UserListUIResponse = {
-  num_of_records: number;
-  first_item_index: number;
-  sort_by: UsersColumn;
-  data: Array<UserListUILineItem>;
-};
 /**
  *
  * @param environment walkme environment id
@@ -26,13 +10,13 @@ export type UserListUIResponse = {
  * @param to date, format (YYYY-MM-DD)
  * @param options pagination options
  */
-export async function getList(
+export async function getUsersList(
   environment: number,
   from: string,
   to: string,
-  options: users.UsersListQueryOptions,
+  options: UsersListQueryOptions,
 ): Promise<UserListUIResponse> {
-  const usersData = await users.getList(environment, from, to, options);
+  const usersData = await users.getUsersList(environment, from, to, options);
   return {
     first_item_index: usersData.first_item_index,
     num_of_records: usersData.num_of_records,

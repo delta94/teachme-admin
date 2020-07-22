@@ -1,4 +1,5 @@
 import * as endpoint from '../endpoint';
+import { UsersListQueryOptions, UsersColumn, UsersOrder } from '../../models/users';
 
 export type UsersResponse = {
   num_of_records: number;
@@ -14,33 +15,10 @@ export type UsersResponseData = {
   started_date: string;
   /**  date format 'YYYY-MM-DDTHH:MM:SS.MMMZ' **/
   completed_date: string;
-  quiz_result: boolean;
+  quiz_result: number;
   quiz_passed: boolean;
-  time_to_complete: boolean;
+  time_to_complete: number;
   quiz_attempts: number;
-};
-
-export enum UsersColumn {
-  ID = 'id',
-  COURSE_ID = 'course_id',
-  COMPLETED_DATE = 'completed_date',
-  QUIZ_RESULT = 'quiz_result',
-  QUIZ_ATTEMPTS = 'quiz_attempts',
-  STARTED_DATE = 'started_date',
-  TIME_TO_COMPLETE = 'time_to_complete',
-}
-
-export enum UsersOrder {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
-
-export type UsersListQueryOptions = {
-  first_item_index: number;
-  num_of_records: number;
-  sort_by: UsersColumn;
-  sort_by_order: UsersOrder;
-  user_name?: string;
 };
 
 const DEFAULT_OPTIONS: UsersListQueryOptions = {
@@ -56,7 +34,7 @@ const DEFAULT_OPTIONS: UsersListQueryOptions = {
  * @param from date, format (YYYY-MM-DD)
  * @param to date, format (YYYY-MM-DD)
  */
-export function getList(
+export function getUsersList(
   environment: number,
   from: string,
   to: string,

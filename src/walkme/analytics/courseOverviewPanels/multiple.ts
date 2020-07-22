@@ -1,5 +1,5 @@
 import * as endpoint from '../endpoint';
-import { AllCoursesOverviewResponse } from '.';
+import { AllCoursesOverviewResponse } from '../../models';
 
 export function getAllCoursesOverview(
   environment: number,

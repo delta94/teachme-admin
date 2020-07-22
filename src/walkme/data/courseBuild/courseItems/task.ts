@@ -10,8 +10,8 @@ import {
   ResourceDataItem,
 } from '@walkme/types';
 import { Container } from '../itemsContainer';
-import { getDataSync } from '../../../wmData';
-import { getTypeName, getTypeId, getResourceType } from '../../../item';
+import { getDataSync } from '../../services/wmData';
+import { getTypeId, getTypeName, getResourceType } from '../../services/item';
 
 export const getCourseItems = (itemsData: Array<WalkMeDataNewCourseTask>) =>
   new Container(itemsData, (data) => new CourseTask(data), newDataModel);

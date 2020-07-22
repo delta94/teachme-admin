@@ -1,5 +1,3 @@
-import { TypeId, TypeName, QuestionType, BuildQuizQuestion, BuildQuiz } from '@walkme/types';
-import { types } from 'util';
 import {
   getQuizData,
   QuizOutlineData,
@@ -7,33 +5,10 @@ import {
   QuizOutlineQuestionData,
 } from '../analytics/quizOutline';
 import { getCourse } from './courseBuild';
-import { Quiz, BuildQuizQuestions } from './courseBuild/quiz';
+import { Quiz } from './courseBuild/quiz';
 import { QuizQuestion } from './courseBuild/quiz/question';
 import { BuildQuizAnswer } from './courseBuild/quiz/question/answers';
-
-export enum APITypes {
-  Content = 'resource',
-  SWT = 'bizFlow',
-}
-
-export type QuizOutlineUIAnswer = {
-  id: number;
-  title: string;
-  isCorrect: boolean;
-  countAnswers: number;
-};
-
-export type QuizOutlineUIQuestion = {
-  id: number;
-  title: string;
-  type: QuestionType;
-  answers: Array<QuizOutlineUIAnswer>;
-};
-
-export type QuizOutlineUI = {
-  id: number;
-  questions: Array<QuizOutlineUIQuestion>;
-};
+import { QuizOutlineUI, QuizOutlineUIQuestion, QuizOutlineUIAnswer } from '../models/course/quiz';
 
 /**
  *

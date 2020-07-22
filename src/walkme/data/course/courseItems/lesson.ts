@@ -1,5 +1,4 @@
-import { Container } from '../itemsContainer';
-import { CourseTask, getCourseItems } from './task';
+import { Container } from '../../courseBuild/itemsContainer';
 import {
   NewCourseItemData,
   WalkMeDataCourseNewItem,
@@ -13,6 +12,7 @@ import {
 } from '@walkme/types';
 import { createLink } from '../../services/collection';
 import { getGuid } from '../../services/guid';
+import { CourseTask, getCourseItems } from '../../courseBuild/courseItems/task';
 
 export class CourseLesson implements BuildLesson {
   public childNodes: Container<CourseTask, NewCourseItemData, WalkMeDataCourseNewItem>;

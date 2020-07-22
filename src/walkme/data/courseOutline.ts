@@ -9,29 +9,12 @@ import { TypeName } from '@walkme/types';
 import { getCourse } from './courseBuild';
 import { CourseLesson } from './courseBuild/courseItems/lesson';
 import { CourseTask } from './courseBuild/courseItems/task';
-
-export type CourseOutlineUIModel = Array<CourseOutlineUIModelItem | CourseOutlineUIModelLesson>;
-
-export enum CourseChildType {
-  Lesson,
-  Task,
-}
-
-export type CourseOutlineUIModelLesson = {
-  childType: CourseChildType.Lesson;
-  items: CourseOutlineUIModelItem[];
-  id: number;
-  title: string;
-};
-
-export type CourseOutlineUIModelItem = {
-  childType: CourseChildType.Task;
-  title: string;
-  users_completed: number | null;
-  drop_off: number;
-  type: TypeName;
-  id: number;
-};
+import {
+  CourseOutlineUIModelItem,
+  CourseChildType,
+  CourseOutlineUIModel,
+  CourseOutlineUIModelLesson,
+} from '../models/course/outline';
 
 function mapUIOutlineItem(
   item: CourseChild,

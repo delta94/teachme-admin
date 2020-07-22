@@ -1,6 +1,6 @@
 import * as wm from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
-import { getCourseSegments } from '../segments';
+import { getCourseSegments } from './services/segments';
 import { CourseListItem, getCourseListData } from '../analytics';
 import { TypeName, WalkMeDataCourse } from '@walkme/types';
 import { join } from '../utils';

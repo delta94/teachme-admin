@@ -1,6 +1,6 @@
 import { Course } from './course';
 import { WalkMeDataNewCourse, TypeName } from '@walkme/types';
-import { getData } from '../../wmData';
+import { getData } from '../services/wmData';
 export * from './course';
 
 export async function getNewCourse(): Promise<Course> {

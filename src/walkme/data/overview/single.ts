@@ -1,10 +1,6 @@
 import * as analytics from '../../analytics';
 import { getCourseMetadata } from '../courseBuild';
-import { CourseOverviewResponse } from '../../analytics';
-
-export type CourseOverviewData = CourseOverviewResponse & {
-  passmark?: number;
-};
+import { CourseOverviewData } from '../../models';
 
 export async function getCourseOverview(
   course_id: number,
