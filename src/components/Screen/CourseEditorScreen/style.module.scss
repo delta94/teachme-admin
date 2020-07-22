@@ -58,10 +58,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
-      .item-list {
-        margin: unset;
-      }
     }
   }
 
@@ -71,7 +67,6 @@
     .tabs {
       height: inherit;
       color: inherit;
-      height: 100%;
 
       > :global(.ant-tabs-nav) {
         font-family: var(--font-secondary);

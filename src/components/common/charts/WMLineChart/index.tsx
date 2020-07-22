@@ -11,8 +11,9 @@ import {
 
 import { ITooltipContent } from '../charts.interface';
 import WMChartTooltip from '../WMChartTooltip';
+
 import { IWMLineChartItem, IWMLineChartProps } from './wmLineChart.interface';
-import EmptyLineChart from './emptyLineChart';
+import EmptyLineChart from './EmptyLineChart';
 
 const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLineChartItem[] }) => {
   const { payload, label, active } = data;

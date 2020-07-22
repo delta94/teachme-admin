@@ -2,7 +2,7 @@
   &:global(.ant-btn) {
     height: 28px;
     width: 28px;
-    box-shadow: 0 2px 0 0 var(--shadow);
+    box-shadow: var(wm-box-shadow);
     background-color: var(--white);
     justify-content: center;
     border: var(--wm-border);

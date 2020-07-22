@@ -18,8 +18,8 @@ import { ReactComponent as LessonSmallIcon } from '../../../images/icons/lesson-
 import { ReactComponent as ArticleSmallIcon } from '../../../images/icons/article-small.svg';
 import { ReactComponent as RefreshIcon } from '../../../images/icons/refresh.svg';
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
-import { ReactComponent as CourseEmptyIcon } from '../../../images/icons/course-empty.svg';
-import { ReactComponent as LessonEmptyIcon } from '../../../images/icons/lesson-empty.svg';
+import { ReactComponent as CourseEmptyIcon } from '../../../images/icons/empty-course.svg';
+import { ReactComponent as LessonEmptyIcon } from '../../../images/icons/empty-lesson.svg';
 import { ReactComponent as CheckIcon } from '../../../images/icons/check.svg';
 
 import { IconType } from './icon.interface';
@@ -46,7 +46,7 @@ export const IconSVG = {
   [IconType.LessonSmall]: LessonSmallIcon,
   [IconType.Refresh]: RefreshIcon,
   [IconType.Plus]: PlusIcon,
-  [IconType.CourseEmpty]: CourseEmptyIcon,
-  [IconType.LessonEmpty]: LessonEmptyIcon,
+  [IconType.EmptyCourse]: CourseEmptyIcon,
+  [IconType.EmptyLesson]: LessonEmptyIcon,
   [IconType.Check]: CheckIcon,
 };

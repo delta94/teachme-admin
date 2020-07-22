@@ -50,8 +50,8 @@ export default function ResourcesList(): ReactElement {
     onSearch(courseItemsSearchValue);
   };
 
-  const isCourseItems = courseItems?.length === 0 ? false : true;
-  const isFilteredCourseItems = filteredCourseItems?.length === 0 ? false : true;
+  const hasCourseItems = courseItems?.length === 0 ? false : true;
+  const hasFilteredCourseItems = filteredCourseItems?.length === 0 ? false : true;
 
   return (
     <WMCard
@@ -74,14 +74,14 @@ export default function ResourcesList(): ReactElement {
       <div
         className={cc([
           classes['items-container'],
-          {
-            [classes['empty-state-items']]: !isFilteredCourseItems,
-          },
+          { [classes['empty-state-items']]: !hasFilteredCourseItems },
         ])}
       >
-        {isCourseItems && isFilteredCourseItems ? (
+        {hasCourseItems || hasFilteredCourseItems ? (
           <CourseItemsList items={getCourseItems(filteredCourseItems)} />
-        ) : isCourseItems ? (
+        ) : hasCourseItems ? (
+          <WMEmpty description="No results found" />
+        ) : (
           <WMEmpty
             description={
               <>
@@ -90,8 +90,6 @@ export default function ResourcesList(): ReactElement {
               </>
             }
           />
-        ) : (
-          <WMEmpty description="No results found" />
         )}
       </div>
     </WMCard>

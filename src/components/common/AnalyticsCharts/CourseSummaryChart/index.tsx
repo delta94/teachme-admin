@@ -49,7 +49,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
 
   const hasData = Boolean(summaryData.data.days.length);
 
-  const usersNumber = (key: string): number =>
+  const getUsersCount = (key: string): number =>
     summaryData.data.days.reduce((total: number, arr: any): number => total + arr[key], 0);
 
   return (
@@ -58,14 +58,16 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
         <div className={classes['chart-legend']}>
           <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={hasData}>
             <LegendContent
-              number={usersNumber('Users Started')}
-              description="52% of users with TeachMe access" //TODO: calc %
+              number={getUsersCount('Users Started')}
+              //TODO: calc %
+              description="52% of users with TeachMe access"
             />
           </WMLegend>
           <WMLegend title="Users Completed" dotStatusColor="#8812FF" hasData={hasData}>
             <LegendContent
-              number={usersNumber('Users Completed')}
-              description="47% of users who started courses" //TODO: calc %
+              number={getUsersCount('Users Completed')}
+              //TODO: calc %
+              description="47% of users who started courses"
             />
           </WMLegend>
         </div>

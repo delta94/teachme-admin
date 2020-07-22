@@ -10,7 +10,7 @@ export default function Counter(): ReactElement {
     <>
       <WMEmpty
         description="Start building your course by creating lessons and dragging items from the Items List"
-        image={<Icon type={IconType.CourseEmpty} />}
+        image={<Icon type={IconType.EmptyCourse} />}
       >
         <AddButton />
       </WMEmpty>
@@ -28,7 +28,7 @@ export default function Counter(): ReactElement {
       <Divider />
       <WMEmpty
         description="Drag content into the lesson"
-        image={<Icon type={IconType.LessonEmpty} />}
+        image={<Icon type={IconType.EmptyLesson} />}
       />
     </>
   );

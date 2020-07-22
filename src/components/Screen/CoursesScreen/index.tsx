@@ -108,7 +108,7 @@ export default function CoursesScreen(): ReactElement {
 
   const customizeRenderEmpty = () => (
     <div className={classes['empty-state']}>
-      <Icon className={classes['empty-icon']} type={IconType.CourseEmpty} />
+      <Icon className={classes['empty-icon']} type={IconType.EmptyCourse} />
       <h1>No courses yet</h1>
       <p>Start creating courses by clicking the button below</p>
       <WMButton

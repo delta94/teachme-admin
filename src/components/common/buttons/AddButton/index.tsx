@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
-import { PlusOutlined } from '@ant-design/icons';
 
 import WMButton from '../../WMButton';
+import Icon, { IconType } from '../../Icon';
 
 import classes from './style.module.scss';
 
@@ -15,7 +15,7 @@ export default function AddButton({
 }): ReactElement {
   return (
     <WMButton className={cc([classes['add-button'], className])} onClick={onClick}>
-      <PlusOutlined />
+      {<Icon type={IconType.Plus} />}
     </WMButton>
   );
 }

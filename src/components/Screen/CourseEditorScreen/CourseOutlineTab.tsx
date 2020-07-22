@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
@@ -134,7 +133,7 @@ export default function CourseOutlineTab(): ReactElement {
       ) : (
         <WMEmpty
           description="Start building your course by creating lessons and dragging items from the Items List"
-          image={<Icon type={IconType.CourseEmpty} />}
+          image={<Icon type={IconType.EmptyCourse} />}
         >
           <AddButton />
         </WMEmpty>

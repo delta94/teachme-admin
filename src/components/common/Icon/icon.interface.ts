@@ -20,7 +20,7 @@ export enum IconType {
   LessonSmall = 'lesson-small',
   Refresh = 'refresh',
   Plus = 'plus',
-  CourseEmpty = 'course-empty',
-  LessonEmpty = 'lesson-empty',
+  EmptyCourse = 'empty-course',
+  EmptyLesson = 'empty-lesson',
   Check = 'check',
 }
