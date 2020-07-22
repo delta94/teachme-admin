@@ -1,0 +1,38 @@
+.task-item {
+  border-bottom: var(--wm-border);
+  cursor: grab;
+
+  &:first-of-type {
+    border-top: var(--wm-border);
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    color: var(--neutral800);
+    padding: 0 20px;
+
+    .icon {
+      color: var(--secondary500);
+      margin-right: 11px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .item-title {
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}

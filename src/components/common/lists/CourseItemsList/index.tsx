@@ -1,32 +1,42 @@
 import React, { ReactElement, ReactNode } from 'react';
+import { Container } from 'react-smooth-dnd';
 
-import WMList, { WMListItem, IWMList } from '../../WMList';
+import { ContentItem } from '@walkme/types';
+import cc from 'classcat';
+
+import TaskItem from '../TaskItem';
 
 import classes from './style.module.scss';
 
-export interface ICourseItem {
-  text: string;
-  icon: ReactNode;
+export interface ICourseItemsList {
+  items: Array<ContentItem>;
+  className?: string;
+  onDrop?: any;
+  emptyState?: ReactNode;
+  [key: string]: any;
 }
 
-export interface ICourseItemsList<T> extends Omit<IWMList<T>, 'dataSource' | 'renderItem'> {
-  items: T[];
-}
-
-export default function CourseItemsList<T extends ICourseItem>({
+export default function CourseItemsList({
   items,
+  onDrop,
+  className,
+  emptyState,
   ...otherProps
-}: ICourseItemsList<T>): ReactElement {
+}: ICourseItemsList): ReactElement {
+  const localEmptyState = emptyState ?? <div>No items were found</div>;
+
   return (
-    <WMList
-      className={classes['course-items-list']}
-      dataSource={items}
-      renderItem={(item: T) => (
-        <WMListItem className={classes['item']} icon={item.icon}>
-          <span className={classes['item-text']}>{item.text}</span>
-        </WMListItem>
-      )}
-      {...otherProps}
-    />
+    <div className={cc([classes['course-items-list'], className])}>
+      <Container
+        {...otherProps}
+        getChildPayload={(i) => items[i]}
+        onDrop={onDrop}
+        dragClass={classes['card-ghost']}
+      >
+        {items.length
+          ? items.map((item, i) => <TaskItem key={i} index={i} item={item} />)
+          : localEmptyState}
+      </Container>
+    </div>
   );
 }

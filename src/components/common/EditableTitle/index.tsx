@@ -61,11 +61,11 @@ export default function EditableTitle({
     setShowInputText(false);
   };
 
+  const isCourseTitle = type === EditableTitleType.Course;
+
   return (
     <div className={classes['editable-title']}>
-      {type === EditableTitleType.Course && (
-        <Icon type={IconType.EventCourse} className={classes['course-icon']} />
-      )}
+      {isCourseTitle && <Icon type={IconType.EventCourse} className={classes['course-icon']} />}
       <div
         className={cc([
           classes['text'],
@@ -75,9 +75,7 @@ export default function EditableTitle({
         onClick={showInput}
       >
         {inputValue}
-        {type === EditableTitleType.Course && (
-          <Icon type={IconType.Pencil} className={classes['pencil-icon']} />
-        )}
+        {isCourseTitle && <Icon type={IconType.Pencil} className={classes['pencil-icon']} />}
       </div>
       <WMInput
         className={cc([
@@ -90,6 +88,7 @@ export default function EditableTitle({
         onChange={onChange}
         onBlur={onInputBlur}
         onClick={(e) => e.stopPropagation()}
+        maxLength={isCourseTitle ? 50 : undefined}
       />
     </div>
   );

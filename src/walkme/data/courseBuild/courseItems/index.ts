@@ -1,15 +1,15 @@
-import { Container } from '../itemsContainer';
-import { CourseLesson, newDataModel as getNewLesson } from './lesson';
 import {
   WalkMeDataNewLesson,
   NewCourseLessonData,
   WalkMeDataNewCourseTask,
   NewCourseItemData,
 } from '@walkme/types';
+import { Container } from '../../../itemsContainer';
+import { CourseLesson, newDataModel as getNewLesson } from './lesson';
 import { CourseTask, newDataModel as getNewItem } from './task';
 
 function isLessonData<TValue>(value: TValue): value is TValue {
-  return (value as any).index != null;
+  return !value || !(value as any).type;
 }
 
 export function isLesson<TValue>(value: TValue): value is TValue {

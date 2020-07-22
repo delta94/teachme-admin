@@ -1,6 +1,6 @@
-import { getRandomString } from './getRandomString';
+import { getRandomString, getRandomNumber, getRandomFractionNumber } from './getRandom';
 
-export { getRandomString };
+export { getRandomString, getRandomNumber, getRandomFractionNumber };
 
 export const allPropertiesAreNull = (obj: any) => {
   for (const key in obj) {
@@ -9,3 +9,6 @@ export const allPropertiesAreNull = (obj: any) => {
 
   return true;
 };
+
+export const propsAreEqual = (first: any, second: any): boolean =>
+  JSON.stringify(first) === JSON.stringify(second);

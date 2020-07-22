@@ -12,11 +12,10 @@ export const initialState = {
   isFetchingCourse: false,
   isFetchingCourseError: false,
   course: null,
-  courseOutline: [],
   filteredCourseOutline: [],
   courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
-};
+} as IState;
 
 export const reducer = produce(
   (draft: IState, action: IAction): IState => {
@@ -57,13 +56,11 @@ export const reducer = produce(
         draft.isFetchingCourseError = true;
         break;
       case ActionType.UpdateCourseOutline:
-        draft.courseOutline = action.courseOutline ?? initialState.courseOutline;
-        draft.filteredCourseOutline = action.courseOutline ?? initialState.filteredCourseOutline;
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =
           action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue;
-        draft.filteredCourseOutline = action.courseOutline ?? initialState.filteredCourseOutline;
+        draft.filteredCourseOutline = action.course?.items ?? initialState.filteredCourseOutline;
         break;
       case ActionType.ToggleDetailsPanel:
         draft.isDetailsPanelOpen = !draft.isDetailsPanelOpen;

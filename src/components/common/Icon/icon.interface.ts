@@ -20,4 +20,8 @@ export enum IconType {
   LessonSmall = 'lesson-small',
   Refresh = 'refresh',
   Plus = 'plus',
+  QuizSettings = 'quiz-settings',
+  EmptyCourse = 'empty-course',
+  EmptyLesson = 'empty-lesson',
+  Check = 'check',
 }
