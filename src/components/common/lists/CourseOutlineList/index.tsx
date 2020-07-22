@@ -9,6 +9,7 @@ import TaskItem from '../TaskItem';
 
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
 
+import CourseOutlineTabEmptyState from '../CourseOutlineTabEmptyState';
 import classes from './style.module.scss';
 
 export { CourseOutlineLessonItem };
@@ -81,9 +82,7 @@ export default function CourseOutlineList<T>({
             ),
           )
         ) : (
-          <div className={classes.placeholder}>
-            Start building your course by creating lessons and dragging items from the Items List
-          </div>
+          <CourseOutlineTabEmptyState />
         )}
       </Container>
     </div>
