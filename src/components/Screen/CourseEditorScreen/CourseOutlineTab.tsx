@@ -3,8 +3,8 @@ import React, { ReactElement } from 'react';
 import { useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
 import { SearchFilter } from '../../common/filters';
-import CourseOutlineList from './CourseOutlineList';
 
+import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
 import classes from './style.module.scss';
 

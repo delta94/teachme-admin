@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 
 import WMEmpty from '../../common/WMEmpty';
 import Icon, { IconType } from '../../common/Icon';
+
 import ActionMenu from './ActionMenu';
 
 export default function CourseOutlineListEmptyState(): ReactElement {
