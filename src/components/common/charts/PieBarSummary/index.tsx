@@ -15,12 +15,12 @@ export default function PieBarSummary({
     <div className={classes['pie-bar-summary']}>
       {value ? (
         <>
-          <span className={classes['pie-bar-value']}>{value}</span>
-          {unit && <span className={classes['pie-bar-unit']}>{unit}</span>}
-          {text && <span className={classes['pie-bar-text']}>{text}</span>}
+          <span className={classes['value']}>{value}</span>
+          {unit && <span className={classes['unit']}>{unit}</span>}
+          {text && <span className={classes['text']}>{text}</span>}
         </>
       ) : (
-        <span className={classes['pie-bar-value']}>- - : - -</span>
+        <span className={classes['value']}>- - : - -</span>
       )}
     </div>
   );
