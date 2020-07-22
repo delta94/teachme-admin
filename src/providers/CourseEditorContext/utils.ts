@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { getFlatItemsList, getCourse } from '../../walkme';
+import { getFlatItemsList, getCourse, getNewCourse } from '../../walkme';
 
 import { ActionType, IState, IDispatch } from './course-editor-context.interface';
 
@@ -59,7 +59,25 @@ export const fetchCourse = async (
 
     if (course) {
       dispatch({ type: ActionType.SetCourseTitle, courseTitle: course.title });
-      dispatch({ type: ActionType.UpdateCourseOutline, courseOutline: course.items.toArray() });
+      dispatch({ type: ActionType.UpdateCourseOutline });
+    }
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.FetchCourseError });
+  }
+};
+
+export const fetchNewCourse = async (dispatch: IDispatch): Promise<void> => {
+  dispatch({ type: ActionType.FetchCourse });
+
+  try {
+    const course = await getNewCourse();
+
+    dispatch({ type: ActionType.FetchCourseSuccess, course });
+
+    if (course) {
+      dispatch({ type: ActionType.SetCourseTitle, courseTitle: course.title });
+      dispatch({ type: ActionType.UpdateCourseOutline });
     }
   } catch (error) {
     console.error(error);
