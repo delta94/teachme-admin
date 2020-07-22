@@ -1,0 +1,14 @@
+import React, { ReactElement } from 'react';
+import { QuizScreen } from '@walkme/types';
+import cc from 'classcat';
+
+import classes from './style.module.scss';
+
+export default function WelcomeScreenForm({ data }: { data: QuizScreen }): ReactElement {
+  return (
+    <div className={classes['quiz-welcome-screen-form']}>
+      <p>welcome-screen</p>
+      {JSON.stringify(data)}
+    </div>
+  );
+}
