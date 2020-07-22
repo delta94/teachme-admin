@@ -1,13 +1,5 @@
 import React, { ReactElement, useState, ReactNode } from 'react';
-import {
-  Quiz,
-  QuizScreen,
-  QuizQuestion,
-  BaseQuiz,
-  BuildQuiz,
-  BaseQuizQuestion,
-} from '@walkme/types';
-import cc from 'classcat';
+import { QuizScreen, BuildQuiz, BaseQuizQuestion } from '@walkme/types';
 
 import DetailsPanel from '../DetailsPanel';
 import Icon, { IconType } from '../Icon';
@@ -65,8 +57,8 @@ export default function QuizEditForm({
   quizScreenData?: QuizScreen | BaseQuizQuestion;
   onClose: () => void;
 }): ReactElement {
-  const [originalQuiz, setOriginalQuiz] = useState(quizData);
-  const [screenData, setScreenData] = useState(quizScreenData as QuizScreen | BaseQuizQuestion);
+  // const [originalQuiz, setOriginalQuiz] = useState(quizData);
+  // const [screenData, setScreenData] = useState(quizScreenData as QuizScreen | BaseQuizQuestion);
 
   return (
     <DetailsPanel

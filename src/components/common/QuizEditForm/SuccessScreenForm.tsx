@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
-import { QuizScreen, QuizQuestion, BuildQuiz } from '@walkme/types';
-import cc from 'classcat';
+import React, { ReactElement } from 'react';
+import { QuizScreen } from '@walkme/types';
 
 import classes from './style.module.scss';
 

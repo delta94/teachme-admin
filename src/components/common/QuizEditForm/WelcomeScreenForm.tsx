@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { QuizScreen } from '@walkme/types';
-import cc from 'classcat';
 
 import classes from './style.module.scss';
 
