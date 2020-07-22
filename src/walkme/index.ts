@@ -1,36 +1,21 @@
 import walkme from '@walkme/editor-sdk';
-import { UserData } from '@walkme/editor-sdk/dist/user';
-import {
-  WalkMeDataCourse,
-  TypeName,
-  BuildCourse,
-  ContentItem,
-  TypeId,
-  WalkMeDataLesson,
-  WalkMeDataItem,
-  WalkMeDataNewLesson,
-  WalkMeDataNewCourse,
-} from '@walkme/types';
-import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
-import { SystemData } from '@walkme/editor-sdk/dist/system';
+import { TypeName, ContentItem, TypeId, WalkMeDataItem, WalkMeDataNewCourse } from '@walkme/types';
 
-import { UICourse, mapCourse } from './course/overview';
-import * as courses from './course/defaults';
-import { mapItem, getTypeId } from './item';
-import { getData } from './data';
-import { notEmpty, index } from './utils';
-import { Course } from './course/mappers/course';
+import { UICourse } from './data/courseList';
+import { mapItem } from './item';
+import * as data from './data';
+import * as courses from './data/courseBuild';
 import {
   getCourseListData,
   getCourseOutlineData,
   CourseOutlineData,
   CourseOutlineItem,
-  mapServeType,
+  mapServerType,
 } from './analytics';
-import { join } from './utils';
-import { CourseTask } from './course/mappers/course/courseItems/task';
-import { CourseChild } from './course/mappers/course/courseItems';
-import { CourseLesson } from './course/mappers/course/courseItems/lesson';
+import { CourseChild } from './data/courseBuild/courseItems';
+import { CourseLesson } from './data/courseBuild/courseItems/lesson';
+import { Course } from './data/courseBuild';
+import { CourseOutlineUIModel } from './data';
 
 declare global {
   interface Window {
@@ -65,25 +50,17 @@ export async function getCourseList(
   from: string,
   to: string,
 ): Promise<Array<UICourse>> {
-  const [coursesMetadata, coursesData] = await Promise.all([
-    walkme.data.getContent(TypeName.Course, environmentId),
-    getCourseListData(environmentId, from, to),
-  ]);
-  const mergedData = join(coursesMetadata as WalkMeDataCourse[], coursesData, 'Id', 'course_id');
-  const uiCourses = await Promise.all(
-    mergedData.map((course) => {
-      try {
-        return mapCourse(course, environmentId);
-      } catch (err) {
-        walkme.error(err);
-        return null;
-      }
-    }),
-  );
-
-  return uiCourses.filter(notEmpty);
+  return data.getCourseList(environmentId, from, to);
 }
 
+export async function getCourseOutline(
+  courseId: number,
+  environmentId: number,
+  from: string,
+  to: string,
+): Promise<CourseOutlineUIModel> {
+  return data.getCourseOutline(courseId, environmentId, from, to);
+}
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
  * @param environmentId
@@ -132,103 +109,12 @@ export async function switchSystem(id: number) {
   return walkme.system.switchSystem(id);
 }
 
-export type CourseOutlineUIModel = Array<CourseOutlineUIModelItem | CourseOutlineUIModelLesson>;
-
-export enum CourseChildType {
-  Lesson,
-  Task,
-}
-
-export type CourseOutlineUIModelLesson = {
-  type: CourseChildType.Lesson;
-  items: CourseOutlineUIModelItem[];
-};
-
-export type CourseOutlineUIModelItem = {
-  type: CourseChildType.Task;
-  title: string;
-  users_completed: number | null;
-  drop_off: number;
-};
-
-function mapUIOutlineItem(
-  item: CourseChild,
-  itemData?: CourseOutlineItem,
-): CourseOutlineUIModelItem {
-  return {
-    type: CourseChildType.Task,
-    drop_off: 0,
-    title: item.title,
-    users_completed: itemData?.users_complete || null,
-  };
-}
-
-function getCourseOutlineItem(
-  type: TypeName,
-  id: number,
-  allData: CourseOutlineData,
-): CourseOutlineItem | undefined {
-  // need to do this in a more performant way
-  return allData.find(function (item) {
-    return mapServeType(item.item_type) == type && item.item_id == id;
-  });
-}
-
-export async function getCourseOutline(
-  courseId: number,
-  environmentId: number,
-  from: string,
-  to: string,
-): Promise<CourseOutlineUIModel> {
-  const [course, outlineData] = await Promise.all([
-    getCourse(courseId, environmentId),
-    getCourseOutlineData(courseId, environmentId, from, to),
-  ]);
-
-  return course.items.toArray().map((item) => {
-    return item.type == TypeName.Lesson
-      ? {
-          type: CourseChildType.Lesson,
-          items: (<CourseLesson>item).childNodes
-            .toArray()
-            .map((item) =>
-              mapUIOutlineItem(
-                item,
-                getCourseOutlineItem(item.type as TypeName, item.id, outlineData),
-              ),
-            )
-            .map((item, index, array) => {
-              if (index == 0) return item;
-              const prev = array[index - 1].users_completed ?? 0;
-              const curr = array[index].users_completed ?? 0;
-              item.drop_off = (100 * curr) / prev;
-              return item;
-            }),
-        }
-      : mapUIOutlineItem(item, getCourseOutlineItem(item.type as TypeName, item.id, outlineData));
-  });
-}
-
-async function initData(environmentId: number) {
-  await Promise.all(
-    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>
-      getData(type, environmentId),
-    ),
-  );
-}
-
 export async function getNewCourse(): Promise<Course> {
-  await initData(0);
-  return new Course();
+  return courses.getNewCourse();
 }
 
 export async function getCourse(id: number, environmentId: number): Promise<Course> {
-  await initData(environmentId);
-
-  const [course] = ((await getData(TypeName.Course, environmentId, [id])) as unknown) as Array<
-    WalkMeDataNewCourse
-  >;
-  return new Course(course);
+  return courses.getCourse(id, environmentId);
 }
 
 /**

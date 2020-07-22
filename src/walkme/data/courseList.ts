@@ -1,6 +1,10 @@
 import * as wm from '@walkme/types';
+import walkme from '@walkme/editor-sdk';
 import { getCourseSegments } from '../segments';
-import { CourseListItem } from '../analytics';
+import { CourseListItem, getCourseListData } from '../analytics';
+import { TypeName, WalkMeDataCourse } from '@walkme/types';
+import { join } from '../utils';
+import { notEmpty } from '../utils';
 export interface UICourse {
   id: number;
   title: string;
@@ -20,7 +24,30 @@ export enum PublishStatus {
   Deleted,
 }
 
-export async function mapCourse(
+export async function getCourseList(
+  environmentId: number,
+  from: string,
+  to: string,
+): Promise<Array<UICourse>> {
+  const [coursesMetadata, coursesData] = await Promise.all([
+    walkme.data.getContent(TypeName.Course, environmentId),
+    getCourseListData(environmentId, from, to),
+  ]);
+  const mergedData = join(coursesMetadata as WalkMeDataCourse[], coursesData, 'Id', 'course_id');
+  const uiCourses = await Promise.all(
+    mergedData.map((course) => {
+      try {
+        return mapCourse(course, environmentId);
+      } catch (err) {
+        walkme.error(err);
+        return null;
+      }
+    }),
+  );
+  return uiCourses.filter(notEmpty);
+}
+
+async function mapCourse(
   wmCourse: wm.WalkMeDataCourse & CourseListItem,
   environmentId: number,
 ): Promise<UICourse> {

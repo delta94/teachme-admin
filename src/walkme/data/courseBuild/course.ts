@@ -11,14 +11,14 @@ import {
 import walkme from '@walkme/editor-sdk';
 import * as quiz from './quiz';
 import * as items from './courseItems/index';
-import defaults from '../../defaults';
-import { getGuid } from '../../../guid';
+import defaults from './defaults';
+import { getGuid } from '../../guid';
 import { Quiz } from './quiz';
 import { CourseChildContainer, isLesson } from './courseItems/index';
 import { CourseProperties } from './settings';
-import { createLink } from '../../../collection';
-import { getDataSync } from '../../../data';
-import { notEmpty } from '../../../utils';
+import { createLink } from '../../collection';
+import { notEmpty } from '../../utils';
+import { getDataSync } from '../../wmData';
 
 function getUniqueCourseName(): string {
   const courseNames = getDataSync(TypeId.Course).map((course) => course.Name);
@@ -30,7 +30,7 @@ function getUniqueCourseName(): string {
   return `${defaults.COURSE_NAME} ${Math.max(0, ...counters) + 1}`;
 }
 
-export function newDataModel(index: number): WalkMeDataNewCourse {
+function newDataModel(index: number): WalkMeDataNewCourse {
   return {
     Id: -1,
     Name: getUniqueCourseName(),

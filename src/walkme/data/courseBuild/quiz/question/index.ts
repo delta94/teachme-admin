@@ -6,10 +6,10 @@ import {
   NewQuestionData,
 } from '@walkme/types';
 import * as answers from './answers';
-import defaults from '../../../../defaults';
+import defaults from '../../defaults';
 import { QuizQuestionProperties } from './settings';
 import { BuildQuizAnswer } from './answers';
-import { Container } from '../../../../itemsContainer';
+import { Container } from '../../itemsContainer';
 
 export const getQuizQuestions = (questionsData: Array<WalkMeDataQuizQuestion>) =>
   new Container<QuizQuestion, NewQuestionData, WalkMeDataQuizQuestion>(

@@ -5,8 +5,8 @@ import {
   GroupType,
   TypeId,
 } from '@walkme/types';
-import defaults from '../../defaults';
-import { getGuid } from '../../../guid';
+import defaults from './defaults';
+import { getGuid } from '../../guid';
 
 export function newDataModel(index: number): WalkMeDataNewLesson {
   return {

@@ -5,9 +5,9 @@ import {
   CourseTaskCompletionType,
   NewCourseItemData,
 } from '@walkme/types';
-import { Container } from '../../../itemsContainer';
-import { getDataSync } from '../../../../data';
-import { getTypeName, getTypeId } from '../../../../item';
+import { Container } from '../itemsContainer';
+import { getDataSync } from '../../../wmData';
+import { getTypeName, getTypeId } from '../../../item';
 
 export const getCourseItems = (itemsData: Array<WalkMeDataNewCourseTask>) =>
   new Container(itemsData, (data) => new CourseTask(data), newDataModel);

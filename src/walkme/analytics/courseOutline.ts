@@ -33,7 +33,7 @@ export function getCourseOutlineData(
   return endpoint.get(`course/outline/${course_id}?${query.toString()}`);
 }
 
-export function mapServeType(type: APITypes): TypeName {
+export function mapServerType(type: APITypes): TypeName {
   switch (type) {
     case APITypes.Content:
       return TypeName.Content;

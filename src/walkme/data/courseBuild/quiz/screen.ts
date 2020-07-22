@@ -6,7 +6,7 @@ import {
   QUIZ_TEMPLATE_IDS,
   QUIZ_COMPONENTS_IDS,
 } from '@walkme/types';
-import defaults from '../../../defaults';
+import defaults from '../defaults';
 
 export function toUIModel(screen: WalkMeDataQuizScreen): QuizScreen {
   return {

@@ -1,4 +1,4 @@
-import { Container } from '../../../itemsContainer';
+import { Container } from '../itemsContainer';
 import { CourseLesson, newDataModel as getNewLesson } from './lesson';
 import {
   WalkMeDataNewLesson,

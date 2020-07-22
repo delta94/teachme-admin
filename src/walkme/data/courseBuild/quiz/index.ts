@@ -18,8 +18,8 @@ import { QuizQuestion } from './question';
 
 import * as question from './question';
 import * as settings from './settings';
-import defaults from '../../../defaults';
-import { Container } from '../../../itemsContainer';
+import defaults from '../defaults';
+import { Container } from '../itemsContainer';
 
 export function newDataModel(): WalkMeDataQuiz {
   return {

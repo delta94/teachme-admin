@@ -1,5 +1,5 @@
 import { WalkMeDataQuizSettings, BuildQuizProperties, BooleanStringOption } from '@walkme/types';
-import { convertToNumberBoolean, isTrue } from '../../../../utils';
+import { convertToNumberBoolean, isTrue } from '../../../utils';
 
 export function toUIModel(settings: WalkMeDataQuizSettings, passmark: number): BuildQuizProperties {
   return {

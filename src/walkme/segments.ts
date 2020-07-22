@@ -1,5 +1,5 @@
 import { WalkMeDataTag, WalkMeLink, TypeName, TypeId } from '@walkme/types';
-import { getData } from './data';
+import { getData } from './wmData';
 
 export async function getCourseSegments(
   course_id: number,

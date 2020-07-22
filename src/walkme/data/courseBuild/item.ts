@@ -3,7 +3,7 @@ import {
   WalkMeDataCourseTaskSettings,
   WalkMeDataCourseNewItem,
 } from '@walkme/types';
-import { createLink } from '../../../collection';
+import { createLink } from '../../collection';
 
 export function toDataModel(item: BuildCourseTask, index: number): WalkMeDataCourseNewItem {
   return createLink(

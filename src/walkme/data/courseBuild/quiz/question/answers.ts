@@ -1,6 +1,6 @@
 import { WalkMeDataQuizAnswer, QuizAnswer, NewAnswerData } from '@walkme/types';
-import { Container } from '../../../../itemsContainer';
-import defaults from '../../../../defaults';
+import { Container } from '../../itemsContainer';
+import defaults from '../../defaults';
 
 export function toUIModel(answersData: Array<WalkMeDataQuizAnswer>): Array<QuizAnswer> {
   return answersData.map((answersData) => ({

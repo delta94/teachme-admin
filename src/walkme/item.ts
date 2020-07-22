@@ -9,8 +9,6 @@ import {
   ResourceDataItem,
 } from '@walkme/types';
 import { resolveLinks, resolveLinksSync } from './collection';
-import { getData } from './data';
-import { Consumer } from 'react';
 
 export type PostMapper<T> = (item: ContentItem, original: WalkMeDataItem, link?: WalkMeLink) => T;
 export interface MapOptions<T> {

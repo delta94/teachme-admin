@@ -1,5 +1,5 @@
 import { WalkMeDataCourseSettings, BuildCourseProperties } from '@walkme/types';
-import { isTrue, convertToNumberBoolean } from '../../../utils';
+import { isTrue, convertToNumberBoolean } from '../../utils';
 
 export class CourseProperties implements BuildCourseProperties {
   public enableIfPreviousDone: boolean;
