@@ -2,13 +2,13 @@ import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
-import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
 import WMCollapse from '../../WMCollapse';
 import { IconType } from '../../Icon';
 import { CourseItemsList } from '../index';
 
 import LessonHeader from '../LessonHeader';
 import classes from './style.module.scss';
+import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
 
 export interface INewLesson extends CourseLesson {
   isNew?: boolean;

@@ -4,9 +4,9 @@ import {
   WalkMeDataNewCourseTask,
   NewCourseItemData,
 } from '@walkme/types';
-import { Container } from '../../../itemsContainer';
 import { CourseLesson, newDataModel as getNewLesson } from './lesson';
 import { CourseTask, newDataModel as getNewItem } from './task';
+import { Container } from '../itemsContainer';
 
 function isLessonData<TValue>(value: TValue): value is TValue {
   return !value || !(value as any).type;
