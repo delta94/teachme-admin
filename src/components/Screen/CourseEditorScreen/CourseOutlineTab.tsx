@@ -4,6 +4,7 @@ import { useCourseEditorContext, ActionType } from '../../../providers/CourseEdi
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { getRandomFractionNumber } from '../../../utils/';
 
+import CourseOutlineQuiz from '../../common/lists/CourseOutlineQuiz';
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -87,7 +88,7 @@ export default function CourseOutlineTab(): ReactElement {
           forceRerender={forceRerender}
         />
       )}
-      {quiz && <div>HAS QUIZ</div>}
+      {quiz && <CourseOutlineQuiz item={quiz} forceRerender={forceRerender} />}
     </>
   );
 }

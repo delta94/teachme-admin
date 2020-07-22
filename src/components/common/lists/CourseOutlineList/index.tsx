@@ -65,7 +65,7 @@ export default function CourseOutlineList<T>({
           showOnTop: true,
           className: classes['drop-preview'],
         }}
-        shouldAcceptDrop={() => true}
+        shouldAcceptDrop={(e: any, payload: any) => !payload.answers}
       >
         {items.length ? (
           (items as any[]).map((item, i) =>
