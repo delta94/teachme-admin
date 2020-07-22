@@ -17,21 +17,20 @@ export function notEmpty<TValue>(value: TValue | null | undefined): value is TVa
 export function join<T, S>(arr1: T[], arr2: S[], prop1: string, prop2: string): (T & S)[] {
   console.time('join');
   const joined: (T & S)[] = [];
-  const map1: any = {};
-  arr1.forEach((item) => {
-    //@ts-ignore
-    const key = item[prop1].toString();
-    map1[key] = item;
-  });
+  const map: any = {};
   arr2.forEach((item) => {
     //@ts-ignore
     const key = item[prop2].toString();
-    const base = map1[key];
-    if (!base) return;
+    map[key] = item;
+  });
+  arr1.forEach((item) => {
+    //@ts-ignore
+    const key = item[prop1].toString();
+    const base = map[key];
 
     joined.push({
-      ...base,
       ...item,
+      ...(base || {}),
     });
   });
   console.timeEnd('join');
