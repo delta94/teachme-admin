@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { getRandomNumber } from '../../../utils/getRandomString';
+import { getRandomFractionNumber } from '../../../utils/getRandomString';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
@@ -56,7 +56,7 @@ export default function CourseOutlineTab(): ReactElement {
       // Add new lesson
       const newLesson = course?.items.addNewItem();
       if (newLesson) {
-        newLesson.id = getRandomNumber();
+        newLesson.id = getRandomFractionNumber();
       }
       forceRerender();
     } else {
