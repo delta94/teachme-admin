@@ -1,20 +1,20 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { Switch } from 'antd';
-import { SwitchProps } from 'antd/lib/switch';
+import { SwitchProps, SwitchSize } from 'antd/lib/switch';
 
 import classes from './style.module.scss';
 
-export interface IWMSwitch extends SwitchProps {
+export interface IWMSwitch extends Omit<SwitchProps, 'size'> {
   label: string;
   infoText?: string;
+  size?: SwitchSize;
 }
 
 export default function WMSwitch({
   label,
   infoText,
   size = 'small',
-  checked,
   className,
   ...otherProps
 }: IWMSwitch): ReactElement {
@@ -22,14 +22,14 @@ export default function WMSwitch({
     <div
       className={cc([
         classes['wm-switch'],
+        className,
         {
           [classes['switch-size-default']]: size === 'default',
-          [classes['switch-size-small']]: size === 'small',
         },
       ])}
     >
       <label className={classes['wm-switch-wrap']}>
-        <Switch size={size} className={cc([classes['switch-btn'], className])} {...otherProps} />
+        <Switch size={size} className={cc([classes['switch-btn']])} {...otherProps} />
         <span className={classes['switch-label']}>{label}</span>
       </label>
       {infoText && <p className={classes['switch-info']}>{infoText}</p>}
