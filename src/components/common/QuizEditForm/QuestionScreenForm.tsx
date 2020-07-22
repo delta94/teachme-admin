@@ -1,10 +1,13 @@
 import React, { ReactElement } from 'react';
-import { BaseQuizQuestion } from '@walkme/types';
-import cc from 'classcat';
+import { BaseQuizQuestion, QuizScreen } from '@walkme/types';
 
 import classes from './style.module.scss';
 
-export default function QuestionScreenForm({ data }: { data: BaseQuizQuestion }): ReactElement {
+export default function QuestionScreenForm({
+  data,
+}: {
+  data?: BaseQuizQuestion | QuizScreen;
+}): ReactElement {
   return (
     <div className={classes['quiz-question-screen-form']}>
       <p>question-screen</p>

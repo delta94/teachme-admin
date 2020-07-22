@@ -16,6 +16,7 @@ export enum QuizScreenType {
   SuccessScreen = 'success-screen',
   QuestionScreen = 'question-screen',
 }
+
 const screenTitle = (type: QuizScreenType, data?: QuizScreen | BaseQuizQuestion): string => {
   switch (type) {
     case QuizScreenType.WelcomeScreen:
@@ -26,21 +27,6 @@ const screenTitle = (type: QuizScreenType, data?: QuizScreen | BaseQuizQuestion)
       return 'Quiz Fail Page';
     case QuizScreenType.QuestionScreen:
       return data ? data.title : '';
-    default:
-      throw new Error(`Unknown quiz screen type ${type}`);
-  }
-};
-
-const screenTitleIcon = (type: QuizScreenType): ReactNode => {
-  switch (type) {
-    case QuizScreenType.WelcomeScreen:
-      return <Icon type={IconType.QuizSettings} />; // TODO: change to the correct icon
-    case QuizScreenType.SuccessScreen:
-      return <Icon type={IconType.QuizSettings} />; // TODO: change to the correct icon
-    case QuizScreenType.FailScreen:
-      return <Icon type={IconType.QuizSettings} />; // TODO: change to the correct icon
-    case QuizScreenType.QuestionScreen:
-      return <Icon type={IconType.QuizSettings} />; // TODO: change to the correct icon
     default:
       throw new Error(`Unknown quiz screen type ${type}`);
   }
@@ -59,29 +45,24 @@ export default function QuizEditForm({
 }): ReactElement {
   // const [originalQuiz, setOriginalQuiz] = useState(quizData);
   // const [screenData, setScreenData] = useState(quizScreenData as QuizScreen | BaseQuizQuestion);
+  const ScreenForm = {
+    [QuizScreenType.WelcomeScreen]: WelcomeScreenForm,
+    [QuizScreenType.SuccessScreen]: SuccessScreenForm,
+    [QuizScreenType.FailScreen]: FailScreenForm,
+    [QuizScreenType.QuestionScreen]: QuestionScreenForm,
+  };
+
+  const QuizScreenForm = ScreenForm[quizScreenType as keyof typeof ScreenForm];
 
   return (
     <DetailsPanel
       title={screenTitle(quizScreenType, quizScreenData)}
-      titleIcon={screenTitleIcon(quizScreenType)}
+      titleIcon={<Icon type={quizScreenType} />}
       isOpen={Boolean(quizScreenData)}
       onClose={onClose}
     >
       <div className={classes['quiz-edit']}>
-        {(() => {
-          switch (quizScreenType) {
-            case QuizScreenType.WelcomeScreen:
-              return <WelcomeScreenForm data={quizScreenData as QuizScreen} />;
-            case QuizScreenType.SuccessScreen:
-              return <SuccessScreenForm data={quizScreenData as QuizScreen} />;
-            case QuizScreenType.FailScreen:
-              return <FailScreenForm data={quizScreenData as QuizScreen} />;
-            case QuizScreenType.QuestionScreen:
-              return <QuestionScreenForm data={quizScreenData as BaseQuizQuestion} />;
-            default:
-              return <></>;
-          }
-        })()}
+        {QuizScreenForm && <QuizScreenForm data={quizScreenData} />}
       </div>
     </DetailsPanel>
   );
