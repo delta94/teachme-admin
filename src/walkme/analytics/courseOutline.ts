@@ -1,10 +1,15 @@
 import * as endpoint from './endpoint';
-import { TypeId } from '@walkme/types';
+import { TypeId, TypeName } from '@walkme/types';
+import { types } from 'util';
 
+export enum APITypes {
+  Content = 'resource',
+  SWT = 'bizFlow',
+}
 export interface CourseOutlineItem {
-  id: number;
-  type: TypeId;
-  users_completed: number;
+  item_id: number;
+  item_type: APITypes;
+  users_complete: number;
 }
 
 export type CourseOutlineData = Array<CourseOutlineItem>;
@@ -26,4 +31,13 @@ export function getCourseOutlineData(
   query.append('from', from);
   query.append('to', to);
   return endpoint.get(`course/outline/${course_id}?${query.toString()}`);
+}
+
+export function mapServeType(type: APITypes): TypeName {
+  switch (type) {
+    case APITypes.Content:
+      return TypeName.Content;
+    case APITypes.SWT:
+      return TypeName.SmartWalkThru;
+  }
 }

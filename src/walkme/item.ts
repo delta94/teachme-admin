@@ -3,11 +3,10 @@ import {
   ContentItem,
   WalkMeDataCollectionItem,
   TypeName,
-  ResourceDataItem,
   TypeId,
   ResourceType,
-  WalkMeNewLink,
   WalkMeLink,
+  ResourceDataItem,
 } from '@walkme/types';
 import { resolveLinks, resolveLinksSync } from './collection';
 import { getData } from './data';
