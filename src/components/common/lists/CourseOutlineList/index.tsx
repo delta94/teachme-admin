@@ -14,7 +14,6 @@ export { CourseOutlineLessonItem };
 
 export interface ICourseOutlineItem extends ContentItem {
   isNew?: boolean;
-  localId?: string;
 }
 
 export interface ICourseOutlineList<T> extends IWMList<T> {

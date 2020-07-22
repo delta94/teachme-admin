@@ -14,6 +14,7 @@ import Checkboxes from './components/Checkboxes';
 import QuizSettings from './components/QuizSettings';
 import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
 import QuizEdit from './components/QuizEdit';
+import Toaster from './components/Toaster';
 
 import classes from './style.module.scss';
 
@@ -65,6 +66,12 @@ const tabs = [
     title: 'Quiz Edit',
     icon: undefined,
     content: <QuizEdit />,
+  },
+  {
+    id: 'toaster',
+    title: 'Toaster',
+    icon: undefined,
+    content: <Toaster />,
   },
 ];
 

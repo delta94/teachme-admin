@@ -50,6 +50,10 @@ export default function EditableTitle({
 
   const [inputValue, setInputValue] = useState(value);
 
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
   const onInputBlur = () => {
@@ -57,25 +61,25 @@ export default function EditableTitle({
     setShowInputText(false);
   };
 
+  const isCourseTitle = type === EditableTitleType.Course;
+
   return (
     <div className={classes['editable-title']}>
-      {type === EditableTitleType.Course && (
-        <Icon type={IconType.EventCourse} className={classes['course-icon']} />
-      )}
+      {isCourseTitle && <Icon type={IconType.EventCourse} className={classes['course-icon']} />}
       <div
         className={cc([
-          classes['text-title'],
+          classes['text'],
           classes[titleType[type as keyof typeof titleType]],
           { [classes['hidden']]: showInputText },
         ])}
         onClick={showInput}
       >
         {inputValue}
-        <Icon type={IconType.Pencil} className={classes['pencil-icon']} />
+        {isCourseTitle && <Icon type={IconType.Pencil} className={classes['pencil-icon']} />}
       </div>
       <WMInput
         className={cc([
-          classes['input-title'],
+          classes['input'],
           classes[titleType[type as keyof typeof titleType]],
           { [classes['hidden']]: !showInputText },
         ])}
@@ -84,6 +88,7 @@ export default function EditableTitle({
         onChange={onChange}
         onBlur={onInputBlur}
         onClick={(e) => e.stopPropagation()}
+        maxLength={isCourseTitle ? 50 : undefined}
       />
     </div>
   );

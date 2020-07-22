@@ -1,15 +1,10 @@
 .app {
   position: relative;
-  width: 100%;
-  height: auto;
-  background: var(--background);
-  max-width: 100%;
-  margin: 0 auto;
-  opacity: 1;
-
-  // sidebar slot
-  padding-left: var(--sidebarWidth);
-
-  transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
-  transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+  width: 100vw;
+  height: 100vh;
+  padding-top: var(--header-toolbar-height);
+  padding-left: var(--sidebar-width);
+  background-color: var(--wm-background-color);
+  transition: all 500ms cubic-bezier(0.68, -0.2, 0.265, 1.2);
+  overflow: auto;
 }

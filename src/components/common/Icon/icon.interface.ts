@@ -21,4 +21,5 @@ export enum IconType {
   Refresh = 'refresh',
   Plus = 'plus',
   QuizSettings = 'quiz-settings',
+  Check = 'check',
 }

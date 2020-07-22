@@ -51,8 +51,12 @@ export default function WMDropdown({
   );
 
   return (
-    <Dropdown overlay={menu} trigger={['click']} {...otherProps}>
-      {children}
-    </Dropdown>
+    <>
+      {options.length && selected && (
+        <Dropdown overlay={menu} trigger={['click']} {...otherProps}>
+          {children}
+        </Dropdown>
+      )}
+    </>
   );
 }

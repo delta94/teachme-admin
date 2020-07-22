@@ -1,8 +1,10 @@
 import React, { ReactElement, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import {
   useCourseEditorContext,
   fetchItemsList,
+  fetchCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
 
@@ -13,14 +15,18 @@ import ResourcesList from './ResourcesList';
 import CourseOutline from './CourseOutline';
 import classes from './style.module.scss';
 
-export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean }): ReactElement {
+export default function CourseEditorScreen(): ReactElement {
   const [{ courseTitle }, dispatch] = useCourseEditorContext();
+  const { courseId } = useParams();
 
   useEffect(() => {
     fetchItemsList(dispatch);
 
+    // TODO: replace hard-coded courseId with variable
+    if (courseId) fetchCourse(dispatch, 1284870);
+
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch]);
+  }, [dispatch, courseId]);
 
   const onCourseTitleBlur = (courseTitle: string) =>
     dispatch({ type: ActionType.SetCourseTitle, courseTitle });
@@ -28,7 +34,7 @@ export default function CourseEditorScreen({ isNew = false }: { isNew?: boolean 
   return (
     <>
       <ScreenHeader
-        title={<EditableTitle onBlur={onCourseTitleBlur} value={courseTitle} isNew={isNew} />}
+        title={<EditableTitle onBlur={onCourseTitleBlur} value={courseTitle} isNew={!courseId} />}
         hideTimeFilter={true}
       />
       <div className={classes['cards-wrapper']}>
