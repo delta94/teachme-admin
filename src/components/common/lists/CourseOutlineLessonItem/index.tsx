@@ -4,8 +4,7 @@ import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
 import WMCollapse from '../../WMCollapse';
-import Header from '../../Header';
-import Icon, { IconType } from '../../Icon';
+import { IconType } from '../../Icon';
 import { CourseItemsList } from '../index';
 
 import LessonHeader from '../LessonHeader';

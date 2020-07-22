@@ -7,7 +7,7 @@ import { Course } from '../../../../walkme/course/mappers/course';
 import { IWMList } from '../../WMList';
 import TaskItem from '../TaskItem';
 
-import CourseOutlineLessonItem from '../CourseOutlineLessonItem/courseOutlineLessonItem';
+import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
 
 import classes from './style.module.scss';
 
