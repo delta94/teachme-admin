@@ -72,7 +72,6 @@ export const fetchNewCourse = async (dispatch: IDispatch): Promise<void> => {
 
   try {
     const course = await getNewCourse();
-    debugger;
 
     dispatch({ type: ActionType.FetchCourseSuccess, course });
 

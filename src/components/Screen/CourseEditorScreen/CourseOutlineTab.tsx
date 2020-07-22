@@ -2,15 +2,14 @@ import React, { ReactElement, useState } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
+import { getRandomNumber } from '../../../utils/getRandomString';
 
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
-import { CourseOutlineList, ICourseOutlineItem } from '../../common/lists';
+import { CourseOutlineList } from '../../common/lists';
 
-import { getRandomString } from '../../../utils';
-import { getRandomNumber } from '../../../utils/getRandomString';
 import classes from './style.module.scss';
 
 export interface IProperties {

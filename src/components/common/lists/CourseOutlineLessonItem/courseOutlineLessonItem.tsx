@@ -1,28 +1,30 @@
 import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
+import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
-import WMCollapse, { WMCollapsePanel } from '../../WMCollapse';
+import WMCollapse from '../../WMCollapse';
 import Header from '../../Header';
 import Icon, { IconType } from '../../Icon';
 import { CourseItemsList } from '../index';
 
+import LessonHeader from '../LessonHeader';
 import classes from './style.module.scss';
 
 export interface INewLesson extends CourseLesson {
   isNew?: boolean;
 }
 
-export default function Index({
+export default function CourseOutlineLessonItem({
   item,
+  className,
   forceRerender,
 }: {
   item: INewLesson;
+  className: string;
   forceRerender: () => void;
 }): ReactElement {
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
-    console.log('on inner drop', e, destinationItemID, element);
-
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
     const isRemove = e.removedIndex !== undefined && e.removedIndex !== null;
     const isReorder = isAdd && isRemove;
@@ -43,31 +45,26 @@ export default function Index({
   }
 
   return (
-    <Draggable className={classes['course-outline-list']}>
-      <WMCollapse className={classes['lesson']}>
-        <WMCollapsePanel
-          header={
-            <Header className={classes['lesson-header']}>
-              <Icon type={IconType.Lesson} />
-              {item.title}
-            </Header>
-          }
-          key={item.id}
-        >
-          <CourseItemsList
-            items={item.childNodes.toArray()}
-            onDrop={(e: any) => onInnerDrop(e, item.id.toString(), e.element)}
-            getChildPayload={(index: number) => item.childNodes?.toArray()[index]}
-            dragClass="card-ghost"
-            dropClass="card-ghost-drop"
-            dropPlaceholder={{
-              animationDuration: 150,
-              showOnTop: true,
-              className: classes['drop-preview'],
-            }}
-            shouldAcceptDrop={shouldAcceptDrop}
-          />
-        </WMCollapsePanel>
+    <Draggable className={cc([classes['course-outline-list'], className])}>
+      <WMCollapse
+        className={classes['lesson']}
+        headerClassName={classes['lesson-header']}
+        header={<LessonHeader title={item.title} type={IconType.Lesson} />}
+      >
+        <CourseItemsList
+          items={item.childNodes.toArray()}
+          onDrop={(e: any) => onInnerDrop(e, item.id.toString(), e.element)}
+          getChildPayload={(index: number) => item.childNodes?.toArray()[index]}
+          dragClass={classes['card-ghost']}
+          dropClass={classes['card-ghost-drop']}
+          dropPlaceholder={{
+            animationDuration: 150,
+            showOnTop: false,
+            className: classes['drop-preview'],
+          }}
+          shouldAcceptDrop={shouldAcceptDrop}
+          className={cc([{ [classes['is-empty']]: !item.childNodes.toArray().length }])}
+        />
       </WMCollapse>
     </Draggable>
   );

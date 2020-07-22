@@ -35,3 +35,10 @@
     }
   }
 }
+
+.card-ghost {
+  border: 1px solid #e6edf1;
+  background-color: var(--white);
+  box-shadow: 3px 3px 7px 0 #dfdfdf;
+  cursor: grabbing;
+}

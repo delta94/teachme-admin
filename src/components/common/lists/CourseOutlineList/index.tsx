@@ -7,11 +7,11 @@ import { Course } from '../../../../walkme/course/mappers/course';
 import { IWMList } from '../../WMList';
 import TaskItem from '../TaskItem';
 
-import Index from '../CourseOutlineLessonItem';
+import CourseOutlineLessonItem from '../CourseOutlineLessonItem/courseOutlineLessonItem';
 
 import classes from './style.module.scss';
 
-export { Index };
+export { CourseOutlineLessonItem };
 
 export interface ICourseOutlineItem extends CourseLesson {
   isNew?: boolean;
@@ -71,9 +71,14 @@ export default function CourseOutlineList<T>({
         {items.length ? (
           (items as any[]).map((item, i) =>
             item.type === 'lesson' ? (
-              <Index item={item} key={item.id} forceRerender={forceRerender} />
+              <CourseOutlineLessonItem
+                item={item}
+                key={item.id}
+                forceRerender={forceRerender}
+                className={classes['outline-lesson']}
+              />
             ) : (
-              <TaskItem key={i} index={i} item={item} />
+              <TaskItem key={i} index={i} item={item} className={classes['outline-task']} />
             ),
           )
         ) : (

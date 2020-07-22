@@ -1,5 +1,8 @@
 import CourseItemsList from './CourseItemsList';
-import CourseOutlineList, { Index, ICourseOutlineItem } from './CourseOutlineList';
+import CourseOutlineList, {
+  CourseOutlineLessonItem,
+  ICourseOutlineItem,
+} from './CourseOutlineList';
 
-export { CourseItemsList, CourseOutlineList, Index };
+export { CourseItemsList, CourseOutlineList, CourseOutlineLessonItem };
 export type { ICourseOutlineItem };

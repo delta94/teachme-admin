@@ -22,7 +22,12 @@ export default function CourseItemsList({
 }: ICourseItemsList): ReactElement {
   return (
     <div className={cc([classes['course-items-list'], className])}>
-      <Container {...otherProps} getChildPayload={(i) => items && items[i]} onDrop={onDrop}>
+      <Container
+        {...otherProps}
+        getChildPayload={(i) => items && items[i]}
+        onDrop={onDrop}
+        dragClass={classes['card-ghost']}
+      >
         {items && items.map((item, i) => <TaskItem key={i} index={i} item={item} />)}
       </Container>
     </div>

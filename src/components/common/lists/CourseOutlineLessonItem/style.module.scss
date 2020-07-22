@@ -31,66 +31,11 @@
   }
 
   .lesson {
-    border: var(--wm-border);
     width: 100%;
-    margin-bottom: 0;
-    box-shadow: var(--wm-box-shadow);
-    border-radius: 5px;
+  }
 
-    & > .ant-collapse-item {
-      border-bottom: none;
-    }
-
-    :global(.ant-collapse-header) {
-      background-color: var(--white);
-    }
-
-    & > :global(.ant-collapse-item) {
-      & > :global(.ant-collapse-header),
-      &:last-child > :global(.ant-collapse-header) {
-        color: var(--neutral500);
-        padding: 6px 15px;
-        border-radius: 5px;
-      }
-
-      :global(.ant-collapse-arrow) {
-        color: var(--neutral500);
-      }
-    }
-
-    :global(.ant-collapse-content) {
-      border-top: var(--wm-border);
-
-      :global(.ant-collapse-content-box) {
-        padding: 0;
-      }
-
-      :global(.ant-list) {
-        margin-bottom: 0;
-
-        :global(.ant-list-item) {
-          padding: 6px 15px;
-          margin-bottom: 0;
-          font-size: 13px;
-          font-weight: 500;
-        }
-      }
-    }
-
-    .lesson-header {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      margin-left: 35px;
-      color: var(--neutral500);
-      text-transform: uppercase;
-      font-size: 11px;
-      font-weight: 600;
-
-      :global(.wm-icon) {
-        width: 18px;
-      }
-    }
+  .lesson-header {
+    cursor: grab;
   }
 }
 
@@ -103,7 +48,39 @@
 }
 
 .card-ghost {
+  border: 1px solid #e6edf1;
+  background-color: var(--white);
+  box-shadow: 3px 3px 7px 0 #dfdfdf;
+  cursor: grabbing;
 }
 
 .card-ghost-drop {
+}
+
+.is-empty {
+  height: 70px;
+  position: relative;
+
+  :global(.smooth-dnd-stretcher-element) {
+    position: absolute;
+  }
+
+  &::after {
+    content: 'Drag content into the lesson';
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%);
+    /* text-align: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -37px;
+
+    z-index: 0;*/
+  }
 }
