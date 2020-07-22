@@ -4,12 +4,14 @@ import { Container } from 'react-smooth-dnd';
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
 import { CourseChild } from '../../../../walkme/course/mappers/course/courseItems';
 import { Course } from '../../../../walkme/course/mappers/course';
-import { IWMList } from '../../WMList';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+
+import { IWMList } from '../../../common/WMList';
+
 import TaskItem from '../TaskItem';
-
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
+import CourseOutlineListEmptyState from '../CourseOutlineListEmptyState';
 
-import CourseOutlineTabEmptyState from '../CourseOutlineTabEmptyState';
 import classes from './style.module.scss';
 
 export { CourseOutlineLessonItem };
@@ -21,14 +23,14 @@ export interface ICourseOutlineItem extends CourseLesson {
 export interface ICourseOutlineList<T> extends IWMList<T> {
   items: CourseLesson[] | CourseChild[];
   course: Course;
-  forceRerender: () => void;
 }
 
 export default function CourseOutlineList<T>({
   items,
   course,
-  forceRerender,
 }: ICourseOutlineList<T>): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   const onDrop = (
     addedIndex: number | undefined | null,
     removedIndex: number | undefined | null,
@@ -52,7 +54,7 @@ export default function CourseOutlineList<T>({
       course?.items.removeItem(payload);
     }
 
-    forceRerender();
+    dispatch({ type: ActionType.UpdateCourseOutline });
   };
 
   return (
@@ -74,7 +76,6 @@ export default function CourseOutlineList<T>({
               <CourseOutlineLessonItem
                 item={item}
                 key={item.id}
-                forceRerender={forceRerender}
                 className={classes['outline-lesson']}
               />
             ) : (
@@ -82,7 +83,7 @@ export default function CourseOutlineList<T>({
             ),
           )
         ) : (
-          <CourseOutlineTabEmptyState />
+          <CourseOutlineListEmptyState />
         )}
       </Container>
     </div>

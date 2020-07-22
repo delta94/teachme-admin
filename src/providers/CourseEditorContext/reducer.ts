@@ -13,6 +13,7 @@ export const initialState = {
   isFetchingCourseError: false,
   course: null,
   filteredCourseOutline: [],
+  refreshCourseOutline: false,
   courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
 } as IState;
@@ -56,6 +57,7 @@ export const reducer = produce(
         draft.isFetchingCourseError = true;
         break;
       case ActionType.UpdateCourseOutline:
+        draft.refreshCourseOutline = !draft.refreshCourseOutline;
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =

@@ -3,11 +3,14 @@ import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/course/mappers/course/courseItems/lesson';
-import WMCollapse from '../../WMCollapse';
-import { IconType } from '../../Icon';
-import { CourseItemsList } from '../index';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
+import WMCollapse from '../../../common/WMCollapse';
+import { IconType } from '../../../common/Icon';
+
+import CourseItemsList from '../CourseItemsList';
 import LessonHeader from '../LessonHeader';
+
 import classes from './style.module.scss';
 
 export interface INewLesson extends CourseLesson {
@@ -17,12 +20,12 @@ export interface INewLesson extends CourseLesson {
 export default function CourseOutlineLessonItem({
   item,
   className,
-  forceRerender,
 }: {
   item: INewLesson;
   className: string;
-  forceRerender: () => void;
 }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
     const isRemove = e.removedIndex !== undefined && e.removedIndex !== null;
@@ -36,13 +39,13 @@ export default function CourseOutlineLessonItem({
       item.childNodes.removeItem(e.payload);
     }
 
-    forceRerender();
+    dispatch({ type: ActionType.UpdateCourseOutline });
   };
 
   const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson';
 
   return (
-    <Draggable className={cc([classes['course-outline-list-item'], className])}>
+    <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
       <WMCollapse
         className={classes['lesson']}
         headerClassName={classes['lesson-header']}

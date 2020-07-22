@@ -5,7 +5,6 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   fetchCourse,
-  fetchNewCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
 
@@ -22,13 +21,7 @@ export default function CourseEditorScreen(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-
-    // TODO: replace hard-coded courseId with variable
-    if (courseId) {
-      fetchCourse(dispatch, 1284870);
-    } else {
-      fetchNewCourse(dispatch);
-    }
+    fetchCourse(dispatch, courseId);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
