@@ -80,8 +80,8 @@ export class Course implements BuildCourse {
               ? ((getDataSync(TypeId.Lesson, [
                   item.DeployableID,
                 ])[0] as unknown) as WalkMeDataNewLesson)
-              : item,
-          ),
+              : item;
+          }),
     );
     this._quiz = new Quiz(course.Quiz);
     this.properties = new CourseProperties(course.Settings);
