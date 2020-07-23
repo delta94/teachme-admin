@@ -1,16 +1,17 @@
 import { ReactNode } from 'react';
-import { ContentItem, BuildCourse } from '@walkme/types';
-
+import { ContentItem } from '@walkme/types';
 import { TypeContainer } from '@walkme/types/dist/general/apps';
 import {
   CourseTaskBase,
   NewCourseItemData,
   NewCourseLessonData,
 } from '@walkme/types/dist/general/apps/teachme/course';
+
 import { ICourseOutlineItem } from '../../components/common/lists';
+import { Course } from '../../walkme/data/courseBuild';
+import { Quiz } from '../../walkme/data/courseBuild/quiz';
 
 import { ActionType } from './actions';
-import { Course, Quiz } from '../../walkme/data/courseBuild';
 
 export { ActionType };
 

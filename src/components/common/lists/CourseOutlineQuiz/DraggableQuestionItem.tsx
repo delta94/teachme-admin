@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
-import { QuizQuestion } from '../../../../walkme/course/mappers/course/quiz/question';
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
 import classes from './style.module.scss';
 import QuestionItem from './QuestionItem';

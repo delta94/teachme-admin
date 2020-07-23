@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
-import { Quiz } from '../../../../walkme/course/mappers/course/quiz';
+import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
+
 import WMCollapse from '../../WMCollapse';
 import { IconType } from '../../Icon';
 

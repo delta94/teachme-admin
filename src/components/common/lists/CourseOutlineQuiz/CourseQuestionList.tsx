@@ -1,9 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
-
 import cc from 'classcat';
 
-import { QuizQuestion } from '../../../../walkme/course/mappers/course/quiz/question';
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
 import DraggableQuestionItem from './DraggableQuestionItem';
 import classes from './style.module.scss';
