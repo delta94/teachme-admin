@@ -1,7 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
-import TextCounter from '../../common/TextCounterInput';
-import TextCounterTextarea from '../TextCounterTextarea';
+import QuizScreenForm from './QuizScreenForm';
 
 import classes from './style.module.scss';
 
@@ -12,41 +11,23 @@ export default function WelcomeScreenForm({
   data?: any;
   handleDataChanged: (updatedData: any) => void;
 }): ReactElement {
+  const [screen, setScreen] = useState(data);
   const onDataChanged = (updatedData: any) => {
-    handleDataChanged({ ...data, ...updatedData });
+    handleDataChanged({ ...screen, ...updatedData });
+
+    setScreen((prev: any) => ({
+      ...prev,
+      ...updatedData,
+    }));
   };
 
   return (
     <div className={classes['quiz-welcome-screen-form']}>
-      <TextCounter
-        maxLength={80}
-        placeholder="Text"
-        label="Title"
-        value={data?.title}
-        onChange={(e) => onDataChanged({ title: e.target.value })}
-      />
-      <TextCounterTextarea
-        maxLength={210}
-        placeholder="Text"
-        label="Description"
-        value={data?.description}
-        minRows={3}
-        maxRows={5}
-        onChange={(e) => onDataChanged({ description: e.target.value })}
-      />
-      <TextCounter
-        maxLength={80}
-        placeholder="Text"
-        label="Title"
-        value={data?.buttons[0].text}
-        onChange={(e) =>
-          onDataChanged({
-            buttons: data?.buttons.map((btn: any, index: number) =>
-              index === 0 ? { ...btn, text: e.target.value } : btn,
-            ),
-          })
-        }
-      />
+      <QuizScreenForm data={screen} onDataChanged={onDataChanged} />
+      <p className={classes['info-text']}>
+        Note: This info will also be presented in the Quiz call-to-action banner, in the user’s
+        course page.
+      </p>
     </div>
   );
 }

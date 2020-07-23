@@ -50,7 +50,7 @@ export default function QuizEditForm({
     [QuizScreenType.QuestionScreen]: QuestionScreenForm,
   };
 
-  const QuizScreenForm = ScreenForm[quizScreenType as keyof typeof ScreenForm];
+  const ScreenFormComponent = ScreenForm[quizScreenType as keyof typeof ScreenForm];
 
   return (
     <DetailsPanel
@@ -60,8 +60,8 @@ export default function QuizEditForm({
       onClose={onClose}
     >
       <div className={classes['quiz-edit']}>
-        {QuizScreenForm && (
-          <QuizScreenForm
+        {ScreenFormComponent && (
+          <ScreenFormComponent
             data={
               quizScreenType === QuizScreenType.QuestionScreen
                 ? (quizScreenData as BaseQuizQuestion)
