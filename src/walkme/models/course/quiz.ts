@@ -20,6 +20,8 @@ export type QuizOutlineUIQuestion = {
   type: QuestionType;
   /** Answers data */
   answers: Array<QuizOutlineUIAnswer>;
+  /** Number of responses received for this question */
+  total_responses: number;
 };
 
 /** Quiz answer data */

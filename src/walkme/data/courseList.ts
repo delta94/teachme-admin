@@ -14,6 +14,7 @@ export interface UICourse {
   users_completed: number | null;
   avg_quiz_score: number | null;
   avg_quiz_attempts: number | null;
+  quiz_passed: boolean;
 }
 
 export enum PublishStatus {
@@ -56,7 +57,7 @@ async function mapCourse(
     throw new Error(
       `Could not find publish data for item [${wmCourse.Name}] environment id [${environmentId}]`,
     );
-
+      //todo: take care of no quiz
   return {
     id: wmCourse.Id,
     title: wmCourse.Name,
@@ -66,6 +67,7 @@ async function mapCourse(
     avg_quiz_score: wmCourse.avg_quiz_score,
     users_completed: wmCourse.users_completed,
     users_started: wmCourse.users_started,
+    quiz_passed: wmCourse.avg_quiz_score >= wmCourse.Quiz.Passmark,
   };
 }
 

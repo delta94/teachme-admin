@@ -1,5 +1,4 @@
 import walkme from '@walkme/editor-sdk';
-import { SystemData } from '@walkme/editor-sdk/dist/system';
 
 /**
  * Returns Data for logged-in user
