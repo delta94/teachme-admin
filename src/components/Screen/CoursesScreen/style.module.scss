@@ -19,3 +19,36 @@
 .dropdown-tag:global(.ant-tag) {
   cursor: pointer;
 }
+
+.empty-state {
+  text-align: center;
+  color: var(--empty-text);
+  font-family: var(--font-primary);
+  font-size: 14px;
+  letter-spacing: 0.43px;
+  line-height: 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  align-items: center;
+  justify-content: center;
+
+  .empty-icon {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+    color: var(--empty-text);
+    margin-bottom: unset;
+    font-weight: unset;
+  }
+
+  .create-btn:global(.ant-btn) {
+    margin-right: unset;
+
+    span {
+      font-size: 12px;
+    }
+  }
+}

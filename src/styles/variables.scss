@@ -53,6 +53,7 @@
   --neutral300: #97adb8;
   --neutral200: #b3b3b3;
   --neutral100: #e1e9ee;
+  --empty-text: rgba(0, 0, 0, 0.5);
 
   // used for borders that separate categories from other items
   --border100: rgba(170, 196, 209, 0.2);
@@ -85,4 +86,8 @@
 
   // switch
   --switch-off: #9ba1b0;
+
+  //disabled
+  --disable-dot: #aabed2;
+  --disable-chart: #c1c1c1;
 }
