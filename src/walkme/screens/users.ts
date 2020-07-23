@@ -40,6 +40,14 @@ export function getUsersCount(
   return analytics.getUsersCount(environment, from, to, options);
 }
 
+/**
+ * Downloads the users data as csv
+ * @param environmentId requested environment id
+ * @param from start date in format YYYY-MM-DD
+ * @param to end date in format YYYY-MM-DD
+ * @param options pagination and search options - see object documentation
+ * @returns a promise that is resolved once the file is downloaded
+ */
 export async function exportUsersData(
   environment: number,
   from: string,

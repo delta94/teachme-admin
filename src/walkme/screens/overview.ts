@@ -50,8 +50,11 @@ export async function deleteCourse(courseId: number) {
 }
 
 /**
- * Downloads the courses table data as csv
- * @param environmentId the requested walkme environment
+ * Downloads the courses table as csv
+ * @param environmentId requested environment id
+ * @param from start date in format YYYY-MM-DD
+ * @param to end date in format YYYY-MM-DD
+ * @returns a promise that is resolved once the file is downloaded
  */
 export async function exportCoursesData(
   environmentId: number,

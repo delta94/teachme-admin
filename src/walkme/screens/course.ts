@@ -58,8 +58,11 @@ export async function getCourseOverview(
 }
 
 /**
- * Downloads the courses table data as csv
+ * Downloads the course outline data as csv
  * @param environmentId the requested walkme environment
+ * @param from start date in format YYYY-MM-DD
+ * @param to end date in format YYYY-MM-DD
+ * @returns a promise that is resolved once the file is downloaded
  */
 export async function exportCourseOutline(
   courseId: number,
