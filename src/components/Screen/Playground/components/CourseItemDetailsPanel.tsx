@@ -66,6 +66,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
           <CourseOutlineList
             items={course?.items.toArray() ?? []}
             course={course}
+            hasQuiz={!!course?.quiz}
             forceRerender={forceRerender}
             handleItemClick={(item) => {
               setSelectedItem(item);

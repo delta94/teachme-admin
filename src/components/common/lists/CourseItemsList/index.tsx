@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Container } from 'react-smooth-dnd';
 
 import { ContentItem } from '@walkme/types';
@@ -12,6 +12,7 @@ export interface ICourseItemsList {
   items: Array<ContentItem>;
   className?: string;
   onDrop?: any;
+  emptyState?: ReactNode;
   [key: string]: any;
   handleItemClick?: (item: ContentItem) => void;
 }
@@ -21,8 +22,11 @@ export default function CourseItemsList({
   onDrop,
   className,
   handleItemClick,
+  emptyState,
   ...otherProps
 }: ICourseItemsList): ReactElement {
+  const localEmptyState = emptyState ?? <div>No items were found</div>;
+
   return (
     <div className={cc([classes['course-items-list'], className])}>
       <Container
@@ -31,14 +35,16 @@ export default function CourseItemsList({
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
       >
-        {items.map((item, i) => (
-          <TaskItem
-            key={i}
-            index={i}
-            item={item}
-            onClick={() => handleItemClick && handleItemClick(item)}
-          />
-        ))}
+        {items.length
+          ? items.map((item, i) => (
+              <TaskItem
+                key={i}
+                index={i}
+                item={item}
+                onClick={() => handleItemClick && handleItemClick(item)}
+              />
+            ))
+          : localEmptyState}
       </Container>
     </div>
   );

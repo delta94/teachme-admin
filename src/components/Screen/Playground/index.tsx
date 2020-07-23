@@ -10,6 +10,7 @@ import WMCard from '../../common/WMCard';
 import Dialogs from './components/Dialogs';
 import Counter from './components/Counter';
 import Switches from './components/Switches';
+import Empty from './components/Empty';
 import Checkboxes from './components/Checkboxes';
 import QuizSettings from './components/QuizSettings';
 import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
@@ -36,6 +37,12 @@ const tabs = [
     title: 'Switches',
     icon: undefined,
     content: <Switches />,
+  },
+  {
+    id: 'empty',
+    title: 'Empty',
+    icon: undefined,
+    content: <Empty />,
   },
   {
     id: 'checkboxes',

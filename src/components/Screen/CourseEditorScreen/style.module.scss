@@ -52,6 +52,13 @@
     .filters-bar {
       padding: 0 20px 13px;
     }
+
+    .empty-state-items {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .course-structure {
