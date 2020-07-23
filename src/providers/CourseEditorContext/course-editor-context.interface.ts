@@ -7,7 +7,7 @@ import {
   NewCourseLessonData,
 } from '@walkme/types/dist/general/apps/teachme/course';
 
-import { ICourseOutlineItem } from '../../components/common/lists';
+import { ICourseOutlineItem } from '../../components/Screen/CourseEditorScreen/CourseOutlineList';
 import { Course } from '../../walkme/data/courseBuild';
 import { Quiz } from '../../walkme/data/courseBuild/quiz';
 
@@ -43,6 +43,7 @@ export interface IState {
   filteredCourseOutline:
     | TypeContainer<CourseTaskBase, NewCourseItemData | NewCourseLessonData>
     | [];
+  refreshCourseOutline: boolean;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
 }

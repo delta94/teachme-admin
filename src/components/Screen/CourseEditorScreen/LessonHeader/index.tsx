@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
-import Header from '../../Header';
-import Icon from '../../Icon';
+import Header from '../../../common/Header';
+import Icon from '../../../common/Icon';
 
 import classes from './style.module.scss';
 

@@ -1,15 +1,17 @@
 import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
-import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
 
-import WMCollapse from '../../WMCollapse';
-import { IconType } from '../../Icon';
-import { CourseItemsList } from '../index';
-
-import LessonHeader from '../LessonHeader';
-import classes from './style.module.scss';
 import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+
+import WMCollapse from '../../../common/WMCollapse';
+import { IconType } from '../../../common/Icon';
+
+import CourseItemsList from '../CourseItemsList';
+import LessonHeader from '../LessonHeader';
+
+import classes from './style.module.scss';
 
 export interface INewLesson extends CourseLesson {
   isNew?: boolean;
@@ -18,14 +20,14 @@ export interface INewLesson extends CourseLesson {
 export default function CourseOutlineLessonItem({
   item,
   className,
-  forceRerender,
   handleItemClick,
 }: {
   item: INewLesson;
   className: string;
-  forceRerender: () => void;
   handleItemClick: (item: any) => void;
 }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
     const isRemove = e.removedIndex !== undefined && e.removedIndex !== null;
@@ -39,13 +41,13 @@ export default function CourseOutlineLessonItem({
       item.childNodes.removeItem(e.payload);
     }
 
-    forceRerender();
+    dispatch({ type: ActionType.UpdateCourseOutline });
   };
 
   const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson' && !payload.answers;
 
   return (
-    <Draggable className={cc([classes['course-outline-list-item'], className])}>
+    <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
       <WMCollapse
         className={classes['lesson']}
         headerClassName={classes['lesson-header']}
