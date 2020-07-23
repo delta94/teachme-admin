@@ -23,11 +23,13 @@ export interface ICourseOutlineItem extends CourseLesson {
 export interface ICourseOutlineList<T> extends IWMList<T> {
   items: CourseLesson[] | CourseChild[];
   course: Course;
+  hasQuiz: boolean;
 }
 
 export default function CourseOutlineList<T>({
   items,
   course,
+  hasQuiz,
 }: ICourseOutlineList<T>): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
 
@@ -68,23 +70,21 @@ export default function CourseOutlineList<T>({
           showOnTop: true,
           className: classes['drop-preview'],
         }}
-        shouldAcceptDrop={() => true}
+        shouldAcceptDrop={(e: any, payload: any) => !payload.answers}
       >
-        {items.length ? (
-          (items as any[]).map((item, i) =>
-            item.type === 'lesson' ? (
-              <CourseOutlineLessonItem
-                item={item}
-                key={item.id}
-                className={classes['outline-lesson']}
-              />
-            ) : (
-              <TaskItem key={i} index={i} item={item} className={classes['outline-task']} />
-            ),
-          )
-        ) : (
-          <CourseOutlineListEmptyState />
-        )}
+        {items.length
+          ? (items as any[]).map((item, i) =>
+              item.type === 'lesson' ? (
+                <CourseOutlineLessonItem
+                  item={item}
+                  key={item.id}
+                  className={classes['outline-lesson']}
+                />
+              ) : (
+                <TaskItem key={i} index={i} item={item} className={classes['outline-task']} />
+              ),
+            )
+          : !hasQuiz && <CourseOutlineListEmptyState />}
       </Container>
     </div>
   );
