@@ -6,6 +6,7 @@ import { getAllCoursesOverview } from '../analytics';
 import { AllCoursesOverviewResponse } from '../models';
 import { getCourse } from '../data/courseBuild';
 import { getData } from '../data/services/wmData';
+import { saveAsCsv } from '../utils';
 /**
  * Returns a list of courses data
  * @param environmentId the current selected environment id
@@ -52,8 +53,27 @@ export async function deleteCourse(courseId: number) {
  * Downloads the courses table data as csv
  * @param environmentId the requested walkme environment
  */
-export async function exportCoursesData(environmentId: number): Promise<void> {
-  // todo:
+export async function exportCoursesData(
+  environmentId: number,
+  from: string,
+  to: string,
+): Promise<void> {
+  const courses = await getCourseList(environmentId, from, to);
+  return saveAsCsv(
+    courses,
+    [
+      'id',
+      'title',
+      'publishStatus',
+      'segments',
+      'users_started',
+      'users_completed',
+      'avg_quiz_score',
+      'avg_quiz_attempts',
+      'quiz_passed',
+    ],
+    `teachme-courses-data-${Date.now()}`,
+  );
 }
 
 export async function changeIndex(courseId: number, fromIndex: number, toIndex: number) {

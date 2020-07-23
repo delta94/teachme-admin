@@ -40,7 +40,7 @@ export function getUsersCount(
   return analytics.getUsersCount(environment, from, to, options);
 }
 
-export async function exportData(
+export async function exportUsersData(
   environment: number,
   from: string,
   to: string,
