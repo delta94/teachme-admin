@@ -3,7 +3,7 @@ import cc from 'classcat';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
-import Icon from '../../Icon';
+import Icon from '../../../common/Icon';
 
 import classes from './style.module.scss';
 
@@ -22,8 +22,9 @@ export default function QuestionItem({
 }: IQuestionItem): ReactElement {
   return (
     <div onClick={onClick} className={cc([classes['question-item'], className])} key={index}>
+      {/* just a placeholder icon for now */}
       <Icon type={`quiz-${type}`} className={classes['icon']} />
-      <span className={classes['item-title']}>{title}</span>
+      <span className={classes['title']}>{title}</span>
     </div>
   );
 }

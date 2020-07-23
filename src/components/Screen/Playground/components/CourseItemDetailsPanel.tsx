@@ -7,10 +7,9 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   fetchCourse,
-  fetchNewCourse,
   ActionType,
 } from '../../../../providers/CourseEditorContext';
-import { CourseOutlineList } from '../../../common/lists';
+import CourseOutlineList from '../../../Screen/CourseEditorScreen/CourseOutlineList';
 
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import DetailsPanel from '../../../common/DetailsPanel';
@@ -25,8 +24,6 @@ export default function CourseItemDetailsPanel(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const [selectedItem, setSelectedItem] = useState<any>();
   const { course } = state;
-  const [mockState, setMockState] = useState(new Date());
-  const forceRerender = () => setMockState(new Date());
   const [courseId, setCourseId] = useState(0);
 
   const handleItemChanged = (updatedItem: ContentItem) => {
@@ -35,12 +32,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-
-    if (courseId) {
-      fetchCourse(dispatch, courseId);
-    } else {
-      fetchNewCourse(dispatch);
-    }
+    fetchCourse(dispatch, courseId);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
@@ -49,15 +41,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
     <div className={classes['cards-wrapper']}>
       <WMCard className={cc([classes['buttons'], classes['grow']])}>
         <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1284870)}>
-          Quiz Settings - courseId 1284870
-        </WMButton>
-        <Divider />
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1297234)}>
-          Quiz Settings - courseId 1297234
-        </WMButton>
-        <Divider />
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1277328)}>
-          Quiz Settings - courseId 1277328
+          courseId 1284870
         </WMButton>
         <Divider />
       </WMCard>
@@ -67,7 +51,6 @@ export default function CourseItemDetailsPanel(): ReactElement {
             items={course?.items.toArray() ?? []}
             course={course}
             hasQuiz={!!course?.quiz}
-            forceRerender={forceRerender}
             handleItemClick={(item) => {
               setSelectedItem(item);
             }}

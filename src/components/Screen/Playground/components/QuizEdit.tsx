@@ -2,14 +2,12 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
-import CourseOutlineQuiz from '../../../common/lists/CourseOutlineQuiz';
-import { BuildQuizScreen } from '../../../../walkme/data/courseBuild/quiz/screen';
+import CourseOutlineQuiz from '../../../Screen/CourseEditorScreen/CourseOutlineQuiz';
 
 import {
   useCourseEditorContext,
   fetchItemsList,
   fetchCourse,
-  fetchNewCourse,
   ActionType,
 } from '../../../../providers/CourseEditorContext';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
@@ -23,8 +21,6 @@ export default function QuizEdit(): ReactElement {
 
   const [state, dispatch] = useCourseEditorContext();
   const { course } = state;
-  const [mockState, setMockState] = useState(new Date());
-  const forceRerender = () => setMockState(new Date());
   const [quizScreenType, setQuizScreenType] = useState<QuizScreenType>(
     QuizScreenType.WelcomeScreen,
   );
@@ -32,12 +28,7 @@ export default function QuizEdit(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-
-    if (courseId) {
-      fetchCourse(dispatch, courseId);
-    } else {
-      fetchNewCourse(dispatch);
-    }
+    fetchCourse(dispatch, courseId);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
@@ -58,39 +49,23 @@ export default function QuizEdit(): ReactElement {
           throw new Error(`Unknown quiz screen type ${quizScreenType}`);
       }
 
-      // TODO: use provider to update the data
-      forceRerender();
+      dispatch({ type: ActionType.UpdateCourseOutline });
     }
   };
 
   return (
     <div className={classes['cards-wrapper']}>
-      <WMCard className={cc([classes['buttons'], classes['grow']])}>
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1284870)}>
-          Quiz Outline - courseId 1284870
-        </WMButton>
-        <Divider />
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1297234)}>
-          Quiz Outline - courseId 1297234
-        </WMButton>
-        <Divider />
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1277328)}>
-          Quiz Outline - courseId 1277328
-        </WMButton>
-        <Divider />
-      </WMCard>
-      <div className={classes['outline-demo']}>
-        {course?.quiz && (
+      {course?.quiz && (
+        <div className={classes['outline-demo']}>
           <CourseOutlineQuiz
             item={course?.quiz}
-            forceRerender={forceRerender}
             quizItemClicked={({ type, data }) => {
               setQuizScreenType(type);
               setQuizScreenData(data);
             }}
           />
-        )}
-      </div>
+        </div>
+      )}
       {course?.quiz && Boolean(quizScreenType) && quizScreenData && (
         <QuizEditForm
           quizScreenData={quizScreenData}

@@ -9,7 +9,6 @@ import {
   fetchCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
-import { fetchNewCourse } from '../../../providers/CourseEditorContext/utils';
 
 import WMInput from '../WMInput';
 import FormGroup from '../FormGroup';
@@ -25,12 +24,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
   useEffect(() => {
     fetchItemsList(dispatch);
-
-    if (courseId) {
-      fetchCourse(dispatch, courseId);
-    } else {
-      fetchNewCourse(dispatch);
-    }
+    fetchCourse(dispatch, courseId);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);

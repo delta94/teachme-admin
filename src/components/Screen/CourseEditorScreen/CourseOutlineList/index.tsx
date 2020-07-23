@@ -4,11 +4,13 @@ import { Container } from 'react-smooth-dnd';
 import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
 import { CourseChild } from '../../../../walkme/data/courseBuild/courseItems';
 import { Course } from '../../../../walkme/data/courseBuild';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
-import { IWMList } from '../../WMList';
+import { IWMList } from '../../../common/WMList';
+
 import TaskItem from '../TaskItem';
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
-import CourseOutlineTabEmptyState from '../CourseOutlineTabEmptyState';
+import CourseOutlineListEmptyState from '../CourseOutlineListEmptyState';
 
 import classes from './style.module.scss';
 
@@ -22,7 +24,6 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   items: CourseLesson[] | CourseChild[];
   course: Course;
   hasQuiz: boolean;
-  forceRerender: () => void;
   handleItemClick?: (item: any) => void;
 }
 
@@ -30,9 +31,10 @@ export default function CourseOutlineList<T>({
   items,
   course,
   hasQuiz,
-  forceRerender,
   handleItemClick,
 }: ICourseOutlineList<T>): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   const onDrop = (
     addedIndex: number | undefined | null,
     removedIndex: number | undefined | null,
@@ -56,7 +58,7 @@ export default function CourseOutlineList<T>({
       course?.items.removeItem(payload);
     }
 
-    forceRerender();
+    dispatch({ type: ActionType.UpdateCourseOutline });
   };
 
   return (
@@ -72,14 +74,13 @@ export default function CourseOutlineList<T>({
         }}
         shouldAcceptDrop={(e: any, payload: any) => !payload.answers}
       >
-        {/* eslint-disable */}
         {items.length
-          ? (items as any[]).map((item, i) =>
+          ? /* eslint-disable indent */
+            (items as any[]).map((item, i) =>
               item.type === 'lesson' ? (
                 <CourseOutlineLessonItem
                   item={item}
                   key={item.id}
-                  forceRerender={forceRerender}
                   className={classes['outline-lesson']}
                   handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
                 />
@@ -93,7 +94,7 @@ export default function CourseOutlineList<T>({
                 />
               ),
             )
-          : !hasQuiz && <CourseOutlineTabEmptyState />}
+          : !hasQuiz && <CourseOutlineListEmptyState />}
       </Container>
     </div>
   );

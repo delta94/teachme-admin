@@ -2,24 +2,24 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 
-import WMCollapse from '../../WMCollapse';
-import { IconType } from '../../Icon';
-import { QuizScreenType } from '../../QuizEditForm';
+import WMCollapse from '../../../common/WMCollapse';
+import { IconType } from '../../../common/Icon';
+import { QuizScreenType } from '../../../common/QuizEditForm';
 
 import LessonHeader from '../LessonHeader';
-import classes from './style.module.scss';
+
 import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
+import classes from './style.module.scss';
 
 export default function CourseOutlineQuiz({
   item,
-  forceRerender,
   quizItemClicked,
 }: {
   item: Quiz;
-  forceRerender: () => void;
   quizItemClicked: ({
     type,
     data,
@@ -28,6 +28,7 @@ export default function CourseOutlineQuiz({
     data: QuizScreen | BaseQuizQuestion;
   }) => void;
 }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
     const isRemove = e.removedIndex !== undefined && e.removedIndex !== null;
@@ -41,7 +42,7 @@ export default function CourseOutlineQuiz({
       item.questions.removeItem(e.payload);
     }
 
-    forceRerender();
+    dispatch({ type: ActionType.UpdateCourseOutline });
   };
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;

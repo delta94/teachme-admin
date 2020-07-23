@@ -1,16 +1,12 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 
-import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
-import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { getRandomFractionNumber } from '../../../utils/';
+import { useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
-import CourseOutlineQuiz from '../../common/lists/CourseOutlineQuiz';
-import SearchFilter from '../../common/filters/SearchFilter';
-import Icon, { IconType } from '../../common/Icon';
-import WMButton from '../../common/WMButton';
-import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
-import { CourseOutlineList } from '../../common/lists';
+import { SearchFilter } from '../../common/filters';
 
+import CourseOutlineQuiz from './CourseOutlineQuiz';
+import CourseOutlineList from './CourseOutlineList';
+import ActionMenu from './ActionMenu';
 import classes from './style.module.scss';
 
 export interface IProperties {
@@ -22,57 +18,13 @@ export interface IProperties {
   isCompleted?: boolean;
 }
 
-const options: IWMDropdownOption[] = [
-  {
-    id: 0,
-    value: CourseItemType.Lesson,
-    label: (
-      <div className={classes['option']}>
-        <Icon type={IconType.LessonSmall} />
-        Add Lesson
-      </div>
-    ),
-  },
-  {
-    id: 1,
-    value: CourseItemType.Quiz,
-    label: (
-      <div className={classes['option']}>
-        <Icon type={IconType.LessonSmall} />
-        Add Quiz
-      </div>
-    ),
-  },
-];
-
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course, quiz, courseOutlineSearchValue } = state;
 
-  const [mockState, setMockState] = useState(new Date());
-  const forceRerender = () => setMockState(new Date());
-
-  const onActionSelect = (selected: IWMDropdownOption) => {
-    if (selected.value === CourseItemType.Lesson) {
-      // Add new lesson
-      const newLesson = course?.items.addNewItem();
-      if (newLesson) {
-        newLesson.id = getRandomFractionNumber();
-      }
-    } else {
-      // Add new quiz
-      dispatch({ type: ActionType.AddQuiz });
-    }
-
-    dispatch({ type: ActionType.UpdateCourseOutline });
-    forceRerender();
-  };
-
   return (
     <>
-      <WMDropdown options={options} onSelectedChange={onActionSelect}>
-        <WMButton className={classes['add-btn']} icon={<Icon type={IconType.Plus} />} />
-      </WMDropdown>
+      <ActionMenu className={classes['add-btn']} />
       <SearchFilter
         className={classes['search']}
         placeholder="Search"
@@ -82,17 +34,11 @@ export default function CourseOutlineTab(): ReactElement {
         }}
       />
       {course && (
-        <CourseOutlineList
-          items={course?.items.toArray() ?? []}
-          course={course}
-          hasQuiz={!!quiz}
-          forceRerender={forceRerender}
-        />
+        <CourseOutlineList items={course?.items.toArray() ?? []} course={course} hasQuiz={!!quiz} />
       )}
       {quiz && (
         <CourseOutlineQuiz
           item={quiz}
-          forceRerender={forceRerender}
           quizItemClicked={({ type, data }) => {
             console.log('quizItemClicked type ', type);
             console.log('quizItemClicked data ', data);

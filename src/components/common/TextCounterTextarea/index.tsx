@@ -14,12 +14,13 @@ export interface ITextCounterTextarea extends TextAreaProps {
 export default function TextCounterTextarea({
   label,
   maxLength = 100,
+  value,
   minRows,
   maxRows,
   onChange,
   ...otherProps
 }: ITextCounterTextarea): ReactElement {
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>(value as string);
 
   const onInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value);
