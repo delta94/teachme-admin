@@ -7,7 +7,7 @@ import { IconType } from '../../common/Icon/icon.interface';
 import Icon from '../../common/Icon';
 import WMButton from '../../common/WMButton';
 import Header from '../../common/Header';
-import { WMSkeletonInput } from '../../common/WMSkeleton';
+import { WMSkeletonInput, WMSkeletonAvatar, WMSkeletonButton } from '../../common/WMSkeleton';
 
 import SystemMenu from './SystemMenu';
 import EnvironmentMenu from './EnvironmentMenu';
@@ -47,12 +47,12 @@ export default function HeaderToolbar(): ReactElement {
           />
         </>
       ) : (
-        <WMSkeletonInput
-          className={classes['header-toolbar-skeleton']}
-          style={{ width: 400 }}
-          active
-          size="default"
-        />
+        <div className={classes['header-toolbar-skeleton']}>
+          <WMSkeletonInput style={{ width: 100 }} active size="default" />
+          <WMSkeletonInput style={{ width: 100 }} active size="default" />
+          <WMSkeletonButton active size="default" shape="circle" />
+          <WMSkeletonAvatar active size="default" shape="square" />
+        </div>
       )}
     </Header>
   );
