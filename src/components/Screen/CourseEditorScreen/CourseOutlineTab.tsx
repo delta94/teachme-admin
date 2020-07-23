@@ -85,6 +85,7 @@ export default function CourseOutlineTab(): ReactElement {
         <CourseOutlineList
           items={course?.items.toArray() ?? []}
           course={course}
+          hasQuiz={!!quiz}
           forceRerender={forceRerender}
         />
       )}
