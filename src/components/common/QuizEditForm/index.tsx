@@ -1,21 +1,14 @@
-import React, { ReactElement, useState, ReactNode, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { QuizScreen, BuildQuiz, BaseQuizQuestion } from '@walkme/types';
 
 import DetailsPanel from '../DetailsPanel';
-import Icon, { IconType } from '../Icon';
+import Icon from '../Icon';
 
 import classes from './style.module.scss';
 import SuccessScreenForm from './SuccessScreenForm';
 import WelcomeScreenForm from './WelcomeScreenForm';
 import FailScreenForm from './FailScreenForm';
 import QuestionScreenForm from './QuestionScreenForm';
-import {
-  useCourseEditorContext,
-  fetchItemsList,
-  fetchCourse,
-  fetchNewCourse,
-  ActionType,
-} from '../../../providers/CourseEditorContext';
 
 export enum QuizScreenType {
   WelcomeScreen = 'welcome-screen',

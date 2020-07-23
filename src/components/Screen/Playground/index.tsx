@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 
-import ScreenHeader from '../../common/ScreenHeader';
+import CourseEditorProvider from '../../../providers/CourseEditorContext';
 
+import ScreenHeader from '../../common/ScreenHeader';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import WMCard from '../../common/WMCard';
@@ -16,7 +17,6 @@ import QuizEdit from './components/QuizEdit';
 import Toaster from './components/Toaster';
 
 import classes from './style.module.scss';
-import CourseEditorProvider from '../../../providers/CourseEditorContext';
 
 const tabs = [
   {
