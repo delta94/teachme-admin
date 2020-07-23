@@ -55,7 +55,7 @@ export default function QuizEditForm({
   return (
     <DetailsPanel
       title={screenTitle(quizScreenType, quizScreenData)}
-      titleIcon={<Icon type={quizScreenType} />}
+      titleIcon={<Icon type={`quiz-${quizScreenType}`} />}
       isOpen={Boolean(quizScreenData)}
       onClose={onClose}
     >
