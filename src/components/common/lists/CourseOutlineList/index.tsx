@@ -23,6 +23,7 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   course: Course;
   hasQuiz: boolean;
   forceRerender: () => void;
+  handleItemClick?: (item: any) => void;
 }
 
 export default function CourseOutlineList<T>({
@@ -30,6 +31,7 @@ export default function CourseOutlineList<T>({
   course,
   hasQuiz,
   forceRerender,
+  handleItemClick,
 }: ICourseOutlineList<T>): ReactElement {
   const onDrop = (
     addedIndex: number | undefined | null,
@@ -79,9 +81,16 @@ export default function CourseOutlineList<T>({
                   key={item.id}
                   forceRerender={forceRerender}
                   className={classes['outline-lesson']}
+                  handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
                 />
               ) : (
-                <TaskItem key={i} index={i} item={item} className={classes['outline-task']} />
+                <TaskItem
+                  key={i}
+                  index={i}
+                  item={item}
+                  className={classes['outline-task']}
+                  onClick={(e: any) => handleItemClick && handleItemClick(item)}
+                />
               ),
             )
           : !hasQuiz && <CourseOutlineTabEmptyState />}

@@ -12,17 +12,19 @@ export interface ITaskItem {
   index: number;
   className?: string;
   [key: string]: any;
+  onClick?: (e: any) => void;
 }
 
 export default function TaskItem({
   item: { title, type },
   index,
   className,
+  onClick,
   ...otherProps
 }: ITaskItem): ReactElement {
   return (
     <Draggable key={index} className={cc([classes['task-item'], className])} {...otherProps}>
-      <div key={index} className={classes['item']}>
+      <div key={index} className={classes['item']} onClick={onClick}>
         <Icon type={type} className={classes['icon']} />
         <span className={classes['item-title']}>{title}</span>
       </div>
