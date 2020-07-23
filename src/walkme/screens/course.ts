@@ -1,8 +1,13 @@
 import * as data from '../data';
 import { getUIQuiz } from '../data/quizOutline';
 import { CourseOverviewData } from '../models';
-import { CourseOutlineUIModel } from '../models/course/outline';
+import {
+  CourseOutlineUIModel,
+  CourseChildType,
+  CourseOutlineUIModelLesson,
+} from '../models/course/outline';
 import { QuizOutlineUI } from '../models/course/quiz';
+import { saveAsCsv } from '../utils';
 
 /**
  * Returns data for the course outline tab
@@ -50,4 +55,30 @@ export async function getCourseOverview(
   to: string,
 ): Promise<CourseOverviewData> {
   return data.getCourseOverview(course_id, environment, from, to);
+}
+
+/**
+ * Downloads the courses table data as csv
+ * @param environmentId the requested walkme environment
+ */
+export async function exportCourseOutline(
+  courseId: number,
+  environmentId: number,
+  from: string,
+  to: string,
+): Promise<void> {
+  const outline = await getCourseOutline(courseId, environmentId, from, to);
+  const csvData = outline.flatMap((child) => {
+    if (child.childType == CourseChildType.Task) return child;
+    return (child as CourseOutlineUIModelLesson).items.map((task) => ({
+      ...task,
+      lesson_title: child.title,
+      lesson_id: child.id,
+    }));
+  });
+  return saveAsCsv(
+    csvData,
+    ['id', 'title', 'lesson_id', 'lesson_title', 'users_completed', 'drop_off', 'type'],
+    `teachme-course-outline-data-${Date.now()}`,
+  );
 }
