@@ -20,8 +20,9 @@ export default function QuestionItem({
 }: IQuestionItem): ReactElement {
   return (
     <div className={cc([classes['question-item'], className])} key={index}>
+      {/* just a placeholder icon for now */}
       <Icon type="quizItem" className={classes['icon']} />
-      <span className={classes['item-title']}>{title}</span>
+      <span className={classes['title']}>{title}</span>
     </div>
   );
 }
