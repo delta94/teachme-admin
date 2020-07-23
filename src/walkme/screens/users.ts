@@ -6,6 +6,7 @@ import {
   UsersCountResponse,
   UserListUIResponse,
 } from '../models/users';
+import { saveAsCsv } from '../utils';
 
 /**
  * Returns a list of users and their data
@@ -37,4 +38,30 @@ export function getUsersCount(
   options: UsersCountQueryOptions,
 ): Promise<UsersCountResponse> {
   return analytics.getUsersCount(environment, from, to, options);
+}
+
+export async function exportData(
+  environment: number,
+  from: string,
+  to: string,
+  options: UsersListQueryOptions,
+): Promise<void> {
+  const { total_rows } = await getUsersCount(environment, from, to, options);
+  const lines = await getUsersList(environment, from, to, {
+    ...options,
+    num_of_records: total_rows,
+  });
+  return saveAsCsv(
+    lines.data,
+    [
+      'id',
+      'title',
+      'started_date',
+      'completed_date',
+      'quiz_result',
+      'quiz_passed',
+      'quiz_attempts',
+    ],
+    `teachme-users-data-${Date.now()}`,
+  );
 }
