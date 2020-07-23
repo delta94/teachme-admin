@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import {
   LineChart,
   XAxis,
@@ -11,6 +11,8 @@ import {
 
 import { ITooltipContent } from '../charts.interface';
 import WMChartTooltip from '../WMChartTooltip';
+import WMSkeleton from '../../WMSkeleton';
+import { useAppContext } from '../../../../providers/AppContext';
 
 import { IWMLineChartItem, IWMLineChartProps } from './wmLineChart.interface';
 import EmptyLineChart from './EmptyLineChart';
@@ -44,31 +46,45 @@ export default function WMLineChart<T extends {}>({
   hasWMTooltip,
   hasData,
 }: IWMLineChartProps<T>): ReactElement {
+  const [appState, appDispatch] = useAppContext();
+  const { isUpdating } = appState;
+  const [appInit, setAppInit] = useState(false);
+
+  useEffect(() => {
+    if (!isUpdating && !appInit) setAppInit(true);
+  }, [isUpdating, appInit]);
+
   return (
     <div className={className}>
-      {hasData ? (
-        <ResponsiveContainer>
-          <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <XAxis dataKey={xKey} />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            {hasWMTooltip ? (
-              <Tooltip content={(data: any) => renderWMTooltip({ data, lines })} />
-            ) : (
-              <Tooltip />
-            )}
-            {lines.map(({ dataKey, stroke }, index) => (
-              <Line
-                key={`${lineKeyPrefix}-${index}`}
-                type="monotone"
-                dataKey={dataKey}
-                stroke={stroke}
-              />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
+      {appInit ? (
+        <>
+          {hasData ? (
+            <ResponsiveContainer>
+              <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <XAxis dataKey={xKey} />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                {hasWMTooltip ? (
+                  <Tooltip content={(data: any) => renderWMTooltip({ data, lines })} />
+                ) : (
+                  <Tooltip />
+                )}
+                {lines.map(({ dataKey, stroke }, index) => (
+                  <Line
+                    key={`${lineKeyPrefix}-${index}`}
+                    type="monotone"
+                    dataKey={dataKey}
+                    stroke={stroke}
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <EmptyLineChart />
+          )}
+        </>
       ) : (
-        <EmptyLineChart />
+        <WMSkeleton active paragraph={{ rows: 6 }} />
       )}
     </div>
   );
