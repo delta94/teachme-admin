@@ -15,14 +15,14 @@ export interface IQuestionItem {
 }
 
 export default function QuestionItem({
-  item: { title },
+  item: { title, type },
   index,
   className,
   onClick,
 }: IQuestionItem): ReactElement {
   return (
     <div onClick={onClick} className={cc([classes['question-item'], className])} key={index}>
-      <Icon type="quizItem" className={classes['icon']} />
+      <Icon type={`quiz-${type}`} className={classes['icon']} />
       <span className={classes['item-title']}>{title}</span>
     </div>
   );

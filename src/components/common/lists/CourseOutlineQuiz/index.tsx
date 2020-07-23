@@ -53,7 +53,7 @@ export default function CourseOutlineQuiz({
       header={<LessonHeader title="Quiz" type={IconType.QuizSettings} />}
     >
       <QuestionItem
-        item={{ title: 'Quiz Welcome Page' }}
+        item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
         className={classes['welcome-screen-item']}
         onClick={() =>
           quizItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
@@ -76,16 +76,14 @@ export default function CourseOutlineQuiz({
         }
       />
       <QuestionItem
-        item={{ title: 'Summary - Success' }}
+        item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
         onClick={() =>
           quizItemClicked({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
         }
       />
       <QuestionItem
-        item={{ title: 'Summary - Failure' }}
-        onClick={() =>
-          quizItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.failScreen })
-        }
+        item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
+        onClick={() => quizItemClicked({ type: QuizScreenType.FailScreen, data: item.failScreen })}
       />
     </WMCollapse>
   );
