@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
 import QuizScreenForm from './QuizScreenForm';
 
@@ -8,7 +9,7 @@ export default function WelcomeScreenForm({
   data,
   handleDataChanged,
 }: {
-  data?: any;
+  data: BaseQuizQuestion | QuizScreen;
   handleDataChanged: (updatedData: any) => void;
 }): ReactElement {
   const [screen, setScreen] = useState(data);

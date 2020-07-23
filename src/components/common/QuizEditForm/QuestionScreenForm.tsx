@@ -6,7 +6,7 @@ import classes from './style.module.scss';
 export default function QuestionScreenForm({
   data,
 }: {
-  data?: BaseQuizQuestion | QuizScreen;
+  data: BaseQuizQuestion | QuizScreen;
 }): ReactElement {
   return (
     <div className={classes['quiz-question-screen-form']}>

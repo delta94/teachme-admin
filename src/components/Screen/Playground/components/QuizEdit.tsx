@@ -1,8 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { Divider } from 'antd';
-import cc from 'classcat';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
-import CourseOutlineQuiz from '../../../Screen/CourseEditorScreen/CourseOutlineQuiz';
 
 import {
   useCourseEditorContext,
@@ -10,8 +7,8 @@ import {
   fetchCourse,
   ActionType,
 } from '../../../../providers/CourseEditorContext';
-import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
-import WMCard from '../../../common/WMCard';
+
+import CourseOutlineQuiz from '../../../Screen/CourseEditorScreen/CourseOutlineQuiz';
 import QuizEditForm, { QuizScreenType } from '../../../common/QuizEditForm';
 
 import classes from './playground.module.scss';
@@ -33,26 +30,6 @@ export default function QuizEdit(): ReactElement {
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
 
-  const handleScreenDataChanged = (updatedData: any): void => {
-    if (course && course.quiz) {
-      switch (quizScreenType) {
-        case QuizScreenType.WelcomeScreen:
-          course.quiz.welcomeScreen = updatedData;
-          break;
-        case QuizScreenType.SuccessScreen:
-          course.quiz.successScreen = updatedData;
-          break;
-        case QuizScreenType.FailScreen:
-          course.quiz.failScreen = updatedData;
-          break;
-        default:
-          throw new Error(`Unknown quiz screen type ${quizScreenType}`);
-      }
-
-      dispatch({ type: ActionType.UpdateCourseOutline });
-    }
-  };
-
   return (
     <div className={classes['cards-wrapper']}>
       {course?.quiz && (
@@ -71,10 +48,6 @@ export default function QuizEdit(): ReactElement {
           quizScreenData={quizScreenData}
           quizScreenType={quizScreenType}
           onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | BaseQuizQuestion)}
-          handleDataChanged={(updatedData) => {
-            console.log('updatedData ', updatedData);
-            handleScreenDataChanged(updatedData);
-          }}
         />
       )}
     </div>

@@ -1,5 +1,7 @@
 import React, { ReactElement, useState } from 'react';
+import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
+import { BuildQuizScreen } from '../../../walkme/data/courseBuild/quiz/screen';
 import QuizScreenForm from './QuizScreenForm';
 
 import classes from './style.module.scss';
@@ -8,7 +10,7 @@ export default function FailScreenForm({
   data,
   handleDataChanged,
 }: {
-  data?: any;
+  data: BaseQuizQuestion | QuizScreen;
   handleDataChanged: (updatedData: any) => void;
 }): ReactElement {
   const [screen, setScreen] = useState(data);

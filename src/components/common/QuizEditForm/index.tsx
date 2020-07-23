@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
-import { QuizScreen, BuildQuiz, BaseQuizQuestion } from '@walkme/types';
+import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
+
+import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 
 import DetailsPanel from '../DetailsPanel';
 import Icon from '../Icon';
@@ -36,13 +38,34 @@ export default function QuizEditForm({
   quizScreenType,
   quizScreenData,
   onClose,
-  handleDataChanged,
 }: {
   quizScreenType: QuizScreenType;
   quizScreenData?: QuizScreen | BaseQuizQuestion;
   onClose: () => void;
-  handleDataChanged: (updatedData: QuizScreen | BaseQuizQuestion[]) => void;
 }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+  const { course } = state;
+
+  const handleScreenDataChanged = (updatedData: any): void => {
+    if (course && course.quiz) {
+      switch (quizScreenType) {
+        case QuizScreenType.WelcomeScreen:
+          course.quiz.welcomeScreen = updatedData;
+          break;
+        case QuizScreenType.SuccessScreen:
+          course.quiz.successScreen = updatedData;
+          break;
+        case QuizScreenType.FailScreen:
+          course.quiz.failScreen = updatedData;
+          break;
+        default:
+          throw new Error(`Unknown quiz screen type ${quizScreenType}`);
+      }
+
+      dispatch({ type: ActionType.UpdateCourseOutline });
+    }
+  };
+
   const ScreenForm = {
     [QuizScreenType.WelcomeScreen]: WelcomeScreenForm,
     [QuizScreenType.SuccessScreen]: SuccessScreenForm,
@@ -67,7 +90,7 @@ export default function QuizEditForm({
                 ? (quizScreenData as BaseQuizQuestion)
                 : (quizScreenData as QuizScreen)
             }
-            handleDataChanged={handleDataChanged}
+            handleDataChanged={handleScreenDataChanged}
           />
         )}
       </div>
