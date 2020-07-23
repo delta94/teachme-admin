@@ -1,8 +1,9 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
+import { useAppContext } from '../../../providers/AppContext';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -15,6 +16,8 @@ import WMCard from '../../common/WMCard';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMTable from '../../common/WMTable';
 import WMTag from '../../common/WMTag';
+import WMSkeleton, { WMSkeletonInput, WMSkeletonButton } from '../../common/WMSkeleton';
+
 // dialogs
 import DeleteCourseDialog from '../../common/dialogs/DeleteCourseDialog';
 import DialogPublishToEnvironment from '../../common/dialogs/PublishToEnvironmentDialog';
@@ -87,6 +90,17 @@ export default function CoursesScreen(): ReactElement {
   const [showExport, setShowExport] = useState(false);
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
+  // skeleton
+  const [appState, appDispatch] = useAppContext();
+  const { isUpdating } = appState;
+  const [appInit, setAppInit] = useState(false);
+
+  const menuClassName = classes['header-toolbar-menu'];
+
+  useEffect(() => {
+    if (!isUpdating && !appInit) setAppInit(true);
+  }, [isUpdating, appInit]);
+
   const onSearch = (searchValue: string) => {
     const newTableData = table.data.filter((course) =>
       course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
@@ -130,17 +144,18 @@ export default function CoursesScreen(): ReactElement {
         title={`${tableData.length} ${CoursesTableTitle}`}
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <ConfigProvider renderEmpty={customizeRenderEmpty}>
-          <WMTable
-            rowSelection={{
-              selectedRowKeys,
-              onChange: onMultiSelectChange,
-            }}
-            data={tableData as Array<ICourseData>}
-            columns={table.columns}
-          >
-            <ControlsWrapper>
-              {/* <DropdownFilter label="Status" options={statuses} />
+        {appInit ? (
+          <ConfigProvider renderEmpty={customizeRenderEmpty}>
+            <WMTable
+              rowSelection={{
+                selectedRowKeys,
+                onChange: onMultiSelectChange,
+              }}
+              data={tableData as Array<ICourseData>}
+              columns={table.columns}
+            >
+              <ControlsWrapper>
+                {/* <DropdownFilter label="Status" options={statuses} />
         <WMTable
           rowSelection={{
             selectedRowKeys,
@@ -153,39 +168,54 @@ export default function CoursesScreen(): ReactElement {
           <ControlsWrapper>
             {/* <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} /> */}
-            </ControlsWrapper>
-            <ControlsWrapper>
-              <WMDropdown
-                options={prodStatuses}
-                onSelectedChange={onProdStatusChange}
-                disabled={!hasSelected}
-              >
-                <WMButton className={classes['prod-status']}>
-                  Change Status
-                  <DownOutlined />
-                </WMButton>
-              </WMDropdown>
-              <Divider className={classes['separator']} type="vertical" />
-              <WMButton
-                className={classes['delete-btn']}
-                icon={<Icon type={IconType.Delete} />}
-                disabled={!hasSelected}
-                onClick={() => setShowDeleteCourse(true)}
-              />
-              <ExportButton onClick={() => setShowExport(true)} />
-              <Divider className={classes['separator']} type="vertical" />
-              <WMButton
-                className={classes['create-btn']}
-                shape="round"
-                variant={ButtonVariantEnum.Create}
-                icon={<PlusOutlined />}
-              >
-                Create Course
-              </WMButton>
-              <SearchFilter placeholder="Search course name" onSearch={onSearch} />
-            </ControlsWrapper>
-          </WMTable>
-        </ConfigProvider>
+              </ControlsWrapper>
+              <ControlsWrapper>
+                {appInit ? (
+                  <>
+                    <WMDropdown
+                      options={prodStatuses}
+                      onSelectedChange={onProdStatusChange}
+                      disabled={!hasSelected}
+                    >
+                      <WMButton className={classes['prod-status']}>
+                        Change Status
+                        <DownOutlined />
+                      </WMButton>
+                    </WMDropdown>
+                    <Divider className={classes['separator']} type="vertical" />
+                    <WMButton
+                      className={classes['delete-btn']}
+                      icon={<Icon type={IconType.Delete} />}
+                      disabled={!hasSelected}
+                      onClick={() => setShowDeleteCourse(true)}
+                    />
+                    <ExportButton onClick={() => setShowExport(true)} />
+                    <Divider className={classes['separator']} type="vertical" />
+                    <WMButton
+                      className={classes['create-btn']}
+                      shape="round"
+                      variant={ButtonVariantEnum.Create}
+                      icon={<PlusOutlined />}
+                    >
+                      Create Course
+                    </WMButton>
+                    <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+                  </>
+                ) : (
+                  <div className={classes['course-screen-skeleton']}>
+                    <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                    <WMSkeletonButton active size="default" shape="circle" />
+                    <WMSkeletonButton active size="default" shape="circle" />
+                    <WMSkeletonButton active size="default" shape="round" />
+                    <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                  </div>
+                )}
+              </ControlsWrapper>
+            </WMTable>
+          </ConfigProvider>
+        ) : (
+          <WMSkeleton active paragraph={{ rows: 10 }} />
+        )}
       </WMCard>
       {/* Dialogs */}
       <DialogPublishToEnvironment
