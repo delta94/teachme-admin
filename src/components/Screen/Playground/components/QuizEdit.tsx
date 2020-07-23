@@ -3,6 +3,7 @@ import { Divider } from 'antd';
 import cc from 'classcat';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 import CourseOutlineQuiz from '../../../common/lists/CourseOutlineQuiz';
+import { BuildQuizScreen } from '../../../../walkme/data/courseBuild/quiz/screen';
 
 import {
   useCourseEditorContext,
@@ -24,7 +25,7 @@ export default function QuizEdit(): ReactElement {
   const { course } = state;
   const [mockState, setMockState] = useState(new Date());
   const forceRerender = () => setMockState(new Date());
-  const [quizScreenName, setQuizScreenName] = useState<QuizScreenType>(
+  const [quizScreenType, setQuizScreenType] = useState<QuizScreenType>(
     QuizScreenType.WelcomeScreen,
   );
   const [quizScreenData, setQuizScreenData] = useState<QuizScreen | BaseQuizQuestion>();
@@ -40,6 +41,27 @@ export default function QuizEdit(): ReactElement {
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
+
+  const handleScreenDataChanged = (updatedData: any): void => {
+    if (course && course.quiz) {
+      switch (quizScreenType) {
+        case QuizScreenType.WelcomeScreen:
+          course.quiz.welcomeScreen = updatedData;
+          break;
+        case QuizScreenType.SuccessScreen:
+          course.quiz.successScreen = updatedData;
+          break;
+        case QuizScreenType.FailScreen:
+          course.quiz.failScreen = updatedData;
+          break;
+        default:
+          throw new Error(`Unknown quiz screen type ${quizScreenType}`);
+      }
+
+      // TODO: use provider to update the data
+      forceRerender();
+    }
+  };
 
   return (
     <div className={classes['cards-wrapper']}>
@@ -63,67 +85,21 @@ export default function QuizEdit(): ReactElement {
             item={course?.quiz}
             forceRerender={forceRerender}
             quizItemClicked={({ type, data }) => {
-              setQuizScreenName(type);
+              setQuizScreenType(type);
               setQuizScreenData(data);
             }}
           />
         )}
       </div>
-
-      {/* {quiz && (
-        <div className={classes['outline-demo']}>
-          <WMButton
-            variant={ButtonVariantEnum.Link}
-            onClick={() => {
-              setQuizScreenName(QuizScreenType.WelcomeScreen);
-              setQuizScreenData(quiz.welcomeScreen);
-            }}
-          >
-            Quiz WelcomeScreen ({courseId})
-          </WMButton>
-          <Divider />
-          {quiz?.questions?.toArray().map((question: BaseQuizQuestion, index: number) => (
-            <div key={`question-container-${index}`} className={classes['questions']}>
-              <WMButton
-                variant={ButtonVariantEnum.Link}
-                onClick={() => {
-                  setQuizScreenName(QuizScreenType.QuestionScreen);
-                  setQuizScreenData(question);
-                }}
-              >
-                {question.title}
-              </WMButton>
-              <Divider />
-            </div>
-          ))}
-          <WMButton
-            variant={ButtonVariantEnum.Link}
-            onClick={() => {
-              setQuizScreenName(QuizScreenType.SuccessScreen);
-              setQuizScreenData(quiz.successScreen);
-            }}
-          >
-            Quiz successScreen ({courseId})
-          </WMButton>
-          <Divider />
-          <WMButton
-            variant={ButtonVariantEnum.Link}
-            onClick={() => {
-              setQuizScreenName(QuizScreenType.FailScreen);
-              setQuizScreenData(quiz.failScreen);
-            }}
-          >
-            Quiz failScreen ({courseId})
-          </WMButton>
-        </div>
-      )} */}
-
-      {course?.quiz && Boolean(quizScreenName) && quizScreenData && (
+      {course?.quiz && Boolean(quizScreenType) && quizScreenData && (
         <QuizEditForm
-          quizData={course?.quiz}
           quizScreenData={quizScreenData}
-          quizScreenType={quizScreenName}
+          quizScreenType={quizScreenType}
           onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | BaseQuizQuestion)}
+          handleDataChanged={(updatedData) => {
+            console.log('updatedData ', updatedData);
+            handleScreenDataChanged(updatedData);
+          }}
         />
       )}
     </div>

@@ -34,14 +34,14 @@ const screenTitle = (type: QuizScreenType, data?: QuizScreen | BaseQuizQuestion)
 
 export default function QuizEditForm({
   quizScreenType,
-  quizData,
   quizScreenData,
   onClose,
+  handleDataChanged,
 }: {
   quizScreenType: QuizScreenType;
-  quizData?: BuildQuiz;
   quizScreenData?: QuizScreen | BaseQuizQuestion;
   onClose: () => void;
+  handleDataChanged: (updatedData: QuizScreen | BaseQuizQuestion[]) => void;
 }): ReactElement {
   const ScreenForm = {
     [QuizScreenType.WelcomeScreen]: WelcomeScreenForm,
@@ -60,7 +60,16 @@ export default function QuizEditForm({
       onClose={onClose}
     >
       <div className={classes['quiz-edit']}>
-        {QuizScreenForm && <QuizScreenForm data={quizScreenData} />}
+        {QuizScreenForm && (
+          <QuizScreenForm
+            data={
+              quizScreenType === QuizScreenType.QuestionScreen
+                ? (quizScreenData as BaseQuizQuestion)
+                : (quizScreenData as QuizScreen)
+            }
+            handleDataChanged={handleDataChanged}
+          />
+        )}
       </div>
     </DetailsPanel>
   );

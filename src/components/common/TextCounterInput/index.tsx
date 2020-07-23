@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, ReactElement } from 'react';
+import React, { useState, ChangeEvent, ReactElement, useEffect } from 'react';
 
 import WMInput, { IWMInput } from '../WMInput';
 
@@ -11,10 +11,11 @@ export interface ITextCounterInput extends IWMInput {
 export default function TextCounterInput({
   label,
   maxLength = 30,
+  value = '',
   onChange,
   ...otherProps
 }: ITextCounterInput): ReactElement {
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>(value as string);
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
