@@ -63,7 +63,11 @@ const tabs = [
     id: 'quiz-edit',
     title: 'Quiz Edit',
     icon: undefined,
-    content: <QuizEdit />,
+    content: (
+      <CourseEditorProvider>
+        <QuizEdit />
+      </CourseEditorProvider>
+    ),
   },
   {
     id: 'toaster',

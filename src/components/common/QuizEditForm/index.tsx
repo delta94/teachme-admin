@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, ReactNode } from 'react';
+import React, { ReactElement, useState, ReactNode, useEffect } from 'react';
 import { QuizScreen, BuildQuiz, BaseQuizQuestion } from '@walkme/types';
 
 import DetailsPanel from '../DetailsPanel';
@@ -9,6 +9,13 @@ import SuccessScreenForm from './SuccessScreenForm';
 import WelcomeScreenForm from './WelcomeScreenForm';
 import FailScreenForm from './FailScreenForm';
 import QuestionScreenForm from './QuestionScreenForm';
+import {
+  useCourseEditorContext,
+  fetchItemsList,
+  fetchCourse,
+  fetchNewCourse,
+  ActionType,
+} from '../../../providers/CourseEditorContext';
 
 export enum QuizScreenType {
   WelcomeScreen = 'welcome-screen',
@@ -43,8 +50,6 @@ export default function QuizEditForm({
   quizScreenData?: QuizScreen | BaseQuizQuestion;
   onClose: () => void;
 }): ReactElement {
-  // const [originalQuiz, setOriginalQuiz] = useState(quizData);
-  // const [screenData, setScreenData] = useState(quizScreenData as QuizScreen | BaseQuizQuestion);
   const ScreenForm = {
     [QuizScreenType.WelcomeScreen]: WelcomeScreenForm,
     [QuizScreenType.SuccessScreen]: SuccessScreenForm,

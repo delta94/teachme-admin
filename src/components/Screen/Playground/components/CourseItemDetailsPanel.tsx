@@ -2,7 +2,6 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { ContentItem } from '@walkme/types';
-import { CourseChild } from '../../../../walkme/course/mappers/course/courseItems';
 
 import {
   useCourseEditorContext,
