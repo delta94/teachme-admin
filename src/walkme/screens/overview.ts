@@ -4,6 +4,8 @@ import walkme from '@walkme/editor-sdk';
 import { TypeName, TypeId } from '@walkme/types';
 import { getAllCoursesOverview } from '../analytics';
 import { AllCoursesOverviewResponse } from '../models';
+import { getCourse } from '../data/courseBuild';
+import { getData } from '../data/services/wmData';
 /**
  * Returns a list of courses data
  * @param environmentId the current selected environment id
@@ -17,6 +19,7 @@ export async function getCourseList(
 ): Promise<Array<UICourse>> {
   return data.getCourseList(environmentId, from, to);
 }
+
 /**
  * Publishes courses to a customer's environment
  * @param environmentId
@@ -26,6 +29,36 @@ export async function publishCourses(environmentId: number, coursesIds: Array<nu
   await walkme.publish.publish(environmentId, TypeName.Course, TypeId.Course, coursesIds);
 }
 
+/**
+ * Archive courses from a customer's environment
+ * @param environmentId
+ * @param coursesIds Array of course ids
+ */
+export async function archiveCourses(environmentId: number, coursesIds: Array<number>) {
+  await walkme.publish.archive(environmentId, TypeName.Course, TypeId.Course, coursesIds);
+}
+
+/**
+ * Delete courses from customer account
+ * @param environmentId
+ * @param coursesIds Array of course ids
+ */
+export async function deleteCourse(courseId: number) {
+  const [course] = await getData(TypeName.Course, 0, [courseId]);
+  return await walkme.data.deleteItem(TypeName.Course, TypeId.Course, courseId, course.ResourceId);
+}
+
+/**
+ * Downloads the courses table data as csv
+ * @param environmentId the requested walkme environment
+ */
+export async function exportCoursesData(environmentId: number): Promise<void> {
+  // todo:
+}
+
+export async function changeIndex(courseId: number, fromIndex: number, toIndex: number) {
+  return await walkme.data.reorder(courseId, TypeId.Course, fromIndex, toIndex);
+}
 /**
  * Returns data for the top 3 panel in the courses overview screen
  * @param environment requested environment id

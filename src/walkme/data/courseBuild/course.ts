@@ -125,4 +125,8 @@ export class Course implements BuildCourse {
   deleteQuiz() {
     this.properties.hasQuiz = false;
   }
+
+  includes(type: TypeName, id: number) : boolean {
+    return false
+  }
 }
