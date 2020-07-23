@@ -3,8 +3,13 @@ import { Divider } from 'antd';
 import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
-import { getCourse } from '../../../walkme';
-import { propsAreEqual } from '../../../utils';
+import {
+  useCourseEditorContext,
+  fetchItemsList,
+  fetchCourse,
+  ActionType,
+} from '../../../providers/CourseEditorContext';
+import { fetchNewCourse } from '../../../providers/CourseEditorContext/utils';
 
 import WMInput from '../WMInput';
 import FormGroup from '../FormGroup';
@@ -13,29 +18,28 @@ import WMSwitch from '../WMSwitch';
 import classes from './style.module.scss';
 
 export default function QuizSettingsForm({ courseId }: { courseId: number }): ReactElement {
-  const [originalQuizProperties, setOriginalQuizProperties] = useState(
-    (null as unknown) as BuildQuizProperties,
-  );
-  const [quizProperties, setQuizProperties] = useState((null as unknown) as BuildQuizProperties);
-
-  const getCourseOutline = useCallback(async () => {
-    const course = await getCourse(courseId, 0);
-
-    course && course.quiz
-      ? setOriginalQuizProperties(course.quiz.properties as BuildQuizProperties)
-      : setOriginalQuizProperties((null as unknown) as BuildQuizProperties);
-  }, [courseId]);
+  const [state, dispatch] = useCourseEditorContext();
+  const { course } = state;
+  const [mockState, setMockState] = useState(new Date());
+  const forceRerender = () => setMockState(new Date());
 
   useEffect(() => {
-    // TODO: use useCourseEditorContext
-    getCourseOutline();
-  }, [courseId, getCourseOutline]);
+    fetchItemsList(dispatch);
+
+    if (courseId) {
+      fetchCourse(dispatch, courseId);
+    } else {
+      fetchNewCourse(dispatch);
+    }
+
+    return () => dispatch({ type: ActionType.ResetCourseEditor });
+  }, [dispatch, courseId]);
 
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
-    setQuizProperties((prevState: BuildQuizProperties) => ({
-      ...prevState,
-      ...updatedData,
-    }));
+    if (course?.quiz?.properties) {
+      course.quiz.properties = { ...course.quiz.properties, ...updatedData };
+      forceRerender();
+    }
   };
 
   const onPassmarkChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,24 +49,16 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
       const quizPassmark =
         value === '' || value === '-' ? 0 : parseInt(value) > 100 ? 100 : parseInt(value);
 
-      updateQuizProperties({ passmark: quizPassmark });
+      if (course?.quiz) {
+        course.quiz.properties = { ...course.quiz.properties, ...{ passmark: quizPassmark } };
+        forceRerender();
+      }
     }
   };
 
-  useEffect(() => {
-    if (originalQuizProperties) setQuizProperties(originalQuizProperties);
-  }, [originalQuizProperties]);
-
-  useEffect(() => {
-    if (quizProperties && !propsAreEqual(originalQuizProperties, quizProperties)) {
-      // TODO: here we should call to dispatch to update course quiz
-      console.log('*** quizProperties changed ', quizProperties);
-    }
-  }, [quizProperties, originalQuizProperties]);
-
   return (
     <div className={classes['quiz-settings-form']}>
-      {quizProperties && (
+      {course?.quiz?.properties && (
         <>
           <FormGroup
             className={classes['passmark']}
@@ -73,7 +69,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
             <WMInput
               id="passmark"
               className={classes['passmark-field']}
-              value={quizProperties.passmark}
+              value={course?.quiz?.properties.passmark}
               onChange={onPassmarkChange}
             />
             {'%'}
@@ -85,7 +81,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           >
             <WMSwitch
               className={classes['switch-field']}
-              checked={quizProperties.forceCourseCompletion}
+              checked={course?.quiz?.properties.forceCourseCompletion}
               label="Enable quiz after all course work is completed"
               onChange={(checked: boolean) =>
                 updateQuizProperties({ forceCourseCompletion: checked })
@@ -96,7 +92,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           <FormGroup className={classes['random-questions']} title="Randomize">
             <WMSwitch
               className={cc([classes['switch-field'], classes['space-bottom']])}
-              checked={quizProperties.randQuestions}
+              checked={course?.quiz?.properties.randQuestions}
               label="Randomize questions order"
               infoText="Toggling this option on will randomize the questions in the quiz for every quiz attempt."
               onChange={(checked: boolean) => updateQuizProperties({ randQuestions: checked })}
@@ -105,7 +101,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           <FormGroup className={classes['random-answers']}>
             <WMSwitch
               className={classes['switch-field']}
-              checked={quizProperties.randAnswers}
+              checked={course?.quiz?.properties.randAnswers}
               label="Randomize answers order"
               infoText="Toggling this option on will randomize the answers of each question in the quiz for every quiz attempt."
               onChange={(checked: boolean) => updateQuizProperties({ randAnswers: checked })}
@@ -115,7 +111,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
           <FormGroup className={classes['show-summary']} title="Full quiz results view">
             <WMSwitch
               className={classes['switch-field']}
-              checked={quizProperties.showSummary}
+              checked={course?.quiz?.properties.showSummary}
               label="Toggle on to allow users to view the correct answers and compare them to the answers they selected"
               onChange={(checked: boolean) => updateQuizProperties({ showSummary: checked })}
             />

@@ -20,9 +20,11 @@ export interface INewLesson extends CourseLesson {
 export default function CourseOutlineLessonItem({
   item,
   className,
+  handleItemClick,
 }: {
   item: INewLesson;
   className: string;
+  handleItemClick: (item: any) => void;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
 
@@ -63,6 +65,7 @@ export default function CourseOutlineLessonItem({
           }}
           shouldAcceptDrop={shouldAcceptDrop}
           className={cc([{ [classes['is-empty']]: !item.childNodes.toArray().length }])}
+          handleItemClick={(item) => handleItemClick && handleItemClick(item)}
         />
       </WMCollapse>
     </Draggable>

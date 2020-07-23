@@ -13,12 +13,14 @@ export interface ICourseItemsList {
   onDrop?: any;
   emptyState?: ReactNode;
   [key: string]: any;
+  handleItemClick?: (item: ContentItem) => void;
 }
 
 export default function CourseItemsList({
   items,
   onDrop,
   className,
+  handleItemClick,
   emptyState,
   ...otherProps
 }: ICourseItemsList): ReactElement {
@@ -31,7 +33,14 @@ export default function CourseItemsList({
         dragClass={classes['card-ghost']}
       >
         {items.length ? (
-          items.map((item, i) => <TaskItem key={i} index={i} item={item} />)
+          items.map((item, i) => (
+            <TaskItem
+              key={i}
+              index={i}
+              item={item}
+              onClick={() => handleItemClick && handleItemClick(item)}
+            />
+          ))
         ) : (
           <div className={classes['empty']}>No items were found</div>
         )}

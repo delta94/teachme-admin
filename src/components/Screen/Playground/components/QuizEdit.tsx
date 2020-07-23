@@ -1,9 +1,15 @@
-import React, { ReactElement, useState, useCallback, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
-import { QuizScreen, BuildQuiz, BuildQuizQuestion, BaseQuizQuestion } from '@walkme/types';
+import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
-import { getCourse } from '../../../../walkme';
+import {
+  useCourseEditorContext,
+  fetchItemsList,
+  fetchCourse,
+  fetchNewCourse,
+  ActionType,
+} from '../../../../providers/CourseEditorContext';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import WMCard from '../../../common/WMCard';
 import QuizEditForm, { QuizScreenType } from '../../../common/QuizEditForm';
@@ -12,30 +18,27 @@ import classes from './playground.module.scss';
 
 export default function QuizEdit(): ReactElement {
   const [courseId, setCourseId] = useState(0);
-  const [quizData, setQuizData] = useState<BuildQuiz | undefined>();
-  const [quizQuestions, setQuizQuestions] = useState(([] as unknown) as BuildQuizQuestion[]);
-  const [quizScreenData, setQuizScreenData] = useState<QuizScreen | BaseQuizQuestion>();
+
+  const [state, dispatch] = useCourseEditorContext();
+  const { course } = state;
+  const [mockState, setMockState] = useState(new Date());
+  const forceRerender = () => setMockState(new Date());
   const [quizScreenName, setQuizScreenName] = useState<QuizScreenType>(
     QuizScreenType.WelcomeScreen,
   );
-
-  const getCourseOutline = useCallback(async () => {
-    const course = await getCourse(courseId, 0);
-    const quiz = course && course.quiz;
-
-    if (quiz) {
-      setQuizData((quiz as unknown) as BuildQuiz | undefined);
-      setQuizQuestions(quiz.questions.toArray() as BuildQuizQuestion[]);
-    } else {
-      setQuizData((undefined as unknown) as BuildQuiz | undefined);
-      setQuizQuestions(([] as unknown) as BuildQuizQuestion[]);
-    }
-  }, [courseId]);
+  const [quizScreenData, setQuizScreenData] = useState<QuizScreen | BaseQuizQuestion>();
 
   useEffect(() => {
-    // TODO: use useCourseEditorContext
-    getCourseOutline();
-  }, [courseId, getCourseOutline]);
+    fetchItemsList(dispatch);
+
+    if (courseId) {
+      fetchCourse(dispatch, courseId);
+    } else {
+      fetchNewCourse(dispatch);
+    }
+
+    return () => dispatch({ type: ActionType.ResetCourseEditor });
+  }, [dispatch, courseId]);
 
   return (
     <div className={classes['cards-wrapper']}>
@@ -53,19 +56,19 @@ export default function QuizEdit(): ReactElement {
         </WMButton>
         <Divider />
       </WMCard>
-      {quizData && (
+      {course?.quiz && (
         <div className={classes['outline-demo']}>
           <WMButton
             variant={ButtonVariantEnum.Link}
             onClick={() => {
               setQuizScreenName(QuizScreenType.WelcomeScreen);
-              setQuizScreenData(quizData.welcomeScreen);
+              setQuizScreenData(course?.quiz?.welcomeScreen);
             }}
           >
             Quiz WelcomeScreen ({courseId})
           </WMButton>
           <Divider />
-          {quizQuestions.map((question: BaseQuizQuestion, index: number) => (
+          {course?.quiz?.questions?.toArray().map((question: BaseQuizQuestion, index: number) => (
             <div key={`question-container-${index}`} className={classes['questions']}>
               <WMButton
                 variant={ButtonVariantEnum.Link}
@@ -83,7 +86,7 @@ export default function QuizEdit(): ReactElement {
             variant={ButtonVariantEnum.Link}
             onClick={() => {
               setQuizScreenName(QuizScreenType.SuccessScreen);
-              setQuizScreenData(quizData.successScreen);
+              setQuizScreenData(course?.quiz?.successScreen);
             }}
           >
             Quiz successScreen ({courseId})
@@ -93,19 +96,21 @@ export default function QuizEdit(): ReactElement {
             variant={ButtonVariantEnum.Link}
             onClick={() => {
               setQuizScreenName(QuizScreenType.FailScreen);
-              setQuizScreenData(quizData.failScreen);
+              setQuizScreenData(course?.quiz?.failScreen);
             }}
           >
             Quiz failScreen ({courseId})
           </WMButton>
         </div>
       )}
-      <QuizEditForm
-        quizData={quizData}
-        quizScreenData={quizScreenData}
-        quizScreenType={quizScreenName}
-        onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | BaseQuizQuestion)}
-      />
+      {Boolean(quizScreenName) && quizScreenData && (
+        <QuizEditForm
+          quizData={course?.quiz}
+          quizScreenData={quizScreenData}
+          quizScreenType={quizScreenName}
+          onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | BaseQuizQuestion)}
+        />
+      )}
     </div>
   );
 }
