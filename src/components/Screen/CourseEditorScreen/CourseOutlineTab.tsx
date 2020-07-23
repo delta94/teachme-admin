@@ -4,6 +4,7 @@ import { useCourseEditorContext, ActionType } from '../../../providers/CourseEdi
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { getRandomFractionNumber } from '../../../utils/';
 
+import CourseOutlineQuiz from '../../common/lists/CourseOutlineQuiz';
 import SearchFilter from '../../common/filters/SearchFilter';
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -46,7 +47,7 @@ const options: IWMDropdownOption[] = [
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { course, filteredCourseOutline, courseOutlineSearchValue } = state;
+  const { course, quiz, courseOutlineSearchValue } = state;
 
   const [mockState, setMockState] = useState(new Date());
   const forceRerender = () => setMockState(new Date());
@@ -58,14 +59,13 @@ export default function CourseOutlineTab(): ReactElement {
       if (newLesson) {
         newLesson.id = getRandomFractionNumber();
       }
-      forceRerender();
     } else {
       // Add new quiz
-      // TODO: add new quiz
-      console.log('quiz added');
+      dispatch({ type: ActionType.AddQuiz });
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline });
+    forceRerender();
   };
 
   return (
@@ -85,9 +85,11 @@ export default function CourseOutlineTab(): ReactElement {
         <CourseOutlineList
           items={course?.items.toArray() ?? []}
           course={course}
+          hasQuiz={!!quiz}
           forceRerender={forceRerender}
         />
       )}
+      {quiz && <CourseOutlineQuiz item={quiz} forceRerender={forceRerender} />}
     </>
   );
 }

@@ -39,7 +39,7 @@ export default function CourseOutlineLessonItem({
     forceRerender();
   };
 
-  const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson';
+  const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson' && !payload.answers;
 
   return (
     <Draggable className={cc([classes['course-outline-list-item'], className])}>

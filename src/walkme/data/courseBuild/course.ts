@@ -70,13 +70,12 @@ export class Course implements BuildCourse {
     this.items = items.getCourseChildren(
       options?.light
         ? []
-        : this._course.LinkedDeployables!.map((item) => {
-            return item.DeployableType == TypeId.Lesson
-              ? ((getDataSync(TypeId.Lesson, [
-                  item.DeployableID,
+        :this._course.LinkedDeployables!.map((item) =>
+            item.DeployableType == TypeId.Lesson
+          ? ((getDataSync(TypeId.Lesson, [item.DeployableID,
                 ])[0] as unknown) as WalkMeDataNewLesson)
-              : item;
-          }),
+              : item,
+          ),
     );
     this._quiz = new Quiz(this._course.Quiz);
     this.properties = new CourseProperties(this._course.Settings);
@@ -117,12 +116,12 @@ export class Course implements BuildCourse {
     };
   }
 
-  addQuiz() {
+  addQuiz(): Quiz | undefined {
     this.properties.hasQuiz = true;
     return this.quiz;
   }
 
-  deleteQuiz() {
+  deleteQuiz(): void {
     this.properties.hasQuiz = false;
   }
 }
