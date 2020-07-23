@@ -7,6 +7,8 @@ export enum ActionType {
   FetchCourse = 'FETCH_COURSE',
   FetchCourseSuccess = 'FETCH_COURSE_SUCCESS',
   FetchCourseError = 'FETCH_COURSE_ERROR',
+  AddQuiz = 'ADD_QUIZ',
+  DeleteQuiz = 'DELETE_QUIZ',
   UpdateCourseOutline = 'UPDATE_COURSE_OUTLINE',
   SetCourseOutlineSearchValue = 'SET_COURSE_OUTLINE_SEARCH_VALUE',
   ToggleDetailsPanel = 'TOGGLE_DETAILS_PANEL',

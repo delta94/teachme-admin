@@ -47,31 +47,14 @@ export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<vo
 
 export const fetchCourse = async (
   dispatch: IDispatch,
-  courseId: number,
+  courseId: number | string | undefined,
   envId = 0,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });
 
   try {
-    const course = await getCourse(courseId, envId);
-
-    dispatch({ type: ActionType.FetchCourseSuccess, course });
-
-    if (course) {
-      dispatch({ type: ActionType.SetCourseTitle, courseTitle: course.title });
-      dispatch({ type: ActionType.UpdateCourseOutline });
-    }
-  } catch (error) {
-    console.error(error);
-    dispatch({ type: ActionType.FetchCourseError });
-  }
-};
-
-export const fetchNewCourse = async (dispatch: IDispatch): Promise<void> => {
-  dispatch({ type: ActionType.FetchCourse });
-
-  try {
-    const course = await getNewCourse();
+    // TODO: replace hard-coded courseId with variable
+    const course = courseId !== undefined ? await getCourse(1284870, envId) : await getNewCourse();
 
     dispatch({ type: ActionType.FetchCourseSuccess, course });
 

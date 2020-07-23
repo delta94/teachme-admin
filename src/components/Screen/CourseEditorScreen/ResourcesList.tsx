@@ -7,10 +7,11 @@ import {
 } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
-import RefreshButton from '../../common/buttons/RefreshButton';
-import SearchFilter from '../../common/filters/SearchFilter';
-import { CourseItemsList } from '../../common/lists';
+import { RefreshButton } from '../../common/buttons';
+import { SearchFilter } from '../../common/filters';
 
+import CourseItemsList from './CourseItemsList';
+import ResourcesListEmptyState from './ResourcesListEmptyState';
 import classes from './style.module.scss';
 
 export default function ResourcesList(): ReactElement {
@@ -52,7 +53,11 @@ export default function ResourcesList(): ReactElement {
           onSearch={onSearch}
         />
       </div>
-      <CourseItemsList items={filteredCourseItems} behaviour="copy" />
+      {courseItems.length ? (
+        <CourseItemsList items={filteredCourseItems} behaviour="copy" />
+      ) : (
+        <ResourcesListEmptyState />
+      )}
     </WMCard>
   );
 }
