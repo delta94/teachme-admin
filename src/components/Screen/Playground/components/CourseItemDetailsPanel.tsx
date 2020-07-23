@@ -2,6 +2,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { ContentItem } from '@walkme/types';
+import { CourseChild } from '../../../../walkme/course/mappers/course/courseItems';
 
 import {
   useCourseEditorContext,
@@ -28,6 +29,10 @@ export default function CourseItemDetailsPanel(): ReactElement {
   const [mockState, setMockState] = useState(new Date());
   const forceRerender = () => setMockState(new Date());
   const [courseId, setCourseId] = useState(0);
+
+  const handleItemChanged = (updatedItem: ContentItem) => {
+    setSelectedItem(updatedItem);
+  };
 
   useEffect(() => {
     fetchItemsList(dispatch);
@@ -64,7 +69,6 @@ export default function CourseItemDetailsPanel(): ReactElement {
             course={course}
             forceRerender={forceRerender}
             handleItemClick={(item) => {
-              console.log('CourseOutlineList item clicked', item);
               setSelectedItem(item);
             }}
           />
@@ -77,7 +81,9 @@ export default function CourseItemDetailsPanel(): ReactElement {
         onClose={() => setSelectedItem((null as unknown) as ContentItem)}
         titleIsEllipsis
       >
-        {selectedItem && <CourseItemDetails courseItem={selectedItem} />}
+        {selectedItem && (
+          <CourseItemDetails courseItem={selectedItem} courseItemChanged={handleItemChanged} />
+        )}
       </DetailsPanel>
     </div>
   );
