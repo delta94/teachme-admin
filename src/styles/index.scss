@@ -19,6 +19,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--neutral900);
   user-select: none;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+
+    /* Handle */
+    &-thumb {
+      background: var(--neutral100);
+      border-radius: 2.5px;
+    }
+
+    /* Handle on hover */
+    &-thumb:hover {
+      background: var(--neutral100);
+    }
+  }
 }
 
 h1,
