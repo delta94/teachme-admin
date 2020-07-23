@@ -3,12 +3,8 @@ import React, { ReactElement } from 'react';
 import { useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
 import { SearchFilter } from '../../common/filters';
-import CourseOutlineQuiz from '../../common/lists/CourseOutlineQuiz';
-import Icon, { IconType } from '../../common/Icon';
-import WMButton from '../../common/WMButton';
-import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
-import { CourseOutlineList } from '../../common/lists';
 
+import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
 import classes from './style.module.scss';
@@ -38,11 +34,7 @@ export default function CourseOutlineTab(): ReactElement {
         }}
       />
       {course && (
-        <CourseOutlineList
-          items={course?.items.toArray() ?? []}
-          course={course}
-          hasQuiz={!!quiz}
-        />
+        <CourseOutlineList items={course?.items.toArray() ?? []} course={course} hasQuiz={!!quiz} />
       )}
       {quiz && <CourseOutlineQuiz item={quiz} />}
     </>

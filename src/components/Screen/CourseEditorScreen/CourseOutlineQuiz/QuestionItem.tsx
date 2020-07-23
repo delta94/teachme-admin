@@ -3,7 +3,7 @@ import cc from 'classcat';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
-import Icon from '../../Icon';
+import Icon from '../../../common/Icon';
 
 import classes from './style.module.scss';
 

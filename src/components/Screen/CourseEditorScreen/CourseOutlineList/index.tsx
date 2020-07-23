@@ -73,7 +73,8 @@ export default function CourseOutlineList<T>({
         shouldAcceptDrop={(e: any, payload: any) => !payload.answers}
       >
         {items.length
-          ? (items as any[]).map((item, i) =>
+          ? /* eslint-disable indent */
+            (items as any[]).map((item, i) =>
               item.type === 'lesson' ? (
                 <CourseOutlineLessonItem
                   item={item}

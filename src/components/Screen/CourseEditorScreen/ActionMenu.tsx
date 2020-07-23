@@ -45,8 +45,7 @@ export default function ActionMenu({ className }: { className?: string }): React
       }
     } else {
       // Add new quiz
-      // TODO: add new quiz
-      console.log('quiz added');
+      dispatch({ type: ActionType.AddQuiz });
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline });
