@@ -89,7 +89,16 @@ export default function CourseOutlineTab(): ReactElement {
           forceRerender={forceRerender}
         />
       )}
-      {quiz && <CourseOutlineQuiz item={quiz} forceRerender={forceRerender} />}
+      {quiz && (
+        <CourseOutlineQuiz
+          item={quiz}
+          forceRerender={forceRerender}
+          quizItemClicked={({ type, data }) => {
+            console.log('quizItemClicked type ', type);
+            console.log('quizItemClicked data ', data);
+          }}
+        />
+      )}
     </>
   );
 }

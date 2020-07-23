@@ -2,6 +2,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
+import CourseOutlineQuiz from '../../../common/lists/CourseOutlineQuiz';
 
 import {
   useCourseEditorContext,
@@ -56,19 +57,32 @@ export default function QuizEdit(): ReactElement {
         </WMButton>
         <Divider />
       </WMCard>
-      {course?.quiz && (
+      <div className={classes['outline-demo']}>
+        {course?.quiz && (
+          <CourseOutlineQuiz
+            item={course?.quiz}
+            forceRerender={forceRerender}
+            quizItemClicked={({ type, data }) => {
+              setQuizScreenName(type);
+              setQuizScreenData(data);
+            }}
+          />
+        )}
+      </div>
+
+      {/* {quiz && (
         <div className={classes['outline-demo']}>
           <WMButton
             variant={ButtonVariantEnum.Link}
             onClick={() => {
               setQuizScreenName(QuizScreenType.WelcomeScreen);
-              setQuizScreenData(course?.quiz?.welcomeScreen);
+              setQuizScreenData(quiz.welcomeScreen);
             }}
           >
             Quiz WelcomeScreen ({courseId})
           </WMButton>
           <Divider />
-          {course?.quiz?.questions?.toArray().map((question: BaseQuizQuestion, index: number) => (
+          {quiz?.questions?.toArray().map((question: BaseQuizQuestion, index: number) => (
             <div key={`question-container-${index}`} className={classes['questions']}>
               <WMButton
                 variant={ButtonVariantEnum.Link}
@@ -86,7 +100,7 @@ export default function QuizEdit(): ReactElement {
             variant={ButtonVariantEnum.Link}
             onClick={() => {
               setQuizScreenName(QuizScreenType.SuccessScreen);
-              setQuizScreenData(course?.quiz?.successScreen);
+              setQuizScreenData(quiz.successScreen);
             }}
           >
             Quiz successScreen ({courseId})
@@ -96,14 +110,15 @@ export default function QuizEdit(): ReactElement {
             variant={ButtonVariantEnum.Link}
             onClick={() => {
               setQuizScreenName(QuizScreenType.FailScreen);
-              setQuizScreenData(course?.quiz?.failScreen);
+              setQuizScreenData(quiz.failScreen);
             }}
           >
             Quiz failScreen ({courseId})
           </WMButton>
         </div>
-      )}
-      {Boolean(quizScreenName) && quizScreenData && (
+      )} */}
+
+      {course?.quiz && Boolean(quizScreenName) && quizScreenData && (
         <QuizEditForm
           quizData={course?.quiz}
           quizScreenData={quizScreenData}

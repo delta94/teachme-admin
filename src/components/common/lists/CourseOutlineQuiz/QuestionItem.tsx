@@ -11,15 +11,17 @@ export interface IQuestionItem {
   item: QuizQuestion | any;
   index?: number;
   className?: string;
+  onClick: () => void;
 }
 
 export default function QuestionItem({
   item: { title },
   index,
   className,
+  onClick,
 }: IQuestionItem): ReactElement {
   return (
-    <div className={cc([classes['question-item'], className])} key={index}>
+    <div onClick={onClick} className={cc([classes['question-item'], className])} key={index}>
       <Icon type="quizItem" className={classes['icon']} />
       <span className={classes['item-title']}>{title}</span>
     </div>

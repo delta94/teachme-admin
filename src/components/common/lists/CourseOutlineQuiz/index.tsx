@@ -1,10 +1,12 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
+import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 
 import WMCollapse from '../../WMCollapse';
 import { IconType } from '../../Icon';
+import { QuizScreenType } from '../../QuizEditForm';
 
 import LessonHeader from '../LessonHeader';
 import classes from './style.module.scss';
@@ -14,9 +16,17 @@ import QuestionItem from './QuestionItem';
 export default function CourseOutlineQuiz({
   item,
   forceRerender,
+  quizItemClicked,
 }: {
   item: Quiz;
   forceRerender: () => void;
+  quizItemClicked: ({
+    type,
+    data,
+  }: {
+    type: QuizScreenType;
+    data: QuizScreen | BaseQuizQuestion;
+  }) => void;
 }): ReactElement {
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -45,6 +55,9 @@ export default function CourseOutlineQuiz({
       <QuestionItem
         item={{ title: 'Quiz Welcome Page' }}
         className={classes['welcome-screen-item']}
+        onClick={() =>
+          quizItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
+        }
       />
       <CourseQuestionList
         items={item.questions.toArray()}
@@ -58,9 +71,22 @@ export default function CourseOutlineQuiz({
         }}
         shouldAcceptDrop={shouldAcceptDrop}
         className={cc([{ [classes['is-empty']]: !item.questions.toArray().length }])}
+        handleQuestionClicked={(question) =>
+          quizItemClicked({ type: QuizScreenType.QuestionScreen, data: question })
+        }
       />
-      <QuestionItem item={{ title: 'Summary - Success' }} />
-      <QuestionItem item={{ title: 'Summary - Failure' }} />
+      <QuestionItem
+        item={{ title: 'Summary - Success' }}
+        onClick={() =>
+          quizItemClicked({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
+        }
+      />
+      <QuestionItem
+        item={{ title: 'Summary - Failure' }}
+        onClick={() =>
+          quizItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.failScreen })
+        }
+      />
     </WMCollapse>
   );
 }

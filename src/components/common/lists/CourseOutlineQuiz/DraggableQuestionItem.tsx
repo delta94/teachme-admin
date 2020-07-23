@@ -12,12 +12,14 @@ export interface IQuestionItem {
   index: number;
   className?: string;
   [key: string]: any;
+  onClick: () => void;
 }
 
 export default function DraggableQuestionItem({
   item,
   index,
   className,
+  onClick,
   ...otherProps
 }: IQuestionItem): ReactElement {
   return (
@@ -26,7 +28,7 @@ export default function DraggableQuestionItem({
       className={cc([classes['draggable-question-item'], className])}
       {...otherProps}
     >
-      <QuestionItem item={item} key={index} />
+      <QuestionItem item={item} key={index} onClick={onClick} />
     </Draggable>
   );
 }
