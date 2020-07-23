@@ -7,7 +7,6 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   fetchCourse,
-  fetchNewCourse,
   ActionType,
 } from '../../../../providers/CourseEditorContext';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
@@ -30,12 +29,7 @@ export default function QuizEdit(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-
-    if (courseId) {
-      fetchCourse(dispatch, courseId);
-    } else {
-      fetchNewCourse(dispatch);
-    }
+    fetchCourse(dispatch, courseId);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);

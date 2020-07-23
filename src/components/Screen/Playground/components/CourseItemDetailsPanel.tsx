@@ -7,10 +7,9 @@ import {
   useCourseEditorContext,
   fetchItemsList,
   fetchCourse,
-  fetchNewCourse,
   ActionType,
 } from '../../../../providers/CourseEditorContext';
-import { CourseOutlineList } from '../../../common/lists';
+import CourseOutlineList from '../../../Screen/CourseEditorScreen/CourseOutlineList';
 
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import DetailsPanel from '../../../common/DetailsPanel';
@@ -35,12 +34,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-
-    if (courseId) {
-      fetchCourse(dispatch, courseId);
-    } else {
-      fetchNewCourse(dispatch);
-    }
+    fetchCourse(dispatch, courseId);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
@@ -67,7 +61,6 @@ export default function CourseItemDetailsPanel(): ReactElement {
             items={course?.items.toArray() ?? []}
             course={course}
             hasQuiz={!!course?.quiz}
-            forceRerender={forceRerender}
             handleItemClick={(item) => {
               setSelectedItem(item);
             }}
