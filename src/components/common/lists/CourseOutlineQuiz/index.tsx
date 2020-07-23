@@ -39,9 +39,12 @@ export default function CourseOutlineQuiz({
     <WMCollapse
       className={classes['quiz']}
       headerClassName={classes['quiz-header']}
-      header={<LessonHeader title="Quiz" type={IconType.Quiz} />}
+      header={<LessonHeader title="Quiz" type={IconType.QuizSettings} />}
     >
-      <QuestionItem item={{ title: 'Quiz Welcome Page' }} />
+      <QuestionItem
+        item={{ title: 'Quiz Welcome Page' }}
+        className={classes['welcome-screen-item']}
+      />
       <CourseQuestionList
         items={item.questions.toArray()}
         onDrop={(e: any) => onInnerDrop(e)}
