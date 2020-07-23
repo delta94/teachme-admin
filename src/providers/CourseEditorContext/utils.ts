@@ -47,7 +47,7 @@ export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<vo
 
 export const fetchCourse = async (
   dispatch: IDispatch,
-  courseId: string | undefined,
+  courseId: number | string | undefined,
   envId = 0,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });
