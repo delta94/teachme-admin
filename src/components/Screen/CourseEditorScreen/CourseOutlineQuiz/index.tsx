@@ -18,11 +18,11 @@ import classes from './style.module.scss';
 
 export default function CourseOutlineQuiz({
   item,
-  quizItemClicked,
+  quizItemClick,
   selectedOutlineItem,
 }: {
   item: Quiz;
-  quizItemClicked: ({
+  quizItemClick: ({
     type,
     data,
   }: {
@@ -52,9 +52,9 @@ export default function CourseOutlineQuiz({
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;
 
-  const onItemClicked = ({ type, data }: { type: QuizScreenType; data: any }) => {
+  const onItemClick = ({ type, data }: { type: QuizScreenType; data: any }) => {
     setActiveOutlineItem({ type, id: data.id });
-    quizItemClicked({
+    quizItemClick({
       type,
       data,
     });
@@ -73,7 +73,7 @@ export default function CourseOutlineQuiz({
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
         ])}
         onClick={() =>
-          onItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
+          onItemClick({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
         }
       />
       <CourseQuestionList
@@ -93,8 +93,8 @@ export default function CourseOutlineQuiz({
           },
         ])}
         activeQuestionId={activeOutlineItem?.id}
-        onQuestionClicked={(question: QuizQuestion) =>
-          onItemClicked({ type: QuizScreenType.QuestionScreen, data: question })
+        onQuestionClick={(question: QuizQuestion) =>
+          onItemClick({ type: QuizScreenType.QuestionScreen, data: question })
         }
       />
       <QuestionItem
@@ -104,7 +104,7 @@ export default function CourseOutlineQuiz({
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
         ])}
         onClick={() =>
-          onItemClicked({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
+          onItemClick({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
         }
       />
       <QuestionItem
@@ -113,7 +113,7 @@ export default function CourseOutlineQuiz({
           classes['fail-screen-item'],
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
         ])}
-        onClick={() => onItemClicked({ type: QuizScreenType.FailScreen, data: item.failScreen })}
+        onClick={() => onItemClick({ type: QuizScreenType.FailScreen, data: item.failScreen })}
       />
     </WMCollapse>
   );

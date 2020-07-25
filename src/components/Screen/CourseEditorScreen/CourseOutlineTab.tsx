@@ -39,7 +39,7 @@ export default function CourseOutlineTab(): ReactElement {
       {quiz && (
         <CourseOutlineQuiz
           item={quiz}
-          quizItemClicked={({ type, data }) => {
+          quizItemClick={({ type, data }) => {
             console.log('quizItemClicked type ', type);
             console.log('quizItemClicked data ', data);
           }}

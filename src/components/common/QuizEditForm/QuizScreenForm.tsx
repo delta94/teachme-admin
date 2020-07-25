@@ -5,14 +5,14 @@ import TextCounterTextarea from '../TextCounterTextarea';
 
 export default function QuizScreenForm({
   data,
-  handleDataChanged,
+  handleDataChange,
 }: {
   data: any;
-  handleDataChanged: (updatedData: any) => void;
+  handleDataChange: (updatedData: any) => void;
 }): ReactElement {
   const [question, setScreen] = useState(data);
-  const onDataChanged = (updatedData: any) => {
-    handleDataChanged({ ...question, ...updatedData });
+  const onDataChange = (updatedData: any) => {
+    handleDataChange({ ...question, ...updatedData });
 
     setScreen((prev: any) => ({
       ...prev,
@@ -24,8 +24,8 @@ export default function QuizScreenForm({
     setScreen(data);
   }, [data]);
 
-  const onButtonTextChanged = (value: string, buttonIndex: number) => {
-    onDataChanged({
+  const onButtonTextChange = (value: string, buttonIndex: number) => {
+    onDataChange({
       buttons: data.buttons.map((btn: any, index: number) =>
         index === buttonIndex ? { ...btn, text: value } : btn,
       ),
@@ -39,7 +39,7 @@ export default function QuizScreenForm({
         placeholder="Text"
         label="Title"
         value={data.title}
-        onChange={(e) => onDataChanged({ title: e.target.value })}
+        onChange={(e) => onDataChange({ title: e.target.value })}
       />
       <TextCounterTextarea
         maxLength={210}
@@ -48,7 +48,7 @@ export default function QuizScreenForm({
         value={data.description}
         minRows={3}
         maxRows={5}
-        onChange={(e) => onDataChanged({ description: e.target.value })}
+        onChange={(e) => onDataChange({ description: e.target.value })}
       />
       {data.buttons.map((button: any, index: number) => (
         <TextCounter
@@ -57,7 +57,7 @@ export default function QuizScreenForm({
           placeholder="Text"
           label="Title"
           value={button.text}
-          onChange={(e) => onButtonTextChanged(e.target.value, index)}
+          onChange={(e) => onButtonTextChange(e.target.value, index)}
         />
       ))}
     </>

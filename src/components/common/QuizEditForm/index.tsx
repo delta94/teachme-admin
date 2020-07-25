@@ -44,7 +44,7 @@ export default function QuizEditForm({
   const [state, dispatch] = useCourseEditorContext();
   const { course } = state;
 
-  const handleScreenDataChanged = (updatedData: any): void => {
+  const handleScreenDataChange = (updatedData: any): void => {
     if (course && course.quiz) {
       switch (quizScreenType) {
         case QuizScreenType.WelcomeScreen:
@@ -82,11 +82,11 @@ export default function QuizEditForm({
     >
       <div className={classes['quiz-edit']}>
         {quizScreenType !== QuizScreenType.QuestionScreen ? (
-          <QuizScreenForm data={quizScreenData} handleDataChanged={handleScreenDataChanged} />
+          <QuizScreenForm data={quizScreenData} handleDataChange={handleScreenDataChange} />
         ) : (
           <QuestionScreenForm
             data={quizScreenData as BaseQuizQuestion}
-            handleDataChanged={handleScreenDataChanged}
+            handleDataChange={handleScreenDataChange}
           />
         )}
       </div>

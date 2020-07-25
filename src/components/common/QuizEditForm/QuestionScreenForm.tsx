@@ -17,16 +17,16 @@ const questionTypes: IWMDropdownOption[] = [
 
 export default function QuestionScreenForm({
   data,
-  handleDataChanged,
+  handleDataChange,
 }: {
   data: any;
-  handleDataChanged: (updatedData: any) => void;
+  handleDataChange: (updatedData: any) => void;
 }): ReactElement {
   const [question, setQuestion] = useState(data);
   const [selectedQuestionType, setSelectedQuestionType] = useState(questionTypes[data.type]);
 
-  const onDataChanged = (updatedData: any) => {
-    handleDataChanged({ ...question, ...updatedData });
+  const onDataChange = (updatedData: any) => {
+    handleDataChange({ ...question, ...updatedData });
 
     setQuestion((prev: any) => ({
       ...prev,
@@ -34,8 +34,8 @@ export default function QuestionScreenForm({
     }));
   };
 
-  const onQuestionTypeChanged = (selected: IWMDropdownOption) => {
-    onDataChanged({ type: selected.id });
+  const onQuestionTypeChange = (selected: IWMDropdownOption) => {
+    onDataChange({ type: selected.id });
     setSelectedQuestionType(selected);
   };
 
@@ -53,7 +53,7 @@ export default function QuestionScreenForm({
         <WMDropdown
           options={questionTypes}
           selected={selectedQuestionType}
-          onSelectedChange={onQuestionTypeChanged}
+          onSelectedChange={onQuestionTypeChange}
         >
           <WMButton className={classes['dropdown-menu-button']}>
             {selectedQuestionType.value}
@@ -67,7 +67,7 @@ export default function QuestionScreenForm({
         label="Title"
         value={question.title}
         onChange={(e) => {
-          onDataChanged({ title: e.target.value });
+          onDataChange({ title: e.target.value });
         }}
       />
       <TextCounterTextarea
@@ -78,7 +78,7 @@ export default function QuestionScreenForm({
         minRows={3}
         maxRows={5}
         onChange={(e) => {
-          onDataChanged({ description: e.target.value });
+          onDataChange({ description: e.target.value });
         }}
       />
     </div>

@@ -36,7 +36,7 @@ export default function QuizEdit(): ReactElement {
         <div className={classes['outline-demo']}>
           <CourseOutlineQuiz
             item={course?.quiz}
-            quizItemClicked={({ type, data }) => {
+            quizItemClick={({ type, data }) => {
               setQuizScreenType(type);
               setQuizScreenData(data);
             }}
