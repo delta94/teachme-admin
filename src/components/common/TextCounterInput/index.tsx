@@ -22,6 +22,10 @@ export default function TextCounterInput({
     onChange && onChange(event);
   };
 
+  useEffect(() => {
+    setContent(value as string);
+  }, [value]);
+
   return (
     <div className={classes['text-counter-input']}>
       <label className={classes['input-label']}>

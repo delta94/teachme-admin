@@ -58,6 +58,10 @@ export default function QuizEditForm({
         case QuizScreenType.FailScreen:
           course.quiz.failScreen = updatedData;
           break;
+        case QuizScreenType.QuestionScreen: {
+          console.log('QuestionScreen updatedData ', updatedData);
+          break;
+        }
         default:
           throw new Error(`Unknown quiz screen type ${quizScreenType}`);
       }

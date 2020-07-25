@@ -10,7 +10,7 @@ export default function QuizScreenForm({
   data: any;
   onDataChanged: (updatedData: any) => void;
 }): ReactElement {
-  const buttonTextChanged = (value: string, buttonIndex: number) => {
+  const onButtonTextChanged = (value: string, buttonIndex: number) => {
     onDataChanged({
       buttons: data.buttons.map((btn: any, index: number) =>
         index === buttonIndex ? { ...btn, text: value } : btn,
@@ -43,7 +43,7 @@ export default function QuizScreenForm({
           placeholder="Text"
           label="Title"
           value={button.text}
-          onChange={(e) => buttonTextChanged(e.target.value, index)}
+          onChange={(e) => onButtonTextChanged(e.target.value, index)}
         />
       ))}
     </>

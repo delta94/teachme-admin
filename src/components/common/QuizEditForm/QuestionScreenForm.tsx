@@ -15,14 +15,22 @@ const questionTypes: IWMDropdownOption[] = [
   { id: 1, value: 'Multiple Selection' },
 ];
 
-export default function QuestionScreenForm({ data }: { data: any }): ReactElement {
+export default function QuestionScreenForm({
+  data,
+  handleDataChanged,
+}: {
+  data: any;
+  handleDataChanged: (updatedData: any) => void;
+}): ReactElement {
   const [question, setQuestion] = useState(data);
+  const onDataChanged = (updatedData: any) => handleDataChanged({ ...question, ...updatedData });
 
   useEffect(() => {
     if (data.id !== question.id) {
+      console.log('QuestionScreenForm data ', data);
       setQuestion(data);
     }
-  }, [data.id, question.id]);
+  }, [data, data.id, question.id]);
 
   return (
     <div className={classes['quiz-question-screen-form']}>
@@ -46,7 +54,7 @@ export default function QuestionScreenForm({ data }: { data: any }): ReactElemen
         value={question.title}
         onChange={(e) => {
           console.log('title changed ', e.target.value);
-          //onDataChanged({ title: e.target.value })
+          onDataChanged({ title: e.target.value });
         }}
       />
       <TextCounterTextarea
