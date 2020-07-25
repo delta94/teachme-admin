@@ -24,14 +24,10 @@ body {
     width: 5px;
 
     /* Handle */
-    &-thumb {
-      background: var(--neutral100);
-      border-radius: 2.5px;
-    }
-
-    /* Handle on hover */
+    &-thumb,
     &-thumb:hover {
       background: var(--neutral100);
+      border-radius: 2.5px;
     }
   }
 }
