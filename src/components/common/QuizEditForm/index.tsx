@@ -82,7 +82,18 @@ export default function QuizEditForm({
     >
       <div className={classes['quiz-edit']}>
         {quizScreenType !== QuizScreenType.QuestionScreen ? (
-          <QuizScreenForm data={quizScreenData} handleDataChange={handleScreenDataChange} />
+          <QuizScreenForm
+            data={quizScreenData}
+            handleDataChange={handleScreenDataChange}
+            renderExtra={
+              quizScreenType === QuizScreenType.WelcomeScreen && (
+                <p className={classes['info-text']}>
+                  Note: This info will also be presented in the Quiz call-to-action banner, in the
+                  user’s course page.
+                </p>
+              )
+            }
+          />
         ) : (
           <QuestionScreenForm
             data={quizScreenData as BaseQuizQuestion}

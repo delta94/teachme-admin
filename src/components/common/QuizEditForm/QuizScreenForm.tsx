@@ -1,14 +1,18 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, ReactNode } from 'react';
 
 import TextCounter from '../../common/TextCounterInput';
 import TextCounterTextarea from '../TextCounterTextarea';
 
+import classes from './style.module.scss';
+
 export default function QuizScreenForm({
   data,
   handleDataChange,
+  renderExtra,
 }: {
   data: any;
   handleDataChange: (updatedData: any) => void;
+  renderExtra?: ReactNode;
 }): ReactElement {
   const [question, setScreen] = useState(data);
   const onDataChange = (updatedData: any) => {
@@ -33,7 +37,7 @@ export default function QuizScreenForm({
   };
 
   return (
-    <>
+    <div className={classes['quiz-screen-form']}>
       <TextCounter
         maxLength={80}
         placeholder="Text"
@@ -60,6 +64,7 @@ export default function QuizScreenForm({
           onChange={(e) => onButtonTextChange(e.target.value, index)}
         />
       ))}
-    </>
+      {renderExtra}
+    </div>
   );
 }

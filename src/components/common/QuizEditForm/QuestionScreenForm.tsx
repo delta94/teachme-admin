@@ -47,7 +47,7 @@ export default function QuestionScreenForm({
   }, [data, question.id]);
 
   return (
-    <div className={classes['quiz-question-screen-form']}>
+    <div className={classes['question-screen-form']}>
       {/* TODO: make it match to correct data */}
       <FormGroup className={classes['question-type']} label="Question Type:">
         <WMDropdown
