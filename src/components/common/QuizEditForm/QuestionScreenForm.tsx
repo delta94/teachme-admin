@@ -23,6 +23,8 @@ export default function QuestionScreenForm({
   handleDataChanged: (updatedData: any) => void;
 }): ReactElement {
   const [question, setQuestion] = useState(data);
+  const [selectedQuestionType, setSelectedQuestionType] = useState(questionTypes[data.type]);
+
   const onDataChanged = (updatedData: any) => {
     handleDataChanged({ ...question, ...updatedData });
 
@@ -32,9 +34,15 @@ export default function QuestionScreenForm({
     }));
   };
 
+  const onQuestionTypeChanged = (selected: IWMDropdownOption) => {
+    onDataChanged({ type: selected.id });
+    setSelectedQuestionType(selected);
+  };
+
   useEffect(() => {
     if (data.id !== question.id) {
       setQuestion(data);
+      setSelectedQuestionType(questionTypes[data.type]);
     }
   }, [data, question.id]);
 
@@ -44,11 +52,11 @@ export default function QuestionScreenForm({
       <FormGroup className={classes['question-type']} label="Question Type:">
         <WMDropdown
           options={questionTypes}
-          selected={questionTypes[0]}
-          onSelectedChange={(selected) => console.log('onSelectedChange selected ', selected)}
+          selected={selectedQuestionType}
+          onSelectedChange={onQuestionTypeChanged}
         >
           <WMButton className={classes['dropdown-menu-button']}>
-            {questionTypes[0].value}
+            {selectedQuestionType.value}
             <DownOutlined />
           </WMButton>
         </WMDropdown>

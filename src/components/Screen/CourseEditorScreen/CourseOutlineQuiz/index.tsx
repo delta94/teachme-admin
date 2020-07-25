@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
 import WMCollapse from '../../../common/WMCollapse';
 import { IconType } from '../../../common/Icon';
@@ -18,6 +19,7 @@ import classes from './style.module.scss';
 export default function CourseOutlineQuiz({
   item,
   quizItemClicked,
+  selectedOutlineItem,
 }: {
   item: Quiz;
   quizItemClicked: ({
@@ -27,8 +29,11 @@ export default function CourseOutlineQuiz({
     type: QuizScreenType;
     data: QuizScreen | BaseQuizQuestion;
   }) => void;
+  selectedOutlineItem?: { type: QuizScreenType; id?: number };
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
+  const [activeOutlineItem, setActiveOutlineItem] = useState(selectedOutlineItem);
+
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
     const isRemove = e.removedIndex !== undefined && e.removedIndex !== null;
@@ -47,6 +52,14 @@ export default function CourseOutlineQuiz({
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;
 
+  const onItemClicked = ({ type, data }: { type: QuizScreenType; data: any }) => {
+    setActiveOutlineItem({ type, id: data.id });
+    quizItemClicked({
+      type,
+      data,
+    });
+  };
+
   return (
     <WMCollapse
       className={classes['quiz']}
@@ -55,9 +68,12 @@ export default function CourseOutlineQuiz({
     >
       <QuestionItem
         item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
-        className={classes['welcome-screen-item']}
+        className={cc([
+          classes['welcome-screen-item'],
+          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
+        ])}
         onClick={() =>
-          quizItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
+          onItemClicked({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
         }
       />
       <CourseQuestionList
@@ -71,20 +87,33 @@ export default function CourseOutlineQuiz({
           className: classes['drop-preview'],
         }}
         shouldAcceptDrop={shouldAcceptDrop}
-        className={cc([{ [classes['is-empty']]: !item.questions.toArray().length }])}
-        handleQuestionClicked={(question) =>
-          quizItemClicked({ type: QuizScreenType.QuestionScreen, data: question })
+        className={cc([
+          {
+            [classes['is-empty']]: !item.questions.toArray().length,
+          },
+        ])}
+        activeQuestionId={activeOutlineItem?.id}
+        onQuestionClicked={(question: QuizQuestion) =>
+          onItemClicked({ type: QuizScreenType.QuestionScreen, data: question })
         }
       />
       <QuestionItem
         item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
+        className={cc([
+          classes['success-screen-item'],
+          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
+        ])}
         onClick={() =>
-          quizItemClicked({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
+          onItemClicked({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
         }
       />
       <QuestionItem
         item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
-        onClick={() => quizItemClicked({ type: QuizScreenType.FailScreen, data: item.failScreen })}
+        className={cc([
+          classes['fail-screen-item'],
+          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
+        ])}
+        onClick={() => onItemClicked({ type: QuizScreenType.FailScreen, data: item.failScreen })}
       />
     </WMCollapse>
   );

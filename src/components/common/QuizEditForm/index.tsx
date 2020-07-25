@@ -78,6 +78,7 @@ export default function QuizEditForm({
       titleIcon={<Icon type={`quiz-${quizScreenType}`} />}
       isOpen={Boolean(quizScreenData)}
       onClose={onClose}
+      titleIsEllipsis
     >
       <div className={classes['quiz-edit']}>
         {quizScreenType !== QuizScreenType.QuestionScreen ? (

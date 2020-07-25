@@ -12,14 +12,16 @@ export interface ICourseItemsList {
   className?: string;
   onDrop?: any;
   [key: string]: any;
-  handleQuestionClicked: (item: QuizQuestion) => void;
+  onQuestionClicked: (question: QuizQuestion) => void;
+  activeQuestionId?: number;
 }
 
 export default function CourseQuestionList({
   items,
   onDrop,
   className,
-  handleQuestionClicked,
+  onQuestionClicked,
+  activeQuestionId,
   ...otherProps
 }: ICourseItemsList): ReactElement {
   return (
@@ -35,7 +37,8 @@ export default function CourseQuestionList({
             key={i}
             index={i}
             item={item}
-            onClick={() => handleQuestionClicked(item)}
+            onClick={() => onQuestionClicked(item)}
+            className={cc([{ [classes['active-item']]: activeQuestionId === item.id }])}
           />
         ))}
       </Container>
