@@ -1,15 +1,29 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import TextCounter from '../../common/TextCounterInput';
 import TextCounterTextarea from '../TextCounterTextarea';
 
 export default function QuizScreenForm({
   data,
-  onDataChanged,
+  handleDataChanged,
 }: {
   data: any;
-  onDataChanged: (updatedData: any) => void;
+  handleDataChanged: (updatedData: any) => void;
 }): ReactElement {
+  const [question, setScreen] = useState(data);
+  const onDataChanged = (updatedData: any) => {
+    handleDataChanged({ ...question, ...updatedData });
+
+    setScreen((prev: any) => ({
+      ...prev,
+      ...updatedData,
+    }));
+  };
+
+  useEffect(() => {
+    setScreen(data);
+  }, [data]);
+
   const onButtonTextChanged = (value: string, buttonIndex: number) => {
     onDataChanged({
       buttons: data.buttons.map((btn: any, index: number) =>

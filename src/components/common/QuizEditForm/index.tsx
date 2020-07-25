@@ -7,10 +7,8 @@ import DetailsPanel from '../DetailsPanel';
 import Icon from '../Icon';
 
 import classes from './style.module.scss';
-import SuccessScreenForm from './SuccessScreenForm';
-import WelcomeScreenForm from './WelcomeScreenForm';
-import FailScreenForm from './FailScreenForm';
 import QuestionScreenForm from './QuestionScreenForm';
+import QuizScreenForm from './QuizScreenForm';
 
 export enum QuizScreenType {
   WelcomeScreen = 'welcome-screen',
@@ -59,7 +57,11 @@ export default function QuizEditForm({
           course.quiz.failScreen = updatedData;
           break;
         case QuizScreenType.QuestionScreen: {
-          console.log('QuestionScreen updatedData ', updatedData);
+          const questionIndex = course.quiz.questions
+            .toArray()
+            .findIndex((question) => question.id === updatedData.id);
+          // TODO: talk about updateIndex
+          course.quiz.questions.updateIndex(updatedData, questionIndex);
           break;
         }
         default:
@@ -70,15 +72,6 @@ export default function QuizEditForm({
     }
   };
 
-  const ScreenForm = {
-    [QuizScreenType.WelcomeScreen]: WelcomeScreenForm,
-    [QuizScreenType.SuccessScreen]: SuccessScreenForm,
-    [QuizScreenType.FailScreen]: FailScreenForm,
-    [QuizScreenType.QuestionScreen]: QuestionScreenForm,
-  };
-
-  const ScreenFormComponent = ScreenForm[quizScreenType as keyof typeof ScreenForm];
-
   return (
     <DetailsPanel
       title={screenTitle(quizScreenType, quizScreenData)}
@@ -87,13 +80,11 @@ export default function QuizEditForm({
       onClose={onClose}
     >
       <div className={classes['quiz-edit']}>
-        {ScreenFormComponent && (
-          <ScreenFormComponent
-            data={
-              quizScreenType === QuizScreenType.QuestionScreen
-                ? (quizScreenData as BaseQuizQuestion)
-                : (quizScreenData as QuizScreen)
-            }
+        {quizScreenType !== QuizScreenType.QuestionScreen ? (
+          <QuizScreenForm data={quizScreenData} handleDataChanged={handleScreenDataChanged} />
+        ) : (
+          <QuestionScreenForm
+            data={quizScreenData as BaseQuizQuestion}
             handleDataChanged={handleScreenDataChanged}
           />
         )}
