@@ -49,7 +49,7 @@ export default function QuizScreenForm({
           key={`quiz-form-button-${index}`}
           maxLength={80}
           placeholder="Text"
-          label="Title"
+          label="Button"
           value={button.text}
           errorMessage={fieldErrorMessage(button.text)}
           onChange={(e) => {
