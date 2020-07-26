@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
-import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
+import { QuizScreen } from '@walkme/types';
 
 import { QuizQuestion } from '../../../walkme/data/courseBuild/quiz/question';
-import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 
 import DetailsPanel from '../DetailsPanel';
 import Icon from '../Icon';
@@ -42,13 +41,6 @@ export default function QuizEditForm({
   quizScreenData?: QuizScreen | QuizQuestion; // TODO: change to QuizQuestion type
   onClose: () => void;
 }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-  const { course } = state;
-
-  if (course?.quiz) {
-    console.log('course?.quiz ', course?.quiz);
-  }
-
   return (
     <DetailsPanel
       title={screenTitle(quizScreenType, quizScreenData)}

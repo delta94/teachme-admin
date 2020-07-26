@@ -37,7 +37,7 @@ export default function QuestionAnswersCreator({
 
   return (
     <div className={classes['answers-creator']}>
-      {answers.map((answer) =>
+      {answers.map((answer: QuizAnswer) =>
         type === QuestionType.Single ? (
           <WMRadio
             className={classes['single-select-field']}
