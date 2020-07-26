@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 
-import ScreenHeader from '../../common/ScreenHeader';
+import CourseEditorProvider from '../../../providers/CourseEditorContext';
 
+import ScreenHeader from '../../common/ScreenHeader';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import WMCard from '../../common/WMCard';
@@ -54,7 +55,11 @@ const tabs = [
     id: 'course-item-details-panel',
     title: 'Course Item Details Panel',
     icon: undefined,
-    content: <CourseItemDetailsPanel />,
+    content: (
+      <CourseEditorProvider>
+        <CourseItemDetailsPanel />
+      </CourseEditorProvider>
+    ),
   },
   {
     id: 'quiz-settings',
@@ -66,7 +71,11 @@ const tabs = [
     id: 'quiz-edit',
     title: 'Quiz Edit',
     icon: undefined,
-    content: <QuizEdit />,
+    content: (
+      <CourseEditorProvider>
+        <QuizEdit />
+      </CourseEditorProvider>
+    ),
   },
   {
     id: 'toaster',

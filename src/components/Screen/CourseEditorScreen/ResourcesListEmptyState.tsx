@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import WMEmpty from '../../WMEmpty';
+import WMEmpty from '../../common/WMEmpty';
 
 import classes from './style.module.scss';
 
-export default function ResourceListEmptyState(): ReactElement {
+export default function ResourcesListEmptyState(): ReactElement {
   return (
     <WMEmpty
       description={

@@ -13,8 +13,6 @@ window.test = {
   ...screens,
 };
 
-export * from '@walkme/editor-sdk';
-
 export function getRedirectURI(): string {
   switch (window.location.hostname) {
     case 'localhost':
