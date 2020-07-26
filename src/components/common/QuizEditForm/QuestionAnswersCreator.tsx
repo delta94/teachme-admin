@@ -4,6 +4,7 @@ import { QuestionType, QuizAnswer } from '@walkme/types';
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 
 import TextCounterInput from '../TextCounterInput';
+import { AddButton } from '../buttons';
 import WMCheckbox from '../WMCheckbox';
 import WMRadio from '../WMRadio';
 

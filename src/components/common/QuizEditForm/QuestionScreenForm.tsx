@@ -11,6 +11,7 @@ import TextCounterTextarea from '../TextCounterTextarea';
 import FormGroup from '../FormGroup';
 import WMDropdown, { IWMDropdownOption } from '../WMDropdown';
 import WMButton from '../WMButton';
+import { AddButton } from '../buttons';
 
 import QuestionAnswersCreator from './QuestionAnswersCreator';
 
@@ -73,6 +74,13 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
       <QuestionAnswersCreator
         answers={data.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
+      />
+      <AddButton
+        className={classes['add-answer']}
+        onClick={() => {
+          data.answers.addNewItem();
+          dispatch({ type: ActionType.UpdateCourseOutline });
+        }}
       />
     </div>
   );
