@@ -2,12 +2,13 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
+import { useAppContext } from '../../../../providers/AppContext';
+
+import { WMSkeletonInput } from '../../WMSkeleton';
 import WMDropdown, { IWMDropdownOption } from '../../WMDropdown';
 import WMButton from '../../WMButton';
 
 import classes from './style.module.scss';
-import { useAppContext } from '../../../../providers/AppContext';
-import { WMSkeletonInput } from '../../WMSkeleton';
 
 export default function DropdownFilter({
   label,
