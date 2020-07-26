@@ -12,6 +12,7 @@ import FormGroup from '../FormGroup';
 import WMDropdown, { IWMDropdownOption } from '../WMDropdown';
 import WMButton from '../WMButton';
 import { AddButton } from '../buttons';
+import WMSwitch from '../WMSwitch';
 
 import QuestionAnswersCreator from './QuestionAnswersCreator';
 
@@ -62,7 +63,7 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
       <TextCounterTextarea
         maxLength={210}
         placeholder="Text"
-        label="Description"
+        label="Description (Optional)"
         value={data.description}
         minRows={3}
         maxRows={5}
@@ -71,6 +72,7 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
+      <p>Answers:</p>
       <QuestionAnswersCreator
         answers={data.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
@@ -82,6 +84,30 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
+      <FormGroup className={classes['explanation']}>
+        <WMSwitch
+          className={classes['switch-field']}
+          checked={data.properties?.hasExplanation}
+          label="Explain answer (after quiz)"
+          onChange={(checked: boolean) => {
+            if (data.properties) {
+              data.properties.hasExplanation = checked;
+              dispatch({ type: ActionType.UpdateCourseOutline });
+            }
+          }}
+        />
+        <TextCounterInput
+          counterClassName={classes['explanation-field']}
+          maxLength={200}
+          placeholder="Text"
+          disabled={!data.properties?.hasExplanation}
+          value={data.explanation ? data.explanation : ''}
+          onChange={(e) => {
+            data.explanation = e.target.value;
+            dispatch({ type: ActionType.UpdateCourseOutline });
+          }}
+        />
+      </FormGroup>
     </div>
   );
 }
