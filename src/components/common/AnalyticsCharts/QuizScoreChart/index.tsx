@@ -22,7 +22,8 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
   useEffect(() => {
     if (!isUpdating && !appInit) setAppInit(true);
   }, [isUpdating, appInit]);
-  const isEmpty = Object.keys(quizScoreData.data).length === 0;
+
+  const isEmpty = Array.from(Object.keys(quizScoreData.data)).length === 0;
 
   return (
     <WMCard title={title} className={classes['course-average']}>
@@ -30,14 +31,14 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
         <div className={classes['course-average-content']}>
           <WMProgress
             className={classes['course-average-chart']}
-            percent={isEmpty && average}
+            percent={!isEmpty && average}
             type={ProgressType.Circle}
-            format={() => (isEmpty ? average : '- -')}
+            format={() => (isEmpty ? '- -' : average)}
             width={80}
             strokeWidth={10}
             status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
           />
-          {isEmpty && (
+          {!isEmpty && (
             <span className={classes['passmark']}>
               Passmark: <b>{passmark}</b>
             </span>

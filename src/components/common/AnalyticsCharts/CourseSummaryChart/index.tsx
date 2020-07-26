@@ -50,7 +50,15 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
   const hasData = Boolean(summaryData.data.days.length);
 
   const getUsersCount = (key: string): number =>
-    summaryData.data.days.reduce((total: number, arr: any): number => total + arr[key], 0);
+    summaryData.data.days.reduce(
+      (
+        total: number,
+        dayStats: {
+          [label: string]: number;
+        },
+      ): number => total + dayStats[key],
+      0,
+    );
 
   return (
     <WMCard title={title}>
