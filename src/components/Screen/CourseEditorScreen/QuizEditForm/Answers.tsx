@@ -11,7 +11,7 @@ import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
 
-export default function QuestionAnswersCreator({
+export default function Answers({
   answers,
   type,
 }: {

@@ -14,7 +14,7 @@ import WMButton from '../../../common/WMButton';
 import { AddButton } from '../../../common/buttons';
 import WMSwitch from '../../../common/WMSwitch';
 
-import QuestionAnswersCreator from './QuestionAnswersCreator';
+import Answers from './Answers';
 
 import classes from './style.module.scss';
 import { fieldErrorMessage } from './utils';
@@ -76,7 +76,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         }}
       />
       <p>Answers:</p>
-      <QuestionAnswersCreator
+      <Answers
         answers={question.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
       />
