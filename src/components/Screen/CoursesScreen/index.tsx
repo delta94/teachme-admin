@@ -5,14 +5,13 @@ import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
-import { UICourse } from '../../../walkme/data';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import ExportButton from '../../common/buttons/ExportButton';
+import { ExportButton } from '../../common/buttons';
 import Icon, { IconType } from '../../common/Icon';
 import ScreenHeader from '../../common/ScreenHeader';
-import SearchFilter from '../../common/filters/SearchFilter';
+import { SearchFilter } from '../../common/filters';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import WMCard from '../../common/WMCard';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
@@ -31,22 +30,22 @@ const mockDates = {
   to: moment(new Date()).subtract(1, 'months').endOf('month').format('YYYY-MM-DD'),
 };
 
-const statuses: IWMDropdownOption[] = [
-  { id: 0, value: 'All Status' },
-  { id: 1, value: 'Published' },
-  { id: 2, value: 'Modified' },
-  { id: 3, value: 'Draft' },
-  { id: 4, value: 'Archived' },
-];
+// const statuses: IWMDropdownOption[] = [
+//   { id: 0, value: 'All Status' },
+//   { id: 1, value: 'Published' },
+//   { id: 2, value: 'Modified' },
+//   { id: 3, value: 'Draft' },
+//   { id: 4, value: 'Archived' },
+// ];
 
-const segments: IWMDropdownOption[] = [
-  { id: 0, value: 'All Segments' },
-  { id: 1, value: 'All Employees' },
-  { id: 2, value: 'HR' },
-  { id: 3, value: 'Sales' },
-  { id: 4, value: 'Product' },
-  { id: 5, value: 'R&D' },
-];
+// const segments: IWMDropdownOption[] = [
+//   { id: 0, value: 'All Segments' },
+//   { id: 1, value: 'All Employees' },
+//   { id: 2, value: 'HR' },
+//   { id: 3, value: 'Sales' },
+//   { id: 4, value: 'Product' },
+//   { id: 5, value: 'R&D' },
+// ];
 
 const prodStatuses: IWMDropdownOption[] = [
   {
@@ -70,7 +69,7 @@ export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, analytics } = coursesMockData;
   const { from, to } = mockDates;
 
-  const [{ courses }, dispatch] = useCoursesContext();
+  const [{ courses, filteredCourses }, dispatch] = useCoursesContext();
 
   useEffect(() => {
     fetchCourseList(dispatch, 0, from, to);
@@ -78,7 +77,6 @@ export default function CoursesScreen(): ReactElement {
     return () => dispatch({ type: ActionType.ResetCourses });
   }, [dispatch, from, to]);
 
-  const [tableData, setTableData] = useState<Array<UICourse>>(courses);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
   const [selectedRows, setSelectedRows] = useState<Array<any>>([]);
 
@@ -87,12 +85,16 @@ export default function CoursesScreen(): ReactElement {
   const [showExport, setShowExport] = useState(false);
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
-  // TODO: fix search filter
   const onSearch = (searchValue: string) => {
-    const newTableData = courses.filter((course) =>
-      course.title.toLowerCase().includes(searchValue.toLowerCase()),
+    const newCourseList = courses.filter(({ title }) =>
+      title.toLowerCase().includes(searchValue.toLowerCase()),
     );
-    setTableData(newTableData);
+
+    dispatch({
+      type: ActionType.SetCoursesSearchValue,
+      coursesSearchValue: searchValue,
+      courses: newCourseList,
+    });
   };
 
   const onProdStatusChange = (selected: IWMDropdownOption) => {
@@ -137,7 +139,7 @@ export default function CoursesScreen(): ReactElement {
               selectedRowKeys,
               onChange: onMultiSelectChange,
             }}
-            data={courses}
+            data={filteredCourses}
             columns={columns}
           >
             <ControlsWrapper>

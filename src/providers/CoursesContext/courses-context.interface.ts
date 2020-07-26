@@ -9,6 +9,7 @@ export { ActionType };
 export interface IAction {
   type: ActionType;
   courses?: Array<UICourse> | null;
+  coursesSearchValue?: string;
 }
 
 export interface IDispatch {
@@ -19,6 +20,8 @@ export interface IState {
   isFetchingCourses: boolean;
   isFetchingCoursesError: boolean;
   courses: Array<UICourse>;
+  filteredCourses: Array<UICourse>;
+  coursesSearchValue: string;
 }
 
 export interface ICoursesProvider {

@@ -6,6 +6,8 @@ export const initialState = {
   isFetchingCourses: false,
   isFetchingCoursesError: false,
   courses: [],
+  filteredCourses: [],
+  coursesSearchValue: '',
 } as IState;
 
 export const reducer = produce(
@@ -19,10 +21,15 @@ export const reducer = produce(
         draft.isFetchingCourses = false;
         draft.isFetchingCoursesError = false;
         draft.courses = action.courses ?? initialState.courses;
+        draft.filteredCourses = action.courses ?? initialState.filteredCourses;
         break;
       case ActionType.FetchCoursesError:
         draft.isFetchingCourses = false;
         draft.isFetchingCoursesError = true;
+        break;
+      case ActionType.SetCoursesSearchValue:
+        draft.coursesSearchValue = action.coursesSearchValue ?? initialState.coursesSearchValue;
+        draft.filteredCourses = action.courses ?? initialState.filteredCourses;
         break;
       case ActionType.ResetCourses:
         draft = { ...initialState };
