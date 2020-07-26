@@ -52,25 +52,30 @@ export type CourseOptions = {
   light: boolean;
 };
 export class Course implements BuildCourse {
-  public index: number;
-  public id: number;
-  public title: string;
-  public items: CourseChildContainer;
+  public index!: number;
+  public id!: number;
+  public title!: string;
+  public items!: CourseChildContainer;
   public get quiz(): Quiz | undefined {
     return this.properties.hasQuiz ? this._quiz : undefined;
   }
-  public properties: CourseProperties;
-  private _quiz: Quiz;
+  public properties!: CourseProperties;
+  private _quiz!: Quiz;
   constructor(private _course?: WalkMeDataNewCourse, options?: CourseOptions) {
     if (!this._course) {
       this._course = newDataModel(0);
     }
-    this.id = this._course.Id;
-    this.title = this._course.Name;
+    this.map(this._course, options);
+  }
+
+  private map(course: WalkMeDataNewCourse, options?: CourseOptions): void {
+    this._course = course;
+    this.id = course.Id;
+    this.title = course.Name;
     this.items = items.getCourseChildren(
       options?.light
         ? []
-        : this._course.LinkedDeployables!.map((item) => {
+        : course.LinkedDeployables!.map((item) => {
             return item.DeployableType == TypeId.Lesson
               ? ((getDataSync(TypeId.Lesson, [
                   item.DeployableID,
@@ -78,9 +83,9 @@ export class Course implements BuildCourse {
               : item;
           }),
     );
-    this._quiz = new Quiz(this._course.Quiz);
-    this.properties = new CourseProperties(this._course.Settings);
-    this.index = this._course.OrderIndex;
+    this._quiz = new Quiz(course.Quiz);
+    this.properties = new CourseProperties(course.Settings);
+    this.index = course.OrderIndex;
   }
 
   async save(): Promise<void> {
@@ -99,7 +104,8 @@ export class Course implements BuildCourse {
         item.DeployableID = lessons[item.DeployableID]?.Id ?? item.DeployableID;
       },
     );
-    return walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
+    const savedCourse = await walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
+    this.map(savedCourse);
   }
 
   toDataModel(): WalkMeDataNewCourse {
@@ -117,12 +123,16 @@ export class Course implements BuildCourse {
     };
   }
 
-  addQuiz() {
+  addQuiz(): Quiz | undefined {
     this.properties.hasQuiz = true;
     return this.quiz;
   }
 
-  deleteQuiz() {
+  deleteQuiz(): void {
     this.properties.hasQuiz = false;
+  }
+
+  includes(type: TypeName, id: number): boolean {
+    return false;
   }
 }

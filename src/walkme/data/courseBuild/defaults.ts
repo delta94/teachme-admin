@@ -24,5 +24,5 @@ export default {
   QUIZ_PASSMARK: 100,
   QUIZ_POSITION: 8,
   COURSE_NAME: 'Untitled Course',
-  NEW_LESON_NAME: 'New Lesson',
+  NEW_LESSON_NAME: 'New Lesson',
 };

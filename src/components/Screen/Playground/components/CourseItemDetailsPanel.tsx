@@ -3,7 +3,13 @@ import { Divider } from 'antd';
 import cc from 'classcat';
 import { ContentItem } from '@walkme/types';
 
-import { getFlatItemsList } from '../../../../walkme';
+import {
+  useCourseEditorContext,
+  fetchItemsList,
+  fetchCourse,
+  ActionType,
+} from '../../../../providers/CourseEditorContext';
+import CourseOutlineList from '../../../Screen/CourseEditorScreen/CourseOutlineList';
 
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import DetailsPanel from '../../../common/DetailsPanel';
@@ -15,39 +21,52 @@ import CourseItemDetails from '../../../common/CourseItemDetails';
 import classes from './playground.module.scss';
 
 export default function CourseItemDetailsPanel(): ReactElement {
-  const [items, setItems] = useState([] as ContentItem[]);
-  const [selectedItem, setSelectedItem] = useState((null as unknown) as ContentItem);
+  const [state, dispatch] = useCourseEditorContext();
+  const [selectedItem, setSelectedItem] = useState<any>();
+  const { course } = state;
+  const [mockState, setMockState] = useState(new Date());
+  const forceRerender = () => setMockState(new Date());
+  const [courseId, setCourseId] = useState(0);
 
-  const handleItemClicked = (item: ContentItem): void => {
-    setSelectedItem(item);
-  };
-
-  const getItems = async () => {
-    const courseItems = await getFlatItemsList(0);
-    setItems(courseItems);
+  const handleItemChanged = (updatedItem: ContentItem) => {
+    setSelectedItem(updatedItem);
   };
 
   useEffect(() => {
-    getItems();
-  }, []);
+    fetchItemsList(dispatch);
+    fetchCourse(dispatch, courseId);
+
+    return () => dispatch({ type: ActionType.ResetCourseEditor });
+  }, [dispatch, courseId]);
 
   return (
     <div className={classes['cards-wrapper']}>
       <WMCard className={cc([classes['buttons'], classes['grow']])}>
-        {Boolean(items.length) &&
-          items.map((item: ContentItem, index: number) => (
-            <div key={`course-details-button-${index}`}>
-              <WMButton
-                variant={ButtonVariantEnum.Link}
-                onClick={() => handleItemClicked(item)}
-                icon={<Icon type={item.type} />}
-              >
-                {item.title}
-              </WMButton>
-              <Divider />
-            </div>
-          ))}
+        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1284870)}>
+          Quiz Settings - courseId 1284870
+        </WMButton>
+        <Divider />
+        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1297234)}>
+          Quiz Settings - courseId 1297234
+        </WMButton>
+        <Divider />
+        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1277328)}>
+          Quiz Settings - courseId 1277328
+        </WMButton>
+        <Divider />
       </WMCard>
+      {course && Boolean(course.items?.toArray().length) && (
+        <div className={classes['outline-demo']}>
+          <CourseOutlineList
+            items={course?.items.toArray() ?? []}
+            course={course}
+            hasQuiz={!!course?.quiz}
+            handleItemClick={(item) => {
+              setSelectedItem(item);
+            }}
+          />
+        </div>
+      )}
       <DetailsPanel
         title={selectedItem && selectedItem.title}
         titleIcon={selectedItem && <Icon type={selectedItem.type} />}
@@ -55,7 +74,9 @@ export default function CourseItemDetailsPanel(): ReactElement {
         onClose={() => setSelectedItem((null as unknown) as ContentItem)}
         titleIsEllipsis
       >
-        {selectedItem && <CourseItemDetails courseItem={selectedItem} />}
+        {selectedItem && (
+          <CourseItemDetails courseItem={selectedItem} courseItemChanged={handleItemChanged} />
+        )}
       </DetailsPanel>
     </div>
   );
