@@ -18,34 +18,33 @@ export default function QuestionAnswersCreator({
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
 
-  const AnswerField = ({ answer, index }: { answer: QuizAnswer; index: number }) => (
+  const fieldErrorMessage = (fieldValue: string) =>
+    fieldValue === '' ? 'This field cannot be empty' : undefined;
+
+  const AnswerField = ({ answer }: { answer: QuizAnswer }) => (
     <TextCounterInput
       className={classes['answer-field']}
       maxLength={200}
       placeholder="Text"
       value={answer.text}
+      errorMessage={fieldErrorMessage(answer.text)}
       onBlur={(e) => {
-        const val = e.target.value;
-        if (val.trim() !== '') {
-          answer.text = e.target.value;
-          dispatch({ type: ActionType.UpdateCourseOutline });
-        } else {
-          console.log('error this field require');
-        }
+        answer.text = e.target.value;
+        dispatch({ type: ActionType.UpdateCourseOutline });
       }}
     />
   );
 
   return (
     <div className={classes['answers-creator']}>
-      {answers.map((answer, index) =>
+      {answers.map((answer) =>
         type === QuestionType.Single ? (
           <WMRadio
             className={classes['single-select-field']}
             key={`answer-${answer.id}`}
             value={answer.id}
             checked={answer.isCorrect}
-            label={<AnswerField answer={answer} index={index} />}
+            label={<AnswerField answer={answer} />}
             onChange={(e) => {
               answer.isCorrect = e.target.checked;
               dispatch({ type: ActionType.UpdateCourseOutline });
@@ -62,7 +61,7 @@ export default function QuestionAnswersCreator({
               dispatch({ type: ActionType.UpdateCourseOutline });
             }}
           >
-            <AnswerField answer={answer} index={index} />
+            <AnswerField answer={answer} />
           </WMCheckbox>
         ),
       )}

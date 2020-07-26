@@ -32,9 +32,9 @@ export default function TextCounterInput({
         {label}
         <WMInput onChange={onInputChange} value={content} maxLength={maxLength} {...otherProps} />
       </label>
-      <p className={classes['input-counter']}>
+      <span className={classes['input-counter']}>
         {content.length}/{maxLength}
-      </p>
+      </span>
     </div>
   );
 }
