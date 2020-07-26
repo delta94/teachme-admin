@@ -20,16 +20,14 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
       <div className={classes['course-average-content']}>
         <WMProgress
           className={classes['course-average-chart']}
-          percent={isEmpty ? '' : average}
+          percent={!isEmpty && average}
           type={ProgressType.Circle}
           format={() => (isEmpty ? '- -' : average)}
           width={80}
           strokeWidth={10}
           status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
         />
-        {isEmpty ? (
-          ''
-        ) : (
+        {!isEmpty && (
           <span className={classes['passmark']}>
             Passmark: <b>{passmark}</b>
           </span>
