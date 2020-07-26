@@ -95,8 +95,6 @@ export default function CoursesScreen(): ReactElement {
   const { isUpdating } = appState;
   const [appInit, setAppInit] = useState(false);
 
-  const menuClassName = classes['header-toolbar-menu'];
-
   useEffect(() => {
     if (!isUpdating && !appInit) setAppInit(true);
   }, [isUpdating, appInit]);
