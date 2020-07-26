@@ -42,6 +42,7 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
           selected={selectedQuestionType}
           onSelectedChange={(selected: IWMDropdownOption) => {
             data.type = selected.id as QuestionType;
+            dispatch({ type: ActionType.UpdateCourseOutline });
           }}
         >
           <WMButton className={classes['dropdown-menu-button']}>

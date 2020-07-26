@@ -39,7 +39,7 @@ export class QuizQuestion implements BuildQuizQuestion {
   public answers: QuizQuestionAnswers;
   public description: string;
   public title: string;
-  public type: QuestionType;
+  private _type: QuestionType;
   public explanation?: string;
   public properties?: QuizQuestionProperties;
 
@@ -48,9 +48,24 @@ export class QuizQuestion implements BuildQuizQuestion {
     this.answers = answers.getQuizAnswers(_question.Answers);
     this.description = _question.Description;
     this.title = _question.Question;
-    this.type = _question.QuestionType;
+    this._type = _question.QuestionType;
     this.explanation = _question.Explanation;
     this.properties = new QuizQuestionProperties(_question.Settings);
+  }
+
+  set type(val: QuestionType) {
+    if (this._type == QuestionType.Multiple && val == QuestionType.Single) {
+      const firstCorrect = this.answers.toArray().findIndex((ans) => ans.isCorrect == true);
+      this.answers.toArray().forEach((ans, index) => {
+        if (index === firstCorrect) return;
+        ans.isCorrect = false;
+      });
+    }
+    this._type = val;
+  }
+
+  get type(): QuestionType {
+    return this._type;
   }
 
   public toDataModel(index: number) {
