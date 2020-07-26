@@ -58,7 +58,7 @@ export default function CourseOutlineList<T>({
       course?.items.removeItem(payload);
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline });
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
   return (

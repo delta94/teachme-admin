@@ -1,6 +1,6 @@
-import { getRandomString, getRandomNumber, getRandomFractionNumber } from './getRandom';
+import { getRandomString, getRandomNumber, getRandomNegativeNumber } from './getRandom';
 
-export { getRandomString, getRandomNumber, getRandomFractionNumber };
+export { getRandomString, getRandomNumber, getRandomNegativeNumber };
 
 export const allPropertiesAreNull = (obj: any) => {
   for (const key in obj) {

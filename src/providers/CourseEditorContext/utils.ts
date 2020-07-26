@@ -47,14 +47,15 @@ export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<vo
 
 export const fetchCourse = async (
   dispatch: IDispatch,
-  courseId: number | string | undefined,
+  courseId: string | number | undefined,
   envId = 0,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });
+  const numberCourseId = courseId ? +courseId : undefined;
 
   try {
-    // TODO: replace hard-coded courseId with variable
-    const course = courseId !== undefined ? await getCourse(1284870, envId) : await getNewCourse();
+    const course =
+      numberCourseId !== undefined ? await getCourse(numberCourseId, envId) : await getNewCourse();
 
     dispatch({ type: ActionType.FetchCourseSuccess, course });
 

@@ -29,7 +29,7 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
       item.questions.removeItem(e.payload);
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline });
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;

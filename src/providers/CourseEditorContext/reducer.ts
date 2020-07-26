@@ -17,6 +17,7 @@ export const initialState = {
   refreshCourseOutline: false,
   courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
+  hasChanges: false,
 } as IState;
 
 export const reducer = produce(
@@ -38,6 +39,7 @@ export const reducer = produce(
         break;
       case ActionType.SetCourseTitle:
         draft.courseTitle = action.courseTitle ?? initialState.courseTitle;
+        draft.hasChanges = action.updateHasChange ? true : draft.hasChanges;
         break;
       case ActionType.SetCourseItemsSearchValue:
         draft.courseItemsSearchValue =
@@ -59,13 +61,16 @@ export const reducer = produce(
         break;
       case ActionType.AddQuiz:
         draft.quiz = draft.course?.addQuiz() ?? null;
+        draft.hasChanges = true;
         break;
       case ActionType.DeleteQuiz:
         draft.course?.deleteQuiz();
         draft.quiz = null;
+        draft.hasChanges = true;
         break;
       case ActionType.UpdateCourseOutline:
         draft.refreshCourseOutline = !draft.refreshCourseOutline;
+        draft.hasChanges = action.updateHasChange ? true : draft.hasChanges;
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =

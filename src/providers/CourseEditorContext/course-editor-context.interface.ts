@@ -23,6 +23,7 @@ export interface IAction {
   course?: Course | null;
   courseOutline?: Array<ICourseOutlineItem>;
   courseOutlineSearchValue?: string;
+  updateHasChange?: boolean;
 }
 
 export interface IDispatch {
@@ -46,6 +47,7 @@ export interface IState {
   refreshCourseOutline: boolean;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
+  hasChanges: boolean;
 }
 
 export interface ICourseEditorProvider {

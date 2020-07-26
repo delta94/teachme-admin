@@ -13,11 +13,13 @@ import ScreenHeader from '../../common/ScreenHeader';
 
 import ResourcesList from './ResourcesList';
 import CourseOutline from './CourseOutline';
+import HeaderConfirmationButtons from './HeaderConfirmationButtons';
 import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
-  const [{ courseTitle }, dispatch] = useCourseEditorContext();
   const { courseId } = useParams();
+
+  const [{ courseTitle }, dispatch] = useCourseEditorContext();
 
   useEffect(() => {
     fetchItemsList(dispatch);
@@ -27,14 +29,16 @@ export default function CourseEditorScreen(): ReactElement {
   }, [dispatch, courseId]);
 
   const onCourseTitleBlur = (courseTitle: string) =>
-    dispatch({ type: ActionType.SetCourseTitle, courseTitle });
+    dispatch({ type: ActionType.SetCourseTitle, courseTitle, updateHasChange: true });
 
   return (
     <>
       <ScreenHeader
         title={<EditableTitle onBlur={onCourseTitleBlur} value={courseTitle} isNew={!courseId} />}
         hideTimeFilter={true}
-      />
+      >
+        <HeaderConfirmationButtons />
+      </ScreenHeader>
       <div className={classes['cards-wrapper']}>
         <ResourcesList />
         <CourseOutline />

@@ -41,7 +41,7 @@ export default function CourseOutlineLessonItem({
       item.childNodes.removeItem(e.payload);
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline });
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
   const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson' && !payload.answers;
