@@ -39,7 +39,7 @@ export default function WMVerticalRadioGroup({
 
   return (
     <Radio.Group
-      className={cc([classes['wm-radio'], className])}
+      className={cc([classes['wm-radio-group'], className])}
       onChange={localOnChange}
       value={localValue}
       {...otherProps}

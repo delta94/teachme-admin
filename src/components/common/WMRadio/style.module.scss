@@ -1,13 +1,7 @@
-.wm-radio-group {
-  .radio-button {
-    display: block;
-    height: 30px;
-    line-height: 30px;
-  }
-
-  :global(.ant-radio-inner) {
-    border-color: var(--neutral500);
-  }
+.wm-radio-button {
+  display: block;
+  height: 30px;
+  line-height: 30px;
 
   :global(.ant-radio):hover,
   :global(.ant-radio-wrapper):hover :global(.ant-radio),
