@@ -3,6 +3,7 @@ import { TypeContainer } from '@walkme/types';
 export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataModel>
   implements TypeContainer<UIModel, NewItemData> {
   private _items: Array<UIModel>;
+  _spyCallback: (item: UIModel, prop: string | number | symbol) => void = (_0, _1) => {};
   public [Symbol.iterator]: () => Iterator<UIModel>;
   constructor(
     itemsData: Array<DataModel>,
@@ -10,7 +11,14 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
     private _newDataModel: (index: number, data?: NewItemData) => DataModel,
   ) {
     this._items = itemsData.map((item) => {
-      return this._getUIModel(item);
+      const _this = this;
+      return new Proxy(this._getUIModel(item), {
+        set(obj, prop) {
+          _this._spyCallback(obj, prop);
+          //@ts-ignore
+          return obj[prop];
+        },
+      });
     });
     this[Symbol.iterator] = this._items[Symbol.iterator];
   }
@@ -46,6 +54,10 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
     if (index == -1) return;
 
     this._items.splice(index, 1);
+  }
+
+  public spy(callback: (item: UIModel, prop: string | number | symbol) => void) {
+    this._spyCallback = callback;
   }
 }
 
