@@ -9,28 +9,8 @@ import Icon from '../../../common/Icon';
 import classes from './style.module.scss';
 import QuestionScreenForm from './QuestionScreenForm';
 import QuizScreenForm from './QuizScreenForm';
-
-export enum QuizScreenType {
-  WelcomeScreen = 'welcome-screen',
-  FailScreen = 'fail-screen',
-  SuccessScreen = 'success-screen',
-  QuestionScreen = 'question-screen',
-}
-
-const screenTitle = (type: QuizScreenType, data?: QuizScreen | QuizQuestion): string => {
-  switch (type) {
-    case QuizScreenType.WelcomeScreen:
-      return 'Quiz Welcome Page';
-    case QuizScreenType.SuccessScreen:
-      return 'Quiz Success Page';
-    case QuizScreenType.FailScreen:
-      return 'Quiz Fail Page';
-    case QuizScreenType.QuestionScreen:
-      return data ? data.title : '';
-    default:
-      throw new Error(`Unknown quiz screen type ${type}`);
-  }
-};
+import { QuizScreenType } from './interface';
+import { screenTitle } from './utils';
 
 export default function QuizEditForm({
   quizScreenType,
@@ -38,12 +18,12 @@ export default function QuizEditForm({
   onClose,
 }: {
   quizScreenType: QuizScreenType;
-  quizScreenData?: QuizScreen | QuizQuestion; // TODO: change to QuizQuestion type
+  quizScreenData: QuizScreen | QuizQuestion; // TODO: change to QuizQuestion type
   onClose: () => void;
 }): ReactElement {
   return (
     <DetailsPanel
-      title={screenTitle(quizScreenType, quizScreenData)}
+      title={screenTitle(quizScreenType, quizScreenData.title)}
       titleIcon={<Icon type={`quiz-${quizScreenType}`} />}
       isOpen={Boolean(quizScreenData)}
       onClose={onClose}

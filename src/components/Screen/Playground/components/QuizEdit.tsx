@@ -9,8 +9,10 @@ import {
   ActionType,
 } from '../../../../providers/CourseEditorContext';
 
+import { QuizScreenType } from '../../CourseEditorScreen/QuizEditForm/interface';
+
 import CourseOutlineQuiz from '../../../Screen/CourseEditorScreen/CourseOutlineQuiz';
-import QuizEditForm, { QuizScreenType } from '../../CourseEditorScreen/QuizEditForm';
+import QuizEditForm from '../../CourseEditorScreen/QuizEditForm';
 
 import classes from './playground.module.scss';
 

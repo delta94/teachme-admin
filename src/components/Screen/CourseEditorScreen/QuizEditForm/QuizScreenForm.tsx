@@ -6,6 +6,8 @@ import { ActionType, useCourseEditorContext } from '../../../../providers/Course
 import TextCounter from '../../../common/TextCounterInput';
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
 
+import { fieldErrorMessage } from './utils';
+
 import classes from './style.module.scss';
 
 export default function QuizScreenForm({
@@ -24,6 +26,7 @@ export default function QuizScreenForm({
         placeholder="Text"
         label="Title"
         value={screen.title}
+        errorMessage={fieldErrorMessage(screen.title)}
         onChange={(e) => {
           screen.title = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline });
@@ -48,6 +51,7 @@ export default function QuizScreenForm({
           placeholder="Text"
           label="Title"
           value={button.text}
+          errorMessage={fieldErrorMessage(button.text)}
           onChange={(e) => {
             screen.buttons[index].text = e.target.value;
             dispatch({ type: ActionType.UpdateCourseOutline });

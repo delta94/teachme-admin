@@ -17,6 +17,7 @@ import WMSwitch from '../../../common/WMSwitch';
 import QuestionAnswersCreator from './QuestionAnswersCreator';
 
 import classes from './style.module.scss';
+import { fieldErrorMessage } from './utils';
 
 const questionTypes: IWMDropdownOption[] = [
   { id: QuestionType.Single, value: 'Single Selection' },
@@ -56,6 +57,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         placeholder="Text"
         label="Title"
         value={question.title}
+        errorMessage={fieldErrorMessage(question.title)}
         onChange={(e) => {
           question.title = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline });

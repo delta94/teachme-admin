@@ -8,9 +8,9 @@ import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question'
 
 import WMCollapse from '../../../common/WMCollapse';
 import { IconType } from '../../../common/Icon';
-import { QuizScreenType } from '../QuizEditForm';
 
 import LessonHeader from '../LessonHeader';
+import { QuizScreenType } from '../QuizEditForm/interface';
 
 import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';

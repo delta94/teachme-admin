@@ -4,9 +4,10 @@ import { QuestionType, QuizAnswer } from '@walkme/types';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import TextCounterInput from '../../../common/TextCounterInput';
-import { AddButton } from '../../../common/buttons';
 import WMCheckbox from '../../../common/WMCheckbox';
 import WMRadio from '../../../common/WMRadio';
+
+import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
 
@@ -18,9 +19,6 @@ export default function QuestionAnswersCreator({
   type: QuestionType;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-
-  const fieldErrorMessage = (fieldValue: string) =>
-    fieldValue === '' ? 'This field cannot be empty' : undefined;
 
   const AnswerField = ({ answer }: { answer: QuizAnswer }) => (
     <TextCounterInput

@@ -35,7 +35,7 @@ export default function CourseItemDetails({
           <WMVerticalRadioGroup
             options={completionOptions}
             onChange={(value: any) => {
-              courseItem.properties.completionType = value;
+              courseItem.properties.completionType = value as CompletionType;
               dispatch({ type: ActionType.UpdateCourseOutline });
             }}
             value={courseItem.properties.completionType}
