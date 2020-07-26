@@ -1,5 +1,7 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { ContentItem } from '@walkme/types';
+
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
 import { WMVerticalRadioGroup } from '../WMRadio';
 
@@ -10,26 +12,20 @@ export enum CompletionType {
   ReachingItemsGoal,
 }
 
+const completionOptions = [
+  { label: 'Item is opened', value: CompletionType.ItemIsOpen },
+  {
+    label: 'Reaching item’s goal',
+    value: CompletionType.ReachingItemsGoal,
+  },
+];
+
 export default function CourseItemDetails({
   courseItem,
-  courseItemChanged,
 }: {
   courseItem: ContentItem;
-  courseItemChanged: (courseItem: ContentItem) => void;
 }): ReactElement {
-  const [item, setItem] = useState(courseItem);
-
-  const completionOptions = [
-    { label: 'Item is opened', value: CompletionType.ItemIsOpen },
-    {
-      label: 'Reaching item’s goal',
-      value: CompletionType.ReachingItemsGoal,
-    },
-  ];
-
-  useEffect(() => {
-    setItem(courseItem);
-  }, [courseItem]);
+  const [state, dispatch] = useCourseEditorContext();
 
   return (
     <div className={classes['course-item-details']}>
@@ -39,10 +35,10 @@ export default function CourseItemDetails({
           <WMVerticalRadioGroup
             options={completionOptions}
             onChange={(value: any) => {
-              item.properties.completionType = value;
-              courseItemChanged(item);
+              courseItem.properties.completionType = value;
+              dispatch({ type: ActionType.UpdateCourseOutline });
             }}
-            value={item.properties.completionType}
+            value={courseItem.properties.completionType}
           />
         </>
       )}

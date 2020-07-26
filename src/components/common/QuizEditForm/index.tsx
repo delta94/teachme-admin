@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
 
+import { QuizQuestion } from '../../../walkme/data/courseBuild/quiz/question';
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 
 import DetailsPanel from '../DetailsPanel';
@@ -17,7 +18,7 @@ export enum QuizScreenType {
   QuestionScreen = 'question-screen',
 }
 
-const screenTitle = (type: QuizScreenType, data?: QuizScreen | BaseQuizQuestion): string => {
+const screenTitle = (type: QuizScreenType, data?: QuizScreen | QuizQuestion): string => {
   switch (type) {
     case QuizScreenType.WelcomeScreen:
       return 'Quiz Welcome Page';
@@ -38,39 +39,15 @@ export default function QuizEditForm({
   onClose,
 }: {
   quizScreenType: QuizScreenType;
-  quizScreenData?: QuizScreen | BaseQuizQuestion;
+  quizScreenData?: QuizScreen | QuizQuestion; // TODO: change to QuizQuestion type
   onClose: () => void;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course } = state;
 
-  const handleScreenDataChange = (updatedData: any): void => {
-    if (course && course.quiz) {
-      switch (quizScreenType) {
-        case QuizScreenType.WelcomeScreen:
-          course.quiz.welcomeScreen = updatedData;
-          break;
-        case QuizScreenType.SuccessScreen:
-          course.quiz.successScreen = updatedData;
-          break;
-        case QuizScreenType.FailScreen:
-          course.quiz.failScreen = updatedData;
-          break;
-        case QuizScreenType.QuestionScreen: {
-          const questionIndex = course.quiz.questions
-            .toArray()
-            .findIndex((question) => question.id === updatedData.id);
-          // TODO: talk about updateIndex
-          course.quiz.questions.updateIndex(updatedData, questionIndex);
-          break;
-        }
-        default:
-          throw new Error(`Unknown quiz screen type ${quizScreenType}`);
-      }
-
-      dispatch({ type: ActionType.UpdateCourseOutline });
-    }
-  };
+  if (course?.quiz) {
+    console.log('course?.quiz ', course?.quiz);
+  }
 
   return (
     <DetailsPanel
@@ -84,7 +61,6 @@ export default function QuizEditForm({
         {quizScreenType !== QuizScreenType.QuestionScreen ? (
           <QuizScreenForm
             data={quizScreenData}
-            handleDataChange={handleScreenDataChange}
             renderExtra={
               quizScreenType === QuizScreenType.WelcomeScreen && (
                 <p className={classes['info-text']}>
@@ -95,10 +71,7 @@ export default function QuizEditForm({
             }
           />
         ) : (
-          <QuestionScreenForm
-            data={quizScreenData as BaseQuizQuestion}
-            handleDataChange={handleScreenDataChange}
-          />
+          <QuestionScreenForm data={quizScreenData as QuizQuestion} />
         )}
       </div>
     </DetailsPanel>

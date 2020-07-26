@@ -1,6 +1,7 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
+import { QuizScreen } from '@walkme/types';
 
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 import {
   useCourseEditorContext,
   fetchItemsList,
@@ -21,7 +22,7 @@ export default function QuizEdit(): ReactElement {
   const [quizScreenType, setQuizScreenType] = useState<QuizScreenType>(
     QuizScreenType.WelcomeScreen,
   );
-  const [quizScreenData, setQuizScreenData] = useState<QuizScreen | BaseQuizQuestion>();
+  const [quizScreenData, setQuizScreenData] = useState<QuizScreen | QuizQuestion>();
 
   useEffect(() => {
     fetchItemsList(dispatch);
@@ -47,7 +48,7 @@ export default function QuizEdit(): ReactElement {
         <QuizEditForm
           quizScreenData={quizScreenData}
           quizScreenType={quizScreenType}
-          onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | BaseQuizQuestion)}
+          onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | QuizQuestion)}
         />
       )}
     </div>

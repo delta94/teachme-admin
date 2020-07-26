@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
-import { QuizScreen, BaseQuizQuestion } from '@walkme/types';
+import { QuizScreen } from '@walkme/types';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
@@ -27,7 +27,7 @@ export default function CourseOutlineQuiz({
     data,
   }: {
     type: QuizScreenType;
-    data: QuizScreen | BaseQuizQuestion;
+    data: QuizScreen | QuizQuestion;
   }) => void;
   selectedOutlineItem?: { type: QuizScreenType; id?: number };
 }): ReactElement {

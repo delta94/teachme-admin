@@ -1,4 +1,6 @@
-import React, { ReactElement, useState, useEffect, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
+
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
 import TextCounter from '../../common/TextCounterInput';
 import TextCounterTextarea from '../TextCounterTextarea';
@@ -7,34 +9,12 @@ import classes from './style.module.scss';
 
 export default function QuizScreenForm({
   data,
-  handleDataChange,
   renderExtra,
 }: {
   data: any;
-  handleDataChange: (updatedData: any) => void;
   renderExtra?: ReactNode;
 }): ReactElement {
-  const [question, setScreen] = useState(data);
-  const onDataChange = (updatedData: any) => {
-    handleDataChange({ ...question, ...updatedData });
-
-    setScreen((prev: any) => ({
-      ...prev,
-      ...updatedData,
-    }));
-  };
-
-  useEffect(() => {
-    setScreen(data);
-  }, [data]);
-
-  const onButtonTextChange = (value: string, buttonIndex: number) => {
-    onDataChange({
-      buttons: data.buttons.map((btn: any, index: number) =>
-        index === buttonIndex ? { ...btn, text: value } : btn,
-      ),
-    });
-  };
+  const [state, dispatch] = useCourseEditorContext();
 
   return (
     <div className={classes['quiz-screen-form']}>
@@ -43,7 +23,10 @@ export default function QuizScreenForm({
         placeholder="Text"
         label="Title"
         value={data.title}
-        onChange={(e) => onDataChange({ title: e.target.value })}
+        onChange={(e) => {
+          data.title = e.target.value;
+          dispatch({ type: ActionType.UpdateCourseOutline });
+        }}
       />
       <TextCounterTextarea
         maxLength={210}
@@ -52,7 +35,10 @@ export default function QuizScreenForm({
         value={data.description}
         minRows={3}
         maxRows={5}
-        onChange={(e) => onDataChange({ description: e.target.value })}
+        onChange={(e) => {
+          data.description = e.target.value;
+          dispatch({ type: ActionType.UpdateCourseOutline });
+        }}
       />
       {data.buttons.map((button: any, index: number) => (
         <TextCounter
@@ -61,7 +47,10 @@ export default function QuizScreenForm({
           placeholder="Text"
           label="Title"
           value={button.text}
-          onChange={(e) => onButtonTextChange(e.target.value, index)}
+          onChange={(e) => {
+            data.buttons[index].text = e.target.value;
+            dispatch({ type: ActionType.UpdateCourseOutline });
+          }}
         />
       ))}
       {renderExtra}

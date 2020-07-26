@@ -2,6 +2,9 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { QuestionType } from '@walkme/types';
 import { DownOutlined } from '@ant-design/icons';
 
+import { QuizQuestion } from '../../../walkme/data/courseBuild/quiz/question';
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+
 import TextCounterInput from '../../common/TextCounterInput';
 
 import TextCounterTextarea from '../TextCounterTextarea';
@@ -18,48 +21,26 @@ const questionTypes: IWMDropdownOption[] = [
   { id: QuestionType.Multiple, value: 'Multiple Selection' },
 ];
 
-export default function QuestionScreenForm({
-  data,
-  handleDataChange,
-}: {
-  data: any;
-  handleDataChange: (updatedData: any) => void;
-}): ReactElement {
-  const [question, setQuestion] = useState(data);
+export default function QuestionScreenForm({ data }: { data: QuizQuestion }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   const [selectedQuestionType, setSelectedQuestionType] = useState(
     questionTypes[data.type as QuestionType],
   );
 
-  const onDataChange = (updatedData: any) => {
-    handleDataChange({ ...question, ...updatedData });
-
-    setQuestion((prev: any) => ({
-      ...prev,
-      ...updatedData,
-    }));
-  };
-
-  const onQuestionTypeChange = (selected: IWMDropdownOption) => {
-    onDataChange({ type: selected.id as QuestionType });
-    setSelectedQuestionType(selected);
-  };
-
   useEffect(() => {
-    if (data.id !== question.id) {
-      setQuestion(data);
-      setSelectedQuestionType(questionTypes[data.type]);
-    }
-  }, [data, question.id]);
+    setSelectedQuestionType(questionTypes[data.type]);
+  }, [data.type]);
 
-  console.log('question', question);
   return (
     <div className={classes['question-screen-form']}>
-      {/* TODO: make it match to correct data */}
       <FormGroup className={classes['question-type']} label="Question Type:">
         <WMDropdown
           options={questionTypes}
           selected={selectedQuestionType}
-          onSelectedChange={onQuestionTypeChange}
+          onSelectedChange={(selected: IWMDropdownOption) => {
+            data.type = selected.id as QuestionType;
+          }}
         >
           <WMButton className={classes['dropdown-menu-button']}>
             {selectedQuestionType.value}
@@ -71,28 +52,27 @@ export default function QuestionScreenForm({
         maxLength={80}
         placeholder="Text"
         label="Title"
-        value={question.title}
+        value={data.title}
         onChange={(e) => {
-          onDataChange({ title: e.target.value });
+          data.title = e.target.value;
+          dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
       <TextCounterTextarea
         maxLength={210}
         placeholder="Text"
         label="Description"
-        value={question.description}
+        value={data.description}
         minRows={3}
         maxRows={5}
         onChange={(e) => {
-          onDataChange({ description: e.target.value });
+          data.description = e.target.value;
+          dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
       <QuestionAnswersCreator
-        answers={question.answers.toArray()}
+        answers={data.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
-        onAnswersChange={(updatedAnswers: any[]) => {
-          console.log('onAnswersChange updatedAnswers', updatedAnswers);
-        }}
       />
     </div>
   );

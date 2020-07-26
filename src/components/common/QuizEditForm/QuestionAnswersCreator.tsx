@@ -1,5 +1,7 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { QuestionType, QuizAnswer } from '@walkme/types';
+
+import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 
 import TextCounterInput from '../TextCounterInput';
 import WMCheckbox from '../WMCheckbox';
@@ -10,55 +12,44 @@ import classes from './style.module.scss';
 export default function QuestionAnswersCreator({
   answers,
   type,
-  onAnswersChange,
 }: {
   answers: QuizAnswer[];
   type: QuestionType;
-  onAnswersChange: (answers: QuizAnswer[]) => void;
 }): ReactElement {
-  const [answersOptions, setAnswersOptions] = useState(answers);
+  const [state, dispatch] = useCourseEditorContext();
 
-  const AnswerField = ({ answer }: { answer: QuizAnswer }) => (
+  const AnswerField = ({ answer, index }: { answer: QuizAnswer; index: number }) => (
     <TextCounterInput
       className={classes['answer-field']}
       maxLength={200}
       placeholder="Text"
       value={answer.text}
-      onChange={(e) => {
-        console.log('on answer text change ', e.target.value);
-        // onDataChange({ title: e.target.value });
+      onBlur={(e) => {
+        const val = e.target.value;
+        if (val.trim() !== '') {
+          answer.text = e.target.value;
+          dispatch({ type: ActionType.UpdateCourseOutline });
+        } else {
+          console.log('error this field require');
+        }
       }}
     />
   );
 
-  useEffect(() => {
-    setAnswersOptions(answers);
-  }, [answers]);
-
-  useEffect(() => {
-    const isSingleAnswer = type === QuestionType.Single;
-    const totalCorrectAnswers = answersOptions.filter(({ isCorrect }) => isCorrect).length;
-
-    if (isSingleAnswer && totalCorrectAnswers > 1) {
-      setAnswersOptions(
-        answersOptions.map((opt, index) =>
-          index === 0 ? { ...opt, isCorrect: true } : { ...opt, isCorrect: false },
-        ),
-      );
-    }
-  }, [type, answersOptions]);
-
   return (
     <div className={classes['answers-creator']}>
-      {answersOptions.map((answer) =>
+      {answers.map((answer, index) =>
         type === QuestionType.Single ? (
           <WMRadio
             className={classes['single-select-field']}
             key={`answer-${answer.id}`}
             value={answer.id}
             checked={answer.isCorrect}
-            label={<AnswerField answer={answer} />}
-            onChange={(e) => console.log('WMRadio on change', e)}
+            label={<AnswerField answer={answer} index={index} />}
+            onChange={(e) => {
+              answer.isCorrect = e.target.checked;
+              dispatch({ type: ActionType.UpdateCourseOutline });
+            }}
           />
         ) : (
           <WMCheckbox
@@ -66,9 +57,12 @@ export default function QuestionAnswersCreator({
             key={`answer-${answer.id}`}
             value={answer.id}
             checked={answer.isCorrect}
-            onChange={(e) => console.log('WMCheckbox on change', e)}
+            onChange={(e) => {
+              answer.isCorrect = e.target.checked;
+              dispatch({ type: ActionType.UpdateCourseOutline });
+            }}
           >
-            <AnswerField answer={answer} />
+            <AnswerField answer={answer} index={index} />
           </WMCheckbox>
         ),
       )}

@@ -64,9 +64,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
         onClose={() => setSelectedItem((null as unknown) as ContentItem)}
         titleIsEllipsis
       >
-        {selectedItem && (
-          <CourseItemDetails courseItem={selectedItem} courseItemChanged={handleItemChanged} />
-        )}
+        {selectedItem && <CourseItemDetails courseItem={selectedItem} />}
       </DetailsPanel>
     </div>
   );
