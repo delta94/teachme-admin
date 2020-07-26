@@ -42,7 +42,7 @@ export default function DropdownFilter({
           </WMButton>
         </WMDropdown>
       ) : (
-        <WMSkeletonInput style={{ width: 150 }} active size="default" />
+        <WMSkeletonInput style={{ width: 200 }} active size="default" />
       )}
     </div>
   );
