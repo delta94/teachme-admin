@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactElement } from 'react';
 import { Radio } from 'antd';
 import cc from 'classcat';
 
-import WMVerticalRadioGroup from '../WMVerticalRadioGroup';
+import WMVerticalRadioGroup from './WMVerticalRadioGroup';
 
 import { IWMRadio } from './interface';
 

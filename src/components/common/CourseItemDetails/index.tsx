@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { ContentItem } from '@walkme/types';
 
-import WMVerticalRadioGroup from '../WMVerticalRadioGroup';
+import { WMVerticalRadioGroup } from '../WMRadio';
 
 import classes from './style.module.scss';
 

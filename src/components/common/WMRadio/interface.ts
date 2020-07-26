@@ -12,6 +12,6 @@ export interface IWMRadio extends RadioProps {
   className?: string;
 }
 
-export interface IWMRadioGroup extends IWMRadio {
+export interface IWMRadioGroup extends Omit<IWMRadio, 'label'> {
   options: Array<IRadioButton>;
 }
