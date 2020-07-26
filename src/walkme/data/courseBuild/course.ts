@@ -18,11 +18,11 @@ import { CourseChildContainer, isLesson } from './courseItems/index';
 import { CourseProperties } from './settings';
 import { createLink } from '../services/collection';
 import { notEmpty } from '../../utils';
-import { getDataSync } from '../services/wmData';
+import * as wmData from '../services/wmData';
 
 function getUniqueCourseName(): string {
-  const courseNames = getDataSync(TypeId.Course).map((course) => course.Name);
-  const pattern = new RegExp(`^${defaults.COURSE_NAME} (\\d+)$`);
+  const courseNames = wmData.getDataSync(TypeId.Course).map((course) => course.Name);
+  const pattern = new RegExp(`^${defaults.COURSE_NAME} (\\d+)$`, 'i');
   const counters = courseNames
     .map((name) => name.match(pattern)?.[1])
     .filter(notEmpty)
@@ -77,7 +77,7 @@ export class Course implements BuildCourse {
         ? []
         : course.LinkedDeployables!.map((item) => {
             return item.DeployableType == TypeId.Lesson
-              ? ((getDataSync(TypeId.Lesson, [
+              ? ((wmData.getDataSync(TypeId.Lesson, [
                   item.DeployableID,
                 ])[0] as unknown) as WalkMeDataNewLesson)
               : item;
@@ -105,6 +105,7 @@ export class Course implements BuildCourse {
       },
     );
     const savedCourse = await walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
+    await wmData.refresh([TypeName.Course, TypeName.Lesson]);
     this.map(savedCourse);
   }
 
