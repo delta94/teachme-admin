@@ -22,7 +22,7 @@ export default function QuestionAnswersCreator({
 
   const AnswerField = ({ answer }: { answer: QuizAnswer }) => (
     <TextCounterInput
-      className={classes['answer-field']}
+      counterClassName={classes['answer-field']}
       maxLength={200}
       placeholder="Text"
       value={answer.text}

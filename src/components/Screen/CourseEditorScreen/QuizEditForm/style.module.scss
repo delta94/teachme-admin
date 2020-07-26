@@ -104,4 +104,11 @@
     width: 100%;
     margin-left: 40px;
   }
+
+  .answer-field {
+    :global(label) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
