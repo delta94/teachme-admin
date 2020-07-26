@@ -1,20 +1,12 @@
-import React, { useState, useEffect, ReactElement, ReactNode } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { Radio } from 'antd';
-import { RadioChangeEventTarget, RadioProps } from 'antd/es/radio';
 import cc from 'classcat';
 
+import WMVerticalRadioGroup from '../WMVerticalRadioGroup';
+
+import { IWMRadio } from './interface';
+
 import classes from './style.module.scss';
-
-export interface IRadioButton {
-  value: any;
-  label: React.ReactNode;
-}
-
-export interface IWMRadio extends RadioProps {
-  value: any;
-  label: ReactNode;
-  className?: string;
-}
 
 export default function WMRadio({
   onChange,
@@ -32,7 +24,7 @@ export default function WMRadio({
   return (
     <Radio
       value={localValue}
-      className={classes['wm-radio-button']}
+      className={cc([classes['wm-radio-button'], className])}
       onChange={onChange}
       {...otherProps}
     >
@@ -40,3 +32,5 @@ export default function WMRadio({
     </Radio>
   );
 }
+
+export { WMVerticalRadioGroup };

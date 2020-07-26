@@ -1,34 +1,24 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { QuestionType } from '@walkme/types';
-
-import { BuildQuizAnswer } from '../../../walkme/data/courseBuild/quiz/question/answers';
+import { QuestionType, QuizAnswer } from '@walkme/types';
 
 import TextCounterInput from '../TextCounterInput';
-import WMCheckbox, { IWMCheckbox } from '../WMCheckbox';
-import { IRadioButton } from '../WMVerticalRadioGroup';
+import WMCheckbox from '../WMCheckbox';
 import WMRadio from '../WMRadio';
 
 import classes from './style.module.scss';
-
-export const parseToOptions = (answers: BuildQuizAnswer[]): IRadioButton[] | IWMCheckbox[] => {
-  return answers.map((answer: BuildQuizAnswer) => ({
-    label: answer.text,
-    value: answer.id,
-  }));
-};
 
 export default function QuestionAnswersCreator({
   answers,
   type,
   onAnswersChange,
 }: {
-  answers: BuildQuizAnswer[];
+  answers: QuizAnswer[];
   type: QuestionType;
-  onAnswersChange: (answers: BuildQuizAnswer[]) => void;
+  onAnswersChange: (answers: QuizAnswer[]) => void;
 }): ReactElement {
   const [answersOptions, setAnswersOptions] = useState(answers);
 
-  const AnswerField = ({ answer }: { answer: BuildQuizAnswer }) => (
+  const AnswerField = ({ answer }: { answer: QuizAnswer }) => (
     <TextCounterInput
       className={classes['answer-field']}
       maxLength={200}
@@ -45,12 +35,25 @@ export default function QuestionAnswersCreator({
     setAnswersOptions(answers);
   }, [answers]);
 
+  useEffect(() => {
+    const isSingleAnswer = type === QuestionType.Single;
+    const totalCorrectAnswers = answersOptions.filter(({ isCorrect }) => isCorrect).length;
+
+    if (isSingleAnswer && totalCorrectAnswers > 1) {
+      setAnswersOptions(
+        answersOptions.map((opt, index) =>
+          index === 0 ? { ...opt, isCorrect: true } : { ...opt, isCorrect: false },
+        ),
+      );
+    }
+  }, [type, answersOptions]);
+
   return (
     <div className={classes['answers-creator']}>
-      <p>QuestionAnswersCreator</p>
       {answersOptions.map((answer) =>
         type === QuestionType.Single ? (
           <WMRadio
+            className={classes['single-select-field']}
             key={`answer-${answer.id}`}
             value={answer.id}
             checked={answer.isCorrect}
@@ -59,6 +62,7 @@ export default function QuestionAnswersCreator({
           />
         ) : (
           <WMCheckbox
+            className={classes['multiple-select-field']}
             key={`answer-${answer.id}`}
             value={answer.id}
             checked={answer.isCorrect}

@@ -16,4 +16,59 @@
       font-size: 14px;
     }
   }
+
+  .answers-creator {
+    display: flex;
+    flex-direction: column;
+
+    .multiple-select-field,
+    .single-select-field {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      height: auto;
+      margin-right: 0;
+
+      :global(span.ant-radio),
+      :global(span.ant-checkbox) {
+        position: relative;
+        top: 18px;
+
+        &:global(+ span) {
+          width: 100%;
+        }
+      }
+
+      :global(.ant-checkbox-checked::after) {
+        border: 1px solid var(--green);
+      }
+
+      :global(.ant-checkbox-checked:not(.ant-checkbox-indeterminate):not(.ant-checkbox-disabled)) {
+        :global(.ant-checkbox-inner) {
+          background-color: var(--green);
+          border-color: var(--green);
+        }
+      }
+
+      /* Radio styles **/
+
+      :global(.ant-radio-checked) :global(.ant-radio-inner) {
+        border-color: var(--green);
+        background-color: var(--green);
+      }
+
+      :global(.ant-radio-checked) :global(.ant-radio-inner)::after {
+        background-color: var(--green);
+        // background
+      }
+
+      :global(.ant-radio-checked)::after {
+        border-color: var(--green);
+      }
+
+      :global(.ant-radio-input):focus + :global(.ant-radio-inner) {
+        box-shadow: 0 0 0 3px var(--primaryVeryTransparent);
+      }
+    }
+  }
 }
