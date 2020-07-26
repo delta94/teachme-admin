@@ -37,7 +37,7 @@ export default function EditableTitle({
   const [showInputText, setShowInputText] = useState(false);
 
   useEffect(() => {
-    if (isNew && !isLoading && inputTitle.current && inputTitle.current) {
+    if (isNew && !isLoading && inputTitle.current) {
       setTimeout(() => inputTitle.current?.select(), 100);
       setShowInputText(true);
     }
