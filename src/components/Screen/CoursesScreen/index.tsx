@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
@@ -8,11 +8,11 @@ import { useCoursesContext, fetchCourseList, ActionType } from '../../../provide
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import { ExportButton } from '../../common/buttons';
+import { ExportButton, CreateButton } from '../../common/buttons';
 import Icon, { IconType } from '../../common/Icon';
 import ScreenHeader from '../../common/ScreenHeader';
 import { SearchFilter } from '../../common/filters';
-import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
+import WMButton from '../../common/WMButton';
 import WMCard from '../../common/WMCard';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMTable from '../../common/WMTable';
@@ -114,14 +114,7 @@ export default function CoursesScreen(): ReactElement {
       <Icon className={classes['empty-icon']} type={IconType.EmptyCourse} />
       <h1>No courses yet</h1>
       <p>Start creating courses by clicking the button below</p>
-      <WMButton
-        className={classes['create-btn']}
-        shape="round"
-        variant={ButtonVariantEnum.Create}
-        icon={<PlusOutlined />}
-      >
-        Create Course
-      </WMButton>
+      <CreateButton />
     </div>
   );
 
@@ -177,15 +170,8 @@ export default function CoursesScreen(): ReactElement {
               />
               <ExportButton onClick={() => setShowExport(true)} />
               <Divider className={classes['separator']} type="vertical" />
-              <WMButton
-                className={classes['create-btn']}
-                shape="round"
-                variant={ButtonVariantEnum.Create}
-                icon={<PlusOutlined />}
-              >
-                Create Course
-              </WMButton>
               <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+              <CreateButton className={classes['create-btn']} />
             </ControlsWrapper>
           </WMTable>
         </ConfigProvider>

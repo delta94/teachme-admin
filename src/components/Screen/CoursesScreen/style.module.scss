@@ -13,7 +13,7 @@
 }
 
 .create-btn:global(.ant-btn) {
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .dropdown-tag:global(.ant-tag) {
@@ -42,13 +42,5 @@
     color: var(--empty-text);
     margin-bottom: unset;
     font-weight: unset;
-  }
-
-  .create-btn:global(.ant-btn) {
-    margin-right: unset;
-
-    span {
-      font-size: 12px;
-    }
   }
 }
