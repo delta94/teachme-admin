@@ -4,7 +4,7 @@ import cc from 'classcat';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
-import { QuizScreenType } from '../../../common/QuizEditForm';
+import { QuizScreenType } from '../QuizEditForm';
 
 import QuestionItem from './QuestionItem';
 

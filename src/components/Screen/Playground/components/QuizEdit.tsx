@@ -10,7 +10,7 @@ import {
 } from '../../../../providers/CourseEditorContext';
 
 import CourseOutlineQuiz from '../../../Screen/CourseEditorScreen/CourseOutlineQuiz';
-import QuizEditForm, { QuizScreenType } from '../../../common/QuizEditForm';
+import QuizEditForm, { QuizScreenType } from '../../CourseEditorScreen/QuizEditForm';
 
 import classes from './playground.module.scss';
 

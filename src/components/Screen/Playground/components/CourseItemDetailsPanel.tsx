@@ -16,7 +16,7 @@ import DetailsPanel from '../../../common/DetailsPanel';
 
 import WMCard from '../../../common/WMCard';
 import Icon from '../../../common/Icon';
-import CourseItemDetails from '../../../common/CourseItemDetails';
+import CourseItemDetails from '../../CourseEditorScreen/CourseItemDetails';
 
 import classes from './playground.module.scss';
 

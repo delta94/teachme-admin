@@ -2,17 +2,17 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { QuestionType } from '@walkme/types';
 import { DownOutlined } from '@ant-design/icons';
 
-import { QuizQuestion } from '../../../walkme/data/courseBuild/quiz/question';
-import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
-import TextCounterInput from '../../common/TextCounterInput';
+import TextCounterInput from '../../../common/TextCounterInput';
 
-import TextCounterTextarea from '../TextCounterTextarea';
-import FormGroup from '../FormGroup';
-import WMDropdown, { IWMDropdownOption } from '../WMDropdown';
-import WMButton from '../WMButton';
-import { AddButton } from '../buttons';
-import WMSwitch from '../WMSwitch';
+import TextCounterTextarea from '../../../common/TextCounterTextarea';
+import FormGroup from '../../../common/FormGroup';
+import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
+import WMButton from '../../../common/WMButton';
+import { AddButton } from '../../../common/buttons';
+import WMSwitch from '../../../common/WMSwitch';
 
 import QuestionAnswersCreator from './QuestionAnswersCreator';
 
@@ -23,16 +23,16 @@ const questionTypes: IWMDropdownOption[] = [
   { id: QuestionType.Multiple, value: 'Multiple Selection' },
 ];
 
-export default function QuestionScreenForm({ data }: { data: QuizQuestion }): ReactElement {
+export default function QuestionScreenForm({ question }: { question: QuizQuestion }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
 
   const [selectedQuestionType, setSelectedQuestionType] = useState(
-    questionTypes[data.type as QuestionType],
+    questionTypes[question.type as QuestionType],
   );
 
   useEffect(() => {
-    setSelectedQuestionType(questionTypes[data.type]);
-  }, [data.type]);
+    setSelectedQuestionType(questionTypes[question.type]);
+  }, [question.type]);
 
   return (
     <div className={classes['question-screen-form']}>
@@ -41,7 +41,7 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
           options={questionTypes}
           selected={selectedQuestionType}
           onSelectedChange={(selected: IWMDropdownOption) => {
-            data.type = selected.id as QuestionType;
+            question.type = selected.id as QuestionType;
             dispatch({ type: ActionType.UpdateCourseOutline });
           }}
         >
@@ -55,9 +55,9 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
         maxLength={80}
         placeholder="Text"
         label="Title"
-        value={data.title}
+        value={question.title}
         onChange={(e) => {
-          data.title = e.target.value;
+          question.title = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
@@ -65,34 +65,34 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
         maxLength={210}
         placeholder="Text"
         label="Description (Optional)"
-        value={data.description}
+        value={question.description}
         minRows={3}
         maxRows={5}
         onChange={(e) => {
-          data.description = e.target.value;
+          question.description = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
       <p>Answers:</p>
       <QuestionAnswersCreator
-        answers={data.answers.toArray()}
+        answers={question.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
       />
       <AddButton
         className={classes['add-answer']}
         onClick={() => {
-          data.answers.addNewItem();
+          question.answers.addNewItem();
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
       <FormGroup className={classes['explanation']}>
         <WMSwitch
           className={classes['switch-field']}
-          checked={data.properties?.hasExplanation}
+          checked={question.properties?.hasExplanation}
           label="Explain answer (after quiz)"
           onChange={(checked: boolean) => {
-            if (data.properties) {
-              data.properties.hasExplanation = checked;
+            if (question.properties) {
+              question.properties.hasExplanation = checked;
               dispatch({ type: ActionType.UpdateCourseOutline });
             }
           }}
@@ -101,10 +101,10 @@ export default function QuestionScreenForm({ data }: { data: QuizQuestion }): Re
           counterClassName={classes['explanation-field']}
           maxLength={200}
           placeholder="Text"
-          disabled={!data.properties?.hasExplanation}
-          value={data.explanation ? data.explanation : ''}
+          disabled={!question.properties?.hasExplanation}
+          value={question.explanation ? question.explanation : ''}
           onChange={(e) => {
-            data.explanation = e.target.value;
+            question.explanation = e.target.value;
             dispatch({ type: ActionType.UpdateCourseOutline });
           }}
         />

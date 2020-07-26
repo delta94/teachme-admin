@@ -1,17 +1,18 @@
 import React, { ReactElement, ReactNode } from 'react';
+import { QuizScreen } from '@walkme/types';
 
-import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
-import TextCounter from '../../common/TextCounterInput';
-import TextCounterTextarea from '../TextCounterTextarea';
+import TextCounter from '../../../common/TextCounterInput';
+import TextCounterTextarea from '../../../common/TextCounterTextarea';
 
 import classes from './style.module.scss';
 
 export default function QuizScreenForm({
-  data,
+  screen,
   renderExtra,
 }: {
-  data: any;
+  screen: QuizScreen;
   renderExtra?: ReactNode;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -22,9 +23,9 @@ export default function QuizScreenForm({
         maxLength={80}
         placeholder="Text"
         label="Title"
-        value={data.title}
+        value={screen.title}
         onChange={(e) => {
-          data.title = e.target.value;
+          screen.title = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
@@ -32,15 +33,15 @@ export default function QuizScreenForm({
         maxLength={210}
         placeholder="Text"
         label="Description"
-        value={data.description}
+        value={screen.description}
         minRows={3}
         maxRows={5}
         onChange={(e) => {
-          data.description = e.target.value;
+          screen.description = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline });
         }}
       />
-      {data.buttons.map((button: any, index: number) => (
+      {screen.buttons.map((button: any, index: number) => (
         <TextCounter
           key={`quiz-form-button-${index}`}
           maxLength={80}
@@ -48,7 +49,7 @@ export default function QuizScreenForm({
           label="Title"
           value={button.text}
           onChange={(e) => {
-            data.buttons[index].text = e.target.value;
+            screen.buttons[index].text = e.target.value;
             dispatch({ type: ActionType.UpdateCourseOutline });
           }}
         />

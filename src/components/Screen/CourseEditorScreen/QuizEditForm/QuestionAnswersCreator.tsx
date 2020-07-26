@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { QuestionType, QuizAnswer } from '@walkme/types';
 
-import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
-import TextCounterInput from '../TextCounterInput';
-import { AddButton } from '../buttons';
-import WMCheckbox from '../WMCheckbox';
-import WMRadio from '../WMRadio';
+import TextCounterInput from '../../../common/TextCounterInput';
+import { AddButton } from '../../../common/buttons';
+import WMCheckbox from '../../../common/WMCheckbox';
+import WMRadio from '../../../common/WMRadio';
 
 import classes from './style.module.scss';
 

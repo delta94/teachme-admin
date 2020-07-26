@@ -7,7 +7,7 @@ import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import WMCard from '../../../common/WMCard';
 import DetailsPanel from '../../../common/DetailsPanel';
 import Icon, { IconType } from '../../../common/Icon';
-import QuizSettingsForm from '../../../common/QuizSettingsForm';
+import QuizSettingsForm from '../../CourseEditorScreen/QuizSettingsForm';
 
 import classes from './playground.module.scss';
 

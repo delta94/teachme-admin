@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { ContentItem } from '@walkme/types';
 
-import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
-import { WMVerticalRadioGroup } from '../WMRadio';
+import { WMVerticalRadioGroup } from '../../../common/WMRadio';
 
 import classes from './style.module.scss';
 

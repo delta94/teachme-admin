@@ -8,11 +8,11 @@ import {
   fetchItemsList,
   fetchCourse,
   ActionType,
-} from '../../../providers/CourseEditorContext';
+} from '../../../../providers/CourseEditorContext';
 
-import WMInput from '../WMInput';
-import FormGroup from '../FormGroup';
-import WMSwitch from '../WMSwitch';
+import WMInput from '../../../common/WMInput';
+import FormGroup from '../../../common/FormGroup';
+import WMSwitch from '../../../common/WMSwitch';
 
 import classes from './style.module.scss';
 

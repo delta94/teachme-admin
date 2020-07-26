@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import { QuizScreen } from '@walkme/types';
 
-import { QuizQuestion } from '../../../walkme/data/courseBuild/quiz/question';
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
-import DetailsPanel from '../DetailsPanel';
-import Icon from '../Icon';
+import DetailsPanel from '../../../common/DetailsPanel';
+import Icon from '../../../common/Icon';
 
 import classes from './style.module.scss';
 import QuestionScreenForm from './QuestionScreenForm';
@@ -52,7 +52,7 @@ export default function QuizEditForm({
       <div className={classes['quiz-edit']}>
         {quizScreenType !== QuizScreenType.QuestionScreen ? (
           <QuizScreenForm
-            data={quizScreenData}
+            screen={quizScreenData as QuizScreen}
             renderExtra={
               quizScreenType === QuizScreenType.WelcomeScreen && (
                 <p className={classes['info-text']}>
@@ -63,7 +63,7 @@ export default function QuizEditForm({
             }
           />
         ) : (
-          <QuestionScreenForm data={quizScreenData as QuizQuestion} />
+          <QuestionScreenForm question={quizScreenData as QuizQuestion} />
         )}
       </div>
     </DetailsPanel>
