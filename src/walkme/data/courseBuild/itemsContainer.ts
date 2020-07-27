@@ -3,6 +3,10 @@ import { TypeContainer } from '@walkme/types';
 export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataModel>
   implements TypeContainer<UIModel, NewItemData> {
   private _items: Array<UIModel>;
+  private _spyCallback: (item: UIModel, prop: string | number | symbol, val: any) => void = (
+    _0,
+    _1,
+  ) => {};
   public [Symbol.iterator]: () => Iterator<UIModel>;
   constructor(
     itemsData: Array<DataModel>,
@@ -10,7 +14,8 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
     private _newDataModel: (index: number, data?: NewItemData) => DataModel,
   ) {
     this._items = itemsData.map((item) => {
-      return this._getUIModel(item);
+      const _this = this;
+      return this._proxy(this._getUIModel(item));
     });
     this[Symbol.iterator] = this._items[Symbol.iterator];
   }
@@ -37,8 +42,9 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
   public addNewItem(index: number = this._items.length, data?: NewItemData): UIModel {
     const itemData = this._newDataModel(index, data);
     const item = this._getUIModel(itemData);
-    this._items.splice(index, 0, item);
-    return item;
+    const proxyItem = this._proxy(item);
+    this._items.splice(index, 0, proxyItem);
+    return proxyItem;
   }
 
   public removeItem(item: UIModel): void {
@@ -46,6 +52,22 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
     if (index == -1) return;
 
     this._items.splice(index, 1);
+  }
+
+  public spy(callback: (item: UIModel, prop: string | number | symbol, val: any) => void) {
+    this._spyCallback = callback;
+  }
+
+  private _proxy(item: UIModel): UIModel {
+    const _this = this;
+    return new Proxy(item, {
+      set(obj, prop, val) {
+        _this._spyCallback(obj, prop, val);
+        //@ts-ignore
+        obj[prop] = val;
+        return true;
+      },
+    });
   }
 }
 

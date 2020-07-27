@@ -117,7 +117,7 @@ export class Course implements BuildCourse {
       Settings: this.properties.toDataModel(),
       LinkedDeployables: [],
       GroupType: GroupType.Course,
-      Quiz: this.properties.hasQuiz ? this._quiz.toDataModel() : quiz.newDataModel(),
+      Quiz: this._quiz.toDataModel(),
       Guid: getGuid(),
       ResourceId: getGuid(),
       deployableType: TypeId.Course,
