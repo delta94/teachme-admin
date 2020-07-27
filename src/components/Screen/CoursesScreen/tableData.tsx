@@ -42,7 +42,7 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Name',
     dataIndex: 'title',
-    render: (text, { title, id }) => <LinkCell value={title} to={`/course-editor/${id}`} />,
+    render: (text, { title, id }) => <LinkCell value={title} to={`/course/${id}`} />,
   },
   {
     title: 'Production Status',
