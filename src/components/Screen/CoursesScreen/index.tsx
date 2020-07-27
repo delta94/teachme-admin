@@ -4,6 +4,7 @@ import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
+import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 
@@ -18,6 +19,8 @@ import WMCard from '../../common/WMCard';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMTable from '../../common/WMTable';
 import WMTag from '../../common/WMTag';
+import { WMSkeletonInput, WMSkeletonButton } from '../../common/WMSkeleton';
+
 // dialogs
 import DeleteCourseDialog from '../../common/dialogs/DeleteCourseDialog';
 import DialogPublishToEnvironment from '../../common/dialogs/PublishToEnvironmentDialog';
@@ -87,6 +90,15 @@ export default function CoursesScreen(): ReactElement {
   const [showExport, setShowExport] = useState(false);
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
+  // skeleton
+  const [appState, appDispatch] = useAppContext();
+  const { isUpdating } = appState;
+  const [appInit, setAppInit] = useState(false);
+
+  useEffect(() => {
+    if (!isUpdating && !appInit) setAppInit(true);
+  }, [isUpdating, appInit]);
+
   // TODO: fix search filter
   const onSearch = (searchValue: string) => {
     const newTableData = courses.filter((course) =>
@@ -142,6 +154,17 @@ export default function CoursesScreen(): ReactElement {
           >
             <ControlsWrapper>
               {/* <DropdownFilter label="Status" options={statuses} />
+        <ConfigProvider renderEmpty={customizeRenderEmpty}>
+          <WMTable
+            rowSelection={{
+              selectedRowKeys,
+              onChange: onMultiSelectChange,
+            }}
+            data={courses}
+            columns={columns}
+          >
+            <ControlsWrapper>
+              {/* <DropdownFilter label="Status" options={statuses} />
         <WMTable
           rowSelection={{
             selectedRowKeys,
@@ -156,34 +179,51 @@ export default function CoursesScreen(): ReactElement {
             <DropdownFilter label="Segments" options={segments} /> */}
             </ControlsWrapper>
             <ControlsWrapper>
-              <WMDropdown
-                options={prodStatuses}
-                onSelectedChange={onProdStatusChange}
-                disabled={!hasSelected}
-              >
-                <WMButton className={classes['prod-status']}>
-                  Change Status
-                  <DownOutlined />
-                </WMButton>
-              </WMDropdown>
-              <Divider className={classes['separator']} type="vertical" />
-              <WMButton
-                className={classes['delete-btn']}
-                icon={<Icon type={IconType.Delete} />}
-                disabled={!hasSelected}
-                onClick={() => setShowDeleteCourse(true)}
-              />
-              <ExportButton onClick={() => setShowExport(true)} />
-              <Divider className={classes['separator']} type="vertical" />
-              <WMButton
-                className={classes['create-btn']}
-                shape="round"
-                variant={ButtonVariantEnum.Create}
-                icon={<PlusOutlined />}
-              >
-                Create Course
-              </WMButton>
-              <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+              {appInit ? (
+                <>
+                  <WMDropdown
+                    options={prodStatuses}
+                    onSelectedChange={onProdStatusChange}
+                    disabled={!hasSelected}
+                  >
+                    <WMButton className={classes['prod-status']}>
+                      Change Status
+                      <DownOutlined />
+                    </WMButton>
+                  </WMDropdown>
+                  <Divider className={classes['separator']} type="vertical" />
+                  <WMButton
+                    className={classes['delete-btn']}
+                    icon={<Icon type={IconType.Delete} />}
+                    disabled={!hasSelected}
+                    onClick={() => setShowDeleteCourse(true)}
+                  />
+                  <ExportButton onClick={() => setShowExport(true)} />
+                  <Divider className={classes['separator']} type="vertical" />
+                  <WMButton
+                    className={classes['create-btn']}
+                    shape="round"
+                    variant={ButtonVariantEnum.Create}
+                    icon={<PlusOutlined />}
+                  >
+                    Create Course
+                  </WMButton>
+                  <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+                </>
+              ) : (
+                <div className={classes['course-screen-skeleton']}>
+                  <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                  <WMSkeletonButton active size="default" shape="circle" />
+                  <WMSkeletonButton active size="default" shape="circle" />
+                  <WMSkeletonButton
+                    active
+                    size="default"
+                    shape="round"
+                    className={classes['add-button-skeleton']}
+                  />
+                  <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                </div>
+              )}
             </ControlsWrapper>
           </WMTable>
         </ConfigProvider>
