@@ -1,6 +1,6 @@
 import { Course } from './course';
 import { WalkMeDataNewCourse, TypeName } from '@walkme/types';
-import { getData } from '../services/wmData';
+import * as wmData from '../services/wmData';
 export * from './course';
 
 export async function getNewCourse(): Promise<Course> {
@@ -9,7 +9,7 @@ export async function getNewCourse(): Promise<Course> {
 }
 
 export async function getCourseMetadata(id: number, environmentId: number): Promise<Course> {
-  const [course] = ((await getData(
+  const [course] = ((await wmData.getData(
     TypeName.Course,
     environmentId,
     [id],
@@ -21,16 +21,15 @@ export async function getCourseMetadata(id: number, environmentId: number): Prom
 export async function getCourse(id: number, environmentId: number): Promise<Course> {
   await initData(environmentId);
 
-  const [course] = ((await getData(TypeName.Course, environmentId, [id])) as unknown) as Array<
-    WalkMeDataNewCourse
-  >;
+  const [course] = ((await wmData.getData(TypeName.Course, environmentId, [
+    id,
+  ])) as unknown) as Array<WalkMeDataNewCourse>;
   return new Course(course);
 }
 
 async function initData(environmentId: number) {
-  await Promise.all(
-    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru].map((type) =>
-      getData(type, environmentId),
-    ),
+  await wmData.refresh(
+    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru],
+    environmentId,
   );
 }

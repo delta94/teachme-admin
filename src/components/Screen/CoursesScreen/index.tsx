@@ -1,9 +1,12 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import { useAppContext } from '../../../providers/AppContext';
+import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
+import { UICourse } from '../../../walkme/data';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -23,21 +26,13 @@ import DeleteCourseDialog from '../../common/dialogs/DeleteCourseDialog';
 import DialogPublishToEnvironment from '../../common/dialogs/PublishToEnvironmentDialog';
 import ExportToCSVDialog from '../../common/dialogs/ExportToCSVDialog';
 
+import { columns } from './tableData';
 import classes from './style.module.scss';
 
-interface ICourseData {
-  key: string;
-  name: {
-    value: string;
-    id: number;
-  };
-  productionStatus: string;
-  segment: Array<string>;
-  usersStarted: number;
-  usersCompleted: number;
-  avgQuizScore: number;
-  avgQuizAttempts: number;
-}
+const mockDates = {
+  from: moment(new Date()).subtract(3, 'months').startOf('month').format('YYYY-MM-DD'),
+  to: moment(new Date()).subtract(1, 'months').endOf('month').format('YYYY-MM-DD'),
+};
 
 const statuses: IWMDropdownOption[] = [
   { id: 0, value: 'All Status' },
@@ -75,13 +70,18 @@ const prodStatuses: IWMDropdownOption[] = [
 ];
 
 export default function CoursesScreen(): ReactElement {
-  const {
-    title: mainTitle,
-    analytics,
-    CoursesTable: { title: CoursesTableTitle, table },
-  } = coursesMockData;
+  const { title: mainTitle, analytics } = coursesMockData;
+  const { from, to } = mockDates;
 
-  const [tableData, setTableData] = useState<Array<any>>(table.data);
+  const [{ courses }, dispatch] = useCoursesContext();
+
+  useEffect(() => {
+    fetchCourseList(dispatch, 0, from, to);
+
+    return () => dispatch({ type: ActionType.ResetCourses });
+  }, [dispatch, from, to]);
+
+  const [tableData, setTableData] = useState<Array<UICourse>>(courses);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
   const [selectedRows, setSelectedRows] = useState<Array<any>>([]);
 
@@ -99,9 +99,10 @@ export default function CoursesScreen(): ReactElement {
     if (!isUpdating && !appInit) setAppInit(true);
   }, [isUpdating, appInit]);
 
+  // TODO: fix search filter
   const onSearch = (searchValue: string) => {
-    const newTableData = table.data.filter((course) =>
-      course.name.value.toLowerCase().includes(searchValue.toLowerCase()),
+    const newTableData = courses.filter((course) =>
+      course.title.toLowerCase().includes(searchValue.toLowerCase()),
     );
     setTableData(newTableData);
   };
@@ -113,7 +114,7 @@ export default function CoursesScreen(): ReactElement {
 
   const onMultiSelectChange = (selectedRowKeys: any) => {
     setSelectedRowKeys(selectedRowKeys);
-    setSelectedRows(table.data.filter((row) => selectedRowKeys.includes(row.key)));
+    setSelectedRows(courses.filter((row) => selectedRowKeys.includes(row.id)));
   };
 
   const hasSelected = !!selectedRowKeys.length;
@@ -139,7 +140,7 @@ export default function CoursesScreen(): ReactElement {
       <ScreenHeader title={mainTitle} />
       <AnalyticsCharts data={analytics} />
       <WMCard
-        title={`${tableData.length} ${CoursesTableTitle}`}
+        title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
         {appInit ? (
@@ -154,6 +155,17 @@ export default function CoursesScreen(): ReactElement {
             >
               <ControlsWrapper>
                 {/* <DropdownFilter label="Status" options={statuses} />
+        <ConfigProvider renderEmpty={customizeRenderEmpty}>
+          <WMTable
+            rowSelection={{
+              selectedRowKeys,
+              onChange: onMultiSelectChange,
+            }}
+            data={courses}
+            columns={columns}
+          >
+            <ControlsWrapper>
+              {/* <DropdownFilter label="Status" options={statuses} />
         <WMTable
           rowSelection={{
             selectedRowKeys,
