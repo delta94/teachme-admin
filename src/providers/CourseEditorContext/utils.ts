@@ -60,7 +60,6 @@ export const fetchCourse = async (
     dispatch({ type: ActionType.FetchCourseSuccess, course });
 
     if (course) {
-      dispatch({ type: ActionType.SetCourseTitle, courseTitle: course.title });
       dispatch({ type: ActionType.UpdateCourseOutline });
     }
   } catch (error) {

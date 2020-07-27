@@ -31,7 +31,6 @@ export interface IDispatch {
 }
 
 export interface IState {
-  courseTitle: string;
   isFetchingItems: boolean;
   isFetchingItemsError: boolean;
   courseItems: Array<ContentItem>;

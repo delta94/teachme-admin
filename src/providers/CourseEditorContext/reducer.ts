@@ -3,7 +3,6 @@ import produce from 'immer';
 import { ActionType, IState, IAction } from './course-editor-context.interface';
 
 export const initialState = {
-  courseTitle: 'Untitled Course',
   isFetchingItems: false,
   isFetchingItemsError: false,
   courseItems: [],
@@ -36,10 +35,6 @@ export const reducer = produce(
       case ActionType.FetchItemsError:
         draft.isFetchingItems = false;
         draft.isFetchingItemsError = true;
-        break;
-      case ActionType.SetCourseTitle:
-        draft.courseTitle = action.courseTitle ?? initialState.courseTitle;
-        draft.hasChanges = action.updateHasChange ? true : draft.hasChanges;
         break;
       case ActionType.SetCourseItemsSearchValue:
         draft.courseItemsSearchValue =
