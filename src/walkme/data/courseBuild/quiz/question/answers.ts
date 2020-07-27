@@ -26,7 +26,7 @@ export function toDataModel(
 
 export function newDataModel(OrderIndex: number, data?: NewAnswerData): WalkMeDataQuizAnswer {
   return {
-    Id: -1,
+    Id: -1 - OrderIndex,
     Text: data?.text ?? defaults.NEW_ANSWER_TEXT,
     IsCorrect: data?.isCorrect ?? defaults.NEW_ANSWER_IS_CORRECT,
     OrderIndex,
