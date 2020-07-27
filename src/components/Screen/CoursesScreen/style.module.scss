@@ -1,5 +1,19 @@
-.prod-status {
-  color: var(--table-header-color);
+.showing {
+  font-family: var(--font-secondary);
+  color: var(--neutral900);
+}
+
+.prod-status-btns {
+  button:global(.ant-btn) {
+    height: 32px;
+    padding: 0 10px;
+    text-transform: uppercase;
+    margin-right: 10px;
+  }
+}
+
+.delete-btn:global(.ant-btn) {
+  font-size: 18px;
 }
 
 .separator:global(.ant-divider-vertical) {

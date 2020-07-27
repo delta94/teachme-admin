@@ -27,21 +27,3 @@ export const segments: IWMDropdownOption[] = [
   { id: 4, value: 'Product' },
   { id: 5, value: 'R&D' },
 ];
-
-export const prodStatuses: IWMDropdownOption[] = [
-  {
-    id: 0,
-    value: 'Published',
-    label: <WMTag value="Published" color="green" className={classes['dropdown-tag']} />,
-  },
-  {
-    id: 1,
-    value: 'Draft',
-    label: <WMTag value="Draft" color="orange" className={classes['dropdown-tag']} />,
-  },
-  {
-    id: 2,
-    value: 'Archived',
-    label: <WMTag value="Archived" color="gray" className={classes['dropdown-tag']} />,
-  },
-];

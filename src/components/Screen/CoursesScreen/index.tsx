@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect, Key } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
@@ -11,9 +10,8 @@ import { ExportButton, CreateButton } from '../../common/buttons';
 import Icon, { IconType } from '../../common/Icon';
 import ScreenHeader from '../../common/ScreenHeader';
 import { DropdownFilter, SearchFilter } from '../../common/filters';
-import WMButton from '../../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import WMCard from '../../common/WMCard';
-import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMTable from '../../common/WMTable';
 import {
   DeleteCourseDialog,
@@ -21,7 +19,7 @@ import {
   ExportToCSVDialog,
 } from '../../common/dialogs';
 
-import { mockDates, statuses, segments, prodStatuses } from './utils';
+import { mockDates, statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
 
@@ -55,11 +53,6 @@ export default function CoursesScreen(): ReactElement {
   const [showExport, setShowExport] = useState(false);
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
-  const onProdStatusChange = (selected: IWMDropdownOption) => {
-    if (selected.value === 'Published') setShowPublish(true);
-    else message.info(`Production status was changed to ${selected.value}`);
-  };
-
   const onMultiSelectChange = (selectedRowKeys: Array<Key>) => {
     dispatch({
       type: ActionType.SetSelectedRows,
@@ -76,6 +69,9 @@ export default function CoursesScreen(): ReactElement {
       <CreateButton />
     </div>
   );
+
+  const selectedRowsCount = selectedRowKeys?.length;
+  const shownCoursesCount = filteredCourses.length;
 
   return (
     <>
@@ -95,20 +91,37 @@ export default function CoursesScreen(): ReactElement {
             columns={columns}
             // onSortEnd={(sortedData) => setTableData(sortedData)}
           >
+            <div className={classes['showing']}>
+              {selectedRowsCount
+                ? `${selectedRowsCount} ${selectedRowsCount > 1 ? 'courses' : 'course'} selected`
+                : `Showing ${shownCoursesCount} ${shownCoursesCount > 1 ? 'courses' : 'course'}`}
+            </div>
+            {/* <ControlsWrapper>
+              <DropdownFilter label="Status" options={statuses} />
+              <DropdownFilter label="Segments" options={segments} />
+            </ControlsWrapper> */}
             <ControlsWrapper>
-              {/* <DropdownFilter label="Status" options={statuses} />
-              <DropdownFilter label="Segments" options={segments} /> */}
-            </ControlsWrapper>
-            <ControlsWrapper>
-              {selectedRowKeys?.length ? (
+              {selectedRowsCount ? (
                 <>
-                  <WMDropdown options={prodStatuses} onSelectedChange={onProdStatusChange}>
-                    <WMButton className={classes['prod-status']}>
-                      Change Status
-                      <DownOutlined />
+                  <div className={classes['prod-status-btns']}>
+                    <WMButton variant={ButtonVariantEnum.Link} onClick={() => setShowPublish(true)}>
+                      Publish
                     </WMButton>
-                  </WMDropdown>
+                    <WMButton
+                      variant={ButtonVariantEnum.Link}
+                      onClick={() => message.info(`Production status was changed to archive`)}
+                    >
+                      Archive
+                    </WMButton>
+                    <WMButton
+                      variant={ButtonVariantEnum.Link}
+                      onClick={() => message.info(`Production status was changed to draft`)}
+                    >
+                      Mark as Draft
+                    </WMButton>
+                  </div>
                   <WMButton
+                    className={classes['delete-btn']}
                     icon={<Icon type={IconType.Delete} />}
                     onClick={() => setShowDeleteCourse(true)}
                   />
