@@ -23,17 +23,18 @@ export default function ExportButton({
   useEffect(() => {
     if (!isUpdating && !appInit) setAppInit(true);
   }, [isUpdating, appInit]);
+
   return (
-    <>
+    <div className={classes['export-button']}>
       {appInit ? (
         <WMButton
-          className={cc([classes['export-button'], className])}
+          className={cc([classes['export-wmbutton'], className])}
           onClick={onClick}
           icon={<Icon type={IconType.FileExport} />}
         />
       ) : (
         <WMSkeletonButton active shape="square" />
       )}
-    </>
+    </div>
   );
 }

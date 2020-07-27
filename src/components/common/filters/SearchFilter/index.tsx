@@ -37,11 +37,11 @@ export default function SearchFilter({
   };
 
   return (
-    <>
+    <div className={classes['search-filter']}>
       {appInit ? (
         <Input
           prefix={<Icon type={IconType.Search} />}
-          className={cc([classes['search-filter'], className])}
+          className={cc([classes['search-filter-input'], className])}
           placeholder={placeholder}
           value={searchValue}
           onChange={onChange}
@@ -49,6 +49,6 @@ export default function SearchFilter({
       ) : (
         <WMSkeletonInput style={{ width: 150 }} active size="default" />
       )}
-    </>
+    </div>
   );
 }

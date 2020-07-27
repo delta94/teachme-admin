@@ -1,6 +1,5 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState } from 'react';
 
-import { useAppContext } from '../../../providers/AppContext';
 import { usersMockData } from '../../../constants/mocks/users-mock';
 import { data, columns } from '../../../constants/mocks/tableMockUsersData';
 import WMCard from '../../common/WMCard';
@@ -11,7 +10,6 @@ import DropdownFilter from '../../common/filters/DropdownFilter';
 import { IWMDropdownOption } from '../../common/WMDropdown';
 import SearchFilter from '../../common/filters/SearchFilter';
 import ExportButton from '../../common/buttons/ExportButton';
-import WMSkeleton from '../../common/WMSkeleton';
 
 import classes from './style.module.scss';
 
@@ -52,13 +50,6 @@ const results: IWMDropdownOption[] = [
 export default function UsersScreen(): ReactElement {
   const { title: mainTitle, usersTable } = usersMockData;
   const [tableData, setTableData] = useState(data);
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
 
   const onSearch = (searchValue: string) => {
     const newTableData = data.filter((user) =>
@@ -71,21 +62,17 @@ export default function UsersScreen(): ReactElement {
     <>
       <ScreenHeader title={mainTitle} />
       <WMCard title={`${tableData.length} ${usersTable.title}`}>
-        {appInit ? (
-          <WMTable data={tableData as Array<IUserData>} columns={columns}>
-            <ControlsWrapper>
-              <DropdownFilter label="Course Name" options={courses} />
-              <DropdownFilter label="Completed" options={statuses} />
-              <DropdownFilter label="Quiz Results" options={results} />
-            </ControlsWrapper>
-            <ControlsWrapper>
-              <ExportButton className={classes['export-btn']} />
-              <SearchFilter placeholder="Search users" onSearch={onSearch} />
-            </ControlsWrapper>
-          </WMTable>
-        ) : (
-          <WMSkeleton active paragraph={{ rows: 10 }} />
-        )}
+        <WMTable data={tableData as Array<IUserData>} columns={columns}>
+          <ControlsWrapper>
+            <DropdownFilter label="Course Name" options={courses} />
+            <DropdownFilter label="Completed" options={statuses} />
+            <DropdownFilter label="Quiz Results" options={results} />
+          </ControlsWrapper>
+          <ControlsWrapper>
+            <ExportButton className={classes['export-btn']} />
+            <SearchFilter placeholder="Search users" onSearch={onSearch} />
+          </ControlsWrapper>
+        </WMTable>
       </WMCard>
     </>
   );
