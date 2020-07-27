@@ -1,8 +1,12 @@
-import React, { ReactNode, ReactElement } from 'react';
+import React, { ReactNode, ReactElement, useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { SortEnd, SortEvent, SortStart, SortStartHandler } from 'react-sortable-hoc';
+
+import { useAppContext } from '../../../providers/AppContext';
+
+import WMSkeleton from '../WMSkeleton';
 
 import SortableTableBody from './SortableTableBody';
 import SortableRow from './SortableRow';
@@ -27,6 +31,14 @@ export default function WMTable({
   onSortStart,
   ...otherProps
 }: IWMTable): ReactElement {
+  const [appState, appDispatch] = useAppContext();
+  const { isUpdating } = appState;
+  const [appInit, setAppInit] = useState(false);
+
+  useEffect(() => {
+    if (!isUpdating && !appInit) setAppInit(true);
+  }, [isUpdating, appInit]);
+
   const isSortable = typeof onSortEnd === 'function';
 
   const onSortStartCallback = (sort: SortStart, event: SortEvent) => {
@@ -75,15 +87,21 @@ export default function WMTable({
   return (
     <div className={classes['wm-table']}>
       {children && <div className={classes['toolbar']}>{children}</div>}
-      <Table
-        rowSelection={rowSelection}
-        pagination={false}
-        dataSource={data}
-        columns={columns}
-        rowKey={(record: any, index?: number) => index as React.Key}
-        {...componentsProps}
-        {...otherProps}
-      />
+      {appInit ? (
+        <>
+          <Table
+            rowSelection={rowSelection}
+            pagination={false}
+            dataSource={data}
+            columns={columns}
+            rowKey={(record: any, index?: number) => index as React.Key}
+            {...componentsProps}
+            {...otherProps}
+          />
+        </>
+      ) : (
+        <WMSkeleton active paragraph={{ rows: 10 }} />
+      )}
     </div>
   );
 }

@@ -143,18 +143,17 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        {appInit ? (
-          <ConfigProvider renderEmpty={customizeRenderEmpty}>
-            <WMTable
-              rowSelection={{
-                selectedRowKeys,
-                onChange: onMultiSelectChange,
-              }}
-              data={courses}
-              columns={columns}
-            >
-              <ControlsWrapper>
-                {/* <DropdownFilter label="Status" options={statuses} />
+        <ConfigProvider renderEmpty={customizeRenderEmpty}>
+          <WMTable
+            rowSelection={{
+              selectedRowKeys,
+              onChange: onMultiSelectChange,
+            }}
+            data={courses}
+            columns={columns}
+          >
+            <ControlsWrapper>
+              {/* <DropdownFilter label="Status" options={statuses} />
         <ConfigProvider renderEmpty={customizeRenderEmpty}>
           <WMTable
             rowSelection={{
@@ -178,54 +177,56 @@ export default function CoursesScreen(): ReactElement {
           <ControlsWrapper>
             {/* <DropdownFilter label="Status" options={statuses} />
             <DropdownFilter label="Segments" options={segments} /> */}
-              </ControlsWrapper>
-              <ControlsWrapper>
-                {appInit ? (
-                  <>
-                    <WMDropdown
-                      options={prodStatuses}
-                      onSelectedChange={onProdStatusChange}
-                      disabled={!hasSelected}
-                    >
-                      <WMButton className={classes['prod-status']}>
-                        Change Status
-                        <DownOutlined />
-                      </WMButton>
-                    </WMDropdown>
-                    <Divider className={classes['separator']} type="vertical" />
-                    <WMButton
-                      className={classes['delete-btn']}
-                      icon={<Icon type={IconType.Delete} />}
-                      disabled={!hasSelected}
-                      onClick={() => setShowDeleteCourse(true)}
-                    />
-                    <ExportButton onClick={() => setShowExport(true)} />
-                    <Divider className={classes['separator']} type="vertical" />
-                    <WMButton
-                      className={classes['create-btn']}
-                      shape="round"
-                      variant={ButtonVariantEnum.Create}
-                      icon={<PlusOutlined />}
-                    >
-                      Create Course
+            </ControlsWrapper>
+            <ControlsWrapper>
+              {appInit ? (
+                <>
+                  <WMDropdown
+                    options={prodStatuses}
+                    onSelectedChange={onProdStatusChange}
+                    disabled={!hasSelected}
+                  >
+                    <WMButton className={classes['prod-status']}>
+                      Change Status
+                      <DownOutlined />
                     </WMButton>
-                    <SearchFilter placeholder="Search course name" onSearch={onSearch} />
-                  </>
-                ) : (
-                  <div className={classes['course-screen-skeleton']}>
-                    <WMSkeletonInput style={{ width: 150 }} active size="default" />
-                    <WMSkeletonButton active size="default" shape="circle" />
-                    <WMSkeletonButton active size="default" shape="circle" />
-                    <WMSkeletonButton active size="default" shape="round" />
-                    <WMSkeletonInput style={{ width: 150 }} active size="default" />
-                  </div>
-                )}
-              </ControlsWrapper>
-            </WMTable>
-          </ConfigProvider>
-        ) : (
-          <WMSkeleton active paragraph={{ rows: 10 }} />
-        )}
+                  </WMDropdown>
+                  <Divider className={classes['separator']} type="vertical" />
+                  <WMButton
+                    className={classes['delete-btn']}
+                    icon={<Icon type={IconType.Delete} />}
+                    disabled={!hasSelected}
+                    onClick={() => setShowDeleteCourse(true)}
+                  />
+                  <ExportButton onClick={() => setShowExport(true)} />
+                  <Divider className={classes['separator']} type="vertical" />
+                  <WMButton
+                    className={classes['create-btn']}
+                    shape="round"
+                    variant={ButtonVariantEnum.Create}
+                    icon={<PlusOutlined />}
+                  >
+                    Create Course
+                  </WMButton>
+                  <SearchFilter placeholder="Search course name" onSearch={onSearch} />
+                </>
+              ) : (
+                <div className={classes['course-screen-skeleton']}>
+                  <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                  <WMSkeletonButton active size="default" shape="circle" />
+                  <WMSkeletonButton active size="default" shape="circle" />
+                  <WMSkeletonButton
+                    active
+                    size="default"
+                    shape="round"
+                    className={classes['add-button-skeleton']}
+                  />
+                  <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                </div>
+              )}
+            </ControlsWrapper>
+          </WMTable>
+        </ConfigProvider>
       </WMCard>
       {/* Dialogs */}
       <DialogPublishToEnvironment
