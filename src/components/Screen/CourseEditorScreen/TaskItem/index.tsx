@@ -32,7 +32,11 @@ export default function TaskItem({
   ...otherProps
 }: ITaskItem): ReactElement {
   return (
-    <Draggable key={index} className={cc([classes['task-item'], className])} {...otherProps}>
+    <Draggable
+      key={index}
+      className={cc([classes['task-item'], 'drag-handle', className])}
+      {...otherProps}
+    >
       <div key={index} className={classes['item']} onClick={onClick}>
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />
         <span className={classes['title']}>{title}</span>

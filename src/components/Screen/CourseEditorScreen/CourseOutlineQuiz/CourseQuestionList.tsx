@@ -27,6 +27,7 @@ export default function CourseQuestionList({
         getChildPayload={(i) => items[i]}
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
+        dragHandleSelector=".drag-handle"
       >
         {items.map((item, i: number) => (
           <DraggableQuestionItem key={i} index={i} item={item} />

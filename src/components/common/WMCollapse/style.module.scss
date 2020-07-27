@@ -10,6 +10,38 @@
     justify-content: flex-start;
     height: 37px;
     overflow: hidden;
+
+    &:hover {
+      background-color: #f6fbff;
+    }
+
+    &.has-drag-handle {
+      .collapse-button {
+        margin-right: 10px;
+        margin-left: 24px;
+        width: 19px;
+      }
+
+      &:hover {
+        .collapse-button {
+          margin-right: 10px;
+          margin-left: 3px;
+        }
+
+        .drag-handle {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .drag-handle {
+    cursor: grab;
+    justify-content: center;
+    align-items: center;
+    width: 21px;
+    padding-left: 3px;
+    display: none;
   }
 
   .collapse-button {
@@ -20,16 +52,16 @@
     align-items: center;
     justify-content: center;
     font-size: 10px;
-    transition: all 250ms ease-in-out;
-    transform: rotate(-90deg);
     color: var(--neutral500);
 
     svg {
+      transform: rotate(-90deg);
+      transition: all 250ms ease-in-out;
       width: 9px;
       height: 5px;
     }
 
-    &.is-open {
+    &.is-open svg {
       transform: rotate(0deg);
     }
   }

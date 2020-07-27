@@ -54,6 +54,7 @@ export default function CourseOutlineLessonItem({
         className={classes['lesson']}
         headerClassName={classes['lesson-header']}
         header={<LessonHeader lesson={item} type={IconType.Lesson} />}
+        hasDragHandle
       >
         <CourseItemsList
           items={item.childNodes.toArray()}
