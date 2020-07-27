@@ -1,7 +1,6 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, Key } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
@@ -11,79 +10,33 @@ import ControlsWrapper from '../../common/ControlsWrapper';
 import { ExportButton, CreateButton } from '../../common/buttons';
 import Icon, { IconType } from '../../common/Icon';
 import ScreenHeader from '../../common/ScreenHeader';
-import { SearchFilter } from '../../common/filters';
+import { DropdownFilter, SearchFilter } from '../../common/filters';
 import WMButton from '../../common/WMButton';
 import WMCard from '../../common/WMCard';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMTable from '../../common/WMTable';
-import WMTag from '../../common/WMTag';
-// dialogs
-import DeleteCourseDialog from '../../common/dialogs/DeleteCourseDialog';
-import DialogPublishToEnvironment from '../../common/dialogs/PublishToEnvironmentDialog';
-import ExportToCSVDialog from '../../common/dialogs/ExportToCSVDialog';
+import {
+  DeleteCourseDialog,
+  PublishToEnvironmentDialog,
+  ExportToCSVDialog,
+} from '../../common/dialogs';
 
+import { mockDates, statuses, segments, prodStatuses } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
-
-const mockDates = {
-  from: moment(new Date()).subtract(3, 'months').startOf('month').format('YYYY-MM-DD'),
-  to: moment(new Date()).subtract(1, 'months').endOf('month').format('YYYY-MM-DD'),
-};
-
-// const statuses: IWMDropdownOption[] = [
-//   { id: 0, value: 'All Status' },
-//   { id: 1, value: 'Published' },
-//   { id: 2, value: 'Modified' },
-//   { id: 3, value: 'Draft' },
-//   { id: 4, value: 'Archived' },
-// ];
-
-// const segments: IWMDropdownOption[] = [
-//   { id: 0, value: 'All Segments' },
-//   { id: 1, value: 'All Employees' },
-//   { id: 2, value: 'HR' },
-//   { id: 3, value: 'Sales' },
-//   { id: 4, value: 'Product' },
-//   { id: 5, value: 'R&D' },
-// ];
-
-const prodStatuses: IWMDropdownOption[] = [
-  {
-    id: 0,
-    value: 'Published',
-    label: <WMTag value="Published" color="green" className={classes['dropdown-tag']} />,
-  },
-  {
-    id: 1,
-    value: 'Draft',
-    label: <WMTag value="Draft" color="orange" className={classes['dropdown-tag']} />,
-  },
-  {
-    id: 2,
-    value: 'Archived',
-    label: <WMTag value="Archived" color="gray" className={classes['dropdown-tag']} />,
-  },
-];
 
 export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, analytics } = coursesMockData;
   const { from, to } = mockDates;
 
-  const [{ courses, filteredCourses }, dispatch] = useCoursesContext();
+  const [state, dispatch] = useCoursesContext();
+  const { courses, filteredCourses, selectedRows, selectedRowKeys } = state;
 
   useEffect(() => {
     fetchCourseList(dispatch, 0, from, to);
 
     return () => dispatch({ type: ActionType.ResetCourses });
   }, [dispatch, from, to]);
-
-  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
-  const [selectedRows, setSelectedRows] = useState<Array<any>>([]);
-
-  // dialogs
-  const [showPublish, setShowPublish] = useState(false);
-  const [showExport, setShowExport] = useState(false);
-  const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
   const onSearch = (searchValue: string) => {
     const newCourseList = courses.filter(({ title }) =>
@@ -97,17 +50,23 @@ export default function CoursesScreen(): ReactElement {
     });
   };
 
+  // Dialogs
+  const [showPublish, setShowPublish] = useState(false);
+  const [showExport, setShowExport] = useState(false);
+  const [showDeleteCourse, setShowDeleteCourse] = useState(false);
+
   const onProdStatusChange = (selected: IWMDropdownOption) => {
     if (selected.value === 'Published') setShowPublish(true);
     else message.info(`Production status was changed to ${selected.value}`);
   };
 
-  const onMultiSelectChange = (selectedRowKeys: any) => {
-    setSelectedRowKeys(selectedRowKeys);
-    setSelectedRows(courses.filter((row) => selectedRowKeys.includes(row.id)));
+  const onMultiSelectChange = (selectedRowKeys: Array<Key>) => {
+    dispatch({
+      type: ActionType.SetSelectedRows,
+      courses: courses.filter((row) => selectedRowKeys.includes(row.id)),
+      selectedRowKeys,
+    });
   };
-
-  const hasSelected = !!selectedRowKeys.length;
 
   const customizeRenderEmpty = () => (
     <div className={classes['empty-state']}>
@@ -134,50 +93,41 @@ export default function CoursesScreen(): ReactElement {
             }}
             data={filteredCourses}
             columns={columns}
+            // onSortEnd={(sortedData) => setTableData(sortedData)}
           >
             <ControlsWrapper>
               {/* <DropdownFilter label="Status" options={statuses} />
-        <WMTable
-          rowSelection={{
-            selectedRowKeys,
-            onChange: onMultiSelectChange,
-          }}
-          data={tableData as Array<ICourseData>}
-          columns={table.columns}
-          onSortEnd={(sortedData) => setTableData(sortedData)}
-        >
-          <ControlsWrapper>
-            {/* <DropdownFilter label="Status" options={statuses} />
-            <DropdownFilter label="Segments" options={segments} /> */}
+              <DropdownFilter label="Segments" options={segments} /> */}
             </ControlsWrapper>
             <ControlsWrapper>
-              <WMDropdown
-                options={prodStatuses}
-                onSelectedChange={onProdStatusChange}
-                disabled={!hasSelected}
-              >
-                <WMButton className={classes['prod-status']}>
-                  Change Status
-                  <DownOutlined />
-                </WMButton>
-              </WMDropdown>
-              <Divider className={classes['separator']} type="vertical" />
-              <WMButton
-                className={classes['delete-btn']}
-                icon={<Icon type={IconType.Delete} />}
-                disabled={!hasSelected}
-                onClick={() => setShowDeleteCourse(true)}
-              />
+              {selectedRowKeys?.length ? (
+                <>
+                  <WMDropdown options={prodStatuses} onSelectedChange={onProdStatusChange}>
+                    <WMButton className={classes['prod-status']}>
+                      Change Status
+                      <DownOutlined />
+                    </WMButton>
+                  </WMDropdown>
+                  <WMButton
+                    icon={<Icon type={IconType.Delete} />}
+                    onClick={() => setShowDeleteCourse(true)}
+                  />
+                  <Divider className={classes['separator']} type="vertical" />
+                </>
+              ) : null}
               <ExportButton onClick={() => setShowExport(true)} />
-              <Divider className={classes['separator']} type="vertical" />
-              <SearchFilter placeholder="Search course name" onSearch={onSearch} />
-              <CreateButton className={classes['create-btn']} />
+              <SearchFilter
+                className={classes['search']}
+                placeholder="Search course name"
+                onSearch={onSearch}
+              />
+              <CreateButton />
             </ControlsWrapper>
           </WMTable>
         </ConfigProvider>
       </WMCard>
       {/* Dialogs */}
-      <DialogPublishToEnvironment
+      <PublishToEnvironmentDialog
         open={showPublish}
         onCancel={() => setShowPublish(false)}
         onConfirm={() => {

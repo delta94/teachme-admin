@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Key } from 'react';
 
 import { UICourse } from '../../walkme/data';
 
@@ -8,8 +8,9 @@ export { ActionType };
 
 export interface IAction {
   type: ActionType;
-  courses?: Array<UICourse> | null;
+  courses?: Array<UICourse>;
   coursesSearchValue?: string;
+  selectedRowKeys?: Array<Key>;
 }
 
 export interface IDispatch {
@@ -22,6 +23,8 @@ export interface IState {
   courses: Array<UICourse>;
   filteredCourses: Array<UICourse>;
   coursesSearchValue: string;
+  selectedRows?: Array<UICourse>;
+  selectedRowKeys?: Array<Key>;
 }
 
 export interface ICoursesProvider {

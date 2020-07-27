@@ -8,6 +8,8 @@ export const initialState = {
   courses: [],
   filteredCourses: [],
   coursesSearchValue: '',
+  selectedRows: [],
+  selectedRowKeys: [],
 } as IState;
 
 export const reducer = produce(
@@ -30,6 +32,10 @@ export const reducer = produce(
       case ActionType.SetCoursesSearchValue:
         draft.coursesSearchValue = action.coursesSearchValue ?? initialState.coursesSearchValue;
         draft.filteredCourses = action.courses ?? initialState.filteredCourses;
+        break;
+      case ActionType.SetSelectedRows:
+        draft.selectedRows = action.courses ?? initialState.selectedRows;
+        draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
         break;
       case ActionType.ResetCourses:
         draft = { ...initialState };

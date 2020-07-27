@@ -3,17 +3,12 @@
 }
 
 .separator:global(.ant-divider-vertical) {
-  height: 33px;
+  height: 32px;
   margin: 0 20px;
 }
 
-.delete-btn:global(.ant-btn) {
-  font-size: 18px;
-  margin-right: 20px;
-}
-
-.create-btn:global(.ant-btn) {
-  margin-left: 20px;
+.search {
+  margin: 0 20px;
 }
 
 .dropdown-tag:global(.ant-tag) {
