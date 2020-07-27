@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, Key, ChangeEvent } from 'react';
 
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 import WMVerticalRadioGroup from '../../WMVerticalRadioGroup';
@@ -6,20 +6,27 @@ import WMInput from '../../WMInput';
 
 import classes from './style.module.scss';
 
+export interface IExportToCSVDialog extends IWMConfirmationDialogWrapper {
+  coursesCount: number;
+}
+
 export default function ExportToCSVDialog({
+  coursesCount,
   open,
   onCancel,
   onConfirm,
-}: IWMConfirmationDialogWrapper): ReactElement {
-  const [value, setValue] = useState<number>(0);
+}: IExportToCSVDialog): ReactElement {
+  const [value, setValue] = useState<Key>(0);
   const [email, setEmail] = useState<string | undefined>(undefined);
 
-  function onEmailChange(e: any) {
-    setEmail(e.target.value);
-  }
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+
+  const onOptionChange = (value: Key) => setValue(value);
+
+  const data = { value, email };
 
   const options = [
-    { label: 'Download CSV file', value: 0 },
+    { label: 'Download CSV file', value: 0, disabled: !coursesCount },
     {
       label: (
         <>
@@ -39,21 +46,20 @@ export default function ExportToCSVDialog({
     },
   ];
 
-  function onOptionChange(value: any) {
-    setValue(value);
-  }
-  const data = { value, email };
   return (
-    <>
-      <WMConfirmationDialog
-        open={open}
-        title="Export data"
-        onCancel={onCancel}
-        onConfirm={() => onConfirm(data)}
-      >
-        <p>You are about to export data of 8 courses.</p>
-        <WMVerticalRadioGroup options={options} onChange={onOptionChange} value={value} />
-      </WMConfirmationDialog>
-    </>
+    <WMConfirmationDialog
+      open={open}
+      title="Export data"
+      onCancel={onCancel}
+      onConfirm={() => onConfirm(data)}
+      disableConfirmButton={!coursesCount}
+    >
+      <p>
+        {coursesCount
+          ? `You are about to export data of ${coursesCount} course${coursesCount > 1 ? 's' : ''}.`
+          : 'No available courses to export'}
+      </p>
+      <WMVerticalRadioGroup options={options} onChange={onOptionChange} value={value} />
+    </WMConfirmationDialog>
   );
 }

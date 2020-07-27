@@ -54,6 +54,7 @@ export default function Dialogs(): ReactElement {
         show Export Dialog
       </WMButton>
       <ExportToCSVDialog
+        coursesCount={8}
         open={showExport}
         onCancel={() => setShowExport(false)}
         onConfirm={() => setShowExport(false)}

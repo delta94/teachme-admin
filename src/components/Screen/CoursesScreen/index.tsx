@@ -97,9 +97,13 @@ export default function CoursesScreen(): ReactElement {
             // onSortEnd={(sortedData) => setTableData(sortedData)}
           >
             <div className={classes['showing']}>
-              {selectedRowsCount
-                ? `${selectedRowsCount} ${selectedRowsCount > 1 ? 'courses' : 'course'} selected`
-                : `Showing ${shownCoursesCount} ${shownCoursesCount > 1 ? 'courses' : 'course'}`}
+              {courses.length ? (
+                <>
+                  {selectedRowsCount
+                    ? `${selectedRowsCount} course${selectedRowsCount > 1 ? 's' : ''} selected`
+                    : `Showing ${shownCoursesCount} course${shownCoursesCount > 1 ? 's' : ''}`}
+                </>
+              ) : null}
             </div>
             {/* <ControlsWrapper>
               <DropdownFilter label="Status" options={statuses} />
@@ -162,6 +166,7 @@ export default function CoursesScreen(): ReactElement {
         }}
       />
       <ExportToCSVDialog
+        coursesCount={courses.length}
         open={showExport}
         onCancel={() => setShowExport(false)}
         onConfirm={() => {
