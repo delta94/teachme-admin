@@ -30,3 +30,12 @@ export function getDataSync(type: number, ids?: Array<number>): Array<WalkMeData
 function filter(items: Array<WalkMeDataItem>, ids?: Array<number>): Array<WalkMeDataItem> {
   return ids ? items.filter((item) => ids.includes(item.Id)) : items;
 }
+
+export async function refresh(types: Array<TypeName>, environmentId: number = 0): Promise<void> {
+  await Promise.all(
+    types.map((type) => {
+      delete data[type];
+      return getData(type, environmentId);
+    }),
+  );
+}

@@ -21,7 +21,8 @@ export interface INumberCell extends ITableCell {
 
 export interface IStatusDotCell extends ITableCell {
   value: string | number;
-  passingValue: number;
+  passingValue?: number;
+  passed?: boolean;
 }
 
 export interface ISubtextCell extends ITableCell {
