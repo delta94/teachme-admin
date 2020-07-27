@@ -17,6 +17,8 @@ import { useAppContext } from '../../../../providers/AppContext';
 import { IWMLineChartItem, IWMLineChartProps } from './wmLineChart.interface';
 import EmptyLineChart from './EmptyLineChart';
 
+import classes from './style.module.scss';
+
 const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLineChartItem[] }) => {
   const { payload, label, active } = data;
   if (active) {
@@ -84,7 +86,7 @@ export default function WMLineChart<T extends {}>({
           )}
         </>
       ) : (
-        <WMSkeleton active paragraph={{ rows: 6 }} />
+        <WMSkeleton active paragraph={{ rows: 6 }} className={classes['line-chart-skeleton']} />
       )}
     </div>
   );

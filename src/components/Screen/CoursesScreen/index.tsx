@@ -19,7 +19,7 @@ import WMCard from '../../common/WMCard';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMTable from '../../common/WMTable';
 import WMTag from '../../common/WMTag';
-import WMSkeleton, { WMSkeletonInput, WMSkeletonButton } from '../../common/WMSkeleton';
+import { WMSkeletonInput, WMSkeletonButton } from '../../common/WMSkeleton';
 
 // dialogs
 import DeleteCourseDialog from '../../common/dialogs/DeleteCourseDialog';
