@@ -150,8 +150,8 @@ export default function CoursesScreen(): ReactElement {
                 selectedRowKeys,
                 onChange: onMultiSelectChange,
               }}
-              data={tableData as Array<ICourseData>}
-              columns={table.columns}
+              data={courses}
+              columns={columns}
             >
               <ControlsWrapper>
                 {/* <DropdownFilter label="Status" options={statuses} />
