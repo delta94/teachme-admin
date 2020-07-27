@@ -4,6 +4,7 @@ import {
   QuestionType,
   WalkMeDataQuizAnswer,
   NewQuestionData,
+  QuizAnswer,
 } from '@walkme/types';
 import * as answers from './answers';
 import defaults from '../../defaults';
@@ -51,6 +52,7 @@ export class QuizQuestion implements BuildQuizQuestion {
     this._type = _question.QuestionType;
     this.explanation = _question.Explanation;
     this.properties = new QuizQuestionProperties(_question.Settings);
+    this.answers.spy(this.setSingleSelect);
   }
 
   set type(val: QuestionType) {
@@ -67,6 +69,19 @@ export class QuizQuestion implements BuildQuizQuestion {
   get type(): QuestionType {
     return this._type;
   }
+
+  private setSingleSelect = (
+    changedAnswer: QuizAnswer,
+    prop: string | number | symbol,
+    val: any,
+  ): void => {
+    if (this._type == QuestionType.Multiple || prop !== 'isCorrect' || !val) return;
+
+    this.answers.toArray().forEach((answer) => {
+      if (answer == changedAnswer) return;
+      answer.isCorrect = false;
+    });
+  };
 
   public toDataModel(index: number) {
     return {
