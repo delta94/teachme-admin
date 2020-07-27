@@ -38,7 +38,7 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
     <WMCollapse
       className={classes['quiz']}
       headerClassName={classes['quiz-header']}
-      header={<LessonHeader title="Quiz" type={IconType.QuizSettings} />}
+      header={<div>Quiz</div>}
     >
       <QuestionItem
         item={{ title: 'Quiz Welcome Page' }}

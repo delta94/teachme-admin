@@ -12,3 +12,69 @@
     margin-right: 8px;
   }
 }
+
+.editable-lesson-title {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+
+  .input-wrapper {
+    display: flex;
+    * > :first-child {
+      flex-grow: 1;
+    }
+  }
+
+  .input-wrapper,
+  .text {
+    position: absolute;
+    color: var(--neutral900);
+    font-family: var(--font-secondary);
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: unset;
+    font-size: 10px;
+    left: 0;
+    flex-grow: 1;
+
+    width: 500px;
+
+    &.hidden {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+
+  .text {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .input {
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    height: 100%;
+    margin: 0;
+    align-self: center;
+    flex-grow: 1;
+
+    &:focus {
+      border-color: var(--neutral900);
+    }
+
+    &::selection {
+      color: var(--neutral900);
+      background: var(--selected);
+    }
+
+    &.lesson {
+      height: 26px;
+      border: var(--wm-border);
+    }
+  }
+}

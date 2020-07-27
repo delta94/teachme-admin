@@ -41,7 +41,9 @@ export default function CourseOutlineLessonItem({
       item.childNodes.removeItem(e.payload);
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    if (isReorder || isAdd || isRemove) {
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    }
   };
 
   const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson' && !payload.answers;
@@ -51,7 +53,7 @@ export default function CourseOutlineLessonItem({
       <WMCollapse
         className={classes['lesson']}
         headerClassName={classes['lesson-header']}
-        header={<LessonHeader title={item.title} type={IconType.Lesson} />}
+        header={<LessonHeader lesson={item} type={IconType.Lesson} />}
       >
         <CourseItemsList
           items={item.childNodes.toArray()}

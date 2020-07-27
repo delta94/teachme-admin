@@ -54,6 +54,7 @@ export const reducer = produce(
         draft.isFetchingCourse = false;
         draft.isFetchingCourseError = false;
         draft.course = action.course ?? initialState.course;
+        draft.quiz = action.course?.quiz ?? null;
         break;
       case ActionType.FetchCourseError:
         draft.isFetchingCourse = false;
