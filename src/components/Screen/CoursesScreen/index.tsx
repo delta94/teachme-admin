@@ -212,16 +212,15 @@ export default function CoursesScreen(): ReactElement {
                 </>
               ) : (
                 <div className={classes['course-screen-skeleton']}>
-                  <WMSkeletonInput style={{ width: 150 }} active size="default" />
-                  <WMSkeletonButton active size="default" shape="circle" />
-                  <WMSkeletonButton active size="default" shape="circle" />
+                  <WMSkeletonInput style={{ width: 150 }} active />
+                  <WMSkeletonButton active shape="circle" />
+                  <WMSkeletonButton active shape="circle" />
                   <WMSkeletonButton
                     active
-                    size="default"
                     shape="round"
                     className={classes['add-button-skeleton']}
                   />
-                  <WMSkeletonInput style={{ width: 150 }} active size="default" />
+                  <WMSkeletonInput style={{ width: 150 }} active />
                 </div>
               )}
             </ControlsWrapper>
