@@ -50,7 +50,6 @@ export default function ScreenHeader({
             className={classes['screen-header-skeleton']}
             style={{ width: 250 }}
             active
-            size="default"
           />
         )}
       </Header>
