@@ -53,7 +53,7 @@ export default function WMLegend({
           )}
         </>
       ) : (
-        <WMSkeleton active paragraph={{ rows: 2 }} />
+        <WMSkeleton active paragraph={{ rows: 2 }} className={classes['legend-skeleton']} />
       )}
     </>
   );
