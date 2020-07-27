@@ -70,9 +70,12 @@ export class QuizQuestion implements BuildQuizQuestion {
     return this._type;
   }
 
-  private setSingleSelect = (changedAnswer: QuizAnswer, prop: string | number | symbol): void => {
-    if (this._type == QuestionType.Multiple || prop !== 'isCorrect' || !changedAnswer.isCorrect)
-      return;
+  private setSingleSelect = (
+    changedAnswer: QuizAnswer,
+    prop: string | number | symbol,
+    val: any,
+  ): void => {
+    if (this._type == QuestionType.Multiple || prop !== 'isCorrect' || !val) return;
 
     this.answers.toArray().forEach((answer) => {
       if (answer == changedAnswer) return;

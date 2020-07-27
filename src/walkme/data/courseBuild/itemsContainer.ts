@@ -3,7 +3,10 @@ import { TypeContainer } from '@walkme/types';
 export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataModel>
   implements TypeContainer<UIModel, NewItemData> {
   private _items: Array<UIModel>;
-  _spyCallback: (item: UIModel, prop: string | number | symbol) => void = (_0, _1) => {};
+  private _spyCallback: (item: UIModel, prop: string | number | symbol, val: any) => void = (
+    _0,
+    _1,
+  ) => {};
   public [Symbol.iterator]: () => Iterator<UIModel>;
   constructor(
     itemsData: Array<DataModel>,
@@ -12,13 +15,7 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
   ) {
     this._items = itemsData.map((item) => {
       const _this = this;
-      return new Proxy(this._getUIModel(item), {
-        set(obj, prop) {
-          _this._spyCallback(obj, prop);
-          //@ts-ignore
-          return obj[prop];
-        },
-      });
+      return this._proxy(this._getUIModel(item));
     });
     this[Symbol.iterator] = this._items[Symbol.iterator];
   }
@@ -45,8 +42,9 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
   public addNewItem(index: number = this._items.length, data?: NewItemData): UIModel {
     const itemData = this._newDataModel(index, data);
     const item = this._getUIModel(itemData);
-    this._items.splice(index, 0, item);
-    return item;
+    const proxyItem = this._proxy(item);
+    this._items.splice(index, 0, proxyItem);
+    return proxyItem;
   }
 
   public removeItem(item: UIModel): void {
@@ -56,8 +54,20 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
     this._items.splice(index, 1);
   }
 
-  public spy(callback: (item: UIModel, prop: string | number | symbol) => void) {
+  public spy(callback: (item: UIModel, prop: string | number | symbol, val: any) => void) {
     this._spyCallback = callback;
+  }
+
+  private _proxy(item: UIModel): UIModel {
+    const _this = this;
+    return new Proxy(item, {
+      set(obj, prop, val) {
+        _this._spyCallback(obj, prop, val);
+        //@ts-ignore
+        obj[prop] = val;
+        return true;
+      },
+    });
   }
 }
 
