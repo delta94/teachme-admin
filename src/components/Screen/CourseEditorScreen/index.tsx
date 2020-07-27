@@ -16,7 +16,7 @@ import CourseOutline from './CourseOutline';
 import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
-  const [{ courseTitle }, dispatch] = useCourseEditorContext();
+  const [{ courseTitle, isFetchingCourse }, dispatch] = useCourseEditorContext();
   const { courseId } = useParams();
 
   useEffect(() => {
@@ -32,7 +32,14 @@ export default function CourseEditorScreen(): ReactElement {
   return (
     <>
       <ScreenHeader
-        title={<EditableTitle onBlur={onCourseTitleBlur} value={courseTitle} isNew={!courseId} />}
+        title={
+          <EditableTitle
+            isNew={!courseId}
+            isLoading={isFetchingCourse}
+            value={courseTitle}
+            onBlur={onCourseTitleBlur}
+          />
+        }
         hideTimeFilter={true}
       />
       <div className={classes['cards-wrapper']}>

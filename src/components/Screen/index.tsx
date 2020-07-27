@@ -10,6 +10,7 @@ import {
   PLAYGROUND_ROUTE,
 } from '../../constants/routes';
 import CourseEditorProvider from '../../providers/CourseEditorContext';
+import CoursesProvider from '../../providers/CoursesContext';
 
 import SplashScreen from './SplashScreen';
 import ErrorScreen from './ErrorScreen';
@@ -26,7 +27,9 @@ export default function Screen(): ReactElement {
     <section className={classes.screen}>
       <Switch>
         <Route path={COURSES_ROUTE.path}>
-          <CoursesScreen />
+          <CoursesProvider>
+            <CoursesScreen />
+          </CoursesProvider>
         </Route>
         <Route path={COURSE_ROUTE.path}>
           <CourseScreen />
