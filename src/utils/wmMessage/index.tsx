@@ -1,23 +1,17 @@
 import React, { ReactNode } from 'react';
 import { message } from 'antd';
 
-import Icon, { IconType } from '../Icon';
+import Icon, { IconType } from '../../components/common/Icon';
 
 import classes from './style.module.scss';
 
 export const wmMessage = (content: ReactNode, type?: string): void => {
   switch (type) {
     case 'warning':
-      message.warning({
-        content,
-        className: classes['wm-message-warning'],
-      });
+      message.warning({ content });
       break;
     case 'error':
-      message.error({
-        content,
-        className: classes['wm-message-error'],
-      });
+      message.error({ content });
       break;
     default:
       message.success({

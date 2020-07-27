@@ -8,6 +8,7 @@ import classes from './style.module.scss';
 export interface IRadioButton {
   value: any;
   label: React.ReactNode;
+  disabled?: boolean;
 }
 
 export interface IWMRadio extends Omit<RadioProps, 'onChange'> {
@@ -45,7 +46,12 @@ export default function WMVerticalRadioGroup({
       {...otherProps}
     >
       {options.map((option) => (
-        <Radio key={option.value} value={option.value} className={classes['radio-button']}>
+        <Radio
+          key={option.value}
+          value={option.value}
+          disabled={option.disabled}
+          className={classes['radio-button']}
+        >
           {option.label}
         </Radio>
       ))}

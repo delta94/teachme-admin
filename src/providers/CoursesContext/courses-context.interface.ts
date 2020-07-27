@@ -23,8 +23,10 @@ export interface IState {
   courses: Array<UICourse>;
   filteredCourses: Array<UICourse>;
   coursesSearchValue: string;
-  selectedRows?: Array<UICourse>;
-  selectedRowKeys?: Array<Key>;
+  selectedRows: Array<UICourse>;
+  selectedRowKeys: Array<Key>;
+  isExportingCourses: boolean;
+  isExportingCoursesError: boolean;
 }
 
 export interface ICoursesProvider {

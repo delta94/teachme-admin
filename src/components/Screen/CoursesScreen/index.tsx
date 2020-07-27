@@ -2,7 +2,13 @@ import React, { ReactElement, useState, useEffect, Key } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
-import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
+import {
+  useCoursesContext,
+  fetchCourseList,
+  ActionType,
+  exportCourses,
+} from '../../../providers/CoursesContext';
+import { UICourse } from '../../../walkme/data';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -53,13 +59,12 @@ export default function CoursesScreen(): ReactElement {
   const [showExport, setShowExport] = useState(false);
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
-  const onMultiSelectChange = (selectedRowKeys: Array<Key>) => {
+  const onMultiSelectChange = (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
     dispatch({
       type: ActionType.SetSelectedRows,
-      courses: courses.filter((row) => selectedRowKeys.includes(row.id)),
+      courses: selectedRows,
       selectedRowKeys,
     });
-  };
 
   const customizeRenderEmpty = () => (
     <div className={classes['empty-state']}>
@@ -70,7 +75,7 @@ export default function CoursesScreen(): ReactElement {
     </div>
   );
 
-  const selectedRowsCount = selectedRowKeys?.length;
+  const selectedRowsCount = selectedRows.length;
   const shownCoursesCount = filteredCourses.length;
 
   return (
@@ -161,7 +166,7 @@ export default function CoursesScreen(): ReactElement {
         onCancel={() => setShowExport(false)}
         onConfirm={() => {
           setShowExport(false);
-          message.info('Exporting file');
+          exportCourses(dispatch, 0, from, to);
         }}
       />
     </>

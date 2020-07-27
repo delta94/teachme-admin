@@ -10,6 +10,8 @@ export const initialState = {
   coursesSearchValue: '',
   selectedRows: [],
   selectedRowKeys: [],
+  isExportingCourses: false,
+  isExportingCoursesError: false,
 } as IState;
 
 export const reducer = produce(
@@ -36,6 +38,18 @@ export const reducer = produce(
       case ActionType.SetSelectedRows:
         draft.selectedRows = action.courses ?? initialState.selectedRows;
         draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
+        break;
+      case ActionType.ExportCourses:
+        draft.isExportingCourses = true;
+        draft.isExportingCoursesError = false;
+        break;
+      case ActionType.ExportCoursesSuccess:
+        draft.isExportingCourses = false;
+        draft.isExportingCoursesError = false;
+        break;
+      case ActionType.ExportCoursesError:
+        draft.isExportingCourses = false;
+        draft.isExportingCoursesError = true;
         break;
       case ActionType.ResetCourses:
         draft = { ...initialState };
