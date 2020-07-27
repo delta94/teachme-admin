@@ -21,8 +21,9 @@ export interface IQuizScoreData {
   quizScoreData: any;
 }
 
-export interface ICourseByDate {
-  data: string;
-  start_users: number;
-  completed_users: number;
+export interface ICourseSummaryLegendData {
+  startUsers: number;
+  completedUsers: number;
+  completedPercentages: number;
+  startedPercentages: number;
 }

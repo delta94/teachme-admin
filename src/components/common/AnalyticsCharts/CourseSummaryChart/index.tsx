@@ -1,12 +1,13 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import moment from 'moment';
 
 import { useCoursesContext } from '../../../../providers/CoursesContext';
 
 import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
-import { ICourseSummaryChart, ICourseByDate } from '../analytics.interface';
+
+import { parseCourseSummaryLegendData } from '../utils';
+import { ICourseSummaryChart } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
@@ -21,56 +22,36 @@ const LegendContent = ({ number, description }: { number: number; description?: 
 
 export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart): ReactElement {
   const [{ overview }, dispatch] = useCoursesContext();
-  // const { mark_completion, total_completion,  } = overview;
-  const [legendData, setLegendData] = useState();
+  const [legendData, setLegendData] = useState<any>();
+  const [markCompletion, setMarkCompletion] = useState();
 
-  const {
-    title,
-    data: { days, lines },
-  } = summaryData;
+  const { title } = summaryData;
 
   useEffect(() => {
     if (overview.total_completion && overview.total_users_accessed) {
-      // const { total_completion, total_users_accessed } = overview;
-      // const user_started_percentages =
-      //   overview.total_completion.start_users! / overview.total_users_accessed;
-      // const user_completed_percentages =
-      //   overview.total_completion.start_users / total_users_accessed;
-
-      console.log('CourseSummaryChart total_completion ', overview.total_completion);
-      // console.log('CourseSummaryChart total_completion ', user_started_percentages);
+      setLegendData(parseCourseSummaryLegendData(overview));
     }
   }, [overview]);
-
-  // const formatToDateDisplay = () =>
-  //   mark_completion.map(
-  //     (item: any): ICourseByDate => {
-  //       const displayDate = moment(item.date).format('D/DD') as string;
-
-  //       return {
-  //         ...item,
-  //         date: displayDate,
-  //       };
-  //     },
-  //   );
 
   return (
     <WMCard title={title}>
       <div className={classes['course-summary']}>
         <div className={classes['chart-legend']}>
-          <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={Boolean(overview)}>
-            <LegendContent
-              number={0}
-              //TODO: calc %
-              description="52% of users with TeachMe access"
-            />
+          <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={Boolean(legendData)}>
+            {legendData && (
+              <LegendContent
+                number={legendData.startedPercentages}
+                description={`${legendData.startedPercentages}% of users with TeachMe access`}
+              />
+            )}
           </WMLegend>
-          <WMLegend title="Users Completed" dotStatusColor="#8812FF" hasData={Boolean(overview)}>
-            <LegendContent
-              number={0}
-              //TODO: calc %
-              description="47% of users who started courses"
-            />
+          <WMLegend title="Users Completed" dotStatusColor="#8812FF" hasData={Boolean(legendData)}>
+            {legendData && (
+              <LegendContent
+                number={legendData.completedUsers}
+                description={`${legendData.completedPercentages}% of users who started courses`}
+              />
+            )}
           </WMLegend>
         </div>
         <WMLineChart
