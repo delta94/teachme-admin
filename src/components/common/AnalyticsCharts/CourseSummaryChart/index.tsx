@@ -6,7 +6,7 @@ import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
 
-import { parseCourseSummaryLegendData } from '../utils';
+import { parseCourseSummaryLegendData, formatMarkCompletionDate } from '../utils';
 import { ICourseSummaryChart } from '../analytics.interface';
 
 import classes from './style.module.scss';
@@ -23,7 +23,7 @@ const LegendContent = ({ number, description }: { number: number; description?: 
 export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart): ReactElement {
   const [{ overview }, dispatch] = useCoursesContext();
   const [legendData, setLegendData] = useState<any>();
-  const [markCompletion, setMarkCompletion] = useState();
+  const [markCompletion, setMarkCompletion] = useState<any>([]);
 
   const { title } = summaryData;
 
@@ -31,7 +31,14 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
     if (overview.total_completion && overview.total_users_accessed) {
       setLegendData(parseCourseSummaryLegendData(overview));
     }
+    if (overview.mark_completion) {
+      // const formatted = formatMarkCompletionDate(overview);
+      // console.log('formatted ', formatted);
+      setMarkCompletion(formatMarkCompletionDate(overview));
+    }
   }, [overview]);
+
+  console.log('overview ', overview);
 
   return (
     <WMCard title={title}>
@@ -40,7 +47,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={Boolean(legendData)}>
             {legendData && (
               <LegendContent
-                number={legendData.startedPercentages}
+                number={legendData.startUsers}
                 description={`${legendData.startedPercentages}% of users with TeachMe access`}
               />
             )}
@@ -56,7 +63,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
         </div>
         <WMLineChart
           className={classes['course-summary-chart']}
-          data={overview.mark_completion}
+          data={markCompletion}
           xKey="date"
           lines={[
             {
@@ -72,7 +79,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           ]}
           lineKeyPrefix="course-summary"
           hasWMTooltip
-          hasData={Boolean(overview)}
+          hasData={Boolean(markCompletion)}
         />
       </div>
     </WMCard>
