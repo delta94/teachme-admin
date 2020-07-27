@@ -1,0 +1,10 @@
+.line-chart-skeleton {
+  :global(.ant-skeleton-content .ant-skeleton-title + .ant-skeleton-paragraph) {
+    margin-left: 50px;
+    width: 80%;
+  }
+
+  :global(.ant-skeleton-title) {
+    margin-left: 50px;
+  }
+}
