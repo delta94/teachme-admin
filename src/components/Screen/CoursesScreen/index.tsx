@@ -7,8 +7,9 @@ import {
   fetchCourseList,
   ActionType,
   exportCourses,
+  deleteCourses,
 } from '../../../providers/CoursesContext';
-import { UICourse } from '../../../walkme/data';
+import { UICourse, PublishStatus } from '../../../walkme/data';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -21,6 +22,7 @@ import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import {
   DeleteCourseDialog,
+  CantDeleteDialog, // TODO: remove 'delete' button from this dialog, disabled for now
   PublishToEnvironmentDialog,
   ExportToCSVDialog,
 } from '../../common/dialogs';
@@ -58,6 +60,15 @@ export default function CoursesScreen(): ReactElement {
   const [showPublish, setShowPublish] = useState(false);
   const [showExport, setShowExport] = useState(false);
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
+  const [showCantDeleteCourse, setShowCantDeleteCourse] = useState(false);
+
+  const checkCantDelete = () =>
+    selectedRows.some((course) => course.publishStatus === PublishStatus.Published);
+
+  const onDeleteCourse = () => {
+    if (checkCantDelete()) setShowCantDeleteCourse(true);
+    else setShowDeleteCourse(true);
+  };
 
   const onMultiSelectChange = (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
     dispatch({
@@ -132,7 +143,7 @@ export default function CoursesScreen(): ReactElement {
                   <WMButton
                     className={classes['delete-btn']}
                     icon={<Icon type={IconType.Delete} />}
-                    onClick={() => setShowDeleteCourse(true)}
+                    onClick={onDeleteCourse}
                   />
                   <Divider className={classes['separator']} type="vertical" />
                 </>
@@ -158,12 +169,19 @@ export default function CoursesScreen(): ReactElement {
         }}
       />
       <DeleteCourseDialog
+        courses={selectedRows}
         open={showDeleteCourse}
         onCancel={() => setShowDeleteCourse(false)}
-        onConfirm={() => {
+        onConfirm={async () => {
           setShowDeleteCourse(false);
-          message.info('Deleting courses');
+          await deleteCourses(dispatch, selectedRows);
+          fetchCourseList(dispatch, 0, from, to);
         }}
+      />
+      <CantDeleteDialog
+        open={showCantDeleteCourse}
+        onCancel={() => setShowCantDeleteCourse(false)}
+        onConfirm={() => setShowCantDeleteCourse(false)}
       />
       <ExportToCSVDialog
         coursesCount={courses.length}

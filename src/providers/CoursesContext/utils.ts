@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseList, exportCoursesData } from '../../walkme';
+import { getCourseList, exportCoursesData, deleteCourse } from '../../walkme';
+import { UICourse } from '../../walkme/data';
 import { wmMessage } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
@@ -68,5 +69,25 @@ export const exportCourses = async (
     console.error(error);
     dispatch({ type: ActionType.ExportCoursesError });
     wmMessage('Export failed', 'error');
+  }
+};
+
+export const deleteCourses = async (
+  dispatch: IDispatch,
+  courses: Array<UICourse>,
+): Promise<void> => {
+  dispatch({ type: ActionType.DeleteCourses });
+
+  try {
+    for (const course of courses) {
+      await deleteCourse(course.id);
+    }
+
+    dispatch({ type: ActionType.DeleteCoursesSuccess });
+    wmMessage(`Course${courses.length > 1 ? 's' : ''} deleted successfully`);
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.DeleteCoursesError });
+    wmMessage('Delete process failed', 'error');
   }
 };

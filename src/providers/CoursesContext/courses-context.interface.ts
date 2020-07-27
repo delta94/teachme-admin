@@ -27,6 +27,8 @@ export interface IState {
   selectedRowKeys: Array<Key>;
   isExportingCourses: boolean;
   isExportingCoursesError: boolean;
+  isDeletingCourses: boolean;
+  isDeletingCoursesError: boolean;
 }
 
 export interface ICoursesProvider {

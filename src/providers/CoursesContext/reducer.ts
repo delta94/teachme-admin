@@ -12,6 +12,8 @@ export const initialState = {
   selectedRowKeys: [],
   isExportingCourses: false,
   isExportingCoursesError: false,
+  isDeletingCourses: false,
+  isDeletingCoursesError: false,
 } as IState;
 
 export const reducer = produce(
@@ -50,6 +52,18 @@ export const reducer = produce(
       case ActionType.ExportCoursesError:
         draft.isExportingCourses = false;
         draft.isExportingCoursesError = true;
+        break;
+      case ActionType.DeleteCourses:
+        draft.isDeletingCourses = true;
+        draft.isDeletingCoursesError = false;
+        break;
+      case ActionType.DeleteCoursesSuccess:
+        draft.isDeletingCourses = false;
+        draft.isDeletingCoursesError = false;
+        break;
+      case ActionType.DeleteCoursesError:
+        draft.isDeletingCourses = false;
+        draft.isDeletingCoursesError = true;
         break;
       case ActionType.ResetCourses:
         draft = { ...initialState };
