@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 import moment from 'moment';
 
+import { useCoursesContext } from '../../../../providers/CoursesContext';
+
 import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
@@ -18,6 +20,9 @@ const LegendContent = ({ number, description }: { number: number; description?: 
 };
 
 export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart): ReactElement {
+  const [{ overview }, dispatch] = useCoursesContext();
+  console.log('CourseSummaryChart overview ', overview);
+
   const {
     title,
     data: { days, lines },

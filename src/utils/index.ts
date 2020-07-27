@@ -1,6 +1,13 @@
 import { getRandomString, getRandomNumber, getRandomFractionNumber } from './getRandom';
+import { getValidDateRange, defaultDateRange } from './date';
 
-export { getRandomString, getRandomNumber, getRandomFractionNumber };
+export {
+  getRandomString,
+  getRandomNumber,
+  getRandomFractionNumber,
+  getValidDateRange,
+  defaultDateRange,
+};
 
 export const allPropertiesAreNull = (obj: any) => {
   for (const key in obj) {

@@ -1,8 +1,8 @@
 import produce from 'immer';
 
 import { AllCoursesOverviewResponse } from '../../walkme/models';
-import { defaultDateRange } from '../../constants/default';
-import { ActionType, IState, IAction } from './courses-context.interface';
+import { defaultDateRange } from '../../utils';
+import { ActionType, IState, IAction, IDateRange } from './courses-context.interface';
 
 export const initialState = {
   isFetchingCourses: false,

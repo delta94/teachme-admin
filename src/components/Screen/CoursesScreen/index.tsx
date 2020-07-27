@@ -69,13 +69,12 @@ export default function CoursesScreen(): ReactElement {
     dateRange: { from, to },
   } = state;
 
-  console.log('state ', state);
-
   useEffect(() => {
     fetchCoursesData(dispatch, 0, from, to);
-
-    return () => dispatch({ type: ActionType.ResetCourses });
   }, [dispatch, from, to]);
+
+  // Unmount only
+  useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
 
   const [tableData, setTableData] = useState<Array<UICourse>>(courses);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
