@@ -48,10 +48,10 @@ export default function HeaderToolbar(): ReactElement {
         </>
       ) : (
         <div className={classes['header-toolbar-skeleton']}>
-          <WMSkeletonInput style={{ width: 100 }} active size="default" />
-          <WMSkeletonInput style={{ width: 100 }} active size="default" />
-          <WMSkeletonButton active size="default" shape="circle" />
-          <WMSkeletonAvatar active size="default" shape="square" />
+          <WMSkeletonInput style={{ width: 100 }} active />
+          <WMSkeletonInput style={{ width: 100 }} active />
+          <WMSkeletonButton active shape="circle" />
+          <WMSkeletonAvatar active shape="square" />
         </div>
       )}
     </Header>
