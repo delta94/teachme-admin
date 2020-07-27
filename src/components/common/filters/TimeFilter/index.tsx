@@ -3,6 +3,8 @@ import cc from 'classcat';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 
+import { useCoursesContext } from '../../../../providers/CoursesContext';
+
 import { TimeOption } from '../filters.interface';
 
 import classes from './style.module.scss';
@@ -10,6 +12,13 @@ import classes from './style.module.scss';
 const { RangePicker } = DatePicker;
 
 export default function TimeFilter({ className }: { className?: string }): ReactElement {
+  const dateFormat = 'YYYY-MM-DD';
+  const [state, dispatch] = useCoursesContext();
+
+  const {
+    dateRange: { from, to },
+  } = state;
+
   const onChange = (dates: any, dateStrings: any) => {
     // set the selected dates after changes and call to SDK
     if (dates) {
@@ -24,11 +33,11 @@ export default function TimeFilter({ className }: { className?: string }): React
     <div className={cc([classes['time-filter-container'], className])}>
       <span className="label">Time: </span>
       <RangePicker
+        defaultValue={[moment(from, dateFormat), moment(to, dateFormat)]}
         className={classes['wm-range-picker']}
         dropdownClassName={classes['wm-range-picker-dropdown']}
         bordered={false}
         ranges={{
-          // TODO: add here the other options
           [TimeOption.Yesterday]: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
           [TimeOption.LastWeek]: [
             moment().subtract(1, 'weeks').startOf('week'),
@@ -56,19 +65,7 @@ export default function TimeFilter({ className }: { className?: string }): React
           ],
         }}
         onChange={onChange}
-        format="YYYY/MM/DD"
-        // renderExtraFooter={() => {
-        //   return (
-        //     <Button
-        //       type="default"
-        //       onClick={() => {
-        //         console.log('apply');
-        //       }}
-        //     >
-        //       Apply
-        //     </Button>
-        //   );
-        // }}
+        format={dateFormat}
       />
     </div>
   );
