@@ -1,5 +1,4 @@
 import { CompletionGraphStats } from '../../../walkme/models';
-import { doesNotReject } from 'assert';
 
 export interface IAnalyticsCharts {
   data: any;

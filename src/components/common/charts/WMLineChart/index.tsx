@@ -17,7 +17,7 @@ import EmptyLineChart from './EmptyLineChart';
 
 const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLineChartItem[] }) => {
   const { payload, label, active } = data;
-  if (active && active) {
+  if (active && payload) {
     return (
       <WMChartTooltip
         data={{
