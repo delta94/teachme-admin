@@ -24,4 +24,7 @@ export enum IconType {
   EmptyCourse = 'empty-course',
   EmptyLesson = 'empty-lesson',
   Check = 'check',
+  Remove = 'remove',
+  X = 'x',
+  V = 'v',
 }

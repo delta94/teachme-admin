@@ -23,11 +23,24 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .delete-button {
+      display: none;
     }
   }
 
   .disabled {
     pointer-events: none;
     opacity: 0.5;
+  }
+
+  &:hover {
+    background-color: #f6fbff;
+
+    .delete-button {
+      display: inline-block;
+    }
   }
 }

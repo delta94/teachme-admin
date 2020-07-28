@@ -12,8 +12,9 @@ export interface ICourseItemsList {
   className?: string;
   onDrop?: any;
   emptyState?: ReactNode;
-  [key: string]: any;
   handleItemClick?: (item: ContentItem) => void;
+  taskItemProps?: any;
+  [key: string]: any;
 }
 
 export default function CourseItemsList({
@@ -22,6 +23,7 @@ export default function CourseItemsList({
   className,
   handleItemClick,
   emptyState,
+  taskItemProps = {},
   ...otherProps
 }: ICourseItemsList): ReactElement {
   return (
@@ -40,6 +42,7 @@ export default function CourseItemsList({
               index={i}
               item={item}
               onClick={() => handleItemClick && handleItemClick(item)}
+              {...taskItemProps}
             />
           ))
         ) : (

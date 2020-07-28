@@ -4,12 +4,13 @@ import { Input } from 'antd';
 
 import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 import WMInput from '../../../common/WMInput';
-import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
+import WMButton from '../../../common/WMButton';
 
+import Icon, { IconType } from '../../../common/Icon';
 import classes from './style.module.scss';
 
 export default function LessonEditableTitle({ lesson }: { lesson?: any }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
+  const [{ course }, dispatch] = useCourseEditorContext();
 
   const inputTitle = useRef<Input>(null);
   const [showInput, setShowInput] = useState(false);
@@ -37,13 +38,29 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
+  const deleteLesson = () => {
+    course?.items.removeItem(lesson);
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+  };
+
   return (
     <div className={cc([classes['editable-lesson-title']])}>
-      <div
-        className={cc([classes['text'], { [classes['hidden']]: showInput }])}
-        onClick={setInputActive}
-      >
-        {lesson?.title ?? ''}
+      <div className={cc([classes['text'], { [classes['hidden']]: showInput }])}>
+        <span className={classes['lesson-title-text']}>{lesson?.title ?? ''}</span>
+        <WMButton
+          onMouseDown={setInputActive}
+          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
+          onClick={setInputActive}
+        >
+          <Icon type={IconType.Pencil} className={classes['title-icon']} />
+        </WMButton>
+        <WMButton
+          onMouseDown={deleteLesson}
+          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
+          onClick={deleteLesson}
+        >
+          <Icon type={IconType.Delete} className={classes['title-icon']} />
+        </WMButton>
       </div>
       <div className={cc([classes['input-wrapper'], { [classes['hidden']]: !showInput }])}>
         <WMInput
@@ -54,11 +71,11 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
           onBlur={onBlur}
           maxLength={50}
         />
-        <WMButton variant={ButtonVariantEnum.Secondary} shape="round" onMouseDown={onApprove}>
-          V
+        <WMButton onMouseDown={onApprove} className={classes['title-button']}>
+          <Icon type={IconType.V} className={classes['title-icon']} />
         </WMButton>
-        <WMButton variant={ButtonVariantEnum.Secondary} shape="round" onMouseDown={onBlur}>
-          X
+        <WMButton onMouseDown={onBlur} className={classes['title-button']}>
+          <Icon type={IconType.X} className={classes['title-icon']} />
         </WMButton>
       </div>
     </div>

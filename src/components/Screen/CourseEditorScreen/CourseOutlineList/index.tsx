@@ -61,6 +61,11 @@ export default function CourseOutlineList<T>({
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
+  const onDeleteTaskItem = (item: any) => {
+    course?.items.removeItem(item);
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+  };
+
   return (
     <div className={classes['course-outline-list']}>
       <Container
@@ -82,6 +87,7 @@ export default function CourseOutlineList<T>({
                 <CourseOutlineLessonItem
                   item={item}
                   key={item.id}
+                  index={i}
                   className={classes['outline-lesson']}
                   handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
                 />
@@ -92,6 +98,8 @@ export default function CourseOutlineList<T>({
                   item={item}
                   className={classes['outline-task']}
                   onClick={(e: any) => handleItemClick && handleItemClick(item)}
+                  deletable
+                  onDelete={onDeleteTaskItem}
                 />
               ),
             )

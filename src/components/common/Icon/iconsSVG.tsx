@@ -22,6 +22,9 @@ import { ReactComponent as QuizSettingsIcon } from '../../../images/icons/quiz-s
 import { ReactComponent as EmptyCourseIcon } from '../../../images/icons/empty-course.svg';
 import { ReactComponent as EmptyLessonIcon } from '../../../images/icons/empty-lesson.svg';
 import { ReactComponent as CheckIcon } from '../../../images/icons/check.svg';
+import { ReactComponent as RemoveIcon } from '../../../images/icons/remove.svg';
+import { ReactComponent as VIcon } from '../../../images/icons/v.svg';
+import { ReactComponent as XIcon } from '../../../images/icons/x.svg';
 
 import { IconType } from './icon.interface';
 
@@ -51,4 +54,7 @@ export const IconSVG = {
   [IconType.EmptyCourse]: EmptyCourseIcon,
   [IconType.EmptyLesson]: EmptyLessonIcon,
   [IconType.Check]: CheckIcon,
+  [IconType.Remove]: RemoveIcon,
+  [IconType.V]: VIcon,
+  [IconType.X]: XIcon,
 };

@@ -27,6 +27,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
       })
       .catch((e) => {
         wmMessage('Saving course failed, please try again', 'error');
+        console.error(e);
       });
   };
 
