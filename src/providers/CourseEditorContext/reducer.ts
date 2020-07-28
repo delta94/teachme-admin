@@ -66,7 +66,8 @@ export const reducer = produce(
         break;
       case ActionType.UpdateCourseOutline:
         draft.refreshCourseOutline = !draft.refreshCourseOutline;
-        draft.hasChanges = action.updateHasChange ? true : draft.hasChanges;
+        draft.hasChanges =
+          action.updateHasChange !== undefined ? action.updateHasChange : draft.hasChanges;
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =

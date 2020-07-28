@@ -7,11 +7,10 @@ import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
 import WMCollapse from '../../../common/WMCollapse';
-import { IconType } from '../../../common/Icon';
 
-import LessonHeader from '../LessonHeader';
 import { QuizScreenType } from '../QuizEditForm/interface';
 
+import QuizHeader from '../QuizHeader';
 import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
@@ -64,7 +63,7 @@ export default function CourseOutlineQuiz({
     <WMCollapse
       className={classes['quiz']}
       headerClassName={classes['quiz-header']}
-      header={<div>Quiz</div>}
+      header={<QuizHeader />}
     >
       <QuestionItem
         item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
