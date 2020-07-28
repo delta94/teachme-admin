@@ -16,4 +16,15 @@
       box-shadow: none;
     }
   }
+
+  &.error {
+    &:global(.ant-input) {
+      border: 1px solid var(--red);
+    }
+  }
+}
+
+.error-message {
+  color: var(--red);
+  font-size: 12px;
 }

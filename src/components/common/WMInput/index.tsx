@@ -12,20 +12,34 @@ export interface IWMInput extends InputProps {
   prefix?: ReactNode;
   suffix?: ReactNode;
   allowClear?: boolean;
+  isRequire?: boolean;
+  errorMessage?: string;
 }
 
 const WMInput = forwardRef(
   (
-    { value, placeholder, className, prefix, suffix, allowClear, ...otherProps }: IWMInput,
+    {
+      value,
+      placeholder,
+      className,
+      prefix,
+      suffix,
+      allowClear,
+      errorMessage,
+      ...otherProps
+    }: IWMInput,
     ref: Ref<Input>,
   ) => (
-    <Input
-      ref={ref}
-      value={value}
-      placeholder={placeholder}
-      className={cc([classes['wm-input'], className])}
-      {...otherProps}
-    />
+    <>
+      <Input
+        ref={ref}
+        value={value}
+        placeholder={placeholder}
+        className={cc([classes['wm-input'], className, { [classes['error']]: errorMessage }])}
+        {...otherProps}
+      />
+      {errorMessage && <span className={classes['error-message']}>{errorMessage}</span>}
+    </>
   ),
 );
 

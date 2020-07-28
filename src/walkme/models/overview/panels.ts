@@ -29,10 +29,8 @@ export type AllCoursesOverviewResponse = {
  * Represents completions stats for a specific time period
  */
 export type CompletionGraphStats = {
-  /** range start data string in date format YYYY-MM-DD */
-  from: string;
-  /** range end data string in date format YYYY-MM-DD */
-  to: string;
+  /** string in date format YYYY-MM-DD */
+  date?: string;
   /** number of users who started a course in this range */
   users_started: number;
   /** number of users who completed a course in this range */

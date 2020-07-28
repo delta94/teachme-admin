@@ -4,7 +4,10 @@ import cc from 'classcat';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
+import { QuizScreenType } from '../QuizEditForm/interface';
+
 import QuestionItem from './QuestionItem';
+
 import classes from './style.module.scss';
 
 export interface IQuestionItem {
@@ -12,12 +15,14 @@ export interface IQuestionItem {
   index: number;
   className?: string;
   [key: string]: any;
+  onClick: () => void;
 }
 
 export default function DraggableQuestionItem({
   item,
   index,
   className,
+  onClick,
   ...otherProps
 }: IQuestionItem): ReactElement {
   return (
@@ -26,7 +31,11 @@ export default function DraggableQuestionItem({
       className={cc([classes['draggable-question-item'], className])}
       {...otherProps}
     >
-      <QuestionItem item={item} key={index} />
+      <QuestionItem
+        item={{ ...item, type: QuizScreenType.QuestionScreen }}
+        key={index}
+        onClick={onClick}
+      />
     </Draggable>
   );
 }

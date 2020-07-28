@@ -1,7 +1,8 @@
 import React, { ReactElement, useState, Key, ChangeEvent } from 'react';
+import { RadioChangeEvent } from 'antd/lib/radio';
 
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
-import WMVerticalRadioGroup from '../../WMVerticalRadioGroup';
+import { WMVerticalRadioGroup } from '../../WMRadio';
 import WMInput from '../../WMInput';
 
 import classes from './style.module.scss';
@@ -21,7 +22,7 @@ export default function ExportToCSVDialog({
 
   const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
 
-  const onOptionChange = (value: Key) => setValue(value);
+  const onOptionChange = (e: RadioChangeEvent) => setValue(e.target.value);
 
   const data = { value, email };
 

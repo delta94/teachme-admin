@@ -11,7 +11,7 @@ import {
   CoursesStateContext,
   CoursesDispatchContext,
   useCoursesContext,
-  fetchCourseList,
+  fetchCoursesData,
   exportCourses,
   deleteCourses,
 } from './utils';
@@ -21,7 +21,7 @@ export type { IAction, IState, IDispatch, ICoursesProvider };
 
 export {
   useCoursesContext,
-  fetchCourseList,
+  fetchCoursesData,
   exportCourses,
   deleteCourses,
   reducer,
