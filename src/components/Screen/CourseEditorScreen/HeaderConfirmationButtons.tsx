@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { BASE_COURSE_EDITOR_ROUTE, COURSES_ROUTE } from '../../../constants/routes';
+import { MessageType, wmMessage } from '../../../utils/wmMessage';
 
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
-import { BASE_COURSE_EDITOR_ROUTE, COURSES_ROUTE } from '../../../constants/routes';
-import { wmMessage } from '../../common/wmMessage';
 
 import classes from './style.module.scss';
 
@@ -19,14 +19,14 @@ export default function HeaderConfirmationButtons(): ReactElement {
       ?.save()
       .then((): void => {
         dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: false });
-        wmMessage('Course saved successfully', 'success');
+        wmMessage('Course saved successfully', MessageType.Success);
 
         if (!courseId) {
           history.replace(`${BASE_COURSE_EDITOR_ROUTE.path}/${course.id}`);
         }
       })
       .catch((e) => {
-        wmMessage('Saving course failed, please try again', 'error');
+        wmMessage('Saving course failed, please try again', MessageType.Error);
         console.error(e);
       });
   };
