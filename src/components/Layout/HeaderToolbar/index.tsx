@@ -1,8 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { Divider, Tooltip } from 'antd';
 
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppSkeleton } from '../../../Hook';
 import { IconType } from '../../common/Icon/icon.interface';
 import Icon from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -16,15 +16,8 @@ import UserMenu from './UserMenu';
 import classes from './style.module.scss';
 
 export default function HeaderToolbar(): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
   const menuClassName = classes['header-toolbar-menu'];
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <Header className={classes['header-toolbar']}>

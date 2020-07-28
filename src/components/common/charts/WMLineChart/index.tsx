@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import {
   LineChart,
   XAxis,
@@ -9,10 +9,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+import { useAppSkeleton } from '../../../../Hook';
 import { ITooltipContent } from '../charts.interface';
 import WMChartTooltip from '../WMChartTooltip';
 import WMSkeleton from '../../WMSkeleton';
-import { useAppContext } from '../../../../providers/AppContext';
 
 import { IWMLineChartItem, IWMLineChartProps } from './wmLineChart.interface';
 import EmptyLineChart from './EmptyLineChart';
@@ -48,13 +48,8 @@ export default function WMLineChart<T extends {}>({
   hasWMTooltip,
   hasData,
 }: IWMLineChartProps<T>): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
 
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <div className={className}>

@@ -1,11 +1,11 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 
 import { PieBarChart } from '../../charts';
 import { PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import WMSkeleton from '../../WMSkeleton';
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../Hook';
 
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 
@@ -18,13 +18,7 @@ export default function CoursesTimeCompletionChart({
     data: { summaryLegend, summaryUnit, bars, totalValue },
   } = completionData;
 
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <WMCard title={title}>
