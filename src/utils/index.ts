@@ -1,6 +1,6 @@
-import { getRandomString, getRandomNumber, getRandomNegativeNumber } from './getRandom';
-
-export { getRandomString, getRandomNumber, getRandomNegativeNumber };
+export * from './getRandom';
+export * from './wmMessage';
+export * from './date';
 
 export const allPropertiesAreNull = (obj: any) => {
   for (const key in obj) {

@@ -1,6 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, Key } from 'react';
 
+import { AllCoursesOverviewResponse } from '../../walkme/models/overview';
 import { UICourse } from '../../walkme/data';
+import { IDateRange } from '../../utils';
 
 import { ActionType } from './actions';
 
@@ -8,7 +10,11 @@ export { ActionType };
 
 export interface IAction {
   type: ActionType;
-  courses?: Array<UICourse> | null;
+  overview?: AllCoursesOverviewResponse;
+  courses?: Array<UICourse>;
+  dateRange?: IDateRange;
+  coursesSearchValue?: string;
+  selectedRowKeys?: Array<Key>;
 }
 
 export interface IDispatch {
@@ -16,9 +22,19 @@ export interface IDispatch {
 }
 
 export interface IState {
-  isFetchingCourses: boolean;
-  isFetchingCoursesError: boolean;
+  isFetchingCoursesData: boolean;
+  isFetchingCoursesDataError: boolean;
+  dateRange: IDateRange;
+  overview: AllCoursesOverviewResponse;
   courses: Array<UICourse>;
+  filteredCourses: Array<UICourse>;
+  coursesSearchValue: string;
+  selectedRows: Array<UICourse>;
+  selectedRowKeys: Array<Key>;
+  isExportingCourses: boolean;
+  isExportingCoursesError: boolean;
+  isDeletingCourses: boolean;
+  isDeletingCoursesError: boolean;
 }
 
 export interface ICoursesProvider {

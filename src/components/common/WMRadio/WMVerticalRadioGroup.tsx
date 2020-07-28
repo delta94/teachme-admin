@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { Radio } from 'antd';
+import { RadioChangeEvent } from 'antd/lib/radio';
 
 import cc from 'classcat';
 
@@ -16,11 +17,11 @@ export default function WMVerticalRadioGroup({
 }: IWMRadioGroup): ReactElement {
   const [localValue, setLocalValue] = useState(value);
 
-  const localOnChange = (e: any) => {
+  const localOnChange = (e: RadioChangeEvent) => {
     const val = e.target.value;
 
     setLocalValue(val);
-    onChange && onChange(val);
+    onChange && onChange(e);
   };
 
   useEffect(() => {
@@ -35,7 +36,12 @@ export default function WMVerticalRadioGroup({
       {...otherProps}
     >
       {options.map((option) => (
-        <Radio key={option.value} value={option.value} className={classes['wm-radio-button']}>
+        <Radio
+          key={option.value}
+          value={option.value}
+          disabled={option.disabled}
+          className={classes['wm-radio-button']}
+        >
           {option.label}
         </Radio>
       ))}
