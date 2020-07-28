@@ -47,6 +47,9 @@ export default function CoursesScreen(): ReactElement {
     fetchCoursesData(dispatch, 0, from, to);
   }, [dispatch, from, to]);
 
+  // Unmount only
+  useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
+
   const onSearch = (searchValue: string) => {
     const newCourseList = courses.filter(({ title }) =>
       title.toLowerCase().includes(searchValue.toLowerCase()),
@@ -58,9 +61,6 @@ export default function CoursesScreen(): ReactElement {
       courses: newCourseList,
     });
   };
-
-  // Unmount only
-  useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
 
   // Dialogs
   const [showPublish, setShowPublish] = useState(false);

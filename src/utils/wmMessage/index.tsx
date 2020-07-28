@@ -25,5 +25,8 @@ export const wmMessage = (content: ReactNode, type = MessageType.Success): void 
         className: classes['wm-message-success'],
         icon: <Icon type={IconType.Check} className={classes['icon-message']} />,
       });
+      break;
+    default:
+      throw new Error(`Unhandled message type: ${type}`);
   }
 };

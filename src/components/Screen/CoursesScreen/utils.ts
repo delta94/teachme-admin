@@ -1,11 +1,4 @@
-import moment from 'moment';
-
 import { IWMDropdownOption } from '../../common/WMDropdown';
-
-export const mockDates = {
-  from: moment(new Date()).subtract(3, 'months').startOf('month').format('YYYY-MM-DD'),
-  to: moment(new Date()).subtract(1, 'months').endOf('month').format('YYYY-MM-DD'),
-};
 
 export const statuses: IWMDropdownOption[] = [
   { id: 0, value: 'All Status' },
