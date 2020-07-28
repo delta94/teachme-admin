@@ -5,7 +5,7 @@ import { PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import WMSkeleton from '../../WMSkeleton';
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 
