@@ -15,7 +15,7 @@ export default function AnalyticsCharts({ data }: IAnalyticsCharts): ReactElemen
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
-        <CourseSummaryChart summaryData={summary} />
+        <CourseSummaryChart title={summary.title} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
         <CourseTimeCompletionChart className={classes['line-graph']} completionData={completion} />

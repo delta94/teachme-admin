@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseList } from '../../walkme';
+import { getCourseList, getCoursesOverview } from '../../walkme';
+import { getAllCoursesOverview } from '../../walkme/analytics';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
 
@@ -32,7 +33,7 @@ export const useCoursesContext = (): [IState, IDispatch] => [
   useCoursesDispatch(),
 ];
 
-export const fetchCourseList = async (
+export const fetchCoursesData = async (
   dispatch: IDispatch,
   envId = 0,
   from: string,
@@ -42,8 +43,9 @@ export const fetchCourseList = async (
 
   try {
     const courses = await getCourseList(envId, from, to);
+    const overview = await getCoursesOverview(envId, from, to);
 
-    dispatch({ type: ActionType.FetchCoursesSuccess, courses });
+    dispatch({ type: ActionType.FetchCoursesSuccess, courses, overview });
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCoursesError });

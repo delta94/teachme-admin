@@ -19,8 +19,8 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
   const [selectedEnv, setSelectedEnv] = useState(
     parseEnvironments([environment]) as IWMDropdownOption,
   );
-  const [environments, setEnvironments] = useState([] as WalkMeEnvironment[]);
-  const [options, setOptions] = useState([] as IWMDropdownOption[]);
+  const [environments, setEnvironments] = useState<WalkMeEnvironment[]>([]);
+  const [options, setOptions] = useState<IWMDropdownOption[]>([]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setAppEnvironment({
@@ -42,6 +42,11 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
 
   useEffect(() => {
     getEnvironmentsOptions();
+
+    return () => {
+      setEnvironments([]);
+      setOptions([]);
+    };
   }, []);
 
   useEffect(() => {

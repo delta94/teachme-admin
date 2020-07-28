@@ -1,10 +1,9 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
-import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
+import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
@@ -25,11 +24,6 @@ import ExportToCSVDialog from '../../common/dialogs/ExportToCSVDialog';
 
 import { columns } from './tableData';
 import classes from './style.module.scss';
-
-const mockDates = {
-  from: moment(new Date()).subtract(3, 'months').startOf('month').format('YYYY-MM-DD'),
-  to: moment(new Date()).subtract(1, 'months').endOf('month').format('YYYY-MM-DD'),
-};
 
 const statuses: IWMDropdownOption[] = [
   { id: 0, value: 'All Status' },
@@ -68,15 +62,19 @@ const prodStatuses: IWMDropdownOption[] = [
 
 export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, analytics } = coursesMockData;
-  const { from, to } = mockDates;
 
-  const [{ courses }, dispatch] = useCoursesContext();
+  const [state, dispatch] = useCoursesContext();
+  const {
+    courses,
+    dateRange: { from, to },
+  } = state;
 
   useEffect(() => {
-    fetchCourseList(dispatch, 0, from, to);
-
-    return () => dispatch({ type: ActionType.ResetCourses });
+    fetchCoursesData(dispatch, 0, from, to);
   }, [dispatch, from, to]);
+
+  // Unmount only
+  useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
 
   const [tableData, setTableData] = useState<Array<UICourse>>(courses);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string>>([]);
