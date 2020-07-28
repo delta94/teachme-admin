@@ -4,8 +4,7 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 
 import { useAppContext } from '../../../../providers/AppContext';
-import { useCoursesContext, ActionType } from '../../../../providers/CoursesContext';
-import { getValidDateRange } from '../../../../utils';
+import { getValidDateRange, IDateRange } from '../../../../utils';
 
 import { WMSkeletonInput } from '../../WMSkeleton';
 
@@ -15,16 +14,21 @@ import classes from './style.module.scss';
 
 const { RangePicker } = DatePicker;
 
-export default function TimeFilter({ className }: { className?: string }): ReactElement {
+export default function TimeFilter({
+  className,
+  dateRange,
+  onDateRangeChange,
+}: {
+  className?: string;
+  dateRange: IDateRange;
+  onDateRangeChange: (dateRange: IDateRange | undefined) => void;
+}): ReactElement {
   const [{ isUpdating }] = useAppContext();
-  const [state, dispatch] = useCoursesContext();
-  const {
-    dateRange: { from, to },
-  } = state;
+  const { from, to } = dateRange;
   const dateFormat = 'YYYY-MM-DD';
 
   const onChange = (dates: any, dateStrings: string[]) =>
-    dispatch({ type: ActionType.SetDateRange, dateRange: getValidDateRange(dateStrings) });
+    onDateRangeChange(getValidDateRange(dateStrings));
 
   if (isUpdating) {
     return <WMSkeletonInput active style={{ width: 400 }} />;

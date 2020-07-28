@@ -1,6 +1,8 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
+import { IDateRange } from '../../../utils';
+
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
 
@@ -11,13 +13,18 @@ export default function ScreenHeader({
   className,
   children,
   hideTimeFilter,
+  timeFilterProps,
   breadcrumbs,
 }: {
   title: ReactNode;
   className?: string;
-  hideTimeFilter?: boolean;
   children?: ReactNode;
   breadcrumbs?: ReactNode;
+  timeFilterProps?: {
+    dateRange: IDateRange;
+    onDateRangeChange: (dateRange: IDateRange | undefined) => void;
+  };
+  hideTimeFilter?: boolean;
 }): ReactElement {
   return (
     <Header
@@ -29,7 +36,9 @@ export default function ScreenHeader({
         {breadcrumbs && <div className={classes['screen-header-breadcrumbs']}>{breadcrumbs}</div>}
         {children}
         {/* TODO: add callback on timeFilterChanges */}
-        {!hideTimeFilter && <TimeFilter className={classes['screen-header-time-filter']} />}
+        {!hideTimeFilter && timeFilterProps && (
+          <TimeFilter className={classes['screen-header-time-filter']} {...timeFilterProps} />
+        )}
       </>
     </Header>
   );

@@ -12,12 +12,22 @@ import {
   CoursesDispatchContext,
   useCoursesContext,
   fetchCoursesData,
+  exportCourses,
+  deleteCourses,
 } from './utils';
 import { reducer, initialState } from './reducer';
 
 export type { IAction, IState, IDispatch, ICoursesProvider };
 
-export { useCoursesContext, fetchCoursesData, reducer, initialState, ActionType };
+export {
+  useCoursesContext,
+  fetchCoursesData,
+  exportCourses,
+  deleteCourses,
+  reducer,
+  initialState,
+  ActionType,
+};
 
 export default function CoursesProvider({ children }: ICoursesProvider): ReactElement {
   const [state, dispatch] = useReducer(reducer, initialState);
