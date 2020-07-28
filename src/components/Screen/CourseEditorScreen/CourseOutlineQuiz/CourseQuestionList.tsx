@@ -12,12 +12,16 @@ export interface ICourseItemsList {
   className?: string;
   onDrop?: any;
   [key: string]: any;
+  onQuestionClick: (question: QuizQuestion) => void;
+  activeQuestionId?: number;
 }
 
 export default function CourseQuestionList({
   items,
   onDrop,
   className,
+  onQuestionClick,
+  activeQuestionId,
   ...otherProps
 }: ICourseItemsList): ReactElement {
   return (
@@ -29,7 +33,13 @@ export default function CourseQuestionList({
         dragClass={classes['card-ghost']}
       >
         {items.map((item, i: number) => (
-          <DraggableQuestionItem key={i} index={i} item={item} />
+          <DraggableQuestionItem
+            key={i}
+            index={i}
+            item={item}
+            onClick={() => onQuestionClick(item)}
+            className={cc([{ [classes['active-item']]: activeQuestionId === item.id }])}
+          />
         ))}
       </Container>
     </div>

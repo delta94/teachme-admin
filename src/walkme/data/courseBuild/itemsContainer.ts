@@ -34,6 +34,10 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
     return this._items[index];
   }
 
+  public updateIndex(item: UIModel, index: number): void {
+    this._items[index] = item;
+  }
+
   public changeIndex(item: UIModel, index: number): void {
     this.removeItem(item);
     this._items.splice(index, 0, item);

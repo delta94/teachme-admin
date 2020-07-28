@@ -36,7 +36,15 @@ export default function CourseOutlineTab(): ReactElement {
       {course && (
         <CourseOutlineList items={course?.items.toArray() ?? []} course={course} hasQuiz={!!quiz} />
       )}
-      {quiz && <CourseOutlineQuiz item={quiz} />}
+      {quiz && (
+        <CourseOutlineQuiz
+          item={quiz}
+          quizItemClick={({ type, data }) => {
+            console.log('quizItemClicked type ', type);
+            console.log('quizItemClicked data ', data);
+          }}
+        />
+      )}
     </>
   );
 }
