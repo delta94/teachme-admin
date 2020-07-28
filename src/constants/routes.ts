@@ -20,7 +20,7 @@ export const COURSES_ROUTE = {
 };
 
 export const COURSE_ROUTE = {
-  id: 'courses',
+  id: 'course',
   path: '/course/:courseId',
   hideInSidebar: true,
 };

@@ -1,6 +1,8 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseList } from '../../walkme';
+import { getCourseList, getCoursesOverview, exportCoursesData, deleteCourse } from '../../walkme';
+import { UICourse } from '../../walkme/data';
+import { wmMessage, MessageType } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
 
@@ -32,20 +34,61 @@ export const useCoursesContext = (): [IState, IDispatch] => [
   useCoursesDispatch(),
 ];
 
-export const fetchCourseList = async (
+export const fetchCoursesData = async (
   dispatch: IDispatch,
   envId = 0,
   from: string,
   to: string,
 ): Promise<void> => {
-  dispatch({ type: ActionType.FetchCourses });
+  dispatch({ type: ActionType.FetchCoursesData });
 
   try {
     const courses = await getCourseList(envId, from, to);
+    const overview = await getCoursesOverview(envId, from, to);
 
-    dispatch({ type: ActionType.FetchCoursesSuccess, courses });
+    dispatch({ type: ActionType.FetchCoursesDataSuccess, courses, overview });
   } catch (error) {
     console.error(error);
-    dispatch({ type: ActionType.FetchCoursesError });
+    dispatch({ type: ActionType.FetchCoursesDataError });
+  }
+};
+
+export const exportCourses = async (
+  dispatch: IDispatch,
+  envId = 0,
+  from: string,
+  to: string,
+): Promise<void> => {
+  dispatch({ type: ActionType.ExportCourses });
+
+  try {
+    await exportCoursesData(envId, from, to);
+
+    dispatch({ type: ActionType.ExportCoursesSuccess });
+    wmMessage('Export completed');
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.ExportCoursesError });
+    wmMessage('Export failed', MessageType.Error);
+  }
+};
+
+export const deleteCourses = async (
+  dispatch: IDispatch,
+  courses: Array<UICourse>,
+): Promise<void> => {
+  dispatch({ type: ActionType.DeleteCourses });
+
+  try {
+    for (const course of courses) {
+      await deleteCourse(course.id);
+    }
+
+    dispatch({ type: ActionType.DeleteCoursesSuccess });
+    wmMessage(`Course${courses.length > 1 ? 's' : ''} deleted successfully`);
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.DeleteCoursesError });
+    wmMessage('Delete process failed', MessageType.Error);
   }
 };

@@ -7,10 +7,10 @@
   .wm-range-picker {
     padding-top: 0;
     padding-bottom: 0;
-  }
 
-  .ant-picker-ranges {
-    order: -1;
+    :global(.ant-picker-input) {
+      min-width: 90px;
+    }
   }
 }
 
