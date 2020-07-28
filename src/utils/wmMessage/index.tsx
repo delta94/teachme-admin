@@ -5,15 +5,21 @@ import Icon, { IconType } from '../../components/common/Icon';
 
 import classes from './style.module.scss';
 
-export const wmMessage = (content: ReactNode, type?: string): void => {
+export enum MessageType {
+  Warning = 'warning',
+  Error = 'error',
+  Success = 'success',
+}
+
+export const wmMessage = (content: ReactNode, type = MessageType.Success): void => {
   switch (type) {
-    case 'warning':
+    case MessageType.Warning:
       message.warning({ content });
       break;
-    case 'error':
+    case MessageType.Error:
       message.error({ content });
       break;
-    default:
+    case MessageType.Success:
       message.success({
         content,
         className: classes['wm-message-success'],

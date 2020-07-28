@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 import { getCourseList, exportCoursesData, deleteCourse } from '../../walkme';
 import { UICourse } from '../../walkme/data';
-import { wmMessage } from '../../utils';
+import { wmMessage, MessageType } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
 
@@ -68,7 +68,7 @@ export const exportCourses = async (
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.ExportCoursesError });
-    wmMessage('Export failed', 'error');
+    wmMessage('Export failed', MessageType.Error);
   }
 };
 
@@ -88,6 +88,6 @@ export const deleteCourses = async (
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.DeleteCoursesError });
-    wmMessage('Delete process failed', 'error');
+    wmMessage('Delete process failed', MessageType.Error);
   }
 };
