@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 import { getCourseList, getCoursesOverview, exportCoursesData, deleteCourse } from '../../walkme';
 import { UICourse } from '../../walkme/data';
-import { wmMessage, MessageType } from '../../utils';
+import { wmMessage, MessageType, pluralizer } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
 
@@ -85,7 +85,7 @@ export const deleteCourses = async (
     }
 
     dispatch({ type: ActionType.DeleteCoursesSuccess });
-    wmMessage(`Course${courses.length > 1 ? 's' : ''} deleted successfully`);
+    wmMessage(`${pluralizer('Course', courses.length)} deleted successfully`);
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.DeleteCoursesError });

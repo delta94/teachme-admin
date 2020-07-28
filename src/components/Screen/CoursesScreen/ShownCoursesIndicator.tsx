@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { useCoursesContext } from '../../../providers/CoursesContext';
+import { pluralizer } from '../../../utils';
 
 import classes from './style.module.scss';
 
@@ -15,8 +16,8 @@ export default function ShownCoursesIndicator(): ReactElement {
       {courses.length ? (
         <>
           {selectedRowsCount
-            ? `${selectedRowsCount} course${selectedRowsCount > 1 ? 's' : ''} selected`
-            : `Showing ${shownCoursesCount} course${shownCoursesCount > 1 ? 's' : ''}`}
+            ? `${selectedRowsCount} ${pluralizer('course', selectedRowsCount)} selected`
+            : `Showing ${shownCoursesCount} ${pluralizer('course', shownCoursesCount)}`}
         </>
       ) : null}
     </div>
