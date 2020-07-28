@@ -3,9 +3,8 @@ import cc from 'classcat';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 
-import { ActionType } from '../../../../providers/CoursesContext/courses-context.interface';
 import { useAppContext } from '../../../../providers/AppContext';
-import { useCoursesContext } from '../../../../providers/CoursesContext';
+import { useCoursesContext, ActionType } from '../../../../providers/CoursesContext';
 import { getValidDateRange } from '../../../../utils';
 
 import { WMSkeletonInput } from '../../WMSkeleton';
