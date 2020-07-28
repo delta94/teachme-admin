@@ -1,20 +1,38 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
+import { QuizScreen } from '@walkme/types';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
+import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 
 import WMCollapse from '../../../common/WMCollapse';
 import { IconType } from '../../../common/Icon';
 
 import LessonHeader from '../LessonHeader';
+import { QuizScreenType } from '../QuizEditForm/interface';
 
 import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
 
-export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElement {
+export default function CourseOutlineQuiz({
+  item,
+  quizItemClick,
+  selectedOutlineItem,
+}: {
+  item: Quiz;
+  quizItemClick: ({
+    type,
+    data,
+  }: {
+    type: QuizScreenType;
+    data: QuizScreen | QuizQuestion;
+  }) => void;
+  selectedOutlineItem?: { type: QuizScreenType; id?: number };
+}): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
+  const [activeOutlineItem, setActiveOutlineItem] = useState(selectedOutlineItem);
 
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -34,6 +52,14 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;
 
+  const onItemClick = ({ type, data }: { type: QuizScreenType; data: any }) => {
+    setActiveOutlineItem({ type, id: data.id });
+    quizItemClick({
+      type,
+      data,
+    });
+  };
+
   return (
     <WMCollapse
       className={classes['quiz']}
@@ -41,8 +67,14 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
       header={<div>Quiz</div>}
     >
       <QuestionItem
-        item={{ title: 'Quiz Welcome Page' }}
-        className={classes['welcome-screen-item']}
+        item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
+        className={cc([
+          classes['welcome-screen-item'],
+          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
+        ])}
+        onClick={() =>
+          onItemClick({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
+        }
       />
       <CourseQuestionList
         items={item.questions.toArray()}
@@ -55,10 +87,34 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
           className: classes['drop-preview'],
         }}
         shouldAcceptDrop={shouldAcceptDrop}
-        className={cc([{ [classes['is-empty']]: !item.questions.toArray().length }])}
+        className={cc([
+          {
+            [classes['is-empty']]: !item.questions.toArray().length,
+          },
+        ])}
+        activeQuestionId={activeOutlineItem?.id}
+        onQuestionClick={(question: QuizQuestion) =>
+          onItemClick({ type: QuizScreenType.QuestionScreen, data: question })
+        }
       />
-      <QuestionItem item={{ title: 'Summary - Success' }} />
-      <QuestionItem item={{ title: 'Summary - Failure' }} />
+      <QuestionItem
+        item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
+        className={cc([
+          classes['success-screen-item'],
+          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
+        ])}
+        onClick={() =>
+          onItemClick({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
+        }
+      />
+      <QuestionItem
+        item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
+        className={cc([
+          classes['fail-screen-item'],
+          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
+        ])}
+        onClick={() => onItemClick({ type: QuizScreenType.FailScreen, data: item.failScreen })}
+      />
     </WMCollapse>
   );
 }

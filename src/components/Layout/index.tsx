@@ -1,8 +1,9 @@
 import React, { ReactElement, useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { PLAYGROUND_ROUTE } from '../../constants/routes';
 
-import { ButtonVariantEnum } from '../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../common/WMButton';
 import WMDialog from '../common/WMDialog';
 import Screen from '../Screen';
 
@@ -18,7 +19,7 @@ export default function Layout(): ReactElement {
   useHotkeys('ctrl+shift+up', openAboutDialog);
 
   return (
-    <>
+    <Router basename={process.env.PUBLIC_URL}>
       <WMDialog
         title="About TeachMe"
         open={openAbout}
@@ -27,15 +28,18 @@ export default function Layout(): ReactElement {
           { label: 'Ok', onClickCallback: closeAboutDialog, variant: ButtonVariantEnum.Primary },
         ]}
       >
-        Version: {process.env.REACT_APP_VERSION}
+        <p>Version: {process.env.REACT_APP_VERSION}</p>
+        <p>
+          <Link to={PLAYGROUND_ROUTE.path}>
+            <WMButton variant={ButtonVariantEnum.Link}>Click here to get to Playground</WMButton>
+          </Link>
+        </p>
       </WMDialog>
-      <Router basename={process.env.PUBLIC_URL}>
-        <section className={classes['app']}>
-          <Sidebar />
-          <HeaderToolbar />
-          <Screen />
-        </section>
-      </Router>
-    </>
+      <section className={classes['app']}>
+        <Sidebar />
+        <HeaderToolbar />
+        <Screen />
+      </section>
+    </Router>
   );
 }
