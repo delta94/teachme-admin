@@ -3,7 +3,8 @@ import { RadioProps } from 'antd/lib/radio';
 
 export interface IRadioButton {
   value: any;
-  label: React.ReactNode;
+  label: ReactNode;
+  disabled?: boolean;
 }
 
 export interface IWMRadio extends RadioProps {

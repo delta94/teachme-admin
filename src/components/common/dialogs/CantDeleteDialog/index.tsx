@@ -10,12 +10,16 @@ export default function CantDeleteDialog({
   return (
     <WMConfirmationDialog
       open={open}
-      title="You can’t delete this course"
+      title="Delete Courses"
       confirmLabel="Delete"
       onCancel={onCancel}
       onConfirm={onConfirm}
+      disableConfirmButton
     >
-      <p>You must first archive a published course in order to delete it</p>
+      <p>
+        At least 1 of the courses you selected is Published and cannot be deleted. You must archive
+        it first.
+      </p>
     </WMConfirmationDialog>
   );
 }

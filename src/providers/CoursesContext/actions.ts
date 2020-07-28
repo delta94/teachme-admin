@@ -1,7 +1,15 @@
 export enum ActionType {
-  FetchCourses = 'FETCH_COURSES',
-  FetchCoursesSuccess = 'FETCH_COURSES_SUCCESS',
-  FetchCoursesError = 'FETCH_COURSES_ERROR',
+  FetchCoursesData = 'FETCH_COURSES_DATA',
+  FetchCoursesDataSuccess = 'FETCH_COURSES_DATA_SUCCESS',
+  FetchCoursesDataError = 'FETCH_COURSES_DATA_ERROR',
+  SetCoursesSearchValue = 'SET_COURSES_SEARCH_VALUE',
+  SetSelectedRows = 'SET_SELECTED_ROWS',
   SetDateRange = 'SET_DATE_RANGE',
+  ExportCourses = 'EXPORT_COURSES',
+  ExportCoursesSuccess = 'EXPORT_COURSES_SUCCESS',
+  ExportCoursesError = 'EXPORT_COURSES_ERROR',
+  DeleteCourses = 'DELETE_COURSES',
+  DeleteCoursesSuccess = 'DELETE_COURSES_SUCCESS',
+  DeleteCoursesError = 'DELETE_COURSES_ERROR',
   ResetCourses = 'RESET_COURSES',
 }
