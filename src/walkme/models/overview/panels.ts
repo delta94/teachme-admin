@@ -3,7 +3,7 @@
  */
 export type AllCoursesOverviewResponse = {
   /** Completion data to display on the left side of the graph */
-  total_completion: { start_users: number; completed_users: number };
+  total_completion: CompletionGraphStats;
   /**
    * Number of users with walkme access in the period
    * Used for the left hand side fo the graph

@@ -1,13 +1,14 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
 import { useCoursesContext } from '../../../../providers/CoursesContext';
+import { CompletionGraphStats } from '../../../../walkme/models/overview/panels';
 
 import WMCard from '../../WMCard';
 import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
 
 import { parseCourseSummaryLegendData, formatMarkCompletionDate } from '../utils';
-import { ICourseSummaryChart } from '../analytics.interface';
+import { ICourseSummaryChart, ICourseSummaryLegendData } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
@@ -22,21 +23,28 @@ const LegendContent = ({ number, description }: { number: number; description?: 
 
 export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart): ReactElement {
   const [{ overview }, dispatch] = useCoursesContext();
-  const [legendData, setLegendData] = useState<any>();
-  const [markCompletion, setMarkCompletion] = useState<any>([]);
+  const [legendData, setLegendData] = useState<ICourseSummaryLegendData>();
+  const [markCompletion, setMarkCompletion] = useState<CompletionGraphStats[]>([]);
 
   const { title } = summaryData;
 
   useEffect(() => {
-    if (overview.total_completion && overview.total_users_accessed) {
-      setLegendData(parseCourseSummaryLegendData(overview));
-    }
-    if (overview.mark_completion) {
-      // const formatted = formatMarkCompletionDate(overview);
-      // console.log('formatted ', formatted);
-      setMarkCompletion(formatMarkCompletionDate(overview));
-    }
+    const { total_completion, total_users_accessed, mark_completion } = overview;
+
+    if (total_completion && total_users_accessed)
+      setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
+
+    if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
   }, [overview]);
+
+  // unmount only
+  useEffect(
+    () => () => {
+      setLegendData(undefined);
+      setMarkCompletion([]);
+    },
+    [],
+  );
 
   console.log('overview ', overview);
 
@@ -47,16 +55,16 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={Boolean(legendData)}>
             {legendData && (
               <LegendContent
-                number={legendData.startUsers}
-                description={`${legendData.startedPercentages}% of users with TeachMe access`}
+                number={legendData.start_users}
+                description={`${legendData.started_percentages}% of users with TeachMe access`}
               />
             )}
           </WMLegend>
           <WMLegend title="Users Completed" dotStatusColor="#8812FF" hasData={Boolean(legendData)}>
             {legendData && (
               <LegendContent
-                number={legendData.completedUsers}
-                description={`${legendData.completedPercentages}% of users who started courses`}
+                number={legendData.completed_users}
+                description={`${legendData.completed_percentages}% of users who started courses`}
               />
             )}
           </WMLegend>

@@ -1,3 +1,6 @@
+import { CompletionGraphStats } from '../../../walkme/models';
+import { doesNotReject } from 'assert';
+
 export interface IAnalyticsCharts {
   data: any;
 }
@@ -21,9 +24,9 @@ export interface IQuizScoreData {
   quizScoreData: any;
 }
 
-export interface ICourseSummaryLegendData {
-  startUsers: number;
-  completedUsers: number;
-  completedPercentages: number;
-  startedPercentages: number;
+export interface ICourseSummaryLegendData extends Omit<CompletionGraphStats, 'date'> {
+  start_users: number;
+  completed_users: number;
+  completed_percentages: number;
+  started_percentages: number;
 }
