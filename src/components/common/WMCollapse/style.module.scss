@@ -12,7 +12,7 @@
     overflow: hidden;
 
     &:hover {
-      background-color: var(--border-light);
+      background-color: var(--hover-color);
     }
 
     &.has-drag-handle {
