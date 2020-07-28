@@ -1,6 +1,6 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../Hook';
 import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
 import { IQuizScoreData } from '../analytics.interface';
@@ -15,13 +15,7 @@ export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): React
     data: { average = 0, passmark = 0 },
   } = quizScoreData;
 
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   const isEmpty = Array.from(Object.keys(quizScoreData.data)).length === 0;
 

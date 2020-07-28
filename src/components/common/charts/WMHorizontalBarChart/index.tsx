@@ -1,8 +1,8 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
 import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../Hook';
 
 import WMSkeleton from '../../WMSkeleton';
 
@@ -91,13 +91,7 @@ export default function WMHorizontalBarChart({
   bars,
   totalValue,
 }: IWMHorizontalBarChart): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <div className={classes['wm-horizontal-bar-chart']}>
