@@ -1,5 +1,9 @@
 import moment from 'moment';
-import { IDateRange } from '../providers/CoursesContext/courses-context.interface';
+
+export interface IDateRange {
+  from: string;
+  to: string;
+}
 
 export const defaultDateRange = {
   from: moment(new Date()).subtract(7, 'd').format('YYYY-MM-DD'),

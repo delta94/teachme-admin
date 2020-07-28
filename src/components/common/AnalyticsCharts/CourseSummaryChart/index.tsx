@@ -52,7 +52,7 @@ export default function CourseSummaryChart({ title }: { title: string }): ReactE
             {legendData && (
               <LegendContent
                 number={legendData.start_users}
-                description={`${legendData.started_percentages}% of users with TeachMe access`}
+                description={`${legendData.start_percentages}% of users with TeachMe access`}
               />
             )}
           </WMLegend>

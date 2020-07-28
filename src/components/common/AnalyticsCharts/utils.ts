@@ -15,7 +15,7 @@ export const parseCourseSummaryLegendData = ({
   total_users_accessed: number;
 }): ICourseSummaryLegendData => ({
   ...total_completion,
-  started_percentages: calculatePercentages(total_completion.start_users, total_users_accessed),
+  start_percentages: calculatePercentages(total_completion.start_users, total_users_accessed),
   completed_percentages: calculatePercentages(
     total_completion.completed_users,
     total_completion.start_users,

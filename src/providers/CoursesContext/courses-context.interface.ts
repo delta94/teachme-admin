@@ -2,15 +2,11 @@ import { ReactNode } from 'react';
 
 import { AllCoursesOverviewResponse } from '../../walkme/models/overview';
 import { UICourse } from '../../walkme/data';
+import { IDateRange } from '../../utils';
 
 import { ActionType } from './actions';
 
 export { ActionType };
-
-export interface IDateRange {
-  from: string;
-  to: string;
-}
 
 export interface IAction {
   type: ActionType;

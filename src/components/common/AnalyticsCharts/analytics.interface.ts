@@ -27,5 +27,5 @@ export interface ICourseSummaryLegendData extends Omit<CompletionGraphStats, 'da
   start_users: number;
   completed_users: number;
   completed_percentages: number;
-  started_percentages: number;
+  start_percentages: number;
 }
