@@ -1,8 +1,8 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
 import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppSkeleton } from '../../../Hook';
 
 import Logo from '../../common/Logo';
 import { WMSkeletonButton } from '../../common/WMSkeleton';
@@ -15,13 +15,7 @@ import classes from './style.module.scss';
 const sidebarRoutes = [COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE];
 
 export default function Sidebar(): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <nav className={classes['sidebar']}>
