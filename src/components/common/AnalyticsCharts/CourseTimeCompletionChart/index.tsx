@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
 
-import { PieBarChart } from '../../charts';
-import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
-import { PieBarSummary } from '../../charts';
+import { PieBarChart, PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
+
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
+
+import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 
 export default function CoursesTimeCompletionChart({
   className,
