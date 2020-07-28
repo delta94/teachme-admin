@@ -48,16 +48,14 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
       <div className={cc([classes['text'], { [classes['hidden']]: showInput }])}>
         <span className={classes['lesson-title-text']}>{lesson?.title ?? ''}</span>
         <WMButton
-          onMouseDown={setInputActive}
-          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
           onClick={setInputActive}
+          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
         >
           <Icon type={IconType.Pencil} className={classes['title-icon']} />
         </WMButton>
         <WMButton
-          onMouseDown={deleteLesson}
-          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
           onClick={deleteLesson}
+          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
         >
           <Icon type={IconType.Delete} className={classes['title-icon']} />
         </WMButton>
@@ -71,6 +69,7 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
           onBlur={onBlur}
           maxLength={50}
         />
+        {/* onMouseDown is required to allow both an onBlur event and after that another button event */}
         <WMButton onMouseDown={onApprove} className={classes['title-button']}>
           <Icon type={IconType.V} className={classes['title-icon']} />
         </WMButton>

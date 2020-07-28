@@ -1,4 +1,4 @@
-.lesson-header {
+.quiz-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -16,7 +16,7 @@
   }
 }
 
-.editable-lesson-title {
+.editable-quiz-title {
   position: relative;
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@
     line-height: 11px;
     display: flex;
 
-    .lesson-title-text {
+    .quiz-title-text {
       flex: 1;
     }
 
@@ -84,7 +84,7 @@
       background: var(--selected);
     }
 
-    &.lesson {
+    &.quiz {
       height: 26px;
       border: var(--wm-border);
     }

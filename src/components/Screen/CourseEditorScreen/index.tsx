@@ -18,8 +18,8 @@ import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
   const [{ course, isFetchingCourse }, dispatch] = useCourseEditorContext();
-
   const { courseId } = useParams();
+
   useEffect(() => {
     fetchItemsList(dispatch);
     fetchCourse(dispatch, courseId);
