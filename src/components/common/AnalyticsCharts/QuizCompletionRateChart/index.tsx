@@ -4,7 +4,7 @@ import WMCard from '../../WMCard';
 import WMSkeleton from '../../WMSkeleton';
 import { PieBarChart, PieBarSummary } from '../../charts';
 import { IQuizCompletionRateChart } from '../analytics.interface';
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import QuizCompletionRateLegend from './QuizCompletionRateLegend';
 

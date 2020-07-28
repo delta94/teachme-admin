@@ -4,7 +4,7 @@ import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { SortEnd, SortEvent, SortStart, SortStartHandler } from 'react-sortable-hoc';
 
-import { useAppSkeleton } from '../../../Hook';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 
 import WMSkeleton from '../WMSkeleton';
 

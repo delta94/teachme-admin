@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
 import { IQuizScoreData } from '../analytics.interface';

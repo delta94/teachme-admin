@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
 import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import WMSkeleton from '../../WMSkeleton';
 

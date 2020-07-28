@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { Divider, Tooltip } from 'antd';
 
-import { useAppSkeleton } from '../../../Hook';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 import { IconType } from '../../common/Icon/icon.interface';
 import Icon from '../../common/Icon';
 import WMButton from '../../common/WMButton';

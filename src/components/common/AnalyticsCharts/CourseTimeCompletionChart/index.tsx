@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import { PieBarChart } from '../../charts';
-import { PieBarSummary } from '../../charts';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
+import { PieBarChart, PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import WMSkeleton from '../../WMSkeleton';
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
-import { useAppSkeleton } from '../../../../Hook';
 
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 

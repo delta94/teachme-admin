@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 import { ITooltipContent } from '../charts.interface';
 import WMChartTooltip from '../WMChartTooltip';
 import WMSkeleton from '../../WMSkeleton';
@@ -48,7 +48,6 @@ export default function WMLineChart<T extends {}>({
   hasWMTooltip,
   hasData,
 }: IWMLineChartProps<T>): ReactElement {
-
   const appInit = useAppSkeleton();
 
   return (

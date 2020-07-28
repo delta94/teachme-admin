@@ -2,7 +2,7 @@ import React, { ReactElement, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
 
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import Icon, { IconType } from '../../Icon';
 import { WMSkeletonInput } from '../../WMSkeleton';
