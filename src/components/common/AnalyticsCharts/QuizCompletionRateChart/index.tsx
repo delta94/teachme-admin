@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 import WMCard from '../../WMCard';
 import WMSkeleton from '../../WMSkeleton';
 import { PieBarChart, PieBarSummary } from '../../charts';
 import { IQuizCompletionRateChart } from '../analytics.interface';
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../Hook';
 
 import QuizCompletionRateLegend from './QuizCompletionRateLegend';
 
@@ -17,13 +17,7 @@ export default function QuizCompletionRateChart({
     data: { summaryLegend, summaryUnit, bars, totalValue },
   } = quizCompletionData;
 
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <WMCard title={title}>

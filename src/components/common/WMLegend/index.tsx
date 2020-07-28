@@ -1,7 +1,7 @@
-import React, { ReactNode, ReactElement, useState, useEffect } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppSkeleton } from '../../../Hook';
 import Header from '../Header';
 import StatusDot, { DotType } from '../StatusDot';
 import WMSkeleton from '../WMSkeleton';
@@ -24,13 +24,7 @@ export default function WMLegend({
   children,
   hasData,
 }: IWMLegend): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <>

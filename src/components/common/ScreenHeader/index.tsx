@@ -1,10 +1,10 @@
-import React, { ReactNode, ReactElement, useEffect, useState } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
+import { useAppSkeleton } from '../../../Hook';
+import { WMSkeletonInput } from '../WMSkeleton';
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
-import { useAppContext } from '../../../providers/AppContext';
-import { WMSkeletonInput } from '../WMSkeleton';
 
 import classes from './style.module.scss';
 
@@ -21,13 +21,7 @@ export default function ScreenHeader({
   children?: ReactNode;
   breadcrumbs?: ReactNode;
 }): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <>
