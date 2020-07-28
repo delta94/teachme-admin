@@ -16,6 +16,7 @@ import QuizSettings from './components/QuizSettings';
 import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
 import QuizEdit from './components/QuizEdit';
 import Toaster from './components/Toaster';
+import Skeleton from './components/Skeleton';
 
 import classes from './style.module.scss';
 
@@ -81,6 +82,12 @@ const tabs = [
     title: 'Toaster',
     icon: undefined,
     content: <Toaster />,
+  },
+  {
+    id: 'skeleton',
+    title: 'Skeleton',
+    icon: undefined,
+    content: <Skeleton />,
   },
 ];
 

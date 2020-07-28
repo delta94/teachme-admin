@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, Key, ChangeEvent } from 'react';
 
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
-import WMVerticalRadioGroup from '../../WMVerticalRadioGroup';
+import { WMVerticalRadioGroup } from '../../WMRadio';
 import WMInput from '../../WMInput';
 
 import classes from './style.module.scss';

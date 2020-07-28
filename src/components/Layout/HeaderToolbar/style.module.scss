@@ -38,6 +38,15 @@
       border-radius: 5px;
     }
   }
+
+  .header-toolbar-skeleton {
+    display: flex;
+    flex-direction: row;
+
+    > * {
+      margin-left: var(--spacing);
+    }
+  }
 }
 
 .header-toolbar-menu {
