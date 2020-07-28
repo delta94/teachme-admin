@@ -1,9 +1,9 @@
-.showing {
+.shown-courses-indicator {
   font-family: var(--font-secondary);
   color: var(--neutral900);
 }
 
-.prod-status-btns {
+.production-status-actions {
   button:global(.ant-btn) {
     height: 32px;
     padding: 0 10px;
@@ -12,7 +12,7 @@
   }
 }
 
-.delete-btn:global(.ant-btn) {
+.delete-courses-button:global(.ant-btn) {
   font-size: 18px;
 }
 
@@ -21,7 +21,7 @@
   margin: 0 20px;
 }
 
-.search {
+.search-courses-filter {
   margin: 0 20px;
 }
 
