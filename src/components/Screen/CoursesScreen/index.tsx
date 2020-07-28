@@ -7,7 +7,7 @@ import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 
-import { useAppSkeleton } from '../../../Hook';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import ExportButton from '../../common/buttons/ExportButton';

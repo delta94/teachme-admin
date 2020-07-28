@@ -2,7 +2,7 @@ import React, { ReactElement, useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
 
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import Icon, { IconType } from '../../Icon';
 import { WMSkeletonInput } from '../../WMSkeleton';
@@ -24,7 +24,6 @@ export default function SearchFilter({
 }: ISearchFilter): ReactElement {
   const [searchValue, setSearchValue] = useState(value ?? '');
   const appInit = useAppSkeleton();
-
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);

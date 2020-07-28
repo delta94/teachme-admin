@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
-import { useAppSkeleton } from '../../../../Hook';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import { WMSkeletonInput } from '../../WMSkeleton';
 import WMDropdown, { IWMDropdownOption } from '../../WMDropdown';
