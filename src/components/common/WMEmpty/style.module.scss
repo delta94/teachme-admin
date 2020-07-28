@@ -1,0 +1,37 @@
+.wm-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  .empty-container {
+    &:global(.ant-empty) {
+      width: 320px;
+
+      :global(.ant-empty-image) {
+        height: auto;
+        margin-bottom: 5px;
+      }
+
+      :global(.ant-empty-description) {
+        color: var(--empty-text);
+        font-family: var(--font-primary);
+        font-size: 14px;
+        letter-spacing: 0.3px;
+        line-height: 21px;
+        text-align: center;
+      }
+    }
+
+    &.horizontal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      :global(.ant-empty-image) {
+        margin-bottom: 0;
+        margin-right: 10px;
+      }
+    }
+  }
+}

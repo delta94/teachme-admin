@@ -47,15 +47,36 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
     });
   };
 
+  const hasData = Boolean(summaryData.data.days.length);
+
+  const getUsersCount = (key: string): number =>
+    summaryData.data.days.reduce(
+      (
+        total: number,
+        dayStats: {
+          [label: string]: number;
+        },
+      ): number => total + dayStats[key],
+      0,
+    );
+
   return (
     <WMCard title={title}>
       <div className={classes['course-summary']}>
         <div className={classes['chart-legend']}>
-          <WMLegend title="User Started" dotStatusColor="#F2B529">
-            <LegendContent number={2580} description="52% of users with TeachMe access" />
+          <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={hasData}>
+            <LegendContent
+              number={getUsersCount('Users Started')}
+              //TODO: calc %
+              description="52% of users with TeachMe access"
+            />
           </WMLegend>
-          <WMLegend title="User Completed" dotStatusColor="#8812FF">
-            <LegendContent number={2130} description="47% of users who started courses" />
+          <WMLegend title="Users Completed" dotStatusColor="#8812FF" hasData={hasData}>
+            <LegendContent
+              number={getUsersCount('Users Completed')}
+              //TODO: calc %
+              description="47% of users who started courses"
+            />
           </WMLegend>
         </div>
         <WMLineChart
@@ -65,6 +86,7 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
           lines={lines}
           lineKeyPrefix="course-summary"
           hasWMTooltip
+          hasData={hasData}
         />
       </div>
     </WMCard>

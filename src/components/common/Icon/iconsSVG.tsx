@@ -19,7 +19,13 @@ import { ReactComponent as ArticleSmallIcon } from '../../../images/icons/articl
 import { ReactComponent as RefreshIcon } from '../../../images/icons/refresh.svg';
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 import { ReactComponent as QuizSettingsIcon } from '../../../images/icons/quiz-settings.svg';
+import { ReactComponent as EmptyCourseIcon } from '../../../images/icons/empty-course.svg';
+import { ReactComponent as EmptyLessonIcon } from '../../../images/icons/empty-lesson.svg';
 import { ReactComponent as CheckIcon } from '../../../images/icons/check.svg';
+import { ReactComponent as QuizWelcomeScreenIcon } from '../../../images/icons/quiz-welcome-screen.svg';
+import { ReactComponent as QuizFailScreenIcon } from '../../../images/icons/quiz-fail-screen.svg';
+import { ReactComponent as QuizSuccessScreenIcon } from '../../../images/icons/quiz-success-screen.svg';
+import { ReactComponent as QuizQuestionScreenIcon } from '../../../images/icons/quiz-question-screen.svg';
 
 import { IconType } from './icon.interface';
 
@@ -46,5 +52,11 @@ export const IconSVG = {
   [IconType.Refresh]: RefreshIcon,
   [IconType.Plus]: PlusIcon,
   [IconType.QuizSettings]: QuizSettingsIcon,
+  [IconType.EmptyCourse]: EmptyCourseIcon,
+  [IconType.EmptyLesson]: EmptyLessonIcon,
   [IconType.Check]: CheckIcon,
+  [IconType.QuizWelcomeScreen]: QuizWelcomeScreenIcon,
+  [IconType.QuizFailScreen]: QuizFailScreenIcon,
+  [IconType.QuizSuccessScreen]: QuizSuccessScreenIcon,
+  [IconType.QuizQuestionScreen]: QuizQuestionScreenIcon,
 };

@@ -46,8 +46,12 @@
     }
   }
 
+  .skeleton,
   .input {
     width: 400px;
+  }
+
+  .input {
     border-bottom: 1px solid transparent;
     border-radius: 0;
 

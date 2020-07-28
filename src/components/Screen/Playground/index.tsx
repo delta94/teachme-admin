@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 
-import ScreenHeader from '../../common/ScreenHeader';
+import CourseEditorProvider from '../../../providers/CourseEditorContext';
 
+import ScreenHeader from '../../common/ScreenHeader';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import WMCard from '../../common/WMCard';
@@ -9,6 +10,7 @@ import WMCard from '../../common/WMCard';
 import Dialogs from './components/Dialogs';
 import Counter from './components/Counter';
 import Switches from './components/Switches';
+import Empty from './components/Empty';
 import Checkboxes from './components/Checkboxes';
 import QuizSettings from './components/QuizSettings';
 import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
@@ -37,6 +39,12 @@ const tabs = [
     content: <Switches />,
   },
   {
+    id: 'empty',
+    title: 'Empty',
+    icon: undefined,
+    content: <Empty />,
+  },
+  {
     id: 'checkboxes',
     title: 'Checkboxes',
     icon: undefined,
@@ -46,7 +54,11 @@ const tabs = [
     id: 'course-item-details-panel',
     title: 'Course Item Details Panel',
     icon: undefined,
-    content: <CourseItemDetailsPanel />,
+    content: (
+      <CourseEditorProvider>
+        <CourseItemDetailsPanel />
+      </CourseEditorProvider>
+    ),
   },
   {
     id: 'quiz-settings',
@@ -58,7 +70,11 @@ const tabs = [
     id: 'quiz-edit',
     title: 'Quiz Edit',
     icon: undefined,
-    content: <QuizEdit />,
+    content: (
+      <CourseEditorProvider>
+        <QuizEdit />
+      </CourseEditorProvider>
+    ),
   },
   {
     id: 'toaster',

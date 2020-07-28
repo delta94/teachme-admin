@@ -1,0 +1,34 @@
+.wm-radio-button {
+  &:global(.ant-radio-wrapper) {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  :global(.ant-radio):hover,
+  :global(.ant-radio-wrapper):hover :global(.ant-radio),
+  :global(.ant-radio-input):focus + :global(.ant-radio-inner),
+  :global(.ant-radio):hover :global(.ant-radio-inner),
+  :global(.ant-radio-checked) :global(.ant-radio-inner),
+  :global(.ant-radio-checked) :global(.ant-radio-inner):hover {
+    border-color: var(--primary);
+  }
+
+  :global(.ant-radio-checked) :global(.ant-radio-inner)::after {
+    background-color: var(--primary);
+  }
+
+  :global(.ant-radio-checked)::after {
+    border-color: var(--primary);
+  }
+
+  :global(.ant-radio-input):focus + :global(.ant-radio-inner) {
+    box-shadow: 0 0 0 3px var(--primaryVeryTransparent);
+  }
+}
+
+.wm-radio-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

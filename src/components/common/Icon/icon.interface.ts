@@ -21,5 +21,11 @@ export enum IconType {
   Refresh = 'refresh',
   Plus = 'plus',
   QuizSettings = 'quiz-settings',
+  EmptyCourse = 'empty-course',
+  EmptyLesson = 'empty-lesson',
   Check = 'check',
+  QuizWelcomeScreen = 'quiz-welcome-screen',
+  QuizFailScreen = 'quiz-fail-screen',
+  QuizSuccessScreen = 'quiz-success-screen',
+  QuizQuestionScreen = 'quiz-question-screen',
 }

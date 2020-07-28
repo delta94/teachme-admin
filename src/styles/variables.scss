@@ -53,6 +53,7 @@
   --neutral300: #97adb8;
   --neutral200: #b3b3b3;
   --neutral100: #e1e9ee;
+  --empty-text: rgba(0, 0, 0, 0.5);
 
   // used for borders that separate categories from other items
   --border100: rgba(170, 196, 209, 0.2);
@@ -63,6 +64,7 @@
   // colors for warnings, tags, etc.
   --red: #fc4040;
   --green: #41c378;
+  --greenVeryTransparent: rgba(65, 195, 120, 0.08);
   --orange: #e9a11c;
   --gray: #a7b3ba;
   // light versions of above colors
@@ -72,8 +74,8 @@
 
   // component colors
   --hover-color: #f7fbff;
-
   --pie-bar-char-background-color: #dfe1e2;
+
   // table
   --table-header-color: #78868f;
   --table-border-color: #dcdcdc;
@@ -85,4 +87,8 @@
 
   // switch
   --switch-off: #9ba1b0;
+
+  //disabled
+  --disable-dot: #aabed2;
+  --disable-chart: #c1c1c1;
 }
