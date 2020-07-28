@@ -8,7 +8,7 @@ import WMLegend from '../../WMLegend';
 import { WMLineChart } from '../../charts';
 
 import { parseCourseSummaryLegendData, formatMarkCompletionDate } from '../utils';
-import { ICourseSummaryChart, ICourseSummaryLegendData } from '../analytics.interface';
+import { ICourseSummaryLegendData } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
@@ -21,12 +21,10 @@ const LegendContent = ({ number, description }: { number: number; description?: 
   );
 };
 
-export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart): ReactElement {
+export default function CourseSummaryChart({ title }: { title: string }): ReactElement {
   const [{ overview }, dispatch] = useCoursesContext();
   const [legendData, setLegendData] = useState<ICourseSummaryLegendData>();
   const [markCompletion, setMarkCompletion] = useState<CompletionGraphStats[]>([]);
-
-  const { title } = summaryData;
 
   useEffect(() => {
     const { total_completion, total_users_accessed, mark_completion } = overview;
