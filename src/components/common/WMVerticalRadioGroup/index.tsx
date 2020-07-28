@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { Radio } from 'antd';
 import { RadioProps } from 'antd/es/radio';
 import cc from 'classcat';
@@ -23,15 +23,19 @@ export default function WMVerticalRadioGroup({
   options,
   className,
   ...otherProps
-}: IWMRadio) {
+}: IWMRadio): ReactElement {
   const [localValue, setLocalValue] = useState(value);
 
-  function localOnChange(e: any) {
-    const value = e.target.value;
+  const localOnChange = (e: any) => {
+    const val = e.target.value;
 
+    setLocalValue(val);
+    onChange(val);
+  };
+
+  useEffect(() => {
     setLocalValue(value);
-    onChange(value);
-  }
+  }, [value]);
 
   return (
     <Radio.Group

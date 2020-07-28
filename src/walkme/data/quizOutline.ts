@@ -53,6 +53,7 @@ function mapQuestion(
       const answerData = data?.answers?.find((answerData) => answerData.id == answer.id);
       return mapAnswer(answer, answerData);
     }),
+    total_responses: data?.answers.reduce((total, answer) => answer.count_answers + total, 0) ?? 0,
   };
 }
 
