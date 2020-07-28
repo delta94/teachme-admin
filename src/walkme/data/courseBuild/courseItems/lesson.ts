@@ -1,4 +1,4 @@
-import { Container } from '../itemsContainer';
+import { Container, ITypeIdQueriable, DeployableContainer } from '../itemsContainer';
 import { CourseTask, getCourseItems } from './task';
 import {
   NewCourseItemData,
@@ -14,8 +14,8 @@ import {
 import { createLink } from '../../services/collection';
 import { getGuid } from '../../services/guid';
 
-export class CourseLesson implements BuildLesson {
-  public childNodes: Container<CourseTask, NewCourseItemData, WalkMeDataCourseNewItem>;
+export class CourseLesson implements BuildLesson, ITypeIdQueriable {
+  public childNodes: DeployableContainer<CourseTask, NewCourseItemData, WalkMeDataCourseNewItem>;
   public id: number;
   public description: string;
   public title: string;
@@ -40,6 +40,10 @@ export class CourseLesson implements BuildLesson {
       Name: this.title,
       LinkedDeployables: this.childNodes.toArray().map((item, index) => createLink(item, index)),
     };
+  }
+
+  includes(type: string, id: number) {
+    return this.childNodes.includes(type, id);
   }
 }
 
