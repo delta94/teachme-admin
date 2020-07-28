@@ -1,17 +1,12 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { Radio } from 'antd';
+import { RadioChangeEvent } from 'antd/lib/radio';
 
 import cc from 'classcat';
 
 import { IWMRadioGroup } from './interface';
 
 import classes from './style.module.scss';
-
-export interface IRadioButton {
-  value: any;
-  label: React.ReactNode;
-  disabled?: boolean;
-}
 
 export default function WMVerticalRadioGroup({
   onChange,
@@ -22,11 +17,11 @@ export default function WMVerticalRadioGroup({
 }: IWMRadioGroup): ReactElement {
   const [localValue, setLocalValue] = useState(value);
 
-  const localOnChange = (e: any) => {
+  const localOnChange = (e: RadioChangeEvent) => {
     const val = e.target.value;
 
     setLocalValue(val);
-    onChange && onChange(val);
+    onChange && onChange(e);
   };
 
   useEffect(() => {
