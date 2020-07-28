@@ -35,6 +35,8 @@ export interface IState {
   isExportingCoursesError: boolean;
   isDeletingCourses: boolean;
   isDeletingCoursesError: boolean;
+  isPublishingCourses: boolean;
+  isPublishingCoursesError: boolean;
 }
 
 export interface ICoursesProvider {

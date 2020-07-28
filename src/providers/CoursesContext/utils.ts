@@ -1,8 +1,15 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseList, getCoursesOverview, exportCoursesData, deleteCourse } from '../../walkme';
+import {
+  getCourseList,
+  getCoursesOverview,
+  exportCoursesData,
+  deleteCourse,
+  publishCourses as _publishCourses,
+} from '../../walkme';
 import { UICourse } from '../../walkme/data';
 import { wmMessage, MessageType, pluralizer } from '../../utils';
+import { EnvironmentType } from '../../interfaces/app.interfaces';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
 
@@ -90,5 +97,34 @@ export const deleteCourses = async (
     console.error(error);
     dispatch({ type: ActionType.DeleteCoursesError });
     wmMessage('Delete process failed', MessageType.Error);
+  }
+};
+
+const envNames = {
+  [EnvironmentType.Production]: 'production',
+  [EnvironmentType.Test]: 'test',
+};
+
+export const publishCourses = async (
+  dispatch: IDispatch,
+  envId = 0,
+  courses: Array<UICourse>,
+): Promise<void> => {
+  dispatch({ type: ActionType.PublishCourses });
+
+  try {
+    const coursesIds = courses.map((course) => course.id);
+    await _publishCourses(envId, coursesIds);
+
+    dispatch({ type: ActionType.PublishCoursesSuccess });
+    wmMessage(
+      `${courses.length} ${pluralizer('course', courses.length)} published to ${
+        envNames[envId as keyof typeof envNames]
+      }`,
+    );
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.PublishCoursesError });
+    wmMessage('Publish process failed', MessageType.Error);
   }
 };

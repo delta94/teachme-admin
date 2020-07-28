@@ -11,5 +11,8 @@ export enum ActionType {
   DeleteCourses = 'DELETE_COURSES',
   DeleteCoursesSuccess = 'DELETE_COURSES_SUCCESS',
   DeleteCoursesError = 'DELETE_COURSES_ERROR',
+  PublishCourses = 'PUBLISH_COURSES',
+  PublishCoursesSuccess = 'PUBLISH_COURSES_SUCCESS',
+  PublishCoursesError = 'PUBLISH_COURSES_ERROR',
   ResetCourses = 'RESET_COURSES',
 }

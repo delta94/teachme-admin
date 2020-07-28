@@ -14,6 +14,7 @@ import {
   fetchCoursesData,
   exportCourses,
   deleteCourses,
+  publishCourses,
 } from './utils';
 import { reducer, initialState } from './reducer';
 
@@ -24,6 +25,7 @@ export {
   fetchCoursesData,
   exportCourses,
   deleteCourses,
+  publishCourses,
   reducer,
   initialState,
   ActionType,
