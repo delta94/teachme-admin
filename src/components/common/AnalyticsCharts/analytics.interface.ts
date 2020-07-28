@@ -2,6 +2,7 @@ import { CompletionGraphStats } from '../../../walkme/models';
 
 export interface IAnalyticsCharts {
   data: any;
+  overview?: any;
 }
 
 // TODO: create a properly interface instead of using any
