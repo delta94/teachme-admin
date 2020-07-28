@@ -9,12 +9,12 @@ import {
   WalkMeDataItem,
   ResourceDataItem,
 } from '@walkme/types';
-import { Container } from '../itemsContainer';
+import { Container, DeployableContainer } from '../itemsContainer';
 import { getDataSync } from '../../services/wmData';
 import { getTypeId, getTypeName, getResourceType } from '../../services/item';
 
 export const getCourseItems = (itemsData: Array<WalkMeDataNewCourseTask>) =>
-  new Container(itemsData, (data) => new CourseTask(data), newDataModel);
+  new DeployableContainer(itemsData, (data) => new CourseTask(data), newDataModel);
 
 export class CourseTask implements BuildCourseTask {
   public description: string;
