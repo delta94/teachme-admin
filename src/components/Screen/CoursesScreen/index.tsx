@@ -4,10 +4,10 @@ import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
-import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, fetchCourseList, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 
+import { useAppSkeleton } from '../../../Hook';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import ExportButton from '../../common/buttons/ExportButton';
@@ -91,13 +91,7 @@ export default function CoursesScreen(): ReactElement {
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
 
   // skeleton
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   // TODO: fix search filter
   const onSearch = (searchValue: string) => {

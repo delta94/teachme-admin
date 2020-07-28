@@ -1,10 +1,10 @@
-import React, { ReactNode, ReactElement, useEffect, useState } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { SortEnd, SortEvent, SortStart, SortStartHandler } from 'react-sortable-hoc';
 
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppSkeleton } from '../../../Hook';
 
 import WMSkeleton from '../WMSkeleton';
 
@@ -31,13 +31,7 @@ export default function WMTable({
   onSortStart,
   ...otherProps
 }: IWMTable): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   const isSortable = typeof onSortEnd === 'function';
 
