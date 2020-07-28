@@ -18,8 +18,8 @@ export default function SystemMenu({ className }: { className?: string }): React
 
   const [selectedSystem, setSelectedSystem] = useState(parseSystems([system]) as IWMDropdownOption);
 
-  const [systems, setSystems] = useState([] as SystemData[]);
-  const [options, setOptions] = useState([] as IWMDropdownOption[]);
+  const [systems, setSystems] = useState<SystemData[]>([]);
+  const [options, setOptions] = useState<IWMDropdownOption[]>([]);
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setAppSystem({
@@ -41,6 +41,11 @@ export default function SystemMenu({ className }: { className?: string }): React
 
   useEffect(() => {
     getSystemsOptions();
+
+    return () => {
+      setSystems([]);
+      setOptions([]);
+    };
   }, []);
 
   useEffect(() => {

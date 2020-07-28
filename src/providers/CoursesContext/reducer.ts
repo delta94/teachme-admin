@@ -1,10 +1,15 @@
 import produce from 'immer';
 
+import { AllCoursesOverviewResponse } from '../../walkme/models';
+import { defaultDateRange } from '../../utils';
+
 import { ActionType, IState, IAction } from './courses-context.interface';
 
 export const initialState = {
-  isFetchingCourses: false,
-  isFetchingCoursesError: false,
+  isFetchingCoursesData: false,
+  isFetchingCoursesDataError: false,
+  dateRange: defaultDateRange,
+  overview: {} as AllCoursesOverviewResponse,
   courses: [],
   filteredCourses: [],
   coursesSearchValue: '',
@@ -19,19 +24,20 @@ export const initialState = {
 export const reducer = produce(
   (draft: IState, action: IAction): IState => {
     switch (action.type) {
-      case ActionType.FetchCourses:
-        draft.isFetchingCourses = true;
-        draft.isFetchingCoursesError = false;
+      case ActionType.FetchCoursesData:
+        draft.isFetchingCoursesData = true;
+        draft.isFetchingCoursesDataError = false;
         break;
-      case ActionType.FetchCoursesSuccess:
-        draft.isFetchingCourses = false;
-        draft.isFetchingCoursesError = false;
+      case ActionType.FetchCoursesDataSuccess:
+        draft.isFetchingCoursesData = false;
+        draft.isFetchingCoursesDataError = false;
+        draft.overview = action.overview ?? initialState.overview;
         draft.courses = action.courses ?? initialState.courses;
         draft.filteredCourses = action.courses ?? initialState.filteredCourses;
         break;
-      case ActionType.FetchCoursesError:
-        draft.isFetchingCourses = false;
-        draft.isFetchingCoursesError = true;
+      case ActionType.FetchCoursesDataError:
+        draft.isFetchingCoursesData = false;
+        draft.isFetchingCoursesDataError = true;
         break;
       case ActionType.SetCoursesSearchValue:
         draft.coursesSearchValue = action.coursesSearchValue ?? initialState.coursesSearchValue;
@@ -40,6 +46,9 @@ export const reducer = produce(
       case ActionType.SetSelectedRows:
         draft.selectedRows = action.courses ?? initialState.selectedRows;
         draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
+        break;
+      case ActionType.SetDateRange:
+        draft.dateRange = action.dateRange ?? initialState.dateRange;
         break;
       case ActionType.ExportCourses:
         draft.isExportingCourses = true;

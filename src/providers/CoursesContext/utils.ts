@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseList, exportCoursesData, deleteCourse } from '../../walkme';
+import { getCourseList, getCoursesOverview, exportCoursesData, deleteCourse } from '../../walkme';
 import { UICourse } from '../../walkme/data';
 import { wmMessage, MessageType } from '../../utils';
 
@@ -34,21 +34,22 @@ export const useCoursesContext = (): [IState, IDispatch] => [
   useCoursesDispatch(),
 ];
 
-export const fetchCourseList = async (
+export const fetchCoursesData = async (
   dispatch: IDispatch,
   envId = 0,
   from: string,
   to: string,
 ): Promise<void> => {
-  dispatch({ type: ActionType.FetchCourses });
+  dispatch({ type: ActionType.FetchCoursesData });
 
   try {
     const courses = await getCourseList(envId, from, to);
+    const overview = await getCoursesOverview(envId, from, to);
 
-    dispatch({ type: ActionType.FetchCoursesSuccess, courses });
+    dispatch({ type: ActionType.FetchCoursesDataSuccess, courses, overview });
   } catch (error) {
     console.error(error);
-    dispatch({ type: ActionType.FetchCoursesError });
+    dispatch({ type: ActionType.FetchCoursesDataError });
   }
 };
 

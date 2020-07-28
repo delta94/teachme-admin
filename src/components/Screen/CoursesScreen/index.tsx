@@ -4,7 +4,7 @@ import { Divider, message, ConfigProvider } from 'antd';
 import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import {
   useCoursesContext,
-  fetchCourseList,
+  fetchCoursesData,
   ActionType,
   exportCourses,
   deleteCourses,
@@ -27,21 +27,24 @@ import {
   ExportToCSVDialog,
 } from '../../common/dialogs';
 
-import { mockDates, statuses, segments } from './utils';
+// import { statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
 
 export default function CoursesScreen(): ReactElement {
   const { title: mainTitle, analytics } = coursesMockData;
-  const { from, to } = mockDates;
 
   const [state, dispatch] = useCoursesContext();
-  const { courses, filteredCourses, selectedRows, selectedRowKeys } = state;
+  const {
+    dateRange: { from, to },
+    courses,
+    filteredCourses,
+    selectedRows,
+    selectedRowKeys,
+  } = state;
 
   useEffect(() => {
-    fetchCourseList(dispatch, 0, from, to);
-
-    return () => dispatch({ type: ActionType.ResetCourses });
+    fetchCoursesData(dispatch, 0, from, to);
   }, [dispatch, from, to]);
 
   const onSearch = (searchValue: string) => {
@@ -55,6 +58,9 @@ export default function CoursesScreen(): ReactElement {
       courses: newCourseList,
     });
   };
+
+  // Unmount only
+  useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
 
   // Dialogs
   const [showPublish, setShowPublish] = useState(false);
@@ -175,7 +181,7 @@ export default function CoursesScreen(): ReactElement {
         onConfirm={async () => {
           setShowDeleteCourse(false);
           await deleteCourses(dispatch, selectedRows);
-          fetchCourseList(dispatch, 0, from, to);
+          fetchCoursesData(dispatch, 0, from, to);
         }}
       />
       <CantDeleteDialog
