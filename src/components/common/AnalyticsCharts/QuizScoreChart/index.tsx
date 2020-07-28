@@ -7,13 +7,13 @@ import { WMProgress } from '../../charts';
 
 import classes from './style.module.scss';
 
-export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): ReactElement {
+export default function QuizScoreChart({ quizData }: IQuizScoreData): ReactElement {
   const {
     title,
     data: { average = 0, passmark = 0 },
-  } = quizScoreData;
+  } = quizData;
 
-  const isEmpty = Array.from(Object.keys(quizScoreData.data)).length === 0;
+  const isEmpty = Array.from(Object.keys(quizData.data)).length === 0;
 
   return (
     <WMCard title={title} className={classes['course-average']}>

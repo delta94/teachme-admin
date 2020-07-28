@@ -12,15 +12,19 @@ import QuizCompletionRateLegend from './QuizCompletionRateLegend';
 export default function QuizCompletionRateChart({
   className,
   title,
-  overview: { users_passed, users_submitted },
+  overview,
 }: IQuizCompletionRateChart): ReactElement {
   const [totalPercentages, setTotalPercentages] = useState<number>(0);
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {
-    if (users_passed && users_submitted)
-      setTotalPercentages(calculatePercentages(users_passed, users_submitted));
-  }, [users_passed, users_submitted]);
+    if (overview) {
+      const { users_passed, users_submitted } = overview;
+
+      if (users_passed && users_submitted)
+        setTotalPercentages(calculatePercentages(users_passed, users_submitted));
+    }
+  }, [overview]);
 
   useEffect(() => {
     if (totalPercentages)
@@ -48,7 +52,7 @@ export default function QuizCompletionRateChart({
         <PieBarSummary
           value={totalPercentages as number}
           unit={'%'}
-          text={` (${users_passed ?? 0} of ${users_submitted ?? 0} users)`}
+          text={` (${overview?.users_passed ?? 0} of ${overview?.users_submitted ?? 0} users)`}
         />
         <PieBarChart bars={bars} legendContent={QuizCompletionRateLegend} />
       </div>

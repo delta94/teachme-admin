@@ -12,19 +12,21 @@ import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 export default function CoursesTimeCompletionChart({
   className,
   title,
-  overview: { completion_time },
+  overview,
 }: ICoursesTimeCompletionChart): ReactElement {
   const [completionTimeAvg, setCompletionTimeAvg] = useState<number>();
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {
-    if (completion_time) {
+    if (overview?.completion_time) {
+      const { completion_time } = overview;
+
       setCompletionTimeAvg(completion_time.avg ? completion_time.avg.toFixed(0) : 0);
 
       if (completion_time.buckets.length)
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
     }
-  }, [completion_time]);
+  }, [overview]);
 
   // unmount only
   useEffect(

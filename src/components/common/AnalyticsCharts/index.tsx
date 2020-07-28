@@ -9,27 +9,31 @@ import QuizScoreChart from './QuizScoreChart';
 
 import classes from './style.module.scss';
 
-export default function AnalyticsCharts({ data, overview }: IAnalyticsCharts): ReactElement {
-  const { summary, completion, quizCompletion, quizScore } = data;
-
+export default function AnalyticsCharts({
+  summaryChartTitle,
+  timeCompletionTitle = 'Avg. Completion Time',
+  quizCompletionTitle = 'Quiz Completion Rate',
+  quizData,
+  overview,
+}: IAnalyticsCharts): ReactElement {
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
-        <CourseSummaryChart title={summary.title} overview={overview} />
+        <CourseSummaryChart title={summaryChartTitle} overview={overview} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
         <CourseTimeCompletionChart
           className={classes['line-graph']}
-          title={completion.title}
+          title={timeCompletionTitle}
           overview={overview}
         />
         <div className={classes['quiz-graphs']}>
           <QuizCompletionRateChart
             className={classes['line-graph']}
-            title={quizCompletion.title}
+            title={quizCompletionTitle}
             overview={overview}
           />
-          {quizScore && <QuizScoreChart quizScoreData={quizScore} />}
+          {quizData && <QuizScoreChart quizData={quizData} />}
         </div>
       </div>
     </div>

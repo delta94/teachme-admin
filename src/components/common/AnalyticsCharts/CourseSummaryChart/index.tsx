@@ -20,7 +20,7 @@ const LegendContent = ({ number, description }: { number: number; description?: 
 
 export default function CourseSummaryChart({
   title,
-  overview: { total_completion, total_users_accessed, mark_completion },
+  overview,
 }: {
   title: string;
   overview?: any;
@@ -29,13 +29,17 @@ export default function CourseSummaryChart({
   const [markCompletion, setMarkCompletion] = useState<CompletionGraphStats[]>([]);
 
   useEffect(() => {
-    if (total_completion || total_users_accessed || mark_completion) {
-      if (total_completion && total_users_accessed)
-        setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
+    if (overview) {
+      const { total_completion, total_users_accessed, mark_completion } = overview;
 
-      if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
+      if (total_completion || total_users_accessed || mark_completion) {
+        if (total_completion && total_users_accessed)
+          setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
+
+        if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
+      }
     }
-  }, [total_completion, total_users_accessed, mark_completion]);
+  }, [overview]);
 
   // unmount only
   useEffect(

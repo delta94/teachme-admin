@@ -106,7 +106,7 @@ export default function CoursesScreen(): ReactElement {
         title={mainTitle}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
-      <AnalyticsCharts data={analytics} overview={overview} />
+      <AnalyticsCharts summaryChartTitle="Users Started / Completed Courses" overview={overview} />
       <WMCard
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
