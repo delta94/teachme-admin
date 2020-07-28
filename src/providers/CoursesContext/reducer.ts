@@ -21,6 +21,8 @@ export const initialState = {
   isDeletingCoursesError: false,
   isPublishingCourses: false,
   isPublishingCoursesError: false,
+  isArchivingCourses: false,
+  isArchivingCoursesError: false,
 } as IState;
 
 export const reducer = produce(
@@ -87,6 +89,18 @@ export const reducer = produce(
       case ActionType.PublishCoursesError:
         draft.isPublishingCourses = false;
         draft.isPublishingCoursesError = true;
+        break;
+      case ActionType.ArchiveCourses:
+        draft.isArchivingCourses = true;
+        draft.isArchivingCoursesError = false;
+        break;
+      case ActionType.ArchiveCoursesSuccess:
+        draft.isArchivingCourses = false;
+        draft.isArchivingCoursesError = false;
+        break;
+      case ActionType.ArchiveCoursesError:
+        draft.isArchivingCourses = false;
+        draft.isArchivingCoursesError = true;
         break;
       case ActionType.ResetCourses:
         draft = { ...initialState };

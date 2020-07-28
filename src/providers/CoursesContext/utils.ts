@@ -6,6 +6,7 @@ import {
   exportCoursesData,
   deleteCourse,
   publishCourses as _publishCourses,
+  archiveCourses as _archiveCourses,
 } from '../../walkme';
 import { UICourse } from '../../walkme/data';
 import { wmMessage, MessageType, pluralizer } from '../../utils';
@@ -126,5 +127,29 @@ export const publishCourses = async (
     console.error(error);
     dispatch({ type: ActionType.PublishCoursesError });
     wmMessage('Publish process failed', MessageType.Error);
+  }
+};
+
+export const archiveCourses = async (
+  dispatch: IDispatch,
+  envId = 0,
+  courses: Array<UICourse>,
+): Promise<void> => {
+  dispatch({ type: ActionType.ArchiveCourses });
+
+  try {
+    const coursesIds = courses.map((course) => course.id);
+    await _archiveCourses(envId, coursesIds);
+
+    dispatch({ type: ActionType.ArchiveCoursesSuccess });
+    wmMessage(
+      `${courses.length} ${pluralizer('course', courses.length)} archived to ${
+        envNames[envId as keyof typeof envNames]
+      }`,
+    );
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.ArchiveCoursesError });
+    wmMessage('Archive process failed', MessageType.Error);
   }
 };

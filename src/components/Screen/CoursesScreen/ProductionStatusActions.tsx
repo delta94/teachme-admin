@@ -1,12 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import { message } from 'antd';
 
 import {
   useCoursesContext,
   publishCourses,
+  archiveCourses,
   fetchCoursesData,
 } from '../../../providers/CoursesContext';
-import { PublishStatus } from '../../../walkme/data';
+// import { PublishStatus } from '../../../walkme/data';
 
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import { PublishToEnvironmentDialog } from '../../common/dialogs';
@@ -20,13 +20,14 @@ export default function ProductionStatusActions(): ReactElement {
     selectedRows,
   } = state;
 
-  const hasPublished = selectedRows.some(
-    (course) => course.publishStatus === PublishStatus.Published,
-  );
-  const hasArchived = selectedRows.some(
-    (course) => course.publishStatus === PublishStatus.Archived,
-  );
-  const hasDraft = selectedRows.some((course) => course.publishStatus === PublishStatus.Draft);
+  // TODO: uncomment once sdk supports marking as draft
+  // const hasPublished = selectedRows.some(
+  //   (course) => course.publishStatus === PublishStatus.Published,
+  // );
+  // const hasArchived = selectedRows.some(
+  //   (course) => course.publishStatus === PublishStatus.Archived,
+  // );
+  // const hasDraft = selectedRows.some((course) => course.publishStatus === PublishStatus.Draft);
 
   const [showPublish, setShowPublish] = useState(false);
 
@@ -38,13 +39,17 @@ export default function ProductionStatusActions(): ReactElement {
         </WMButton>
         <WMButton
           variant={ButtonVariantEnum.Link}
-          onClick={() => message.info(`Production status was changed to archive`)}
+          onClick={async () => {
+            await archiveCourses(dispatch, 0, selectedRows);
+            fetchCoursesData(dispatch, 0, from, to);
+          }}
         >
           Archive
         </WMButton>
+        {/* TODO: uncomment once sdk supports marking as draft */}
         {/* <WMButton
           variant={ButtonVariantEnum.Link}
-          onClick={() => message.info(`Production status was changed to draft`)}
+          onClick={() => console.log('Production status was changed to draft')}
           disabled={hasPublished || (hasArchived && hasDraft)}
         >
           Mark as Draft

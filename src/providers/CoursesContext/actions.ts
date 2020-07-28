@@ -14,5 +14,8 @@ export enum ActionType {
   PublishCourses = 'PUBLISH_COURSES',
   PublishCoursesSuccess = 'PUBLISH_COURSES_SUCCESS',
   PublishCoursesError = 'PUBLISH_COURSES_ERROR',
+  ArchiveCourses = 'ARCHIVE_COURSES',
+  ArchiveCoursesSuccess = 'ARCHIVE_COURSES_SUCCESS',
+  ArchiveCoursesError = 'ARCHIVE_COURSES_ERROR',
   ResetCourses = 'RESET_COURSES',
 }

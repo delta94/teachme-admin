@@ -15,6 +15,7 @@ import {
   exportCourses,
   deleteCourses,
   publishCourses,
+  archiveCourses,
 } from './utils';
 import { reducer, initialState } from './reducer';
 
@@ -26,6 +27,7 @@ export {
   exportCourses,
   deleteCourses,
   publishCourses,
+  archiveCourses,
   reducer,
   initialState,
   ActionType,
