@@ -18,11 +18,16 @@ export default function AnalyticsCharts({ data, overview }: IAnalyticsCharts): R
         <CourseSummaryChart title={summary.title} overview={overview} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
-        <CourseTimeCompletionChart className={classes['line-graph']} completionData={completion} />
+        <CourseTimeCompletionChart
+          className={classes['line-graph']}
+          title={completion.title}
+          overview={overview}
+        />
         <div className={classes['quiz-graphs']}>
           <QuizCompletionRateChart
             className={classes['line-graph']}
-            quizCompletionData={quizCompletion}
+            title={quizCompletion.title}
+            overview={overview}
           />
           {quizScore && <QuizScoreChart quizScoreData={quizScore} />}
         </div>

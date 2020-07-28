@@ -12,12 +12,14 @@ export interface ICourseSummaryChart {
 
 export interface ICoursesTimeCompletionChart {
   className?: string;
-  completionData: any;
+  title: string;
+  overview?: any;
 }
 
 export interface IQuizCompletionRateChart {
   className?: string;
-  quizCompletionData: any;
+  title: string;
+  overview?: any;
 }
 
 export interface IQuizScoreData {

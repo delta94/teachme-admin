@@ -2,6 +2,8 @@ import moment from 'moment';
 
 import { CompletionGraphStats } from '../../../walkme/models';
 
+import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
+
 import { ICourseSummaryLegendData } from './analytics.interface';
 
 export const calculatePercentages = (first: number, second: number): number =>
@@ -29,4 +31,12 @@ export const formatMarkCompletionDate = (
   mark_completion.map((item) => ({
     ...item,
     date: moment(item.date).format(format),
+  }));
+
+export const convertPercentagesToPieBar = (percentages: number): number => percentages * 10; // convert percentages to PieBarSummary proper value
+
+export const parseBucketsToPieBarSummary = (buckets: any[]): IBar[] =>
+  buckets.map((bucket: any) => ({
+    value: convertPercentagesToPieBar(bucket.users_percentages),
+    legend: `${bucket.from}-${bucket.to}`,
   }));

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 // @ts-ignore
 import mix from 'mix-css-color';
 
@@ -17,14 +17,14 @@ function generateColors(colorStart: string, colorEnd: string, steps: number) {
 export default function PieBarChart({
   height,
   width,
-  totalValue,
+  totalValue = 1000,
   bars,
   legendContent: LegendContent,
   colorStart = '#006af7',
   colorEnd = '#afd7ff',
   ...otherProps
 }: IPieBarChart): React.ReactElement {
-  const generatedColors = useRef(generateColors(colorStart, colorEnd, bars.length));
+  const generatedColors = generateColors(colorStart, colorEnd, bars.length);
 
   return (
     <div className={classes['pie-bar-chart']} {...otherProps}>
@@ -32,7 +32,7 @@ export default function PieBarChart({
         {bars.map((bar, index) => {
           const barValue = `${(bar.value / totalValue) * 100}%`;
           const barLegend = bar.legend;
-          const barColor = bar.color ?? generatedColors.current[index];
+          const barColor = generatedColors[index];
           const legendContent = (
             <LegendContent
               barValue={barValue}
@@ -47,8 +47,8 @@ export default function PieBarChart({
               <span
                 className={classes['pie-bar-chunk']}
                 style={{
-                  width: barValue,
-                  backgroundColor: barColor,
+                  width: `${barValue}`, // using literals to prevent stylelint(value-keyword-case) error
+                  backgroundColor: `${barColor}`, // using literals to prevent stylelint(value-keyword-case) error
                 }}
               />
             </PieBarChartLegend>
