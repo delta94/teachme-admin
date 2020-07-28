@@ -1,7 +1,7 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../Hook';
 
 import Icon, { IconType } from '../../Icon';
 import { WMSkeletonButton } from '../../WMSkeleton';
@@ -16,13 +16,7 @@ export default function ExportButton({
   className?: string;
   onClick?: () => void; // todo: make this required
 }): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   return (
     <div className={classes['export-button']}>

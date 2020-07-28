@@ -1,8 +1,8 @@
-import React, { ReactElement, useState, ChangeEvent, useEffect } from 'react';
+import React, { ReactElement, useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
 
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../Hook';
 
 import Icon, { IconType } from '../../Icon';
 import { WMSkeletonInput } from '../../WMSkeleton';
@@ -23,13 +23,8 @@ export default function SearchFilter({
   onSearch,
 }: ISearchFilter): ReactElement {
   const [searchValue, setSearchValue] = useState(value ?? '');
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
+  const appInit = useAppSkeleton();
 
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
