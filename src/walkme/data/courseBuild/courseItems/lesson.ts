@@ -13,6 +13,7 @@ import {
 } from '@walkme/types';
 import { createLink } from '../../services/collection';
 import { getGuid } from '../../services/guid';
+import defaults from '../defaults';
 
 export class CourseLesson implements BuildLesson, ITypeIdQueriable {
   public childNodes: DeployableContainer<CourseTask, NewCourseItemData, WalkMeDataCourseNewItem>;
@@ -54,7 +55,7 @@ export function newDataModel(index: number, data?: NewCourseLessonData): WalkMeD
     Id: -index - 1,
     IsModified: true,
     LinkedDeployables: [],
-    Name: `Lesson ${index}`,
+    Name: defaults.NEW_LESSON_NAME,
     OrderIndex: index,
     PublishStatus: 0,
     ResourceId: getGuid(),
