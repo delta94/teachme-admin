@@ -1,10 +1,6 @@
-import React from 'react';
 import moment from 'moment';
 
 import { IWMDropdownOption } from '../../common/WMDropdown';
-import WMTag from '../../common/WMTag';
-
-import classes from './style.module.scss';
 
 export const mockDates = {
   from: moment(new Date()).subtract(3, 'months').startOf('month').format('YYYY-MM-DD'),
