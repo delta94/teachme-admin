@@ -46,8 +46,6 @@ export default function CourseSummaryChart({ summaryData }: ICourseSummaryChart)
     [],
   );
 
-  console.log('overview ', overview);
-
   return (
     <WMCard title={title}>
       <div className={classes['course-summary']}>
