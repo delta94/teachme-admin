@@ -1,7 +1,7 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
-import { useAppSkeleton } from '../../../Hook';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 import Header from '../Header';
 import StatusDot, { DotType } from '../StatusDot';
 import WMSkeleton from '../WMSkeleton';

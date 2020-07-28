@@ -1,7 +1,7 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
-import { useAppSkeleton } from '../../../Hook';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 import { WMSkeletonInput } from '../WMSkeleton';
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';

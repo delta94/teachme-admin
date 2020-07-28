@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
 import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
-import { useAppSkeleton } from '../../../Hook';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 
 import Logo from '../../common/Logo';
 import { WMSkeletonButton } from '../../common/WMSkeleton';
