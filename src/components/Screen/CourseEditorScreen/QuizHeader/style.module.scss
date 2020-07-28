@@ -30,7 +30,7 @@
   .input-wrapper,
   .text {
     position: absolute;
-    color: #8d8d8d;
+    color: var(--neutral500);
     font-family: var(--font-secondary);
     border: none;
     background-color: transparent;
@@ -76,8 +76,8 @@
     box-sizing: border-box;
     height: 26px;
     width: 583px;
-    border: 1px solid #e6edf1;
-    background-color: #ffffff;
+    border: var(--wm-border);
+    background-color: var(--white);
 
     &::selection {
       color: var(--neutral900);
