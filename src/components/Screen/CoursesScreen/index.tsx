@@ -10,13 +10,14 @@ import {
   deleteCourses,
 } from '../../../providers/CoursesContext';
 import { UICourse, PublishStatus } from '../../../walkme/data';
+import { IDateRange } from '../../../utils';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { ExportButton, CreateButton } from '../../common/buttons';
 import Icon, { IconType } from '../../common/Icon';
 import ScreenHeader from '../../common/ScreenHeader';
-import { DropdownFilter, SearchFilter } from '../../common/filters';
+import { SearchFilter } from '../../common/filters';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
@@ -38,6 +39,7 @@ export default function CoursesScreen(): ReactElement {
   const {
     dateRange: { from, to },
     courses,
+    overview,
     filteredCourses,
     selectedRows,
     selectedRowKeys,
@@ -92,13 +94,19 @@ export default function CoursesScreen(): ReactElement {
     </div>
   );
 
+  const onDateRangeChange = (dateRange?: IDateRange) =>
+    dispatch({ type: ActionType.SetDateRange, dateRange });
+
   const selectedRowsCount = selectedRows.length;
   const shownCoursesCount = filteredCourses.length;
 
   return (
     <>
-      <ScreenHeader title={mainTitle} />
-      <AnalyticsCharts data={analytics} />
+      <ScreenHeader
+        title={mainTitle}
+        timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
+      />
+      <AnalyticsCharts data={analytics} overview={overview} />
       <WMCard
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."

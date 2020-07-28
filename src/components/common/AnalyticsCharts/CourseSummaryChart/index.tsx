@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
-import { useCoursesContext } from '../../../../providers/CoursesContext';
 import { CompletionGraphStats } from '../../../../walkme/models/overview/panels';
 
 import WMCard from '../../WMCard';
@@ -21,18 +20,25 @@ const LegendContent = ({ number, description }: { number: number; description?: 
   );
 };
 
-export default function CourseSummaryChart({ title }: { title: string }): ReactElement {
-  const [{ overview }, dispatch] = useCoursesContext();
+export default function CourseSummaryChart({
+  title,
+  overview,
+}: {
+  title: string;
+  overview?: any;
+}): ReactElement {
   const [legendData, setLegendData] = useState<ICourseSummaryLegendData>();
   const [markCompletion, setMarkCompletion] = useState<CompletionGraphStats[]>([]);
 
   useEffect(() => {
-    const { total_completion, total_users_accessed, mark_completion } = overview;
+    if (overview) {
+      const { total_completion, total_users_accessed, mark_completion } = overview;
 
-    if (total_completion && total_users_accessed)
-      setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
+      if (total_completion && total_users_accessed)
+        setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
 
-    if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
+      if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
+    }
   }, [overview]);
 
   // unmount only
@@ -83,7 +89,7 @@ export default function CourseSummaryChart({ title }: { title: string }): ReactE
           ]}
           lineKeyPrefix="course-summary"
           hasWMTooltip
-          hasData={Boolean(markCompletion)}
+          hasData={Boolean(markCompletion.length)}
         />
       </div>
     </WMCard>
