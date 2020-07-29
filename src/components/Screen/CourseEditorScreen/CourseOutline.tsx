@@ -1,7 +1,4 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
-
-import { useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
@@ -9,7 +6,7 @@ import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 import CourseOutlineTab from './CourseOutlineTab';
 import classes from './style.module.scss';
 import CourseSettingsTab from './CourseSettingsTab';
-import ActionMenu from './ActionMenu';
+import CourseOutlineDetailsPanel from './CourseOutlineDetailsPanel/CourseOutlineDetailsPanel';
 
 enum TabId {
   CourseOutline = 'course-outline',
@@ -17,9 +14,6 @@ enum TabId {
 }
 
 export default function CourseOutline(): ReactElement {
-  const [state] = useCourseEditorContext();
-  const { isDetailsPanelOpen } = state;
-
   const tabs = [
     {
       id: TabId.CourseOutline,
@@ -44,10 +38,7 @@ export default function CourseOutline(): ReactElement {
           ))}
         </WMTabs>
       </WMCard>
-      <WMCard
-        className={cc([classes['details-panel'], { [classes['open']]: isDetailsPanelOpen }])}
-        title={<div className={classes['title']}>Some Details</div>}
-      />
+      <CourseOutlineDetailsPanel />
     </>
   );
 }
