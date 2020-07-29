@@ -36,6 +36,7 @@ export default function Dialogs(): ReactElement {
         show Publish Dialog
       </WMButton>
       <DialogPublishToEnvironment
+        coursesCount={1}
         open={showPublish}
         onCancel={() => setShowPublish(false)}
         onConfirm={() => setShowPublish(false)}
@@ -54,6 +55,7 @@ export default function Dialogs(): ReactElement {
         show Export Dialog
       </WMButton>
       <ExportToCSVDialog
+        coursesCount={8}
         open={showExport}
         onCancel={() => setShowExport(false)}
         onConfirm={() => setShowExport(false)}
@@ -66,6 +68,19 @@ export default function Dialogs(): ReactElement {
         show Delete Dialog
       </WMButton>
       <DeleteCourseDialog
+        courses={[
+          {
+            avg_quiz_attempts: null,
+            avg_quiz_score: 0,
+            id: 1306527,
+            publishStatus: 1,
+            quiz_passed: false,
+            segments: [],
+            title: 'Getting Started Program',
+            users_completed: 121,
+            users_started: 3261,
+          },
+        ]}
         open={showDeleteCourse}
         onCancel={() => setShowDeleteCourse(false)}
         onConfirm={() => setShowDeleteCourse(false)}

@@ -48,6 +48,9 @@
   --neutral800: #0a2333;
   --neutral700: #78868f;
 
+  // used in dialogs
+  --neutral600: #616775;
+
   // regular text color, item descriptions, crossed off tasks
   --neutral500: #8d8d8d;
   --neutral300: #97adb8;
@@ -62,8 +65,10 @@
   --borderLightGray: #e1e6e9;
 
   // colors for warnings, tags, etc.
+  --delete: #ed1010;
   --red: #fc4040;
   --green: #41c378;
+  --greenVeryTransparent: rgba(65, 195, 120, 0.08);
   --orange: #e9a11c;
   --gray: #a7b3ba;
   // light versions of above colors
@@ -73,8 +78,8 @@
 
   // component colors
   --hover-color: #f7fbff;
-
   --pie-bar-char-background-color: #dfe1e2;
+
   // table
   --table-header-color: #78868f;
   --table-border-color: #dcdcdc;

@@ -18,6 +18,7 @@ export interface IWMConfirmationDialog {
   title?: ReactNode;
   cancelLabel?: string;
   confirmLabel?: string;
+  disableConfirmButton?: boolean;
   onCancel: () => void;
   onConfirm: (data?: any) => void;
   className?: string;
@@ -29,6 +30,7 @@ export default function WMConfirmationDialog({
   title,
   cancelLabel,
   confirmLabel,
+  disableConfirmButton,
   onCancel,
   onConfirm,
   className,
@@ -47,6 +49,7 @@ export default function WMConfirmationDialog({
       onClickCallback: onConfirm,
       shape: 'round',
       variant: ButtonVariantEnum.Primary,
+      disabled: disableConfirmButton,
     },
   ];
 
