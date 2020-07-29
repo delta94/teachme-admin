@@ -27,6 +27,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       environments,
       envId: parseInt(selected.id as string),
     });
+    setSelectedEnv(selected);
 
     message.info(`Environment changed to ${selected.value}`);
   };

@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
+import { allPropertiesAreExist } from '../../../utils';
 import { useAppContext, setAppSystem } from '../../../providers/AppContext';
 import { getSystems } from '../../../walkme';
 
@@ -12,7 +13,6 @@ import WMButton from '../../common/WMButton';
 import { parseSystems } from './utils';
 
 import classes from './style.module.scss';
-import { allPropertiesAreExist } from '../../../utils';
 
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
   const [{ system }, dispatch] = useAppContext();
@@ -27,6 +27,7 @@ export default function SystemMenu({ className }: { className?: string }): React
       systems,
       systemId: parseInt(selected.id as string),
     });
+    setSelectedSystem(selected);
 
     message.info(`System changed to ${selected.value}`);
   };
