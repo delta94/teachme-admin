@@ -3,7 +3,6 @@ import produce from 'immer';
 import { ActionType, IState, IAction } from './course-editor-context.interface';
 
 export const initialState = {
-  courseTitle: 'Untitled Course',
   isFetchingItems: false,
   isFetchingItemsError: false,
   courseItems: [],
@@ -17,6 +16,7 @@ export const initialState = {
   refreshCourseOutline: false,
   courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
+  hasChanges: false,
 } as IState;
 
 export const reducer = produce(
@@ -36,9 +36,6 @@ export const reducer = produce(
         draft.isFetchingItems = false;
         draft.isFetchingItemsError = true;
         break;
-      case ActionType.SetCourseTitle:
-        draft.courseTitle = action.courseTitle ?? initialState.courseTitle;
-        break;
       case ActionType.SetCourseItemsSearchValue:
         draft.courseItemsSearchValue =
           action.courseItemsSearchValue ?? initialState.courseItemsSearchValue;
@@ -52,6 +49,7 @@ export const reducer = produce(
         draft.isFetchingCourse = false;
         draft.isFetchingCourseError = false;
         draft.course = action.course ?? initialState.course;
+        draft.quiz = action.course?.quiz ?? null;
         break;
       case ActionType.FetchCourseError:
         draft.isFetchingCourse = false;
@@ -59,13 +57,17 @@ export const reducer = produce(
         break;
       case ActionType.AddQuiz:
         draft.quiz = draft.course?.addQuiz() ?? null;
+        draft.hasChanges = true;
         break;
       case ActionType.DeleteQuiz:
         draft.course?.deleteQuiz();
         draft.quiz = null;
+        draft.hasChanges = true;
         break;
       case ActionType.UpdateCourseOutline:
         draft.refreshCourseOutline = !draft.refreshCourseOutline;
+        draft.hasChanges =
+          action.updateHasChange !== undefined ? action.updateHasChange : draft.hasChanges;
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =

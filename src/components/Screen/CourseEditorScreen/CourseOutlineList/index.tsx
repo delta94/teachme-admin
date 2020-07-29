@@ -58,7 +58,12 @@ export default function CourseOutlineList<T>({
       course?.items.removeItem(payload);
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline });
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+  };
+
+  const onDeleteTaskItem = (item: any) => {
+    course?.items.removeItem(item);
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
   return (
@@ -67,6 +72,7 @@ export default function CourseOutlineList<T>({
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
         dragClass={classes['card-ghost']}
+        dragHandleSelector=".drag-handle"
         dropPlaceholder={{
           animationDuration: 150,
           showOnTop: true,
@@ -81,6 +87,7 @@ export default function CourseOutlineList<T>({
                 <CourseOutlineLessonItem
                   item={item}
                   key={item.id}
+                  index={i}
                   className={classes['outline-lesson']}
                   handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
                 />
@@ -91,6 +98,8 @@ export default function CourseOutlineList<T>({
                   item={item}
                   className={classes['outline-task']}
                   onClick={(e: any) => handleItemClick && handleItemClick(item)}
+                  deletable
+                  onDelete={onDeleteTaskItem}
                 />
               ),
             )

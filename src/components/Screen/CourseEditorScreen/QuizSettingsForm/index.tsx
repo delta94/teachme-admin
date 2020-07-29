@@ -8,19 +8,17 @@ import {
   fetchItemsList,
   fetchCourse,
   ActionType,
-} from '../../../providers/CourseEditorContext';
+} from '../../../../providers/CourseEditorContext';
 
-import WMInput from '../WMInput';
-import FormGroup from '../FormGroup';
-import WMSwitch from '../WMSwitch';
+import WMInput from '../../../common/WMInput';
+import FormGroup from '../../../common/FormGroup';
+import WMSwitch from '../../../common/WMSwitch';
 
 import classes from './style.module.scss';
 
 export default function QuizSettingsForm({ courseId }: { courseId: number }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course } = state;
-  const [mockState, setMockState] = useState(new Date());
-  const forceRerender = () => setMockState(new Date());
 
   useEffect(() => {
     fetchItemsList(dispatch);
@@ -32,7 +30,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
     if (course?.quiz?.properties) {
       course.quiz.properties = { ...course.quiz.properties, ...updatedData };
-      forceRerender();
+      dispatch({ type: ActionType.UpdateCourseOutline });
     }
   };
 
@@ -45,7 +43,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
       if (course?.quiz) {
         course.quiz.properties = { ...course.quiz.properties, ...{ passmark: quizPassmark } };
-        forceRerender();
+        dispatch({ type: ActionType.UpdateCourseOutline });
       }
     }
   };
