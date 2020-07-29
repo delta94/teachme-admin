@@ -12,17 +12,21 @@ import {
   SubtextCell,
 } from '../../common/tableCells';
 
+import classes from './style.module.scss';
+
 const tableDateFormat = 'MMM. D, YYYY';
 
 export const columns: ColumnsType<any> = [
   {
     title: 'User',
     dataIndex: UsersColumn.ID,
-    render: (value: string): ReactElement => <TextCell value={<b>{value}</b>} />,
+    render: (value: string): ReactElement => (
+      <TextCell className={classes['user-cell']} value={value} />
+    ),
   },
   {
     title: 'Course Name',
-    dataIndex: UsersColumn.COURSE_ID,
+    dataIndex: 'title',
     render: (value: string): ReactElement => <TextCell value={value} />,
   },
   {
@@ -32,7 +36,9 @@ export const columns: ColumnsType<any> = [
       const range = moment(value).fromNow();
       const formattedDate = moment(value).format(tableDateFormat);
 
-      return <SubtextCell value={range} subtext={formattedDate} />;
+      return (
+        <SubtextCell className={classes['started-cell']} value={range} subtext={formattedDate} />
+      );
     },
   },
   {
@@ -43,9 +49,9 @@ export const columns: ColumnsType<any> = [
       const formattedDate = moment(value).format(tableDateFormat);
 
       return value ? (
-        <SubtextCell value={range} subtext={formattedDate} />
+        <SubtextCell className={classes['completed-cell']} value={range} subtext={formattedDate} />
       ) : (
-        <WarningCell value="Did not complete" />
+        <WarningCell className={classes['completed-cell']} value="Did not complete" />
       );
     },
   },
@@ -53,7 +59,11 @@ export const columns: ColumnsType<any> = [
     title: 'Time to Complete',
     dataIndex: UsersColumn.TIME_TO_COMPLETE,
     render: (value: string): ReactElement =>
-      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
+      value ? (
+        <NumberCell className={classes['duration-cell']} value={value} />
+      ) : (
+        <WarningCell className={classes['duration-cell']} value="Did not complete" />
+      ),
   },
   {
     title: 'Quiz Result',
@@ -61,9 +71,9 @@ export const columns: ColumnsType<any> = [
     align: 'right',
     render: (value: number): ReactElement =>
       value ? (
-        <StatusDotCell value={value} passingValue={66} />
+        <StatusDotCell className={classes['result-cell']} value={value} passingValue={66} />
       ) : (
-        <WarningCell value="Did not submit" />
+        <WarningCell className={classes['result-cell']} value="Did not submit" />
       ),
   },
   {
@@ -71,6 +81,10 @@ export const columns: ColumnsType<any> = [
     dataIndex: UsersColumn.QUIZ_ATTEMPTS,
     align: 'right',
     render: (value: string): ReactElement =>
-      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
+      value ? (
+        <NumberCell className={classes['attempts-cell']} value={value} />
+      ) : (
+        <WarningCell className={classes['attempts-cell']} value="Did not complete" />
+      ),
   },
 ];

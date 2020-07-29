@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import { ITextCell } from './tableCells.interface';
 
-export default function TextCell({ value, className, ...otherProps }: ITextCell) {
+export default function TextCell({ value, className, ...otherProps }: ITextCell): ReactElement {
   return (
-    <span className={className} {...otherProps}>
+    <div className={className} {...otherProps}>
       {value}
-    </span>
+    </div>
   );
 }

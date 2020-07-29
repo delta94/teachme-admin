@@ -15,6 +15,7 @@ import { ExportButton } from '../../common/buttons';
 
 // import { courses, statuses, results } from './utils';
 import { columns } from './tableData';
+import ShownUsersIndicator from './ShownUsersIndicator';
 import classes from './style.module.scss';
 
 export default function UsersScreen(): ReactElement {
@@ -23,7 +24,6 @@ export default function UsersScreen(): ReactElement {
     dateRange: { from, to },
     users,
     filteredUsers,
-    totals_unique_users,
     usersSearchValue,
   } = state;
 
@@ -55,13 +55,14 @@ export default function UsersScreen(): ReactElement {
         title="Users"
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
-      <WMCard title={`${totals_unique_users} Users`}>
+      <WMCard className={classes['table-wrapper']}>
         <WMTable className={classes['users-table']} data={filteredUsers} columns={columns}>
-          <ControlsWrapper>
-            {/* <DropdownFilter label="Course Name" options={courses} />
+          <ShownUsersIndicator />
+          {/* <ControlsWrapper>
+            <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
-            <DropdownFilter label="Quiz Results" options={results} /> */}
-          </ControlsWrapper>
+            <DropdownFilter label="Quiz Results" options={results} />
+          </ControlsWrapper> */}
           <ControlsWrapper>
             <ExportButton className={classes['export-btn']} />
             <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
