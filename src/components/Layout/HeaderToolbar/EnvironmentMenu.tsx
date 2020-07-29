@@ -12,6 +12,7 @@ import WMButton from '../../common/WMButton';
 import { parseEnvironments } from './utils';
 
 import classes from './style.module.scss';
+import { allPropertiesAreExist } from '../../../utils';
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
   const [{ environment }, dispatch] = useAppContext();
@@ -48,7 +49,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
   }, []);
 
   useEffect(() => {
-    if (Object.keys(environment).length)
+    if (allPropertiesAreExist(environment))
       setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
   }, [environment]);
 

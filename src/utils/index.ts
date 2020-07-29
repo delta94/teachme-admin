@@ -2,12 +2,16 @@ export * from './getRandom';
 export * from './wmMessage';
 export * from './date';
 
+export const isNotEmpty = (item: any): boolean => Boolean(item);
+
 export const allPropertiesAreExist = (obj: any) => {
-  for (const key in obj) {
-    return !obj[key] && obj[key] !== null && obj[key] !== '';
+  if (obj.constructor === Object && Object.keys(obj).length) {
+    for (const key in obj) {
+      return !isNotEmpty(obj[key]);
+    }
   }
 
-  return Boolean(obj);
+  return !isNotEmpty(obj);
 };
 
 export const propsAreEqual = (first: any, second: any): boolean =>

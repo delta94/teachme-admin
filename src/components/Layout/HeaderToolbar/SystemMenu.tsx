@@ -12,6 +12,7 @@ import WMButton from '../../common/WMButton';
 import { parseSystems } from './utils';
 
 import classes from './style.module.scss';
+import { allPropertiesAreExist } from '../../../utils';
 
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
   const [{ system }, dispatch] = useAppContext();
@@ -48,7 +49,8 @@ export default function SystemMenu({ className }: { className?: string }): React
   }, []);
 
   useEffect(() => {
-    if (Object.keys(system).length) setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
+    if (allPropertiesAreExist(system))
+      setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
   }, [system]);
 
   return (
