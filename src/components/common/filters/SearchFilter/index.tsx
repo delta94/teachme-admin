@@ -1,8 +1,11 @@
-import React, { ReactElement, useState, ChangeEvent } from 'react';
+import React, { ReactElement, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
 
+import { useAppSkeleton } from '../../../../hooks/skeleton';
+
 import Icon, { IconType } from '../../Icon';
+import { WMSkeletonInput } from '../../WMSkeleton';
 
 import classes from './style.module.scss';
 
@@ -19,7 +22,7 @@ export default function SearchFilter({
   value,
   onSearch,
 }: ISearchFilter): ReactElement {
-  const [searchValue, setSearchValue] = useState(value ?? '');
+  const appInit = useAppSkeleton();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -27,12 +30,18 @@ export default function SearchFilter({
   };
 
   return (
-    <Input
-      prefix={<Icon type={IconType.Search} />}
-      className={cc([classes['search-filter'], className])}
-      placeholder={placeholder}
-      value={searchValue}
-      onChange={onChange}
-    />
+    <div className={classes['search-filter']}>
+      {appInit ? (
+        <Input
+          prefix={<Icon type={IconType.Search} />}
+          className={cc([classes['search-filter-input'], className])}
+          placeholder={placeholder}
+          value={searchValue}
+          onChange={onChange}
+        />
+      ) : (
+        <WMSkeletonInput style={{ width: 150 }} active size="default" />
+      )}
+    </div>
   );
 }

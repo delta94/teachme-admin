@@ -9,14 +9,12 @@ span.search-filter {
     border-color: var(--border-light);
   }
 
-  > span {
-    font-size: 16px;
-    margin-right: 8px;
-    opacity: 0.5;
-  }
-
   ::placeholder {
     font-size: 12px;
     font-weight: 600;
   }
+}
+
+:global(.ant-skeleton.ant-skeleton-active .ant-skeleton-input) {
+  margin: 0 10px;
 }

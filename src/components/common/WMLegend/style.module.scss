@@ -21,3 +21,9 @@
     margin-bottom: 50px;
   }
 }
+
+.legend-skeleton {
+  :global(.ant-skeleton-content .ant-skeleton-title + .ant-skeleton-paragraph) {
+    width: 70%;
+  }
+}

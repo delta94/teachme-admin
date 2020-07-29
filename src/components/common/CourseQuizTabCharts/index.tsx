@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Divider } from 'antd';
 
+import { IQuizQuestions } from '../../../constants/mocks/quizBarChart-mock';
+
 import { WMHorizontalBarChart } from '../charts';
 
 import classes from './style.module.scss';
-import { IQuizQuestions } from '../../../constants/mocks/quizBarChart-mock';
 
 export default function CourseQuizTabCharts({ data }: { data: any }): ReactElement {
   return (
