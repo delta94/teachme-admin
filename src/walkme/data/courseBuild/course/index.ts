@@ -44,7 +44,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     this._course = course;
     this.id = course.Id;
     this.title = course.Name;
-    this.items = itemsData.getCourseChildren(options?.light ? course.LinkedDeployables! : []);
+    this.items = itemsData.getCourseChildren(options?.light ? [] : course.LinkedDeployables!);
     this._quiz = new Quiz(course.Quiz);
     this.properties = new CourseProperties(course.Settings);
     this.index = course.OrderIndex;
