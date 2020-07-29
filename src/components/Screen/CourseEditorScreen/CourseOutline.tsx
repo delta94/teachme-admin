@@ -8,6 +8,8 @@ import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 
 import CourseOutlineTab from './CourseOutlineTab';
 import classes from './style.module.scss';
+import CourseSettingsTab from './CourseSettingsTab';
+import ActionMenu from './ActionMenu';
 
 enum TabId {
   CourseOutline = 'course-outline',
@@ -15,7 +17,7 @@ enum TabId {
 }
 
 export default function CourseOutline(): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
+  const [state] = useCourseEditorContext();
   const { isDetailsPanelOpen } = state;
 
   const tabs = [
@@ -27,7 +29,7 @@ export default function CourseOutline(): ReactElement {
     {
       id: TabId.Settings,
       title: 'Settings',
-      content: null, // TODO: add content
+      content: <CourseSettingsTab />,
     },
   ];
 

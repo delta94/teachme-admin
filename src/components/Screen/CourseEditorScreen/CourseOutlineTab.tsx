@@ -23,7 +23,7 @@ export default function CourseOutlineTab(): ReactElement {
   const { course, quiz, courseOutlineSearchValue } = state;
 
   return (
-    <>
+    <div className={classes['course-outline-tab']}>
       <ActionMenu className={classes['add-btn']} />
       {/* <SearchFilter
         className={classes['search']}
@@ -45,6 +45,6 @@ export default function CourseOutlineTab(): ReactElement {
           }}
         />
       )}
-    </>
+    </div>
   );
 }
