@@ -41,6 +41,7 @@ export const fetchUsers = async (
   dispatch({ type: ActionType.FetchUsers });
 
   try {
+    // TODO: utilize 'load more' button using 'first_item_index'
     const { data: users } = await getUsersList(envId, from, to, options);
     const { totals_unique_users } = await getUsersCount(envId, from, to, options);
 
