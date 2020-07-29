@@ -6,13 +6,15 @@ import { SortableHandle } from 'react-sortable-hoc';
 import { PublishStatus, UICourse } from '../../../walkme/data';
 
 import { WMTagColor } from '../../common/WMTag';
-import DashCell from '../../common/tableCells/DashCell';
-import DragHandleCell from '../../common/tableCells/DragHandleCell';
-import LinkCell from '../../common/tableCells/LinkCell';
-import NumberCell from '../../common/tableCells/NumberCell';
-import StatusDotCell from '../../common/tableCells/StatusDotCell';
-import TagCell from '../../common/tableCells/TagCell';
-import TextArrayCell from '../../common/tableCells/TextArrayCell';
+import {
+  DashCell,
+  DragHandleCell,
+  LinkCell,
+  NumberCell,
+  StatusDotCell,
+  TagCell,
+  TextArrayCell,
+} from '../../common/tableCells';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
 
