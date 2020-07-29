@@ -33,7 +33,7 @@ export async function authInit(params: {
 }): Promise<void> {
   walkme.auth.onTokenExpired(() => {
     console.log('Token expired - redirecting to login');
-    walkme.auth.init(params);
+    walkme.auth.logout();
   });
   await walkme.auth.init(params);
 }

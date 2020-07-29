@@ -1,8 +1,15 @@
 .cards-wrapper {
+  --build-page-header-height: 132px;
+  --distance-from-bottom-of-screen: 30px;
+
   flex-grow: 1;
   display: flex;
   font-family: var(--font-primary);
   color: var(--neutral900);
+  height: calc(
+    100vh - var(--header-toolbar-height) - var(--build-page-header-height) -
+      var(--distance-from-bottom-of-screen)
+  );
 
   .resources-list,
   .course-structure,
@@ -12,7 +19,6 @@
     :global(.ant-card-body) {
       display: flex;
       flex-direction: column;
-      min-height: 560px;
       height: 100%;
       padding: 0;
     }
@@ -52,6 +58,14 @@
     .filters-bar {
       padding: 0 20px 13px;
     }
+
+    .resource-item-list {
+      --items-list-height: 60px;
+      --search-filter-height: 58px;
+
+      height: calc(100% - var(--items-list-height) - var(--search-filter-height));
+      overflow: auto;
+    }
   }
 
   .course-structure {
@@ -88,13 +102,22 @@
       }
 
       :global(.ant-tabs-content) {
-        height: 100%;
-
         :global(.ant-tabs-tabpane) {
           display: flex;
           flex-direction: column;
           padding: 0 20px 15px;
+
+          &[tabindex='-1'] {
+            display: none;
+          }
         }
+      }
+
+      :global(.ant-tabs-content-holder) {
+        --tabs-height: 60px;
+
+        height: calc(100% - var(--tabs-height));
+        overflow: auto;
       }
     }
 
@@ -129,5 +152,12 @@
 
   > span {
     margin-right: 10px;
+  }
+}
+
+.header-confirmation-buttons {
+  display: flex;
+  .cancel-button {
+    margin-right: 20px;
   }
 }

@@ -24,4 +24,11 @@ export enum IconType {
   EmptyCourse = 'empty-course',
   EmptyLesson = 'empty-lesson',
   Check = 'check',
+  QuizWelcomeScreen = 'quiz-welcome-screen',
+  QuizFailScreen = 'quiz-fail-screen',
+  QuizSuccessScreen = 'quiz-success-screen',
+  QuizQuestionScreen = 'quiz-question-screen',
+  Remove = 'remove',
+  X = 'x',
+  V = 'v',
 }

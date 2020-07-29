@@ -21,7 +21,7 @@ import classes from './style.module.scss';
 
 const renderWMTooltip = ({ data, lines }: { data: ITooltipContent; lines: IWMLineChartItem[] }) => {
   const { payload, label, active } = data;
-  if (active) {
+  if (active && payload) {
     return (
       <WMChartTooltip
         data={{
@@ -48,7 +48,6 @@ export default function WMLineChart<T extends {}>({
   hasWMTooltip,
   hasData,
 }: IWMLineChartProps<T>): ReactElement {
-
   const appInit = useAppSkeleton();
 
   return (

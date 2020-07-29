@@ -16,7 +16,7 @@ export default function WMSkeletonButton({
 }: IWMSkeletonButton): ReactElement {
   return (
     <Skeleton.Button
-      className={cc([classes['wm-skeleton'], classes['avatar'], className])}
+      className={cc([classes['wm-skeleton'], classes['button'], className])}
       {...otherProps}
     />
   );

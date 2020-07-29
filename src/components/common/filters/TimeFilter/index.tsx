@@ -3,32 +3,48 @@ import cc from 'classcat';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 
+import { ActionType } from '../../../../providers/CoursesContext/courses-context.interface';
+import { useAppContext } from '../../../../providers/AppContext';
+import { useCoursesContext } from '../../../../providers/CoursesContext';
+import { getValidDateRange, IDateRange } from '../../../../utils';
+
+import { WMSkeletonInput } from '../../WMSkeleton';
+
 import { TimeOption } from '../filters.interface';
 
 import classes from './style.module.scss';
 
 const { RangePicker } = DatePicker;
 
-export default function TimeFilter({ className }: { className?: string }): ReactElement {
-  const onChange = (dates: any, dateStrings: any) => {
-    // set the selected dates after changes and call to SDK
-    if (dates) {
-      console.log('From: ', dates[0], ', to: ', dates[1]);
-    }
-    if (dateStrings) {
-      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-    }
-  };
+export default function TimeFilter({
+  className,
+  dateRange,
+  onDateRangeChange,
+}: {
+  className?: string;
+  dateRange: IDateRange;
+  onDateRangeChange: (dateRange: IDateRange | undefined) => void;
+}): ReactElement {
+  const [{ isUpdating }] = useAppContext();
+  const { from, to } = dateRange;
+  const dateFormat = 'YYYY-MM-DD';
+
+  const onChange = (dates: any, dateStrings: string[]) =>
+    onDateRangeChange(getValidDateRange(dateStrings));
+
+  if (isUpdating) {
+    return <WMSkeletonInput active style={{ width: 400 }} />;
+  }
 
   return (
     <div className={cc([classes['time-filter-container'], className])}>
       <span className="label">Time: </span>
       <RangePicker
+        defaultValue={[moment(from, dateFormat), moment(to, dateFormat)]}
         className={classes['wm-range-picker']}
         dropdownClassName={classes['wm-range-picker-dropdown']}
         bordered={false}
         ranges={{
-          // TODO: add here the other options
           [TimeOption.Yesterday]: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
           [TimeOption.LastWeek]: [
             moment().subtract(1, 'weeks').startOf('week'),
@@ -56,19 +72,7 @@ export default function TimeFilter({ className }: { className?: string }): React
           ],
         }}
         onChange={onChange}
-        format="YYYY/MM/DD"
-        // renderExtraFooter={() => {
-        //   return (
-        //     <Button
-        //       type="default"
-        //       onClick={() => {
-        //         console.log('apply');
-        //       }}
-        //     >
-        //       Apply
-        //     </Button>
-        //   );
-        // }}
+        format={dateFormat}
       />
     </div>
   );

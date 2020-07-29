@@ -1,22 +1,30 @@
 import React, { ReactElement, useState } from 'react';
 
-import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
+import { EnvironmentType } from '../../../../interfaces/app.interfaces';
+import { pluralizer } from '../../../../utils';
 
+import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 import { IWMDropdownOption } from '../../WMDropdown';
+
 import EnvironmentDropdown from './EnvironmentDropdown';
 import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
 
 const environments: IWMDropdownOption[] = [
-  { id: 0, value: 'Production' },
-  { id: 1, value: 'Test' },
+  { id: EnvironmentType.Production, value: 'Production' },
+  { id: EnvironmentType.Test, value: 'Test' },
 ];
 
+export interface IPublishToEnvironmentDialog extends IWMConfirmationDialogWrapper {
+  coursesCount: number;
+}
+
 export default function PublishToEnvironmentDialog({
+  coursesCount,
   open,
   onCancel,
   onConfirm,
-}: IWMConfirmationDialogWrapper): ReactElement {
+}: IPublishToEnvironmentDialog): ReactElement {
   const [environment, setEnvironment] = useState<IWMDropdownOption>(environments[0]);
 
   return (
@@ -34,12 +42,13 @@ export default function PublishToEnvironmentDialog({
       }
       confirmLabel={`Publish to ${environment.value}`}
       onCancel={onCancel}
-      onConfirm={onConfirm}
+      onConfirm={() => onConfirm(environment.id)}
     >
       <p>You are about to publish the following courses. Please review before confirmation.</p>
       <ul className={classes['publish-dialog-ul']}>
         <li>
-          <VIcon />1 course
+          <VIcon />
+          {coursesCount} {pluralizer('course', coursesCount)}
         </li>
         <li>
           <VIcon />

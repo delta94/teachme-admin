@@ -54,7 +54,11 @@ export default function ResourcesList(): ReactElement {
         />
       </div>
       {courseItems.length ? (
-        <CourseItemsList items={filteredCourseItems} behaviour="copy" />
+        <CourseItemsList
+          items={filteredCourseItems}
+          behaviour="copy"
+          className={classes['resource-item-list']}
+        />
       ) : (
         <ResourcesListEmptyState />
       )}

@@ -1,12 +1,8 @@
-.wm-radio {
-  .radio-button {
+.wm-radio-button {
+  &:global(.ant-radio-wrapper) {
     display: block;
     height: 30px;
     line-height: 30px;
-  }
-
-  :global(.ant-radio-inner) {
-    border-color: var(--neutral500);
   }
 
   :global(.ant-radio):hover,
@@ -29,4 +25,10 @@
   :global(.ant-radio-input):focus + :global(.ant-radio-inner) {
     box-shadow: 0 0 0 3px var(--primaryVeryTransparent);
   }
+}
+
+.wm-radio-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

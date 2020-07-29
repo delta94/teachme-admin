@@ -16,7 +16,7 @@ import DetailsPanel from '../../../common/DetailsPanel';
 
 import WMCard from '../../../common/WMCard';
 import Icon from '../../../common/Icon';
-import CourseItemDetails from '../../../common/CourseItemDetails';
+import CourseItemDetails from '../../CourseEditorScreen/CourseItemDetails';
 
 import classes from './playground.module.scss';
 
@@ -24,8 +24,6 @@ export default function CourseItemDetailsPanel(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const [selectedItem, setSelectedItem] = useState<any>();
   const { course } = state;
-  const [mockState, setMockState] = useState(new Date());
-  const forceRerender = () => setMockState(new Date());
   const [courseId, setCourseId] = useState(0);
 
   const handleItemChanged = (updatedItem: ContentItem) => {
@@ -43,15 +41,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
     <div className={classes['cards-wrapper']}>
       <WMCard className={cc([classes['buttons'], classes['grow']])}>
         <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1284870)}>
-          Quiz Settings - courseId 1284870
-        </WMButton>
-        <Divider />
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1297234)}>
-          Quiz Settings - courseId 1297234
-        </WMButton>
-        <Divider />
-        <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1277328)}>
-          Quiz Settings - courseId 1277328
+          courseId 1284870
         </WMButton>
         <Divider />
       </WMCard>
@@ -74,9 +64,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
         onClose={() => setSelectedItem((null as unknown) as ContentItem)}
         titleIsEllipsis
       >
-        {selectedItem && (
-          <CourseItemDetails courseItem={selectedItem} courseItemChanged={handleItemChanged} />
-        )}
+        {selectedItem && <CourseItemDetails courseItem={selectedItem} />}
       </DetailsPanel>
     </div>
   );
