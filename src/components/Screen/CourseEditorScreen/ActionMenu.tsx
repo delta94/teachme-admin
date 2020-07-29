@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { getRandomFractionNumber } from '../../../utils';
+import { getRandomNegativeNumber } from '../../../utils';
 
 import Icon, { IconType } from '../../common/Icon';
 import { AddButton } from '../../common/buttons';
@@ -41,14 +41,14 @@ export default function ActionMenu({ className }: { className?: string }): React
       // Add new lesson
       const newLesson = course?.items.addNewItem();
       if (newLesson) {
-        newLesson.id = getRandomFractionNumber();
+        newLesson.id = getRandomNegativeNumber();
       }
     } else {
       // Add new quiz
       dispatch({ type: ActionType.AddQuiz });
     }
 
-    dispatch({ type: ActionType.UpdateCourseOutline });
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
   return (

@@ -25,14 +25,14 @@ export default function CourseOutlineTab(): ReactElement {
   return (
     <>
       <ActionMenu className={classes['add-btn']} />
-      <SearchFilter
+      {/* <SearchFilter
         className={classes['search']}
         placeholder="Search"
         value={courseOutlineSearchValue}
         onSearch={() => {
           console.log('searching');
         }}
-      />
+      /> */}
       {course && (
         <CourseOutlineList items={course?.items.toArray() ?? []} course={course} hasQuiz={!!quiz} />
       )}

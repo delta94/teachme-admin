@@ -26,6 +26,9 @@ import { ReactComponent as QuizWelcomeScreenIcon } from '../../../images/icons/q
 import { ReactComponent as QuizFailScreenIcon } from '../../../images/icons/quiz-fail-screen.svg';
 import { ReactComponent as QuizSuccessScreenIcon } from '../../../images/icons/quiz-success-screen.svg';
 import { ReactComponent as QuizQuestionScreenIcon } from '../../../images/icons/quiz-question-screen.svg';
+import { ReactComponent as RemoveIcon } from '../../../images/icons/remove.svg';
+import { ReactComponent as VIcon } from '../../../images/icons/v.svg';
+import { ReactComponent as XIcon } from '../../../images/icons/x.svg';
 
 import { IconType } from './icon.interface';
 
@@ -59,4 +62,7 @@ export const IconSVG = {
   [IconType.QuizFailScreen]: QuizFailScreenIcon,
   [IconType.QuizSuccessScreen]: QuizSuccessScreenIcon,
   [IconType.QuizQuestionScreen]: QuizQuestionScreenIcon,
+  [IconType.Remove]: RemoveIcon,
+  [IconType.V]: VIcon,
+  [IconType.X]: XIcon,
 };

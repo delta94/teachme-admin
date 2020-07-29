@@ -1,5 +1,4 @@
 export enum ActionType {
-  SetCourseTitle = 'SET_COURSE_TITLE',
   FetchItems = 'FETCH_ITEMS',
   FetchItemsSuccess = 'FETCH_ITEMS_SUCCESS',
   FetchItemsError = 'FETCH_ITEMS_ERROR',
