@@ -1,6 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
 
-import { useUsersContext, fetchUsers, ActionType } from '../../../providers/UsersContext';
+import {
+  useUsersContext,
+  fetchUsers,
+  exportUsers,
+  ActionType,
+} from '../../../providers/UsersContext';
 import { IDateRange } from '../../../utils';
 
 import WMCard from '../../common/WMCard';
@@ -64,7 +69,10 @@ export default function UsersScreen(): ReactElement {
             <DropdownFilter label="Quiz Results" options={results} />
           </ControlsWrapper> */}
           <ControlsWrapper>
-            <ExportButton className={classes['export-btn']} />
+            <ExportButton
+              className={classes['export-btn']}
+              onClick={() => exportUsers(dispatch, 0, from, to)}
+            />
             <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
           </ControlsWrapper>
         </WMTable>

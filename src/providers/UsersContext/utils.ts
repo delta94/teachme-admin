@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import { getUsersList, getUsersCount, exportUsersData } from '../../walkme';
-import { UsersListQueryOptions } from '../../walkme/models';
+import { UsersListQueryOptions, UsersColumn, UsersOrder } from '../../walkme/models';
 import { wmMessage, MessageType } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './users-context.interface';
@@ -57,11 +57,16 @@ export const exportUsers = async (
   envId = 0,
   from: string,
   to: string,
-  options: UsersListQueryOptions,
 ): Promise<void> => {
   dispatch({ type: ActionType.ExportUsers });
 
   try {
+    const options = {
+      first_item_index: 0,
+      num_of_records: 100,
+      sort_by: UsersColumn.ID,
+      sort_by_order: UsersOrder.ASC,
+    };
     await exportUsersData(envId, from, to, options);
 
     dispatch({ type: ActionType.ExportUsersSuccess });
