@@ -17,7 +17,7 @@ function generateColors(colorStart: string, colorEnd: string, steps: number) {
 export default function PieBarChart({
   height,
   width,
-  totalValue = 1000,
+  totalValue = 100,
   bars,
   legendContent: LegendContent,
   colorStart = '#006af7',

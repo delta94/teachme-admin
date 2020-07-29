@@ -6,7 +6,7 @@ import WMCard from '../../WMCard';
 import { IBar } from '../../charts/PieBarChart/pieBarChart.interface';
 
 import { IQuizCompletionRateChart } from '../analytics.interface';
-import { calculatePercentages, convertPercentagesToPieBar } from '../utils';
+import { calculatePercentages } from '../utils';
 
 import WMSkeleton from '../../WMSkeleton';
 import { PieBarChart, PieBarSummary } from '../../charts';
@@ -35,9 +35,8 @@ export default function QuizCompletionRateChart({
     if (totalPercentages)
       setBars([
         {
-          value: convertPercentagesToPieBar(totalPercentages),
+          value: totalPercentages,
           legend: 'Users who completed a course',
-          color: '#AFD7FF',
         },
       ]);
   }, [totalPercentages]);
@@ -57,7 +56,7 @@ export default function QuizCompletionRateChart({
         <div className={className}>
           <PieBarSummary
             value={totalPercentages as number}
-            unit={'%'}
+            unit="%"
             text={` (${overview?.users_passed ?? 0} of ${overview?.users_submitted ?? 0} users)`}
           />
           <PieBarChart bars={bars} legendContent={QuizCompletionRateLegend} />

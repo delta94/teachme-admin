@@ -33,10 +33,8 @@ export const formatMarkCompletionDate = (
     date: moment(item.date).format(format),
   }));
 
-export const convertPercentagesToPieBar = (percentages: number): number => percentages * 10; // convert percentages to PieBarSummary proper value
-
 export const parseBucketsToPieBarSummary = (buckets: any[]): IBar[] =>
   buckets.map((bucket: any) => ({
-    value: convertPercentagesToPieBar(bucket.users_percentages),
+    value: bucket.users_percentages.toFixed(2),
     legend: `${bucket.from}-${bucket.to}`,
   }));
