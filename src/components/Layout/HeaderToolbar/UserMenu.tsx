@@ -23,7 +23,7 @@ export default function UserMenu({
 
   const options: IWMDropdownOption[] = [
     { id: 0, value: user.userName },
-    { id: 1, value: 'Impersonate' },
+    { id: 1, value: user.userIsBackOffice ? 'Impersonate' : '' },
     { id: 2, value: 'Log Out', onClick: () => logout() },
   ];
 
