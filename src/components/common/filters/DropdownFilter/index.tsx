@@ -1,8 +1,8 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
-import { useAppContext } from '../../../../providers/AppContext';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import { WMSkeletonInput } from '../../WMSkeleton';
 import WMDropdown, { IWMDropdownOption } from '../../WMDropdown';
@@ -18,13 +18,7 @@ export default function DropdownFilter({
   options: IWMDropdownOption[];
 }): ReactElement {
   const [selectedOption, setSelectedOption] = useState(options[0]);
-  const [appState, appDispatch] = useAppContext();
-  const { isUpdating } = appState;
-  const [appInit, setAppInit] = useState(false);
-
-  useEffect(() => {
-    if (!isUpdating && !appInit) setAppInit(true);
-  }, [isUpdating, appInit]);
+  const appInit = useAppSkeleton();
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedOption(selected);

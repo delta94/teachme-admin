@@ -1,4 +1,4 @@
-import React, { ReactElement, ChangeEvent } from 'react';
+import React, { ReactElement, useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
 
@@ -22,6 +22,7 @@ export default function SearchFilter({
   value,
   onSearch,
 }: ISearchFilter): ReactElement {
+  const [searchValue, setSearchValue] = useState(value ?? '');
   const appInit = useAppSkeleton();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
