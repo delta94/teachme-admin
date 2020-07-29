@@ -1,21 +1,12 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { Radio } from 'antd';
-import { RadioProps } from 'antd/es/radio';
+import { RadioChangeEvent } from 'antd/lib/radio';
+
 import cc from 'classcat';
 
+import { IWMRadioGroup } from './interface';
+
 import classes from './style.module.scss';
-
-export interface IRadioButton {
-  value: any;
-  label: React.ReactNode;
-}
-
-export interface IWMRadio extends Omit<RadioProps, 'onChange'> {
-  value: any;
-  onChange: (value: number | string) => void;
-  options: Array<IRadioButton>;
-  className?: string;
-}
 
 export default function WMVerticalRadioGroup({
   onChange,
@@ -23,14 +14,14 @@ export default function WMVerticalRadioGroup({
   options,
   className,
   ...otherProps
-}: IWMRadio): ReactElement {
+}: IWMRadioGroup): ReactElement {
   const [localValue, setLocalValue] = useState(value);
 
-  const localOnChange = (e: any) => {
+  const localOnChange = (e: RadioChangeEvent) => {
     const val = e.target.value;
 
     setLocalValue(val);
-    onChange(val);
+    onChange && onChange(e);
   };
 
   useEffect(() => {
@@ -39,13 +30,18 @@ export default function WMVerticalRadioGroup({
 
   return (
     <Radio.Group
-      className={cc([classes['wm-radio'], className])}
+      className={cc([classes['wm-radio-group'], className])}
       onChange={localOnChange}
       value={localValue}
       {...otherProps}
     >
       {options.map((option) => (
-        <Radio key={option.value} value={option.value} className={classes['radio-button']}>
+        <Radio
+          key={option.value}
+          value={option.value}
+          disabled={option.disabled}
+          className={classes['wm-radio-button']}
+        >
           {option.label}
         </Radio>
       ))}

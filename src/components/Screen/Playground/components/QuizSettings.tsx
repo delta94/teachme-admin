@@ -7,7 +7,7 @@ import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import WMCard from '../../../common/WMCard';
 import DetailsPanel from '../../../common/DetailsPanel';
 import Icon, { IconType } from '../../../common/Icon';
-import QuizSettingsForm from '../../../common/QuizSettingsForm';
+import QuizSettingsForm from '../../CourseEditorScreen/QuizSettingsForm';
 
 import classes from './playground.module.scss';
 
@@ -20,14 +20,6 @@ export default function QuizSettings(): ReactElement {
         <WMCard className={cc([classes['buttons'], classes['grow']])}>
           <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1284870)}>
             Quiz Settings - courseId 1284870
-          </WMButton>
-          <Divider />
-          <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1297234)}>
-            Quiz Settings - courseId 1297234
-          </WMButton>
-          <Divider />
-          <WMButton variant={ButtonVariantEnum.Primary} onClick={() => setCourseId(1277328)}>
-            Quiz Settings - courseId 1277328
           </WMButton>
           <Divider />
         </WMCard>

@@ -11,14 +11,4 @@ export const getRandomNumber = (size = 6): number => {
   return parseInt(numberString, 10);
 };
 
-export const getRandomFractionNumber = (size = 6): number => {
-  const number = getRandomNumber();
-
-  const divider = [...Array(size + 1)].map((item, index) => (index === 0 ? 1 : 0)).join('');
-  const parsedDivider = parseInt(divider, 10);
-
-  const fractionNumber = number / parsedDivider;
-  const parsedFractionNumber = parseFloat(`${fractionNumber}`);
-
-  return parseFloat(parsedFractionNumber.toFixed(size));
-};
+export const getRandomNegativeNumber = (size = 6): number => getRandomNumber() * -1;

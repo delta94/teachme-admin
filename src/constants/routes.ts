@@ -20,7 +20,7 @@ export const COURSES_ROUTE = {
 };
 
 export const COURSE_ROUTE = {
-  id: 'courses',
+  id: 'course',
   path: '/course/:courseId',
   hideInSidebar: true,
 };
@@ -33,15 +33,21 @@ export const USERS_ROUTE = {
   title: usersMockData.title,
 };
 
+export const BASE_COURSE_EDITOR_ROUTE = {
+  id: 'course-editor',
+  path: '/course-editor',
+  title: 'course-editor',
+};
+
 export const COURSE_EDITOR_ROUTE = {
   id: 'course-editor',
-  path: '/course-editor/:courseId?',
+  path: `${BASE_COURSE_EDITOR_ROUTE.path}/:courseId?`,
   title: 'course-editor',
 };
 
 export const NEW_COURSE_EDITOR_ROUTE = {
   id: 'new-course',
-  path: '/course-editor/new',
+  path: `${BASE_COURSE_EDITOR_ROUTE.path}/new`,
   title: 'new-course',
 };
 

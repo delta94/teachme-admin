@@ -1,19 +1,28 @@
-.prod-status {
-  color: var(--table-header-color);
+.shown-courses-indicator {
+  font-family: var(--font-secondary);
+  color: var(--neutral900);
+}
+
+.production-status-actions {
+  button:global(.ant-btn) {
+    height: 32px;
+    padding: 0 10px;
+    text-transform: uppercase;
+    margin-right: 10px;
+  }
+}
+
+.delete-courses-button:global(.ant-btn) {
+  font-size: 18px;
 }
 
 .separator:global(.ant-divider-vertical) {
-  height: 33px;
+  height: 32px;
   margin: 0 20px;
 }
 
-.delete-btn:global(.ant-btn) {
-  font-size: 18px;
-  margin-right: 20px;
-}
-
-.create-btn:global(.ant-btn) {
-  margin-right: 20px;
+.search-courses-filter {
+  margin: 0 20px;
 }
 
 .dropdown-tag:global(.ant-tag) {
@@ -42,14 +51,6 @@
     color: var(--empty-text);
     margin-bottom: unset;
     font-weight: unset;
-  }
-
-  .create-btn:global(.ant-btn) {
-    margin-right: unset;
-
-    span {
-      font-size: 12px;
-    }
   }
 }
 

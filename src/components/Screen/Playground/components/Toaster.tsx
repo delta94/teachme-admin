@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Button, Space } from 'antd';
 
-import { wmMessage } from '../../../common/wmMessage';
+import { wmMessage } from '../../../../utils';
 
 export default function Toaster(): ReactElement {
   return (

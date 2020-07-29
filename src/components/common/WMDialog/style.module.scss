@@ -35,7 +35,7 @@
   :global(.ant-modal-body) {
     padding-top: 9px;
     padding-bottom: 9px;
-    color: #616775;
+    color: var(--neutral600);
     font-family: var(--font-primary);
     font-size: 15px;
     letter-spacing: 0.3px;

@@ -1,0 +1,10 @@
+.delete-course-dialog {
+  .bold {
+    font-weight: bold;
+  }
+
+  button:global(.ant-btn):last-of-type {
+    background-color: var(--delete);
+    border-color: var(--delete);
+  }
+}
