@@ -1,7 +1,6 @@
 import React, { ReactElement, useState, useEffect, Key } from 'react';
 import { Divider, message, ConfigProvider } from 'antd';
 
-import { coursesMockData } from '../../../constants/mocks/courses-screen';
 import {
   useCoursesContext,
   fetchCoursesData,
@@ -33,8 +32,6 @@ import { columns } from './tableData';
 import classes from './style.module.scss';
 
 export default function CoursesScreen(): ReactElement {
-  const { title: mainTitle, analytics } = coursesMockData;
-
   const [state, dispatch] = useCoursesContext();
   const {
     dateRange: { from, to },
@@ -103,7 +100,7 @@ export default function CoursesScreen(): ReactElement {
   return (
     <>
       <ScreenHeader
-        title={mainTitle}
+        title="Courses"
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <AnalyticsCharts summaryChartTitle="Users Started / Completed Courses" overview={overview} />
