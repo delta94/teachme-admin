@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react';
 
 import { UICourse } from '../../../../walkme/data';
+import { pluralizer } from '../../../../utils';
 
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 
+import DialogContent from './DialogContent';
 import classes from './styles.module.scss';
 
 export interface IDeleteCourseDialog extends IWMConfirmationDialogWrapper {
@@ -20,23 +22,12 @@ export default function DeleteCourseDialog({
     <WMConfirmationDialog
       className={classes['delete-course-dialog']}
       open={open}
-      title={`Delete Course${courses.length > 1 ? 's' : ''}`}
+      title={`Delete ${pluralizer('Course', courses.length)}`}
       confirmLabel="Delete"
       onCancel={onCancel}
       onConfirm={onConfirm}
     >
-      <p>
-        {'Are you sure you want to delete '}
-        {courses.length > 1 ? (
-          `${courses.length} courses`
-        ) : (
-          <>
-            <span className={classes['bold']}>{courses[0]?.title}</span>
-            {' course'}
-          </>
-        )}
-        {'?'}
-      </p>
+      <DialogContent courses={courses} />
     </WMConfirmationDialog>
   );
 }

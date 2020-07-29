@@ -36,6 +36,7 @@ export default function Dialogs(): ReactElement {
         show Publish Dialog
       </WMButton>
       <DialogPublishToEnvironment
+        coursesCount={1}
         open={showPublish}
         onCancel={() => setShowPublish(false)}
         onConfirm={() => setShowPublish(false)}

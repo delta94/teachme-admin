@@ -1,4 +1,4 @@
-import { Container } from '../itemsContainer';
+import { Container, ITypeIdQueriable, DeployableContainer } from '../itemsContainer';
 import { CourseTask, getCourseItems } from './task';
 import {
   NewCourseItemData,
@@ -13,9 +13,10 @@ import {
 } from '@walkme/types';
 import { createLink } from '../../services/collection';
 import { getGuid } from '../../services/guid';
+import defaults from '../defaults';
 
-export class CourseLesson implements BuildLesson {
-  public childNodes: Container<CourseTask, NewCourseItemData, WalkMeDataCourseNewItem>;
+export class CourseLesson implements BuildLesson, ITypeIdQueriable {
+  public childNodes: DeployableContainer<CourseTask, NewCourseItemData, WalkMeDataCourseNewItem>;
   public id: number;
   public description: string;
   public title: string;
@@ -41,6 +42,10 @@ export class CourseLesson implements BuildLesson {
       LinkedDeployables: this.childNodes.toArray().map((item, index) => createLink(item, index)),
     };
   }
+
+  includes(type: string, id: number) {
+    return this.childNodes.includes(type, id);
+  }
 }
 
 export function newDataModel(index: number, data?: NewCourseLessonData): WalkMeDataNewLesson {
@@ -50,7 +55,7 @@ export function newDataModel(index: number, data?: NewCourseLessonData): WalkMeD
     Id: -index - 1,
     IsModified: true,
     LinkedDeployables: [],
-    Name: `Lesson ${index}`,
+    Name: defaults.NEW_LESSON_NAME,
     OrderIndex: index,
     PublishStatus: 0,
     ResourceId: getGuid(),

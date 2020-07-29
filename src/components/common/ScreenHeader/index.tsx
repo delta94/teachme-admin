@@ -1,7 +1,9 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
 
-import { IDateRange } from '../../../utils';
+import { IDateRange } from '../../../utils/date';
+import { useAppSkeleton } from '../../../hooks/skeleton';
+import { WMSkeletonInput } from '../WMSkeleton';
 
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
@@ -26,20 +28,33 @@ export default function ScreenHeader({
   };
   hideTimeFilter?: boolean;
 }): ReactElement {
+  const appInit = useAppSkeleton();
+
   return (
-    <Header
-      className={cc([classes['screen-header'], className])}
-      titleClassName={classes['screen-header-title']}
-      title={title}
-    >
-      <>
-        {breadcrumbs && <div className={classes['screen-header-breadcrumbs']}>{breadcrumbs}</div>}
-        {children}
-        {/* TODO: add callback on timeFilterChanges */}
-        {!hideTimeFilter && timeFilterProps && (
-          <TimeFilter className={classes['screen-header-time-filter']} {...timeFilterProps} />
+    <>
+      <Header
+        className={cc([classes['screen-header'], className])}
+        titleClassName={classes['screen-header-title']}
+        title={title}
+      >
+        {appInit ? (
+          <>
+            {breadcrumbs && (
+              <div className={classes['screen-header-breadcrumbs']}>{breadcrumbs}</div>
+            )}
+            {children}
+            {!hideTimeFilter && timeFilterProps && (
+              <TimeFilter className={classes['screen-header-time-filter']} {...timeFilterProps} />
+            )}
+          </>
+        ) : (
+          <WMSkeletonInput
+            className={classes['screen-header-skeleton']}
+            style={{ width: 250 }}
+            active
+          />
         )}
-      </>
-    </Header>
+      </Header>
+    </>
   );
 }
