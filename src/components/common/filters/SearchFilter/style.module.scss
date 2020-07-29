@@ -9,13 +9,12 @@ span.search-filter {
     border-color: var(--border-light);
   }
 
-    ::placeholder {
-      font-size: 12px;
-      font-weight: 600;
-    }
+  ::placeholder {
+    font-size: 12px;
+    font-weight: 600;
   }
+}
 
-  :global(.ant-skeleton.ant-skeleton-active .ant-skeleton-input) {
-    margin: 0 10px;
-  }
+:global(.ant-skeleton.ant-skeleton-active .ant-skeleton-input) {
+  margin: 0 10px;
 }
