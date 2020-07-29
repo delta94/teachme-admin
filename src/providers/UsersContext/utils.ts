@@ -36,7 +36,7 @@ export const fetchUsers = async (
   envId = 0,
   from: string,
   to: string,
-  options: UsersListQueryOptions,
+  options?: UsersListQueryOptions,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchUsers });
 

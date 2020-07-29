@@ -38,7 +38,7 @@ export function getUsersList(
   environment: number,
   from: string,
   to: string,
-  options: UsersListQueryOptions,
+  options?: UsersListQueryOptions,
 ): Promise<UsersResponse> {
   const combinedOptions = { ...DEFAULT_OPTIONS, ...options };
   const query = new URLSearchParams();
