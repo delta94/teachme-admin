@@ -54,7 +54,7 @@ export default function TimeFilter({
             moment().subtract(1, 'months').startOf('month'),
             moment().subtract(1, 'months').endOf('month'),
           ],
-          [TimeOption.LastThreeMonth]: [
+          [TimeOption.Last3Months]: [
             moment().subtract(3, 'months').startOf('month'),
             moment().subtract(1, 'months').endOf('month'),
           ],
