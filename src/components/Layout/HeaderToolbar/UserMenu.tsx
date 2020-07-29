@@ -22,9 +22,9 @@ export default function UserMenu({
   const { user } = appState;
 
   const options: IWMDropdownOption[] = [
-    { id: 0, value: user.userName },
-    { id: 1, value: user.userIsBackOffice ? 'Impersonate' : '' },
-    { id: 2, value: 'Log Out', onClick: () => logout() },
+    { id: 'user-name', value: user.userName },
+    { id: 'impersonate', value: 'Impersonate', skip: user.userIsBackOffice },
+    { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
