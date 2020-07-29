@@ -11,6 +11,7 @@ import {
 } from '../../constants/routes';
 import CourseEditorProvider from '../../providers/CourseEditorContext';
 import CoursesProvider from '../../providers/CoursesContext';
+import CourseProvider from '../../providers/CourseContext';
 
 import SplashScreen from './SplashScreen';
 import ErrorScreen from './ErrorScreen';
@@ -32,7 +33,9 @@ export default function Screen(): ReactElement {
           </CoursesProvider>
         </Route>
         <Route path={COURSE_ROUTE.path}>
-          <CourseScreen />
+          <CourseProvider>
+            <CourseScreen />
+          </CourseProvider>
         </Route>
         <Route path={USERS_ROUTE.path}>
           <UsersScreen />

@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, Key } from 'react';
 import { Divider, ConfigProvider } from 'antd';
 
+import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 import { IDateRange } from '../../../utils';
@@ -25,6 +26,7 @@ import { columns } from './tableData';
 import classes from './style.module.scss';
 
 export default function CoursesScreen(): ReactElement {
+  const [{ environment, system }, appDispatch] = useAppContext();
   const [state, dispatch] = useCoursesContext();
   const {
     dateRange: { from, to },
@@ -35,8 +37,9 @@ export default function CoursesScreen(): ReactElement {
   } = state;
 
   useEffect(() => {
-    fetchCoursesData(dispatch, 0, from, to);
-  }, [dispatch, from, to]);
+    const envId = environment?.id ?? 0;
+    fetchCoursesData(dispatch, envId, from, to);
+  }, [dispatch, environment, system, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);

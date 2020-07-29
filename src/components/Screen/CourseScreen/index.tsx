@@ -1,6 +1,8 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useAppContext } from '../../../providers/AppContext';
+import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
 import { courseMockData } from '../../../constants/mocks/course-screen';
 import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
 
@@ -12,8 +14,24 @@ export const getCourseById = ({ courses, id }: { courses: any[]; id: string }): 
   courses.find((course) => course.key === id);
 
 export default function CourseScreen(): ReactElement {
+  const [{ environment, system }, appDispatch] = useAppContext();
+  const [state, dispatch] = useCourseContext();
+  const {
+    dateRange: { from, to },
+    overview,
+    // course,
+  } = state;
+
   const { courseId } = useParams();
   const [course, setCourse] = useState(null as any);
+
+  // useEffect(() => {
+  //   const envId = environment?.id ?? 0;
+  //   fetchCourseData(dispatch, courseId, envId, from, to);
+  // }, [dispatch, courseId, environment, system, from, to]);
+
+  // // Unmount only
+  // useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);
 
   useEffect(() => {
     setCourse(null);
