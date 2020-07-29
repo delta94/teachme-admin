@@ -3,7 +3,6 @@ import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
-import { allPropertiesAreExist } from '../../../utils';
 import { useAppContext, setAppSystem } from '../../../providers/AppContext';
 import { getSystems } from '../../../walkme';
 
@@ -27,7 +26,6 @@ export default function SystemMenu({ className }: { className?: string }): React
       systems,
       systemId: parseInt(selected.id as string),
     });
-    setSelectedSystem(selected);
 
     message.info(`System changed to ${selected.value}`);
   };
@@ -50,9 +48,8 @@ export default function SystemMenu({ className }: { className?: string }): React
   }, []);
 
   useEffect(() => {
-    if (allPropertiesAreExist(system))
-      setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
-  }, [system]);
+    if (system?.userId) setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
+  }, [system, system.userId]);
 
   return (
     <WMDropdown

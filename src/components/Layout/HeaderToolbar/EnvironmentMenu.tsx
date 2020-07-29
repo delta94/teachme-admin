@@ -3,7 +3,6 @@ import { WalkMeEnvironment } from '@walkme/editor-sdk';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
-import { allPropertiesAreExist } from '../../../utils';
 import { useAppContext, setAppEnvironment } from '../../../providers/AppContext';
 import { getEnvironments } from '../../../walkme';
 
@@ -50,9 +49,8 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
   }, []);
 
   useEffect(() => {
-    if (allPropertiesAreExist(environment))
-      setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
-  }, [environment]);
+    if (environment?.id) setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
+  }, [environment, environment.id]);
 
   return (
     <WMDropdown
