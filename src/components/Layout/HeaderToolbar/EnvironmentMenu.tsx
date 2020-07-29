@@ -1,4 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
+import { WalkMeEnvironment } from '@walkme/editor-sdk';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
@@ -11,14 +12,11 @@ import WMButton from '../../common/WMButton';
 import { parseEnvironments } from './utils';
 
 import classes from './style.module.scss';
-import { WalkMeEnvironment } from '@walkme/editor-sdk';
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
   const [{ environment }, dispatch] = useAppContext();
 
-  const [selectedEnv, setSelectedEnv] = useState(
-    parseEnvironments([environment]) as IWMDropdownOption,
-  );
+  const [selectedEnv, setSelectedEnv] = useState<IWMDropdownOption>();
   const [environments, setEnvironments] = useState<WalkMeEnvironment[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
 
@@ -50,7 +48,8 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
   }, []);
 
   useEffect(() => {
-    setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
+    if (Object.keys(environment).length)
+      setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
   }, [environment]);
 
   return (
@@ -61,7 +60,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       onSelectedChange={handleMenuClick}
     >
       <WMButton className={classes['dropdown-menu-button']}>
-        {selectedEnv.value}
+        {selectedEnv ? selectedEnv.value : (Boolean(options.length) && options[0].value) ?? ''}
         <DownOutlined />
       </WMButton>
     </WMDropdown>

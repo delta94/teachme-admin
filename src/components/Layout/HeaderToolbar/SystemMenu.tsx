@@ -16,8 +16,7 @@ import classes from './style.module.scss';
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
   const [{ system }, dispatch] = useAppContext();
 
-  const [selectedSystem, setSelectedSystem] = useState(parseSystems([system]) as IWMDropdownOption);
-
+  const [selectedSystem, setSelectedSystem] = useState<IWMDropdownOption>();
   const [systems, setSystems] = useState<SystemData[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
 
@@ -49,7 +48,7 @@ export default function SystemMenu({ className }: { className?: string }): React
   }, []);
 
   useEffect(() => {
-    setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
+    if (Object.keys(system).length) setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
   }, [system]);
 
   return (
@@ -60,7 +59,9 @@ export default function SystemMenu({ className }: { className?: string }): React
       onSelectedChange={handleMenuClick}
     >
       <WMButton className={classes['dropdown-menu-button']}>
-        {selectedSystem.value}
+        {selectedSystem
+          ? selectedSystem.value
+          : (Boolean(options.length) && options[0].value) ?? ''}
         <DownOutlined />
       </WMButton>
     </WMDropdown>

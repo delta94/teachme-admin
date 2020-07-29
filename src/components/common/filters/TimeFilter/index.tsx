@@ -31,7 +31,9 @@ export default function TimeFilter({
     onDateRangeChange(getValidDateRange(dateStrings));
 
   if (isUpdating) {
-    return <WMSkeletonInput active style={{ width: 400 }} />;
+    return (
+      <WMSkeletonInput className={classes['time-filter-skeleton']} active style={{ width: 400 }} />
+    );
   }
 
   return (
