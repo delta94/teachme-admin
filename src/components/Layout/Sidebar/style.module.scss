@@ -18,3 +18,29 @@
     min-width: calc(100% - 38px);
   }
 }
+
+.sidebar-skeleton {
+  width: var(--sidebar-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  margin-top: 18px;
+
+  > * {
+    padding: unset;
+  }
+
+  .sidebar-top-skeleton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+
+    > * {
+      margin: 20px 0;
+    }
+  }
+}

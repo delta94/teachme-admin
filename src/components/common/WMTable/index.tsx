@@ -4,6 +4,10 @@ import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { SortEnd, SortEvent, SortStart, SortStartHandler } from 'react-sortable-hoc';
 
+import { useAppSkeleton } from '../../../hooks/skeleton';
+
+import WMSkeleton from '../WMSkeleton';
+
 import SortableTableBody from './SortableTableBody';
 import SortableRow from './SortableRow';
 
@@ -27,6 +31,8 @@ export default function WMTable({
   onSortStart,
   ...otherProps
 }: IWMTable): ReactElement {
+  const appInit = useAppSkeleton();
+
   const isSortable = typeof onSortEnd === 'function';
 
   const onSortStartCallback = (sort: SortStart, event: SortEvent) => {
@@ -75,15 +81,21 @@ export default function WMTable({
   return (
     <div className={classes['wm-table']}>
       {children && <div className={classes['toolbar']}>{children}</div>}
-      <Table
-        rowSelection={rowSelection}
-        pagination={false}
-        dataSource={data}
-        columns={columns}
-        rowKey={(record: any, index?: number) => index as React.Key}
-        {...componentsProps}
-        {...otherProps}
-      />
+      {appInit ? (
+        <>
+          <Table
+            rowSelection={rowSelection}
+            pagination={false}
+            dataSource={data}
+            columns={columns}
+            rowKey={(record: any, index?: number) => index as React.Key}
+            {...componentsProps}
+            {...otherProps}
+          />
+        </>
+      ) : (
+        <WMSkeleton active paragraph={{ rows: 10 }} />
+      )}
     </div>
   );
 }
