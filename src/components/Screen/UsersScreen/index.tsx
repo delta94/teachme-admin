@@ -38,8 +38,8 @@ export default function UsersScreen(): ReactElement {
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
   const onSearch = (searchValue: string) => {
-    const newUsersList = users.filter(({ title }) =>
-      title.toLowerCase().includes(searchValue.toLowerCase()),
+    const newUsersList = users.filter(({ id }) =>
+      id.toLowerCase().includes(searchValue.toLowerCase()),
     );
 
     dispatch({
@@ -56,7 +56,7 @@ export default function UsersScreen(): ReactElement {
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <WMCard title={`${totals_unique_users} Users`}>
-        <WMTable data={filteredUsers} columns={columns}>
+        <WMTable className={classes['users-table']} data={filteredUsers} columns={columns}>
           <ControlsWrapper>
             {/* <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
