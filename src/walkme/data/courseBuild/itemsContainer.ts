@@ -75,7 +75,51 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
   }
 }
 
+export class DeployableContainer<
+  UIModel extends MappableAndQueriable<DataModel>,
+  NewItemData,
+  DataModel
+> extends Container<UIModel, NewItemData, DataModel> implements ITypeIdQueriable {
+  private _itemsMap: { [key: string]: { [key: number]: boolean } } = {};
+
+  public addNewItem(index?: number, data?: NewItemData): UIModel {
+    const item = super.addNewItem(index, data);
+    this._itemsMap[item.type] = this._itemsMap[item.type] ?? {};
+    this._itemsMap[item.type][item.id] = true;
+    return item;
+  }
+
+  public removeItem(item: UIModel): void {
+    super.removeItem(item);
+    this._itemsMap[item.type][item.id] = false;
+  }
+
+  public includes(type: string, id: number): boolean {
+    return (
+      this._itemsMap[type]?.[id] ||
+      this.toArray().some(
+        (item) => isTypeIdQueriable<ITypeIdQueriable>(item) && item.includes(type, id),
+      )
+    );
+  }
+}
+
 export interface Mappable<DataModel> {
   id: number;
   toDataModel(index: number): DataModel;
+}
+
+export interface TypeIdQueriable {
+  id: number;
+  type: string;
+}
+
+export interface MappableAndQueriable<T> extends Mappable<T>, TypeIdQueriable {}
+
+export interface ITypeIdQueriable {
+  includes(type: string, id: number): boolean;
+}
+
+function isTypeIdQueriable<T>(type: any): type is T {
+  return typeof (type as any).includes == 'function';
 }

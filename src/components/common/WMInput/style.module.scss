@@ -12,7 +12,7 @@
 
     &:hover,
     &:focus {
-      border-color: #cdced1;
+      border-color: var(--border-light);
       box-shadow: none;
     }
   }

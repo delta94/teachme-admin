@@ -1,9 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
+import { useAppSkeleton } from '../../../../hooks/skeleton';
+
 import { PieBarChart, PieBarSummary } from '../../charts';
 import WMCard from '../../WMCard';
 import { IBar } from '../../charts/PieBarChart/pieBarChart.interface';
 
+import WMSkeleton from '../../WMSkeleton';
 import { ICoursesTimeCompletionChart } from '../analytics.interface';
 import { parseBucketsToPieBarSummary } from '../utils';
 
@@ -16,6 +19,7 @@ export default function CoursesTimeCompletionChart({
 }: ICoursesTimeCompletionChart): ReactElement {
   const [completionTimeAvg, setCompletionTimeAvg] = useState<number>();
   const [bars, setBars] = useState<IBar[]>([]);
+  const appInit = useAppSkeleton();
 
   useEffect(() => {
     if (overview?.completion_time) {
@@ -39,10 +43,14 @@ export default function CoursesTimeCompletionChart({
 
   return (
     <WMCard title={title}>
-      <div className={className}>
-        <PieBarSummary value={completionTimeAvg as number} unit=" min" />
-        <PieBarChart bars={bars} legendContent={AvgCompletionTimeLegend} />
-      </div>
+      {appInit ? (
+        <div className={className}>
+          <PieBarSummary value={completionTimeAvg as number} unit=" min" />
+          <PieBarChart bars={bars} legendContent={AvgCompletionTimeLegend} />
+        </div>
+      ) : (
+        <WMSkeleton active paragraph={{ rows: 2 }} />
+      )}
     </WMCard>
   );
 }

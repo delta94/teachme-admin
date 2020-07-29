@@ -1,8 +1,12 @@
 import React, { ReactElement } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
-import classes from './style.module.scss';
 import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
+import { useAppSkeleton } from '../../../../hooks/skeleton';
+
+import WMSkeleton from '../../WMSkeleton';
+
+import classes from './style.module.scss';
 
 const colors = [
   '#006AF7',
@@ -87,6 +91,8 @@ export default function WMHorizontalBarChart({
   bars,
   totalValue,
 }: IWMHorizontalBarChart): ReactElement {
+  const appInit = useAppSkeleton();
+
   return (
     <div className={classes['wm-horizontal-bar-chart']}>
       <ResponsiveContainer
@@ -94,28 +100,32 @@ export default function WMHorizontalBarChart({
         height={bars.length * 40}
         className={classes['bar-chart-container']}
       >
-        <BarChart data={bars} maxBarSize={16} layout={'vertical'}>
-          <XAxis type={'number'} orientation={'bottom'} hide />
-          <YAxis
-            type={'category'}
-            orientation={'left'}
-            dataKey={'title'}
-            tickLine={false}
-            axisLine={{ stroke: 'transparent' }}
-            interval={0}
-            width={200}
-            tick={(props) => <YAxisTick {...props} bars={bars} />}
-          />
-          <Bar
-            dataKey="value"
-            radius={[0, 16, 16, 0]}
-            label={(props: any) => <BarLabel {...props} totalValue={totalValue} />}
-          >
-            {bars.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index]} />
-            ))}
-          </Bar>
-        </BarChart>
+        {appInit ? (
+          <BarChart data={bars} maxBarSize={16} layout={'vertical'}>
+            <XAxis type={'number'} orientation={'bottom'} hide />
+            <YAxis
+              type={'category'}
+              orientation={'left'}
+              dataKey={'title'}
+              tickLine={false}
+              axisLine={{ stroke: 'transparent' }}
+              interval={0}
+              width={200}
+              tick={(props) => <YAxisTick {...props} bars={bars} />}
+            />
+            <Bar
+              dataKey="value"
+              radius={[0, 16, 16, 0]}
+              label={(props: any) => <BarLabel {...props} totalValue={totalValue} />}
+            >
+              {bars.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={colors[index]} />
+              ))}
+            </Bar>
+          </BarChart>
+        ) : (
+          <WMSkeleton active paragraph={{ rows: 5 }} />
+        )}
       </ResponsiveContainer>
     </div>
   );

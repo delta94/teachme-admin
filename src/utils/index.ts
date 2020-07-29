@@ -16,3 +16,5 @@ export const allPropertiesAreExist = (obj: any) => {
 
 export const propsAreEqual = (first: any, second: any): boolean =>
   JSON.stringify(first) === JSON.stringify(second);
+
+export const pluralizer = (word: string, count: number): string => (count > 1 ? `${word}s` : word);

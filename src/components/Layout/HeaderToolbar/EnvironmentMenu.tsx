@@ -3,6 +3,7 @@ import { WalkMeEnvironment } from '@walkme/editor-sdk';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 
+import { allPropertiesAreExist } from '../../../utils';
 import { useAppContext, setAppEnvironment } from '../../../providers/AppContext';
 import { getEnvironments } from '../../../walkme';
 
@@ -12,7 +13,6 @@ import WMButton from '../../common/WMButton';
 import { parseEnvironments } from './utils';
 
 import classes from './style.module.scss';
-import { allPropertiesAreExist } from '../../../utils';
 
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
   const [{ environment }, dispatch] = useAppContext();
