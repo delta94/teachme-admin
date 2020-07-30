@@ -37,8 +37,8 @@ export default function AnalyticsCharts({
             <QuizScoreChart
               isEmpty={Object.keys(quizData).length === 0}
               quizData={{
-                average: 0, // overview.average
-                passmark: quizData.properties.passmark,
+                average: 0, // TODO: should use overview.avg_quiz_score - but getting error Property 'passmark' does not exist on type 'AllCoursesOverviewResponse | CourseOverviewData'
+                passmark: quizData.properties.passmark, // TODO: should use `overview?.passmark` but getting error Property 'passmark' does not exist on type 'AllCoursesOverviewResponse | CourseOverviewData'
               }}
             />
           )}

@@ -67,7 +67,7 @@ const BarLabel = ({
   name: any;
   totalValue: number;
 }) => {
-  const percent = ((value / totalValue) * 100).toFixed(1);
+  const percent = totalValue ? ((value / totalValue) * 100).toFixed(1) : 0;
 
   return (
     <text
@@ -118,9 +118,13 @@ export default function WMHorizontalBarChart({
               radius={[0, 16, 16, 0]}
               label={(props: any) => <BarLabel {...props} totalValue={totalValue} />}
             >
-              {bars.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]} />
-              ))}
+              {bars.map((entry, index) =>
+                totalValue ? (
+                  <Cell key={`cell-${index}`} fill={colors[index]} />
+                ) : (
+                  <Cell key={`cell-${index}`} fill="#ccc" width={500} />
+                ),
+              )}
             </Bar>
           </BarChart>
         ) : (
