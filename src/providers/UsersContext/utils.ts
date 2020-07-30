@@ -1,7 +1,12 @@
 import { createContext, useContext } from 'react';
 
 import { getUsersList, getUsersCount, exportUsersData } from '../../walkme';
-import { UsersListQueryOptions, UsersColumn, UsersOrder } from '../../walkme/models';
+import {
+  UsersListQueryOptions,
+  UsersColumn,
+  UsersOrder,
+  UserListUILineItem,
+} from '../../walkme/models';
 import { wmMessage, MessageType } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './users-context.interface';
@@ -43,14 +48,22 @@ export const fetchUsers = async (
   envId: number,
   from: string,
   to: string,
+  prevUsers?: Array<UserListUILineItem>,
   options?: UsersListQueryOptions,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchUsers });
 
   try {
-    // TODO: utilize 'load more' button using 'first_item_index'
-    const { data: users } = await getUsersList(envId, from, to, options ?? defaultQueryOptions);
+    const { data } = await getUsersList(envId, from, to, options ?? defaultQueryOptions);
     const { totals_unique_users, total_rows } = await getUsersCount(envId, from, to, options);
+
+    let users = [];
+
+    if (prevUsers && options) {
+      users = [...prevUsers, ...data];
+    } else {
+      users = [...data];
+    }
 
     dispatch({ type: ActionType.FetchUsersSuccess, users, totals_unique_users, total_rows });
   } catch (error) {
