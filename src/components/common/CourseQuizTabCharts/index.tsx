@@ -17,8 +17,13 @@ export default function CourseQuizTabCharts({
   data: any;
   quiz: Quiz;
 }): ReactElement {
-  // TODO: The data doesn't match to the expected data structure.
-  console.log('quiz ', quiz);
+  /**
+   * The data doesn't match to the expected data structure.
+   * using the commented code and the console.log as reference.
+   * TODO: remove the comments and the hard-coded values after getting a proper data
+   * */
+
+  // console.log('quiz ', quiz);
 
   // return (
   //   <div className={classes['course-quiz-tab-charts']}>

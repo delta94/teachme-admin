@@ -33,7 +33,7 @@ export default function CourseTabs({ course }: ICourseTabs): ReactElement {
       itemsLength: quizData.questions.length,
       icon: <Icon type={IconType.Quiz} />,
       isDisabled: !quiz || Object.keys(quiz).length === 0,
-      content: <CourseQuizTabCharts data={quizData} quiz={quiz} />, // TODO: after integration replace mock data with prop course
+      content: <CourseQuizTabCharts data={quizData} quiz={quiz} />, // TODO: after integration replace the prop data
     },
   ];
 
