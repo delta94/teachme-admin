@@ -1,16 +1,22 @@
-.time-filter-container {
-  .wm-time-filter {
-    display: flex;
-    justify-content: flex-end;
+.time-filter {
+  &-container {
+    .wm-time-filter {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .wm-range-picker {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      :global(.ant-picker-input) {
+        min-width: 90px;
+      }
+    }
   }
 
-  .wm-range-picker {
-    padding-top: 0;
-    padding-bottom: 0;
-
-    :global(.ant-picker-input) {
-      min-width: 90px;
-    }
+  &-skeleton {
+    max-width: 400px;
   }
 }
 

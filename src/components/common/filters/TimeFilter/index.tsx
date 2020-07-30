@@ -3,9 +3,7 @@ import cc from 'classcat';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 
-import { ActionType } from '../../../../providers/CoursesContext/courses-context.interface';
 import { useAppContext } from '../../../../providers/AppContext';
-import { useCoursesContext } from '../../../../providers/CoursesContext';
 import { getValidDateRange, IDateRange } from '../../../../utils';
 
 import { WMSkeletonInput } from '../../WMSkeleton';
@@ -33,7 +31,9 @@ export default function TimeFilter({
     onDateRangeChange(getValidDateRange(dateStrings));
 
   if (isUpdating) {
-    return <WMSkeletonInput active style={{ width: 400 }} />;
+    return (
+      <WMSkeletonInput className={classes['time-filter-skeleton']} active style={{ width: 400 }} />
+    );
   }
 
   return (

@@ -71,6 +71,7 @@ export default function WMLineChart<T extends {}>({
                     type="monotone"
                     dataKey={dataKey}
                     stroke={stroke}
+                    dot={data.length === 1}
                   />
                 ))}
               </LineChart>
