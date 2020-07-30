@@ -29,6 +29,7 @@ import classes from './style.module.scss';
 export default function UsersScreen(): ReactElement {
   const [appState] = useAppContext();
   const {
+    isUpdating,
     system,
     environment: { id: envId },
   } = appState;
@@ -44,8 +45,8 @@ export default function UsersScreen(): ReactElement {
 
     if (usersSearchValue.length) options.user_name = usersSearchValue;
 
-    fetchUsers(dispatch, envId, from, to, options);
-  }, [system, envId, dispatch, from, to, usersSearchValue]);
+    if (!isUpdating) fetchUsers(dispatch, envId, from, to, options);
+  }, [dispatch, isUpdating, system, envId, from, to, usersSearchValue]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);

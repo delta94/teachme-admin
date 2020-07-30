@@ -44,7 +44,7 @@ export const useCoursesContext = (): [IState, IDispatch] => [
 
 export const fetchCoursesData = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   from: string,
   to: string,
 ): Promise<void> => {
