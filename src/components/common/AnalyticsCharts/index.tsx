@@ -33,7 +33,15 @@ export default function AnalyticsCharts({
             title={quizCompletionTitle}
             overview={overview}
           />
-          {quizData && <QuizScoreChart quizData={quizData} />}
+          {quizData && (
+            <QuizScoreChart
+              isEmpty={Object.keys(quizData).length === 0}
+              quizData={{
+                average: 0, // overview.average
+                passmark: quizData.properties.passmark,
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ import SearchCoursesFilter from './SearchCoursesFilter';
 // import { statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
+import { AllCoursesOverviewResponse } from '../../../walkme/models';
 
 // TODO: add cleanups to fetchCoursesData
 export default function CoursesScreen(): ReactElement {
@@ -77,7 +78,10 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
-      <AnalyticsCharts summaryChartTitle="Users Started / Completed Courses" overview={overview} />
+      <AnalyticsCharts
+        summaryChartTitle="Users Started / Completed Courses"
+        overview={overview as AllCoursesOverviewResponse}
+      />
       <WMCard
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."

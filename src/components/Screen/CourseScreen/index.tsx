@@ -9,6 +9,7 @@ import { courseMockData } from '../../../constants/mocks/course-screen';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
+import { CourseOverviewData } from '../../../walkme/models';
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
@@ -47,8 +48,8 @@ export default function CourseScreen(): ReactElement {
       />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Course"
-        overview={overview}
-        quizData={courseMockData.analytics.quizData}
+        overview={overview as CourseOverviewData}
+        quizData={course?.quiz}
       />
       <CourseTabs course={course} />
     </>
