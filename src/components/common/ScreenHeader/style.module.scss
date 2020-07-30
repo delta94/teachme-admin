@@ -16,20 +16,16 @@
     line-height: 22px;
   }
 
-  &-time-filter {
+  .screen-header-time-filter,
+  .screen-header-time-filter:global(.ant-skeleton) {
     margin-left: auto;
     margin-bottom: 10px;
     display: flex;
     flex: 1 1 auto;
   }
 
-  &-breadcrumbs {
+  .screen-header-breadcrumbs {
     margin-bottom: 25px;
     order: -1;
-  }
-
-  .screen-header-skeleton {
-    justify-content: flex-end;
-    display: flex;
   }
 }
