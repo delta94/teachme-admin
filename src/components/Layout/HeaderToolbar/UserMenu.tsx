@@ -24,14 +24,10 @@ export default function UserMenu({
 
   const options: IWMDropdownOption[] = [
     { id: 'user-name', value: user.userName },
-    { id: 'impersonate', value: 'Impersonate' },
+    { id: 'impersonate', value: 'Impersonate', skip: !impersonate.userIsBackOffice },
     { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
 
-  if (!impersonate.userIsBackOffice) {
-    const index = options.findIndex((option) => option.id === 'impersonate');
-    options.splice(index, 1);
-  }
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     message.info(`User clicked on ${selected.value}`);
