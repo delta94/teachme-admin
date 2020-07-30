@@ -14,7 +14,7 @@ export async function getUsersList(
   environment: number,
   from: string,
   to: string,
-  options: UsersListQueryOptions,
+  options?: UsersListQueryOptions,
 ): Promise<UserListUIResponse> {
   const usersData = await users.getUsersList(environment, from, to, options);
   return {

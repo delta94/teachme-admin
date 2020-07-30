@@ -5,7 +5,6 @@ import { useCoursesContext, fetchCoursesData, ActionType } from '../../../provid
 import { UICourse } from '../../../walkme/data';
 import { IDateRange } from '../../../utils';
 
-import { useAppSkeleton } from '../../../hooks/skeleton';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { CreateButton } from '../../common/buttons';
@@ -40,9 +39,6 @@ export default function CoursesScreen(): ReactElement {
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
-
-  // skeleton
-  const appInit = useAppSkeleton();
 
   const onMultiSelectChange = (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
     dispatch({

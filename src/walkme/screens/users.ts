@@ -19,7 +19,7 @@ export function getUsersList(
   environment: number,
   from: string,
   to: string,
-  options: UsersListQueryOptions,
+  options?: UsersListQueryOptions,
 ): Promise<UserListUIResponse> {
   return data.getUsersList(environment, from, to, options);
 }
@@ -35,7 +35,7 @@ export function getUsersCount(
   environment: number,
   from: string,
   to: string,
-  options: UsersCountQueryOptions,
+  options?: UsersCountQueryOptions,
 ): Promise<UsersCountResponse> {
   return analytics.getUsersCount(environment, from, to, options);
 }
