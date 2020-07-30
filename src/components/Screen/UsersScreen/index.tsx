@@ -27,6 +27,7 @@ import classes from './style.module.scss';
 export default function UsersScreen(): ReactElement {
   const [appState] = useAppContext();
   const {
+    isUpdating,
     system,
     environment: { id: envId },
   } = appState;
@@ -39,8 +40,8 @@ export default function UsersScreen(): ReactElement {
   } = state;
 
   useEffect(() => {
-    fetchUsers(dispatch, envId, from, to);
-  }, [system, envId, dispatch, from, to]);
+    if (!isUpdating) fetchUsers(dispatch, envId, from, to);
+  }, [dispatch, isUpdating, system, envId, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
