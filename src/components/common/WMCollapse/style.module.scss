@@ -23,25 +23,20 @@
       }
 
       &:hover {
-        .collapse-button {
+        /* .collapse-button {
           margin-right: 10px;
           margin-left: 3px;
-        }
+        } */
 
-        .drag-handle {
-          display: flex;
+        .collapse-drag-handle {
+          visibility: visible;
         }
       }
     }
   }
 
-  .drag-handle {
-    cursor: grab;
-    justify-content: center;
-    align-items: center;
-    width: 21px;
-    padding-left: 3px;
-    display: none;
+  .collapse-drag-handle {
+    visibility: hidden;
   }
 
   .collapse-button {

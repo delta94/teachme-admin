@@ -6,6 +6,7 @@ import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question'
 
 import { QuizScreenType } from '../QuizEditForm/interface';
 
+import DragHandle from '../../../common/DragHandle/DragHandle';
 import QuestionItem from './QuestionItem';
 
 import classes from './style.module.scss';
@@ -26,16 +27,15 @@ export default function DraggableQuestionItem({
   ...otherProps
 }: IQuestionItem): ReactElement {
   return (
-    <Draggable
-      key={index}
-      className={cc([classes['draggable-question-item'], className])}
-      {...otherProps}
-    >
-      <QuestionItem
-        item={{ ...item, type: QuizScreenType.QuestionScreen }}
-        key={index}
-        onClick={onClick}
-      />
+    <Draggable key={index} {...otherProps}>
+      <div className={cc([classes['draggable-question-item'], className])}>
+        <DragHandle className={classes['question-item-drag-handle']} />
+        <QuestionItem
+          item={{ ...item, type: QuizScreenType.QuestionScreen }}
+          key={index}
+          onClick={onClick}
+        />
+      </div>
     </Draggable>
   );
 }

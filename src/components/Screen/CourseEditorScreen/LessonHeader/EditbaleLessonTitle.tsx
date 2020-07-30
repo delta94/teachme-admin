@@ -43,8 +43,12 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
+  const toggleLessonSettings = () => {
+    dispatch({ type: ActionType.ToggleDetailsPanel });
+  };
+
   return (
-    <div className={cc([classes['editable-lesson-title']])}>
+    <div className={cc([classes['editable-lesson-title']])} onClick={toggleLessonSettings}>
       <div className={cc([classes['text'], { [classes['hidden']]: showInput }])}>
         <span className={classes['lesson-title-text']}>{lesson?.title ?? ''}</span>
         <WMButton

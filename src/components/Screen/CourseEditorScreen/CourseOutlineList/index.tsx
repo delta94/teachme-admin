@@ -72,7 +72,6 @@ export default function CourseOutlineList<T>({
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
         dragClass={classes['card-ghost']}
-        dragHandleSelector=".drag-handle"
         dropPlaceholder={{
           animationDuration: 150,
           showOnTop: true,

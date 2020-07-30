@@ -33,7 +33,6 @@ export default function CourseItemsList({
         getChildPayload={(i) => items[i]}
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
-        dragHandleSelector=".drag-handle"
       >
         {items.length ? (
           items.map((item, i) => (
