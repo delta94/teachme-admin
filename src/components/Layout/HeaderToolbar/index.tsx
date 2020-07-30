@@ -15,6 +15,7 @@ import UserMenu from './UserMenu';
 
 import classes from './style.module.scss';
 
+// TODO: refactor HeaderToolbar (Nofar)
 export default function HeaderToolbar(): ReactElement {
   const menuClassName = classes['header-toolbar-menu'];
   const appInit = useAppSkeleton();

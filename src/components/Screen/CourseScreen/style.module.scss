@@ -11,6 +11,10 @@
     flex-wrap: wrap;
     align-items: center;
 
+    :global(.ant-skeleton) {
+      width: auto;
+    }
+
     .course-details-icon {
       .svg path {
         fill: currentColor;
@@ -19,10 +23,20 @@
 
     .course-name {
       margin: 0 25px;
+
+      &:global(.ant-skeleton) {
+        width: 400px;
+      }
     }
 
     .edit {
       margin-left: auto;
+
+      &:global(.ant-skeleton) {
+        .edit {
+          width: 120px;
+        }
+      }
     }
 
     .course-details-sub-title {
@@ -32,6 +46,12 @@
       flex: 0 0 100%;
       font-family: var(--font-primary);
       font-weight: 400;
+
+      &:global(.ant-skeleton) {
+        .course-details-sub-title {
+          width: 300px;
+        }
+      }
     }
   }
 }
