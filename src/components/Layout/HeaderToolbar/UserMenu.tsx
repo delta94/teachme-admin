@@ -20,6 +20,7 @@ export default function UserMenu({
 }): ReactElement {
   const [appState, appDispatch] = useAppContext();
   const { user } = appState;
+  const { impersonate } = appState;
 
   const options: IWMDropdownOption[] = [
     { id: 'user-name', value: user.userName },
@@ -27,7 +28,7 @@ export default function UserMenu({
     { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
 
-  if (!user.userIsBackOffice) {
+  if (!impersonate.userIsBackOffice) {
     const index = options.findIndex((option) => option.id === 'impersonate');
     options.splice(index, 1);
   }
