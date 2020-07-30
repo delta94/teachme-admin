@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 
+import { useAppContext } from '../../../providers/AppContext';
 import {
   useUsersContext,
   fetchUsers,
@@ -24,6 +25,11 @@ import ShownUsersIndicator from './ShownUsersIndicator';
 import classes from './style.module.scss';
 
 export default function UsersScreen(): ReactElement {
+  const [appState] = useAppContext();
+  const {
+    system,
+    environment: { id: envId },
+  } = appState;
   const [state, dispatch] = useUsersContext();
   const {
     dateRange: { from, to },
@@ -33,8 +39,8 @@ export default function UsersScreen(): ReactElement {
   } = state;
 
   useEffect(() => {
-    fetchUsers(dispatch, 0, from, to);
-  }, [dispatch, from, to]);
+    fetchUsers(dispatch, envId, from, to);
+  }, [system, envId, dispatch, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
@@ -71,7 +77,7 @@ export default function UsersScreen(): ReactElement {
           <ControlsWrapper>
             <ExportButton
               className={classes['export-btn']}
-              onClick={() => exportUsers(dispatch, 0, from, to)}
+              onClick={() => exportUsers(dispatch, envId, from, to)}
             />
             <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
           </ControlsWrapper>

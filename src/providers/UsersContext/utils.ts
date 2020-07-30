@@ -33,7 +33,7 @@ export const useUsersContext = (): [IState, IDispatch] => [useUsersState(), useU
 
 export const fetchUsers = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   from: string,
   to: string,
   options?: UsersListQueryOptions,
@@ -54,7 +54,7 @@ export const fetchUsers = async (
 
 export const exportUsers = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   from: string,
   to: string,
 ): Promise<void> => {
