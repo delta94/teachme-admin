@@ -41,6 +41,7 @@ export const defaultQueryOptions = {
   num_of_records: 10,
   sort_by: UsersColumn.ID,
   sort_by_order: UsersOrder.ASC,
+  user_name: '',
 };
 
 export const fetchUsers = async (
@@ -48,8 +49,8 @@ export const fetchUsers = async (
   envId: number,
   from: string,
   to: string,
-  prevUsers?: Array<UserListUILineItem>,
   options?: UsersListQueryOptions,
+  prevUsers?: Array<UserListUILineItem>,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchUsers });
 

@@ -27,7 +27,6 @@ export interface IState {
   users: Array<UserListUILineItem>;
   totals_unique_users: number;
   total_rows: number;
-  filteredUsers: Array<UserListUILineItem>;
   usersSearchValue: string;
   isExportingUsers: boolean;
   isExportingUsersError: boolean;

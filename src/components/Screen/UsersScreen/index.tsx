@@ -36,13 +36,16 @@ export default function UsersScreen(): ReactElement {
   const {
     dateRange: { from, to },
     users,
-    filteredUsers,
     usersSearchValue,
   } = state;
 
   useEffect(() => {
-    fetchUsers(dispatch, envId, from, to);
-  }, [system, envId, dispatch, from, to]);
+    const options = { ...defaultQueryOptions };
+
+    if (usersSearchValue.length) options.user_name = usersSearchValue;
+
+    fetchUsers(dispatch, envId, from, to, options);
+  }, [system, envId, dispatch, from, to, usersSearchValue]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
@@ -51,14 +54,16 @@ export default function UsersScreen(): ReactElement {
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
   const onSearch = (searchValue: string) => {
-    const newUsersList = users.filter(({ id }) =>
-      id.toLowerCase().includes(searchValue.toLowerCase()),
-    );
+    const options = {
+      ...defaultQueryOptions,
+      user_name: searchValue,
+    };
+
+    fetchUsers(dispatch, envId, from, to, options);
 
     dispatch({
       type: ActionType.SetUsersSearchValue,
       usersSearchValue: searchValue,
-      users: newUsersList,
     });
   };
 
@@ -69,7 +74,7 @@ export default function UsersScreen(): ReactElement {
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <WMCard className={classes['table-wrapper']}>
-        <WMTable className={classes['users-table']} data={filteredUsers} columns={columns}>
+        <WMTable className={classes['users-table']} data={users} columns={columns}>
           <ShownUsersIndicator />
           {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />

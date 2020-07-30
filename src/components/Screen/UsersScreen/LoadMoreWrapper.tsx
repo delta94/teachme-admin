@@ -15,6 +15,7 @@ export default function LoadMoreWrapper(): ReactElement {
   const [state, dispatch] = useUsersContext();
   const {
     dateRange: { from, to },
+    isFetchingUsers,
     users,
     total_rows,
     usersSearchValue,
@@ -25,12 +26,14 @@ export default function LoadMoreWrapper(): ReactElement {
     first_item_index: users.length,
   };
 
+  if (usersSearchValue.length) options.user_name = usersSearchValue;
+
   return (
     <>
-      {!!users.length && !usersSearchValue.length && (
+      {total_rows > defaultQueryOptions.num_of_records && !isFetchingUsers && (
         <div className={classes['load-more-wrapper']}>
           <span>{`1-${users.length} of ${total_rows} results`}</span>
-          <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, users, options)} />
+          <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, options, users)} />
         </div>
       )}
     </>

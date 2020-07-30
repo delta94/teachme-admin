@@ -11,7 +11,6 @@ export const initialState = {
   users: [],
   totals_unique_users: 0,
   total_rows: 0,
-  filteredUsers: [],
   usersSearchValue: '',
   isExportingUsers: false,
   isExportingUsersError: false,
@@ -28,7 +27,6 @@ export const reducer = produce(
         draft.isFetchingUsers = false;
         draft.isFetchingUsersError = false;
         draft.users = action.users ?? initialState.users;
-        draft.filteredUsers = action.users ?? initialState.filteredUsers;
         draft.totals_unique_users = action.totals_unique_users ?? initialState.totals_unique_users;
         draft.total_rows = action.total_rows ?? initialState.total_rows;
         break;
@@ -38,7 +36,6 @@ export const reducer = produce(
         break;
       case ActionType.SetUsersSearchValue:
         draft.usersSearchValue = action.usersSearchValue ?? initialState.usersSearchValue;
-        draft.filteredUsers = action.users ?? initialState.filteredUsers;
         break;
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
