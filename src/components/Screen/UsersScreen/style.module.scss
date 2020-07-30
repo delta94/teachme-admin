@@ -20,6 +20,14 @@
   }
 
   .users-table {
+    :global(.ant-empty) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 550px;
+      margin: 0;
+    }
+
     :global(.ant-table) {
       font-family: var(--font-primary);
       color: var(--neutral900);
