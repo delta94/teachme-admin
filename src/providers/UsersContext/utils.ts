@@ -60,7 +60,7 @@ export const fetchUsers = async (
 
     let users = [];
 
-    if (prevUsers && options) {
+    if (prevUsers) {
       users = [...prevUsers, ...data];
     } else {
       users = [...data];
