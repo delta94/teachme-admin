@@ -62,10 +62,7 @@ export default function UsersScreen(): ReactElement {
 
     fetchUsers(dispatch, envId, from, to, options);
 
-    dispatch({
-      type: ActionType.SetUsersSearchValue,
-      usersSearchValue: searchValue,
-    });
+    dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
   };
 
   return (

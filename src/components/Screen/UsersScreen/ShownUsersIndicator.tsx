@@ -7,9 +7,8 @@ import WMSkeleton from '../../common/WMSkeleton';
 import classes from './style.module.scss';
 
 export default function ShownUsersIndicator(): ReactElement {
-  const [
-    { isFetchingUsers, totals_unique_users, total_rows, usersSearchValue },
-  ] = useUsersContext();
+  const [state] = useUsersContext();
+  const { isFetchingUsers, totals_unique_users, total_rows, usersSearchValue } = state;
 
   return (
     <WMSkeleton
@@ -25,7 +24,7 @@ export default function ShownUsersIndicator(): ReactElement {
             <span className={classes['search-result']}>{total_rows} Results found</span>
           </>
         ) : (
-          `${totals_unique_users} Users`
+          <>{totals_unique_users} Users</>
         )}
       </div>
     </WMSkeleton>

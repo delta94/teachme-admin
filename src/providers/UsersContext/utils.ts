@@ -49,13 +49,13 @@ export const fetchUsers = async (
   envId: number,
   from: string,
   to: string,
-  options?: UsersListQueryOptions,
+  options: UsersListQueryOptions,
   prevUsers?: Array<UserListUILineItem>,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchUsers });
 
   try {
-    const { data } = await getUsersList(envId, from, to, options ?? defaultQueryOptions);
+    const { data } = await getUsersList(envId, from, to, options);
     const { totals_unique_users, total_rows } = await getUsersCount(envId, from, to, options);
 
     let users = [];
