@@ -9,12 +9,18 @@ span.search-filter {
     border-color: var(--border-light);
   }
 
+  :global(.ant-input) {
+    font-family: var(--font-primary);
+    font-size: 12px;
+    color: var(--neutral900);
+  }
+
   ::placeholder {
     font-size: 12px;
     font-weight: 600;
   }
 }
 
-:global(.ant-skeleton.ant-skeleton-active .ant-skeleton-input) {
-  margin: 0 10px;
+.skeleton:global(.ant-skeleton.ant-skeleton-active .ant-skeleton-input) {
+  width: 186px;
 }

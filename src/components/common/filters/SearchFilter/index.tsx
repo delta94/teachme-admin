@@ -31,18 +31,18 @@ export default function SearchFilter({
   };
 
   return (
-    <div className={classes['search-filter']}>
+    <>
       {appInit ? (
         <Input
           prefix={<Icon type={IconType.Search} />}
-          className={cc([classes['search-filter-input'], className])}
+          className={cc([classes['search-filter'], className])}
           placeholder={placeholder}
           value={searchValue}
           onChange={onChange}
         />
       ) : (
-        <WMSkeletonInput style={{ width: 150 }} active size="default" />
+        <WMSkeletonInput className={classes['skeleton']} active size="default" />
       )}
-    </div>
+    </>
   );
 }
