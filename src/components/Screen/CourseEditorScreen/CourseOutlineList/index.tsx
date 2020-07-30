@@ -88,7 +88,6 @@ export default function CourseOutlineList<T>({
                   key={item.id}
                   index={i}
                   className={classes['outline-lesson']}
-                  handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
                 />
               ) : (
                 <TaskItem

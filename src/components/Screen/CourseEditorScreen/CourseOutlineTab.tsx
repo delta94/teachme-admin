@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
 
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
@@ -20,8 +21,11 @@ export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course, quiz, courseOutlineSearchValue } = state;
 
-  const onItemClick = () => {
-    dispatch({ type: ActionType.ToggleDetailsPanel });
+  const onItemClick = (item: any) => {
+    dispatch({
+      type: ActionType.ToggleDetailsPanel,
+      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id },
+    });
   };
 
   return (

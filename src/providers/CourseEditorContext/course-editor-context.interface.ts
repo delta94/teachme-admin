@@ -24,10 +24,20 @@ export interface IAction {
   courseOutline?: Array<ICourseOutlineItem>;
   courseOutlineSearchValue?: string;
   updateHasChange?: boolean;
+  activeDetailsItem?: { type: DetailsPanelSettingsType; id: number } | null;
 }
 
 export interface IDispatch {
   (action: IAction): void;
+}
+
+export enum DetailsPanelSettingsType {
+  Item = 'item',
+  Quiz = 'quiz',
+  Question = 'question',
+  QuizWelcome = 'welcome',
+  QuizFail = 'fail',
+  QuizSuccess = 'success',
 }
 
 export interface IState {
@@ -46,6 +56,7 @@ export interface IState {
   refreshCourseOutline: boolean;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
+  activeDetailsItem: { type: DetailsPanelSettingsType; id: number } | null;
   hasChanges: boolean;
 }
 

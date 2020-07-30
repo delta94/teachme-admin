@@ -1,27 +1,31 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
+import WMButton from '../../../common/WMButton';
 import Header from '../../../common/Header';
 import Icon, { IconType } from '../../../common/Icon';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
-import WMButton from '../../../common/WMButton';
 import classes from './style.module.scss';
 
 export default function QuizHeader({ className }: { className?: string }): ReactElement {
-  const [{ course, isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
+  const [{ course, quiz, isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
 
   const deleteQuiz = () => {
     course?.deleteQuiz();
     dispatch({ type: ActionType.DeleteQuiz });
 
     if (isDetailsPanelOpen) {
-      dispatch({ type: ActionType.ToggleDetailsPanel });
+      dispatch({ type: ActionType.ToggleDetailsPanel, activeDetailsItem: null });
     }
   };
 
   const toggleSettings = () => {
-    dispatch({ type: ActionType.ToggleDetailsPanel });
+    dispatch({
+      type: ActionType.ToggleDetailsPanel,
+      activeDetailsItem: { type: DetailsPanelSettingsType.Quiz, id: quiz?.id ?? 0 },
+    });
   };
 
   return (
