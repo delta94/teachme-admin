@@ -20,14 +20,13 @@ export default function UserMenu({
 }): ReactElement {
   const [appState, appDispatch] = useAppContext();
   const { user } = appState;
-  const { impersonate } = appState;
+  const { originalUser } = appState;
 
   const options: IWMDropdownOption[] = [
     { id: 'user-name', value: user.userName },
-    { id: 'impersonate', value: 'Impersonate', skip: !impersonate.userIsBackOffice },
+    { id: 'impersonate', value: 'Impersonate', skip: !originalUser.userIsBackOffice },
     { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
-
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     message.info(`User clicked on ${selected.value}`);

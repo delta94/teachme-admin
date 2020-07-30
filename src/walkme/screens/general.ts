@@ -8,7 +8,7 @@ export async function getUserData() {
 }
 
 /**
- * Returns Data for impersonate
+ * Returns Data for originalUser
  */
 export async function getOriginalUserData() {
   return walkme.user.getOriginalUserData();
