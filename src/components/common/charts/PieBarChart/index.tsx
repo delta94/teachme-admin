@@ -17,7 +17,7 @@ function generateColors(colorStart: string, colorEnd: string, steps: number) {
 export default function PieBarChart({
   height,
   width,
-  totalValue = 1000,
+  totalValue = 100,
   bars,
   legendContent: LegendContent,
   colorStart = '#006af7',
@@ -32,7 +32,7 @@ export default function PieBarChart({
         {bars.map((bar, index) => {
           const barValue = `${(bar.value / totalValue) * 100}%`;
           const barLegend = bar.legend;
-          const barColor = generatedColors[index];
+          const barColor = bar.color ?? generatedColors[index];
           const legendContent = (
             <LegendContent
               barValue={barValue}
