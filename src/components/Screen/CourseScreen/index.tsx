@@ -15,8 +15,6 @@ export default function CourseScreen(): ReactElement {
   const { courseId } = useParams();
   const [course, setCourse] = useState(null as any);
 
-  const { analytics } = courseMockData;
-
   useEffect(() => {
     setCourse(null);
 
@@ -42,7 +40,10 @@ export default function CourseScreen(): ReactElement {
     course && (
       <>
         <CourseScreenHeader course={course} />
-        <AnalyticsCharts data={analytics} />
+        <AnalyticsCharts
+          summaryChartTitle="Users Started / Completed Course"
+          quizData={courseMockData.analytics.quizData}
+        />
         <CourseTabs course={course} />
       </>
     )

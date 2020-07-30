@@ -9,7 +9,7 @@ export interface IBar {
 export interface IPieBarChart {
   height?: number | string;
   width?: number | string;
-  totalValue: number;
+  totalValue?: number;
   bars: Array<IBar>;
   legendContent: React.ComponentType<IPieBarLegendContent>;
   colorStart?: string;

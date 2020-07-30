@@ -19,16 +19,16 @@ export default function ExportButton({
   const appInit = useAppSkeleton();
 
   return (
-    <div className={classes['export-button']}>
+    <>
       {appInit ? (
         <WMButton
-          className={cc([classes['export-wmbutton'], className])}
+          className={cc([classes['export-button'], className])}
           onClick={onClick}
           icon={<Icon type={IconType.FileExport} />}
         />
       ) : (
-        <WMSkeletonButton active shape="square" />
+        <WMSkeletonButton className={classes['skeleton']} active shape="square" />
       )}
-    </div>
+    </>
   );
 }

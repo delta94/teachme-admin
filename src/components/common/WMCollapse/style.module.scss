@@ -18,16 +18,11 @@
     &.has-drag-handle {
       .collapse-button {
         margin-right: 10px;
-        margin-left: 24px;
+        margin-left: 3px;
         width: 19px;
       }
 
       &:hover {
-        /* .collapse-button {
-          margin-right: 10px;
-          margin-left: 3px;
-        } */
-
         .collapse-drag-handle {
           visibility: visible;
         }

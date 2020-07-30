@@ -1,7 +1,10 @@
 import { CompletionGraphStats } from '../../../walkme/models';
 
 export interface IAnalyticsCharts {
-  data: any;
+  summaryChartTitle: string;
+  timeCompletionTitle?: string;
+  quizCompletionTitle?: string;
+  quizData?: any;
   overview?: any;
 }
 
@@ -12,16 +15,18 @@ export interface ICourseSummaryChart {
 
 export interface ICoursesTimeCompletionChart {
   className?: string;
-  completionData: any;
+  title: string;
+  overview?: any;
 }
 
 export interface IQuizCompletionRateChart {
   className?: string;
-  quizCompletionData: any;
+  title: string;
+  overview?: any;
 }
 
 export interface IQuizScoreData {
-  quizScoreData: any;
+  quizData: any;
 }
 
 export interface ICourseSummaryLegendData extends Omit<CompletionGraphStats, 'date'> {

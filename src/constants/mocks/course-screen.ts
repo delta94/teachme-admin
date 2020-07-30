@@ -19,7 +19,7 @@ export const courseMockData = {
       title: 'Quiz Completion Rate',
       data: courseCompletionRateChartMock,
     },
-    quizScore: {
+    quizData: {
       title: 'Avg. Quiz Score',
       data: {
         average: 82,
