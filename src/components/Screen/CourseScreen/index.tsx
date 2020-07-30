@@ -10,6 +10,7 @@ import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
 
+// TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
   const [
     {

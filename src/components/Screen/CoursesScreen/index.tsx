@@ -24,6 +24,7 @@ import SearchCoursesFilter from './SearchCoursesFilter';
 import { columns } from './tableData';
 import classes from './style.module.scss';
 
+// TODO: add cleanups to fetchCoursesData
 export default function CoursesScreen(): ReactElement {
   const [
     {

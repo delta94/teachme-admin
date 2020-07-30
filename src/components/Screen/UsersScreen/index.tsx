@@ -24,6 +24,7 @@ import { columns } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import classes from './style.module.scss';
 
+// TODO: add cleanups to fetchUsers
 export default function UsersScreen(): ReactElement {
   const [appState] = useAppContext();
   const {
