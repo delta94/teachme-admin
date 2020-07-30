@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAppSkeleton } from '../../../hooks/skeleton';
 import { IDateRange } from '../../../utils';
 import { useAppContext } from '../../../providers/AppContext';
 import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
@@ -12,9 +11,9 @@ import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
 
 export default function CourseScreen(): ReactElement {
-  const appInit = useAppSkeleton();
   const [
     {
+      isUpdating,
       environment: { id: envId },
       system,
     },
@@ -30,10 +29,8 @@ export default function CourseScreen(): ReactElement {
   const { courseId } = useParams();
 
   useEffect(() => {
-    if (!appInit) return;
-
-    fetchCourseData(dispatch, courseId, envId, from, to);
-  }, [dispatch, appInit, courseId, envId, system, from, to]);
+    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
+  }, [dispatch, isUpdating, courseId, envId, system, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);

@@ -8,7 +8,6 @@ import {
   ActionType,
 } from '../../../providers/UsersContext';
 import { IDateRange } from '../../../utils';
-import { useAppSkeleton } from '../../../hooks/skeleton';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
@@ -26,9 +25,9 @@ import ShownUsersIndicator from './ShownUsersIndicator';
 import classes from './style.module.scss';
 
 export default function UsersScreen(): ReactElement {
-  const appInit = useAppSkeleton();
   const [appState] = useAppContext();
   const {
+    isUpdating,
     system,
     environment: { id: envId },
   } = appState;
@@ -41,10 +40,8 @@ export default function UsersScreen(): ReactElement {
   } = state;
 
   useEffect(() => {
-    if (!appInit) return;
-
-    fetchUsers(dispatch, envId, from, to);
-  }, [dispatch, appInit, system, envId, from, to]);
+    if (!isUpdating) fetchUsers(dispatch, envId, from, to);
+  }, [dispatch, isUpdating, system, envId, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
