@@ -5,6 +5,7 @@ import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 import { IDateRange } from '../../../utils';
+import { useAppSkeleton } from '../../../hooks/skeleton';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -25,7 +26,14 @@ import { columns } from './tableData';
 import classes from './style.module.scss';
 
 export default function CoursesScreen(): ReactElement {
-  const [{ environment, system }, appDispatch] = useAppContext();
+  const appInit = useAppSkeleton();
+  const [
+    {
+      environment: { id: envId },
+      system,
+    },
+    appDispatch,
+  ] = useAppContext();
   const [state, dispatch] = useCoursesContext();
   const {
     dateRange: { from, to },
@@ -36,9 +44,10 @@ export default function CoursesScreen(): ReactElement {
   } = state;
 
   useEffect(() => {
-    const envId = environment?.id ?? 0;
+    if (!appInit) return;
+
     fetchCoursesData(dispatch, envId, from, to);
-  }, [dispatch, environment, system, from, to]);
+  }, [dispatch, appInit, envId, system, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
