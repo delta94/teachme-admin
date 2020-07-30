@@ -1,4 +1,4 @@
-import { UserData } from '@walkme/editor-sdk/dist/user';
+import { UserData, ImpersonateData } from '@walkme/editor-sdk/dist/user';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
@@ -12,6 +12,7 @@ export const initialState = {
   user: {} as UserData,
   system: {} as SystemData,
   environment: {} as WalkMeEnvironment,
+  impersonate: {} as ImpersonateData,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -41,6 +42,11 @@ export const reducer = (state: IState, action: IAction): IState => {
       return {
         ...state,
         user: action.user ?? initialState.user,
+      };
+    case ActionType.SetImpersonate:
+      return {
+        ...state,
+        impersonate: action.impersonate ?? initialState.impersonate,
       };
     case ActionType.SetSystem:
       return {

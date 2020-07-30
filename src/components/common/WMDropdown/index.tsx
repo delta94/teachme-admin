@@ -9,7 +9,6 @@ export interface IWMDropdownOption {
   id: string | number;
   value: string | number;
   label?: ReactNode;
-  skip?: boolean;
   onClick?: () => void;
 }
 
@@ -36,22 +35,18 @@ export default function WMDropdown({
 
   const menu = (
     <Menu onClick={onMenuClick} className={cc([classes['wm-dropdown-menu'], className])}>
-      {options.map((option) =>
-        option.skip ? (
-          'null'
-        ) : (
-          <Menu.Item
-            key={option.id}
-            className={cc([
-              classes['wm-dropdown-menu-item'],
-              { [classes['selected-item']]: selected?.id === option.id },
-            ])}
-            onClick={option.onClick}
-          >
-            {option.label ?? option.value}
-          </Menu.Item>
-        ),
-      )}
+      {options.map((option) => (
+        <Menu.Item
+          key={option.id}
+          className={cc([
+            classes['wm-dropdown-menu-item'],
+            { [classes['selected-item']]: selected?.id === option.id },
+          ])}
+          onClick={option.onClick}
+        >
+          {option.label ?? option.value}
+        </Menu.Item>
+      ))}
     </Menu>
   );
 

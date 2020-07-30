@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { UserData } from '@walkme/editor-sdk/dist/user';
+import { UserData, ImpersonateData } from '@walkme/editor-sdk/dist/user';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
@@ -16,6 +16,7 @@ export interface IAction {
   user?: UserData;
   system?: SystemData;
   environment?: WalkMeEnvironment;
+  impersonate?: ImpersonateData;
 }
 
 export interface IDispatch {
@@ -30,6 +31,7 @@ export interface IState {
   user: UserData;
   system: SystemData;
   environment: WalkMeEnvironment;
+  impersonate: ImpersonateData;
 }
 
 export interface IAppProvider {

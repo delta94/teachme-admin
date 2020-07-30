@@ -8,6 +8,13 @@ export async function getUserData() {
 }
 
 /**
+ * Returns Data for impersonate
+ */
+export async function getOriginalUserData() {
+  return walkme.user.getOriginalUserData();
+}
+
+/**
  * Returns a list of the users environments
  */
 export async function getEnvironments() {
