@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseOverview, exportCoursesData, getCourse, getQuizData } from '../../walkme';
+import { getCourseOverview, getCourse, exportCourseOutline } from '../../walkme';
 import { wmMessage, MessageType } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
@@ -12,7 +12,7 @@ const useCourseState = () => {
   const context = useContext(CourseStateContext);
 
   if (context === undefined) {
-    throw new Error('useCoursesState must be used within a CoursesProvider');
+    throw new Error('useCourseState must be used within a CourseProvider');
   }
 
   return context;
@@ -22,7 +22,7 @@ const useCourseDispatch = () => {
   const context = useContext(CourseDispatchContext);
 
   if (context === undefined) {
-    throw new Error('useCoursesDispatch must be used within a CoursesProvider');
+    throw new Error('useCourseDispatch must be used within a CourseProvider');
   }
 
   return context;
@@ -33,7 +33,7 @@ export const useCourseContext = (): [IState, IDispatch] => [useCourseState(), us
 export const fetchCourseData = async (
   dispatch: IDispatch,
   courseId: number,
-  envId = 0,
+  envId: number,
   from: string,
   to: string,
 ): Promise<void> => {
@@ -53,14 +53,15 @@ export const fetchCourseData = async (
 
 export const exportCourse = async (
   dispatch: IDispatch,
-  envId = 0,
+  courseId: number,
+  envId: number,
   from: string,
   to: string,
 ): Promise<void> => {
   dispatch({ type: ActionType.ExportCourse });
 
   try {
-    await exportCoursesData(envId, from, to);
+    await exportCourseOutline(courseId, envId, from, to);
 
     dispatch({ type: ActionType.ExportCourseSuccess });
     wmMessage('Export completed');
