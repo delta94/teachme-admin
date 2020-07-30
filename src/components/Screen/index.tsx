@@ -12,6 +12,7 @@ import {
 import CourseEditorProvider from '../../providers/CourseEditorContext';
 import CoursesProvider from '../../providers/CoursesContext';
 import CourseProvider from '../../providers/CourseContext';
+import UsersProvider from '../../providers/UsersContext';
 
 import SplashScreen from './SplashScreen';
 import ErrorScreen from './ErrorScreen';
@@ -38,7 +39,9 @@ export default function Screen(): ReactElement {
           </CourseProvider>
         </Route>
         <Route path={USERS_ROUTE.path}>
-          <UsersScreen />
+          <UsersProvider>
+            <UsersScreen />
+          </UsersProvider>
         </Route>
         <Route path={[NEW_COURSE_EDITOR_ROUTE.path, COURSE_EDITOR_ROUTE.path]}>
           <CourseEditorProvider>

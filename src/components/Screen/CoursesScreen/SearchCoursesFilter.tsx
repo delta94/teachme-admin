@@ -8,7 +8,7 @@ import classes from './style.module.scss';
 
 export default function SearchCoursesFilter(): ReactElement {
   const [state, dispatch] = useCoursesContext();
-  const { courses } = state;
+  const { courses, coursesSearchValue } = state;
 
   const onSearch = (searchValue: string) => {
     const newCourseList = courses.filter(({ title }) =>
@@ -26,6 +26,7 @@ export default function SearchCoursesFilter(): ReactElement {
     <SearchFilter
       className={classes['search-courses-filter']}
       placeholder="Search course name"
+      value={coursesSearchValue}
       onSearch={onSearch}
     />
   );
