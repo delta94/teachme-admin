@@ -1,6 +1,7 @@
 import React, { ReactElement, useState, ChangeEvent } from 'react';
 import { Input } from 'antd';
 import cc from 'classcat';
+import { useDebounceCallback } from '@react-hook/debounce';
 
 import { useAppSkeleton } from '../../../../hooks/skeleton';
 
@@ -24,10 +25,11 @@ export default function SearchFilter({
 }: ISearchFilter): ReactElement {
   const [searchValue, setSearchValue] = useState(value ?? '');
   const appInit = useAppSkeleton();
+  const debouncedOnSearch = useDebounceCallback(onSearch, 400);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    onSearch(e.target.value);
+    debouncedOnSearch(e.target.value);
   };
 
   return (
