@@ -10,6 +10,7 @@ export const initialState = {
   dateRange: defaultDateRange,
   users: [],
   totals_unique_users: 0,
+  total_rows: 0,
   filteredUsers: [],
   usersSearchValue: '',
   isExportingUsers: false,
@@ -29,6 +30,7 @@ export const reducer = produce(
         draft.users = action.users ?? initialState.users;
         draft.filteredUsers = action.users ?? initialState.filteredUsers;
         draft.totals_unique_users = action.totals_unique_users ?? initialState.totals_unique_users;
+        draft.total_rows = action.total_rows ?? initialState.total_rows;
         break;
       case ActionType.FetchUsersError:
         draft.isFetchingUsers = false;

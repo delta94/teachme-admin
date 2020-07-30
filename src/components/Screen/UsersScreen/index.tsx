@@ -3,6 +3,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useAppContext } from '../../../providers/AppContext';
 import {
   useUsersContext,
+  defaultQueryOptions,
   fetchUsers,
   exportUsers,
   ActionType,
@@ -22,6 +23,7 @@ import { ExportButton } from '../../common/buttons';
 // import { courses, statuses, results } from './utils';
 import { columns } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
+import LoadMoreWrapper from './LoadMoreWrapper';
 import classes from './style.module.scss';
 
 export default function UsersScreen(): ReactElement {
@@ -82,6 +84,7 @@ export default function UsersScreen(): ReactElement {
             <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
           </ControlsWrapper>
         </WMTable>
+        <LoadMoreWrapper />
       </WMCard>
     </>
   );

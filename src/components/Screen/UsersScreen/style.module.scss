@@ -60,4 +60,16 @@
       }
     }
   }
+
+  .load-more-wrapper {
+    position: relative;
+    color: var(--neutral900);
+    font-family: var(--font-primary);
+    margin-top: 20px;
+
+    button {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 }

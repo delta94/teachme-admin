@@ -5,6 +5,7 @@ import {
   UsersStateContext,
   UsersDispatchContext,
   useUsersContext,
+  defaultQueryOptions,
   fetchUsers,
   exportUsers,
 } from './utils';
@@ -12,7 +13,15 @@ import { reducer, initialState } from './reducer';
 
 export type { IAction, IState, IDispatch, IUsersProvider };
 
-export { useUsersContext, fetchUsers, exportUsers, reducer, initialState, ActionType };
+export {
+  useUsersContext,
+  defaultQueryOptions,
+  fetchUsers,
+  exportUsers,
+  reducer,
+  initialState,
+  ActionType,
+};
 
 export default function UsersProvider({ children }: IUsersProvider): ReactElement {
   const [state, dispatch] = useReducer(reducer, initialState);
