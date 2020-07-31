@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { useUsersContext } from '../../../providers/UsersContext';
+import { pluralizer } from '../../../utils';
 
 import WMSkeleton from '../../common/WMSkeleton';
 
@@ -21,10 +22,13 @@ export default function ShownUsersIndicator(): ReactElement {
         {usersSearchValue ? (
           <>
             Search
-            <span className={classes['search-result']}>{total_rows} Results found</span>
+            <span className={classes['search-result']}>{`${total_rows} ${pluralizer(
+              'Result',
+              total_rows,
+            )} found`}</span>
           </>
         ) : (
-          <>{totals_unique_users} Users</>
+          <>{`${totals_unique_users} ${pluralizer('User', totals_unique_users)}`}</>
         )}
       </div>
     </WMSkeleton>
