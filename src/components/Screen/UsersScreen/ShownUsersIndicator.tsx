@@ -28,7 +28,7 @@ export default function ShownUsersIndicator(): ReactElement {
             )} found`}</span>
           </>
         ) : (
-          <>{`${totals_unique_users} ${pluralizer('User', totals_unique_users)}`}</>
+          `${totals_unique_users} ${pluralizer('User', totals_unique_users)}`
         )}
       </div>
     </WMSkeleton>
