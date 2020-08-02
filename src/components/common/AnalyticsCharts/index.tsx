@@ -33,9 +33,9 @@ export default function AnalyticsCharts({
             title={quizCompletionTitle}
             overview={overview}
           />
-          {overview && (
+          {(overview as CourseOverviewData)?.passmark && (
             <QuizScoreChart
-              isEmpty={Object.keys(overview).length === 0}
+              isEmpty={overview && Object.keys(overview).length === 0}
               overview={overview as CourseOverviewData}
             />
           )}

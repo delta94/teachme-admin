@@ -25,7 +25,7 @@ export interface IQuizCompletionRateChart {
 
 export interface IQuizScoreData {
   overview: CourseOverviewData;
-  isEmpty: boolean;
+  isEmpty?: boolean;
 }
 
 export interface ICourseSummaryLegendData extends Omit<CompletionGraphStats, 'date'> {
