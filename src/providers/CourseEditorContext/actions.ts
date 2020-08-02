@@ -10,6 +10,7 @@ export enum ActionType {
   DeleteQuiz = 'DELETE_QUIZ',
   UpdateCourseOutline = 'UPDATE_COURSE_OUTLINE',
   SetCourseOutlineSearchValue = 'SET_COURSE_OUTLINE_SEARCH_VALUE',
-  ToggleDetailsPanel = 'TOGGLE_DETAILS_PANEL',
+  OpenDetailsPanel = 'OPEN_DETAILS_PANEL',
+  CloseDetailsPanel = 'CLOSE_DETAILS_PANEL',
   ResetCourseEditor = 'RESET_COURSE_EDITOR',
 }

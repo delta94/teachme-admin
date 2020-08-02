@@ -1,38 +1,65 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
+
+import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import WMCard from '../../WMCard';
+import { IBar } from '../../charts/PieBarChart/pieBarChart.interface';
+
+import { IQuizCompletionRateChart } from '../analytics.interface';
+import { calculatePercentages } from '../utils';
+
 import WMSkeleton from '../../WMSkeleton';
 import { PieBarChart, PieBarSummary } from '../../charts';
-import { IQuizCompletionRateChart } from '../analytics.interface';
-import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import QuizCompletionRateLegend from './QuizCompletionRateLegend';
 
 export default function QuizCompletionRateChart({
   className,
-  quizCompletionData,
+  title,
+  overview,
 }: IQuizCompletionRateChart): ReactElement {
-  const {
-    title,
-    data: { summaryLegend, summaryUnit, bars, totalValue },
-  } = quizCompletionData;
-
+  const [totalPercentages, setTotalPercentages] = useState<number>(0);
+  const [bars, setBars] = useState<IBar[]>([]);
   const appInit = useAppSkeleton();
+
+  useEffect(() => {
+    if (overview) {
+      const { users_passed, users_submitted } = overview;
+
+      if (users_passed && users_submitted)
+        setTotalPercentages(calculatePercentages(users_passed, users_submitted));
+    }
+  }, [overview]);
+
+  useEffect(() => {
+    if (totalPercentages)
+      setBars([
+        {
+          value: totalPercentages,
+          legend: 'Users who completed a course',
+        },
+      ]);
+  }, [totalPercentages]);
+
+  // unmount only
+  useEffect(
+    () => () => {
+      setTotalPercentages(0);
+      setBars([]);
+    },
+    [],
+  );
 
   return (
     <WMCard title={title}>
       {appInit ? (
         <div className={className}>
           <PieBarSummary
-            value={summaryLegend}
-            unit={summaryUnit}
-            text={` (${bars[0].value} of ${totalValue} users)`}
+            value={totalPercentages as number}
+            unit="%"
+            text={` (${overview?.users_passed ?? 0} of ${overview?.users_submitted ?? 0} users)`}
           />
-          <PieBarChart
-            bars={bars}
-            totalValue={totalValue}
-            legendContent={QuizCompletionRateLegend}
-          />
+          <PieBarChart bars={bars} legendContent={QuizCompletionRateLegend} />
         </div>
       ) : (
         <WMSkeleton active paragraph={{ rows: 2 }} />

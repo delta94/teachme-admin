@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { courseMockData } from '../../../../constants/mocks/course-screen';
 import { useAppSkeleton } from '../../../../hooks/skeleton';
 import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
@@ -9,34 +10,36 @@ import WMSkeleton from '../../WMSkeleton';
 
 import classes from './style.module.scss';
 
-export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): ReactElement {
+const defaultQuizData = courseMockData.analytics.quizData;
+
+export default function QuizScoreChart({ quizData, isEmpty }: IQuizScoreData): ReactElement {
+  // TODO: remove mock data after getting quizData
   const {
-    title,
-    data: { average = 0, passmark = 0 },
-  } = quizScoreData;
+    data: { mock_average = 0, mock_passmark = 0 },
+  } = defaultQuizData;
 
   const appInit = useAppSkeleton();
 
-  const isEmpty = Array.from(Object.keys(quizScoreData.data)).length === 0;
-
   return (
-    <WMCard title={title} className={classes['course-average']}>
+    <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
       {appInit ? (
         <div className={classes['course-average-content']}>
           <WMProgress
             className={classes['course-average-chart']}
-            percent={!isEmpty && average}
+            percent={!isEmpty && mock_average ? mock_average : 0}
             type={ProgressType.Circle}
-            format={() => (isEmpty ? '- -' : average)}
+            format={() => (isEmpty ? '- -' : mock_average)}
             width={80}
             strokeWidth={10}
-            status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
+            status={
+              mock_average > mock_passmark ? ProgressStatus.Success : ProgressStatus.Exception
+            }
           />
-          {!isEmpty && (
+          {
             <span className={classes['passmark']}>
-              Passmark: <b>{passmark}</b>
+              Passmark: <b>{!isEmpty ? mock_passmark : '- -'}</b>
             </span>
-          )}
+          }
         </div>
       ) : (
         <WMSkeleton active paragraph={{ rows: 1 }} />

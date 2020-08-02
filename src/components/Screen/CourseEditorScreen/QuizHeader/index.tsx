@@ -1,23 +1,35 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
+import WMButton from '../../../common/WMButton';
 import Header from '../../../common/Header';
 import Icon, { IconType } from '../../../common/Icon';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
-import WMButton from '../../../common/WMButton';
 import classes from './style.module.scss';
 
 export default function QuizHeader({ className }: { className?: string }): ReactElement {
-  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ course, quiz, isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
 
   const deleteQuiz = () => {
     course?.deleteQuiz();
     dispatch({ type: ActionType.DeleteQuiz });
+
+    if (isDetailsPanelOpen) {
+      dispatch({ type: ActionType.CloseDetailsPanel });
+    }
+  };
+
+  const toggleSettings = () => {
+    dispatch({
+      type: ActionType.OpenDetailsPanel,
+      activeDetailsItem: { type: DetailsPanelSettingsType.Quiz, id: quiz?.id ?? 0 },
+    });
   };
 
   return (
-    <Header className={cc([classes['quiz-header'], className])}>
+    <Header className={cc([classes['quiz-header'], className])} onClick={toggleSettings}>
       <Icon type={IconType.QuizSettings} />
       <div className={cc([classes['editable-quiz-title']])}>
         <div className={classes['text']}>

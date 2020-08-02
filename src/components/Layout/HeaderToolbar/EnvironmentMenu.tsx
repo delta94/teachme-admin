@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useEffect } from 'react';
+import { WalkMeEnvironment } from '@walkme/editor-sdk';
 import { DownOutlined } from '@ant-design/icons';
 import { message } from 'antd';
-import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
 import { useAppContext, setAppEnvironment } from '../../../providers/AppContext';
 import { getEnvironments } from '../../../walkme';
@@ -16,9 +16,7 @@ import classes from './style.module.scss';
 export default function EnvironmentMenu({ className }: { className?: string }): ReactElement {
   const [{ environment }, dispatch] = useAppContext();
 
-  const [selectedEnv, setSelectedEnv] = useState(
-    parseEnvironments([environment]) as IWMDropdownOption,
-  );
+  const [selectedEnv, setSelectedEnv] = useState<IWMDropdownOption>();
   const [environments, setEnvironments] = useState<WalkMeEnvironment[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
 
@@ -28,6 +26,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       environments,
       envId: parseInt(selected.id as string),
     });
+    setSelectedEnv(selected);
 
     message.info(`Environment changed to ${selected.value}`);
   };
@@ -50,8 +49,8 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
   }, []);
 
   useEffect(() => {
-    setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
-  }, [environment]);
+    if (environment?.id) setSelectedEnv(parseEnvironments([environment]) as IWMDropdownOption);
+  }, [environment, environment.id]);
 
   return (
     <WMDropdown
@@ -61,7 +60,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
       onSelectedChange={handleMenuClick}
     >
       <WMButton className={classes['dropdown-menu-button']}>
-        {selectedEnv.value}
+        {selectedEnv ? selectedEnv.value : (Boolean(options.length) && options[0].value) ?? ''}
         <DownOutlined />
       </WMButton>
     </WMDropdown>

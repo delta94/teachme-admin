@@ -10,14 +10,7 @@ import Header from '../Header';
 
 import classes from './style.module.scss';
 
-export default function ScreenHeader({
-  title,
-  className,
-  children,
-  hideTimeFilter,
-  timeFilterProps,
-  breadcrumbs,
-}: {
+export interface IScreenHeader {
   title: ReactNode;
   className?: string;
   children?: ReactNode;
@@ -27,31 +20,44 @@ export default function ScreenHeader({
     onDateRangeChange: (dateRange: IDateRange | undefined) => void;
   };
   hideTimeFilter?: boolean;
-}): ReactElement {
+  isLoading?: boolean;
+}
+
+export default function ScreenHeader({
+  title,
+  isLoading,
+  className,
+  children,
+  hideTimeFilter,
+  timeFilterProps,
+  breadcrumbs,
+}: IScreenHeader): ReactElement {
   const appInit = useAppSkeleton();
+  const loading = (!appInit && isLoading) || !appInit;
 
   return (
     <>
       <Header
-        className={cc([classes['screen-header'], className])}
+        className={cc([classes['screen-header'], className, { [classes['skeleton']]: loading }])}
         titleClassName={classes['screen-header-title']}
         title={title}
       >
-        {appInit ? (
-          <>
-            {breadcrumbs && (
-              <div className={classes['screen-header-breadcrumbs']}>{breadcrumbs}</div>
-            )}
-            {children}
-            {!hideTimeFilter && timeFilterProps && (
-              <TimeFilter className={classes['screen-header-time-filter']} {...timeFilterProps} />
-            )}
-          </>
-        ) : (
-          <WMSkeletonInput
-            className={classes['screen-header-skeleton']}
-            style={{ width: 250 }}
-            active
+        {breadcrumbs &&
+          (!loading ? (
+            <div className={classes['screen-header-breadcrumbs']}>{breadcrumbs}</div>
+          ) : (
+            <WMSkeletonInput
+              className={classes['screen-header-breadcrumbs']}
+              active
+              style={{ width: 250 }}
+            />
+          ))}
+        {children}
+        {!hideTimeFilter && timeFilterProps && (
+          <TimeFilter
+            className={classes['screen-header-time-filter']}
+            isLoading={loading}
+            {...timeFilterProps}
           />
         )}
       </Header>

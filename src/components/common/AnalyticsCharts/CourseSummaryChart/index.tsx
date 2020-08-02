@@ -11,14 +11,12 @@ import { ICourseSummaryLegendData } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
-const LegendContent = ({ number, description }: { number: number; description?: string }) => {
-  return (
-    <div className={classes['chart-legend-content']}>
-      <span className={classes['legend-number']}>{new Intl.NumberFormat().format(number)}</span>
-      <span className={classes['legend-description']}>{description}</span>
-    </div>
-  );
-};
+const LegendContent = ({ number, description }: { number: number; description?: string }) => (
+  <div className={classes['chart-legend-content']}>
+    <span className={classes['legend-number']}>{new Intl.NumberFormat().format(number)}</span>
+    <span className={classes['legend-description']}>{description}</span>
+  </div>
+);
 
 export default function CourseSummaryChart({
   title,
@@ -34,10 +32,12 @@ export default function CourseSummaryChart({
     if (overview) {
       const { total_completion, total_users_accessed, mark_completion } = overview;
 
-      if (total_completion && total_users_accessed)
-        setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
+      if (total_completion || total_users_accessed || mark_completion) {
+        if (total_completion && total_users_accessed)
+          setLegendData(parseCourseSummaryLegendData({ total_completion, total_users_accessed }));
 
-      if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
+        if (mark_completion) setMarkCompletion(formatMarkCompletionDate(mark_completion, 'MM/DD'));
+      }
     }
   }, [overview]);
 

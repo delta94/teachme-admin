@@ -10,8 +10,6 @@ import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMButton from '../../common/WMButton';
 import { ImpersonateDialog } from '../../common/dialogs';
 
-import classes from './style.module.scss';
-
 export default function UserMenu({
   className,
   buttonClassName,
