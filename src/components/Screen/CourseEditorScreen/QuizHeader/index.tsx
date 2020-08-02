@@ -17,15 +17,14 @@ export default function QuizHeader({ className }: { className?: string }): React
     dispatch({ type: ActionType.DeleteQuiz });
 
     if (isDetailsPanelOpen) {
-      dispatch({ type: ActionType.ToggleDetailsPanel, activeDetailsItem: null });
+      dispatch({ type: ActionType.CloseDetailsPanel });
     }
   };
 
   const toggleSettings = () => {
     dispatch({
-      type: ActionType.ToggleDetailsPanel,
+      type: ActionType.OpenDetailsPanel,
       activeDetailsItem: { type: DetailsPanelSettingsType.Quiz, id: quiz?.id ?? 0 },
-      openDetailsPanel: true,
     });
   };
 

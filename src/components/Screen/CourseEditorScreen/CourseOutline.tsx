@@ -28,11 +28,7 @@ export default function CourseOutline(): ReactElement {
       title: 'Settings',
       content: <CourseSettingsTab />,
       onClick: () => {
-        dispatch({
-          type: ActionType.ToggleDetailsPanel,
-          activeDetailsItem: null,
-          openDetailsPanel: false,
-        });
+        dispatch({ type: ActionType.CloseDetailsPanel });
       },
     },
   ];

@@ -60,9 +60,8 @@ export default function CourseOutlineQuiz({
 
   const onItemClick = ({ type, data }: { type: DetailsPanelSettingsType; data: any }) => {
     dispatch({
-      type: ActionType.ToggleDetailsPanel,
+      type: ActionType.OpenDetailsPanel,
       activeDetailsItem: { type, id: data.id as number },
-      openDetailsPanel: true,
     });
   };
 

@@ -10,7 +10,7 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
   const [{ course, isDetailsPanelOpen, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onClosePanel = (callback?: () => void) => {
-    dispatch({ type: ActionType.ToggleDetailsPanel, activeDetailsItem: null });
+    dispatch({ type: ActionType.CloseDetailsPanel });
 
     if (callback) {
       callback();

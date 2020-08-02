@@ -31,9 +31,8 @@ export default function CourseItemsList({
 
   const handleItemClick = (item: ContentItem) => {
     dispatch({
-      type: ActionType.ToggleDetailsPanel,
+      type: ActionType.OpenDetailsPanel,
       activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id as number },
-      openDetailsPanel: true,
     });
   };
 

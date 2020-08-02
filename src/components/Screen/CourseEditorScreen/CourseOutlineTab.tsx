@@ -23,9 +23,8 @@ export default function CourseOutlineTab(): ReactElement {
 
   const onItemClick = (item: any) => {
     dispatch({
-      type: ActionType.ToggleDetailsPanel,
+      type: ActionType.OpenDetailsPanel,
       activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id },
-      openDetailsPanel: true,
     });
   };
 
