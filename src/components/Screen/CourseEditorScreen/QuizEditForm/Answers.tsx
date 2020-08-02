@@ -29,7 +29,7 @@ export default function Answers({
       errorMessage={fieldErrorMessage(answer.text)}
       onBlur={(e) => {
         answer.text = e.target.value;
-        dispatch({ type: ActionType.UpdateCourseOutline });
+        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
       }}
     />
   );
@@ -46,7 +46,7 @@ export default function Answers({
             label={<AnswerField answer={answer} />}
             onChange={(e) => {
               answer.isCorrect = e.target.checked;
-              dispatch({ type: ActionType.UpdateCourseOutline });
+              dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
             }}
           />
         ) : (
@@ -57,7 +57,7 @@ export default function Answers({
             checked={answer.isCorrect}
             onChange={(e) => {
               answer.isCorrect = e.target.checked;
-              dispatch({ type: ActionType.UpdateCourseOutline });
+              dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
             }}
           >
             <AnswerField answer={answer} />
