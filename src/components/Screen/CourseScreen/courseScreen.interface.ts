@@ -1,6 +1,8 @@
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { QuizOutlineUI } from '../../../walkme/models/course/quiz';
 
+export type ICourseOutlineItems = (ICourseOutlineItem | ICourseOutlineLesson)[];
+
 export interface ICourseOutlineLesson {
   children?: ICourseOutlineItem[];
 }
@@ -14,15 +16,15 @@ export interface ICourseOutlineItem extends ICourseOutlineLesson {
     icon?: CourseItemType;
   };
   className: string;
-  usersCompletedItem?: number;
+  usersCompletedItem?: number | null;
   dropOff?: number;
 }
 
 export interface ICourseTabs {
-  courseOutline: ICourseOutlineItem[];
+  courseOutline: ICourseOutlineItems;
   quiz: QuizOutlineUI;
 }
 
 export interface ICourseOutlineTable {
-  courseOutline: ICourseOutlineItem[];
+  courseOutline: ICourseOutlineItems;
 }

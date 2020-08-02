@@ -2,7 +2,7 @@ import produce from 'immer';
 
 import { CourseOverviewData } from '../../walkme/models';
 import { defaultDateRange } from '../../utils';
-import { ICourseOutlineItem } from '../../components/Screen/CourseScreen';
+import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
 
 import { ActionType, IState, IAction } from './course-context.interface';
 
@@ -12,7 +12,7 @@ export const initialState = {
   dateRange: defaultDateRange,
   overview: {} as CourseOverviewData,
   course: {},
-  courseOutline: [] as ICourseOutlineItem[],
+  courseOutline: [] as ICourseOutlineItems,
   quiz: {},
   isExportingCourse: false,
   isExportingCourseError: false,

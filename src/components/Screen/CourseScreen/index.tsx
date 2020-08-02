@@ -10,10 +10,14 @@ import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
 import { parseCourseOutline } from './utils';
-import { ICourseOutlineItem } from './courseScreen.interface';
+import {
+  ICourseOutlineItem,
+  ICourseOutlineLesson,
+  ICourseOutlineItems,
+} from './courseScreen.interface';
 
 export { parseCourseOutline };
-export type { ICourseOutlineItem };
+export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
@@ -57,7 +61,7 @@ export default function CourseScreen(): ReactElement {
         overview={overview as CourseOverviewData}
         quizData={quiz}
       />
-      <CourseTabs courseOutline={courseOutline} quiz={quiz} />
+      <CourseTabs courseOutline={courseOutline as ICourseOutlineItems} quiz={quiz} />
     </>
   );
 }

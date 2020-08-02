@@ -1,37 +1,69 @@
+import { TypeName } from '@walkme/types';
+
 import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { CourseChild } from '../../../walkme/data/courseBuild/courseItems';
-import { CourseLesson } from '../../../walkme/data/courseBuild/courseItems/lesson';
+import {
+  CourseOutlineUIModel,
+  CourseOutlineUIModelItem,
+  CourseOutlineUIModelLesson,
+  CourseChildType,
+} from '../../../walkme/models/course/outline';
 
-import { ICourseOutlineItem } from './courseScreen.interface';
+import {
+  ICourseOutlineItem,
+  ICourseOutlineLesson,
+  ICourseOutlineItems,
+} from './courseScreen.interface';
 
-export const parseCourseOutline = (items: CourseChild[]): ICourseOutlineItem[] =>
-  items.map((item: CourseChild) => {
-    const isLesson = item.type === CourseItemType.Lesson;
+const getItemType = (type: TypeName) => {
+  switch (type) {
+    case TypeName.Article:
+      return CourseItemType.Article;
+    case TypeName.Video:
+      return CourseItemType.Video;
+    case TypeName.SmartWalkThru:
+      return CourseItemType.SmartWalkThru;
+    default:
+      throw new Error(`Unknown TypeName ${type}`);
+  }
+};
 
-    const itemData = {
-      key: item.id,
-      title: item.title,
-      type: item.type as CourseItemType,
-      itemName: { value: item.title, icon: !isLesson ? (item.type as CourseItemType) : undefined },
-      className: `wm-expanded-default-hide-handler ${
-        isLesson ? 'wm-expandable-item only-first-cell' : ''
-      }`,
-      // usersCompletedItem: undefined, // TODO: update this property from the data
-      // dropOff: undefined, // TODO: update this property from the data
-    };
+const parseDefaultItemData = (item: CourseOutlineUIModelItem | CourseOutlineUIModelLesson) => ({
+  key: item.id,
+  title: item.title,
+});
 
-    if (!isLesson) {
-      return itemData;
+const parseTaskData = (item: CourseOutlineUIModelItem, isNestedItem?: boolean) => ({
+  type: getItemType(item.type) as CourseItemType,
+  itemName: { value: item.title, icon: getItemType(item.type) as CourseItemType },
+  className: !isNestedItem ? 'wm-expanded-default-hide-handler' : '',
+  usersCompletedItem: item.users_completed,
+  dropOff: item.drop_off,
+});
+
+const parseLessonData = (item: CourseOutlineUIModelLesson) => ({
+  type: CourseItemType.Lesson,
+  itemName: { value: item.title },
+  className: 'wm-expanded-default-hide-handler wm-expandable-item only-first-cell',
+  children: item.items.map((node: CourseOutlineUIModelItem) => ({
+    key: node.id,
+    title: node.title,
+    ...parseTaskData(node, true),
+  })),
+});
+
+export const parseCourseOutline = (items: CourseOutlineUIModel): ICourseOutlineItems =>
+  items.map((item: CourseOutlineUIModelItem | CourseOutlineUIModelLesson) => {
+    const itemDefault = parseDefaultItemData(item);
+
+    if (item.childType !== CourseChildType.Lesson) {
+      return {
+        ...itemDefault,
+        ...parseTaskData(item),
+      } as ICourseOutlineItem;
     } else {
       return {
-        ...itemData,
-        children: (item as CourseLesson).childNodes.toArray().map((node: any) => ({
-          className: '',
-          key: node.id,
-          title: node.title,
-          type: node.type,
-          itemName: { value: node.title, icon: node.type },
-        })),
-      };
+        ...itemDefault,
+        ...parseLessonData(item),
+      } as ICourseOutlineLesson;
     }
   });

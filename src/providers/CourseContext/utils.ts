@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 import { getCourseOverview, getCourse, exportCourseOutline, getQuizData } from '../../walkme';
 import { wmMessage, MessageType } from '../../utils';
 import { parseCourseOutline } from '../../components/Screen/CourseScreen';
+import { getCourseOutline } from '../../walkme/data/courseOutline';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
 
@@ -42,14 +43,19 @@ export const fetchCourseData = async (
   const id = +courseId;
 
   try {
-    const course = await getCourse(id, envId);
-    const courseOutline = parseCourseOutline(course.items.toArray());
+    const course = await getCourse(id, envId); // TODO: should remove
+    const courseOutline = await getCourseOutline(id, envId, from, to);
+    const convertedCourseOutline = parseCourseOutline(courseOutline);
     const quiz = await getQuizData(id, envId, from, to);
     const overview = await getCourseOverview(id, envId, from, to);
 
-    console.log('courseOutline ', courseOutline);
-
-    dispatch({ type: ActionType.FetchCourseDataSuccess, course, overview, courseOutline, quiz });
+    dispatch({
+      type: ActionType.FetchCourseDataSuccess,
+      course,
+      overview,
+      courseOutline: convertedCourseOutline,
+      quiz,
+    });
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCourseDataError });

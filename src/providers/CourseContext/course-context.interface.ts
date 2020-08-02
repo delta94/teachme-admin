@@ -5,7 +5,7 @@ import { Course } from '../../walkme/data/courseBuild';
 import { CourseOverviewData } from '../../walkme/models';
 import { IDateRange } from '../../utils';
 
-import { ICourseOutlineItem } from '../../components/Screen/CourseScreen';
+import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
 import { ActionType } from './actions';
 
 export { ActionType };
@@ -14,7 +14,7 @@ export interface IAction {
   type: ActionType;
   overview?: CourseOverviewData;
   course?: Course;
-  courseOutline?: ICourseOutlineItem[];
+  courseOutline?: ICourseOutlineItems;
   quiz?: QuizOutlineUI;
   dateRange?: IDateRange;
   courseOutlineSearchValue?: string;
@@ -30,7 +30,7 @@ export interface IState {
   dateRange: IDateRange;
   overview: CourseOverviewData;
   course: Course;
-  courseOutline: ICourseOutlineItem[];
+  courseOutline: ICourseOutlineItems;
   quiz: QuizOutlineUI;
   isExportingCourse: boolean;
   isExportingCourseError: boolean;

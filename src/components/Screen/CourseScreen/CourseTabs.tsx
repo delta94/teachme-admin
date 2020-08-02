@@ -19,14 +19,14 @@ export default function CourseTabs({ courseOutline, quiz }: ICourseTabs): ReactE
     {
       id: TabId.Outline,
       title: 'Outline',
-      itemsLength: 16,
+      itemsLength: courseOutline.length,
       icon: <Icon type={IconType.SidebarCourses} />,
       content: <CourseOutlineTable courseOutline={courseOutline} />,
     },
     {
       id: TabId.Quiz,
       title: 'Quiz',
-      itemsLength: quiz?.questions?.length,
+      itemsLength: quiz?.questions?.length ?? 0,
       icon: <Icon type={IconType.Quiz} />,
       isDisabled: !quiz || (quiz && Object.keys(quiz).length === 0),
       content: <CourseQuizTabCharts quiz={quiz} />,
