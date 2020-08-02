@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { ContentItem, TypeName } from '@walkme/types';
 import {
   useCourseEditorContext,
   fetchItemsList,
@@ -58,6 +59,9 @@ export default function ResourcesList(): ReactElement {
           items={filteredCourseItems}
           behaviour="copy"
           className={classes['resource-item-list']}
+          isDisabled={(item: ContentItem) =>
+            state.course?.includes(item.type as TypeName, item.id as number)
+          }
         />
       ) : (
         <ResourcesListEmptyState />

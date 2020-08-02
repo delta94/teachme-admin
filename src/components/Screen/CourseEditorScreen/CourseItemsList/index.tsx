@@ -25,6 +25,7 @@ export default function CourseItemsList({
   className,
   emptyState,
   taskItemProps = {},
+  isDisabled,
   ...otherProps
 }: ICourseItemsList): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -45,15 +46,20 @@ export default function CourseItemsList({
         dragClass={classes['card-ghost']}
       >
         {items.length ? (
-          items.map((item, i) => (
-            <TaskItem
-              key={i}
-              index={i}
-              item={item}
-              onClick={() => handleItemClick && handleItemClick(item)}
-              {...taskItemProps}
-            />
-          ))
+          items.map((item, i) => {
+            const disabled = isDisabled && isDisabled(item);
+
+            return (
+              <TaskItem
+                key={i}
+                index={i}
+                item={item}
+                onClick={() => handleItemClick && handleItemClick(item)}
+                {...taskItemProps}
+                disabled={disabled}
+              />
+            );
+          })
         ) : (
           <div className={classes['empty']}>No items were found</div>
         )}
