@@ -27,11 +27,15 @@ export default function UserMenu({
     {
       id: 'impersonate',
       value: 'Impersonate',
-      onClick: () => setShowImpersonate(true),
+      onClick: () => handleImpersonate(),
       skip: !originalUser.userIsBackOffice,
     },
     { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
+
+  const handleImpersonate = () => {
+    setShowImpersonate(true);
+  };
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     message.info(`User clicked on ${selected.value}`);
