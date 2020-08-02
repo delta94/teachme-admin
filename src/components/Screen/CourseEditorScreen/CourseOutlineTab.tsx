@@ -19,7 +19,7 @@ export interface IProperties {
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { course, quiz, courseOutlineSearchValue } = state;
+  const { course, quiz /* , courseOutlineSearchValue */ } = state;
 
   const onItemClick = (item: any) => {
     dispatch({
