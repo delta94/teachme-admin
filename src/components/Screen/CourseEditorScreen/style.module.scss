@@ -102,6 +102,8 @@
       }
 
       :global(.ant-tabs-content) {
+        height: 100%;
+
         :global(.ant-tabs-tabpane) {
           display: flex;
           flex-direction: column;
@@ -158,5 +160,15 @@
 }
 
 .course-outline-tab {
-  padding: 0 20px 15px;
+  --bottom-padding: 15px;
+  --sides-padding: 20px;
+
+  padding: 0 var(--sides-padding) var(--bottom-padding);
+  height: 100%;
+
+  .course-outline-empty-state {
+    position: absolute;
+    height: calc(100% - var(--tabs-height) - var(--bottom-padding));
+    width: calc(100% - var(--sides-padding) * 2);
+  }
 }

@@ -7,6 +7,7 @@ import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
 import classes from './style.module.scss';
+import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
 
 export interface IProperties {
   isAvailable?: boolean;
@@ -39,6 +40,9 @@ export default function CourseOutlineTab(): ReactElement {
           console.log('searching');
         }}
       /> */}
+      {!quiz && !course?.items.toArray().length && (
+        <CourseOutlineListEmptyState containerClassName={classes['course-outline-empty-state']} />
+      )}
       {course && (
         <CourseOutlineList
           items={course?.items.toArray() ?? []}
