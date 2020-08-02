@@ -33,6 +33,7 @@ export default function CourseItemsList({
     dispatch({
       type: ActionType.ToggleDetailsPanel,
       activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id as number },
+      openDetailsPanel: true,
     });
   };
 

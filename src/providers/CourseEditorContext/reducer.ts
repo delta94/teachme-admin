@@ -76,7 +76,10 @@ export const reducer = produce(
         draft.filteredCourseOutline = action.course?.items ?? initialState.filteredCourseOutline;
         break;
       case ActionType.ToggleDetailsPanel:
-        draft.isDetailsPanelOpen = !draft.isDetailsPanelOpen;
+        draft.isDetailsPanelOpen =
+          action.openDetailsPanel !== undefined
+            ? action.openDetailsPanel
+            : !draft.isDetailsPanelOpen;
         draft.activeDetailsItem = action.activeDetailsItem ?? null;
         break;
       case ActionType.ResetCourseEditor:

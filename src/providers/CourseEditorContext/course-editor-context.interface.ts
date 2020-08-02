@@ -25,6 +25,7 @@ export interface IAction {
   courseOutlineSearchValue?: string;
   updateHasChange?: boolean;
   activeDetailsItem?: { type: DetailsPanelSettingsType; id: number } | null;
+  openDetailsPanel?: boolean;
 }
 
 export interface IDispatch {

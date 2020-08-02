@@ -25,6 +25,7 @@ export default function QuizHeader({ className }: { className?: string }): React
     dispatch({
       type: ActionType.ToggleDetailsPanel,
       activeDetailsItem: { type: DetailsPanelSettingsType.Quiz, id: quiz?.id ?? 0 },
+      openDetailsPanel: true,
     });
   };
 
