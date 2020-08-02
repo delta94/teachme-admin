@@ -11,6 +11,7 @@ export interface IAction {
   type: ActionType;
   users?: Array<UserListUILineItem>;
   totals_unique_users?: number;
+  total_rows?: number;
   dateRange?: IDateRange;
   usersSearchValue?: string;
 }
@@ -25,7 +26,7 @@ export interface IState {
   dateRange: IDateRange;
   users: Array<UserListUILineItem>;
   totals_unique_users: number;
-  filteredUsers: Array<UserListUILineItem>;
+  total_rows: number;
   usersSearchValue: string;
   isExportingUsers: boolean;
   isExportingUsersError: boolean;

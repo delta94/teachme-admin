@@ -1,7 +1,12 @@
 import { createContext, useContext } from 'react';
 
 import { getUsersList, getUsersCount, exportUsersData } from '../../walkme';
-import { UsersListQueryOptions, UsersColumn, UsersOrder } from '../../walkme/models';
+import {
+  UsersListQueryOptions,
+  UsersColumn,
+  UsersOrder,
+  UserListUILineItem,
+} from '../../walkme/models';
 import { wmMessage, MessageType } from '../../utils';
 
 import { ActionType, IState, IDispatch } from './users-context.interface';
@@ -31,21 +36,37 @@ const useUsersDispatch = () => {
 
 export const useUsersContext = (): [IState, IDispatch] => [useUsersState(), useUsersDispatch()];
 
+export const defaultQueryOptions = {
+  first_item_index: 0,
+  num_of_records: 10,
+  sort_by: UsersColumn.ID,
+  sort_by_order: UsersOrder.ASC,
+  user_name: '',
+};
+
 export const fetchUsers = async (
   dispatch: IDispatch,
   envId: number,
   from: string,
   to: string,
-  options?: UsersListQueryOptions,
+  options: UsersListQueryOptions,
+  prevUsers?: Array<UserListUILineItem>,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchUsers });
 
   try {
-    // TODO: utilize 'load more' button using 'first_item_index'
-    const { data: users } = await getUsersList(envId, from, to, options);
-    const { totals_unique_users } = await getUsersCount(envId, from, to, options);
+    const { data } = await getUsersList(envId, from, to, options);
+    const { totals_unique_users, total_rows } = await getUsersCount(envId, from, to, options);
 
-    dispatch({ type: ActionType.FetchUsersSuccess, users, totals_unique_users });
+    let users = [];
+
+    if (prevUsers) {
+      users = [...prevUsers, ...data];
+    } else {
+      users = [...data];
+    }
+
+    dispatch({ type: ActionType.FetchUsersSuccess, users, totals_unique_users, total_rows });
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchUsersError });
@@ -61,13 +82,7 @@ export const exportUsers = async (
   dispatch({ type: ActionType.ExportUsers });
 
   try {
-    const options = {
-      first_item_index: 0,
-      num_of_records: 100,
-      sort_by: UsersColumn.ID,
-      sort_by_order: UsersOrder.ASC,
-    };
-    await exportUsersData(envId, from, to, options);
+    await exportUsersData(envId, from, to, defaultQueryOptions);
 
     dispatch({ type: ActionType.ExportUsersSuccess });
     wmMessage('Export completed');

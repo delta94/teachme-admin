@@ -18,6 +18,7 @@ enum TabId {
 
 export default function CourseTabs({ course }: ICourseTabs): ReactElement {
   const { courseOutlineTableData, quizData } = courseMockData;
+  const { quiz } = course;
   const courseTabs = [
     {
       id: TabId.Outline,
@@ -31,7 +32,8 @@ export default function CourseTabs({ course }: ICourseTabs): ReactElement {
       title: 'Quiz',
       itemsLength: quizData.questions.length,
       icon: <Icon type={IconType.Quiz} />,
-      content: <CourseQuizTabCharts data={quizData} />, // TODO: after integration replace mock data with prop course
+      isDisabled: !quiz || Object.keys(quiz).length === 0,
+      content: <CourseQuizTabCharts data={quizData} quiz={quiz} />, // TODO: after integration replace the prop data
     },
   ];
 
@@ -39,7 +41,7 @@ export default function CourseTabs({ course }: ICourseTabs): ReactElement {
     <WMCard>
       <WMTabs defaultActiveKey={TabId.Outline}>
         {courseTabs.map((tab) => {
-          const { id, title, itemsLength, icon, content } = tab;
+          const { id, title, itemsLength, icon, content, isDisabled } = tab;
 
           return (
             <WMTabPanel
@@ -52,6 +54,7 @@ export default function CourseTabs({ course }: ICourseTabs): ReactElement {
                 </>
               }
               key={id}
+              disabled={isDisabled}
             >
               {content}
             </WMTabPanel>

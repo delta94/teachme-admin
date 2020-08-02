@@ -15,11 +15,23 @@
     }
   }
 
+  .shown-users-skeleton {
+    width: 180px;
+  }
+
   .export-btn:global(.ant-btn) {
     margin-right: 20px;
   }
 
   .users-table {
+    :global(.ant-empty) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 550px;
+      margin: 0;
+    }
+
     :global(.ant-table) {
       font-family: var(--font-primary);
       color: var(--neutral900);
@@ -50,6 +62,20 @@
       .attempts-cell {
         text-align: right;
       }
+    }
+  }
+
+  .load-more-wrapper {
+    position: relative;
+    color: var(--neutral900);
+    font-family: var(--font-primary);
+    margin-top: 20px;
+
+    button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 }

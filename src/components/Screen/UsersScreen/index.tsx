@@ -3,6 +3,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useAppContext } from '../../../providers/AppContext';
 import {
   useUsersContext,
+  defaultQueryOptions,
   fetchUsers,
   exportUsers,
   ActionType,
@@ -22,8 +23,10 @@ import { ExportButton } from '../../common/buttons';
 // import { courses, statuses, results } from './utils';
 import { columns } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
+import LoadMoreWrapper from './LoadMoreWrapper';
 import classes from './style.module.scss';
 
+// TODO: add cleanups to fetchUsers
 export default function UsersScreen(): ReactElement {
   const [appState] = useAppContext();
   const {
@@ -35,13 +38,16 @@ export default function UsersScreen(): ReactElement {
   const {
     dateRange: { from, to },
     users,
-    filteredUsers,
     usersSearchValue,
   } = state;
 
   useEffect(() => {
-    if (!isUpdating) fetchUsers(dispatch, envId, from, to);
-  }, [dispatch, isUpdating, system, envId, from, to]);
+    const options = { ...defaultQueryOptions };
+
+    if (usersSearchValue.length) options.user_name = usersSearchValue;
+
+    if (!isUpdating) fetchUsers(dispatch, envId, from, to, options);
+  }, [dispatch, isUpdating, system, envId, from, to, usersSearchValue]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
@@ -50,15 +56,14 @@ export default function UsersScreen(): ReactElement {
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
   const onSearch = (searchValue: string) => {
-    const newUsersList = users.filter(({ id }) =>
-      id.toLowerCase().includes(searchValue.toLowerCase()),
-    );
+    const options = {
+      ...defaultQueryOptions,
+      user_name: searchValue,
+    };
 
-    dispatch({
-      type: ActionType.SetUsersSearchValue,
-      usersSearchValue: searchValue,
-      users: newUsersList,
-    });
+    fetchUsers(dispatch, envId, from, to, options);
+
+    dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
   };
 
   return (
@@ -68,7 +73,7 @@ export default function UsersScreen(): ReactElement {
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <WMCard className={classes['table-wrapper']}>
-        <WMTable className={classes['users-table']} data={filteredUsers} columns={columns}>
+        <WMTable className={classes['users-table']} data={users} columns={columns}>
           <ShownUsersIndicator />
           {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
@@ -83,6 +88,7 @@ export default function UsersScreen(): ReactElement {
             <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
           </ControlsWrapper>
         </WMTable>
+        <LoadMoreWrapper />
       </WMCard>
     </>
   );
