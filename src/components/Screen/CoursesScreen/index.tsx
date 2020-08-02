@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, Key } from 'react';
-import { Divider, ConfigProvider } from 'antd';
+import { Divider } from 'antd';
 
 import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
@@ -21,6 +21,7 @@ import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
 import CoursesEmptyState from './CoursesEmptyState';
+import TableBody, { DraggableTableRow } from './TableBody';
 // import { statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
@@ -59,6 +60,13 @@ export default function CoursesScreen(): ReactElement {
   const onDateRangeChange = (dateRange?: IDateRange) =>
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
+  const components = {
+    body: {
+      wrapper: TableBody,
+      row: filteredCourses.length ? DraggableTableRow : CoursesEmptyState,
+    },
+  };
+
   const selectedRowsCount = selectedRows.length;
 
   return (
@@ -75,35 +83,33 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <ConfigProvider renderEmpty={CoursesEmptyState}>
-          <WMTable
-            rowSelection={{
-              selectedRowKeys,
-              onChange: onMultiSelectChange,
-            }}
-            data={filteredCourses}
-            columns={columns}
-            // onSortEnd={(sortedData) => setTableData(sortedData)}
-          >
-            <ShownCoursesIndicator />
-            {/* <ControlsWrapper>
+        <WMTable
+          rowSelection={{
+            selectedRowKeys,
+            onChange: onMultiSelectChange,
+          }}
+          data={filteredCourses}
+          columns={columns}
+          components={components}
+        >
+          <ShownCoursesIndicator />
+          {/* <ControlsWrapper>
               <DropdownFilter label="Status" options={statuses} />
               <DropdownFilter label="Segments" options={segments} />
             </ControlsWrapper> */}
-            <ControlsWrapper>
-              {selectedRowsCount ? (
-                <>
-                  <ProductionStatusActions />
-                  <DeleteCoursesButton />
-                  <Divider className={classes['separator']} type="vertical" />
-                </>
-              ) : null}
-              <ExportCoursesButton />
-              <SearchCoursesFilter />
-              <CreateButton />
-            </ControlsWrapper>
-          </WMTable>
-        </ConfigProvider>
+          <ControlsWrapper>
+            {selectedRowsCount ? (
+              <>
+                <ProductionStatusActions />
+                <DeleteCoursesButton />
+                <Divider className={classes['separator']} type="vertical" />
+              </>
+            ) : null}
+            <ExportCoursesButton />
+            <SearchCoursesFilter />
+            <CreateButton />
+          </ControlsWrapper>
+        </WMTable>
       </WMCard>
     </>
   );
