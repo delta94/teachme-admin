@@ -1,4 +1,4 @@
-import walkme from '@walkme/editor-sdk';
+import walkme, { EmailList } from '@walkme/editor-sdk';
 
 /**
  * Returns Data for logged-in user
@@ -36,6 +36,22 @@ export async function getSystemData() {
  */
 export async function switchSystem(id: number) {
   return walkme.system.switchSystem(id);
+}
+
+/**
+ * Impersonated the requested account
+ * @param email requested account email to impersonate
+ */
+export async function impersonate(email: string): Promise<any> {
+  return walkme.user.impersonate(email);
+}
+
+/**
+ * Returns a list of emails that start with the given prefix
+ * @param prefix the prefix of the requested emails
+ */
+export async function getEmails(prefix: string): Promise<EmailList> {
+  return walkme.user.autoComplete(prefix);
 }
 
 /**
