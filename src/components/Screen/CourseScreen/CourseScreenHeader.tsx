@@ -42,7 +42,7 @@ export default function CourseScreenHeader({
                 variant={ButtonVariantEnum.Secondary}
                 className={classes['edit']}
               >
-                <Link to="/new-course">Edit</Link>
+                <Link to={`/course-editor/${course.id}`}>Edit</Link>
               </WMButton>
               <div className={classes['course-details-sub-title']}>
                 <span>

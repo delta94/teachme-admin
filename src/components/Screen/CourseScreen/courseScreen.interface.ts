@@ -1,14 +1,28 @@
+import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { QuizOutlineUI } from '../../../walkme/models/course/quiz';
-import { ICourseOutlineItem } from './utils';
 
-// TODO: create a properly interface instead of using any
+export interface ICourseOutlineLesson {
+  children?: ICourseOutlineItem[];
+}
+
+export interface ICourseOutlineItem extends ICourseOutlineLesson {
+  key: number;
+  title: string;
+  type: CourseItemType;
+  itemName: {
+    value: string;
+    icon?: CourseItemType;
+  };
+  className: string;
+  usersCompletedItem?: number;
+  dropOff?: number;
+}
+
 export interface ICourseTabs {
-  // course: any;
   courseOutline: ICourseOutlineItem[];
   quiz: QuizOutlineUI;
 }
 
-// TODO: create a properly interface instead of using any
 export interface ICourseOutlineTable {
   courseOutline: ICourseOutlineItem[];
 }

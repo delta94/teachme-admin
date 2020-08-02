@@ -9,6 +9,11 @@ import { CourseOverviewData } from '../../../walkme/models';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
+import { parseCourseOutline } from './utils';
+import { ICourseOutlineItem } from './courseScreen.interface';
+
+export { parseCourseOutline };
+export type { ICourseOutlineItem };
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {

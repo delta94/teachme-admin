@@ -2,7 +2,7 @@ import produce from 'immer';
 
 import { CourseOverviewData } from '../../walkme/models';
 import { defaultDateRange } from '../../utils';
-import { ICourseOutlineItem } from '../../components/Screen/CourseScreen/utils';
+import { ICourseOutlineItem } from '../../components/Screen/CourseScreen';
 
 import { ActionType, IState, IAction } from './course-context.interface';
 

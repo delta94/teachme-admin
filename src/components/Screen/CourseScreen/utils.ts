@@ -2,22 +2,7 @@ import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { CourseChild } from '../../../walkme/data/courseBuild/courseItems';
 import { CourseLesson } from '../../../walkme/data/courseBuild/courseItems/lesson';
 
-export interface ICourseOutlineLesson {
-  children?: ICourseOutlineItem[];
-}
-
-export interface ICourseOutlineItem extends ICourseOutlineLesson {
-  key: number;
-  title: string;
-  type: CourseItemType;
-  itemName: {
-    value: string;
-    icon?: CourseItemType;
-  };
-  className: string;
-  usersCompletedItem?: number;
-  dropOff?: number;
-}
+import { ICourseOutlineItem } from './courseScreen.interface';
 
 export const parseCourseOutline = (items: CourseChild[]): ICourseOutlineItem[] =>
   items.map((item: CourseChild) => {

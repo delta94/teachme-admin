@@ -5,7 +5,7 @@ import { Course } from '../../walkme/data/courseBuild';
 import { CourseOverviewData } from '../../walkme/models';
 import { IDateRange } from '../../utils';
 
-import { ICourseOutlineItem } from '../../components/Screen/CourseScreen/utils';
+import { ICourseOutlineItem } from '../../components/Screen/CourseScreen';
 import { ActionType } from './actions';
 
 export { ActionType };

@@ -7,8 +7,8 @@ import ExportButton from '../../common/buttons/ExportButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 import { ICourseOutlineTable } from './courseScreen.interface';
 
-import classes from './style.module.scss';
 import { columns } from './tableData';
+import classes from './style.module.scss';
 
 export default function CourseOutlineTable({ courseOutline }: ICourseOutlineTable): ReactElement {
   const [tableData, setTableData] = useState(courseOutline);
