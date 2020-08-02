@@ -31,6 +31,8 @@ export interface IState {
   coursesSearchValue: string;
   selectedRows: Array<UICourse>;
   selectedRowKeys: Array<Key>;
+  isSortingCourses: boolean;
+  isSortingCoursesError: boolean;
   isExportingCourses: boolean;
   isExportingCoursesError: boolean;
   isDeletingCourses: boolean;

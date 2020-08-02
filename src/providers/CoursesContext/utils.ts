@@ -1,8 +1,10 @@
 import { createContext, useContext } from 'react';
+import produce from 'immer';
 
 import {
   getCourseList,
   getCoursesOverview,
+  changeIndex,
   exportCoursesData,
   deleteCourse,
   publishCourses as _publishCourses,
@@ -58,6 +60,30 @@ export const fetchCoursesData = async (
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCoursesDataError });
+  }
+};
+
+export const sortTable = async (
+  dispatch: IDispatch,
+  prevCourses: Array<UICourse>,
+  courseId: number,
+  fromIndex: number,
+  toIndex: number,
+): Promise<void> => {
+  dispatch({ type: ActionType.SortTable });
+
+  try {
+    await changeIndex(courseId, fromIndex, toIndex);
+
+    const courses = produce(prevCourses, (draft) => {
+      const moved = draft.splice(fromIndex, 1);
+      draft.splice(toIndex, 0, moved[0]);
+    });
+
+    dispatch({ type: ActionType.SortTableSuccess, courses });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: ActionType.SortTableError });
   }
 };
 

@@ -15,6 +15,8 @@ export const initialState = {
   coursesSearchValue: '',
   selectedRows: [],
   selectedRowKeys: [],
+  isSortingCourses: false,
+  isSortingCoursesError: false,
   isExportingCourses: false,
   isExportingCoursesError: false,
   isDeletingCourses: false,
@@ -53,6 +55,20 @@ export const reducer = produce(
         break;
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
+        break;
+      case ActionType.SortTable:
+        draft.isSortingCourses = true;
+        draft.isSortingCoursesError = false;
+        break;
+      case ActionType.SortTableSuccess:
+        draft.isSortingCourses = false;
+        draft.isSortingCoursesError = false;
+        draft.courses = action.courses ?? initialState.courses;
+        draft.filteredCourses = action.courses ?? initialState.filteredCourses;
+        break;
+      case ActionType.SortTableError:
+        draft.isSortingCourses = false;
+        draft.isSortingCoursesError = true;
         break;
       case ActionType.ExportCourses:
         draft.isExportingCourses = true;
