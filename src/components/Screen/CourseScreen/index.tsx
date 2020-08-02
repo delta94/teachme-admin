@@ -59,7 +59,6 @@ export default function CourseScreen(): ReactElement {
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Course"
         overview={overview as CourseOverviewData}
-        quizData={quiz}
       />
       <CourseTabs courseOutline={courseOutline as ICourseOutlineItems} quiz={quiz} />
     </>

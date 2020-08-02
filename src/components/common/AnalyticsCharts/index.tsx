@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
+import { CourseOverviewData } from '../../../walkme/models/course/panels';
 import { IAnalyticsCharts } from './analytics.interface';
 import CourseSummaryChart from './CourseSummaryChart';
 import CourseTimeCompletionChart from './CourseTimeCompletionChart';
@@ -13,7 +14,6 @@ export default function AnalyticsCharts({
   summaryChartTitle,
   timeCompletionTitle = 'Avg. Completion Time',
   quizCompletionTitle = 'Quiz Completion Rate',
-  quizData,
   overview,
 }: IAnalyticsCharts): ReactElement {
   return (
@@ -33,13 +33,10 @@ export default function AnalyticsCharts({
             title={quizCompletionTitle}
             overview={overview}
           />
-          {quizData && (
+          {overview && (
             <QuizScoreChart
-              isEmpty={Object.keys(quizData).length === 0}
-              quizData={{
-                average: 0, // TODO: should use overview.avg_quiz_score - but getting error Property 'passmark' does not exist on type 'AllCoursesOverviewResponse | CourseOverviewData'
-                passmark: 100, // TODO: should use `overview?.passmark` but getting error Property 'passmark' does not exist on type 'AllCoursesOverviewResponse | CourseOverviewData'
-              }}
+              isEmpty={Object.keys(overview).length === 0}
+              overview={overview as CourseOverviewData}
             />
           )}
         </div>

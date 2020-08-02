@@ -3,35 +3,28 @@ import {
   AllCoursesOverviewResponse,
   CourseOverviewData,
 } from '../../../walkme/models';
-import { QuizOutlineUI } from '../../../walkme/models/course/quiz';
 
 export interface IAnalyticsCharts {
   summaryChartTitle: string;
   timeCompletionTitle?: string;
   quizCompletionTitle?: string;
-  quizData?: QuizOutlineUI;
   overview?: AllCoursesOverviewResponse | CourseOverviewData;
-}
-
-// TODO: create a properly interface instead of using any
-export interface ICourseSummaryChart {
-  summaryData: any;
 }
 
 export interface ICoursesTimeCompletionChart {
   className?: string;
   title: string;
-  overview?: any;
+  overview?: AllCoursesOverviewResponse | CourseOverviewData;
 }
 
 export interface IQuizCompletionRateChart {
   className?: string;
   title: string;
-  overview?: any;
+  overview?: AllCoursesOverviewResponse | CourseOverviewData;
 }
 
 export interface IQuizScoreData {
-  quizData: any;
+  overview: CourseOverviewData;
   isEmpty: boolean;
 }
 
