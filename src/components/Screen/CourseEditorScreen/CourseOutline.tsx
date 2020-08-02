@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
-import cc from 'classcat';
-
-import { useCourseEditorContext } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import CourseOutlineTab from './CourseOutlineTab';
 import classes from './style.module.scss';
+import CourseSettingsTab from './CourseSettingsTab';
+import CourseOutlineDetailsPanel from './CourseOutlineDetailsPanel/CourseOutlineDetailsPanel';
 
 enum TabId {
   CourseOutline = 'course-outline',
@@ -16,7 +16,6 @@ enum TabId {
 
 export default function CourseOutline(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { isDetailsPanelOpen } = state;
 
   const tabs = [
     {
@@ -27,14 +26,28 @@ export default function CourseOutline(): ReactElement {
     {
       id: TabId.Settings,
       title: 'Settings',
-      content: null, // TODO: add content
+      content: <CourseSettingsTab />,
+      onClick: () => {
+        dispatch({ type: ActionType.CloseDetailsPanel });
+      },
     },
   ];
+
+  const onTabClick = (key: string) => {
+    const tabItem = tabs.find((tab) => tab.id === key);
+    if (tabItem && tabItem.onClick) {
+      tabItem.onClick();
+    }
+  };
 
   return (
     <>
       <WMCard className={classes['course-structure']}>
-        <WMTabs className={classes['tabs']} defaultActiveKey={TabId.CourseOutline}>
+        <WMTabs
+          className={classes['tabs']}
+          defaultActiveKey={TabId.CourseOutline}
+          onTabClick={onTabClick}
+        >
           {tabs.map(({ id, title, content }) => (
             <WMTabPanel tab={title} key={id}>
               {content}
@@ -42,10 +55,7 @@ export default function CourseOutline(): ReactElement {
           ))}
         </WMTabs>
       </WMCard>
-      <WMCard
-        className={cc([classes['details-panel'], { [classes['open']]: isDetailsPanelOpen }])}
-        title={<div className={classes['title']}>Some Details</div>}
-      />
+      <CourseOutlineDetailsPanel />
     </>
   );
 }

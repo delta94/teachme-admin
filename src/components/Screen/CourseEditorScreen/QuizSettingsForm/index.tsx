@@ -1,14 +1,9 @@
-import React, { ReactElement, useState, useEffect, useCallback, ChangeEvent } from 'react';
+import React, { ReactElement, ChangeEvent } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
-import {
-  useCourseEditorContext,
-  fetchItemsList,
-  fetchCourse,
-  ActionType,
-} from '../../../../providers/CourseEditorContext';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMInput from '../../../common/WMInput';
 import FormGroup from '../../../common/FormGroup';
@@ -19,13 +14,6 @@ import classes from './style.module.scss';
 export default function QuizSettingsForm({ courseId }: { courseId: number }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course } = state;
-
-  useEffect(() => {
-    fetchItemsList(dispatch);
-    fetchCourse(dispatch, courseId);
-
-    return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId]);
 
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
     if (course?.quiz?.properties) {

@@ -5,12 +5,11 @@ import { QuizScreen } from '@walkme/types';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
-
+import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
 import WMCollapse from '../../../common/WMCollapse';
-
 import { QuizScreenType } from '../QuizEditForm/interface';
-
 import QuizHeader from '../QuizHeader';
+
 import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
@@ -51,11 +50,18 @@ export default function CourseOutlineQuiz({
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;
 
-  const onItemClick = ({ type, data }: { type: QuizScreenType; data: any }) => {
+  /*  const onItemClick = ({ type, data }: { type: QuizScreenType; data: any }) => {
     setActiveOutlineItem({ type, id: data.id });
     quizItemClick({
       type,
       data,
+    });
+  }; */
+
+  const onItemClick = ({ type, data }: { type: DetailsPanelSettingsType; data: any }) => {
+    dispatch({
+      type: ActionType.OpenDetailsPanel,
+      activeDetailsItem: { type, id: data.id as number },
     });
   };
 
@@ -72,7 +78,7 @@ export default function CourseOutlineQuiz({
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
         ])}
         onClick={() =>
-          onItemClick({ type: QuizScreenType.WelcomeScreen, data: item.welcomeScreen })
+          onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: item.welcomeScreen })
         }
       />
       <CourseQuestionList
@@ -93,7 +99,7 @@ export default function CourseOutlineQuiz({
         ])}
         activeQuestionId={activeOutlineItem?.id}
         onQuestionClick={(question: QuizQuestion) =>
-          onItemClick({ type: QuizScreenType.QuestionScreen, data: question })
+          onItemClick({ type: DetailsPanelSettingsType.Question, data: question })
         }
       />
       <QuestionItem
@@ -103,7 +109,7 @@ export default function CourseOutlineQuiz({
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
         ])}
         onClick={() =>
-          onItemClick({ type: QuizScreenType.SuccessScreen, data: item.successScreen })
+          onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: item.successScreen })
         }
       />
       <QuestionItem
@@ -112,7 +118,9 @@ export default function CourseOutlineQuiz({
           classes['fail-screen-item'],
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
         ])}
-        onClick={() => onItemClick({ type: QuizScreenType.FailScreen, data: item.failScreen })}
+        onClick={() =>
+          onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: item.failScreen })
+        }
       />
     </WMCollapse>
   );

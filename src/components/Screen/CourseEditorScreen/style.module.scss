@@ -105,11 +105,6 @@
         :global(.ant-tabs-tabpane) {
           display: flex;
           flex-direction: column;
-          padding: 0 20px 15px;
-
-          &[tabindex='-1'] {
-            display: none;
-          }
         }
       }
 
@@ -160,4 +155,8 @@
   .cancel-button {
     margin-right: 20px;
   }
+}
+
+.course-outline-tab {
+  padding: 0 20px 15px;
 }

@@ -34,20 +34,40 @@
 }
 
 .draggable-question-item {
-  cursor: grab;
+  display: flex;
+  border-bottom: var(--wm-border);
+  background-color: var(--white);
+
+  .question-item {
+    border: none;
+    padding: 0;
+  }
 
   .disabled {
     pointer-events: none;
     opacity: 0.5;
   }
+
+  .question-item-drag-handle {
+    visibility: hidden;
+  }
+
+  &:hover {
+    background-color: var(--hover-color);
+
+    .question-item-drag-handle {
+      visibility: visible;
+    }
+  }
 }
 
 .question-item {
   display: flex;
+  flex: 1;
   align-items: center;
   height: 35px;
   color: var(--neutral800);
-  padding: 0 20px;
+  padding: 0 22px;
   border-bottom: var(--wm-border);
 
   .icon {
@@ -74,7 +94,7 @@
 
 .card-ghost {
   border: 1px solid var(--wm-border);
-  background-color: var(--white);
+  background-color: var(--red);
   box-shadow: var(--drag-shadow);
   cursor: grabbing;
 }
