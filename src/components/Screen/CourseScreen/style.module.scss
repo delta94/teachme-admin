@@ -56,10 +56,20 @@
   }
 }
 
-.course-table-toolbar {
-  margin-left: auto;
+.course-table-outline {
+  .course-table-toolbar {
+    justify-content: flex-end;
+    max-width: 250px;
+    margin-left: auto;
 
-  .export {
-    margin-right: 20px;
+    .export {
+      margin-right: 20px;
+    }
+  }
+
+  .course-table {
+    :global(.ant-table-placeholder) {
+      height: 500px;
+    }
   }
 }

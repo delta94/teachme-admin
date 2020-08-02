@@ -82,17 +82,15 @@ export default function WMTable({
     <div className={classes['wm-table']}>
       {children && <div className={classes['toolbar']}>{children}</div>}
       {appInit ? (
-        <>
-          <Table
-            rowSelection={rowSelection}
-            pagination={false}
-            dataSource={data}
-            columns={columns}
-            rowKey={(record: any, index?: number) => index as React.Key}
-            {...componentsProps}
-            {...otherProps}
-          />
-        </>
+        <Table
+          rowSelection={rowSelection}
+          pagination={false}
+          dataSource={data}
+          columns={columns}
+          rowKey={(record: any, index?: number) => index as React.Key}
+          {...componentsProps}
+          {...otherProps}
+        />
       ) : (
         <WMSkeleton active paragraph={{ rows: 10 }} />
       )}

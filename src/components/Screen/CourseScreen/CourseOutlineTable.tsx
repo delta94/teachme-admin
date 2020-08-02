@@ -5,6 +5,7 @@ import WMTable from '../../common/WMTable';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import ExportButton from '../../common/buttons/ExportButton';
 import SearchFilter from '../../common/filters/SearchFilter';
+import WMTableExpanded from '../../common/WMTable/WMTableExpanded';
 import { ICourseOutlineTable } from './courseScreen.interface';
 
 import { columns } from './tableData';
@@ -42,13 +43,7 @@ export default function CourseOutlineTable({ courseOutline }: ICourseOutlineTabl
   };
 
   return (
-    <WMTable
-      data={tableData}
-      columns={columns}
-      expandable={{ defaultExpandAllRows: true }}
-      rowClassName={(record) => record.className}
-      className={classes['course-table']}
-    >
+    <div className={classes['course-table-outline']}>
       <ControlsWrapper className={classes['course-table-toolbar']}>
         <ExportButton className={classes['export']} />
         <SearchFilter
@@ -57,6 +52,17 @@ export default function CourseOutlineTable({ courseOutline }: ICourseOutlineTabl
           onSearch={onSearch}
         />
       </ControlsWrapper>
-    </WMTable>
+      {tableData.length ? (
+        <WMTableExpanded
+          data={tableData}
+          columns={columns}
+          expandable={{ defaultExpandAllRows: true }}
+          rowClassName={(record) => record.className}
+          className={classes['course-table']}
+        />
+      ) : (
+        <WMTable data={[]} columns={columns} className={classes['course-table']} />
+      )}
+    </div>
   );
 }
