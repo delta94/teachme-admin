@@ -47,11 +47,7 @@ export default function QuizEdit(): ReactElement {
         </div>
       )}
       {course?.quiz && Boolean(quizScreenType) && quizScreenData && (
-        <QuizEditForm
-          quizScreenData={quizScreenData}
-          quizScreenType={quizScreenType}
-          onClose={() => setQuizScreenData((undefined as unknown) as QuizScreen | QuizQuestion)}
-        />
+        <QuizEditForm quizScreenData={quizScreenData} quizScreenType={quizScreenType} />
       )}
     </div>
   );
