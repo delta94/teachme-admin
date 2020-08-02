@@ -22,8 +22,8 @@ export const courseMockData = {
     quizData: {
       title: 'Avg. Quiz Score',
       data: {
-        average: 82,
-        passmark: 80,
+        mock_average: 82,
+        mock_passmark: 80,
       },
     },
   },
