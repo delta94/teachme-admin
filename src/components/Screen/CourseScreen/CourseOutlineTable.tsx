@@ -1,16 +1,21 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 import WMTable from '../../common/WMTable';
-import { ICourseOutlineTable } from './courseScreen.interface';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import ExportButton from '../../common/buttons/ExportButton';
 import SearchFilter from '../../common/filters/SearchFilter';
+import { ICourseOutlineTable } from './courseScreen.interface';
 
 import classes from './style.module.scss';
+import { columns } from './tableData';
 
-export default function CourseOutlineTable({ course }: ICourseOutlineTable): ReactElement {
-  const [tableData, setTableData] = useState(course.data);
+export default function CourseOutlineTable({ courseOutline }: ICourseOutlineTable): ReactElement {
+  const [tableData, setTableData] = useState(courseOutline);
+
+  useEffect(() => {
+    setTableData(courseOutline);
+  }, [courseOutline]);
 
   const onSearch = (searchValue: string) => {
     const isMatch = (item: any) => item.title.toLowerCase().includes(searchValue.toLowerCase());
@@ -18,7 +23,7 @@ export default function CourseOutlineTable({ course }: ICourseOutlineTable): Rea
     const getFilteredLessonChildren = (items: any[]) =>
       items.filter((child: any) => isMatch(child));
 
-    const newTableData = course.data
+    const newTableData = courseOutline
       .map((item: any) => {
         if (item.type === CourseItemType.Lesson) {
           const someChildrenAreMatch = item.children.some((child: any) => isMatch(child));
@@ -38,8 +43,8 @@ export default function CourseOutlineTable({ course }: ICourseOutlineTable): Rea
 
   return (
     <WMTable
-      data={tableData as Array<any>}
-      columns={course.columns}
+      data={tableData}
+      columns={columns}
       expandable={{ defaultExpandAllRows: true }}
       rowClassName={(record) => record.className}
       className={classes['course-table']}

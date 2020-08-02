@@ -1,9 +1,14 @@
+import { QuizOutlineUI } from '../../../walkme/models/course/quiz';
+import { ICourseOutlineItem } from './utils';
+
 // TODO: create a properly interface instead of using any
 export interface ICourseTabs {
-  course: any;
+  // course: any;
+  courseOutline: ICourseOutlineItem[];
+  quiz: QuizOutlineUI;
 }
 
 // TODO: create a properly interface instead of using any
 export interface ICourseOutlineTable {
-  course: any;
+  courseOutline: ICourseOutlineItem[];
 }

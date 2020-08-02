@@ -1,15 +1,15 @@
-import { Quiz } from '../../../walkme/data/courseBuild/quiz';
 import {
   CompletionGraphStats,
   AllCoursesOverviewResponse,
   CourseOverviewData,
 } from '../../../walkme/models';
+import { QuizOutlineUI } from '../../../walkme/models/course/quiz';
 
 export interface IAnalyticsCharts {
   summaryChartTitle: string;
   timeCompletionTitle?: string;
   quizCompletionTitle?: string;
-  quizData?: Quiz;
+  quizData?: QuizOutlineUI;
   overview?: AllCoursesOverviewResponse | CourseOverviewData;
 }
 

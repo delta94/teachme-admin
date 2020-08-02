@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseOverview, getCourse, exportCourseOutline } from '../../walkme';
+import { getCourseOverview, getCourse, exportCourseOutline, getQuizData } from '../../walkme';
 import { wmMessage, MessageType } from '../../utils';
+import { parseCourseOutline } from '../../components/Screen/CourseScreen/utils';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
 
@@ -42,9 +43,11 @@ export const fetchCourseData = async (
 
   try {
     const course = await getCourse(id, envId);
+    const courseOutline = parseCourseOutline(course.items.toArray());
+    const quiz = await getQuizData(id, envId, from, to);
     const overview = await getCourseOverview(id, envId, from, to);
 
-    dispatch({ type: ActionType.FetchCourseDataSuccess, course, overview });
+    dispatch({ type: ActionType.FetchCourseDataSuccess, course, overview, courseOutline, quiz });
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCourseDataError });

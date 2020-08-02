@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 
-import { courseMockData } from '../../../constants/mocks/course-screen';
-
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import Icon from '../../common/Icon';
@@ -16,24 +14,22 @@ enum TabId {
   Quiz = 'quiz',
 }
 
-export default function CourseTabs({ course }: ICourseTabs): ReactElement {
-  const { courseOutlineTableData, quizData } = courseMockData;
-  const { quiz } = course;
+export default function CourseTabs({ courseOutline, quiz }: ICourseTabs): ReactElement {
   const courseTabs = [
     {
       id: TabId.Outline,
       title: 'Outline',
       itemsLength: 16,
       icon: <Icon type={IconType.SidebarCourses} />,
-      content: <CourseOutlineTable course={courseOutlineTableData} />, // TODO: after integration replace mock data with prop course
+      content: <CourseOutlineTable courseOutline={courseOutline} />,
     },
     {
       id: TabId.Quiz,
       title: 'Quiz',
-      itemsLength: quizData.questions.length,
+      itemsLength: quiz?.questions?.length,
       icon: <Icon type={IconType.Quiz} />,
-      isDisabled: !quiz || Object.keys(quiz).length === 0,
-      content: <CourseQuizTabCharts data={quizData} quiz={quiz} />, // TODO: after integration replace the prop data
+      isDisabled: !quiz || (quiz && Object.keys(quiz).length === 0),
+      content: <CourseQuizTabCharts quiz={quiz} />,
     },
   ];
 
