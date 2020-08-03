@@ -6,6 +6,7 @@ import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorCont
 import WMButton from '../../../common/WMButton';
 import Header from '../../../common/Header';
 import Icon, { IconType } from '../../../common/Icon';
+import { AddButton } from '../../../common/buttons';
 
 import classes from './style.module.scss';
 
@@ -28,6 +29,11 @@ export default function QuizHeader({ className }: { className?: string }): React
     });
   };
 
+  const addQuestion = () => {
+    quiz?.addQuestion(); // the method is empty
+    console.log('addQuestion ');
+  };
+
   return (
     <Header className={cc([classes['quiz-header'], className])}>
       <Icon type={IconType.QuizSettings} />
@@ -48,6 +54,10 @@ export default function QuizHeader({ className }: { className?: string }): React
           >
             <Icon type={IconType.Delete} className={classes['title-icon']} />
           </WMButton>
+          <AddButton
+            className={cc([classes['title-button'], classes['add-question']])}
+            onClick={addQuestion}
+          />
         </div>
       </div>
     </Header>

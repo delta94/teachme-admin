@@ -106,6 +106,18 @@
       padding: 2px;
     }
 
+    &.add-question {
+      :global(.wm-icon) {
+        margin-right: 0;
+      }
+
+      svg {
+        width: auto;
+        height: auto;
+        padding: 0;
+      }
+    }
+
     &:last-child {
       margin-right: 10px;
     }
