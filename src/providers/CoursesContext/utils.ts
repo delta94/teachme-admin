@@ -1,5 +1,4 @@
 import { createContext, useContext } from 'react';
-import produce from 'immer';
 
 import {
   getCourseList,
@@ -65,7 +64,6 @@ export const fetchCoursesData = async (
 
 export const sortTable = async (
   dispatch: IDispatch,
-  prevCourses: Array<UICourse>,
   courseId: number,
   fromIndex: number,
   toIndex: number,
@@ -75,12 +73,7 @@ export const sortTable = async (
   try {
     await changeIndex(courseId, fromIndex, toIndex);
 
-    const courses = produce(prevCourses, (draft) => {
-      const moved = draft.splice(fromIndex, 1);
-      draft.splice(toIndex, 0, moved[0]);
-    });
-
-    dispatch({ type: ActionType.SortTableSuccess, courses });
+    dispatch({ type: ActionType.SortTableSuccess });
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.SortTableError });

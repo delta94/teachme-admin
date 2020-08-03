@@ -56,6 +56,10 @@ export const reducer = produce(
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
         break;
+      case ActionType.UpdateCoursesTable:
+        draft.courses = action.courses ?? initialState.courses;
+        draft.filteredCourses = action.courses ?? initialState.filteredCourses;
+        break;
       case ActionType.SortTable:
         draft.isSortingCourses = true;
         draft.isSortingCoursesError = false;
@@ -63,8 +67,6 @@ export const reducer = produce(
       case ActionType.SortTableSuccess:
         draft.isSortingCourses = false;
         draft.isSortingCoursesError = false;
-        draft.courses = action.courses ?? initialState.courses;
-        draft.filteredCourses = action.courses ?? initialState.filteredCourses;
         break;
       case ActionType.SortTableError:
         draft.isSortingCourses = false;

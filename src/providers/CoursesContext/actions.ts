@@ -5,6 +5,7 @@ export enum ActionType {
   SetCoursesSearchValue = 'SET_COURSES_SEARCH_VALUE',
   SetSelectedRows = 'SET_SELECTED_ROWS',
   SetDateRange = 'SET_DATE_RANGE',
+  UpdateCoursesTable = 'UPDATE_COURSES_TABLE',
   SortTable = 'SORT_TABLE',
   SortTableSuccess = 'SORT_TABLE_SUCCESS',
   SortTableError = 'SORT_TABLE_ERROR',
