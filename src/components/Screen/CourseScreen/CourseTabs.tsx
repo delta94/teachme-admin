@@ -68,7 +68,7 @@ export default function CourseTabs(): ReactElement {
                 <>
                   {icon}
                   <span>
-                    {title} {itemsLength ? `(${itemsLength})` : '(0)'}
+                    {title} {`(${itemsLength})`}
                   </span>
                 </>
               }

@@ -27,10 +27,8 @@ export default function CoursesTimeCompletionChart({
 
       setCompletionTimeAvg(completion_time.avg ? parseInt(completion_time.avg.toFixed(0)) : 0);
 
-      if (completion_time.buckets.length) {
-        console.log('completion_time.buckets ', completion_time.buckets);
+      if (completion_time.buckets.length)
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
-      }
     }
   }, [overview]);
 

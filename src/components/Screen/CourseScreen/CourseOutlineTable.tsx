@@ -35,10 +35,10 @@ export default function CourseOutlineTable({
         />
       </ControlsWrapper>
       {filteredCourseOutline.length ? (
+        // Using WMTableExpanded as a new instance of WMTable to expand all rows initially
         <WMTableExpanded
           data={filteredCourseOutline}
           columns={columns}
-          expandable={{ defaultExpandAllRows: true }}
           rowClassName={(record) => record.className}
           className={classes['course-table']}
         />

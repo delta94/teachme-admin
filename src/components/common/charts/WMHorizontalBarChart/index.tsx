@@ -44,8 +44,6 @@ const YAxisTick = ({
   /**
    * using foreignObject to add text style manipulation
    * https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
-   *
-   * TODO: add support to Internet Explorer
    */
 
   return (
