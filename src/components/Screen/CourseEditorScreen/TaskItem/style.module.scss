@@ -1,6 +1,5 @@
 .task-item {
   border-bottom: var(--wm-border);
-  cursor: grab;
 
   &:first-of-type {
     border-top: var(--wm-border);
@@ -11,7 +10,7 @@
     align-items: center;
     height: 35px;
     color: var(--neutral800);
-    padding: 0 20px;
+    padding: 0 20px 0 0;
 
     .icon {
       color: var(--secondary500);
@@ -31,9 +30,12 @@
     }
   }
 
-  .disabled {
+  &[disabled] {
     pointer-events: none;
-    opacity: 0.5;
+
+    .item {
+      opacity: 0.3;
+    }
   }
 
   &:hover {
@@ -42,5 +44,14 @@
     .delete-button {
       display: inline-block;
     }
+
+    .task-item-drag-handle {
+      visibility: visible;
+    }
+  }
+
+  .task-item-drag-handle {
+    visibility: hidden;
+    margin-right: 8px;
   }
 }

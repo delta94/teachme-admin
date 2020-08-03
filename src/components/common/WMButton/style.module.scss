@@ -156,6 +156,7 @@
     &:global(.ant-btn) {
       justify-content: center;
       width: 32px;
+      min-width: 32px;
       height: 32px;
       font-size: 10px;
       color: var(--white);

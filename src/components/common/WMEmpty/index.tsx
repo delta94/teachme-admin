@@ -5,14 +5,19 @@ import cc from 'classcat';
 
 import classes from './style.module.scss';
 
+export interface IWMEmpty extends EmptyProps {
+  containerClassName?: string;
+}
+
 export default function WMEmpty({
   className,
+  containerClassName,
   children,
   image = null,
   ...otherProps
-}: EmptyProps): ReactElement {
+}: IWMEmpty): ReactElement {
   return (
-    <div className={classes['wm-empty']}>
+    <div className={cc([classes['wm-empty'], containerClassName])}>
       <Empty
         className={cc([
           classes['empty-container'],

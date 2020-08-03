@@ -7,6 +7,10 @@
   .lesson {
     width: 100%;
   }
+
+  .is-empty {
+    height: 70px;
+  }
 }
 
 .drop-preview {
@@ -24,14 +28,17 @@
   cursor: grabbing;
 }
 
-.is-empty {
-  height: 70px;
+.lesson-empty-state-wrapper {
   position: relative;
+  width: 100%;
 
-  &::after {
-    content: 'Drag content into the lesson';
+  .lesson-empty-state {
     position: absolute;
-    top: 0;
-    left: 0;
+    height: 70px;
+    width: 100%;
   }
+}
+
+.task-with-settings {
+  cursor: pointer;
 }

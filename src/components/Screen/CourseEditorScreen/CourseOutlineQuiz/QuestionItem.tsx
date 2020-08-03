@@ -22,7 +22,6 @@ export default function QuestionItem({
 }: IQuestionItem): ReactElement {
   return (
     <div onClick={onClick} className={cc([classes['question-item'], className])} key={index}>
-      {/* just a placeholder icon for now */}
       <Icon type={`quiz-${type}`} className={classes['icon']} />
       <span className={classes['title']}>{title}</span>
     </div>

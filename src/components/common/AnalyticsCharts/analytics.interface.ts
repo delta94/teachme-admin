@@ -1,27 +1,31 @@
-import { CompletionGraphStats } from '../../../walkme/models';
+import {
+  CompletionGraphStats,
+  AllCoursesOverviewResponse,
+  CourseOverviewData,
+} from '../../../walkme/models';
 
 export interface IAnalyticsCharts {
-  data: any;
-  overview?: any;
-}
-
-// TODO: create a properly interface instead of using any
-export interface ICourseSummaryChart {
-  summaryData: any;
+  summaryChartTitle: string;
+  timeCompletionTitle?: string;
+  quizCompletionTitle?: string;
+  overview?: AllCoursesOverviewResponse | CourseOverviewData;
 }
 
 export interface ICoursesTimeCompletionChart {
   className?: string;
-  completionData: any;
+  title: string;
+  overview?: AllCoursesOverviewResponse | CourseOverviewData;
 }
 
 export interface IQuizCompletionRateChart {
   className?: string;
-  quizCompletionData: any;
+  title: string;
+  overview?: AllCoursesOverviewResponse | CourseOverviewData;
 }
 
 export interface IQuizScoreData {
-  quizScoreData: any;
+  overview: CourseOverviewData;
+  isEmpty?: boolean;
 }
 
 export interface ICourseSummaryLegendData extends Omit<CompletionGraphStats, 'date'> {

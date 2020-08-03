@@ -31,7 +31,6 @@ export default function CourseQuestionList({
         getChildPayload={(i) => items[i]}
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
-        dragHandleSelector=".drag-handle"
       >
         {items.map((item, i: number) => (
           <DraggableQuestionItem
@@ -39,7 +38,10 @@ export default function CourseQuestionList({
             index={i}
             item={item}
             onClick={() => onQuestionClick(item)}
-            className={cc([{ [classes['active-item']]: activeQuestionId === item.id }])}
+            className={cc([
+              classes['item-with-settings'],
+              { [classes['active-item']]: activeQuestionId === item.id },
+            ])}
           />
         ))}
       </Container>

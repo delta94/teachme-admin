@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { courseMockData } from '../../../../constants/mocks/course-screen';
 import { useAppSkeleton } from '../../../../hooks/skeleton';
 import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
@@ -9,34 +10,28 @@ import WMSkeleton from '../../WMSkeleton';
 
 import classes from './style.module.scss';
 
-export default function QuizScoreChart({ quizScoreData }: IQuizScoreData): ReactElement {
-  const {
-    title,
-    data: { average = 0, passmark = 0 },
-  } = quizScoreData;
-
+export default function QuizScoreChart({ overview, isEmpty }: IQuizScoreData): ReactElement {
   const appInit = useAppSkeleton();
-
-  const isEmpty = Array.from(Object.keys(quizScoreData.data)).length === 0;
+  const { avg_quiz_score: average = 0, passmark = 0 } = overview;
 
   return (
-    <WMCard title={title} className={classes['course-average']}>
+    <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
       {appInit ? (
         <div className={classes['course-average-content']}>
           <WMProgress
             className={classes['course-average-chart']}
-            percent={!isEmpty && average}
+            percent={!isEmpty && average ? average : 0}
             type={ProgressType.Circle}
             format={() => (isEmpty ? '- -' : average)}
             width={80}
             strokeWidth={10}
             status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
           />
-          {!isEmpty && (
+          {
             <span className={classes['passmark']}>
-              Passmark: <b>{passmark}</b>
+              Passmark: <b>{!isEmpty ? passmark : '- -'}</b>
             </span>
-          )}
+          }
         </div>
       ) : (
         <WMSkeleton active paragraph={{ rows: 1 }} />

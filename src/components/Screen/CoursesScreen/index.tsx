@@ -1,12 +1,11 @@
 import React, { ReactElement, useEffect, Key } from 'react';
 import { Divider, ConfigProvider } from 'antd';
 
-import { coursesMockData } from '../../../constants/mocks/courses-screen';
+import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 import { IDateRange } from '../../../utils';
 
-import { useAppSkeleton } from '../../../hooks/skeleton';
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { CreateButton } from '../../common/buttons';
@@ -24,10 +23,18 @@ import SearchCoursesFilter from './SearchCoursesFilter';
 // import { statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
+import { AllCoursesOverviewResponse } from '../../../walkme/models';
 
+// TODO: add cleanups to fetchCoursesData
 export default function CoursesScreen(): ReactElement {
-  const { title: mainTitle, analytics } = coursesMockData;
-
+  const [
+    {
+      isUpdating,
+      environment: { id: envId },
+      system,
+    },
+    appDispatch,
+  ] = useAppContext();
   const [state, dispatch] = useCoursesContext();
   const {
     dateRange: { from, to },
@@ -38,14 +45,11 @@ export default function CoursesScreen(): ReactElement {
   } = state;
 
   useEffect(() => {
-    fetchCoursesData(dispatch, 0, from, to);
-  }, [dispatch, from, to]);
+    if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
+  }, [dispatch, isUpdating, envId, system, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
-
-  // skeleton
-  const appInit = useAppSkeleton();
 
   const onMultiSelectChange = (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
     dispatch({
@@ -71,10 +75,13 @@ export default function CoursesScreen(): ReactElement {
   return (
     <>
       <ScreenHeader
-        title={mainTitle}
+        title="Courses"
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
-      <AnalyticsCharts data={analytics} overview={overview} />
+      <AnalyticsCharts
+        summaryChartTitle="Users Started / Completed Courses"
+        overview={overview as AllCoursesOverviewResponse}
+      />
       <WMCard
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."

@@ -41,12 +41,33 @@ const YAxisTick = ({
 }) => {
   const isCorrect = bars[index].isCorrect;
 
+  /**
+   * using foreignObject to add text style manipulation
+   * https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
+   */
+
   return (
     <g>
-      <text x={x} y={y} dominantBaseline="middle" textAnchor="end">
+      <text
+        className={classes['answer-option']}
+        x={x}
+        y={y}
+        dominantBaseline="middle"
+        textAnchor="end"
+      >
         {isCorrect && <tspan className={classes['check-mark']}>✔ </tspan>}
-        {value}
       </text>
+      <foreignObject
+        className={classes['answer-option-wrapper']}
+        x={-150}
+        y={y - 10}
+        width="300"
+        height="15"
+      >
+        <p title={value} className={classes['answer-option']}>
+          {value}
+        </p>
+      </foreignObject>
     </g>
   );
 };
@@ -67,7 +88,7 @@ const BarLabel = ({
   name: any;
   totalValue: number;
 }) => {
-  const percent = ((value / totalValue) * 100).toFixed(1);
+  const percent = totalValue ? ((value / totalValue) * 100).toFixed(1) : 0;
 
   return (
     <text
@@ -118,9 +139,13 @@ export default function WMHorizontalBarChart({
               radius={[0, 16, 16, 0]}
               label={(props: any) => <BarLabel {...props} totalValue={totalValue} />}
             >
-              {bars.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]} />
-              ))}
+              {bars.map((entry, index) =>
+                totalValue ? (
+                  <Cell key={`cell-${index}`} fill={colors[index]} />
+                ) : (
+                  <Cell key={`cell-${index}`} fill="#ccc" width={500} />
+                ),
+              )}
             </Bar>
           </BarChart>
         ) : (

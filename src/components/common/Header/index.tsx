@@ -8,14 +8,16 @@ export default function Header({
   className,
   titleClassName,
   children,
+  ...otherProps
 }: {
   title?: ReactNode;
   className?: string;
   titleClassName?: string;
   children?: ReactNode;
+  [key: string]: any;
 }): ReactElement {
   return (
-    <header className={cc([classes.header, className])}>
+    <header className={cc([classes.header, className])} {...otherProps}>
       {title && <div className={cc([classes.title, titleClassName])}>{title}</div>}
       {children}
     </header>

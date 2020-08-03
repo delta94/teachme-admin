@@ -1,14 +1,9 @@
-import React, { ReactElement, useState, useEffect, useCallback, ChangeEvent } from 'react';
+import React, { ReactElement, ChangeEvent } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
-import {
-  useCourseEditorContext,
-  fetchItemsList,
-  fetchCourse,
-  ActionType,
-} from '../../../../providers/CourseEditorContext';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMInput from '../../../common/WMInput';
 import FormGroup from '../../../common/FormGroup';
@@ -20,17 +15,10 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   const [state, dispatch] = useCourseEditorContext();
   const { course } = state;
 
-  useEffect(() => {
-    fetchItemsList(dispatch);
-    fetchCourse(dispatch, courseId);
-
-    return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId]);
-
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
     if (course?.quiz?.properties) {
       course.quiz.properties = { ...course.quiz.properties, ...updatedData };
-      dispatch({ type: ActionType.UpdateCourseOutline });
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     }
   };
 
@@ -43,7 +31,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
       if (course?.quiz) {
         course.quiz.properties = { ...course.quiz.properties, ...{ passmark: quizPassmark } };
-        dispatch({ type: ActionType.UpdateCourseOutline });
+        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
       }
     }
   };

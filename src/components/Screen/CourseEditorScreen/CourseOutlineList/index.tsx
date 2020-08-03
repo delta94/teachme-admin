@@ -1,16 +1,14 @@
 import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
+import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
 import { CourseChild } from '../../../../walkme/data/courseBuild/courseItems';
 import { Course } from '../../../../walkme/data/courseBuild';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
-
 import { IWMList } from '../../../common/WMList';
-
 import TaskItem from '../TaskItem';
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
-import CourseOutlineListEmptyState from '../CourseOutlineListEmptyState';
 
 import classes from './style.module.scss';
 
@@ -72,7 +70,6 @@ export default function CourseOutlineList<T>({
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
         dragClass={classes['card-ghost']}
-        dragHandleSelector=".drag-handle"
         dropPlaceholder={{
           animationDuration: 150,
           showOnTop: true,
@@ -80,30 +77,26 @@ export default function CourseOutlineList<T>({
         }}
         shouldAcceptDrop={(e: any, payload: any) => !payload.answers}
       >
-        {items.length
-          ? /* eslint-disable indent */
-            (items as any[]).map((item, i) =>
-              item.type === 'lesson' ? (
-                <CourseOutlineLessonItem
-                  item={item}
-                  key={item.id}
-                  index={i}
-                  className={classes['outline-lesson']}
-                  handleItemClick={(lessonItem) => handleItemClick && handleItemClick(lessonItem)}
-                />
-              ) : (
-                <TaskItem
-                  key={i}
-                  index={i}
-                  item={item}
-                  className={classes['outline-task']}
-                  onClick={(e: any) => handleItemClick && handleItemClick(item)}
-                  deletable
-                  onDelete={onDeleteTaskItem}
-                />
-              ),
-            )
-          : !hasQuiz && <CourseOutlineListEmptyState />}
+        {(items as any[]).map((item, i) =>
+          item.type === 'lesson' ? (
+            <CourseOutlineLessonItem
+              item={item}
+              key={item.id}
+              index={i}
+              className={classes['outline-lesson']}
+            />
+          ) : (
+            <TaskItem
+              key={i}
+              index={i}
+              item={item}
+              className={cc([classes['outline-task'], classes['task-with-settings']])}
+              onClick={(e: any) => handleItemClick && handleItemClick(item)}
+              deletable
+              onDelete={onDeleteTaskItem}
+            />
+          ),
+        )}
       </Container>
     </div>
   );

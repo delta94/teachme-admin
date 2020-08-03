@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
+import { CourseOverviewData } from '../../../walkme/models/course/panels';
 import { IAnalyticsCharts } from './analytics.interface';
 import CourseSummaryChart from './CourseSummaryChart';
 import CourseTimeCompletionChart from './CourseTimeCompletionChart';
@@ -9,22 +10,35 @@ import QuizScoreChart from './QuizScoreChart';
 
 import classes from './style.module.scss';
 
-export default function AnalyticsCharts({ data, overview }: IAnalyticsCharts): ReactElement {
-  const { summary, completion, quizCompletion, quizScore } = data;
-
+export default function AnalyticsCharts({
+  summaryChartTitle,
+  timeCompletionTitle = 'Avg. Completion Time',
+  quizCompletionTitle = 'Quiz Completion Rate',
+  overview,
+}: IAnalyticsCharts): ReactElement {
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
-        <CourseSummaryChart title={summary.title} overview={overview} />
+        <CourseSummaryChart title={summaryChartTitle} overview={overview} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
-        <CourseTimeCompletionChart className={classes['line-graph']} completionData={completion} />
+        <CourseTimeCompletionChart
+          className={classes['line-graph']}
+          title={timeCompletionTitle}
+          overview={overview}
+        />
         <div className={classes['quiz-graphs']}>
           <QuizCompletionRateChart
             className={classes['line-graph']}
-            quizCompletionData={quizCompletion}
+            title={quizCompletionTitle}
+            overview={overview}
           />
-          {quizScore && <QuizScoreChart quizScoreData={quizScore} />}
+          {(overview as CourseOverviewData)?.passmark && (
+            <QuizScoreChart
+              isEmpty={overview && Object.keys(overview).length === 0}
+              overview={overview as CourseOverviewData}
+            />
+          )}
         </div>
       </div>
     </div>

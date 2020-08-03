@@ -1,78 +1,94 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
-import { usersMockData } from '../../../constants/mocks/users-mock';
-import { data, columns } from '../../../constants/mocks/tableMockUsersData';
+import { useAppContext } from '../../../providers/AppContext';
+import {
+  useUsersContext,
+  defaultQueryOptions,
+  fetchUsers,
+  exportUsers,
+  ActionType,
+} from '../../../providers/UsersContext';
+import { IDateRange } from '../../../utils';
+
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import DropdownFilter from '../../common/filters/DropdownFilter';
-import { IWMDropdownOption } from '../../common/WMDropdown';
-import SearchFilter from '../../common/filters/SearchFilter';
-import ExportButton from '../../common/buttons/ExportButton';
+import {
+  // DropdownFilter,
+  SearchFilter,
+} from '../../common/filters';
+import { ExportButton } from '../../common/buttons';
 
+// import { courses, statuses, results } from './utils';
+import { columns } from './tableData';
+import ShownUsersIndicator from './ShownUsersIndicator';
+import LoadMoreWrapper from './LoadMoreWrapper';
 import classes from './style.module.scss';
 
-interface IUserData {
-  key: string;
-  user: string;
-  courseName: string;
-  started: string;
-  completed: string;
-  timeToComplete: string;
-  quizResult: number;
-  noOfQuizAttempts: number;
-}
-
-const courses: IWMDropdownOption[] = [
-  { id: 0, value: 'All Courses' },
-  { id: 1, value: 'Course 1' },
-  { id: 2, value: 'Course 2' },
-  { id: 3, value: 'Course 3' },
-  { id: 4, value: 'Course 4' },
-  { id: 5, value: 'Course 5' },
-];
-
-const statuses: IWMDropdownOption[] = [
-  { id: 0, value: 'All' },
-  { id: 1, value: 'Completed' },
-  { id: 2, value: 'Did not complete' },
-];
-
-const results: IWMDropdownOption[] = [
-  { id: 0, value: 'All Results' },
-  { id: 1, value: 'Passed' },
-  { id: 2, value: 'Failed' },
-  { id: 3, value: 'Did not submit' },
-  { id: 4, value: 'No quiz' },
-];
-
+// TODO: add cleanups to fetchUsers
 export default function UsersScreen(): ReactElement {
-  const { title: mainTitle, usersTable } = usersMockData;
-  const [tableData, setTableData] = useState(data);
+  const [appState] = useAppContext();
+  const {
+    isUpdating,
+    system,
+    environment: { id: envId },
+  } = appState;
+  const [state, dispatch] = useUsersContext();
+  const {
+    dateRange: { from, to },
+    users,
+    usersSearchValue,
+  } = state;
+
+  useEffect(() => {
+    const options = { ...defaultQueryOptions };
+
+    if (usersSearchValue.length) options.user_name = usersSearchValue;
+
+    if (!isUpdating) fetchUsers(dispatch, envId, from, to, options);
+  }, [dispatch, isUpdating, system, envId, from, to, usersSearchValue]);
+
+  // Unmount only
+  useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
+
+  const onDateRangeChange = (dateRange?: IDateRange) =>
+    dispatch({ type: ActionType.SetDateRange, dateRange });
 
   const onSearch = (searchValue: string) => {
-    const newTableData = data.filter((user) =>
-      user.user.toLowerCase().includes(searchValue.toLowerCase()),
-    );
-    setTableData(newTableData);
+    const options = {
+      ...defaultQueryOptions,
+      user_name: searchValue,
+    };
+
+    fetchUsers(dispatch, envId, from, to, options);
+
+    dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
   };
 
   return (
     <>
-      <ScreenHeader title={mainTitle} />
-      <WMCard title={`${tableData.length} ${usersTable.title}`}>
-        <WMTable data={tableData as Array<IUserData>} columns={columns}>
-          <ControlsWrapper>
+      <ScreenHeader
+        title="Users"
+        timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
+      />
+      <WMCard className={classes['table-wrapper']}>
+        <WMTable className={classes['users-table']} data={users} columns={columns}>
+          <ShownUsersIndicator />
+          {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
             <DropdownFilter label="Quiz Results" options={results} />
-          </ControlsWrapper>
+          </ControlsWrapper> */}
           <ControlsWrapper>
-            <ExportButton className={classes['export-btn']} />
-            <SearchFilter placeholder="Search users" onSearch={onSearch} />
+            <ExportButton
+              className={classes['export-btn']}
+              onClick={() => exportUsers(dispatch, envId, from, to)}
+            />
+            <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
           </ControlsWrapper>
         </WMTable>
+        <LoadMoreWrapper />
       </WMCard>
     </>
   );

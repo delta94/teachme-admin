@@ -1,50 +1,64 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { courseMockData } from '../../../constants/mocks/course-screen';
-import { data as courses } from '../../../constants/mocks/tableMockCoursesData';
+import { IDateRange } from '../../../utils';
+import { useAppContext } from '../../../providers/AppContext';
+import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
+import { CourseOverviewData } from '../../../walkme/models';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
+import { parseCourseOutline } from './utils';
+import {
+  ICourseOutlineItem,
+  ICourseOutlineLesson,
+  ICourseOutlineItems,
+} from './courseScreen.interface';
 
-export const getCourseById = ({ courses, id }: { courses: any[]; id: string }): any =>
-  courses.find((course) => course.key === id);
+export { parseCourseOutline };
+export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
 
+// TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
-  const { courseId } = useParams();
-  const [course, setCourse] = useState(null as any);
+  const [
+    {
+      isUpdating,
+      environment: { id: envId },
+      system,
+    },
+    appDispatch,
+  ] = useAppContext();
+  const [state, dispatch] = useCourseContext();
+  const {
+    dateRange: { from, to },
+    overview,
+    course,
+  } = state;
 
-  const { analytics } = courseMockData;
+  const { courseId } = useParams();
 
   useEffect(() => {
-    setCourse(null);
+    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
+  }, [dispatch, isUpdating, courseId, envId, system, from, to]);
 
-    /**
-     * timer - used for fake async
-     * TODO: replace it with async request when the SDK ready.
-     */
-    const timer = setTimeout(() => {
-      const selectedCourse = getCourseById({
-        courses,
-        id: courseId,
-      });
+  // Unmount only
+  useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);
 
-      if (selectedCourse) {
-        setCourse(selectedCourse);
-      }
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, [courseId]);
+  const onDateRangeChange = (dateRange?: IDateRange) =>
+    dispatch({ type: ActionType.SetDateRange, dateRange });
 
   return (
-    course && (
-      <>
-        <CourseScreenHeader course={course} />
-        <AnalyticsCharts data={analytics} />
-        <CourseTabs course={course} />
-      </>
-    )
+    <>
+      <CourseScreenHeader
+        course={course}
+        timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
+      />
+      <AnalyticsCharts
+        summaryChartTitle="Users Started / Completed Course"
+        overview={overview as CourseOverviewData}
+      />
+      <CourseTabs />
+    </>
   );
 }

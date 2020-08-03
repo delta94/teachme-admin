@@ -81,7 +81,7 @@
   --pie-bar-char-background-color: #dfe1e2;
 
   // table
-  --table-header-color: #78868f;
+  --table-header-color: var(--neutral700);
   --table-border-color: #dcdcdc;
   --table-row-hover-color: var(--hover-color);
 
