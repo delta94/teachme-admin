@@ -44,8 +44,13 @@ export const fetchCourseData = async (
   const id = +courseId;
 
   try {
-    const course = await getCourse(id, envId); // TODO: should remove
-    const courseSegments = await getCourseSegments(id, envId);
+    const course = await getCourse(id, envId); // TODO: should remove after getting all properties in courseOutline
+    const courseSegments = await getCourseSegments(id, envId); // TODO: should remove after getting all properties in courseOutline
+    /**
+     * TODO:
+     * ask Eli to add the following properties to courseOutline:
+     * course-title, course-id, segments, publish-status
+     * */
     const courseOutline = await getCourseOutline(id, envId, from, to);
     const convertedCourseOutline = parseCourseOutline(courseOutline);
     const quiz = await getQuizData(id, envId, from, to);

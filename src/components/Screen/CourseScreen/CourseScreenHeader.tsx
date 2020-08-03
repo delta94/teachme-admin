@@ -46,6 +46,7 @@ export default function CourseScreenHeader({
               >
                 <Link to={`${BASE_COURSE_EDITOR_ROUTE.path}/${course.id}`}>Edit</Link>
               </WMButton>
+              {/* TODO: Verify with Eli why segments return as empty array */}
               {Boolean(courseSegments.length) && (
                 <div className={classes['course-details-sub-title']}>
                   <span>
