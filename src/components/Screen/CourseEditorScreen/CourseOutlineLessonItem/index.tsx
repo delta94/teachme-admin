@@ -73,7 +73,11 @@ export default function CourseOutlineLessonItem({
           }}
           shouldAcceptDrop={shouldAcceptDrop}
           className={cc([{ [classes['is-empty']]: !item.childNodes.toArray().length }])}
-          taskItemProps={{ deletable: true, onDelete: onDeleteTaskItem }}
+          taskItemProps={{
+            deletable: true,
+            onDelete: onDeleteTaskItem,
+            className: classes['task-with-settings'],
+          }}
         />
       </WMCollapse>
     </Draggable>

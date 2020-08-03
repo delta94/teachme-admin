@@ -24,7 +24,7 @@ export interface IAction {
   courseOutline?: Array<ICourseOutlineItem>;
   courseOutlineSearchValue?: string;
   updateHasChange?: boolean;
-  activeDetailsItem?: { type: DetailsPanelSettingsType; id: number } | null;
+  activeDetailsItem?: { type: DetailsPanelSettingsType; id: number; item: any } | null;
   openDetailsPanel?: boolean;
 }
 
@@ -57,7 +57,7 @@ export interface IState {
   refreshCourseOutline: boolean;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
-  activeDetailsItem: { type: DetailsPanelSettingsType; id: number } | null;
+  activeDetailsItem: { type: DetailsPanelSettingsType; id: number; item: any } | null;
   hasChanges: boolean;
 }
 

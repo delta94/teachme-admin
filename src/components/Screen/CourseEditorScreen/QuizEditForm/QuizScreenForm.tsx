@@ -29,7 +29,7 @@ export default function QuizScreenForm({
         errorMessage={fieldErrorMessage(screen.title)}
         onChange={(e) => {
           screen.title = e.target.value;
-          dispatch({ type: ActionType.UpdateCourseOutline });
+          dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
       <TextCounterTextarea
@@ -41,7 +41,7 @@ export default function QuizScreenForm({
         maxRows={5}
         onChange={(e) => {
           screen.description = e.target.value;
-          dispatch({ type: ActionType.UpdateCourseOutline });
+          dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
       {screen.buttons.map((button: any, index: number) => (
@@ -54,7 +54,7 @@ export default function QuizScreenForm({
           errorMessage={fieldErrorMessage(button.text)}
           onChange={(e) => {
             screen.buttons[index].text = e.target.value;
-            dispatch({ type: ActionType.UpdateCourseOutline });
+            dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
           }}
         />
       ))}
