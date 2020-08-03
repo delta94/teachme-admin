@@ -27,8 +27,10 @@ export default function CoursesTimeCompletionChart({
 
       setCompletionTimeAvg(completion_time.avg ? parseInt(completion_time.avg.toFixed(0)) : 0);
 
-      if (completion_time.buckets.length)
+      if (completion_time.buckets.length) {
+        console.log('completion_time.buckets ', completion_time.buckets);
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
+      }
     }
   }, [overview]);
 
@@ -45,7 +47,7 @@ export default function CoursesTimeCompletionChart({
     <WMCard title={title}>
       {appInit ? (
         <div className={className}>
-          <PieBarSummary value={completionTimeAvg as number} unit=" min" />
+          <PieBarSummary value={completionTimeAvg as number} unit=" hours" />
           <PieBarChart bars={bars} legendContent={AvgCompletionTimeLegend} />
         </div>
       ) : (
