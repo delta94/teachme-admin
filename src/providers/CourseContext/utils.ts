@@ -54,6 +54,7 @@ export const fetchCourseData = async (
       course,
       overview,
       courseOutline: convertedCourseOutline,
+      filteredCourseOutline: convertedCourseOutline,
       quiz,
     });
   } catch (error) {

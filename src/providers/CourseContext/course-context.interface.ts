@@ -15,9 +15,10 @@ export interface IAction {
   overview?: CourseOverviewData;
   course?: Course;
   courseOutline?: ICourseOutlineItems;
+  filteredCourseOutline?: ICourseOutlineItems;
+  courseOutlineSearchValue?: string;
   quiz?: QuizOutlineUI;
   dateRange?: IDateRange;
-  courseOutlineSearchValue?: string;
 }
 
 export interface IDispatch {
@@ -31,10 +32,11 @@ export interface IState {
   overview: CourseOverviewData;
   course: Course;
   courseOutline: ICourseOutlineItems;
+  filteredCourseOutline: ICourseOutlineItems;
+  courseOutlineSearchValue: string;
   quiz: QuizOutlineUI;
   isExportingCourse: boolean;
   isExportingCourseError: boolean;
-  courseOutlineSearchValue: string;
 }
 
 export interface ICourseProvider {

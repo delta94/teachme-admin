@@ -13,6 +13,8 @@ export const initialState = {
   overview: {} as CourseOverviewData,
   course: {},
   courseOutline: [] as ICourseOutlineItems,
+  filteredCourseOutline: [] as ICourseOutlineItems,
+  courseOutlineSearchValue: '',
   quiz: {},
   isExportingCourse: false,
   isExportingCourseError: false,
@@ -32,6 +34,8 @@ export const reducer = produce(
         draft.course = action.course ?? initialState.course;
         draft.quiz = action.quiz ?? initialState.quiz;
         draft.courseOutline = action.courseOutline ?? initialState.courseOutline;
+        draft.filteredCourseOutline =
+          action.filteredCourseOutline ?? initialState.filteredCourseOutline;
         break;
       case ActionType.FetchCourseDataError:
         draft.isFetchingCourseData = false;
@@ -39,6 +43,12 @@ export const reducer = produce(
         break;
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
+        break;
+      case ActionType.SetCourseOutlineSearchValue:
+        draft.courseOutlineSearchValue =
+          action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue;
+        draft.filteredCourseOutline =
+          action.filteredCourseOutline ?? initialState.filteredCourseOutline;
         break;
       case ActionType.ExportCourse:
         draft.isExportingCourse = true;

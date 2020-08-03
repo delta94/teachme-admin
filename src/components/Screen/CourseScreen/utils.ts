@@ -67,3 +67,42 @@ export const parseCourseOutline = (items: CourseOutlineUIModel): ICourseOutlineI
       } as ICourseOutlineLesson;
     }
   });
+
+const hasMatchToCourseOutlineSearchValue = (item: ICourseOutlineItem, searchValue: string) =>
+  item.title.toLowerCase().includes(searchValue.toLowerCase());
+
+const getFilteredCourseOutlineLessonChildren = (items: ICourseOutlineItem[], searchValue: string) =>
+  items.filter((child: ICourseOutlineItem) =>
+    hasMatchToCourseOutlineSearchValue(child, searchValue),
+  );
+
+export const getFilteredCourseOutline = (
+  items: ICourseOutlineItems,
+  searchValue: string,
+): ICourseOutlineItems =>
+  items
+    .map((item: ICourseOutlineItem | ICourseOutlineLesson) => {
+      if ((item as ICourseOutlineItem).type === CourseItemType.Lesson) {
+        const someChildrenAreMatch = item?.children?.some((child: ICourseOutlineItem) =>
+          hasMatchToCourseOutlineSearchValue(child, searchValue),
+        );
+
+        const filteredLesson = {
+          ...item,
+          children: getFilteredCourseOutlineLessonChildren(item.children ?? [], searchValue),
+        };
+
+        if (
+          hasMatchToCourseOutlineSearchValue(item as ICourseOutlineItem, searchValue) ||
+          someChildrenAreMatch
+        ) {
+          return filteredLesson;
+        }
+      } else {
+        if (hasMatchToCourseOutlineSearchValue(item as ICourseOutlineItem, searchValue))
+          return item as ICourseOutlineItem;
+      }
+    })
+    .filter((item: ICourseOutlineItem | ICourseOutlineLesson | undefined) =>
+      Boolean(item),
+    ) as ICourseOutlineItems;

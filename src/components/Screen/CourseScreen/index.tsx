@@ -34,8 +34,6 @@ export default function CourseScreen(): ReactElement {
     dateRange: { from, to },
     overview,
     course,
-    courseOutline,
-    quiz,
   } = state;
 
   const { courseId } = useParams();
@@ -60,7 +58,7 @@ export default function CourseScreen(): ReactElement {
         summaryChartTitle="Users Started / Completed Course"
         overview={overview as CourseOverviewData}
       />
-      <CourseTabs courseOutline={courseOutline as ICourseOutlineItems} quiz={quiz} />
+      <CourseTabs />
     </>
   );
 }

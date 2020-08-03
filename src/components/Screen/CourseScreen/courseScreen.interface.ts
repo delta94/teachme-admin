@@ -27,4 +27,10 @@ export interface ICourseTabs {
 
 export interface ICourseOutlineTable {
   courseOutline: ICourseOutlineItems;
+  filteredCourseOutline: ICourseOutlineItems;
+  onSearchCourseOutline: (
+    courseOutlineSearchValue: string,
+    filteredCourseOutline: ICourseOutlineItems,
+  ) => void;
+  courseOutlineSearchValue: string;
 }
