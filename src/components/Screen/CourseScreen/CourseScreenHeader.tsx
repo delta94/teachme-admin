@@ -16,11 +16,13 @@ import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import classes from './style.module.scss';
 
 interface ICourseScreenHeader extends Omit<IScreenHeader, 'title'> {
+  courseSegments: string[];
   course: Course;
 }
 
 export default function CourseScreenHeader({
   course,
+  courseSegments,
   ...otherProps
 }: ICourseScreenHeader): ReactElement {
   const hasCourseData = Object.keys(course).length !== 0;
@@ -44,11 +46,13 @@ export default function CourseScreenHeader({
               >
                 <Link to={`${BASE_COURSE_EDITOR_ROUTE.path}/${course.id}`}>Edit</Link>
               </WMButton>
-              <div className={classes['course-details-sub-title']}>
-                <span>
-                  This course is available to: <b>HR</b>
-                </span>
-              </div>
+              {Boolean(courseSegments.length) && (
+                <div className={classes['course-details-sub-title']}>
+                  <span>
+                    This course is available to: <b>{courseSegments.join(' ,')}</b>
+                  </span>
+                </div>
+              )}
             </>
           ) : (
             <>

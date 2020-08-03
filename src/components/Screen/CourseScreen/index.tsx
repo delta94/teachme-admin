@@ -34,6 +34,7 @@ export default function CourseScreen(): ReactElement {
     dateRange: { from, to },
     overview,
     course,
+    courseSegments,
   } = state;
 
   const { courseId } = useParams();
@@ -52,6 +53,7 @@ export default function CourseScreen(): ReactElement {
     <>
       <CourseScreenHeader
         course={course}
+        courseSegments={courseSegments}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <AnalyticsCharts

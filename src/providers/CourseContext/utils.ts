@@ -4,6 +4,7 @@ import { getCourseOverview, getCourse, exportCourseOutline, getQuizData } from '
 import { wmMessage, MessageType } from '../../utils';
 import { parseCourseOutline } from '../../components/Screen/CourseScreen';
 import { getCourseOutline } from '../../walkme/data/courseOutline';
+import { getCourseSegments } from '../../walkme/data/services/segments';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
 
@@ -44,6 +45,7 @@ export const fetchCourseData = async (
 
   try {
     const course = await getCourse(id, envId); // TODO: should remove
+    const courseSegments = await getCourseSegments(id, envId);
     const courseOutline = await getCourseOutline(id, envId, from, to);
     const convertedCourseOutline = parseCourseOutline(courseOutline);
     const quiz = await getQuizData(id, envId, from, to);
@@ -56,6 +58,7 @@ export const fetchCourseData = async (
       courseOutline: convertedCourseOutline,
       filteredCourseOutline: convertedCourseOutline,
       quiz,
+      courseSegments,
     });
   } catch (error) {
     console.error(error);
