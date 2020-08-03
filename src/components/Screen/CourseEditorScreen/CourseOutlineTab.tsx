@@ -6,8 +6,8 @@ import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
-import classes from './style.module.scss';
 import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
+import classes from './style.module.scss';
 
 export interface IProperties {
   isAvailable?: boolean;
