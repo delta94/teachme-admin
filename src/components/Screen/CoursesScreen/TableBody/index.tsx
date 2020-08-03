@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Container, DropResult } from 'react-smooth-dnd';
 import produce from 'immer';
 
@@ -9,8 +9,13 @@ import classes from './style.module.scss';
 
 export { DraggableTableRow };
 
-export default function TableBody(props: any): ReactElement {
-  const [{ courses }, dispatch] = useCoursesContext();
+interface ITableBody {
+  className: string;
+  children: ReactNode;
+}
+
+export default function TableBody(props: ITableBody): ReactElement {
+  const [{ courses, selectedRowKeys }, dispatch] = useCoursesContext();
 
   const onDrop = ({ removedIndex, addedIndex, payload }: DropResult) => {
     if (
@@ -25,7 +30,28 @@ export default function TableBody(props: any): ReactElement {
       draft.splice(addedIndex, 0, moved[0]);
     });
 
-    dispatch({ type: ActionType.UpdateCoursesTable, courses: newCourses });
+    const newSelectedRowKeys = produce(selectedRowKeys, (draft) => {
+      draft.forEach((rowKey, index) => {
+        const key = Number(rowKey);
+
+        if (key < removedIndex && key >= addedIndex) {
+          // Row moved to before selected row
+          draft[index] = key + 1;
+        } else if (key > removedIndex && key <= addedIndex) {
+          // Row moved to after selected row
+          draft[index] = key - 1;
+        } else if (key === removedIndex && key !== addedIndex) {
+          // Row moved is same as selected row
+          draft[index] = addedIndex;
+        }
+      });
+    });
+
+    dispatch({
+      type: ActionType.UpdateCoursesTable,
+      courses: newCourses,
+      selectedRowKeys: newSelectedRowKeys,
+    });
 
     sortTable(dispatch, payload.id, removedIndex, addedIndex);
   };

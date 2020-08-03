@@ -59,6 +59,7 @@ export const reducer = produce(
       case ActionType.UpdateCoursesTable:
         draft.courses = action.courses ?? initialState.courses;
         draft.filteredCourses = action.courses ?? initialState.filteredCourses;
+        draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
         break;
       case ActionType.SortTable:
         draft.isSortingCourses = true;
