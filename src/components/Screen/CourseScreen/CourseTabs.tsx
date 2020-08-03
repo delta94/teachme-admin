@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { courseMockData } from '../../../constants/mocks/course-screen';
-
+import { useCourseContext, ActionType } from '../../../providers/CourseContext';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import Icon from '../../common/Icon';
@@ -9,31 +8,51 @@ import { IconType } from '../../common/Icon/icon.interface';
 import CourseQuizTabCharts from '../../common/CourseQuizTabCharts';
 import WMCard from '../../common/WMCard';
 import CourseOutlineTable from './CourseOutlineTable';
-import { ICourseTabs } from './courseScreen.interface';
+import { ICourseOutlineItems } from './courseScreen.interface';
 
 enum TabId {
   Outline = 'outline',
   Quiz = 'quiz',
 }
 
-export default function CourseTabs({ course }: ICourseTabs): ReactElement {
-  const { courseOutlineTableData, quizData } = courseMockData;
-  const { quiz } = course;
+export default function CourseTabs(): ReactElement {
+  const [
+    { quiz, courseOutline, filteredCourseOutline, courseOutlineSearchValue },
+    dispatch,
+  ] = useCourseContext();
+
+  const onSearchCourseOutline = (
+    courseOutlineSearchValue: string,
+    filteredCourseOutline: ICourseOutlineItems,
+  ) =>
+    dispatch({
+      type: ActionType.SetCourseOutlineSearchValue,
+      courseOutlineSearchValue,
+      filteredCourseOutline,
+    });
+
   const courseTabs = [
     {
       id: TabId.Outline,
       title: 'Outline',
-      itemsLength: 16,
+      itemsLength: courseOutline.length,
       icon: <Icon type={IconType.SidebarCourses} />,
-      content: <CourseOutlineTable course={courseOutlineTableData} />, // TODO: after integration replace mock data with prop course
+      content: (
+        <CourseOutlineTable
+          courseOutline={courseOutline}
+          onSearchCourseOutline={onSearchCourseOutline}
+          filteredCourseOutline={filteredCourseOutline}
+          courseOutlineSearchValue={courseOutlineSearchValue}
+        />
+      ),
     },
     {
       id: TabId.Quiz,
       title: 'Quiz',
-      itemsLength: quizData.questions.length,
+      itemsLength: quiz?.questions?.length ?? 0,
       icon: <Icon type={IconType.Quiz} />,
-      isDisabled: !quiz || Object.keys(quiz).length === 0,
-      content: <CourseQuizTabCharts data={quizData} quiz={quiz} />, // TODO: after integration replace the prop data
+      isDisabled: !quiz || (quiz && Object.keys(quiz).length === 0),
+      content: quiz && <CourseQuizTabCharts quiz={quiz} />,
     },
   ];
 
@@ -49,7 +68,7 @@ export default function CourseTabs({ course }: ICourseTabs): ReactElement {
                 <>
                   {icon}
                   <span>
-                    {title} {itemsLength && `(${itemsLength})`}
+                    {title} {`(${itemsLength})`}
                   </span>
                 </>
               }

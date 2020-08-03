@@ -41,12 +41,33 @@ const YAxisTick = ({
 }) => {
   const isCorrect = bars[index].isCorrect;
 
+  /**
+   * using foreignObject to add text style manipulation
+   * https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
+   */
+
   return (
     <g>
-      <text x={x} y={y} dominantBaseline="middle" textAnchor="end">
+      <text
+        className={classes['answer-option']}
+        x={x}
+        y={y}
+        dominantBaseline="middle"
+        textAnchor="end"
+      >
         {isCorrect && <tspan className={classes['check-mark']}>✔ </tspan>}
-        {value}
       </text>
+      <foreignObject
+        className={classes['answer-option-wrapper']}
+        x={-150}
+        y={y - 10}
+        width="300"
+        height="15"
+      >
+        <p title={value} className={classes['answer-option']}>
+          {value}
+        </p>
+      </foreignObject>
     </g>
   );
 };
