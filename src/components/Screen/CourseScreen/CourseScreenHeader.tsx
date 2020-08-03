@@ -3,7 +3,7 @@ import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { Course } from '../../../walkme/data/courseBuild';
-import { COURSES_ROUTE } from '../../../constants/routes';
+import { COURSES_ROUTE, BASE_COURSE_EDITOR_ROUTE } from '../../../constants/routes';
 import { labelColors } from '../../../constants/mocks/tableMockCoursesData';
 
 import { WMSkeletonInput, WMSkeletonButton, WMSkeletonAvatar } from '../../common/WMSkeleton';
@@ -42,7 +42,7 @@ export default function CourseScreenHeader({
                 variant={ButtonVariantEnum.Secondary}
                 className={classes['edit']}
               >
-                <Link to="/new-course">Edit</Link>
+                <Link to={`${BASE_COURSE_EDITOR_ROUTE.path}/${course.id}`}>Edit</Link>
               </WMButton>
               <div className={classes['course-details-sub-title']}>
                 <span>

@@ -61,7 +61,7 @@ export default function CourseOutlineQuiz({
   const onItemClick = ({ type, data }: { type: DetailsPanelSettingsType; data: any }) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
-      activeDetailsItem: { type, id: data.id as number },
+      activeDetailsItem: { type, id: data.id as number, item: data },
     });
   };
 
@@ -69,12 +69,13 @@ export default function CourseOutlineQuiz({
     <WMCollapse
       className={classes['quiz']}
       headerClassName={classes['quiz-header']}
-      header={<QuizHeader />}
+      header={<QuizHeader className={classes['item-with-settings']} />}
     >
       <QuestionItem
         item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
         className={cc([
           classes['welcome-screen-item'],
+          classes['item-with-settings'],
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
         ])}
         onClick={() =>
@@ -106,6 +107,7 @@ export default function CourseOutlineQuiz({
         item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
         className={cc([
           classes['success-screen-item'],
+          classes['item-with-settings'],
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
         ])}
         onClick={() =>
@@ -116,6 +118,7 @@ export default function CourseOutlineQuiz({
         item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
         className={cc([
           classes['fail-screen-item'],
+          classes['item-with-settings'],
           { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
         ])}
         onClick={() =>

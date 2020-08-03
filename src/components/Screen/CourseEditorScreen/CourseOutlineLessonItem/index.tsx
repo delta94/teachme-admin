@@ -6,7 +6,8 @@ import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/le
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMCollapse from '../../../common/WMCollapse';
-import { IconType } from '../../../common/Icon';
+import Icon, { IconType } from '../../../common/Icon';
+import WMEmpty from '../../../common/WMEmpty';
 
 import CourseItemsList from '../CourseItemsList';
 import LessonHeader from '../LessonHeader';
@@ -53,14 +54,26 @@ export default function CourseOutlineLessonItem({
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
+  const isEmpty = !item.childNodes.toArray().length;
+
   return (
     <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
       <WMCollapse
         className={classes['lesson']}
+        contentClassName={cc({ [classes['is-empty']]: isEmpty })}
         headerClassName={classes['lesson-header']}
         header={<LessonHeader lesson={item} type={IconType.Lesson} />}
         hasDragHandle
       >
+        {isEmpty && (
+          <div className={classes['lesson-empty-state-wrapper']}>
+            <WMEmpty
+              description="Drag content into the lesson"
+              image={<Icon type={IconType.EmptyLesson} />}
+              containerClassName={classes['lesson-empty-state']}
+            />
+          </div>
+        )}
         <CourseItemsList
           items={item.childNodes.toArray()}
           onDrop={(e: any) => onInnerDrop(e, item.id.toString(), e.element)}
@@ -73,7 +86,11 @@ export default function CourseOutlineLessonItem({
           }}
           shouldAcceptDrop={shouldAcceptDrop}
           className={cc([{ [classes['is-empty']]: !item.childNodes.toArray().length }])}
-          taskItemProps={{ deletable: true, onDelete: onDeleteTaskItem }}
+          taskItemProps={{
+            deletable: true,
+            onDelete: onDeleteTaskItem,
+            className: classes['task-with-settings'],
+          }}
         />
       </WMCollapse>
     </Draggable>

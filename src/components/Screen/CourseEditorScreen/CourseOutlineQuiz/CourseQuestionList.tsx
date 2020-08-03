@@ -38,7 +38,10 @@ export default function CourseQuestionList({
             index={i}
             item={item}
             onClick={() => onQuestionClick(item)}
-            className={cc([{ [classes['active-item']]: activeQuestionId === item.id }])}
+            className={cc([
+              classes['item-with-settings'],
+              { [classes['active-item']]: activeQuestionId === item.id },
+            ])}
           />
         ))}
       </Container>

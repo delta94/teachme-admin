@@ -12,6 +12,7 @@ export const initialState = {
   user: {} as UserData,
   system: {} as SystemData,
   environment: {} as WalkMeEnvironment,
+  originalUser: {} as UserData,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -41,6 +42,11 @@ export const reducer = (state: IState, action: IAction): IState => {
       return {
         ...state,
         user: action.user ?? initialState.user,
+      };
+    case ActionType.SetOriginalUser:
+      return {
+        ...state,
+        originalUser: action.originalUser ?? initialState.originalUser,
       };
     case ActionType.SetSystem:
       return {

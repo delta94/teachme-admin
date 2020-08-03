@@ -6,6 +6,7 @@ import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
+import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
 import classes from './style.module.scss';
 
 export interface IProperties {
@@ -19,12 +20,12 @@ export interface IProperties {
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { course, quiz, courseOutlineSearchValue } = state;
+  const { course, quiz /* , courseOutlineSearchValue */ } = state;
 
   const onItemClick = (item: any) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
-      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id },
+      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id, item },
     });
   };
 
@@ -39,6 +40,9 @@ export default function CourseOutlineTab(): ReactElement {
           console.log('searching');
         }}
       /> */}
+      {!quiz && !course?.items.toArray().length && (
+        <CourseOutlineListEmptyState containerClassName={classes['course-outline-empty-state']} />
+      )}
       {course && (
         <CourseOutlineList
           items={course?.items.toArray() ?? []}

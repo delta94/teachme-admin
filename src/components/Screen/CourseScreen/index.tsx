@@ -4,12 +4,20 @@ import { useParams } from 'react-router-dom';
 import { IDateRange } from '../../../utils';
 import { useAppContext } from '../../../providers/AppContext';
 import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
-import { courseMockData } from '../../../constants/mocks/course-screen';
+import { CourseOverviewData } from '../../../walkme/models';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
-import { CourseOverviewData } from '../../../walkme/models';
+import { parseCourseOutline } from './utils';
+import {
+  ICourseOutlineItem,
+  ICourseOutlineLesson,
+  ICourseOutlineItems,
+} from './courseScreen.interface';
+
+export { parseCourseOutline };
+export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
@@ -49,9 +57,8 @@ export default function CourseScreen(): ReactElement {
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Course"
         overview={overview as CourseOverviewData}
-        quizData={course?.quiz}
       />
-      <CourseTabs course={course} />
+      <CourseTabs />
     </>
   );
 }

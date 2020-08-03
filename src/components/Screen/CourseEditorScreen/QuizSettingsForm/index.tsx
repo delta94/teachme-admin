@@ -18,7 +18,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
     if (course?.quiz?.properties) {
       course.quiz.properties = { ...course.quiz.properties, ...updatedData };
-      dispatch({ type: ActionType.UpdateCourseOutline });
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     }
   };
 
@@ -31,7 +31,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
       if (course?.quiz) {
         course.quiz.properties = { ...course.quiz.properties, ...{ passmark: quizPassmark } };
-        dispatch({ type: ActionType.UpdateCourseOutline });
+        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
       }
     }
   };
