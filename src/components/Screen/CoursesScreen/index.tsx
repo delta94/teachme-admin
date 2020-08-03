@@ -98,13 +98,13 @@ export default function CoursesScreen(): ReactElement {
               <DropdownFilter label="Segments" options={segments} />
             </ControlsWrapper> */}
           <ControlsWrapper>
-            {selectedRowsCount ? (
+            {Boolean(selectedRowsCount) && (
               <>
                 <ProductionStatusActions />
                 <DeleteCoursesButton />
                 <Divider className={classes['separator']} type="vertical" />
               </>
-            ) : null}
+            )}
             <ExportCoursesButton />
             <SearchCoursesFilter />
             <CreateButton />
