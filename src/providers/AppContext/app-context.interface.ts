@@ -14,6 +14,7 @@ export interface IAction {
   currentScreen?: any;
   errorMessage?: string;
   user?: UserData;
+  originalUser?: UserData;
   system?: SystemData;
   environment?: WalkMeEnvironment;
 }
@@ -28,6 +29,7 @@ export interface IState {
   hasUpdateError: boolean;
   errorMessage: string;
   user: UserData;
+  originalUser: UserData;
   system: SystemData;
   environment: WalkMeEnvironment;
 }

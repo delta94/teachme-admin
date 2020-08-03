@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
+import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
 import { CourseChild } from '../../../../walkme/data/courseBuild/courseItems';
 import { Course } from '../../../../walkme/data/courseBuild';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
-
 import { IWMList } from '../../../common/WMList';
-
 import TaskItem from '../TaskItem';
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
 
@@ -91,7 +90,7 @@ export default function CourseOutlineList<T>({
               key={i}
               index={i}
               item={item}
-              className={classes['outline-task']}
+              className={cc([classes['outline-task'], classes['task-with-settings']])}
               onClick={(e: any) => handleItemClick && handleItemClick(item)}
               deletable
               onDelete={onDeleteTaskItem}

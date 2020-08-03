@@ -43,7 +43,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           selected={selectedQuestionType}
           onSelectedChange={(selected: IWMDropdownOption) => {
             question.type = selected.id as QuestionType;
-            dispatch({ type: ActionType.UpdateCourseOutline });
+            dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
           }}
         >
           <WMButton className={classes['dropdown-menu-button']}>
@@ -60,7 +60,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         errorMessage={fieldErrorMessage(question.title)}
         onChange={(e) => {
           question.title = e.target.value;
-          dispatch({ type: ActionType.UpdateCourseOutline });
+          dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
       <TextCounterTextarea
@@ -72,7 +72,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         maxRows={5}
         onChange={(e) => {
           question.description = e.target.value;
-          dispatch({ type: ActionType.UpdateCourseOutline });
+          dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
       <p>Answers:</p>
@@ -84,7 +84,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         className={classes['add-answer']}
         onClick={() => {
           question.answers.addNewItem();
-          dispatch({ type: ActionType.UpdateCourseOutline });
+          dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
       <FormGroup className={classes['explanation']}>
@@ -95,7 +95,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           onChange={(checked: boolean) => {
             if (question.properties) {
               question.properties.hasExplanation = checked;
-              dispatch({ type: ActionType.UpdateCourseOutline });
+              dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
             }
           }}
         />
@@ -107,7 +107,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           value={question.explanation ? question.explanation : ''}
           onChange={(e) => {
             question.explanation = e.target.value;
-            dispatch({ type: ActionType.UpdateCourseOutline });
+            dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
           }}
         />
       </FormGroup>

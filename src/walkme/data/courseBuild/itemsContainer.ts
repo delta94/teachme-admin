@@ -82,10 +82,27 @@ export class DeployableContainer<
 > extends Container<UIModel, NewItemData, DataModel> implements ITypeIdQueriable {
   private _itemsMap: { [key: string]: { [key: number]: boolean } } = {};
 
+  constructor(
+    itemsData: Array<DataModel>,
+    getUIModel: (data: DataModel) => UIModel,
+    newDataModel: (index: number, data?: NewItemData) => DataModel,
+  ) {
+    super(itemsData, getUIModel, newDataModel);
+    this.init();
+  }
+
+  private init() {
+    this.toArray().forEach((item) => this.mapItem(item));
+  }
+
   public addNewItem(index?: number, data?: NewItemData): UIModel {
     const item = super.addNewItem(index, data);
-    this._itemsMap[item.type] = this._itemsMap[item.type] ?? {};
-    this._itemsMap[item.type][item.id] = true;
+    return this.mapItem(item);
+  }
+
+  private mapItem(item: UIModel) {
+    this._itemsMap![item.type] = this._itemsMap![item.type] ?? {};
+    this._itemsMap![item.type][item.id] = true;
     return item;
   }
 

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { ContentItem } from '@walkme/types';
+import { ContentItem, CourseTaskCompletionType } from '@walkme/types';
 
 import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
@@ -7,16 +7,11 @@ import { WMVerticalRadioGroup } from '../../../common/WMRadio';
 
 import classes from './style.module.scss';
 
-export enum CompletionType {
-  ItemIsOpen,
-  ReachingItemsGoal,
-}
-
 const completionOptions = [
-  { label: 'Item is opened', value: CompletionType.ItemIsOpen },
+  { label: 'Item is opened', value: CourseTaskCompletionType.Completed },
   {
     label: 'Reaching item’s goal',
-    value: CompletionType.ReachingItemsGoal,
+    value: CourseTaskCompletionType.Goal,
   },
 ];
 
@@ -34,9 +29,9 @@ export default function CourseItemDetails({
           <p className={classes['label']}>Item is completed when:</p>
           <WMVerticalRadioGroup
             options={completionOptions}
-            onChange={(value: any) => {
-              courseItem.properties.completionType = value as CompletionType;
-              dispatch({ type: ActionType.UpdateCourseOutline });
+            onChange={(e: any) => {
+              courseItem.properties.completionType = e.target.value as CourseTaskCompletionType;
+              dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
             }}
             value={courseItem.properties.completionType}
           />

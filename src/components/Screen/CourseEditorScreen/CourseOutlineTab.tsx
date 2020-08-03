@@ -20,12 +20,12 @@ export interface IProperties {
 
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
-  const { course, quiz, courseOutlineSearchValue } = state;
+  const { course, quiz /* , courseOutlineSearchValue */ } = state;
 
   const onItemClick = (item: any) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
-      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id },
+      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id, item },
     });
   };
 
