@@ -29,11 +29,18 @@ export default function QuizHeader({ className }: { className?: string }): React
   };
 
   return (
-    <Header className={cc([classes['quiz-header'], className])} onClick={toggleSettings}>
+    <Header className={cc([classes['quiz-header'], className])}>
       <Icon type={IconType.QuizSettings} />
       <div className={cc([classes['editable-quiz-title']])}>
         <div className={classes['text']}>
           <span className={classes['quiz-title-text']}>Quiz</span>
+          <WMButton
+            onMouseDown={toggleSettings}
+            className={classes['title-button']}
+            onClick={toggleSettings}
+          >
+            <Icon type={IconType.Settings} className={classes['title-icon']} />
+          </WMButton>
           <WMButton
             onMouseDown={deleteQuiz}
             className={classes['title-button']}
