@@ -11,12 +11,18 @@ export type { IWMTabPanel };
 
 export interface IWMTabs extends TabsProps {
   className?: string;
+  onTabClick?: (activeKey: string, e: React.KeyboardEvent | React.MouseEvent) => void;
   children: ReactNode;
 }
 
-export default function WMTabs({ className, children, ...otherProps }: IWMTabs): ReactElement {
+export default function WMTabs({
+  className,
+  onTabClick,
+  children,
+  ...otherProps
+}: IWMTabs): ReactElement {
   return (
-    <Tabs className={cc([classes['wm-tabs'], className])} {...otherProps}>
+    <Tabs className={cc([classes['wm-tabs'], className])} {...otherProps} onTabClick={onTabClick}>
       {children}
     </Tabs>
   );

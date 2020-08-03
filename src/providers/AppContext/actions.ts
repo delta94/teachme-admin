@@ -7,4 +7,5 @@ export enum ActionType {
   SetEnvironment = 'SET_ENVIRONMENT',
   CurrentScreenProvider = 'CURRENT_SCREEN_PROVIDER',
   ResetAppState = 'RESET_APP_STATE',
+  SetOriginalUser = 'SET_ORIGINAL_USER',
 }

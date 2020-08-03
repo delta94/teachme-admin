@@ -21,12 +21,10 @@ export default function CourseOutlineLessonItem({
   item,
   index,
   className,
-  handleItemClick,
 }: {
   item: INewLesson;
   index: number;
   className: string;
-  handleItemClick: (item: any) => void;
 }): ReactElement {
   const [{ course }, dispatch] = useCourseEditorContext();
 
@@ -75,8 +73,11 @@ export default function CourseOutlineLessonItem({
           }}
           shouldAcceptDrop={shouldAcceptDrop}
           className={cc([{ [classes['is-empty']]: !item.childNodes.toArray().length }])}
-          handleItemClick={(item) => handleItemClick && handleItemClick(item)}
-          taskItemProps={{ deletable: true, onDelete: onDeleteTaskItem }}
+          taskItemProps={{
+            deletable: true,
+            onDelete: onDeleteTaskItem,
+            className: classes['task-with-settings'],
+          }}
         />
       </WMCollapse>
     </Draggable>

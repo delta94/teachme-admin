@@ -16,6 +16,7 @@ export const initialState = {
   refreshCourseOutline: false,
   courseOutlineSearchValue: '',
   isDetailsPanelOpen: false,
+  activeDetailsItem: null,
   hasChanges: false,
 } as IState;
 
@@ -74,8 +75,13 @@ export const reducer = produce(
           action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue;
         draft.filteredCourseOutline = action.course?.items ?? initialState.filteredCourseOutline;
         break;
-      case ActionType.ToggleDetailsPanel:
-        draft.isDetailsPanelOpen = !draft.isDetailsPanelOpen;
+      case ActionType.OpenDetailsPanel:
+        draft.isDetailsPanelOpen = true;
+        draft.activeDetailsItem = action.activeDetailsItem ?? null;
+        break;
+      case ActionType.CloseDetailsPanel:
+        draft.isDetailsPanelOpen = false;
+        draft.activeDetailsItem = null;
         break;
       case ActionType.ResetCourseEditor:
         draft = { ...initialState };

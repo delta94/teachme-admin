@@ -1,0 +1,23 @@
+.course-settings-tab {
+  padding: 0 20px 15px;
+
+  .course-settings-form-group {
+    margin-bottom: 30px;
+  }
+
+  .learning-path {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .switch-field {
+    // display: block;
+    margin: 10px 0 0;
+
+    &.space-bottom {
+      margin-bottom: 10px;
+    }
+  }
+}

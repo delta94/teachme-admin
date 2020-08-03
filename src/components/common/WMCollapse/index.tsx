@@ -2,7 +2,8 @@ import React, { ReactNode, ReactElement, useState, useEffect } from 'react';
 import SmoothCollapse from 'react-smooth-collapse';
 import cc from 'classcat';
 
-import { ReactComponent as DragHandleIcon } from './dragHandleIcon.svg';
+import DragHandle from '../DragHandle/DragHandle';
+
 import { ReactComponent as DownArrowIcon } from './down-arrow.svg';
 import classes from './style.module.scss';
 
@@ -13,7 +14,9 @@ interface IWMCollapse {
   headerClassName?: string;
   isOpen?: boolean;
   hasDragHandle?: boolean;
+  onClick?: (e: any) => void;
   onOpenChange?: (isOpen: boolean) => void;
+  [key: string]: any;
 }
 
 export default function WMCollapse({
@@ -23,6 +26,7 @@ export default function WMCollapse({
   headerClassName,
   isOpen = true,
   hasDragHandle = false,
+  onClick,
   ...otherProps
 }: IWMCollapse): ReactElement {
   const [open, setOpen] = useState(isOpen);
@@ -39,12 +43,9 @@ export default function WMCollapse({
           { [classes['has-drag-handle']]: hasDragHandle },
           headerClassName,
         ])}
+        onClick={onClick}
       >
-        {hasDragHandle && (
-          <div className={cc([classes['drag-handle'], 'drag-handle'])}>
-            <DragHandleIcon />
-          </div>
-        )}
+        {hasDragHandle && <DragHandle className={classes['collapse-drag-handle']} />}
         <div
           className={cc([classes['collapse-button'], { [classes['is-open']]: open }])}
           onClick={() => setOpen(!open)}
