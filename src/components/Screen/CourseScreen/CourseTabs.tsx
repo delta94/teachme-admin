@@ -52,7 +52,7 @@ export default function CourseTabs(): ReactElement {
       itemsLength: quiz?.questions?.length ?? 0,
       icon: <Icon type={IconType.Quiz} />,
       isDisabled: !quiz || (quiz && Object.keys(quiz).length === 0),
-      content: <CourseQuizTabCharts quiz={quiz} />,
+      content: quiz && <CourseQuizTabCharts quiz={quiz} />,
     },
   ];
 
@@ -68,7 +68,7 @@ export default function CourseTabs(): ReactElement {
                 <>
                   {icon}
                   <span>
-                    {title} {itemsLength && `(${itemsLength})`}
+                    {title} {itemsLength ? `(${itemsLength})` : '(0)'}
                   </span>
                 </>
               }
