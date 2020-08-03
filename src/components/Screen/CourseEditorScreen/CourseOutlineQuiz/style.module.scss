@@ -98,15 +98,3 @@
   box-shadow: var(--drag-shadow);
   cursor: grabbing;
 }
-
-.is-empty {
-  height: 70px;
-  position: relative;
-
-  &::after {
-    content: 'Drag content into the lesson';
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-}

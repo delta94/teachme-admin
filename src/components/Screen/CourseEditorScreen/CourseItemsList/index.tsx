@@ -14,7 +14,6 @@ export interface ICourseItemsList {
   items: Array<ContentItem>;
   className?: string;
   onDrop?: any;
-  emptyState?: ReactNode;
   taskItemProps?: any;
   [key: string]: any;
 }
@@ -23,7 +22,6 @@ export default function CourseItemsList({
   items,
   onDrop,
   className,
-  emptyState,
   taskItemProps = {},
   isDisabled,
   ...otherProps
@@ -45,7 +43,7 @@ export default function CourseItemsList({
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
       >
-        {items.length ? (
+        {Boolean(items.length) &&
           items.map((item, i) => {
             const disabled = isDisabled && isDisabled(item);
 
@@ -59,10 +57,7 @@ export default function CourseItemsList({
                 disabled={disabled}
               />
             );
-          })
-        ) : (
-          <div className={classes['empty']}>No items were found</div>
-        )}
+          })}
       </Container>
     </div>
   );
