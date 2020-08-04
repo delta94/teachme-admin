@@ -49,7 +49,15 @@ export async function switchSystem(id: number) {
  * Impersonated the requested account
  * @param email requested account email to impersonate
  */
-export async function impersonate(email: string): Promise<any> {
+//TODO: Remove if function after PR
+export async function impersonate(email: string, debug = false): Promise<any> {
+  if (debug) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(console.log(email));
+      }, 1000);
+    });
+  }
   return walkme.user.impersonate(email);
 }
 
@@ -57,7 +65,15 @@ export async function impersonate(email: string): Promise<any> {
  * Returns a list of emails that start with the given prefix
  * @param prefix the prefix of the requested emails
  */
-export async function getEmails(prefix: string): Promise<EmailList> {
+//TODO: Remove if function after PR
+export async function getEmails(prefix: string, debug = false): Promise<EmailList> {
+  if (debug) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ emails: ['shiran@gmail.com', 'roni@gmail.com'] });
+      }, 1000);
+    });
+  }
   return walkme.user.autoComplete(prefix);
 }
 

@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
-
 import { AutoComplete } from 'antd';
+import { useDebounceCallback } from '@react-hook/debounce';
 
 import { getEmails } from '../../../../walkme';
 import { impersonate } from '../../../../walkme';
@@ -21,16 +21,22 @@ export default function ImpersonateDialog({
   const [localValue, setLocalValue] = useState(value);
   const [options, setOptions] = useState<{ value: string }[]>([]);
 
-  async function onEmailChange(value: string) {
-    const { emails } = await getEmails(value);
+  const fetchEmails = async (value: string) => {
+    const { emails } = await getEmails(value, true);
     const emailList = emails.map((email) => ({ value: email }));
     setOptions(emailList);
+  };
+
+  const debouncedFetchEmails = useDebounceCallback(fetchEmails, 400);
+
+  const onEmailChange = (value: string) => {
     setLocalValue(value);
-  }
+    debouncedFetchEmails(value);
+  };
 
   const onConfirmValue = (userValue: string | undefined) => {
     onConfirm(userValue);
-    userValue && impersonate(userValue);
+    userValue && impersonate(userValue, true);
     setLocalValue('');
   };
 

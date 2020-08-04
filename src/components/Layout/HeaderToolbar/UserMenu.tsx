@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
-import { message } from 'antd';
 
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppContext, setInitialGlobals } from '../../../providers/AppContext';
 import { logout } from '../../../walkme';
 
 import { IconType } from '../../common/Icon/icon.interface';
@@ -27,29 +26,26 @@ export default function UserMenu({
     {
       id: 'impersonate',
       value: 'Impersonate',
-      onClick: () => handleImpersonate(),
+      onClick: () => setShowImpersonate(true),
       skip: !originalUser.userIsBackOffice,
     },
     { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
 
   const handleImpersonate = () => {
-    setShowImpersonate(true);
-  };
-
-  const handleMenuClick = (selected: IWMDropdownOption) => {
-    message.info(`User clicked on ${selected.value}`);
+    setShowImpersonate(false);
+    setInitialGlobals(appDispatch);
   };
 
   return (
     <>
-      <WMDropdown className={className} options={options} onSelectedChange={handleMenuClick}>
+      <WMDropdown className={className} options={options}>
         <WMButton className={buttonClassName} icon={<Icon type={IconType.HeaderAvatar} />} />
       </WMDropdown>
       <ImpersonateDialog
         open={showImpersonate}
         onCancel={() => setShowImpersonate(false)}
-        onConfirm={() => setShowImpersonate(false)}
+        onConfirm={handleImpersonate}
       />
     </>
   );
