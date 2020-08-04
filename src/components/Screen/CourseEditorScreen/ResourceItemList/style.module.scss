@@ -1,13 +1,3 @@
-.resource-items-list {
-  flex-grow: 1;
-  margin: 0;
-
-  :global(.smooth-dnd-container) {
-    position: relative;
-    height: 100%;
-  }
-}
-
 .card-ghost {
   border: var(--wm-border);
   background-color: var(--white);
