@@ -31,6 +31,7 @@ export default function ImpersonateDialog({
   const onConfirmValue = (userValue: string | undefined) => {
     onConfirm(userValue);
     userValue && impersonate(userValue);
+    setLocalValue('');
   };
 
   return (
