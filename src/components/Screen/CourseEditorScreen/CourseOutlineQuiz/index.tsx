@@ -43,9 +43,9 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
   };
 
   const onQuestionDelete = (questionIndex: number) => {
-    const questionToRemove = item.questions.getItem(questionIndex);
-    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === questionToRemove.id;
-    item.questions.removeItem(questionToRemove);
+    const questionToDelete = item.questions.getItem(questionIndex);
+    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === questionToDelete.id;
+    item.questions.removeItem(questionToDelete);
 
     dispatch({
       type: ActionType.UpdateCourseOutline,

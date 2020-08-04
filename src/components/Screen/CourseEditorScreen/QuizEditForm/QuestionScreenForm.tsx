@@ -78,9 +78,9 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
       <Answers
         answers={question.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
-        onRemoveAnswer={(answerIndex) => {
-          const answerToRemove = question.answers.getItem(answerIndex);
-          question.answers.removeItem(answerToRemove);
+        onDeleteAnswer={(answerIndex) => {
+          const answerToDelete = question.answers.getItem(answerIndex);
+          question.answers.removeItem(answerToDelete);
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />

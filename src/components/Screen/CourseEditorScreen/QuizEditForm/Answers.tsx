@@ -16,11 +16,11 @@ import classes from './style.module.scss';
 export default function Answers({
   answers,
   type,
-  onRemoveAnswer,
+  onDeleteAnswer,
 }: {
   answers: QuizAnswer[];
   type: QuestionType;
-  onRemoveAnswer: (answerIndex: number) => void;
+  onDeleteAnswer: (answerIndex: number) => void;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
 
@@ -38,7 +38,7 @@ export default function Answers({
         }}
       />
       {Boolean(answers.length > 2) && (
-        <WMButton className={classes['delete-button']} onClick={() => onRemoveAnswer(index)}>
+        <WMButton className={classes['delete-button']} onClick={() => onDeleteAnswer(index)}>
           <Icon type={IconType.Delete} />
         </WMButton>
       )}
