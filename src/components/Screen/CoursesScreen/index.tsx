@@ -1,8 +1,13 @@
 import React, { ReactElement, useEffect, Key } from 'react';
-import { Divider } from 'antd';
+import { Divider, ConfigProvider } from 'antd';
 
 import { useAppContext } from '../../../providers/AppContext';
-import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
+import {
+  useCoursesContext,
+  fetchCoursesData,
+  sortTable,
+  ActionType,
+} from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 import { AllCoursesOverviewResponse } from '../../../walkme/models';
 import { IDateRange } from '../../../utils';
@@ -21,7 +26,6 @@ import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
 import CoursesEmptyState from './CoursesEmptyState';
-import TableBody, { DraggableTableRow } from './TableBody';
 // import { statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
@@ -60,11 +64,15 @@ export default function CoursesScreen(): ReactElement {
   const onDateRangeChange = (dateRange?: IDateRange) =>
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
-  const components = {
-    body: {
-      wrapper: TableBody,
-      row: filteredCourses.length ? DraggableTableRow : CoursesEmptyState,
-    },
+  const onSortEnd = (
+    { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
+    courses: Array<UICourse>,
+    selectedRowKeys?: Array<Key>,
+  ) => {
+    dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowKeys });
+
+    const courseId = courses[newIndex].id;
+    sortTable(dispatch, courseId, oldIndex, newIndex);
   };
 
   const selectedRowsCount = selectedRows.length;
@@ -83,33 +91,35 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <WMTable
-          rowSelection={{
-            selectedRowKeys,
-            onChange: onMultiSelectChange,
-          }}
-          data={filteredCourses}
-          columns={columns}
-          components={components}
-        >
-          <ShownCoursesIndicator />
-          {/* <ControlsWrapper>
+        <ConfigProvider renderEmpty={CoursesEmptyState}>
+          <WMTable
+            rowSelection={{
+              selectedRowKeys,
+              onChange: onMultiSelectChange,
+            }}
+            data={filteredCourses}
+            columns={columns}
+            onSortEnd={onSortEnd}
+          >
+            <ShownCoursesIndicator />
+            {/* <ControlsWrapper>
               <DropdownFilter label="Status" options={statuses} />
               <DropdownFilter label="Segments" options={segments} />
             </ControlsWrapper> */}
-          <ControlsWrapper>
-            {Boolean(selectedRowsCount) && (
-              <>
-                <ProductionStatusActions />
-                <DeleteCoursesButton />
-                <Divider className={classes['separator']} type="vertical" />
-              </>
-            )}
-            <ExportCoursesButton />
-            <SearchCoursesFilter />
-            <CreateButton />
-          </ControlsWrapper>
-        </WMTable>
+            <ControlsWrapper>
+              {Boolean(selectedRowsCount) && (
+                <>
+                  <ProductionStatusActions />
+                  <DeleteCoursesButton />
+                  <Divider className={classes['separator']} type="vertical" />
+                </>
+              )}
+              <ExportCoursesButton />
+              <SearchCoursesFilter />
+              <CreateButton />
+            </ControlsWrapper>
+          </WMTable>
+        </ConfigProvider>
       </WMCard>
     </>
   );

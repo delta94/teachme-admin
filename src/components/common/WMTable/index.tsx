@@ -1,8 +1,9 @@
-import React, { ReactNode, ReactElement } from 'react';
+import React, { ReactNode, ReactElement, Key } from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { SortEnd, SortEvent, SortStart, SortStartHandler } from 'react-sortable-hoc';
+import produce from 'immer';
 
 import { useAppSkeleton } from '../../../hooks/skeleton';
 
@@ -18,7 +19,11 @@ interface IWMTable extends TableProps<any> {
   columns?: ColumnsType<any>;
   data: Array<any>;
   rowSelection?: TableRowSelection<any>;
-  onSortEnd?: (sortedData: Array<any>) => void;
+  onSortEnd?: (
+    { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
+    updatedData: Array<any>,
+    updatedSelectedRowKeys?: Array<Key>,
+  ) => void;
   onSortStart?: SortStartHandler;
 }
 
@@ -52,14 +57,33 @@ export default function WMTable({
   };
 
   const onSortEndCallback = ({ oldIndex, newIndex }: SortEnd): void => {
-    if (oldIndex !== newIndex && onSortEnd) {
-      const updatedData = [...data];
+    if (oldIndex === newIndex || !onSortEnd) return;
 
-      const movedItems = updatedData.splice(oldIndex, 1)[0]; // remove `oldIndex` item and store it
-      updatedData.splice(newIndex, 0, movedItems); // insert stored item into position `newIndex`
+    const updatedData = produce(data, (draft) => {
+      // Remove moved row and store it
+      const moved = draft.splice(oldIndex, 1);
+      // Insert stored row into new position
+      draft.splice(newIndex, 0, moved[0]);
+    });
 
-      onSortEnd(updatedData);
-    }
+    const updatedSelectedRowKeys = produce(rowSelection?.selectedRowKeys, (draft) => {
+      draft?.forEach((rowKey, index) => {
+        const key = Number(rowKey);
+
+        if (key < oldIndex && key >= newIndex) {
+          // Row moved to before selected row
+          draft[index] = key + 1;
+        } else if (key > oldIndex && key <= newIndex) {
+          // Row moved to after selected row
+          draft[index] = key - 1;
+        } else if (key === oldIndex && key !== newIndex) {
+          // Row moved is same as selected row
+          draft[index] = newIndex;
+        }
+      });
+    });
+
+    onSortEnd({ oldIndex, newIndex }, updatedData, updatedSelectedRowKeys);
   };
 
   const SortableWrapper = (props: any) => (
@@ -87,7 +111,7 @@ export default function WMTable({
           pagination={false}
           dataSource={data}
           columns={columns}
-          rowKey={(record: any, index?: number) => index as React.Key}
+          rowKey={(record: any, index?: number) => index as Key}
           {...componentsProps}
           {...otherProps}
         />
