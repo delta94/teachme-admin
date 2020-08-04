@@ -37,9 +37,11 @@ export default function Answers({
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
-      <WMButton className={classes['delete-button']} onClick={() => onRemoveAnswer(index)}>
-        <Icon type={IconType.Delete} />
-      </WMButton>
+      {Boolean(answers.length > 2) && (
+        <WMButton className={classes['delete-button']} onClick={() => onRemoveAnswer(index)}>
+          <Icon type={IconType.Delete} />
+        </WMButton>
+      )}
     </div>
   );
 

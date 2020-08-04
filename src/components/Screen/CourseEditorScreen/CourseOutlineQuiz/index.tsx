@@ -14,14 +14,7 @@ import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
 
-export default function CourseOutlineQuiz({
-  item,
-  selectedOutlineItem,
-}: {
-  item: Quiz;
-
-  selectedOutlineItem?: { type: QuizScreenType; id?: number };
-}): ReactElement {
+export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onInnerDrop = (e: any) => {

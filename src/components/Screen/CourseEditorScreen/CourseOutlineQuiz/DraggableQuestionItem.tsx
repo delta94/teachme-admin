@@ -18,6 +18,7 @@ export interface IQuestionItem {
   [key: string]: any;
   onClick: () => void;
   onDelete?: (index: number) => void;
+  itemsAreDeletable?: boolean;
 }
 
 export default function DraggableQuestionItem({
@@ -26,6 +27,7 @@ export default function DraggableQuestionItem({
   className,
   onClick,
   onDelete,
+  itemsAreDeletable,
   ...otherProps
 }: IQuestionItem): ReactElement {
   return (
@@ -38,7 +40,7 @@ export default function DraggableQuestionItem({
           index={index}
           onClick={onClick}
           onDelete={() => onDelete && onDelete(index)}
-          deletable
+          deletable={itemsAreDeletable}
         />
       </div>
     </Draggable>

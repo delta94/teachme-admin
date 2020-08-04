@@ -45,6 +45,7 @@ export default function CourseQuestionList({
               classes['item-with-settings'],
               { [classes['active-item']]: activeQuestionId === item.id },
             ])}
+            itemsAreDeletable={items.length > 1}
           />
         ))}
       </Container>
