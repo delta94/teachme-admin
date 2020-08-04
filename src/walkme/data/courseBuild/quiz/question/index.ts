@@ -95,4 +95,8 @@ export class QuizQuestion implements BuildQuizQuestion {
       OrderIndex: index,
     };
   }
+
+  isValid(): boolean {
+    return !!this.title && this.answers.toArray().every((a) => a.isValid());
+  }
 }
