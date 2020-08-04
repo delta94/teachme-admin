@@ -105,21 +105,19 @@
       height: 20px;
       padding: 2px;
     }
+  }
 
-    &.add-question {
-      :global(.wm-icon) {
-        margin-right: 0;
-      }
+  .add-question {
+    margin: 0 10px;
 
-      svg {
-        width: auto;
-        height: auto;
-        padding: 0;
-      }
+    :global(.wm-icon) {
+      margin-right: 0;
     }
 
-    &:last-child {
-      margin-right: 10px;
+    svg {
+      width: auto;
+      height: auto;
+      padding: 0;
     }
   }
 

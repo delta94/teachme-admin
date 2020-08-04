@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
@@ -39,7 +39,9 @@ export default function TaskItem({
   onDelete,
   ...otherProps
 }: ITaskItem): ReactElement {
-  const deleteTask = () => {
+  const deleteTask = (e: any) => {
+    e.stopPropagation();
+
     if (onDelete) {
       onDelete(item, index);
     }
@@ -56,7 +58,7 @@ export default function TaskItem({
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />
         <span className={classes['title']}>{title}</span>
         {deletable && (
-          <WMButton className={classes['delete-button']} onMouseDown={deleteTask}>
+          <WMButton className={classes['delete-button']} onClick={deleteTask}>
             <Icon type={IconType.Remove} />
           </WMButton>
         )}

@@ -16,21 +16,13 @@ import classes from './style.module.scss';
 
 export default function CourseOutlineQuiz({
   item,
-  quizItemClick,
   selectedOutlineItem,
 }: {
   item: Quiz;
-  quizItemClick: ({
-    type,
-    data,
-  }: {
-    type: QuizScreenType;
-    data: QuizScreen | QuizQuestion;
-  }) => void;
+
   selectedOutlineItem?: { type: QuizScreenType; id?: number };
 }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-  const [activeOutlineItem, setActiveOutlineItem] = useState(selectedOutlineItem);
+  const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -50,14 +42,6 @@ export default function CourseOutlineQuiz({
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;
 
-  /*  const onItemClick = ({ type, data }: { type: QuizScreenType; data: any }) => {
-    setActiveOutlineItem({ type, id: data.id });
-    quizItemClick({
-      type,
-      data,
-    });
-  }; */
-
   const onItemClick = ({ type, data }: { type: DetailsPanelSettingsType; data: any }) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
@@ -76,7 +60,10 @@ export default function CourseOutlineQuiz({
         className={cc([
           classes['welcome-screen-item'],
           classes['item-with-settings'],
-          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
+          {
+            [classes['active-item']]:
+              activeDetailsItem?.type === DetailsPanelSettingsType.QuizWelcome,
+          },
         ])}
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: item.welcomeScreen })
@@ -98,7 +85,11 @@ export default function CourseOutlineQuiz({
             [classes['is-empty']]: !item.questions.toArray().length,
           },
         ])}
-        activeQuestionId={activeOutlineItem?.id}
+        activeQuestionId={
+          activeDetailsItem?.type === DetailsPanelSettingsType.Question
+            ? activeDetailsItem?.id
+            : undefined
+        }
         onQuestionClick={(question: QuizQuestion) =>
           onItemClick({ type: DetailsPanelSettingsType.Question, data: question })
         }
@@ -108,7 +99,10 @@ export default function CourseOutlineQuiz({
         className={cc([
           classes['success-screen-item'],
           classes['item-with-settings'],
-          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
+          {
+            [classes['active-item']]:
+              activeDetailsItem?.type === DetailsPanelSettingsType.QuizSuccess,
+          },
         ])}
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: item.successScreen })
@@ -119,7 +113,9 @@ export default function CourseOutlineQuiz({
         className={cc([
           classes['fail-screen-item'],
           classes['item-with-settings'],
-          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
+          {
+            [classes['active-item']]: activeDetailsItem?.type === DetailsPanelSettingsType.QuizFail,
+          },
         ])}
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: item.failScreen })

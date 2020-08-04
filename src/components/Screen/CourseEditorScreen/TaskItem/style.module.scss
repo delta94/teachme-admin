@@ -47,6 +47,10 @@
 
     .delete-button {
       display: inline-block;
+
+      :global(.wm-icon) {
+        pointer-events: none;
+      }
     }
 
     .task-item-drag-handle {

@@ -30,8 +30,18 @@ export default function QuizHeader({ className }: { className?: string }): React
   };
 
   const addQuestion = () => {
-    quiz?.addQuestion(); // the method is empty
-    console.log('addQuestion ');
+    quiz?.questions.addNewItem();
+    const questions = quiz?.questions.toArray();
+    const newQuestion = questions && questions[questions.length - 1];
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    dispatch({
+      type: ActionType.OpenDetailsPanel,
+      activeDetailsItem: {
+        type: DetailsPanelSettingsType.Question,
+        id: newQuestion?.id ?? 0,
+        item: newQuestion,
+      },
+    });
   };
 
   return (
@@ -54,10 +64,7 @@ export default function QuizHeader({ className }: { className?: string }): React
           >
             <Icon type={IconType.Delete} className={classes['title-icon']} />
           </WMButton>
-          <AddButton
-            className={cc([classes['title-button'], classes['add-question']])}
-            onClick={addQuestion}
-          />
+          <AddButton className={cc([classes['add-question']])} onClick={addQuestion} />
         </div>
       </div>
     </Header>
