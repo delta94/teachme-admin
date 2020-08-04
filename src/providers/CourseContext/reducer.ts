@@ -12,6 +12,7 @@ export const initialState = {
   dateRange: defaultDateRange,
   overview: {} as CourseOverviewData,
   course: {},
+  courseSegments: [] as string[],
   courseOutline: [] as ICourseOutlineItems,
   filteredCourseOutline: [] as ICourseOutlineItems,
   courseOutlineSearchValue: '',
@@ -36,6 +37,7 @@ export const reducer = produce(
         draft.courseOutline = action.courseOutline ?? initialState.courseOutline;
         draft.filteredCourseOutline =
           action.filteredCourseOutline ?? initialState.filteredCourseOutline;
+        draft.courseSegments = action.courseSegments ?? initialState.courseSegments;
         break;
       case ActionType.FetchCourseDataError:
         draft.isFetchingCourseData = false;

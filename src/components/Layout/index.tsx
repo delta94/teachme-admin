@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { HashRouter, Link } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { PLAYGROUND_ROUTE } from '../../constants/routes';
 
@@ -19,7 +19,7 @@ export default function Layout(): ReactElement {
   useHotkeys('ctrl+shift+up', openAboutDialog);
 
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <WMDialog
         title="About TeachMe"
         open={openAbout}
@@ -40,6 +40,6 @@ export default function Layout(): ReactElement {
         <HeaderToolbar />
         <Screen />
       </section>
-    </Router>
+    </HashRouter>
   );
 }

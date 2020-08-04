@@ -12,6 +12,7 @@ import {
   CoursesDispatchContext,
   useCoursesContext,
   fetchCoursesData,
+  sortTable,
   exportCourses,
   deleteCourses,
   publishCourses,
@@ -24,6 +25,7 @@ export type { IAction, IState, IDispatch, ICoursesProvider };
 export {
   useCoursesContext,
   fetchCoursesData,
+  sortTable,
   exportCourses,
   deleteCourses,
   publishCourses,
