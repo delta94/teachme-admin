@@ -2,14 +2,19 @@ import React, { ReactElement, useEffect, Key } from 'react';
 import { Divider, ConfigProvider } from 'antd';
 
 import { useAppContext } from '../../../providers/AppContext';
-import { useCoursesContext, fetchCoursesData, ActionType } from '../../../providers/CoursesContext';
+import {
+  useCoursesContext,
+  fetchCoursesData,
+  sortTable,
+  ActionType,
+} from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
+import { AllCoursesOverviewResponse } from '../../../walkme/models';
 import { IDateRange } from '../../../utils';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { CreateButton } from '../../common/buttons';
-import Icon, { IconType } from '../../common/Icon';
 import ScreenHeader from '../../common/ScreenHeader';
 // import { DropdownFilter } from '../../common/filters';
 import WMCard from '../../common/WMCard';
@@ -20,21 +25,19 @@ import ProductionStatusActions from './ProductionStatusActions';
 import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
+import CoursesEmptyState from './CoursesEmptyState';
 // import { statuses, segments } from './utils';
 import { columns } from './tableData';
 import classes from './style.module.scss';
-import { AllCoursesOverviewResponse } from '../../../walkme/models';
 
 // TODO: add cleanups to fetchCoursesData
 export default function CoursesScreen(): ReactElement {
-  const [
-    {
-      isUpdating,
-      environment: { id: envId },
-      system,
-    },
-    appDispatch,
-  ] = useAppContext();
+  const [appState] = useAppContext();
+  const {
+    isUpdating,
+    environment: { id: envId },
+    system,
+  } = appState;
   const [state, dispatch] = useCoursesContext();
   const {
     dateRange: { from, to },
@@ -58,17 +61,19 @@ export default function CoursesScreen(): ReactElement {
       selectedRowKeys,
     });
 
-  const customizeRenderEmpty = () => (
-    <div className={classes['empty-state']}>
-      <Icon className={classes['empty-icon']} type={IconType.EmptyCourse} />
-      <h1>No courses yet</h1>
-      <p>Start creating courses by clicking the button below</p>
-      <CreateButton />
-    </div>
-  );
-
   const onDateRangeChange = (dateRange?: IDateRange) =>
     dispatch({ type: ActionType.SetDateRange, dateRange });
+
+  const onSortEnd = (
+    { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
+    courses: Array<UICourse>,
+    selectedRowKeys?: Array<Key>,
+  ) => {
+    dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowKeys });
+
+    const courseId = courses[newIndex].id;
+    sortTable(dispatch, courseId, oldIndex, newIndex);
+  };
 
   const selectedRowsCount = selectedRows.length;
 
@@ -86,7 +91,7 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <ConfigProvider renderEmpty={customizeRenderEmpty}>
+        <ConfigProvider renderEmpty={CoursesEmptyState}>
           <WMTable
             rowSelection={{
               selectedRowKeys,
@@ -94,7 +99,7 @@ export default function CoursesScreen(): ReactElement {
             }}
             data={filteredCourses}
             columns={columns}
-            // onSortEnd={(sortedData) => setTableData(sortedData)}
+            onSortEnd={onSortEnd}
           >
             <ShownCoursesIndicator />
             {/* <ControlsWrapper>
@@ -102,13 +107,13 @@ export default function CoursesScreen(): ReactElement {
               <DropdownFilter label="Segments" options={segments} />
             </ControlsWrapper> */}
             <ControlsWrapper>
-              {selectedRowsCount ? (
+              {Boolean(selectedRowsCount) && (
                 <>
                   <ProductionStatusActions />
                   <DeleteCoursesButton />
                   <Divider className={classes['separator']} type="vertical" />
                 </>
-              ) : null}
+              )}
               <ExportCoursesButton />
               <SearchCoursesFilter />
               <CreateButton />
