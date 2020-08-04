@@ -1,6 +1,10 @@
 .task-item {
   border-bottom: var(--wm-border);
 
+  &.active-item {
+    background-color: var(--hover-color);
+  }
+
   &:first-of-type {
     border-top: var(--wm-border);
   }

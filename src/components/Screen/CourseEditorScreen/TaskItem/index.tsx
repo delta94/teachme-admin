@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
@@ -35,6 +35,7 @@ export default function TaskItem({
   className,
   onClick,
   deletable = false,
+  active = false,
   onDelete,
   ...otherProps
 }: ITaskItem): ReactElement {
@@ -45,7 +46,11 @@ export default function TaskItem({
   };
 
   return (
-    <Draggable key={index} className={cc([classes['task-item'], className])} {...otherProps}>
+    <Draggable
+      key={index}
+      className={cc([classes['task-item'], className, { [classes['active-item']]: active }])}
+      {...otherProps}
+    >
       <div key={index} className={classes['item']} onClick={onClick}>
         <DragHandle className={classes['task-item-drag-handle']} />
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />
