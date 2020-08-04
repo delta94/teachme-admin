@@ -37,6 +37,20 @@
   .question-item {
     border: none;
     padding: 0;
+
+    .delete-button {
+      opacity: 0;
+      visibility: hidden;
+      margin-left: auto;
+      margin-right: 20px;
+    }
+
+    &:hover {
+      .delete-button {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
 
   .disabled {

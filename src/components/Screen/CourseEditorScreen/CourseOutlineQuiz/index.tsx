@@ -49,6 +49,18 @@ export default function CourseOutlineQuiz({
     });
   };
 
+  const onQuestionDelete = (questionIndex: number) => {
+    const questionToRemove = item.questions.getItem(questionIndex);
+    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === questionToRemove.id;
+    item.questions.removeItem(questionToRemove);
+
+    dispatch({
+      type: ActionType.UpdateCourseOutline,
+      updateHasChange: true,
+      closeDetailsPanel: shouldResetActiveDetailsPanel,
+    });
+  };
+
   return (
     <WMCollapse
       className={classes['quiz']}
@@ -90,9 +102,12 @@ export default function CourseOutlineQuiz({
             ? activeDetailsItem?.id
             : undefined
         }
-        onQuestionClick={(question: QuizQuestion) =>
-          onItemClick({ type: DetailsPanelSettingsType.Question, data: question })
-        }
+        onQuestionClick={(question: QuizQuestion) => {
+          onItemClick({ type: DetailsPanelSettingsType.Question, data: question });
+        }}
+        onQuestionDelete={(questionIndex) => {
+          onQuestionDelete(questionIndex);
+        }}
       />
       <QuestionItem
         item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}

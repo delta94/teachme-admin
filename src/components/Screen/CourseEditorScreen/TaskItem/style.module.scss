@@ -30,7 +30,9 @@
     }
 
     .delete-button {
-      display: none;
+      display: inline-block;
+      opacity: 0;
+      visibility: hidden;
     }
   }
 
@@ -46,7 +48,8 @@
     background-color: var(--hover-color);
 
     .delete-button {
-      display: inline-block;
+      opacity: 1;
+      visibility: visible;
 
       :global(.wm-icon) {
         pointer-events: none;
