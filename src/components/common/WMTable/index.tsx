@@ -2,7 +2,13 @@ import React, { ReactNode, ReactElement, Key } from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
-import { SortEnd, SortEvent, SortStart, SortStartHandler } from 'react-sortable-hoc';
+import {
+  SortEnd,
+  SortEvent,
+  SortStart,
+  SortStartHandler,
+  SortableContainerProps,
+} from 'react-sortable-hoc';
 import produce from 'immer';
 
 import { useAppSkeleton } from '../../../hooks/skeleton';
@@ -36,10 +42,6 @@ export default function WMTable({
   onSortStart,
   ...otherProps
 }: IWMTable): ReactElement {
-  const appInit = useAppSkeleton();
-
-  const isSortable = typeof onSortEnd === 'function';
-
   const onSortStartCallback = (sort: SortStart, event: SortEvent) => {
     const { node } = sort;
     const tds = document.getElementsByClassName('dragged-row')[0].childNodes as NodeListOf<
@@ -86,7 +88,7 @@ export default function WMTable({
     onSortEnd({ oldIndex, newIndex }, updatedData, updatedSelectedRowKeys);
   };
 
-  const SortableWrapper = (props: any) => (
+  const SortableWrapper = (props: SortableContainerProps) => (
     <SortableTableBody onSortEnd={onSortEndCallback} onSortStart={onSortStartCallback} {...props} />
   );
   SortableWrapper.displayName = 'SortableWrapper';
@@ -99,8 +101,10 @@ export default function WMTable({
       },
     },
   };
-
+  const isSortable = typeof onSortEnd === 'function';
   const componentsProps = isSortable ? sortableComponentProps : {};
+
+  const appInit = useAppSkeleton();
 
   return (
     <div className={classes['wm-table']}>
