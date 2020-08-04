@@ -71,7 +71,6 @@
     margin: 0;
     align-self: center;
     flex-grow: 1;
-
     box-sizing: border-box;
     height: 26px;
     width: 583px;
@@ -101,8 +100,8 @@
     }
 
     svg {
-      width: 26px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       padding: 2px;
     }
   }
@@ -124,6 +123,7 @@
   &:hover {
     .title-button {
       display: block;
+      width: 20px;
     }
   }
 }
