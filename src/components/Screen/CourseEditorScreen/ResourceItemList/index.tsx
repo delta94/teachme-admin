@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Container } from 'react-smooth-dnd';
+import useResizeAware from 'react-resize-aware';
 import { ContentItem } from '@walkme/types';
 
 import TaskItem from '../TaskItem';
@@ -63,6 +64,9 @@ export default function ResourceItemsList({
   const [virtualizationProps, setVirtualizationProps] = useState(
     getVirtualizationProps(items.length, itemHeight, itemBuffer, null),
   );
+  const [resizeListener] = useResizeAware(() =>
+    getVirtualizationProps(items.length, itemHeight, itemBuffer, containerRef.current),
+  );
 
   const onContainerScroll = () => {
     if (containerRef.current) {
@@ -86,6 +90,7 @@ export default function ResourceItemsList({
 
   return (
     <div className={className} ref={containerRef} onScroll={onContainerScroll}>
+      {resizeListener}
       <div style={{ height: virtualizationProps.beforeFillerHeight }} />
       <Container
         {...otherProps}
