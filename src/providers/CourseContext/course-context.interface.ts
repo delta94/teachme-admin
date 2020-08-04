@@ -14,6 +14,7 @@ export interface IAction {
   type: ActionType;
   overview?: CourseOverviewData;
   course?: Course;
+  courseSegments?: string[];
   courseOutline?: ICourseOutlineItems;
   filteredCourseOutline?: ICourseOutlineItems;
   courseOutlineSearchValue?: string;
@@ -31,6 +32,7 @@ export interface IState {
   dateRange: IDateRange;
   overview: CourseOverviewData;
   course: Course;
+  courseSegments: string[];
   courseOutline: ICourseOutlineItems;
   filteredCourseOutline: ICourseOutlineItems;
   courseOutlineSearchValue: string;
