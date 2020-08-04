@@ -45,6 +45,7 @@ export default function Answers({
 
   return (
     <div className={classes['answers-creator']}>
+      <p>Answers:</p>
       {answers.map((answer: QuizAnswer, index: number) =>
         type === QuestionType.Single ? (
           <WMRadio

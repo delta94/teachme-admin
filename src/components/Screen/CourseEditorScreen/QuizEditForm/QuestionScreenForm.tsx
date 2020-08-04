@@ -35,8 +35,6 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
     setSelectedQuestionType(questionTypes[question.type]);
   }, [question.type]);
 
-  console.log('question.answers ', question.answers);
-
   return (
     <div className={classes['question-screen-form']}>
       <FormGroup className={classes['question-type']} label="Question Type:">
@@ -77,15 +75,13 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
-      <p>Answers:</p>
       <Answers
         answers={question.answers.toArray()}
         type={selectedQuestionType.id as QuestionType}
         onRemoveAnswer={(answerIndex) => {
           const answerToRemove = question.answers.getItem(answerIndex);
-
-          console.log('onRemoveAnswer ', answerToRemove);
-          // question.answers.removeItem(answerToRemove);
+          question.answers.removeItem(answerToRemove);
+          dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
       />
       <AddButton
