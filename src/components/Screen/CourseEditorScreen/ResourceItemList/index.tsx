@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { Container } from 'react-smooth-dnd';
-import useResizeAware from 'react-resize-aware';
 import { ContentItem } from '@walkme/types';
 
 import TaskItem from '../TaskItem';
@@ -13,6 +12,13 @@ export interface ICourseItemsList {
   taskItemProps?: any;
   [key: string]: any;
 }
+
+type VirtualizationProps = {
+  firstRenderedElement: number;
+  lastRenderedElement: number;
+  beforeFillerHeight: number;
+  afterFillerHeight: number;
+};
 
 const getVirtualizationProps = (
   itemAmount: number,
@@ -50,6 +56,10 @@ const getRangeArray = (from: number, to: number) => {
   return Array.from({ length }, (v, k) => from + k);
 };
 
+const getIsVisible = (index: number, virtualizationProps: VirtualizationProps) =>
+  index >= virtualizationProps.firstRenderedElement &&
+  index <= virtualizationProps.lastRenderedElement;
+
 const itemHeight = 35;
 const itemBuffer = 16;
 
@@ -64,33 +74,19 @@ export default function ResourceItemsList({
   const [virtualizationProps, setVirtualizationProps] = useState(
     getVirtualizationProps(items.length, itemHeight, itemBuffer, null),
   );
-  const [resizeListener] = useResizeAware(() =>
-    getVirtualizationProps(items.length, itemHeight, itemBuffer, containerRef.current),
-  );
 
-  const onContainerScroll = () => {
-    if (containerRef.current) {
-      setVirtualizationProps(
-        getVirtualizationProps(items.length, itemHeight, itemBuffer, containerRef.current),
-      );
-    }
+  const recalculateVirtualizationProps = () => {
+    setVirtualizationProps(
+      getVirtualizationProps(items.length, itemHeight, itemBuffer, containerRef.current),
+    );
   };
 
-  const getIsVisible = (index: number) =>
-    index >= virtualizationProps.firstRenderedElement &&
-    index <= virtualizationProps.lastRenderedElement;
-
   useEffect(() => {
-    if (containerRef.current) {
-      setVirtualizationProps(
-        getVirtualizationProps(items.length, itemHeight, itemBuffer, containerRef.current),
-      );
-    }
+    recalculateVirtualizationProps();
   }, [containerRef.current, items.length]);
 
   return (
-    <div className={className} ref={containerRef} onScroll={onContainerScroll}>
-      {resizeListener}
+    <div className={className} ref={containerRef} onScroll={recalculateVirtualizationProps}>
       <div style={{ height: virtualizationProps.beforeFillerHeight }} />
       <Container
         {...otherProps}
@@ -108,7 +104,7 @@ export default function ResourceItemsList({
       >
         {items.map((item, i) => {
           const disabled = isDisabled && isDisabled(item);
-          const isVisible = getIsVisible(i);
+          const isVisible = getIsVisible(i, virtualizationProps);
 
           return isVisible ? (
             <TaskItem
