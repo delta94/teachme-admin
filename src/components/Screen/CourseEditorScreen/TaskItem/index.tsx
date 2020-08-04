@@ -51,7 +51,7 @@ export default function TaskItem({
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />
         <span className={classes['title']}>{title}</span>
         {deletable && (
-          <WMButton className={classes['delete-button']} onClick={deleteTask}>
+          <WMButton className={classes['delete-button']} onMouseDown={deleteTask}>
             <Icon type={IconType.Remove} />
           </WMButton>
         )}

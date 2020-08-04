@@ -26,7 +26,7 @@ export default function CourseItemsList({
   isDisabled,
   ...otherProps
 }: ICourseItemsList): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
+  const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const handleItemClick = (item: ContentItem) => {
     dispatch({
@@ -52,9 +52,9 @@ export default function CourseItemsList({
                 key={i}
                 index={i}
                 item={item}
-                onClick={() => handleItemClick && handleItemClick(item)}
-                {...taskItemProps}
+                onClick={() => handleItemClick(item)}
                 disabled={disabled}
+                {...taskItemProps}
               />
             );
           })}
