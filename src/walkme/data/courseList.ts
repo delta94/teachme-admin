@@ -5,6 +5,8 @@ import { CourseListItem, getCourseListData } from '../analytics';
 import { TypeName, WalkMeDataCourse } from '@walkme/types';
 import { join } from '../utils';
 import { notEmpty } from '../utils';
+import { PublishStatus } from '../models';
+import { getPublishStatus } from './courseMetadata';
 export interface UICourse {
   id: number;
   title: string;
@@ -15,14 +17,6 @@ export interface UICourse {
   avg_quiz_score: number | null;
   avg_quiz_attempts: number | null;
   quiz_passed: boolean;
-}
-
-export enum PublishStatus {
-  Published,
-  Draft,
-  Archived,
-  Modified,
-  Deleted,
 }
 
 export async function getCourseList(
@@ -52,16 +46,11 @@ async function mapCourse(
   wmCourse: wm.WalkMeDataCourse & CourseListItem,
   environmentId: number,
 ): Promise<UICourse> {
-  const publishData = wmCourse.PublishDataByEnvs[environmentId];
-  if (!publishData)
-    throw new Error(
-      `Could not find publish data for item [${wmCourse.Name}] environment id [${environmentId}]`,
-    );
-      //todo: take care of no quiz
+  //todo: take care of no quiz
   return {
     id: wmCourse.Id,
     title: wmCourse.Name,
-    publishStatus: getPublishStatus(publishData),
+    publishStatus: getPublishStatus(wmCourse, environmentId),
     segments: await getCourseSegments(wmCourse.Id, environmentId),
     avg_quiz_attempts: wmCourse.avg_quiz_attempts,
     avg_quiz_score: wmCourse.avg_quiz_score,
@@ -69,19 +58,4 @@ async function mapCourse(
     users_started: wmCourse.users_started,
     quiz_passed: wmCourse.avg_quiz_score >= wmCourse.Quiz.Passmark,
   };
-}
-
-function getPublishStatus(status: wm.PublishData): PublishStatus {
-  switch (status.PublishStatus) {
-    case wm.PublishStatus.Archived:
-      return PublishStatus.Archived;
-    case wm.PublishStatus.Deleted:
-      return PublishStatus.Deleted;
-    case wm.PublishStatus.Draft:
-      return PublishStatus.Draft;
-    case wm.PublishStatus.Published:
-      return status.IsModified ? PublishStatus.Modified : PublishStatus.Published;
-    case wm.PublishStatus.ReadyToDelete:
-      return PublishStatus.Deleted;
-  }
 }

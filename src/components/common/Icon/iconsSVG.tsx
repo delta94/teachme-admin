@@ -27,8 +27,10 @@ import { ReactComponent as QuizFailScreenIcon } from '../../../images/icons/quiz
 import { ReactComponent as QuizSuccessScreenIcon } from '../../../images/icons/quiz-success-screen.svg';
 import { ReactComponent as QuizQuestionScreenIcon } from '../../../images/icons/quiz-question-screen.svg';
 import { ReactComponent as RemoveIcon } from '../../../images/icons/remove.svg';
+import { ReactComponent as SettingsIcon } from '../../../images/icons/settings.svg';
 import { ReactComponent as VIcon } from '../../../images/icons/v.svg';
 import { ReactComponent as XIcon } from '../../../images/icons/x.svg';
+import { ReactComponent as ValidationErrorIcon } from '../../../images/icons/validation-error.svg';
 
 import { IconType } from './icon.interface';
 
@@ -49,7 +51,6 @@ export const IconSVG = {
   [IconType.ArticleSmall]: ArticleSmallIcon,
   [IconType.Video]: VideoIcon,
   [IconType.VideoSmall]: VideoSmallIcon,
-  [IconType.Content]: VideoIcon, // TODO: should remove after fixing course item type
   [IconType.Lesson]: LessonIcon,
   [IconType.LessonSmall]: LessonSmallIcon,
   [IconType.Refresh]: RefreshIcon,
@@ -63,6 +64,8 @@ export const IconSVG = {
   [IconType.QuizSuccessScreen]: QuizSuccessScreenIcon,
   [IconType.QuizQuestionScreen]: QuizQuestionScreenIcon,
   [IconType.Remove]: RemoveIcon,
+  [IconType.Settings]: SettingsIcon,
   [IconType.V]: VIcon,
   [IconType.X]: XIcon,
+  [IconType.ValidationError]: ValidationErrorIcon,
 };
