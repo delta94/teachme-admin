@@ -61,13 +61,11 @@ export default function CourseOutlineList<T>({
 
   const onDeleteTaskItem = (item: any) => {
     const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
-
     course?.items.removeItem(item);
-    dispatch({
-      type: ActionType.UpdateCourseOutline,
-      updateHasChange: true,
-      closeDetailsPanel: shouldResetActiveDetailsPanel,
-    });
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+
+    // on delete activeDetailsItem should close the details pane
+    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
 
   return (
