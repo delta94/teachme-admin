@@ -14,7 +14,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
   const [{ course, hasChanges }, dispatch] = useCourseEditorContext();
   const history = useHistory();
   const { courseId } = useParams();
-  const isValid = course?.isValid();
+  const isValid = course ? course?.isValid() : true;
 
   const onSave = () => {
     course

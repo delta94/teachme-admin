@@ -83,6 +83,9 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           question.answers.removeItem(answerToDelete);
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
+        errorMessage={
+          !question.isSelectionValid() ? 'You must select at least 1 correct answer' : undefined
+        }
       />
       <AddButton
         className={classes['add-answer']}
