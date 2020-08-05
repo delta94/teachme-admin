@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { useCourseContext, ActionType } from '../../../providers/CourseContext';
+import { useCourseContext } from '../../../providers/CourseContext';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import Icon from '../../common/Icon';
@@ -8,7 +8,6 @@ import { IconType } from '../../common/Icon/icon.interface';
 import CourseQuizTabCharts from '../../common/CourseQuizTabCharts';
 import WMCard from '../../common/WMCard';
 import CourseOutlineTable from './CourseOutlineTable';
-import { ICourseOutlineItems } from './courseScreen.interface';
 
 enum TabId {
   Outline = 'outline',
@@ -16,20 +15,7 @@ enum TabId {
 }
 
 export default function CourseTabs(): ReactElement {
-  const [
-    { quiz, courseOutline, filteredCourseOutline, courseOutlineSearchValue },
-    dispatch,
-  ] = useCourseContext();
-
-  const onSearchCourseOutline = (
-    courseOutlineSearchValue: string,
-    filteredCourseOutline: ICourseOutlineItems,
-  ) =>
-    dispatch({
-      type: ActionType.SetCourseOutlineSearchValue,
-      courseOutlineSearchValue,
-      filteredCourseOutline,
-    });
+  const [{ quiz, courseOutline }] = useCourseContext();
 
   const courseTabs = [
     {
@@ -37,14 +23,7 @@ export default function CourseTabs(): ReactElement {
       title: 'Outline',
       itemsLength: courseOutline.length,
       icon: <Icon type={IconType.SidebarCourses} />,
-      content: (
-        <CourseOutlineTable
-          courseOutline={courseOutline}
-          onSearchCourseOutline={onSearchCourseOutline}
-          filteredCourseOutline={filteredCourseOutline}
-          courseOutlineSearchValue={courseOutlineSearchValue}
-        />
-      ),
+      content: <CourseOutlineTable />,
     },
     {
       id: TabId.Quiz,

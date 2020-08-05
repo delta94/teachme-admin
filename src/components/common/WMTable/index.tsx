@@ -11,10 +11,13 @@ import {
 } from 'react-sortable-hoc';
 import produce from 'immer';
 
+import WMTableExpanded from './WMTableExpanded';
 import SortableTableBody from './SortableTableBody';
 import SortableRow from './SortableRow';
 
 import classes from './style.module.scss';
+
+export { WMTableExpanded };
 
 interface IWMTable extends TableProps<any> {
   children?: ReactNode;
