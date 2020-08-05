@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { ColumnsType } from 'antd/lib/table';
 import { SortableHandle } from 'react-sortable-hoc';
 
-import { PublishStatus, UICourse } from '../../../walkme/data';
+import { UICourse } from '../../../walkme/data';
 
 import { WMTagColor } from '../../common/WMTag';
 import {
@@ -15,6 +15,7 @@ import {
   TagCell,
   TextArrayCell,
 } from '../../common/tableCells';
+import { PublishStatus } from '../../../walkme/models';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
 
