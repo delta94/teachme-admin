@@ -22,10 +22,12 @@ export default function CourseOutlineLessonItem({
   item,
   index,
   className,
+  innerClassName,
 }: {
   item: INewLesson;
   index: number;
-  className: string;
+  className?: string;
+  innerClassName?: string;
 }): ReactElement {
   const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
@@ -64,7 +66,7 @@ export default function CourseOutlineLessonItem({
   return (
     <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
       <WMCollapse
-        className={classes['lesson']}
+        className={cc([classes['lesson'], innerClassName])}
         contentClassName={cc({ [classes['is-empty']]: isEmpty })}
         headerClassName={classes['lesson-header']}
         header={<LessonHeader lesson={item} type={IconType.Lesson} />}
