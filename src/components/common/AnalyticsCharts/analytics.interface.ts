@@ -9,23 +9,27 @@ export interface IAnalyticsCharts {
   timeCompletionTitle?: string;
   quizCompletionTitle?: string;
   overview?: AllCoursesOverviewResponse | CourseOverviewData;
+  isLoading?: boolean;
 }
 
 export interface ICoursesTimeCompletionChart {
   className?: string;
   title: string;
   overview?: AllCoursesOverviewResponse | CourseOverviewData;
+  isLoading?: boolean;
 }
 
 export interface IQuizCompletionRateChart {
   className?: string;
   title: string;
   overview?: AllCoursesOverviewResponse | CourseOverviewData;
+  isLoading?: boolean;
 }
 
 export interface IQuizScoreData {
   overview: CourseOverviewData;
   isEmpty?: boolean;
+  isLoading?: boolean;
 }
 
 export interface ICourseSummaryLegendData extends Omit<CompletionGraphStats, 'date'> {

@@ -15,6 +15,7 @@ export interface IWMLegend {
   dotStatusColor: string;
   children?: ReactNode;
   hasData?: boolean;
+  isLoading?: boolean;
 }
 
 export default function WMLegend({
@@ -23,32 +24,30 @@ export default function WMLegend({
   dotStatusColor,
   children,
   hasData,
+  isLoading = false,
 }: IWMLegend): ReactElement {
-  const appInit = useAppSkeleton();
-
   return (
-    <>
-      {appInit ? (
-        <>
-          {hasData ? (
-            <div className={cc([classes['legend'], className])}>
-              <Header className={classes['legend-header']}>
-                <StatusDot
-                  className={classes['legend-dot-status']}
-                  type={DotType.Custom}
-                  dotColor={dotStatusColor}
-                />
-                <span className={classes['legend-title']}>{title}</span>
-              </Header>
-              {children}
-            </div>
-          ) : (
-            <EmptyLegend title={title} />
-          )}
-        </>
+    <WMSkeleton
+      loading={isLoading}
+      active
+      paragraph={{ rows: 2 }}
+      className={classes['legend-skeleton']}
+    >
+      {hasData ? (
+        <div className={cc([classes['legend'], className])}>
+          <Header className={classes['legend-header']}>
+            <StatusDot
+              className={classes['legend-dot-status']}
+              type={DotType.Custom}
+              dotColor={dotStatusColor}
+            />
+            <span className={classes['legend-title']}>{title}</span>
+          </Header>
+          {children}
+        </div>
       ) : (
-        <WMSkeleton active paragraph={{ rows: 2 }} className={classes['legend-skeleton']} />
+        <EmptyLegend title={title} />
       )}
-    </>
+    </WMSkeleton>
   );
 }

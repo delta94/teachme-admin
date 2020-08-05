@@ -1,22 +1,23 @@
 import React, { ReactElement } from 'react';
 
-import { courseMockData } from '../../../../constants/mocks/course-screen';
-import { useAppSkeleton } from '../../../../hooks/skeleton';
-import { ProgressType, ProgressStatus } from '../../charts/WMProgress/wmProgress.interface';
 import WMCard from '../../WMCard';
-import { IQuizScoreData } from '../analytics.interface';
-import { WMProgress } from '../../charts';
 import WMSkeleton from '../../WMSkeleton';
+import { WMProgress, ProgressType, ProgressStatus } from '../../charts';
+
+import { IQuizScoreData } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
-export default function QuizScoreChart({ overview, isEmpty }: IQuizScoreData): ReactElement {
-  const appInit = useAppSkeleton();
+export default function QuizScoreChart({
+  overview,
+  isEmpty,
+  isLoading = false,
+}: IQuizScoreData): ReactElement {
   const { avg_quiz_score: average = 0, passmark = 0 } = overview;
 
   return (
     <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
-      {appInit ? (
+      <WMSkeleton loading={isLoading} active paragraph={{ rows: 1 }}>
         <div className={classes['course-average-content']}>
           <WMProgress
             className={classes['course-average-chart']}
@@ -33,9 +34,7 @@ export default function QuizScoreChart({ overview, isEmpty }: IQuizScoreData): R
             </span>
           }
         </div>
-      ) : (
-        <WMSkeleton active paragraph={{ rows: 1 }} />
-      )}
+      </WMSkeleton>
     </WMCard>
   );
 }
