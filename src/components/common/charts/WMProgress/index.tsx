@@ -2,9 +2,12 @@ import React, { ReactElement } from 'react';
 import { Progress } from 'antd';
 import cc from 'classcat';
 
-import { IWMProgress, ProgressType } from './wmProgress.interface';
+import { IWMProgress, ProgressType, ProgressStatus } from './wmProgress.interface';
 
 import classes from './style.module.scss';
+
+export type { IWMProgress };
+export { ProgressType, ProgressStatus };
 
 export default function WMProgress({
   className,

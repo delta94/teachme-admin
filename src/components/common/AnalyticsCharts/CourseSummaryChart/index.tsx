@@ -21,9 +21,11 @@ const LegendContent = ({ number, description }: { number: number; description?: 
 export default function CourseSummaryChart({
   title,
   overview,
+  isLoading = false,
 }: {
   title: string;
   overview?: any;
+  isLoading?: boolean;
 }): ReactElement {
   const [legendData, setLegendData] = useState<ICourseSummaryLegendData>();
   const [markCompletion, setMarkCompletion] = useState<CompletionGraphStats[]>([]);
@@ -54,7 +56,12 @@ export default function CourseSummaryChart({
     <WMCard title={title}>
       <div className={classes['course-summary']}>
         <div className={classes['chart-legend']}>
-          <WMLegend title="Users Started" dotStatusColor="#F2B529" hasData={Boolean(legendData)}>
+          <WMLegend
+            title="Users Started"
+            dotStatusColor="#F2B529"
+            hasData={Boolean(legendData)}
+            isLoading={isLoading}
+          >
             {legendData && (
               <LegendContent
                 number={legendData.start_users}
@@ -62,7 +69,12 @@ export default function CourseSummaryChart({
               />
             )}
           </WMLegend>
-          <WMLegend title="Users Completed" dotStatusColor="#8812FF" hasData={Boolean(legendData)}>
+          <WMLegend
+            title="Users Completed"
+            dotStatusColor="#8812FF"
+            hasData={Boolean(legendData)}
+            isLoading={isLoading}
+          >
             {legendData && (
               <LegendContent
                 number={legendData.completed_users}
@@ -90,6 +102,7 @@ export default function CourseSummaryChart({
           lineKeyPrefix="course-summary"
           hasWMTooltip
           hasData={Boolean(markCompletion.length)}
+          isLoading={isLoading}
         />
       </div>
     </WMCard>

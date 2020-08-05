@@ -54,15 +54,6 @@
   }
 }
 
-.course-screen-skeleton {
-  display: flex;
-  flex-direction: row;
-
-  > * {
-    margin-right: 20px;
-  }
-}
-
 :global(.ant-skeleton-element .ant-skeleton-button.ant-skeleton-button-round) {
   width: 150px;
 }
