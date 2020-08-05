@@ -69,11 +69,6 @@ export const reducer = produce(
         draft.refreshCourseOutline = !draft.refreshCourseOutline;
         draft.hasChanges =
           action.updateHasChange !== undefined ? action.updateHasChange : draft.hasChanges;
-        // on delete activeDetailsItem should close the details panel and reset activeDetailsItem to null
-        if (action.closeDetailsPanel) {
-          draft.isDetailsPanelOpen = false;
-          draft.activeDetailsItem = null;
-        }
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =

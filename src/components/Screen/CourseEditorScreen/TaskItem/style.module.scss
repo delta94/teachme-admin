@@ -32,7 +32,6 @@
     .delete-button {
       display: inline-block;
       opacity: 0;
-      visibility: hidden;
     }
   }
 
@@ -49,7 +48,6 @@
 
     .delete-button {
       opacity: 1;
-      visibility: visible;
 
       :global(.wm-icon) {
         pointer-events: none;

@@ -26,7 +26,6 @@ export interface IAction {
   updateHasChange?: boolean;
   activeDetailsItem?: { type: DetailsPanelSettingsType; id: number; item: any } | null;
   openDetailsPanel?: boolean;
-  closeDetailsPanel?: boolean;
 }
 
 export interface IDispatch {

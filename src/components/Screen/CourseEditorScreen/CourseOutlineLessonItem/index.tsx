@@ -52,11 +52,11 @@ export default function CourseOutlineLessonItem({
   const onDeleteTaskItem = (item: any) => {
     const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
     (course?.items.getItem(index) as CourseLesson).childNodes.removeItem(item);
-    dispatch({
-      type: ActionType.UpdateCourseOutline,
-      updateHasChange: true,
-      closeDetailsPanel: shouldResetActiveDetailsPanel,
-    });
+
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+
+    // on delete activeDetailsItem should close the details panel
+    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
 
   const isEmpty = !item.childNodes.toArray().length;

@@ -97,6 +97,14 @@ export class QuizQuestion implements BuildQuizQuestion {
   }
 
   isValid(): boolean {
-    return !!this.title && this.answers.toArray().every((a) => a.isValid());
+    return !!this.title && this.isAnswersValid() && this.isSelectionValid();
+  }
+
+  private isSelectionValid() {
+    return this.answers.toArray().some((a) => a.isCorrect);
+  }
+
+  private isAnswersValid() {
+    return this.answers.toArray().every((a) => a.isValid());
   }
 }
