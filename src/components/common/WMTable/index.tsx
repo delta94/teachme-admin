@@ -11,10 +11,6 @@ import {
 } from 'react-sortable-hoc';
 import produce from 'immer';
 
-import { useAppSkeleton } from '../../../hooks/skeleton';
-
-import WMSkeleton from '../WMSkeleton';
-
 import SortableTableBody from './SortableTableBody';
 import SortableRow from './SortableRow';
 
@@ -104,24 +100,18 @@ export default function WMTable({
   const isSortable = typeof onSortEnd === 'function';
   const componentsProps = isSortable ? sortableComponentProps : {};
 
-  const appInit = useAppSkeleton();
-
   return (
     <div className={classes['wm-table']}>
       {children && <div className={classes['toolbar']}>{children}</div>}
-      {appInit ? (
-        <Table
-          rowSelection={rowSelection}
-          pagination={false}
-          dataSource={data}
-          columns={columns}
-          rowKey={(record: any, index?: number) => index as Key}
-          {...componentsProps}
-          {...otherProps}
-        />
-      ) : (
-        <WMSkeleton active paragraph={{ rows: 10 }} />
-      )}
+      <Table
+        rowSelection={rowSelection}
+        pagination={false}
+        dataSource={data}
+        columns={columns}
+        rowKey={(record: any, index?: number) => index as Key}
+        {...componentsProps}
+        {...otherProps}
+      />
     </div>
   );
 }
