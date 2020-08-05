@@ -57,7 +57,14 @@ export class Quiz implements BuildQuiz {
 
   toDataModel = () => toDataModel(this, this._quiz);
 
-  addQuestion() {}
+  isValid(): boolean {
+    return (
+      this.welcomeScreen.isValid() &&
+      this.failScreen.isValid() &&
+      this.successScreen.isValid() &&
+      this.questions.toArray().every((q) => q.isValid())
+    );
+  }
 }
 
 export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDataQuiz {

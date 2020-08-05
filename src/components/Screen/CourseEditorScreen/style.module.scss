@@ -154,8 +154,23 @@
 
 .header-confirmation-buttons {
   display: flex;
+  width: 40%;
+  justify-content: flex-end;
+
   .cancel-button {
     margin-right: 20px;
+  }
+
+  .error-message {
+    margin-right: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--red);
+
+    :global(.wm-icon) {
+      margin-right: 10px;
+    }
   }
 }
 

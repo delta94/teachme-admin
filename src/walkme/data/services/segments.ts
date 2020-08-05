@@ -1,5 +1,6 @@
 import { WalkMeDataTag, WalkMeLink, TypeName, TypeId } from '@walkme/types';
 import { getData } from './wmData';
+import { getTypeId } from './item';
 
 export async function getCourseSegments(
   course_id: number,
@@ -19,4 +20,4 @@ function isInSegment(segment: WalkMeDataTag, type: TypeName, id: number): boolea
 
 const getTypeFilter = (type: TypeName) =>
   //@ts-ignore
-  (item: WalkMeNewLink) => item.DeployableType == parseInt(TypeId[type]);
+  (item: WalkMeNewLink) => item.DeployableType == parseInt(getTypeId(type));

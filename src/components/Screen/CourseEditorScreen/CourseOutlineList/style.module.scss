@@ -1,17 +1,22 @@
 .course-outline-list {
   position: relative;
+  height: 100%;
 
   :global(.smooth-dnd-container) {
     height: 100%;
+  }
+
+  &.is-empty {
+    :global(.smooth-dnd-drop-preview-constant-class) {
+      height: 100% !important;
+    }
   }
 }
 
 .drop-preview {
   border: 1px dashed var(--primary);
   border-radius: 4px;
-  margin: 8px;
-  min-height: 16px;
-  background-color: var(--hover-color);
+  background-color: var(--hover-color-translucent);
 }
 
 .card-ghost {
@@ -25,14 +30,22 @@
   border: var(--wm-border);
   background-color: var(--white);
   box-shadow: var(--wm-box-shadow);
-  margin-bottom: 14px;
+  margin: 7px 0;
   border-radius: 4px;
 }
 
 .outline-lesson {
-  margin-bottom: 14px;
+  margin: 7px 0;
 }
 
 .task-with-settings {
   cursor: pointer;
+}
+
+.remove-item-border {
+  border-bottom: none;
+
+  &:first-of-type {
+    border-top: none;
+  }
 }

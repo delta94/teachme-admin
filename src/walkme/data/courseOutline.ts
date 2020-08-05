@@ -82,7 +82,7 @@ function calculateDropOff(items: Array<CourseOutlineUIModelItem>): Array<CourseO
     if (index == 0) return item;
     const prev = array[index - 1].users_completed ?? 0;
     const curr = array[index].users_completed ?? 0;
-    item.drop_off = (100 * curr) / prev;
+    item.drop_off = prev && (100 * curr) / prev;
     return item;
   });
 }

@@ -29,6 +29,8 @@ export enum IconType {
   QuizSuccessScreen = 'quiz-success-screen',
   QuizQuestionScreen = 'quiz-question-screen',
   Remove = 'remove',
+  Settings = 'settings',
   X = 'x',
   V = 'v',
+  ValidationError = 'validation-error',
 }

@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { QuizOutlineUI } from '../../walkme/models/course/quiz';
 import { Course } from '../../walkme/data/courseBuild';
 import { CourseOverviewData } from '../../walkme/models';
+import { CourseMetadata } from '../../walkme/data/courseMetadata';
 import { IDateRange } from '../../utils';
 
 import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
@@ -13,8 +14,7 @@ export { ActionType };
 export interface IAction {
   type: ActionType;
   overview?: CourseOverviewData;
-  course?: Course;
-  courseSegments?: string[];
+  courseMetadata?: CourseMetadata;
   courseOutline?: ICourseOutlineItems;
   filteredCourseOutline?: ICourseOutlineItems;
   courseOutlineSearchValue?: string;
@@ -31,8 +31,7 @@ export interface IState {
   isFetchingCourseDataError: boolean;
   dateRange: IDateRange;
   overview: CourseOverviewData;
-  course: Course;
-  courseSegments: string[];
+  courseMetadata?: CourseMetadata;
   courseOutline: ICourseOutlineItems;
   filteredCourseOutline: ICourseOutlineItems;
   courseOutlineSearchValue: string;

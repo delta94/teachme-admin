@@ -40,6 +40,7 @@ export default function CoursesScreen(): ReactElement {
   } = appState;
   const [state, dispatch] = useCoursesContext();
   const {
+    isFetchingCoursesData,
     dateRange: { from, to },
     overview,
     filteredCourses,
@@ -86,6 +87,7 @@ export default function CoursesScreen(): ReactElement {
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"
         overview={overview as AllCoursesOverviewResponse}
+        isLoading={isUpdating || isFetchingCoursesData}
       />
       <WMCard
         title="Courses"
@@ -100,8 +102,9 @@ export default function CoursesScreen(): ReactElement {
             data={filteredCourses}
             columns={columns}
             onSortEnd={onSortEnd}
+            loading={isUpdating || isFetchingCoursesData}
           >
-            <ShownCoursesIndicator />
+            <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
             {/* <ControlsWrapper>
               <DropdownFilter label="Status" options={statuses} />
               <DropdownFilter label="Segments" options={segments} />

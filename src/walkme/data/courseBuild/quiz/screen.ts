@@ -53,6 +53,8 @@ export class BuildQuizScreen implements QuizScreen {
   }
 
   toDataModel = () => toDataModel(this, this._screen);
+
+  isValid = () => !!this.title && !!this.buttons[0].text;
 }
 
 function getQuizWelcomeScreen(): WalkMeDataQuizScreen {
