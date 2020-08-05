@@ -59,4 +59,8 @@ export class BuildQuizAnswer implements QuizAnswer {
       Text: this.text,
     };
   }
+
+  isValid(): boolean {
+    return !!this.text;
+  }
 }

@@ -11,7 +11,7 @@ import WMCard from '../../common/WMCard';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
 
-import CourseItemsList from './CourseItemsList';
+import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
 import classes from './style.module.scss';
 
@@ -55,9 +55,8 @@ export default function ResourcesList(): ReactElement {
         />
       </div>
       {courseItems.length ? (
-        <CourseItemsList
+        <ResourceItemsList
           items={filteredCourseItems}
-          behaviour="copy"
           className={classes['resource-item-list']}
           isDisabled={(item: ContentItem) =>
             state.course?.includes(item.type as TypeName, item.id as number)
