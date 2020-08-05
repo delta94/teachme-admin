@@ -4,7 +4,7 @@ import { getCourseOverview, getCourse, exportCourseOutline, getQuizData } from '
 import { wmMessage, MessageType } from '../../utils';
 import { parseCourseOutline } from '../../components/Screen/CourseScreen';
 import { getCourseOutline } from '../../walkme/data/courseOutline';
-import { getCourseSegments } from '../../walkme/data/services/segments';
+import { getCourseMetadata } from '../../walkme/data/courseMetadata';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
 
@@ -44,13 +44,7 @@ export const fetchCourseData = async (
   const id = +courseId;
 
   try {
-    const course = await getCourse(id, envId); // TODO: should remove after getting all properties in courseOutline
-    const courseSegments = await getCourseSegments(id, envId); // TODO: should remove after getting all properties in courseOutline
-    /**
-     * TODO:
-     * ask Eli to add the following properties to courseOutline:
-     * course-title, course-id, segments, publish-status
-     * */
+    const courseMetadata = await getCourseMetadata(id, envId);
     const courseOutline = await getCourseOutline(id, envId, from, to);
     const convertedCourseOutline = parseCourseOutline(courseOutline);
     const quiz = await getQuizData(id, envId, from, to);
@@ -58,12 +52,11 @@ export const fetchCourseData = async (
 
     dispatch({
       type: ActionType.FetchCourseDataSuccess,
-      course,
+      courseMetadata,
       overview,
       courseOutline: convertedCourseOutline,
       filteredCourseOutline: convertedCourseOutline,
       quiz,
-      courseSegments,
     });
   } catch (error) {
     console.error(error);

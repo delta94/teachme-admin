@@ -3,9 +3,9 @@ import React, { ReactElement } from 'react';
 import { ColumnsType } from 'antd/lib/table';
 import { SortableHandle } from 'react-sortable-hoc';
 
-import { UICourse } from '../../../walkme/data';
+import { UICourse, PublishStatus } from '../../../walkme/data';
+import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils/publish-status';
 
-import { WMTagColor } from '../../common/WMTag';
 import {
   DashCell,
   DragHandleCell,
@@ -15,24 +15,8 @@ import {
   TagCell,
   TextArrayCell,
 } from '../../common/tableCells';
-import { PublishStatus } from '../../../walkme/models';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
-
-const publishStatusColors = {
-  [PublishStatus['Published']]: WMTagColor.Green,
-  [PublishStatus['Modified']]: WMTagColor.Green,
-  [PublishStatus['Draft']]: WMTagColor.Orange,
-  [PublishStatus['Archived']]: WMTagColor.Gray,
-  undefined: WMTagColor.Gray,
-};
-
-const publishStatusLabels = {
-  [PublishStatus['Published']]: 'published',
-  [PublishStatus['Modified']]: 'modified',
-  [PublishStatus['Draft']]: 'draft',
-  [PublishStatus['Archived']]: 'archived',
-};
 
 export const columns: ColumnsType<any> = [
   {
@@ -51,16 +35,9 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Production Status',
     dataIndex: 'publishStatus',
-    render: (value: PublishStatus): ReactElement => {
-      const color: string = publishStatusColors[value as keyof typeof publishStatusColors];
-
-      return (
-        <TagCell
-          value={publishStatusLabels[value as keyof typeof publishStatusLabels]}
-          color={color}
-        />
-      );
-    },
+    render: (value: PublishStatus): ReactElement => (
+      <TagCell value={getPublishStatusLabel(value)} color={getPublishStatusColor(value)} />
+    ),
   },
   {
     title: 'Segment',
