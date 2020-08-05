@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import usePrevious from '@react-hook/previous';
 
 import { IDateRange } from '../../../utils';
 import { useAppContext } from '../../../providers/AppContext';
@@ -36,18 +37,24 @@ export default function CourseScreen(): ReactElement {
     course,
     courseSegments,
   } = state;
-
   const { courseId } = useParams();
 
   useEffect(() => {
     if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
-  }, [dispatch, isUpdating, courseId, envId, system, from, to]);
+  }, [dispatch, isUpdating, courseId, envId, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);
 
   const onDateRangeChange = (dateRange?: IDateRange) =>
     dispatch({ type: ActionType.SetDateRange, dateRange });
+
+  const prevSystem = usePrevious(system);
+  const { push } = useHistory();
+
+  useEffect(() => {
+    if (prevSystem && prevSystem.userId !== system.userId) push('/courses');
+  }, [prevSystem, system, push]);
 
   return (
     <>
