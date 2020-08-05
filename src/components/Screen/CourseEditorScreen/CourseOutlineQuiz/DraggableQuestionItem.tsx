@@ -41,6 +41,7 @@ export default function DraggableQuestionItem({
           onClick={onClick}
           onDelete={() => onDelete && onDelete(index)}
           deletable={itemsAreDeletable}
+          isValid={item.isValid()}
         />
       </div>
     </Draggable>

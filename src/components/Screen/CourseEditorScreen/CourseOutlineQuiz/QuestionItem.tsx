@@ -15,6 +15,7 @@ export interface IQuestionItem {
   deletable?: boolean;
   onClick: () => void;
   onDelete?: () => void;
+  isValid: boolean;
 }
 
 export default function QuestionItem({
@@ -24,10 +25,12 @@ export default function QuestionItem({
   deletable,
   onClick,
   onDelete,
+  isValid = true,
 }: IQuestionItem): ReactElement {
   return (
     <div onClick={onClick} className={cc([classes['question-item'], className])} key={index}>
       <Icon type={`quiz-${type}`} className={classes['icon']} />
+      {!isValid && <Icon className={classes['error-icon']} type={IconType.ValidationError} />}
       <span className={classes['title']}>{title}</span>
       {deletable && (
         <WMButton

@@ -32,4 +32,5 @@ export enum IconType {
   Settings = 'settings',
   X = 'x',
   V = 'v',
+  ValidationError = 'validation-error',
 }
