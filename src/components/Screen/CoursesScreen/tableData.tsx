@@ -4,7 +4,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { SortableHandle } from 'react-sortable-hoc';
 
 import { UICourse, PublishStatus } from '../../../walkme/data';
-import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils/publish-status';
+import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
 
 import {
   DashCell,

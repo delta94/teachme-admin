@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { CourseMetadata } from '../../../walkme/data/courseMetadata';
 import { COURSES_ROUTE, BASE_COURSE_EDITOR_ROUTE } from '../../../constants/routes';
-import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils/publish-status';
+import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
 
 import { WMSkeletonInput, WMSkeletonButton, WMSkeletonAvatar } from '../../common/WMSkeleton';
 import ScreenHeader, { IScreenHeader } from '../../common/ScreenHeader';

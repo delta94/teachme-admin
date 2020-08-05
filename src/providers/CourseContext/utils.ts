@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseOverview, getCourse, exportCourseOutline, getQuizData } from '../../walkme';
+import { getCourseOverview, exportCourseOutline, getQuizData } from '../../walkme';
 import { wmMessage, MessageType } from '../../utils';
 import { parseCourseOutline } from '../../components/Screen/CourseScreen';
 import { getCourseOutline } from '../../walkme/data/courseOutline';
