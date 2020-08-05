@@ -78,7 +78,7 @@
 .impersonate {
   position: fixed;
   top: 0;
-  right: 50%;
+  right: 45%;
   z-index: 3;
   width: 91px;
   height: 23px;
@@ -87,10 +87,9 @@
   font-family: var(--primary);
   background-color: var(--impersonate-background);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.6px;
   line-height: 11px;
-  text-align: center;
   border-radius: 4px;
   text-transform: uppercase;
 }

@@ -20,6 +20,7 @@ export default function ImpersonateDialog({
 }: IImpersonateDialog): ReactElement {
   const [localValue, setLocalValue] = useState(value);
   const [options, setOptions] = useState<{ value: string }[]>([]);
+  const [invalid, setInvalid] = useState(false);
 
   const fetchEmails = async (value: string) => {
     const { emails } = await getEmails(value, true);
@@ -30,13 +31,24 @@ export default function ImpersonateDialog({
   const debouncedFetchEmails = useDebounceCallback(fetchEmails, 400);
 
   const onEmailChange = (value: string) => {
-    setLocalValue(value);
     debouncedFetchEmails(value);
+    setLocalValue(value);
+    const valid = options.some((item) => item.value === value);
+    if (valid) {
+      setInvalid(false);
+    } else {
+      setInvalid(true);
+    }
   };
 
-  const onConfirmValue = (userValue: string | undefined) => {
+  const onConfirmHandle = (userValue: string | undefined) => {
     onConfirm(userValue);
     userValue && impersonate(userValue, true);
+    setLocalValue('');
+  };
+
+  const onCancelHandle = () => {
+    onCancel();
     setLocalValue('');
   };
 
@@ -44,8 +56,9 @@ export default function ImpersonateDialog({
     <WMConfirmationDialog
       open={open}
       title="Impersonate user"
-      onCancel={onCancel}
-      onConfirm={() => onConfirmValue(localValue)}
+      onCancel={onCancelHandle}
+      onConfirm={() => onConfirmHandle(localValue)}
+      disableConfirmButton={invalid}
     >
       <AutoComplete
         className={classes['impersonate-dialog']}
