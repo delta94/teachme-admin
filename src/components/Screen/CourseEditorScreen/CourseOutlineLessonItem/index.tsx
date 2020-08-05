@@ -29,7 +29,7 @@ export default function CourseOutlineLessonItem({
   className?: string;
   innerClassName?: string;
 }): ReactElement {
-  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -52,8 +52,13 @@ export default function CourseOutlineLessonItem({
   const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson' && !payload.answers;
 
   const onDeleteTaskItem = (item: any) => {
+    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
     (course?.items.getItem(index) as CourseLesson).childNodes.removeItem(item);
+
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+
+    // on delete activeDetailsItem should close the details panel
+    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
 
   const isEmpty = !item.childNodes.toArray().length;
@@ -93,6 +98,7 @@ export default function CourseOutlineLessonItem({
             onDelete: onDeleteTaskItem,
             className: classes['task-with-settings'],
           }}
+          isActive={(item: any) => item.id === activeDetailsItem?.id}
         />
       </WMCollapse>
     </Draggable>

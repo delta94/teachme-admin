@@ -1,6 +1,10 @@
 .task-item {
   border-bottom: var(--wm-border);
 
+  &.active-item {
+    background-color: var(--hover-color);
+  }
+
   &:first-of-type {
     border-top: var(--wm-border);
   }
@@ -26,7 +30,8 @@
     }
 
     .delete-button {
-      display: none;
+      display: inline-block;
+      opacity: 0;
     }
 
     &:hover {
@@ -44,7 +49,11 @@
 
   &:hover {
     .delete-button {
-      display: inline-block;
+      opacity: 1;
+
+      :global(.wm-icon) {
+        pointer-events: none;
+      }
     }
 
     .task-item-drag-handle {

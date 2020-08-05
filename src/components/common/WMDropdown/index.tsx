@@ -10,6 +10,7 @@ export interface IWMDropdownOption {
   value: string | number;
   label?: ReactNode;
   skip?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -45,6 +46,7 @@ export default function WMDropdown({
               { [classes['selected-item']]: selected?.id === option.id },
             ])}
             onClick={option.onClick}
+            disabled={option.disabled}
           >
             {option.label ?? option.value}
           </Menu.Item>
