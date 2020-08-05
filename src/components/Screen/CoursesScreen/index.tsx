@@ -93,9 +93,7 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <ConfigProvider
-          renderEmpty={() => <CoursesEmptyState isLoading={isUpdating || isFetchingCoursesData} />}
-        >
+        <ConfigProvider renderEmpty={CoursesEmptyState}>
           <WMTable
             rowSelection={{
               selectedRowKeys,
@@ -104,6 +102,7 @@ export default function CoursesScreen(): ReactElement {
             data={filteredCourses}
             columns={columns}
             onSortEnd={onSortEnd}
+            loading={isUpdating || isFetchingCoursesData}
           >
             <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
             {/* <ControlsWrapper>
