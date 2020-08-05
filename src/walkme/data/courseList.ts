@@ -5,8 +5,10 @@ import { CourseListItem, getCourseListData } from '../analytics';
 import { TypeName, WalkMeDataCourse } from '@walkme/types';
 import { join } from '../utils';
 import { notEmpty } from '../utils';
-import { PublishStatus } from '../models';
+import { PublishStatus } from '../models/course';
 import { getPublishStatus } from './courseMetadata';
+
+export { PublishStatus };
 export interface UICourse {
   id: number;
   title: string;
