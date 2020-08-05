@@ -33,6 +33,10 @@
       display: inline-block;
       opacity: 0;
     }
+
+    &:hover {
+      background-color: var(--hover-color);
+    }
   }
 
   &[disabled] {
@@ -44,8 +48,6 @@
   }
 
   &:hover {
-    background-color: var(--hover-color);
-
     .delete-button {
       opacity: 1;
 

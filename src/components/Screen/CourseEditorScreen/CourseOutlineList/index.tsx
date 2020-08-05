@@ -69,7 +69,7 @@ export default function CourseOutlineList<T>({
   };
 
   return (
-    <div className={classes['course-outline-list']}>
+    <div className={cc([classes['course-outline-list'], { [classes['is-empty']]: !items.length }])}>
       <Container
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
@@ -87,14 +87,15 @@ export default function CourseOutlineList<T>({
               item={item}
               key={item.id}
               index={i}
-              className={classes['outline-lesson']}
+              innerClassName={classes['outline-lesson']}
             />
           ) : (
             <TaskItem
               key={i}
               index={i}
               item={item}
-              className={cc([classes['outline-task'], classes['task-with-settings']])}
+              className={classes['remove-item-border']}
+              innerClassName={cc([classes['outline-task'], classes['task-with-settings']])}
               onClick={(e: any) => handleItemClick && handleItemClick(item)}
               deletable
               onDelete={onDeleteTaskItem}
