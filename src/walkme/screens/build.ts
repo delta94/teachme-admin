@@ -5,7 +5,8 @@ import * as courses from '../data/courseBuild';
 import walkme from '@walkme/editor-sdk';
 import * as wmData from '../data/services/wmData';
 import consts from '../consts';
-
+import * as segments from '../data/services/segments';
+import { UISegment } from '../models';
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
  * @param environmentId
@@ -52,4 +53,12 @@ export async function getNewCourse(): Promise<Course> {
  */
 export async function getCourse(id: number, environmentId: number): Promise<Course> {
   return courses.getCourse(id, environmentId);
+}
+
+/**
+ * Returns a list of the account segments
+ * @param environmentId the requested environment id
+ */
+export async function getSegments(environmentId: number): Promise<Array<UISegment>> {
+  return segments.getSegments(environmentId);
 }

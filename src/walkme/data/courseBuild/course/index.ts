@@ -18,6 +18,7 @@ import { createLink } from '../../services/collection';
 import * as wmData from '../../services/wmData';
 import { newDataModel } from './dataModel';
 import { ITypeIdQueriable } from '../itemsContainer';
+import { getCourseSegmentsSync, getLinkId } from '../../services/segments';
 
 export type CourseOptions = {
   light: boolean;
@@ -33,6 +34,8 @@ export class Course implements BuildCourse, ITypeIdQueriable {
   }
   public properties!: CourseProperties;
   private _quiz!: Quiz;
+  public segments!: Set<number>;
+
   constructor(private _course?: WalkMeDataNewCourse, options?: CourseOptions) {
     if (!this._course) {
       this._course = newDataModel(0);
@@ -48,6 +51,8 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     this._quiz = new Quiz(course.Quiz);
     this.properties = new CourseProperties(course.Settings);
     this.index = course.OrderIndex;
+    const segments = getCourseSegmentsSync(this.id);
+    this.segments = new Set(segments.map((s) => s.id));
   }
 
   async save(): Promise<void> {
@@ -67,7 +72,8 @@ export class Course implements BuildCourse, ITypeIdQueriable {
       },
     );
     const savedCourse = await walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
-    await wmData.refresh([TypeName.Course, TypeName.Lesson]);
+    await this.saveTags(savedCourse.Id);
+    await wmData.refresh([TypeName.Course, TypeName.Lesson, TypeName.Tag]);
     this.map(savedCourse);
   }
 
@@ -101,5 +107,20 @@ export class Course implements BuildCourse, ITypeIdQueriable {
 
   isValid(): boolean {
     return this._quiz.isValid();
+  }
+
+  private async saveTags(courseId: number) {
+    const originalTags = getCourseSegmentsSync(this.id).map((t) => t.id);
+    const tagsToAdd = Array.from(this.segments).filter((tag) => !originalTags.includes(tag));
+    const tagsToRemove = originalTags.filter((tag) => !this.segments.has(tag));
+    await Promise.all([
+      ...tagsToAdd.map((tag) => walkme.data.tagItem(TypeName.Course, courseId, TypeId.Course, tag)),
+      ...tagsToRemove.map(async (tag) => {
+        const linkId = await getLinkId(TypeId.Course, courseId, tag);
+        return (
+          linkId && walkme.data.removeTag(TypeName.Course, courseId, TypeId.Course, tag, linkId)
+        );
+      }),
+    ]);
   }
 }
