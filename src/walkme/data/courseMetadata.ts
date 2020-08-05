@@ -4,6 +4,8 @@ import { TypeName, WalkMeDataCourse } from '@walkme/types';
 import { CourseMetadata, PublishStatus } from '../models';
 import { getData } from './services/wmData';
 
+export type { CourseMetadata };
+
 export async function getCourseMetadata(
   courseOrId: WalkMeDataCourse | number,
   environmentId: number,

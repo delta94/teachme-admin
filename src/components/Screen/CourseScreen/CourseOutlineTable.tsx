@@ -2,11 +2,11 @@ import React, { ReactElement } from 'react';
 
 import WMTable from '../../common/WMTable';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import ExportButton from '../../common/buttons/ExportButton';
 import SearchFilter from '../../common/filters/SearchFilter';
 import WMTableExpanded from '../../common/WMTable/WMTableExpanded';
 import { ICourseOutlineTable, ICourseOutlineItems } from './courseScreen.interface';
 
+import ExportCoursesButton from './ExportCourseButton';
 import { columns } from './tableData';
 import classes from './style.module.scss';
 import { getFilteredCourseOutline } from './utils';
@@ -26,7 +26,7 @@ export default function CourseOutlineTable({
   return (
     <div className={classes['course-table-outline']}>
       <ControlsWrapper className={classes['course-table-toolbar']}>
-        <ExportButton className={classes['export']} />
+        <ExportCoursesButton />
         <SearchFilter
           className={classes['search']}
           placeholder="Search item name"
