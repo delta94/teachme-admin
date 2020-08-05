@@ -31,7 +31,7 @@ export default function CourseOutlineList<T>({
   hasQuiz,
   handleItemClick,
 }: ICourseOutlineList<T>): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
+  const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onDrop = (
     addedIndex: number | undefined | null,
@@ -60,12 +60,16 @@ export default function CourseOutlineList<T>({
   };
 
   const onDeleteTaskItem = (item: any) => {
+    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
     course?.items.removeItem(item);
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+
+    // on delete activeDetailsItem should close the details pane
+    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
 
   return (
-    <div className={classes['course-outline-list']}>
+    <div className={cc([classes['course-outline-list'], { [classes['is-empty']]: !items.length }])}>
       <Container
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
@@ -83,17 +87,19 @@ export default function CourseOutlineList<T>({
               item={item}
               key={item.id}
               index={i}
-              className={classes['outline-lesson']}
+              innerClassName={classes['outline-lesson']}
             />
           ) : (
             <TaskItem
               key={i}
               index={i}
               item={item}
-              className={cc([classes['outline-task'], classes['task-with-settings']])}
+              className={classes['remove-item-border']}
+              innerClassName={cc([classes['outline-task'], classes['task-with-settings']])}
               onClick={(e: any) => handleItemClick && handleItemClick(item)}
               deletable
               onDelete={onDeleteTaskItem}
+              active={activeDetailsItem?.id === item.id}
             />
           ),
         )}

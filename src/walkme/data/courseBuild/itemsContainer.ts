@@ -40,12 +40,16 @@ export class Container<UIModel extends Mappable<DataModel>, NewItemData, DataMod
 
   public changeIndex(item: UIModel, index: number): void {
     this.removeItem(item);
-    this._items.splice(index, 0, item);
+    this.addItem(item, index);
   }
 
   public addNewItem(index: number = this._items.length, data?: NewItemData): UIModel {
     const itemData = this._newDataModel(index, data);
     const item = this._getUIModel(itemData);
+    return this.addItem(item, index);
+  }
+
+  protected addItem(item: UIModel, index: number): UIModel {
     const proxyItem = this._proxy(item);
     this._items.splice(index, 0, proxyItem);
     return proxyItem;
@@ -95,9 +99,9 @@ export class DeployableContainer<
     this.toArray().forEach((item) => this.mapItem(item));
   }
 
-  public addNewItem(index?: number, data?: NewItemData): UIModel {
-    const item = super.addNewItem(index, data);
-    return this.mapItem(item);
+  protected addItem(item: UIModel, index: number): UIModel {
+    this.mapItem(item);
+    return super.addItem(item, index);
   }
 
   private mapItem(item: UIModel) {

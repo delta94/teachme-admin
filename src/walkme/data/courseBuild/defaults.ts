@@ -8,7 +8,7 @@ export default {
   CORRECT_ANSWER_TEXT: 'Correct answer',
   INCORRECT_ANSWER_TEXT: 'Distractor option',
   NEW_ANSWER_IS_CORRECT: false,
-  NEW_ANSWER_TEXT: '',
+  NEW_ANSWER_TEXT: 'New answer',
   QUIZ_WELCOME_SCREEN_TITLE: 'Course Assessment',
   QUIZ_WELCOME_SCREEN_DESCRIPTION:
     'Did you master this course? Use this quiz to assess your knowledge',

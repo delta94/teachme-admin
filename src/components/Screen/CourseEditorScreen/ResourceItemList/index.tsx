@@ -114,6 +114,7 @@ export default function ResourceItemsList({
               item={item}
               {...taskItemProps}
               disabled={disabled}
+              className={classes['resource-item']}
             />
           ) : null;
         })}

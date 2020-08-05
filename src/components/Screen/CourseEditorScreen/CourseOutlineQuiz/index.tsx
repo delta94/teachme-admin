@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
-import { QuizScreen } from '@walkme/types';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
@@ -14,23 +13,8 @@ import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
 
-export default function CourseOutlineQuiz({
-  item,
-  quizItemClick,
-  selectedOutlineItem,
-}: {
-  item: Quiz;
-  quizItemClick: ({
-    type,
-    data,
-  }: {
-    type: QuizScreenType;
-    data: QuizScreen | QuizQuestion;
-  }) => void;
-  selectedOutlineItem?: { type: QuizScreenType; id?: number };
-}): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-  const [activeOutlineItem, setActiveOutlineItem] = useState(selectedOutlineItem);
+export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElement {
+  const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -50,19 +34,22 @@ export default function CourseOutlineQuiz({
 
   const shouldAcceptDrop = (e: any, payload: any) => !payload.type;
 
-  /*  const onItemClick = ({ type, data }: { type: QuizScreenType; data: any }) => {
-    setActiveOutlineItem({ type, id: data.id });
-    quizItemClick({
-      type,
-      data,
-    });
-  }; */
-
   const onItemClick = ({ type, data }: { type: DetailsPanelSettingsType; data: any }) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
       activeDetailsItem: { type, id: data.id as number, item: data },
     });
+  };
+
+  const onQuestionDelete = (questionIndex: number) => {
+    const questionToDelete = item.questions.getItem(questionIndex);
+    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === questionToDelete.id;
+    item.questions.removeItem(questionToDelete);
+
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+
+    // on delete activeDetailsItem should close the details pane
+    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
 
   return (
@@ -76,11 +63,15 @@ export default function CourseOutlineQuiz({
         className={cc([
           classes['welcome-screen-item'],
           classes['item-with-settings'],
-          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.WelcomeScreen },
+          {
+            [classes['active-item']]:
+              activeDetailsItem?.type === DetailsPanelSettingsType.QuizWelcome,
+          },
         ])}
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: item.welcomeScreen })
         }
+        isValid={item.welcomeScreen.isValid()}
       />
       <CourseQuestionList
         items={item.questions.toArray()}
@@ -98,32 +89,46 @@ export default function CourseOutlineQuiz({
             [classes['is-empty']]: !item.questions.toArray().length,
           },
         ])}
-        activeQuestionId={activeOutlineItem?.id}
-        onQuestionClick={(question: QuizQuestion) =>
-          onItemClick({ type: DetailsPanelSettingsType.Question, data: question })
+        activeQuestionId={
+          activeDetailsItem?.type === DetailsPanelSettingsType.Question
+            ? activeDetailsItem?.id
+            : undefined
         }
+        onQuestionClick={(question: QuizQuestion) => {
+          onItemClick({ type: DetailsPanelSettingsType.Question, data: question });
+        }}
+        onQuestionDelete={(questionIndex) => {
+          onQuestionDelete(questionIndex);
+        }}
       />
       <QuestionItem
         item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
         className={cc([
           classes['success-screen-item'],
           classes['item-with-settings'],
-          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.SuccessScreen },
+          {
+            [classes['active-item']]:
+              activeDetailsItem?.type === DetailsPanelSettingsType.QuizSuccess,
+          },
         ])}
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: item.successScreen })
         }
+        isValid={item.successScreen.isValid()}
       />
       <QuestionItem
         item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
         className={cc([
           classes['fail-screen-item'],
           classes['item-with-settings'],
-          { [classes['active-item']]: activeOutlineItem?.type === QuizScreenType.FailScreen },
+          {
+            [classes['active-item']]: activeDetailsItem?.type === DetailsPanelSettingsType.QuizFail,
+          },
         ])}
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: item.failScreen })
         }
+        isValid={item.failScreen.isValid()}
       />
     </WMCollapse>
   );

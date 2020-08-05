@@ -101,8 +101,12 @@
 
     svg {
       width: 26px;
-      height: 16px;
+      height: 18px;
       padding: 2px;
+    }
+
+    &:last-child {
+      margin-right: 10px;
     }
   }
 
