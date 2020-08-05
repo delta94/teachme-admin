@@ -29,10 +29,6 @@
   }
 }
 
-.active-item {
-  background-color: var(--hover-color);
-}
-
 .draggable-question-item {
   display: flex;
   border-bottom: var(--wm-border);
@@ -41,6 +37,18 @@
   .question-item {
     border: none;
     padding: 0;
+
+    .delete-button {
+      opacity: 0;
+      margin-left: auto;
+      margin-right: 20px;
+    }
+
+    &:hover {
+      .delete-button {
+        opacity: 1;
+      }
+    }
   }
 
   .disabled {
@@ -58,6 +66,10 @@
     .question-item-drag-handle {
       visibility: visible;
     }
+  }
+
+  &.active-item {
+    background-color: var(--hover-color);
   }
 }
 
@@ -94,11 +106,15 @@
 
 .card-ghost {
   border: 1px solid var(--wm-border);
-  background-color: var(--red);
+  background-color: var(--hover-color);
   box-shadow: var(--drag-shadow);
   cursor: grabbing;
 }
 
 .item-with-settings {
   cursor: pointer;
+
+  &.active-item {
+    background-color: var(--hover-color);
+  }
 }

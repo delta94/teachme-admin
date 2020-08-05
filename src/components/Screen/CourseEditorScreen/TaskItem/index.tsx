@@ -35,17 +35,24 @@ export default function TaskItem({
   className,
   onClick,
   deletable = false,
+  active = false,
   onDelete,
   ...otherProps
 }: ITaskItem): ReactElement {
-  const deleteTask = () => {
+  const deleteTask = (e: any) => {
+    e.stopPropagation();
+
     if (onDelete) {
       onDelete(item, index);
     }
   };
 
   return (
-    <Draggable key={index} className={cc([classes['task-item'], className])} {...otherProps}>
+    <Draggable
+      key={index}
+      className={cc([classes['task-item'], className, { [classes['active-item']]: active }])}
+      {...otherProps}
+    >
       <div key={index} className={classes['item']} onClick={onClick}>
         <DragHandle className={classes['task-item-drag-handle']} />
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />

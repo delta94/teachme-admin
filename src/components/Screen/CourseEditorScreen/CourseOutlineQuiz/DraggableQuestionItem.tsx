@@ -17,6 +17,8 @@ export interface IQuestionItem {
   className?: string;
   [key: string]: any;
   onClick: () => void;
+  onDelete?: (index: number) => void;
+  itemsAreDeletable?: boolean;
 }
 
 export default function DraggableQuestionItem({
@@ -24,6 +26,8 @@ export default function DraggableQuestionItem({
   index,
   className,
   onClick,
+  onDelete,
+  itemsAreDeletable,
   ...otherProps
 }: IQuestionItem): ReactElement {
   return (
@@ -33,7 +37,10 @@ export default function DraggableQuestionItem({
         <QuestionItem
           item={{ ...item, type: QuizScreenType.QuestionScreen }}
           key={index}
+          index={index}
           onClick={onClick}
+          onDelete={() => onDelete && onDelete(index)}
+          deletable={itemsAreDeletable}
         />
       </div>
     </Draggable>

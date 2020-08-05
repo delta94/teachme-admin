@@ -51,15 +51,7 @@ export default function CourseOutlineTab(): ReactElement {
           handleItemClick={onItemClick}
         />
       )}
-      {quiz && (
-        <CourseOutlineQuiz
-          item={quiz}
-          quizItemClick={({ type, data }) => {
-            console.log('quizItemClicked type ', type);
-            console.log('quizItemClicked data ', data);
-          }}
-        />
-      )}
+      {quiz && <CourseOutlineQuiz item={quiz} />}
     </div>
   );
 }

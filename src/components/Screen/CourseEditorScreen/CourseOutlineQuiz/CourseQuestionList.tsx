@@ -13,6 +13,7 @@ export interface ICourseItemsList {
   onDrop?: any;
   [key: string]: any;
   onQuestionClick: (question: QuizQuestion) => void;
+  onQuestionDelete: (index: number) => void;
   activeQuestionId?: number;
 }
 
@@ -21,6 +22,7 @@ export default function CourseQuestionList({
   onDrop,
   className,
   onQuestionClick,
+  onQuestionDelete,
   activeQuestionId,
   ...otherProps
 }: ICourseItemsList): ReactElement {
@@ -37,11 +39,13 @@ export default function CourseQuestionList({
             key={i}
             index={i}
             item={item}
+            onDelete={onQuestionDelete}
             onClick={() => onQuestionClick(item)}
             className={cc([
               classes['item-with-settings'],
               { [classes['active-item']]: activeQuestionId === item.id },
             ])}
+            itemsAreDeletable={items.length > 1}
           />
         ))}
       </Container>
