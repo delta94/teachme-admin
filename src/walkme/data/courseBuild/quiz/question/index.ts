@@ -100,7 +100,7 @@ export class QuizQuestion implements BuildQuizQuestion {
     return !!this.title && this.isAnswersValid() && this.isSelectionValid();
   }
 
-  private isSelectionValid() {
+  isSelectionValid(): boolean {
     return this.answers.toArray().some((a) => a.isCorrect);
   }
 

@@ -16,10 +16,12 @@ import classes from './style.module.scss';
 export default function Answers({
   answers,
   type,
+  errorMessage,
   onDeleteAnswer,
 }: {
   answers: QuizAnswer[];
   type: QuestionType;
+  errorMessage?: string;
   onDeleteAnswer: (answerIndex: number) => void;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -76,6 +78,7 @@ export default function Answers({
           </WMCheckbox>
         ),
       )}
+      {errorMessage && <span className={classes['error-message']}>{errorMessage}</span>}
     </div>
   );
 }

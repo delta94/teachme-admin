@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
-import { QuizScreen } from '@walkme/types';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
@@ -72,6 +71,7 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: item.welcomeScreen })
         }
+        isValid={item.welcomeScreen.isValid()}
       />
       <CourseQuestionList
         items={item.questions.toArray()}
@@ -114,6 +114,7 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: item.successScreen })
         }
+        isValid={item.successScreen.isValid()}
       />
       <QuestionItem
         item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
@@ -127,6 +128,7 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
         onClick={() =>
           onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: item.failScreen })
         }
+        isValid={item.failScreen.isValid()}
       />
     </WMCollapse>
   );
