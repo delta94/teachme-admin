@@ -6,5 +6,5 @@ const SortableItem = SortableElement((props: any) => <tr {...props} />);
 export default function SortableRow({ ...restProps }): ReactElement {
   const index = restProps['data-row-key'] as number;
 
-  return <SortableItem index={index} {...restProps} />;
+  return <SortableItem index={index ?? 0} {...restProps} />;
 }
