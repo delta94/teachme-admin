@@ -28,6 +28,10 @@
     .delete-button {
       display: none;
     }
+
+    &:hover {
+      background-color: var(--hover-color);
+    }
   }
 
   &[disabled] {
@@ -39,8 +43,6 @@
   }
 
   &:hover {
-    background-color: var(--hover-color);
-
     .delete-button {
       display: inline-block;
     }

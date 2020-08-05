@@ -22,6 +22,7 @@ export interface ITaskItem {
   item: ContentItem;
   index: number;
   className?: string;
+  innerClassName?: string;
   onClick?: (e: any) => void;
   deletable?: boolean;
   onDelete?: (item: any, index: number) => void;
@@ -33,6 +34,7 @@ export default function TaskItem({
   item: { title, type },
   index,
   className,
+  innerClassName,
   onClick,
   deletable = false,
   onDelete,
@@ -46,7 +48,7 @@ export default function TaskItem({
 
   return (
     <Draggable key={index} className={cc([classes['task-item'], className])} {...otherProps}>
-      <div key={index} className={classes['item']} onClick={onClick}>
+      <div key={index} className={cc([classes['item'], innerClassName])} onClick={onClick}>
         <DragHandle className={classes['task-item-drag-handle']} />
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />
         <span className={classes['title']}>{title}</span>
