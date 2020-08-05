@@ -16,20 +16,22 @@ export default function ExportCoursesButton(): ReactElement {
 
   const [showExport, setShowExport] = useState(false);
 
-  return courseMetadata?.id ? (
+  return (
     <>
-      <ExportButton className={classes['export']} onClick={() => setShowExport(true)} />
-      <ExportToCSVDialog
-        coursesCount={1}
-        open={showExport}
-        onCancel={() => setShowExport(false)}
-        onConfirm={() => {
-          setShowExport(false);
-          exportCourse(dispatch, courseMetadata?.id, 0, from, to);
-        }}
-      />
+      {courseMetadata?.id && (
+        <>
+          <ExportButton className={classes['export']} onClick={() => setShowExport(true)} />
+          <ExportToCSVDialog
+            coursesCount={1}
+            open={showExport}
+            onCancel={() => setShowExport(false)}
+            onConfirm={() => {
+              setShowExport(false);
+              exportCourse(dispatch, courseMetadata?.id, 0, from, to);
+            }}
+          />
+        </>
+      )}
     </>
-  ) : (
-    <></>
   );
 }
