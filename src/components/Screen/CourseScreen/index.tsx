@@ -7,6 +7,7 @@ import { useCourseContext, fetchCourseData, ActionType } from '../../../provider
 import { CourseOverviewData } from '../../../walkme/models';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
+
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
 import { parseCourseOutline } from './utils';
@@ -21,16 +22,15 @@ export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
-  const [
-    {
-      isUpdating,
-      environment: { id: envId },
-      system,
-    },
-    appDispatch,
-  ] = useAppContext();
+  const [appState] = useAppContext();
+  const {
+    isUpdating,
+    environment: { id: envId },
+    system,
+  } = appState;
   const [state, dispatch] = useCourseContext();
   const {
+    isFetchingCourseData,
     dateRange: { from, to },
     overview,
     course,
@@ -59,6 +59,7 @@ export default function CourseScreen(): ReactElement {
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Course"
         overview={overview as CourseOverviewData}
+        isLoading={isUpdating || isFetchingCourseData}
       />
       <CourseTabs />
     </>

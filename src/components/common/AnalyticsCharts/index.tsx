@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useParams } from 'react-router-dom';
 import cc from 'classcat';
 
 import { CourseOverviewData } from '../../../walkme/models/course/panels';
@@ -18,6 +19,8 @@ export default function AnalyticsCharts({
   overview,
   isLoading = false,
 }: IAnalyticsCharts): ReactElement {
+  const { courseId } = useParams();
+
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
@@ -37,9 +40,9 @@ export default function AnalyticsCharts({
             overview={overview}
             isLoading={isLoading}
           />
-          {(overview as CourseOverviewData)?.passmark && (
+          {Boolean(courseId) && (
             <QuizScoreChart
-              isEmpty={overview && Object.keys(overview).length === 0}
+              isEmpty={overview && !Object.keys(overview).length}
               overview={overview as CourseOverviewData}
               isLoading={isLoading}
             />
