@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import usePrevious from '@react-hook/previous';
 
 import { IDateRange } from '../../../utils';
+import { COURSES_ROUTE } from '../../../constants/routes';
 import { useAppContext } from '../../../providers/AppContext';
 import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
 import { CourseOverviewData } from '../../../walkme/models';
@@ -53,7 +54,7 @@ export default function CourseScreen(): ReactElement {
   const { push } = useHistory();
 
   useEffect(() => {
-    if (prevSystem && prevSystem.userId !== system.userId) push('/courses');
+    if (prevSystem && prevSystem.userId !== system.userId) push(COURSES_ROUTE.path);
   }, [prevSystem, system, push]);
 
   return (
