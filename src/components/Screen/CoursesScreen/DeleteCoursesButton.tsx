@@ -5,7 +5,6 @@ import {
   fetchCoursesData,
   deleteCourses,
 } from '../../../providers/CoursesContext';
-import { PublishStatus } from '../../../walkme/data';
 
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -15,6 +14,7 @@ import {
 } from '../../common/dialogs';
 
 import classes from './style.module.scss';
+import { PublishStatus } from '../../../walkme/models';
 
 export default function DeleteCoursesButton(): ReactElement {
   const [state, dispatch] = useCoursesContext();

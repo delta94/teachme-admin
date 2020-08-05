@@ -1,6 +1,6 @@
 import * as data from '../data';
 import { getUIQuiz } from '../data/quizOutline';
-import { CourseOverviewData } from '../models';
+import { CourseOverviewData, CourseMetadata } from '../models';
 import {
   CourseOutlineUIModel,
   CourseChildType,
@@ -8,6 +8,7 @@ import {
 } from '../models/course/outline';
 import { QuizOutlineUI } from '../models/course/quiz';
 import { saveAsCsv } from '../utils';
+import * as metadata from '../data/courseMetadata';
 
 /**
  * Returns data for the course outline tab
@@ -84,4 +85,16 @@ export async function exportCourseOutline(
     ['id', 'title', 'lesson_id', 'lesson_title', 'users_completed', 'drop_off', 'type'],
     `teachme-course-outline-data-${Date.now()}`,
   );
+}
+
+/**
+ * Returns the requested course metadata for the given environment
+ * @param courseId the requested course id
+ * @param environmentId the requested environment id
+ */
+export async function getCourseMetadata(
+  courseId: number,
+  environmentId: number,
+): Promise<CourseMetadata> {
+  return metadata.getCourseMetadata(courseId, environmentId);
 }
