@@ -26,11 +26,12 @@ export default function HeaderToolbar(): ReactElement {
 
   const userId = user.userID;
   const originalUserId = originalUser.userID;
+  const isImpersonate = userId !== originalUserId;
 
   return (
     <>
-      {userId !== originalUserId && <span className={classes['impersonate']}>impersonate</span>}
       <Header className={classes['header-toolbar']}>
+        {isImpersonate && <span className={classes['impersonate']}>impersonate</span>}
         {appInit ? (
           <>
             <SystemMenu className={menuClassName} />

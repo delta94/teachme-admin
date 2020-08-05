@@ -2,8 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { AutoComplete } from 'antd';
 import { useDebounceCallback } from '@react-hook/debounce';
 
-import { getEmails } from '../../../../walkme';
-import { impersonate } from '../../../../walkme';
+import { getEmails, impersonate } from '../../../../walkme';
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 
 import classes from './style.module.scss';
@@ -24,7 +23,7 @@ export default function ImpersonateDialog({
 
   const fetchEmails = async (value: string) => {
     const { emails } = await getEmails(value, true);
-    const emailList = emails.map((email) => ({ value: email }));
+    const emailList = emails.map((email: string) => ({ value: email }));
     setOptions(emailList);
   };
 
@@ -34,16 +33,12 @@ export default function ImpersonateDialog({
     debouncedFetchEmails(value);
     setLocalValue(value);
     const valid = options.some((item) => item.value === value);
-    if (valid) {
-      setInvalid(false);
-    } else {
-      setInvalid(true);
-    }
+    valid ? setInvalid(false) : setInvalid(true);
   };
 
-  const onConfirmHandle = (userValue: string | undefined) => {
-    onConfirm(userValue);
-    userValue && impersonate(userValue, true);
+  const onConfirmHandle = (confirmedText: string | undefined) => {
+    onConfirm(confirmedText);
+    confirmedText && impersonate(confirmedText, true);
     setLocalValue('');
   };
 
@@ -59,9 +54,10 @@ export default function ImpersonateDialog({
       onCancel={onCancelHandle}
       onConfirm={() => onConfirmHandle(localValue)}
       disableConfirmButton={invalid}
+      confirmLabel="impersonate"
     >
       <AutoComplete
-        className={classes['impersonate-dialog']}
+        className={classes['autocomplete-input']}
         options={options}
         onChange={onEmailChange}
         value={localValue}

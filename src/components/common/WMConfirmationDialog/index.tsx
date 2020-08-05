@@ -16,6 +16,7 @@ export interface IWMConfirmationDialogWrapper {
 export interface IWMConfirmationDialog {
   open?: boolean;
   title?: ReactNode;
+  okText?: string;
   cancelLabel?: string;
   confirmLabel?: string;
   disableConfirmButton?: boolean;
