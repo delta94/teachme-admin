@@ -19,7 +19,7 @@ export default function ImpersonateDialog({
 }: IImpersonateDialog): ReactElement {
   const [localValue, setLocalValue] = useState(value);
   const [options, setOptions] = useState<{ value: string }[]>([]);
-  const [invalid, setInvalid] = useState(false);
+  const [invalid, setInvalid] = useState(true);
 
   const fetchEmails = async (value: string) => {
     const { emails } = await getEmails(value, true);
@@ -33,7 +33,7 @@ export default function ImpersonateDialog({
     debouncedFetchEmails(value);
     setLocalValue(value);
     const valid = options.some((item) => item.value === value);
-    valid ? setInvalid(false) : setInvalid(true);
+    valid && setInvalid(false);
   };
 
   const onConfirmHandle = (confirmedText: string | undefined) => {
@@ -63,7 +63,7 @@ export default function ImpersonateDialog({
         value={localValue}
         placeholder="Enter email address"
         filterOption={(inputValue, option) =>
-          option?.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+          option?.value.toUpperCase().includes(inputValue.toUpperCase())
         }
       />
     </WMConfirmationDialog>

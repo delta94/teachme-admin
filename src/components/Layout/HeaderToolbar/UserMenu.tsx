@@ -1,7 +1,6 @@
-/* eslint-disable no-restricted-globals */
 import React, { ReactElement, useState } from 'react';
 
-import { useAppContext, setInitialGlobals } from '../../../providers/AppContext';
+import { useAppContext } from '../../../providers/AppContext';
 import { logout } from '../../../walkme';
 
 import { IconType } from '../../common/Icon/icon.interface';
@@ -18,7 +17,7 @@ export default function UserMenu({
   buttonClassName?: string;
 }): ReactElement {
   const [showImpersonate, setShowImpersonate] = useState(false);
-  const [appState, appDispatch] = useAppContext();
+  const [appState] = useAppContext();
   const { user } = appState;
   const { originalUser } = appState;
 
@@ -35,8 +34,7 @@ export default function UserMenu({
 
   const handleImpersonate = () => {
     setShowImpersonate(false);
-    setInitialGlobals(appDispatch);
-    location.reload();
+    window.location.reload();
   };
 
   return (

@@ -1,5 +1,5 @@
 .autocomplete-input {
-  width: 414px;
+  width: 100%;
   color: var(--neutral900);
   font-family: var(--font-primary);
   font-size: 22px;
@@ -9,9 +9,6 @@
 }
 
 :global(.ant-modal-content) {
-  height: 178px;
-  width: 461px;
-
   :global(.ant-btn) {
     font-size: 10px;
     margin-left: 20px;
