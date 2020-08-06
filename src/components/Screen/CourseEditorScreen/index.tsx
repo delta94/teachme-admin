@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import usePrevious from '@react-hook/previous';
+import { useParams } from 'react-router-dom';
 
 import {
   useCourseEditorContext,
@@ -8,8 +7,7 @@ import {
   fetchCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
-import { useAppContext } from '../../../providers/AppContext';
-import { COURSES_ROUTE } from '../../../constants/routes';
+import { useRedirectToMain } from '../../../hooks';
 
 import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
@@ -39,13 +37,7 @@ export default function CourseEditorScreen(): ReactElement {
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
-  const [{ system }] = useAppContext();
-  const prevSystem = usePrevious(system);
-  const { push } = useHistory();
-
-  useEffect(() => {
-    if (prevSystem && prevSystem.userId !== system.userId) push(COURSES_ROUTE.path);
-  }, [prevSystem, system, push]);
+  useRedirectToMain();
 
   return (
     <>
