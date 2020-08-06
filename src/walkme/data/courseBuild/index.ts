@@ -29,7 +29,7 @@ export async function getCourse(id: number, environmentId: number): Promise<Cour
 
 async function initData(environmentId: number) {
   await wmData.refresh(
-    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru],
+    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru, TypeName.Tag],
     environmentId,
   );
 }
