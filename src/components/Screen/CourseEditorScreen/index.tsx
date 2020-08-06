@@ -7,6 +7,7 @@ import {
   fetchCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
+import { useRedirectToMain } from '../../../hooks';
 
 import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
@@ -35,6 +36,8 @@ export default function CourseEditorScreen(): ReactElement {
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
+
+  useRedirectToMain();
 
   return (
     <>
