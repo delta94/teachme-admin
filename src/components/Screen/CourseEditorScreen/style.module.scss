@@ -68,6 +68,10 @@
     }
   }
 
+  .resources-list-skeleton {
+    padding: 0 20px;
+  }
+
   .course-structure {
     flex-grow: 1;
 
@@ -185,5 +189,11 @@
     position: absolute;
     height: calc(100% - var(--tabs-height) - var(--bottom-padding));
     width: calc(100% - var(--sides-padding) * 2);
+    z-index: 1;
+    pointer-events: none;
+
+    :global(.ant-btn) {
+      pointer-events: auto;
+    }
   }
 }

@@ -23,13 +23,15 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   course: Course;
   hasQuiz: boolean;
   handleItemClick?: (item: any) => void;
+  newLessonId?: number;
 }
 
 export default function CourseOutlineList<T>({
   items,
   course,
-  hasQuiz,
   handleItemClick,
+  hasQuiz,
+  newLessonId,
 }: ICourseOutlineList<T>): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
@@ -69,7 +71,12 @@ export default function CourseOutlineList<T>({
   };
 
   return (
-    <div className={cc([classes['course-outline-list'], { [classes['is-empty']]: !items.length }])}>
+    <div
+      className={cc([
+        classes['course-outline-list'],
+        { [classes['is-empty']]: !items.length, [classes['has-quiz']]: hasQuiz },
+      ])}
+    >
       <Container
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
@@ -88,6 +95,7 @@ export default function CourseOutlineList<T>({
               key={item.id}
               index={i}
               innerClassName={classes['outline-lesson']}
+              newLessonId={newLessonId}
             />
           ) : (
             <TaskItem
