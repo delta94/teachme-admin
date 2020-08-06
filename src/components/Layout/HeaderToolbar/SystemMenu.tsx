@@ -1,5 +1,6 @@
 import React, { ReactElement, useState, useEffect, useCallback } from 'react';
 import { message } from 'antd';
+import { useLocation } from 'react-router-dom';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
@@ -70,12 +71,16 @@ export default function SystemMenu({ className }: { className?: string }): React
     [],
   );
 
+  const { pathname } = useLocation();
+  const isEditorScreen = pathname.includes('course-editor');
+
   return (
     <WMDropdown
       className={className}
       options={options}
       selected={selectedSystem}
       onSelectedChange={handleMenuClick}
+      disabled={isEditorScreen}
     >
       <WMButton className={classes['dropdown-menu-button']}>
         {selectedSystem
