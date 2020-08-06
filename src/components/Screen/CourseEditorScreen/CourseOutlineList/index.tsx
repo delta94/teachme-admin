@@ -69,7 +69,12 @@ export default function CourseOutlineList<T>({
   };
 
   return (
-    <div className={cc([classes['course-outline-list'], { [classes['is-empty']]: !items.length }])}>
+    <div
+      className={cc([
+        classes['course-outline-list'],
+        { [classes['is-empty']]: !items.length, [classes['has-quiz']]: hasQuiz },
+      ])}
+    >
       <Container
         onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
         getChildPayload={(index) => items[index]}
