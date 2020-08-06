@@ -24,10 +24,18 @@ export default function LessonDeleteButton({
     setOpenDialog(false);
   };
 
+  const onClickDelete = () => {
+    if (lesson.childNodes.toArray().length > 0) {
+      setOpenDialog(true);
+    } else {
+      deleteLesson();
+    }
+  };
+
   return (
     <>
       <WMButton
-        onClick={() => setOpenDialog(true)}
+        onClick={onClickDelete}
         className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
       >
         <Icon type={IconType.Delete} className={classes['title-icon']} />
