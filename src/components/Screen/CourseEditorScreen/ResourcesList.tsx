@@ -6,8 +6,10 @@ import {
   fetchItemsList,
   ActionType,
 } from '../../../providers/CourseEditorContext';
+import { useAppContext } from '../../../providers/AppContext';
 
 import WMCard from '../../common/WMCard';
+import WMSkeleton from '../../common/WMSkeleton';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
 
@@ -16,8 +18,9 @@ import ResourcesListEmptyState from './ResourcesListEmptyState';
 import classes from './style.module.scss';
 
 export default function ResourcesList(): ReactElement {
+  const [{ isUpdating }] = useAppContext();
   const [state, dispatch] = useCourseEditorContext();
-  const { courseItems, filteredCourseItems, courseItemsSearchValue } = state;
+  const { isFetchingItems, courseItems, filteredCourseItems, courseItemsSearchValue } = state;
 
   const onSearch = (searchValue: string) => {
     const newCourseItems = courseItems.filter(({ title, description }) =>
@@ -54,17 +57,25 @@ export default function ResourcesList(): ReactElement {
           onSearch={onSearch}
         />
       </div>
-      {courseItems.length ? (
-        <ResourceItemsList
-          items={filteredCourseItems}
-          className={classes['resource-item-list']}
-          isDisabled={(item: ContentItem) =>
-            state.course?.includes(item.type as TypeName, item.id as number)
-          }
-        />
-      ) : (
-        <ResourcesListEmptyState />
-      )}
+      <WMSkeleton
+        className={classes['resources-list-skeleton']}
+        loading={isUpdating || isFetchingItems}
+        active
+        title={false}
+        paragraph={{ rows: 15 }}
+      >
+        {courseItems.length ? (
+          <ResourceItemsList
+            items={filteredCourseItems}
+            className={classes['resource-item-list']}
+            isDisabled={(item: ContentItem) =>
+              state.course?.includes(item.type as TypeName, item.id as number)
+            }
+          />
+        ) : (
+          <ResourcesListEmptyState />
+        )}
+      </WMSkeleton>
     </WMCard>
   );
 }
