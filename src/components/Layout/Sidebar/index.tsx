@@ -36,9 +36,7 @@ export default function Sidebar(): ReactElement {
         </>
       ) : (
         <div className={classes['sidebar-skeleton']}>
-          <Link to={COURSES_ROUTE.path}>
-            <Logo />
-          </Link>
+          <Logo />
           <Divider className={classes['sidebar-separator']} />
           <div className={classes['sidebar-top-skeleton']}>
             <WMSkeletonButton active size="large" shape="circle" />
