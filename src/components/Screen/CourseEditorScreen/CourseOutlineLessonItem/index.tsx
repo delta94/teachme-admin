@@ -23,13 +23,13 @@ export default function CourseOutlineLessonItem({
   index,
   className,
   innerClassName,
-  id,
+  newLessonId,
 }: {
   item: INewLesson;
   index: number;
   className?: string;
   innerClassName?: string;
-  id: number;
+  newLessonId?: number;
 }): ReactElement {
   const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
   const newLessonRef = useRef<HTMLDivElement>(null);
@@ -59,7 +59,6 @@ export default function CourseOutlineLessonItem({
     (course?.items.getItem(index) as CourseLesson).childNodes.removeItem(item);
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-
     // on delete activeDetailsItem should close the details panel
     if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
@@ -68,10 +67,10 @@ export default function CourseOutlineLessonItem({
 
   useEffect(() => {
     // detecting new lesson added and scroll to element
-    if (id < 0 && isEmpty) {
+    if (item.id === newLessonId && isEmpty) {
       newLessonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-  }, [id, isEmpty]);
+  }, [item.id, isEmpty, newLessonId]);
 
   return (
     <Draggable className={cc([classes['course-outline-lesson-item'], className])}>

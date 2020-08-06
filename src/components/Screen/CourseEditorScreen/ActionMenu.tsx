@@ -38,7 +38,7 @@ export default function ActionMenu({
   onActionSelected,
 }: {
   className?: string;
-  onActionSelected?: (selected: CourseItemType) => void;
+  onActionSelected?: (selected: CourseItemType, lessonId?: number) => void;
 }): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
@@ -47,7 +47,9 @@ export default function ActionMenu({
       // Add new lesson
       const newLesson = course?.items.addNewItem();
       if (newLesson) {
-        newLesson.id = getRandomNegativeNumber();
+        const lessonId = getRandomNegativeNumber();
+        newLesson.id = lessonId;
+        onActionSelected && onActionSelected(CourseItemType.Lesson, lessonId);
       }
     } else {
       // Add new quiz

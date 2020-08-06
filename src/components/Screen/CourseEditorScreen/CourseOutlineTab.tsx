@@ -23,6 +23,7 @@ export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course, quiz /* , courseOutlineSearchValue */ } = state;
   const [newQuizAdded, setNewQuizAdded] = useState(false);
+  const [newLessonId, setNewLessonId] = useState<number>();
 
   const onItemClick = (item: any) => {
     dispatch({
@@ -31,18 +32,25 @@ export default function CourseOutlineTab(): ReactElement {
     });
   };
 
-  const onActionSelected = (selectedType: CourseItemType) => {
+  const onActionSelected = (selectedType: CourseItemType, lessonId?: number) => {
     if (selectedType === CourseItemType.Quiz) {
       setNewQuizAdded(true);
 
       // reset newQuizAdded
       setTimeout(() => setNewQuizAdded(false), 200);
+    } else {
+      lessonId && setNewLessonId(lessonId);
+
+      // reset newLessonId
+      setTimeout(() => setNewLessonId(undefined), 200);
     }
   };
 
+  // unmount only
   useEffect(
     () => () => {
       setNewQuizAdded(false);
+      setNewLessonId(undefined);
     },
     [],
   );
@@ -66,6 +74,7 @@ export default function CourseOutlineTab(): ReactElement {
           items={course?.items.toArray() ?? []}
           course={course}
           handleItemClick={onItemClick}
+          newLessonId={newLessonId}
         />
       )}
       {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}

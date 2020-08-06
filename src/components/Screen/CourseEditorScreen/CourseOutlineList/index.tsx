@@ -22,12 +22,14 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   items: CourseLesson[] | CourseChild[];
   course: Course;
   handleItemClick?: (item: any) => void;
+  newLessonId?: number;
 }
 
 export default function CourseOutlineList<T>({
   items,
   course,
   handleItemClick,
+  newLessonId,
 }: ICourseOutlineList<T>): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
@@ -84,9 +86,9 @@ export default function CourseOutlineList<T>({
             <CourseOutlineLessonItem
               item={item}
               key={item.id}
-              id={item.id}
               index={i}
               innerClassName={classes['outline-lesson']}
+              newLessonId={newLessonId}
             />
           ) : (
             <TaskItem
