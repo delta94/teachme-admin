@@ -74,7 +74,7 @@ export default function SystemMenu({ className }: { className?: string }): React
   const { pathname } = useLocation();
   const isEditorScreen = pathname.includes('course-editor');
 
-  return (
+  return options.length ? (
     <WMDropdown
       className={className}
       options={options}
@@ -89,5 +89,7 @@ export default function SystemMenu({ className }: { className?: string }): React
         <DownOutlined />
       </WMButton>
     </WMDropdown>
+  ) : (
+    <></>
   );
 }
