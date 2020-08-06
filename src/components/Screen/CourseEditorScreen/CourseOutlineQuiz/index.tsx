@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import cc from 'classcat';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
@@ -13,7 +13,13 @@ import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
 
-export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElement {
+export default function CourseOutlineQuiz({
+  quiz,
+  isNew,
+}: {
+  quiz: Quiz;
+  isNew?: boolean;
+}): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onInnerDrop = (e: any) => {
@@ -22,11 +28,11 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
     const isReorder = isAdd && isRemove;
 
     if (isReorder) {
-      item.questions.changeIndex(e.payload, e.addedIndex);
+      quiz.questions.changeIndex(e.payload, e.addedIndex);
     } else if (isAdd) {
-      item.questions.addNewItem(e.addedIndex, e.payload);
+      quiz.questions.addNewItem(e.addedIndex, e.payload);
     } else if (isRemove) {
-      item.questions.removeItem(e.payload);
+      quiz.questions.removeItem(e.payload);
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
@@ -42,15 +48,22 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
   };
 
   const onQuestionDelete = (questionIndex: number) => {
-    const questionToDelete = item.questions.getItem(questionIndex);
+    const questionToDelete = quiz.questions.getItem(questionIndex);
     const shouldResetActiveDetailsPanel = activeDetailsItem?.id === questionToDelete.id;
-    item.questions.removeItem(questionToDelete);
+    quiz.questions.removeItem(questionToDelete);
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
 
     // on delete activeDetailsItem should close the details pane
     if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
+
+  useEffect(() => {
+    // detecting new quiz added
+    if (quiz.id === undefined && quiz.questions.toArray().length === 1 && isNew) {
+      console.log('NEW QUIZ ADDED!!!');
+    }
+  }, [quiz, isNew]);
 
   return (
     <WMCollapse
@@ -69,14 +82,14 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
           },
         ])}
         onClick={() =>
-          onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: item.welcomeScreen })
+          onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: quiz.welcomeScreen })
         }
-        isValid={item.welcomeScreen.isValid()}
+        isValid={quiz.welcomeScreen.isValid()}
       />
       <CourseQuestionList
-        items={item.questions.toArray()}
+        items={quiz.questions.toArray()}
         onDrop={(e: any) => onInnerDrop(e)}
-        getChildPayload={(index: number) => item.questions?.toArray()[index]}
+        getChildPayload={(index: number) => quiz.questions?.toArray()[index]}
         dragClass={classes['card-ghost']}
         dropPlaceholder={{
           animationDuration: 150,
@@ -86,7 +99,7 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
         shouldAcceptDrop={shouldAcceptDrop}
         className={cc([
           {
-            [classes['is-empty']]: !item.questions.toArray().length,
+            [classes['is-empty']]: !quiz.questions.toArray().length,
           },
         ])}
         activeQuestionId={
@@ -112,9 +125,9 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
           },
         ])}
         onClick={() =>
-          onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: item.successScreen })
+          onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: quiz.successScreen })
         }
-        isValid={item.successScreen.isValid()}
+        isValid={quiz.successScreen.isValid()}
       />
       <QuestionItem
         item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
@@ -126,9 +139,9 @@ export default function CourseOutlineQuiz({ item }: { item: Quiz }): ReactElemen
           },
         ])}
         onClick={() =>
-          onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: item.failScreen })
+          onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: quiz.failScreen })
         }
-        isValid={item.failScreen.isValid()}
+        isValid={quiz.failScreen.isValid()}
       />
     </WMCollapse>
   );

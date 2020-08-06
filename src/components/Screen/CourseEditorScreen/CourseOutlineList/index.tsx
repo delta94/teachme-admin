@@ -21,14 +21,12 @@ export interface ICourseOutlineItem extends CourseLesson {
 export interface ICourseOutlineList<T> extends IWMList<T> {
   items: CourseLesson[] | CourseChild[];
   course: Course;
-  hasQuiz: boolean;
   handleItemClick?: (item: any) => void;
 }
 
 export default function CourseOutlineList<T>({
   items,
   course,
-  hasQuiz,
   handleItemClick,
 }: ICourseOutlineList<T>): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();

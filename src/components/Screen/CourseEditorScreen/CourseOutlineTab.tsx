@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
 
+import { CourseItemType } from '../../../interfaces/course.interfaces';
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
@@ -21,6 +22,7 @@ export interface IProperties {
 export default function CourseOutlineTab(): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
   const { course, quiz /* , courseOutlineSearchValue */ } = state;
+  const [newQuizAdded, setNewQuizAdded] = useState(false);
 
   const onItemClick = (item: any) => {
     dispatch({
@@ -29,9 +31,18 @@ export default function CourseOutlineTab(): ReactElement {
     });
   };
 
+  const onActionSelected = (selectedType: CourseItemType) => {
+    if (selectedType === CourseItemType.Quiz) {
+      setNewQuizAdded(true);
+
+      // reset newQuizAdded
+      setTimeout(() => setNewQuizAdded(false), 200);
+    }
+  };
+
   return (
     <div className={classes['course-outline-tab']}>
-      <ActionMenu className={classes['add-btn']} />
+      <ActionMenu className={classes['add-btn']} onActionSelected={onActionSelected} />
       {/* <SearchFilter
         className={classes['search']}
         placeholder="Search"
@@ -47,11 +58,10 @@ export default function CourseOutlineTab(): ReactElement {
         <CourseOutlineList
           items={course?.items.toArray() ?? []}
           course={course}
-          hasQuiz={!!quiz}
           handleItemClick={onItemClick}
         />
       )}
-      {quiz && <CourseOutlineQuiz item={quiz} />}
+      {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}
     </div>
   );
 }
