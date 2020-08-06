@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { ReactElement, useState } from 'react';
 
 import { useAppContext, setInitialGlobals } from '../../../providers/AppContext';
@@ -35,6 +36,7 @@ export default function UserMenu({
   const handleImpersonate = () => {
     setShowImpersonate(false);
     setInitialGlobals(appDispatch);
+    location.reload();
   };
 
   return (
