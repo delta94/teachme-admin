@@ -36,7 +36,7 @@ export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<vo
   dispatch({ type: ActionType.FetchItems });
 
   try {
-    const courseItems = await getFlatItemsList(envId);
+    const courseItems = await getFlatItemsList(envId, true);
 
     dispatch({ type: ActionType.FetchItemsSuccess, courseItems });
   } catch (error) {

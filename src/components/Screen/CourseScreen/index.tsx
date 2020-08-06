@@ -1,9 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import usePrevious from '@react-hook/previous';
+import { useParams } from 'react-router-dom';
 
 import { IDateRange } from '../../../utils';
-import { COURSES_ROUTE } from '../../../constants/routes';
+import { useRedirectToMain } from '../../../hooks';
 import { useAppContext } from '../../../providers/AppContext';
 import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
 import { CourseOverviewData } from '../../../walkme/models';
@@ -28,7 +27,6 @@ export default function CourseScreen(): ReactElement {
   const {
     isUpdating,
     environment: { id: envId },
-    system,
   } = appState;
   const [state, dispatch] = useCourseContext();
   const {
@@ -49,12 +47,7 @@ export default function CourseScreen(): ReactElement {
   const onDateRangeChange = (dateRange?: IDateRange) =>
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
-  const prevSystem = usePrevious(system);
-  const { push } = useHistory();
-
-  useEffect(() => {
-    if (prevSystem && prevSystem.userId !== system.userId) push(COURSES_ROUTE.path);
-  }, [prevSystem, system, push]);
+  useRedirectToMain();
 
   return (
     <>
