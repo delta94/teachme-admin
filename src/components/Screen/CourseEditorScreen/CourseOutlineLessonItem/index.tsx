@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
@@ -23,13 +23,16 @@ export default function CourseOutlineLessonItem({
   index,
   className,
   innerClassName,
+  id,
 }: {
   item: INewLesson;
   index: number;
   className?: string;
   innerClassName?: string;
+  id: number;
 }): ReactElement {
   const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
+  const newLessonRef = useRef<HTMLDivElement>(null);
 
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -63,6 +66,13 @@ export default function CourseOutlineLessonItem({
 
   const isEmpty = !item.childNodes.toArray().length;
 
+  useEffect(() => {
+    // detecting new lesson added and scroll to element
+    if (id < 0 && isEmpty) {
+      newLessonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [id, isEmpty]);
+
   return (
     <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
       <WMCollapse
@@ -73,7 +83,7 @@ export default function CourseOutlineLessonItem({
         hasDragHandle
       >
         {isEmpty && (
-          <div className={classes['lesson-empty-state-wrapper']}>
+          <div ref={newLessonRef} className={classes['lesson-empty-state-wrapper']}>
             <WMEmpty
               description="Drag content into the lesson"
               image={<Icon type={IconType.EmptyLesson} />}

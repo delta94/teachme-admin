@@ -84,6 +84,7 @@ export default function CourseOutlineList<T>({
             <CourseOutlineLessonItem
               item={item}
               key={item.id}
+              id={item.id}
               index={i}
               innerClassName={classes['outline-lesson']}
             />

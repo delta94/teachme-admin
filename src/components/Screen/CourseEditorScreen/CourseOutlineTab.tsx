@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
@@ -39,6 +39,13 @@ export default function CourseOutlineTab(): ReactElement {
       setTimeout(() => setNewQuizAdded(false), 200);
     }
   };
+
+  useEffect(
+    () => () => {
+      setNewQuizAdded(false);
+    },
+    [],
+  );
 
   return (
     <div className={classes['course-outline-tab']}>

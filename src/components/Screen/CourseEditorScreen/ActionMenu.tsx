@@ -48,7 +48,6 @@ export default function ActionMenu({
       const newLesson = course?.items.addNewItem();
       if (newLesson) {
         newLesson.id = getRandomNegativeNumber();
-        onActionSelected && onActionSelected(CourseItemType.Lesson);
       }
     } else {
       // Add new quiz
