@@ -7,9 +7,11 @@ import {
   fetchCourse,
   ActionType,
 } from '../../../providers/CourseEditorContext';
+import { useRedirectToMain } from '../../../hooks';
 
 import EditableTitle from '../../common/EditableTitle';
 import ScreenHeader from '../../common/ScreenHeader';
+import UnloadDialog from '../../common/UnloadDialog';
 
 import ResourcesList from './ResourcesList';
 import CourseOutline from './CourseOutline';
@@ -17,7 +19,7 @@ import HeaderConfirmationButtons from './HeaderConfirmationButtons';
 import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
-  const [{ course, isFetchingCourse }, dispatch] = useCourseEditorContext();
+  const [{ course, isFetchingCourse, hasChanges }, dispatch] = useCourseEditorContext();
   const { courseId } = useParams();
 
   useEffect(() => {
@@ -34,6 +36,8 @@ export default function CourseEditorScreen(): ReactElement {
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
+
+  useRedirectToMain();
 
   return (
     <>
@@ -54,6 +58,7 @@ export default function CourseEditorScreen(): ReactElement {
         <ResourcesList />
         <CourseOutline />
       </div>
+      <UnloadDialog when={hasChanges} />
     </>
   );
 }
