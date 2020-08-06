@@ -15,7 +15,7 @@ export interface IAction {
   errorMessage?: string;
   user?: UserData;
   originalUser?: UserData;
-  system?: SystemData;
+  system?: SystemData | string; // string type for non-system-users - temporary solution
   environment?: WalkMeEnvironment;
 }
 
@@ -30,7 +30,7 @@ export interface IState {
   errorMessage: string;
   user: UserData;
   originalUser: UserData;
-  system: SystemData;
+  system: SystemData | string; // string type for non-system-users - temporary solution
   environment: WalkMeEnvironment;
 }
 
