@@ -19,7 +19,7 @@ export default function ImpersonateDialog({
 }: IImpersonateDialog): ReactElement {
   const [localValue, setLocalValue] = useState(value);
   const [options, setOptions] = useState<{ value: string }[]>([]);
-  const [invalid, setInvalid] = useState(true);
+  const [invalid, setInvalid] = useState(false);
 
   const fetchEmails = async (value: string) => {
     const { emails } = await getEmails(value, true);
@@ -33,7 +33,7 @@ export default function ImpersonateDialog({
     debouncedFetchEmails(value);
     setLocalValue(value);
     const valid = options.some((item) => item.value === value);
-    valid && setInvalid(false);
+    valid ? setInvalid(false) : setInvalid(true);
   };
 
   const onConfirmHandle = (confirmedText: string | undefined) => {
