@@ -32,7 +32,7 @@ export default function CourseOutlineLessonItem({
   newLessonId?: number;
 }): ReactElement {
   const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
-  const newLessonRef = useRef<HTMLDivElement>(null);
+  const lessonRef = useRef<HTMLDivElement>(null);
 
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -68,7 +68,7 @@ export default function CourseOutlineLessonItem({
   useEffect(() => {
     // detecting new lesson added and scroll to element
     if (item.id === newLessonId && isEmpty) {
-      newLessonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      lessonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [item.id, isEmpty, newLessonId]);
 
@@ -80,9 +80,10 @@ export default function CourseOutlineLessonItem({
         headerClassName={classes['lesson-header']}
         header={<LessonHeader lesson={item} type={IconType.Lesson} />}
         hasDragHandle
+        ref={lessonRef}
       >
         {isEmpty && (
-          <div ref={newLessonRef} className={classes['lesson-empty-state-wrapper']}>
+          <div className={classes['lesson-empty-state-wrapper']}>
             <WMEmpty
               description="Drag content into the lesson"
               image={<Icon type={IconType.EmptyLesson} />}

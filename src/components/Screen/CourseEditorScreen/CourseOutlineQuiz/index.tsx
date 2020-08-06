@@ -21,7 +21,7 @@ export default function CourseOutlineQuiz({
   isNew?: boolean;
 }): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const quizRef = useRef<HTMLDivElement>(null);
 
   const onInnerDrop = (e: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -62,91 +62,89 @@ export default function CourseOutlineQuiz({
   useEffect(() => {
     // detecting new quiz added and scroll to element
     if (quiz.id === undefined && isNew) {
-      containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      quizRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [quiz, isNew]);
 
   return (
-    <div ref={containerRef} className={classes['quiz-wrapper']}>
-      <WMCollapse
-        className={classes['quiz']}
-        headerClassName={classes['quiz-header']}
-        header={<QuizHeader className={classes['item-with-settings']} />}
-      >
-        <QuestionItem
-          item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
-          className={cc([
-            classes['welcome-screen-item'],
-            classes['item-with-settings'],
-            {
-              [classes['active-item']]:
-                activeDetailsItem?.type === DetailsPanelSettingsType.QuizWelcome,
-            },
-          ])}
-          onClick={() =>
-            onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: quiz.welcomeScreen })
-          }
-          isValid={quiz.welcomeScreen.isValid()}
-        />
-        <CourseQuestionList
-          items={quiz.questions.toArray()}
-          onDrop={(e: any) => onInnerDrop(e)}
-          getChildPayload={(index: number) => quiz.questions?.toArray()[index]}
-          dragClass={classes['card-ghost']}
-          dropPlaceholder={{
-            animationDuration: 150,
-            showOnTop: false,
-            className: classes['drop-preview'],
-          }}
-          shouldAcceptDrop={shouldAcceptDrop}
-          className={cc([
-            {
-              [classes['is-empty']]: !quiz.questions.toArray().length,
-            },
-          ])}
-          activeQuestionId={
-            activeDetailsItem?.type === DetailsPanelSettingsType.Question
-              ? activeDetailsItem?.id
-              : undefined
-          }
-          onQuestionClick={(question: QuizQuestion) => {
-            onItemClick({ type: DetailsPanelSettingsType.Question, data: question });
-          }}
-          onQuestionDelete={(questionIndex) => {
-            onQuestionDelete(questionIndex);
-          }}
-        />
-        <QuestionItem
-          item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
-          className={cc([
-            classes['success-screen-item'],
-            classes['item-with-settings'],
-            {
-              [classes['active-item']]:
-                activeDetailsItem?.type === DetailsPanelSettingsType.QuizSuccess,
-            },
-          ])}
-          onClick={() =>
-            onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: quiz.successScreen })
-          }
-          isValid={quiz.successScreen.isValid()}
-        />
-        <QuestionItem
-          item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
-          className={cc([
-            classes['fail-screen-item'],
-            classes['item-with-settings'],
-            {
-              [classes['active-item']]:
-                activeDetailsItem?.type === DetailsPanelSettingsType.QuizFail,
-            },
-          ])}
-          onClick={() =>
-            onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: quiz.failScreen })
-          }
-          isValid={quiz.failScreen.isValid()}
-        />
-      </WMCollapse>
-    </div>
+    <WMCollapse
+      className={classes['quiz']}
+      headerClassName={classes['quiz-header']}
+      header={<QuizHeader className={classes['item-with-settings']} />}
+      ref={quizRef}
+    >
+      <QuestionItem
+        item={{ title: 'Quiz Welcome Page', type: QuizScreenType.WelcomeScreen }}
+        className={cc([
+          classes['welcome-screen-item'],
+          classes['item-with-settings'],
+          {
+            [classes['active-item']]:
+              activeDetailsItem?.type === DetailsPanelSettingsType.QuizWelcome,
+          },
+        ])}
+        onClick={() =>
+          onItemClick({ type: DetailsPanelSettingsType.QuizWelcome, data: quiz.welcomeScreen })
+        }
+        isValid={quiz.welcomeScreen.isValid()}
+      />
+      <CourseQuestionList
+        items={quiz.questions.toArray()}
+        onDrop={(e: any) => onInnerDrop(e)}
+        getChildPayload={(index: number) => quiz.questions?.toArray()[index]}
+        dragClass={classes['card-ghost']}
+        dropPlaceholder={{
+          animationDuration: 150,
+          showOnTop: false,
+          className: classes['drop-preview'],
+        }}
+        shouldAcceptDrop={shouldAcceptDrop}
+        className={cc([
+          {
+            [classes['is-empty']]: !quiz.questions.toArray().length,
+          },
+        ])}
+        activeQuestionId={
+          activeDetailsItem?.type === DetailsPanelSettingsType.Question
+            ? activeDetailsItem?.id
+            : undefined
+        }
+        onQuestionClick={(question: QuizQuestion) => {
+          onItemClick({ type: DetailsPanelSettingsType.Question, data: question });
+        }}
+        onQuestionDelete={(questionIndex) => {
+          onQuestionDelete(questionIndex);
+        }}
+      />
+      <QuestionItem
+        item={{ title: 'Summary - Success', type: QuizScreenType.SuccessScreen }}
+        className={cc([
+          classes['success-screen-item'],
+          classes['item-with-settings'],
+          {
+            [classes['active-item']]:
+              activeDetailsItem?.type === DetailsPanelSettingsType.QuizSuccess,
+          },
+        ])}
+        onClick={() =>
+          onItemClick({ type: DetailsPanelSettingsType.QuizSuccess, data: quiz.successScreen })
+        }
+        isValid={quiz.successScreen.isValid()}
+      />
+      <QuestionItem
+        item={{ title: 'Summary - Failure', type: QuizScreenType.FailScreen }}
+        className={cc([
+          classes['fail-screen-item'],
+          classes['item-with-settings'],
+          {
+            [classes['active-item']]: activeDetailsItem?.type === DetailsPanelSettingsType.QuizFail,
+          },
+        ])}
+        onClick={() =>
+          onItemClick({ type: DetailsPanelSettingsType.QuizFail, data: quiz.failScreen })
+        }
+        isValid={quiz.failScreen.isValid()}
+      />
+    </WMCollapse>
   );
 }
