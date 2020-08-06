@@ -1,9 +1,12 @@
 .course-outline-list {
   position: relative;
-  height: 100%;
 
-  :global(.smooth-dnd-container) {
+  &:not(.has-quiz) {
     height: 100%;
+
+    :global(.smooth-dnd-container) {
+      height: 100%;
+    }
   }
 
   &.is-empty {
