@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 import { Divider } from 'antd';
 
 import { COURSES_ROUTE, COURSE_ROUTE, USERS_ROUTE } from '../../../constants/routes';
@@ -22,7 +23,9 @@ export default function Sidebar(): ReactElement {
       {appInit ? (
         <>
           <div>
-            <Logo />
+            <Link to={COURSES_ROUTE.path}>
+              <Logo />
+            </Link>
             <Divider className={classes['sidebar-separator']} />
             <Navigation routes={sidebarRoutes} />
           </div>
@@ -33,7 +36,9 @@ export default function Sidebar(): ReactElement {
         </>
       ) : (
         <div className={classes['sidebar-skeleton']}>
-          <Logo />
+          <Link to={COURSES_ROUTE.path}>
+            <Logo />
+          </Link>
           <Divider className={classes['sidebar-separator']} />
           <div className={classes['sidebar-top-skeleton']}>
             <WMSkeletonButton active size="large" shape="circle" />
