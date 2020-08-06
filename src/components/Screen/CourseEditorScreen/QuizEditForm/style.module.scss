@@ -105,10 +105,29 @@
     margin-left: 40px;
   }
 
-  .answer-field {
-    :global(label) {
-      display: flex;
-      flex-direction: column;
+  .answer-container {
+    display: flex;
+
+    .answer-field {
+      flex: 1 0 95%;
+
+      :global(label) {
+        display: flex;
+        flex-direction: column;
+      }
     }
+
+    .delete-button {
+      margin-top: 5px;
+      flex: 1 0 30px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 25px;
+    }
+  }
+
+  .error-message {
+    color: var(--red);
   }
 }

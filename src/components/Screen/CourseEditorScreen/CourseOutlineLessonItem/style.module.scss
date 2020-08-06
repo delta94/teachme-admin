@@ -1,11 +1,14 @@
 .course-outline-lesson-item {
   width: 100%;
-  margin-top: 15px;
   margin-bottom: 0;
   padding: 0;
 
   .lesson {
     width: 100%;
+  }
+
+  .is-empty {
+    height: 70px;
   }
 }
 
@@ -14,7 +17,7 @@
   border-radius: 4px;
   margin: 8px;
   min-height: 16px;
-  background-color: var(--hover-color);
+  background-color: var(--hover-color-translucent);
 }
 
 .card-ghost {
@@ -24,15 +27,14 @@
   cursor: grabbing;
 }
 
-.is-empty {
-  height: 70px;
+.lesson-empty-state-wrapper {
   position: relative;
+  width: 100%;
 
-  &::after {
-    content: 'Drag content into the lesson';
+  .lesson-empty-state {
     position: absolute;
-    top: 0;
-    left: 0;
+    height: 70px;
+    width: 100%;
   }
 }
 

@@ -12,6 +12,7 @@ interface IWMCollapse {
   className?: string;
   header: ReactNode;
   headerClassName?: string;
+  contentClassName?: string;
   isOpen?: boolean;
   hasDragHandle?: boolean;
   onClick?: (e: any) => void;
@@ -24,6 +25,7 @@ export default function WMCollapse({
   className,
   header,
   headerClassName,
+  contentClassName,
   isOpen = true,
   hasDragHandle = false,
   onClick,
@@ -55,7 +57,7 @@ export default function WMCollapse({
         {header}
       </div>
       <div className={classes['collapse-content']}>
-        <SmoothCollapse expanded={open} {...otherProps}>
+        <SmoothCollapse expanded={open} className={contentClassName} {...otherProps}>
           {children}
         </SmoothCollapse>
       </div>

@@ -14,7 +14,6 @@ export interface ICourseItemsList {
   items: Array<ContentItem>;
   className?: string;
   onDrop?: any;
-  emptyState?: ReactNode;
   taskItemProps?: any;
   [key: string]: any;
 }
@@ -23,14 +22,14 @@ export default function CourseItemsList({
   items,
   onDrop,
   className,
-  emptyState,
   taskItemProps = {},
   isDisabled,
+  isActive,
   ...otherProps
 }: ICourseItemsList): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
 
-  const handleItemClick = (item: ContentItem) => {
+  const onOpenDetailsPanel = (item: ContentItem) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
       activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id as number, item: item },
@@ -45,24 +44,23 @@ export default function CourseItemsList({
         onDrop={onDrop}
         dragClass={classes['card-ghost']}
       >
-        {items.length ? (
+        {Boolean(items.length) &&
           items.map((item, i) => {
             const disabled = isDisabled && isDisabled(item);
+            const active = isActive && isActive(item);
 
             return (
               <TaskItem
                 key={i}
                 index={i}
                 item={item}
-                onClick={() => handleItemClick && handleItemClick(item)}
-                {...taskItemProps}
+                onClick={(e) => onOpenDetailsPanel(item)}
+                active={active}
                 disabled={disabled}
+                {...taskItemProps}
               />
             );
-          })
-        ) : (
-          <div className={classes['empty']}>No items were found</div>
-        )}
+          })}
       </Container>
     </div>
   );

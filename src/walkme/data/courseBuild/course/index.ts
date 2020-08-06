@@ -98,4 +98,8 @@ export class Course implements BuildCourse, ITypeIdQueriable {
   includes(type: TypeName, id: number): boolean {
     return this.items.includes(type, id);
   }
+
+  isValid(): boolean {
+    return this._quiz.isValid();
+  }
 }

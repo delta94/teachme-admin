@@ -36,6 +36,7 @@ export default function UsersScreen(): ReactElement {
   } = appState;
   const [state, dispatch] = useUsersContext();
   const {
+    isFetchingUsers,
     dateRange: { from, to },
     users,
     usersSearchValue,
@@ -73,7 +74,12 @@ export default function UsersScreen(): ReactElement {
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <WMCard className={classes['table-wrapper']}>
-        <WMTable className={classes['users-table']} data={users} columns={columns}>
+        <WMTable
+          className={classes['users-table']}
+          data={users}
+          columns={columns}
+          loading={isUpdating || isFetchingUsers}
+        >
           <ShownUsersIndicator />
           {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />

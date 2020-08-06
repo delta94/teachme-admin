@@ -3,9 +3,15 @@ import React, { ReactElement } from 'react';
 import { useCoursesContext } from '../../../providers/CoursesContext';
 import { pluralizer } from '../../../utils';
 
+import WMSkeleton from '../../common/WMSkeleton';
+
 import classes from './style.module.scss';
 
-export default function ShownCoursesIndicator(): ReactElement {
+export default function ShownCoursesIndicator({
+  isLoading = false,
+}: {
+  isLoading?: boolean;
+}): ReactElement {
   const [{ courses, filteredCourses, selectedRows }] = useCoursesContext();
 
   const selectedRowsCount = selectedRows.length;
@@ -13,13 +19,15 @@ export default function ShownCoursesIndicator(): ReactElement {
 
   return (
     <div className={classes['shown-courses-indicator']}>
-      {courses.length ? (
-        <>
-          {selectedRowsCount
-            ? `${selectedRowsCount} ${pluralizer('course', selectedRowsCount)} selected`
-            : `Showing ${shownCoursesCount} ${pluralizer('course', shownCoursesCount)}`}
-        </>
-      ) : null}
+      <WMSkeleton loading={isLoading} active title={{ width: 150 }} paragraph={false}>
+        {Boolean(courses.length) && (
+          <>
+            {selectedRowsCount
+              ? `${selectedRowsCount} ${pluralizer('course', selectedRowsCount)} selected`
+              : `Showing ${shownCoursesCount} ${pluralizer('course', shownCoursesCount)}`}
+          </>
+        )}
+      </WMSkeleton>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import produce from 'immer';
 
 import { CourseOverviewData } from '../../walkme/models';
 import { defaultDateRange } from '../../utils';
+import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
 
 import { ActionType, IState, IAction } from './course-context.interface';
 
@@ -10,7 +11,11 @@ export const initialState = {
   isFetchingCourseDataError: false,
   dateRange: defaultDateRange,
   overview: {} as CourseOverviewData,
-  course: {},
+  courseMetadata: {},
+  courseOutline: [] as ICourseOutlineItems,
+  filteredCourseOutline: [] as ICourseOutlineItems,
+  courseOutlineSearchValue: '',
+  quiz: {},
   isExportingCourse: false,
   isExportingCourseError: false,
 } as IState;
@@ -26,7 +31,11 @@ export const reducer = produce(
         draft.isFetchingCourseData = false;
         draft.isFetchingCourseDataError = false;
         draft.overview = action.overview ?? initialState.overview;
-        draft.course = action.course ?? initialState.course;
+        draft.courseMetadata = action.courseMetadata ?? initialState.courseMetadata;
+        draft.quiz = action.quiz ?? initialState.quiz;
+        draft.courseOutline = action.courseOutline ?? initialState.courseOutline;
+        draft.filteredCourseOutline =
+          action.filteredCourseOutline ?? initialState.filteredCourseOutline;
         break;
       case ActionType.FetchCourseDataError:
         draft.isFetchingCourseData = false;
@@ -34,6 +43,12 @@ export const reducer = produce(
         break;
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
+        break;
+      case ActionType.SetCourseOutlineSearchValue:
+        draft.courseOutlineSearchValue =
+          action.courseOutlineSearchValue ?? initialState.courseOutlineSearchValue;
+        draft.filteredCourseOutline =
+          action.filteredCourseOutline ?? initialState.filteredCourseOutline;
         break;
       case ActionType.ExportCourse:
         draft.isExportingCourse = true;

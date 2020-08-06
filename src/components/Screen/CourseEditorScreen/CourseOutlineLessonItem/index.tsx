@@ -6,7 +6,8 @@ import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/le
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMCollapse from '../../../common/WMCollapse';
-import { IconType } from '../../../common/Icon';
+import Icon, { IconType } from '../../../common/Icon';
+import WMEmpty from '../../../common/WMEmpty';
 
 import CourseItemsList from '../CourseItemsList';
 import LessonHeader from '../LessonHeader';
@@ -21,12 +22,14 @@ export default function CourseOutlineLessonItem({
   item,
   index,
   className,
+  innerClassName,
 }: {
   item: INewLesson;
   index: number;
-  className: string;
+  className?: string;
+  innerClassName?: string;
 }): ReactElement {
-  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -49,18 +52,35 @@ export default function CourseOutlineLessonItem({
   const shouldAcceptDrop = (e: any, payload: any) => payload.type !== 'lesson' && !payload.answers;
 
   const onDeleteTaskItem = (item: any) => {
+    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
     (course?.items.getItem(index) as CourseLesson).childNodes.removeItem(item);
+
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+
+    // on delete activeDetailsItem should close the details panel
+    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
+
+  const isEmpty = !item.childNodes.toArray().length;
 
   return (
     <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
       <WMCollapse
-        className={classes['lesson']}
+        className={cc([classes['lesson'], innerClassName])}
+        contentClassName={cc({ [classes['is-empty']]: isEmpty })}
         headerClassName={classes['lesson-header']}
         header={<LessonHeader lesson={item} type={IconType.Lesson} />}
         hasDragHandle
       >
+        {isEmpty && (
+          <div className={classes['lesson-empty-state-wrapper']}>
+            <WMEmpty
+              description="Drag content into the lesson"
+              image={<Icon type={IconType.EmptyLesson} />}
+              containerClassName={classes['lesson-empty-state']}
+            />
+          </div>
+        )}
         <CourseItemsList
           items={item.childNodes.toArray()}
           onDrop={(e: any) => onInnerDrop(e, item.id.toString(), e.element)}
@@ -78,6 +98,7 @@ export default function CourseOutlineLessonItem({
             onDelete: onDeleteTaskItem,
             className: classes['task-with-settings'],
           }}
+          isActive={(item: any) => item.id === activeDetailsItem?.id}
         />
       </WMCollapse>
     </Draggable>

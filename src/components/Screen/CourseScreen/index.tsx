@@ -1,38 +1,47 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import usePrevious from '@react-hook/previous';
 
 import { IDateRange } from '../../../utils';
+import { COURSES_ROUTE } from '../../../constants/routes';
 import { useAppContext } from '../../../providers/AppContext';
 import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
-import { courseMockData } from '../../../constants/mocks/course-screen';
+import { CourseOverviewData } from '../../../walkme/models';
 
 import AnalyticsCharts from '../../common/AnalyticsCharts';
+
 import CourseScreenHeader from './CourseScreenHeader';
 import CourseTabs from './CourseTabs';
-import { CourseOverviewData } from '../../../walkme/models';
+import { parseCourseOutline } from './utils';
+import {
+  ICourseOutlineItem,
+  ICourseOutlineLesson,
+  ICourseOutlineItems,
+} from './courseScreen.interface';
+
+export { parseCourseOutline };
+export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
-  const [
-    {
-      isUpdating,
-      environment: { id: envId },
-      system,
-    },
-    appDispatch,
-  ] = useAppContext();
+  const [appState] = useAppContext();
+  const {
+    isUpdating,
+    environment: { id: envId },
+    system,
+  } = appState;
   const [state, dispatch] = useCourseContext();
   const {
+    isFetchingCourseData,
     dateRange: { from, to },
     overview,
-    course,
+    courseMetadata,
   } = state;
-
   const { courseId } = useParams();
 
   useEffect(() => {
     if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
-  }, [dispatch, isUpdating, courseId, envId, system, from, to]);
+  }, [dispatch, isUpdating, courseId, envId, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);
@@ -40,18 +49,25 @@ export default function CourseScreen(): ReactElement {
   const onDateRangeChange = (dateRange?: IDateRange) =>
     dispatch({ type: ActionType.SetDateRange, dateRange });
 
+  const prevSystem = usePrevious(system);
+  const { push } = useHistory();
+
+  useEffect(() => {
+    if (prevSystem && prevSystem.userId !== system.userId) push(COURSES_ROUTE.path);
+  }, [prevSystem, system, push]);
+
   return (
     <>
       <CourseScreenHeader
-        course={course}
+        courseMetadata={courseMetadata}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Course"
         overview={overview as CourseOverviewData}
-        quizData={course?.quiz}
+        isLoading={isUpdating || isFetchingCourseData}
       />
-      <CourseTabs course={course} />
+      <CourseTabs />
     </>
   );
 }

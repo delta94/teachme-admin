@@ -95,4 +95,16 @@ export class QuizQuestion implements BuildQuizQuestion {
       OrderIndex: index,
     };
   }
+
+  isValid(): boolean {
+    return !!this.title && this.isAnswersValid() && this.isSelectionValid();
+  }
+
+  isSelectionValid(): boolean {
+    return this.answers.toArray().some((a) => a.isCorrect);
+  }
+
+  private isAnswersValid() {
+    return this.answers.toArray().every((a) => a.isValid());
+  }
 }

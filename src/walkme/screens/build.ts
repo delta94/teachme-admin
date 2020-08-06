@@ -3,28 +3,38 @@ import { mapItem } from '../data/services/item';
 import { Course } from '../data/courseBuild';
 import * as courses from '../data/courseBuild';
 import walkme from '@walkme/editor-sdk';
+import * as wmData from '../data/services/wmData';
+import consts from '../consts';
 
 /**
  * Returns a sorted list of folders with only smart WTs, articles and videos
  * @param environmentId
  */
-export async function getItemsList(environmentId: number): Promise<Array<ContentItem>> {
+export async function getItemsList(
+  environmentId: number,
+  refresh = false,
+): Promise<Array<ContentItem>> {
+  if (refresh) {
+    wmData.refresh(consts.TEACHME_TYPES, environmentId);
+  }
   const nestedItems: Array<WalkMeDataItem> = await walkme.data.getFolders(environmentId);
   const items = await Promise.all(
     nestedItems.map((item) =>
-      mapItem(item, TypeName.Folder, environmentId, {
-        types: [TypeName.SmartWalkThru, TypeName.Content],
-      }),
+      mapItem(item, TypeName.Folder, environmentId, { types: consts.TEACHME_TYPES }),
     ),
   );
   return items.flat().reverse();
 }
+
 /**
  * Returns a sorted list of smart WTs, articles and videos without the wrapping folders
  * @param environmentId
  */
-export async function getFlatItemsList(environmentId: number): Promise<Array<ContentItem>> {
-  const nestedItems = await getItemsList(environmentId);
+export async function getFlatItemsList(
+  environmentId: number,
+  refresh = false,
+): Promise<Array<ContentItem>> {
+  const nestedItems = await getItemsList(environmentId, refresh);
   return nestedItems.flatMap((item) => item.childNodes as ContentItem[]) as Array<ContentItem>;
 }
 

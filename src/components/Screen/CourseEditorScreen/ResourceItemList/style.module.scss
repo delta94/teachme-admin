@@ -1,0 +1,12 @@
+.resource-item {
+  &:global(.smooth-dnd-ghost):global(.smooth-dnd-draggable-wrapper) {
+    margin: 7px 0;
+  }
+
+  .card-ghost {
+    border: var(--wm-border);
+    background-color: var(--white);
+    box-shadow: var(--drag-shadow);
+    cursor: grabbing;
+  }
+}

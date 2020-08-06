@@ -1,57 +1,66 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 
-import { CourseItemType } from '../../../interfaces/course.interfaces';
-import WMTable from '../../common/WMTable';
-import { ICourseOutlineTable } from './courseScreen.interface';
+import { useAppContext } from '../../../providers/AppContext';
+import { useCourseContext, ActionType } from '../../../providers/CourseContext';
+
+import WMTable, { WMTableExpanded } from '../../common/WMTable';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import ExportButton from '../../common/buttons/ExportButton';
-import SearchFilter from '../../common/filters/SearchFilter';
+import { SearchFilter } from '../../common/filters';
+
+import ExportCoursesButton from './ExportCourseButton';
+import { columns } from './tableData';
+import { getFilteredCourseOutline } from './utils';
 
 import classes from './style.module.scss';
 
-export default function CourseOutlineTable({ course }: ICourseOutlineTable): ReactElement {
-  const [tableData, setTableData] = useState(course.data);
+export default function CourseOutlineTable(): ReactElement {
+  const [{ isUpdating }] = useAppContext();
+  const [state, dispatch] = useCourseContext();
+  const {
+    isFetchingCourseData,
+    courseOutline,
+    filteredCourseOutline,
+    courseOutlineSearchValue,
+  } = state;
 
   const onSearch = (searchValue: string) => {
-    const isMatch = (item: any) => item.title.toLowerCase().includes(searchValue.toLowerCase());
+    const filtered = getFilteredCourseOutline(courseOutline, searchValue);
 
-    const getFilteredLessonChildren = (items: any[]) =>
-      items.filter((child: any) => isMatch(child));
-
-    const newTableData = course.data
-      .map((item: any) => {
-        if (item.type === CourseItemType.Lesson) {
-          const someChildrenAreMatch = item.children.some((child: any) => isMatch(child));
-          const filteredLesson = { ...item, children: getFilteredLessonChildren(item.children) };
-
-          if (isMatch(item) || someChildrenAreMatch) {
-            return filteredLesson;
-          }
-        } else {
-          return isMatch(item) && item;
-        }
-      })
-      .filter((item: any) => Boolean(item));
-
-    setTableData(newTableData);
+    dispatch({
+      type: ActionType.SetCourseOutlineSearchValue,
+      courseOutlineSearchValue: searchValue,
+      filteredCourseOutline: filtered,
+    });
   };
 
   return (
-    <WMTable
-      data={tableData as Array<any>}
-      columns={course.columns}
-      expandable={{ defaultExpandAllRows: true }}
-      rowClassName={(record) => record.className}
-      className={classes['course-table']}
-    >
+    <div className={classes['course-outline-table']}>
       <ControlsWrapper className={classes['course-table-toolbar']}>
-        <ExportButton className={classes['export']} />
+        <ExportCoursesButton />
         <SearchFilter
           className={classes['search']}
           placeholder="Search item name"
           onSearch={onSearch}
+          value={courseOutlineSearchValue}
         />
       </ControlsWrapper>
-    </WMTable>
+      {filteredCourseOutline.length ? (
+        // Using WMTableExpanded as a new instance of WMTable to expand all rows initially
+        <WMTableExpanded
+          loading={isUpdating || isFetchingCourseData}
+          data={filteredCourseOutline}
+          columns={columns}
+          rowClassName={(record) => record.className}
+          className={classes['course-table']}
+        />
+      ) : (
+        <WMTable
+          loading={isUpdating || isFetchingCourseData}
+          data={[]}
+          columns={columns}
+          className={classes['course-table']}
+        />
+      )}
+    </div>
   );
 }

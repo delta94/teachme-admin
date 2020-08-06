@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react';
+import { useParams } from 'react-router-dom';
 import cc from 'classcat';
+
+import { CourseOverviewData } from '../../../walkme/models/course/panels';
 
 import { IAnalyticsCharts } from './analytics.interface';
 import CourseSummaryChart from './CourseSummaryChart';
@@ -13,33 +16,35 @@ export default function AnalyticsCharts({
   summaryChartTitle,
   timeCompletionTitle = 'Avg. Completion Time',
   quizCompletionTitle = 'Quiz Completion Rate',
-  quizData,
   overview,
+  isLoading = false,
 }: IAnalyticsCharts): ReactElement {
+  const { courseId } = useParams();
+
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
-        <CourseSummaryChart title={summaryChartTitle} overview={overview} />
+        <CourseSummaryChart title={summaryChartTitle} overview={overview} isLoading={isLoading} />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
         <CourseTimeCompletionChart
           className={classes['line-graph']}
           title={timeCompletionTitle}
           overview={overview}
+          isLoading={isLoading}
         />
         <div className={classes['quiz-graphs']}>
           <QuizCompletionRateChart
             className={classes['line-graph']}
             title={quizCompletionTitle}
             overview={overview}
+            isLoading={isLoading}
           />
-          {quizData && (
+          {Boolean(courseId) && (
             <QuizScoreChart
-              isEmpty={Object.keys(quizData).length === 0}
-              quizData={{
-                average: 0, // TODO: should use overview.avg_quiz_score - but getting error Property 'passmark' does not exist on type 'AllCoursesOverviewResponse | CourseOverviewData'
-                passmark: quizData.properties.passmark, // TODO: should use `overview?.passmark` but getting error Property 'passmark' does not exist on type 'AllCoursesOverviewResponse | CourseOverviewData'
-              }}
+              isEmpty={overview && !Object.keys(overview).length}
+              overview={overview as CourseOverviewData}
+              isLoading={isLoading}
             />
           )}
         </div>

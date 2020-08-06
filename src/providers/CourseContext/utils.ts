@@ -1,7 +1,10 @@
 import { createContext, useContext } from 'react';
 
-import { getCourseOverview, getCourse, exportCourseOutline } from '../../walkme';
+import { getCourseOverview, exportCourseOutline, getQuizData } from '../../walkme';
 import { wmMessage, MessageType } from '../../utils';
+import { parseCourseOutline } from '../../components/Screen/CourseScreen';
+import { getCourseOutline } from '../../walkme/data/courseOutline';
+import { getCourseMetadata } from '../../walkme/data/courseMetadata';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
 
@@ -41,10 +44,20 @@ export const fetchCourseData = async (
   const id = +courseId;
 
   try {
-    const course = await getCourse(id, envId);
+    const courseMetadata = await getCourseMetadata(id, envId);
+    const courseOutline = await getCourseOutline(id, envId, from, to);
+    const convertedCourseOutline = parseCourseOutline(courseOutline);
+    const quiz = await getQuizData(id, envId, from, to);
     const overview = await getCourseOverview(id, envId, from, to);
 
-    dispatch({ type: ActionType.FetchCourseDataSuccess, course, overview });
+    dispatch({
+      type: ActionType.FetchCourseDataSuccess,
+      courseMetadata,
+      overview,
+      courseOutline: convertedCourseOutline,
+      filteredCourseOutline: convertedCourseOutline,
+      quiz,
+    });
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCourseDataError });

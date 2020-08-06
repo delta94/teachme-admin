@@ -34,7 +34,7 @@ const options: IWMDropdownOption[] = [
 ];
 
 export default function ActionMenu({ className }: { className?: string }): ReactElement {
-  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
   const onActionSelect = (selected: IWMDropdownOption) => {
     if (selected.value === CourseItemType.Lesson) {
@@ -52,7 +52,15 @@ export default function ActionMenu({ className }: { className?: string }): React
   };
 
   return (
-    <WMDropdown options={options} onSelectedChange={onActionSelect}>
+    <WMDropdown
+      options={options.map((option) => {
+        if (option.value === CourseItemType.Quiz && quiz) {
+          return { ...option, disabled: true };
+        }
+        return option;
+      })}
+      onSelectedChange={onActionSelect}
+    >
       <AddButton className={className} />
     </WMDropdown>
   );

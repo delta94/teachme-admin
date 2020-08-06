@@ -12,4 +12,5 @@ export interface IWMLineChartProps<T> {
   className?: string;
   hasWMTooltip?: boolean;
   hasData?: boolean;
+  isLoading?: boolean;
 }

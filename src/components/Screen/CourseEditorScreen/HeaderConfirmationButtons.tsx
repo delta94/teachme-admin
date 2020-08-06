@@ -5,6 +5,7 @@ import { ActionType, useCourseEditorContext } from '../../../providers/CourseEdi
 import { BASE_COURSE_EDITOR_ROUTE, COURSES_ROUTE } from '../../../constants/routes';
 import { MessageType, wmMessage } from '../../../utils/wmMessage';
 
+import Icon, { IconType } from '../../common/Icon';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 
 import classes from './style.module.scss';
@@ -13,6 +14,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
   const [{ course, hasChanges }, dispatch] = useCourseEditorContext();
   const history = useHistory();
   const { courseId } = useParams();
+  const isValid = course ? course?.isValid() : true;
 
   const onSave = () => {
     course
@@ -33,6 +35,11 @@ export default function HeaderConfirmationButtons(): ReactElement {
 
   return (
     <div className={classes['header-confirmation-buttons']}>
+      {!isValid && (
+        <div className={classes['error-message']}>
+          <Icon type={IconType.ValidationError} /> There are items that require your attention
+        </div>
+      )}
       <Link className={classes['create-button-wrapper']} to={COURSES_ROUTE.path}>
         <WMButton
           variant={ButtonVariantEnum.Secondary}
@@ -45,7 +52,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
       <WMButton
         variant={ButtonVariantEnum.Primary}
         shape={'round'}
-        disabled={!hasChanges}
+        disabled={!hasChanges || !isValid}
         onClick={onSave}
       >
         save

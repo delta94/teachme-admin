@@ -29,7 +29,7 @@
   cursor: pointer;
 }
 
-.empty-state {
+.courses-empty-state {
   text-align: center;
   color: var(--empty-text);
   font-family: var(--font-primary);
@@ -42,7 +42,7 @@
   align-items: center;
   justify-content: center;
 
-  .empty-icon {
+  .icon {
     font-size: 12px;
   }
 
@@ -51,15 +51,6 @@
     color: var(--empty-text);
     margin-bottom: unset;
     font-weight: unset;
-  }
-}
-
-.course-screen-skeleton {
-  display: flex;
-  flex-direction: row;
-
-  > * {
-    margin-right: 20px;
   }
 }
 

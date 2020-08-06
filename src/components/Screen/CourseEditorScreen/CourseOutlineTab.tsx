@@ -6,6 +6,7 @@ import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
+import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
 import classes from './style.module.scss';
 
 export interface IProperties {
@@ -39,6 +40,9 @@ export default function CourseOutlineTab(): ReactElement {
           console.log('searching');
         }}
       /> */}
+      {!quiz && !course?.items.toArray().length && (
+        <CourseOutlineListEmptyState containerClassName={classes['course-outline-empty-state']} />
+      )}
       {course && (
         <CourseOutlineList
           items={course?.items.toArray() ?? []}
@@ -47,15 +51,7 @@ export default function CourseOutlineTab(): ReactElement {
           handleItemClick={onItemClick}
         />
       )}
-      {quiz && (
-        <CourseOutlineQuiz
-          item={quiz}
-          quizItemClick={({ type, data }) => {
-            console.log('quizItemClicked type ', type);
-            console.log('quizItemClicked data ', data);
-          }}
-        />
-      )}
+      {quiz && <CourseOutlineQuiz item={quiz} />}
     </div>
   );
 }
