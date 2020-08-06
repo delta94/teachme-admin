@@ -18,6 +18,7 @@ export default function SystemMenu({ className }: { className?: string }): React
   const [selectedSystem, setSelectedSystem] = useState<IWMDropdownOption>();
   const [systems, setSystems] = useState<SystemData[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
+  const [initiated, setInitiated] = useState(false);
   const systemIsValid = system !== '' && (system as SystemData)?.userId;
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
@@ -49,17 +50,25 @@ export default function SystemMenu({ className }: { className?: string }): React
   }, [systemIsValid, dispatch]);
 
   useEffect(() => {
-    getSystemsOptions();
-
-    return () => {
-      setSystems([]);
-      setOptions([]);
-    };
-  }, [getSystemsOptions]);
+    if (!initiated) {
+      getSystemsOptions();
+      setInitiated(true);
+    }
+  }, [getSystemsOptions, initiated]);
 
   useEffect(() => {
     if (systemIsValid) setSelectedSystem(parseSystems([system as SystemData]) as IWMDropdownOption);
   }, [system, systemIsValid]);
+
+  // unmount only
+  useEffect(
+    () => () => {
+      setSystems([]);
+      setOptions([]);
+      setInitiated(false);
+    },
+    [],
+  );
 
   return (
     <WMDropdown
