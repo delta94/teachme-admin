@@ -1,4 +1,10 @@
-import React, { ReactNode, ReactElement, useState, useEffect } from 'react';
+import React, {
+  ReactNode,
+  ReactElement,
+  useState,
+  useEffect,
+  ForwardRefRenderFunction,
+} from 'react';
 import SmoothCollapse from 'react-smooth-collapse';
 import cc from 'classcat';
 
