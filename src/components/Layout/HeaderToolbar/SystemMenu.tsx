@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import { message } from 'antd';
+import { useLocation } from 'react-router-dom';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
@@ -14,21 +14,15 @@ import { parseSystems } from './utils';
 import classes from './style.module.scss';
 
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
-  const [{ system }, dispatch] = useAppContext();
-
-  const [selectedSystem, setSelectedSystem] = useState<IWMDropdownOption>();
   const [systems, setSystems] = useState<SystemData[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
 
-  const handleMenuClick = (selected: IWMDropdownOption) => {
+  const handleMenuClick = (selected: IWMDropdownOption) =>
     setAppSystem({
       dispatch,
       systems,
       systemId: parseInt(selected.id as string),
     });
-
-    message.info(`System changed to ${selected.value}`);
-  };
 
   const getSystemsOptions = async () => {
     const systemsOptions = await getSystems();
@@ -47,9 +41,15 @@ export default function SystemMenu({ className }: { className?: string }): React
     };
   }, []);
 
+  const [{ system }, dispatch] = useAppContext();
+  const [selectedSystem, setSelectedSystem] = useState<IWMDropdownOption>();
+
   useEffect(() => {
     if (system?.userId) setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
-  }, [system, system.userId]);
+  }, [system]);
+
+  const { pathname } = useLocation();
+  const isEditorScreen = pathname.includes('course-editor');
 
   return (
     <WMDropdown
@@ -57,6 +57,7 @@ export default function SystemMenu({ className }: { className?: string }): React
       options={options}
       selected={selectedSystem}
       onSelectedChange={handleMenuClick}
+      disabled={isEditorScreen}
     >
       <WMButton className={classes['dropdown-menu-button']}>
         {selectedSystem
