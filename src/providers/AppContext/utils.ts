@@ -70,9 +70,6 @@ export const setAppSystem = async ({
   try {
     await walkme.switchSystem(systemId);
     dispatch({ type: ActionType.SetSystem, system });
-
-    // TODO: here we need to add the call to get data
-
     dispatch({ type: ActionType.UpdateSuccess });
   } catch (error) {
     console.error(error);

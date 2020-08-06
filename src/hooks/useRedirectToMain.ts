@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
 import usePrevious from '@react-hook/previous';
 
 import { useAppContext } from '../providers/AppContext';
@@ -11,6 +12,7 @@ export const useRedirectToMain = (): void => {
   const { push } = useHistory();
 
   useEffect(() => {
-    if (prevSystem && prevSystem.userId !== system.userId) push(COURSES_ROUTE.path);
+    if (prevSystem !== '' && (prevSystem as SystemData)?.userId !== (system as SystemData)?.userId)
+      push(COURSES_ROUTE.path);
   }, [prevSystem, system, push]);
 };

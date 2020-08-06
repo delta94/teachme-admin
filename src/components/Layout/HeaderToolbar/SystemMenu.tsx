@@ -1,9 +1,9 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, useCallback } from 'react';
 import { message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
-import { useAppContext, setAppSystem } from '../../../providers/AppContext';
+import { useAppContext, setAppSystem, ActionType } from '../../../providers/AppContext';
 import { getSystems } from '../../../walkme';
 
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
@@ -15,10 +15,10 @@ import classes from './style.module.scss';
 
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
   const [{ system }, dispatch] = useAppContext();
-
   const [selectedSystem, setSelectedSystem] = useState<IWMDropdownOption>();
   const [systems, setSystems] = useState<SystemData[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
+  const systemIsValid = system !== '' && (system as SystemData)?.userId;
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setAppSystem({
@@ -30,13 +30,23 @@ export default function SystemMenu({ className }: { className?: string }): React
     message.info(`System changed to ${selected.value}`);
   };
 
-  const getSystemsOptions = async () => {
-    const systemsOptions = await getSystems();
-    const options = parseSystems(systemsOptions);
+  const getSystemsOptions = useCallback(async () => {
+    if (systemIsValid) {
+      dispatch({ type: ActionType.Updating });
 
-    setSystems(systemsOptions);
-    setOptions(options as IWMDropdownOption[]);
-  };
+      try {
+        const systemsOptions = await getSystems();
+        const options = parseSystems(systemsOptions);
+
+        setSystems(systemsOptions);
+        setOptions(options as IWMDropdownOption[]);
+        dispatch({ type: ActionType.UpdateSuccess });
+      } catch (error) {
+        console.error(error);
+        dispatch({ type: ActionType.UpdateError, errorMessage: error });
+      }
+    }
+  }, [systemIsValid, dispatch]);
 
   useEffect(() => {
     getSystemsOptions();
@@ -45,11 +55,11 @@ export default function SystemMenu({ className }: { className?: string }): React
       setSystems([]);
       setOptions([]);
     };
-  }, []);
+  }, [getSystemsOptions]);
 
   useEffect(() => {
-    if (system?.userId) setSelectedSystem(parseSystems([system]) as IWMDropdownOption);
-  }, [system, system.userId]);
+    if (systemIsValid) setSelectedSystem(parseSystems([system as SystemData]) as IWMDropdownOption);
+  }, [system, systemIsValid]);
 
   return (
     <WMDropdown
