@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement, useState, useEffect } from 'react';
+import React, { ReactNode, ReactElement, useState, useEffect, forwardRef, Ref } from 'react';
 import SmoothCollapse from 'react-smooth-collapse';
 import cc from 'classcat';
 
@@ -20,49 +20,58 @@ interface IWMCollapse {
   [key: string]: any;
 }
 
-export default function WMCollapse({
-  children,
-  className,
-  header,
-  headerClassName,
-  contentClassName,
-  isOpen = true,
-  hasDragHandle = false,
-  onClick,
-  ...otherProps
-}: IWMCollapse): ReactElement {
-  const [open, setOpen] = useState(isOpen);
+const WMCollapse = forwardRef(
+  (
+    {
+      children,
+      className,
+      header,
+      headerClassName,
+      contentClassName,
+      isOpen = true,
+      hasDragHandle = false,
+      onClick,
+      ...otherProps
+    }: IWMCollapse,
+    ref?: Ref<HTMLDivElement>,
+  ): ReactElement => {
+    const [open, setOpen] = useState(isOpen);
 
-  useEffect(() => {
-    setOpen(isOpen);
-  }, [isOpen, setOpen]);
+    useEffect(() => {
+      setOpen(isOpen);
+    }, [isOpen, setOpen]);
 
-  return (
-    <div className={cc([classes['wm-collapse'], className])}>
-      <div
-        className={cc([
-          classes['collapse-header'],
-          { [classes['has-drag-handle']]: hasDragHandle },
-          headerClassName,
-        ])}
-        onClick={onClick}
-      >
-        {hasDragHandle && <DragHandle className={classes['collapse-drag-handle']} />}
+    return (
+      <div ref={ref} className={cc([classes['wm-collapse'], className])}>
         <div
-          className={cc([classes['collapse-button'], { [classes['is-open']]: open }])}
-          onClick={() => setOpen(!open)}
+          className={cc([
+            classes['collapse-header'],
+            { [classes['has-drag-handle']]: hasDragHandle },
+            headerClassName,
+          ])}
+          onClick={onClick}
         >
-          <DownArrowIcon />
+          {hasDragHandle && <DragHandle className={classes['collapse-drag-handle']} />}
+          <div
+            className={cc([classes['collapse-button'], { [classes['is-open']]: open }])}
+            onClick={() => setOpen(!open)}
+          >
+            <DownArrowIcon />
+          </div>
+          {header}
         </div>
-        {header}
+        <div className={classes['collapse-content']}>
+          <SmoothCollapse expanded={open} className={contentClassName} {...otherProps}>
+            {children}
+          </SmoothCollapse>
+        </div>
       </div>
-      <div className={classes['collapse-content']}>
-        <SmoothCollapse expanded={open} className={contentClassName} {...otherProps}>
-          {children}
-        </SmoothCollapse>
-      </div>
-    </div>
-  );
-}
+    );
+  },
+);
 
 export type { IWMCollapse };
+
+export default WMCollapse;
+
+WMCollapse.displayName = 'WMCollapse';

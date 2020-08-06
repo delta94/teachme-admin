@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
@@ -23,13 +23,16 @@ export default function CourseOutlineLessonItem({
   index,
   className,
   innerClassName,
+  newLessonId,
 }: {
   item: INewLesson;
   index: number;
   className?: string;
   innerClassName?: string;
+  newLessonId?: number;
 }): ReactElement {
   const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
+  const lessonRef = useRef<HTMLDivElement>(null);
 
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
     const isAdd = e.addedIndex !== undefined && e.addedIndex !== null;
@@ -56,12 +59,18 @@ export default function CourseOutlineLessonItem({
     (course?.items.getItem(index) as CourseLesson).childNodes.removeItem(item);
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-
     // on delete activeDetailsItem should close the details panel
     if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
   };
 
   const isEmpty = !item.childNodes.toArray().length;
+
+  useEffect(() => {
+    // detecting new lesson added and scroll to element
+    if (item.id === newLessonId && isEmpty) {
+      lessonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [item.id, isEmpty, newLessonId]);
 
   return (
     <Draggable className={cc([classes['course-outline-lesson-item'], className])}>
@@ -71,6 +80,7 @@ export default function CourseOutlineLessonItem({
         headerClassName={classes['lesson-header']}
         header={<LessonHeader lesson={item} type={IconType.Lesson} />}
         hasDragHandle
+        ref={lessonRef}
       >
         {isEmpty && (
           <div className={classes['lesson-empty-state-wrapper']}>

@@ -33,7 +33,13 @@ const options: IWMDropdownOption[] = [
   },
 ];
 
-export default function ActionMenu({ className }: { className?: string }): ReactElement {
+export default function ActionMenu({
+  className,
+  onActionSelected,
+}: {
+  className?: string;
+  onActionSelected?: (selected: CourseItemType, lessonId?: number) => void;
+}): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
   const onActionSelect = (selected: IWMDropdownOption) => {
@@ -41,11 +47,14 @@ export default function ActionMenu({ className }: { className?: string }): React
       // Add new lesson
       const newLesson = course?.items.addNewItem();
       if (newLesson) {
-        newLesson.id = getRandomNegativeNumber();
+        const lessonId = getRandomNegativeNumber();
+        newLesson.id = lessonId;
+        onActionSelected && onActionSelected(CourseItemType.Lesson, lessonId);
       }
     } else {
       // Add new quiz
       dispatch({ type: ActionType.AddQuiz });
+      onActionSelected && onActionSelected(CourseItemType.Quiz);
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });

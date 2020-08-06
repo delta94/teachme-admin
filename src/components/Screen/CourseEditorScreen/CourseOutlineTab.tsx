@@ -1,8 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import { useAppContext } from '../../../providers/AppContext';
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
+
+import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import WMSkeleton from '../../common/WMSkeleton';
 
@@ -25,6 +27,8 @@ export default function CourseOutlineTab(): ReactElement {
   const [{ isUpdating }] = useAppContext();
   const [state, dispatch] = useCourseEditorContext();
   const { isFetchingCourse, course, quiz /* , courseOutlineSearchValue */ } = state;
+  const [newQuizAdded, setNewQuizAdded] = useState(false);
+  const [newLessonId, setNewLessonId] = useState<number>();
 
   const onItemClick = (item: any) => {
     dispatch({
@@ -33,9 +37,32 @@ export default function CourseOutlineTab(): ReactElement {
     });
   };
 
+  const onActionSelected = (selectedType: CourseItemType, lessonId?: number) => {
+    if (selectedType === CourseItemType.Quiz) {
+      setNewQuizAdded(true);
+
+      // reset newQuizAdded
+      setTimeout(() => setNewQuizAdded(false), 200);
+    } else {
+      lessonId && setNewLessonId(lessonId);
+
+      // reset newLessonId
+      setTimeout(() => setNewLessonId(undefined), 200);
+    }
+  };
+
+  // unmount only
+  useEffect(
+    () => () => {
+      setNewQuizAdded(false);
+      setNewLessonId(undefined);
+    },
+    [],
+  );
+
   return (
     <div className={classes['course-outline-tab']}>
-      <ActionMenu className={classes['add-btn']} />
+      <ActionMenu className={classes['add-btn']} onActionSelected={onActionSelected} />
       {/* <SearchFilter
         className={classes['search']}
         placeholder="Search"
@@ -59,9 +86,10 @@ export default function CourseOutlineTab(): ReactElement {
             course={course}
             hasQuiz={!!quiz}
             handleItemClick={onItemClick}
+            newLessonId={newLessonId}
           />
         )}
-        {quiz && <CourseOutlineQuiz item={quiz} />}
+        {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}
       </WMSkeleton>
     </div>
   );
