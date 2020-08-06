@@ -73,6 +73,7 @@ export default function CourseOutlineTab(): ReactElement {
         <CourseOutlineList
           items={course?.items.toArray() ?? []}
           course={course}
+          hasQuiz={!!quiz}
           handleItemClick={onItemClick}
           newLessonId={newLessonId}
         />
