@@ -8,6 +8,7 @@ import WMButton from '../../../common/WMButton';
 
 import Icon, { IconType } from '../../../common/Icon';
 import classes from './style.module.scss';
+import LessonDeleteButton from './LessonDeleteButton';
 
 export default function LessonEditableTitle({ lesson }: { lesson?: any }): ReactElement {
   const [{ course }, dispatch] = useCourseEditorContext();
@@ -38,11 +39,6 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
-  const deleteLesson = () => {
-    course?.items.removeItem(lesson);
-    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-  };
-
   return (
     <div className={cc([classes['editable-lesson-title']])}>
       <div className={cc([classes['text'], { [classes['hidden']]: showInput }])}>
@@ -53,12 +49,7 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
         >
           <Icon type={IconType.Pencil} className={classes['title-icon']} />
         </WMButton>
-        <WMButton
-          onClick={deleteLesson}
-          className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
-        >
-          <Icon type={IconType.Delete} className={classes['title-icon']} />
-        </WMButton>
+        <LessonDeleteButton lesson={lesson} showInput={showInput} />
       </div>
       <div className={cc([classes['input-wrapper'], { [classes['hidden']]: !showInput }])}>
         <WMInput

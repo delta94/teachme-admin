@@ -9,8 +9,8 @@ import DeleteCourseDialog from '../../../common/dialogs/DeleteCourseDialog';
 import CantDeleteDialog from '../../../common/dialogs/CantDeleteDialog';
 import DuplicateCourseDialog from '../../../common/dialogs/DuplicateCourseDialog';
 import ImpersonateDialog from '../../../common/dialogs/ImpersonateDialog';
-import DeleteLessonDialog from '../../../common/dialogs/DeleteLessonDialog';
 import LoadingPublishingDialog from '../../../common/dialogs/LoadingPublishingDialog';
+import DeleteLessonDialog from '../../CourseEditorScreen/LessonHeader/DeleteLessonDialog';
 
 export default function Dialogs(): ReactElement {
   const [showPublish, setShowPublish] = useState(false);
