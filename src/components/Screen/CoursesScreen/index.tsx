@@ -51,7 +51,7 @@ export default function CoursesScreen(): ReactElement {
 
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
-  }, [dispatch, isUpdating, envId, from, to]);
+  }, [dispatch, isUpdating, envId, system, from, to]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
