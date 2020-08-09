@@ -1,6 +1,8 @@
 import { Course } from './course';
 import { WalkMeDataNewCourse, TypeName } from '@walkme/types';
 import * as wmData from '../services/wmData';
+import { CourseNotFoundError } from '../../models/course';
+
 export * from './course';
 
 export async function getNewCourse(): Promise<Course> {
@@ -36,10 +38,4 @@ async function initData(environmentId: number) {
     [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru, TypeName.Tag],
     environmentId,
   );
-}
-
-export class CourseNotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
 }
