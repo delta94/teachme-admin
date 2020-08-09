@@ -1,0 +1,7 @@
+.wm-select {
+  width: 100%;
+
+  :global(.ant-select) {
+    width: 100%;
+  }
+}

@@ -1,15 +1,44 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState, useCallback } from 'react';
 import cc from 'classcat';
+import { SelectValue, LabeledValue } from 'antd/lib/select';
 
+import { getSegments } from '../../../../walkme/screens/build';
+import { useAppContext, ActionType as AppActionType } from '../../../../providers/AppContext';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
+import WMSelect from '../../../common/WMSelect';
 
 import classes from './style.module.scss';
 
+const parseSegments = (segments: any[]): { label: string; value: number }[] =>
+  segments.map(({ name, id }) => ({ label: name, value: id }));
+
 export default function CourseSettingsTab(): ReactElement {
+  const [
+    {
+      environment: { id: envId },
+    },
+    appDispatch,
+  ] = useAppContext();
   const [{ course }, dispatch] = useCourseEditorContext();
+  const [allSegments, setAllSegments] = useState<any[]>([]);
+  const [courseSegments, setCourseSegments] = useState<any[]>([]);
+  const [isSegmentsUpdating, setIsSegmentsUpdating] = useState<boolean>(true);
+
+  const getSegmentsOptions = useCallback(async () => {
+    try {
+      const segmentsOptions = await getSegments(envId);
+      const options = parseSegments(segmentsOptions);
+
+      setAllSegments(options);
+      setIsSegmentsUpdating(false);
+    } catch (error) {
+      console.error(error);
+      setIsSegmentsUpdating(false);
+    }
+  }, [envId]);
 
   const updateEnableIfPreviousDone = (checked: boolean) => {
     if (course?.properties) {
@@ -25,6 +54,38 @@ export default function CourseSettingsTab(): ReactElement {
     }
   };
 
+  const onSelectedSegments = (value: number[], option: any) => {
+    const lastAdded = value[value.length - 1];
+    console.log('value ', value);
+
+    if (lastAdded) {
+      course?.segments.add(lastAdded);
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    }
+  };
+
+  useEffect(() => {
+    getSegmentsOptions();
+
+    return () => {
+      setAllSegments([]);
+      setIsSegmentsUpdating(true);
+    };
+  }, [getSegmentsOptions]);
+
+  useEffect(() => {
+    if (allSegments.length) {
+      const segments = course && Array.from(course?.segments);
+      if (segments?.length) {
+        const courseSegmentsList = segments.map((segment) =>
+          allSegments.find(({ value }) => value === segment),
+        );
+        setCourseSegments(courseSegmentsList);
+      }
+    }
+    console.log('course ', course);
+  }, [allSegments, course]);
+
   return (
     <div className={classes['course-settings-tab']}>
       {course?.properties && (
@@ -32,9 +93,25 @@ export default function CourseSettingsTab(): ReactElement {
           <FormGroup
             className={cc([classes['segmentation'], classes['course-settings-form-group']])}
             title="Segmentation"
+            label="Select the target audiance for the course"
+            labelHtmlFor="segmentation"
           >
-            {/* drodown */}
-            <sub>No segments have been defined in the Editor. Learn More </sub>
+            <WMSelect
+              id="segmentation"
+              loading={isSegmentsUpdating}
+              className={classes['segmentation-selection']}
+              options={allSegments}
+              onSelectedChange={onSelectedSegments}
+              placeholder={!course?.segments.size ? 'No segments' : ''}
+              value={courseSegments.length ? courseSegments.map(({ value }) => value) : undefined}
+            />
+            <sub>
+              No segments have been defined in the Editor.{' '}
+              {/* TODO: change the href to the correct link */}
+              <a target="_blank" href="www.walkme.com">
+                Learn More
+              </a>{' '}
+            </sub>
           </FormGroup>
           <FormGroup
             className={cc([classes['learning-path'], classes['course-settings-form-group']])}
