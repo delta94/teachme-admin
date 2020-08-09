@@ -22,6 +22,8 @@ export default function ImpersonateDialog({
   const [invalid, setInvalid] = useState(true);
 
   const fetchEmails = async (value: string) => {
+    if (!value) return;
+
     const { emails } = await getEmails(value);
     const emailList = emails.map((email: string) => ({ value: email }));
     setOptions(emailList);
