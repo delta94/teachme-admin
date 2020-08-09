@@ -51,7 +51,7 @@ export class Quiz implements BuildQuiz {
     this.failScreen = new BuildQuizScreen(_quiz.FailSummeryPage);
     this.successScreen = new BuildQuizScreen(_quiz.SuccessSummeryPage);
     this.id = _quiz.Id!;
-    this.properties = new QuizProperties(_quiz.Settings, _quiz.Passmark);
+    this.properties = new QuizProperties(_quiz.Settings, _quiz.Passmark, _quiz.IsEnabled);
     this.questions = question.getQuizQuestions(_quiz.Questions);
   }
 
@@ -76,5 +76,6 @@ export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDa
     Settings: settings.toDataModel(quiz.properties, dataQuiz.Settings),
     Passmark: quiz.properties.passmark,
     Questions: (quiz.questions as BuildQuizQuestions).toDataModel(),
+    IsEnabled: quiz.properties.isEnabled,
   };
 }
