@@ -1,7 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
-import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import {
+  ActionType,
+  fetchCourse,
+  useCourseEditorContext,
+} from '../../../providers/CourseEditorContext';
 import { BASE_COURSE_EDITOR_ROUTE, COURSES_ROUTE } from '../../../constants/routes';
 import { MessageType, wmMessage } from '../../../utils/wmMessage';
 
@@ -9,11 +13,13 @@ import Icon, { IconType } from '../../common/Icon';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 
 import classes from './style.module.scss';
+import CancelDialog from './CancelDialog';
 
 export default function HeaderConfirmationButtons(): ReactElement {
   const [{ course, hasChanges }, dispatch] = useCourseEditorContext();
   const history = useHistory();
   const { courseId } = useParams();
+  const [openCancelDialog, setOpenCancelDialog] = useState(false);
   const isValid = course ? course?.isValid() : true;
 
   const onSave = () => {
@@ -33,6 +39,14 @@ export default function HeaderConfirmationButtons(): ReactElement {
       });
   };
 
+  const onCancel = () => {
+    fetchCourse(dispatch, courseId);
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: false });
+    setOpenCancelDialog(false);
+  };
+
+  const showCancelButton = !!courseId;
+
   return (
     <div className={classes['header-confirmation-buttons']}>
       {!isValid && (
@@ -40,15 +54,36 @@ export default function HeaderConfirmationButtons(): ReactElement {
           <Icon type={IconType.ValidationError} /> There are items that require your attention
         </div>
       )}
-      <Link className={classes['create-button-wrapper']} to={COURSES_ROUTE.path}>
-        <WMButton
-          variant={ButtonVariantEnum.Secondary}
-          shape={'round'}
-          className={classes['cancel-button']}
-        >
-          cancel
-        </WMButton>
-      </Link>
+
+      {showCancelButton ? (
+        <>
+          <WMButton
+            variant={ButtonVariantEnum.Secondary}
+            shape={'round'}
+            className={classes['cancel-button']}
+            disabled={!hasChanges}
+            onClick={() => setOpenCancelDialog(true)}
+          >
+            Cancel
+          </WMButton>
+          <CancelDialog
+            open={openCancelDialog}
+            onConfirm={onCancel}
+            onCancel={() => setOpenCancelDialog(false)}
+          />
+        </>
+      ) : (
+        <Link className={classes['create-button-wrapper']} to={COURSES_ROUTE.path}>
+          <WMButton
+            variant={ButtonVariantEnum.Secondary}
+            shape={'round'}
+            className={classes['cancel-button']}
+          >
+            Back to course list
+          </WMButton>
+        </Link>
+      )}
+
       <WMButton
         variant={ButtonVariantEnum.Primary}
         shape={'round'}
