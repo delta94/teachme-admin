@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 
+import { useAppContext } from '../../../providers/AppContext';
 import {
   useCoursesContext,
   publishCourses,
@@ -14,11 +15,11 @@ import { PublishToEnvironmentDialog } from '../../common/dialogs';
 import classes from './style.module.scss';
 
 export default function ProductionStatusActions(): ReactElement {
-  const [state, dispatch] = useCoursesContext();
+  const [appState] = useAppContext();
   const {
     dateRange: { from, to },
-    selectedRows,
-  } = state;
+  } = appState;
+  const [{ selectedRows }, dispatch] = useCoursesContext();
 
   // TODO: uncomment once sdk supports marking as draft
   // const hasPublished = selectedRows.some(

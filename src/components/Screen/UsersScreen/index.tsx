@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react';
 
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
   useUsersContext,
   defaultQueryOptions,
@@ -28,19 +28,15 @@ import classes from './style.module.scss';
 
 // TODO: add cleanups to fetchUsers
 export default function UsersScreen(): ReactElement {
-  const [appState] = useAppContext();
+  const [appState, appDispatch] = useAppContext();
   const {
     isUpdating,
     system,
     environment: { id: envId },
+    dateRange: { from, to },
   } = appState;
   const [state, dispatch] = useUsersContext();
-  const {
-    isFetchingUsers,
-    dateRange: { from, to },
-    users,
-    usersSearchValue,
-  } = state;
+  const { isFetchingUsers, users, usersSearchValue } = state;
   const disableActions = isUpdating || isFetchingUsers || !users.length;
 
   useEffect(() => {
@@ -55,7 +51,7 @@ export default function UsersScreen(): ReactElement {
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
 
   const onDateRangeChange = (dateRange?: IDateRange) =>
-    dispatch({ type: ActionType.SetDateRange, dateRange });
+    appDispatch({ type: AppActionType.SetDateRange, dateRange });
 
   const onSearch = (searchValue: string) => {
     const options = {

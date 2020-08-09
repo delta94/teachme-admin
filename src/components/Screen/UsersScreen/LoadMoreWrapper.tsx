@@ -11,15 +11,10 @@ export default function LoadMoreWrapper(): ReactElement {
   const [appState] = useAppContext();
   const {
     environment: { id: envId },
+    dateRange: { from, to },
   } = appState;
   const [state, dispatch] = useUsersContext();
-  const {
-    dateRange: { from, to },
-    isFetchingUsers,
-    users,
-    total_rows,
-    usersSearchValue,
-  } = state;
+  const { isFetchingUsers, users, total_rows, usersSearchValue } = state;
 
   const options = {
     ...defaultQueryOptions,
