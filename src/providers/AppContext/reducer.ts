@@ -2,6 +2,8 @@ import { UserData } from '@walkme/editor-sdk/dist/user';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
+import { defaultDateRange } from '../../utils';
+
 import { ActionType, IState, IAction } from './app-context.interface';
 
 export const initialState = {
@@ -13,6 +15,7 @@ export const initialState = {
   system: {} as SystemData,
   environment: {} as WalkMeEnvironment,
   originalUser: {} as UserData,
+  dateRange: defaultDateRange,
 };
 
 export const reducer = (state: IState, action: IAction): IState => {
@@ -57,6 +60,11 @@ export const reducer = (state: IState, action: IAction): IState => {
       return {
         ...state,
         environment: action.environment ?? initialState.environment,
+      };
+    case ActionType.SetDateRange:
+      return {
+        ...state,
+        dateRange: action.dateRange ?? initialState.dateRange,
       };
     case ActionType.CurrentScreenProvider:
       return {

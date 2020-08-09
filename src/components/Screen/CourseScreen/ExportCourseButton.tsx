@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 
+import { useAppContext } from '../../../providers/AppContext';
 import { useCourseContext, exportCourse } from '../../../providers/CourseContext';
 
 import { ExportToCSVDialog } from '../../common/dialogs';
@@ -8,11 +9,11 @@ import { ExportButton } from '../../common/buttons';
 import classes from './style.module.scss';
 
 export default function ExportCoursesButton(): ReactElement {
-  const [state, dispatch] = useCourseContext();
+  const [appState] = useAppContext();
   const {
-    courseMetadata,
     dateRange: { from, to },
-  } = state;
+  } = appState;
+  const [{ courseMetadata }, dispatch] = useCourseContext();
 
   const [showExport, setShowExport] = useState(false);
 
