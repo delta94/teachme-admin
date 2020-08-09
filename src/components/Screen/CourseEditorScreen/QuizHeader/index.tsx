@@ -49,7 +49,15 @@ export default function QuizHeader({ className }: { className?: string }): React
       <Icon type={IconType.QuizSettings} />
       <div className={cc([classes['editable-quiz-title']])}>
         <div className={classes['text']}>
-          <span className={classes['quiz-title-text']}>Quiz</span>
+          <span className={classes['quiz-title-text']}>
+            Quiz
+            {/*
+            TODO:
+            support disabled mode - isEnabled does not exist on type 'BuildQuizProperties'
+            after getting the correct data remove this comment and uncomment the following comment
+            */}
+            {/* {!quiz?.properties.isEnabled && ' - (DISABLED)'} */}
+          </span>
           <WMButton
             onMouseDown={toggleSettings}
             className={classes['title-button']}
