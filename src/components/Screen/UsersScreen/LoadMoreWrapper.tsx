@@ -30,7 +30,7 @@ export default function LoadMoreWrapper(): ReactElement {
 
   return (
     <>
-      {total_rows > defaultQueryOptions.num_of_records && !isFetchingUsers && (
+      {total_rows > users.length && !isFetchingUsers && (
         <div className={classes['load-more-wrapper']}>
           <span>{`1-${users.length} of ${total_rows} results`}</span>
           <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, options, users)} />
