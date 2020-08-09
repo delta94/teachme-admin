@@ -50,14 +50,7 @@ export async function switchSystem(id: number) {
  * @param email requested account email to impersonate
  */
 //TODO: Remove if function after PR
-export async function impersonate(email: string, debug = false): Promise<any> {
-  if (debug) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(console.log(email));
-      }, 1000);
-    });
-  }
+export async function impersonate(email: string): Promise<any> {
   return walkme.user.impersonate(email);
 }
 
@@ -66,14 +59,7 @@ export async function impersonate(email: string, debug = false): Promise<any> {
  * @param prefix the prefix of the requested emails
  */
 //TODO: Remove if function after PR
-export async function getEmails(prefix: string, debug = false): Promise<EmailList> {
-  if (debug) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ emails: ['shiran@gmail.com', 'roni@gmail.com'] });
-      }, 1000);
-    });
-  }
+export async function getEmails(prefix: string): Promise<EmailList> {
   return walkme.user.autoComplete(prefix);
 }
 
