@@ -36,10 +36,10 @@ export default function ImpersonateDialog({
     setInvalid(!valid);
   };
 
-  const onConfirmHandle = (confirmedText: string | undefined) => {
-    onConfirm(confirmedText);
-    confirmedText && impersonate(confirmedText);
+  const onConfirmHandle = async (confirmedText: string | undefined) => {
+    confirmedText && (await impersonate(confirmedText));
     setLocalValue('');
+    onConfirm(confirmedText);
   };
 
   const onCancelHandle = () => {
