@@ -47,6 +47,7 @@ export default function CoursesScreen(): ReactElement {
     selectedRows,
     selectedRowKeys,
   } = state;
+  const disableActions = isUpdating || isFetchingCoursesData || !filteredCourses.length;
 
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
@@ -117,8 +118,8 @@ export default function CoursesScreen(): ReactElement {
                   <Divider className={classes['separator']} type="vertical" />
                 </>
               )}
-              <ExportCoursesButton />
-              <SearchCoursesFilter />
+              <ExportCoursesButton disabled={disableActions} />
+              <SearchCoursesFilter disabled={disableActions} />
               <CreateButton />
             </ControlsWrapper>
           </WMTable>

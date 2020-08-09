@@ -22,6 +22,7 @@ export default function CourseOutlineTable(): ReactElement {
     filteredCourseOutline,
     courseOutlineSearchValue,
   } = state;
+  const disableActions = isUpdating || isFetchingCourseData || !filteredCourseOutline.length;
 
   const onSearch = (searchValue: string) => {
     const filtered = getFilteredCourseOutline(courseOutline, searchValue);
@@ -36,12 +37,13 @@ export default function CourseOutlineTable(): ReactElement {
   return (
     <div className={classes['course-outline-table']}>
       <ControlsWrapper className={classes['course-table-toolbar']}>
-        <ExportCoursesButton />
+        <ExportCoursesButton disabled={disableActions} />
         <SearchFilter
           className={classes['search']}
           placeholder="Search item name"
           onSearch={onSearch}
           value={courseOutlineSearchValue}
+          disabled={disableActions}
         />
       </ControlsWrapper>
       {filteredCourseOutline.length ? (

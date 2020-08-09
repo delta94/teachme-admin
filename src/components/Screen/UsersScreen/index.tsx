@@ -41,6 +41,7 @@ export default function UsersScreen(): ReactElement {
     users,
     usersSearchValue,
   } = state;
+  const disableActions = isUpdating || isFetchingUsers || !users.length;
 
   useEffect(() => {
     const options = { ...defaultQueryOptions };
@@ -90,8 +91,14 @@ export default function UsersScreen(): ReactElement {
             <ExportButton
               className={classes['export-btn']}
               onClick={() => exportUsers(dispatch, envId, from, to)}
+              disabled={disableActions}
             />
-            <SearchFilter placeholder="Search users" value={usersSearchValue} onSearch={onSearch} />
+            <SearchFilter
+              placeholder="Search users"
+              value={usersSearchValue}
+              onSearch={onSearch}
+              disabled={disableActions}
+            />
           </ControlsWrapper>
         </WMTable>
         <LoadMoreWrapper />
