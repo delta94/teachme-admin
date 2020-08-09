@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, Key } from 'react';
 import { Divider, ConfigProvider } from 'antd';
 
-import { useAppContext } from '../../../providers/AppContext';
+import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
   useCoursesContext,
   fetchCoursesData,
@@ -32,21 +32,15 @@ import classes from './style.module.scss';
 
 // TODO: add cleanups to fetchCoursesData
 export default function CoursesScreen(): ReactElement {
-  const [appState] = useAppContext();
+  const [appState, appDispatch] = useAppContext();
   const {
     isUpdating,
     environment: { id: envId },
-    system,
+    dateRange: { from, to },
   } = appState;
   const [state, dispatch] = useCoursesContext();
-  const {
-    isFetchingCoursesData,
-    dateRange: { from, to },
-    overview,
-    filteredCourses,
-    selectedRows,
-    selectedRowKeys,
-  } = state;
+  const { isFetchingCoursesData, overview, filteredCourses, selectedRows, selectedRowKeys } = state;
+  const disableActions = isUpdating || isFetchingCoursesData || !filteredCourses.length;
 
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
@@ -63,7 +57,7 @@ export default function CoursesScreen(): ReactElement {
     });
 
   const onDateRangeChange = (dateRange?: IDateRange) =>
-    dispatch({ type: ActionType.SetDateRange, dateRange });
+    appDispatch({ type: AppActionType.SetDateRange, dateRange });
 
   const onSortEnd = (
     { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
@@ -117,8 +111,8 @@ export default function CoursesScreen(): ReactElement {
                   <Divider className={classes['separator']} type="vertical" />
                 </>
               )}
-              <ExportCoursesButton />
-              <SearchCoursesFilter />
+              <ExportCoursesButton disabled={disableActions} />
+              <SearchCoursesFilter disabled={disableActions} />
               <CreateButton />
             </ControlsWrapper>
           </WMTable>

@@ -1,14 +1,12 @@
 import produce from 'immer';
 
 import { AllCoursesOverviewResponse } from '../../walkme/models';
-import { defaultDateRange } from '../../utils';
 
 import { ActionType, IState, IAction } from './courses-context.interface';
 
 export const initialState = {
   isFetchingCoursesData: false,
   isFetchingCoursesDataError: false,
-  dateRange: defaultDateRange,
   overview: {} as AllCoursesOverviewResponse,
   courses: [],
   filteredCourses: [],
@@ -52,9 +50,6 @@ export const reducer = produce(
       case ActionType.SetSelectedRows:
         draft.selectedRows = action.courses ?? initialState.selectedRows;
         draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
-        break;
-      case ActionType.SetDateRange:
-        draft.dateRange = action.dateRange ?? initialState.dateRange;
         break;
       case ActionType.UpdateCoursesTable:
         draft.courses = action.courses ?? initialState.courses;

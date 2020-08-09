@@ -4,6 +4,7 @@ import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
 import { EnvironmentType } from '../../interfaces/app.interfaces';
+import { IDateRange } from '../../utils';
 
 import { ActionType } from './actions';
 
@@ -17,6 +18,7 @@ export interface IAction {
   originalUser?: UserData;
   system?: SystemData | string; // string type for non-system-users - temporary solution
   environment?: WalkMeEnvironment;
+  dateRange?: IDateRange;
 }
 
 export interface IDispatch {
@@ -32,6 +34,7 @@ export interface IState {
   originalUser: UserData;
   system: SystemData | string; // string type for non-system-users - temporary solution
   environment: WalkMeEnvironment;
+  dateRange: IDateRange;
 }
 
 export interface IAppProvider {

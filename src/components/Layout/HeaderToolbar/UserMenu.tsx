@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react';
-import { message } from 'antd';
 
 import { useAppContext } from '../../../providers/AppContext';
 import { logout } from '../../../walkme';
@@ -18,7 +17,7 @@ export default function UserMenu({
   buttonClassName?: string;
 }): ReactElement {
   const [showImpersonate, setShowImpersonate] = useState(false);
-  const [appState, appDispatch] = useAppContext();
+  const [appState] = useAppContext();
   const { user } = appState;
   const { originalUser } = appState;
 
@@ -27,29 +26,26 @@ export default function UserMenu({
     {
       id: 'impersonate',
       value: 'Impersonate',
-      onClick: () => handleImpersonate(),
+      onClick: () => setShowImpersonate(true),
       skip: !originalUser.userIsBackOffice,
     },
     { id: 'log-out', value: 'Log Out', onClick: () => logout() },
   ];
 
   const handleImpersonate = () => {
-    setShowImpersonate(true);
-  };
-
-  const handleMenuClick = (selected: IWMDropdownOption) => {
-    message.info(`User clicked on ${selected.value}`);
+    setShowImpersonate(false);
+    window.location.reload();
   };
 
   return (
     <>
-      <WMDropdown className={className} options={options} onSelectedChange={handleMenuClick}>
+      <WMDropdown className={className} options={options}>
         <WMButton className={buttonClassName} icon={<Icon type={IconType.HeaderAvatar} />} />
       </WMDropdown>
       <ImpersonateDialog
         open={showImpersonate}
         onCancel={() => setShowImpersonate(false)}
-        onConfirm={() => setShowImpersonate(false)}
+        onConfirm={handleImpersonate}
       />
     </>
   );

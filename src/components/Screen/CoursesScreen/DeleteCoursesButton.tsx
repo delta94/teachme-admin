@@ -1,10 +1,12 @@
 import React, { ReactElement, useState } from 'react';
 
+import { useAppContext } from '../../../providers/AppContext';
 import {
   useCoursesContext,
   fetchCoursesData,
   deleteCourses,
 } from '../../../providers/CoursesContext';
+import { PublishStatus } from '../../../walkme/models';
 
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -14,14 +16,13 @@ import {
 } from '../../common/dialogs';
 
 import classes from './style.module.scss';
-import { PublishStatus } from '../../../walkme/models';
 
 export default function DeleteCoursesButton(): ReactElement {
-  const [state, dispatch] = useCoursesContext();
+  const [appState] = useAppContext();
   const {
     dateRange: { from, to },
-    selectedRows,
-  } = state;
+  } = appState;
+  const [{ selectedRows }, dispatch] = useCoursesContext();
 
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
   const [showCantDeleteCourse, setShowCantDeleteCourse] = useState(false);

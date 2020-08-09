@@ -6,7 +6,7 @@ import { SearchFilter } from '../../common/filters';
 
 import classes from './style.module.scss';
 
-export default function SearchCoursesFilter(): ReactElement {
+export default function SearchCoursesFilter({ disabled }: { disabled?: boolean }): ReactElement {
   const [state, dispatch] = useCoursesContext();
   const { courses, coursesSearchValue } = state;
 
@@ -28,6 +28,7 @@ export default function SearchCoursesFilter(): ReactElement {
       placeholder="Search course name"
       value={coursesSearchValue}
       onSearch={onSearch}
+      disabled={disabled}
     />
   );
 }
