@@ -64,6 +64,10 @@ export default function EditableTitle({
     setShowInputText(false);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.key === 'Enter' && setShowInputText(false);
+  };
+
   const isCourseTitle = type === EditableTitleType.Course;
 
   return (
@@ -95,6 +99,7 @@ export default function EditableTitle({
             onChange={onChange}
             onBlur={onInputBlur}
             onClick={(e) => e.stopPropagation()}
+            onKeyPress={handleKeyPress}
             maxLength={isCourseTitle ? 50 : undefined}
           />
         </>
