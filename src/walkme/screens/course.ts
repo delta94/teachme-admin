@@ -72,7 +72,7 @@ export async function exportCourseOutline(
   to: string,
 ): Promise<void> {
   const outline = await getCourseOutline(courseId, environmentId, from, to);
-  const csvData = outline.flatMap((child) => {
+  const csvData = outline.items.flatMap((child) => {
     if (child.childType == CourseChildType.Task) return child;
     return (child as CourseOutlineUIModelLesson).items.map((task) => ({
       ...task,
