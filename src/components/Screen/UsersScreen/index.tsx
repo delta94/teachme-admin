@@ -21,7 +21,7 @@ import {
 import { ExportButton } from '../../common/buttons';
 
 // import { courses, statuses, results } from './utils';
-import { columns } from './tableData';
+import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
 import classes from './style.module.scss';
@@ -64,6 +64,10 @@ export default function UsersScreen(): ReactElement {
     dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
   };
 
+  const onHeaderCellClick = (col: ColumnType<any>) => {
+    console.log('col', col);
+  };
+
   return (
     <>
       <ScreenHeader
@@ -74,7 +78,7 @@ export default function UsersScreen(): ReactElement {
         <WMTable
           className={classes['users-table']}
           data={users}
-          columns={columns}
+          columns={getColumns(onHeaderCellClick)}
           loading={isUpdating || isFetchingUsers}
         >
           <ShownUsersIndicator />

@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { ColumnsType } from 'antd/lib/table';
+import { ColumnsType, ColumnType } from 'antd/lib/table';
 import React, { ReactElement } from 'react';
 import moment from 'moment';
 
@@ -14,12 +14,16 @@ import {
 
 import classes from './style.module.scss';
 
+export type { ColumnType };
+
 const tableDateFormat = 'MMM. D, YYYY';
 
-export const columns: ColumnsType<any> = [
+export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType<any> => [
   {
     title: 'User',
     dataIndex: UsersColumn.ID,
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: string): ReactElement => (
       <TextCell className={classes['user-cell']} value={value} />
     ),
@@ -27,11 +31,15 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Course Name',
     dataIndex: 'title',
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: string): ReactElement => <TextCell value={value} />,
   },
   {
     title: 'Started',
     dataIndex: UsersColumn.STARTED_DATE,
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: Date): ReactElement => {
       const range = moment(value).fromNow();
       const formattedDate = moment(value).format(tableDateFormat);
@@ -44,6 +52,8 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Completed',
     dataIndex: UsersColumn.COMPLETED_DATE,
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: Date): ReactElement => {
       const range = moment(value).fromNow();
       const formattedDate = moment(value).format(tableDateFormat);
@@ -58,6 +68,8 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Time to Complete',
     dataIndex: UsersColumn.TIME_TO_COMPLETE,
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: string): ReactElement =>
       value ? (
         <NumberCell className={classes['duration-cell']} value={value} />
@@ -69,6 +81,8 @@ export const columns: ColumnsType<any> = [
     title: 'Quiz Result',
     dataIndex: UsersColumn.QUIZ_RESULT,
     align: 'right',
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: number): ReactElement =>
       value ? (
         <StatusDotCell className={classes['result-cell']} value={value} passingValue={66} />
@@ -80,6 +94,8 @@ export const columns: ColumnsType<any> = [
     title: 'No. of quiz attempts',
     dataIndex: UsersColumn.QUIZ_ATTEMPTS,
     align: 'right',
+    sorter: true,
+    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
     render: (value: string): ReactElement =>
       value ? (
         <NumberCell className={classes['attempts-cell']} value={value} />
