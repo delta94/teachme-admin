@@ -8,7 +8,6 @@ import {
 } from '../../../providers/CoursesContext';
 import { PublishStatus } from '../../../walkme/models';
 
-import { PublishStatus } from '../../../walkme/models';
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
 import {
