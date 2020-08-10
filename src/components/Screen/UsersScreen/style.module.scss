@@ -49,8 +49,7 @@
       }
 
       .completed-cell,
-      .duration-cell,
-      .attempts-cell {
+      .duration-cell {
         min-width: 120px;
       }
 
@@ -58,9 +57,8 @@
         min-width: 105px;
       }
 
-      .result-cell,
       .attempts-cell {
-        text-align: right;
+        min-width: 130px;
       }
     }
   }
