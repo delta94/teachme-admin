@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
+import { useAppContext } from '../../../providers/AppContext';
 import {
   useCourseEditorContext,
   fetchItemsList,
@@ -19,14 +20,16 @@ import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
   const [{ course, isFetchingCourse, hasChanges }, dispatch] = useCourseEditorContext();
+  const [{ environment }] = useAppContext();
   const { courseId } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     fetchItemsList(dispatch);
-    fetchCourse(dispatch, courseId);
+    fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId]);
+  }, [dispatch, courseId, environment.id, history]);
 
   const onCourseTitleBlur = (courseTitle: string) => {
     if (course) {

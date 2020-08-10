@@ -40,7 +40,7 @@ export default function HeaderToolbar(): ReactElement {
             <Tooltip title="Help">
               <WMButton
                 className={classes['help-btn']}
-                href="https://walkme.com"
+                href="https://support.walkme.com/knowledge-base/teachme"
                 target="_blank"
                 icon={<Icon type={IconType.HelpCircle} />}
               />
