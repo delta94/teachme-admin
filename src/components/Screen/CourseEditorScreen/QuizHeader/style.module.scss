@@ -10,7 +10,6 @@
   flex: 1;
 
   :global(.wm-icon) {
-    width: 18px;
     margin-right: 8px;
   }
 }
@@ -97,12 +96,6 @@
 
     &:global(.ant-btn) > span {
       height: auto;
-    }
-
-    svg {
-      width: 18px;
-      height: 18px;
-      padding: 2px;
     }
   }
 
