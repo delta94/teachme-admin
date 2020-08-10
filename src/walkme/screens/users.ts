@@ -3,6 +3,8 @@ import * as analytics from '../analytics';
 import { UsersListQueryOptions, UsersCountResponse, UserListUIResponse } from '../models/users';
 import { saveAsCsv } from '../utils';
 import { UsersTableQueryFilter } from '../models/users/filter';
+import { CourseMetadata } from '../models';
+import * as metadata from '../data/courseMetadata';
 
 /**
  * Returns a list of users and their data
@@ -68,4 +70,12 @@ export async function exportUsersData(
     ],
     `teachme-users-data-${Date.now()}`,
   );
+}
+
+/**
+ * Returns a list of all the courses metadata
+ * @param environmentId the requested environment id
+ */
+export function getCoursesMetadata(environmentId: number): Promise<Array<CourseMetadata>> {
+  return metadata.getCoursesMetadata(environmentId);
 }
