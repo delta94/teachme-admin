@@ -39,8 +39,15 @@ export default function CoursesScreen(): ReactElement {
     dateRange: { from, to },
   } = appState;
   const [state, dispatch] = useCoursesContext();
-  const { isFetchingCoursesData, overview, filteredCourses, selectedRows, selectedRowKeys } = state;
-  const disableActions = isUpdating || isFetchingCoursesData || !filteredCourses.length;
+  const {
+    isFetchingCoursesData,
+    overview,
+    filteredCourses,
+    courses,
+    selectedRows,
+    selectedRowKeys,
+  } = state;
+  const disableActions = isUpdating || isFetchingCoursesData || !courses.length;
 
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
