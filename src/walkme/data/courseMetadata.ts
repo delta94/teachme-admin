@@ -6,6 +6,11 @@ import { getData } from './services/wmData';
 
 export type { CourseMetadata };
 
+export async function getCoursesMetadata(environmentId: number): Promise<Array<CourseMetadata>> {
+  const courses = (await getData(TypeName.Course, environmentId)) as WalkMeDataCourse[];
+  return Promise.all(courses.map((course) => getCourseMetadata(course, environmentId)));
+}
+
 export async function getCourseMetadata(
   courseOrId: WalkMeDataCourse | number,
   environmentId: number,
@@ -23,11 +28,10 @@ async function getCourse(
   courseOrId: WalkMeDataCourse | number,
   environmentId: number,
 ): Promise<WalkMeDataCourse> {
-  if (typeof courseOrId === 'number') {
-    const [course] = await getData(TypeName.Course, environmentId, [courseOrId]);
-    return course as WalkMeDataCourse;
-  }
-  return courseOrId;
+  if (typeof courseOrId !== 'number') return courseOrId;
+
+  const [course] = await getData(TypeName.Course, environmentId, [courseOrId]);
+  return course as WalkMeDataCourse;
 }
 
 export function getPublishStatus(course: WalkMeDataCourse, environmentId: number): PublishStatus {
