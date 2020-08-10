@@ -49,6 +49,7 @@ export async function switchSystem(id: number) {
  * Impersonated the requested account
  * @param email requested account email to impersonate
  */
+//TODO: Remove if function after PR
 export async function impersonate(email: string): Promise<any> {
   return walkme.user.impersonate(email);
 }
@@ -57,6 +58,7 @@ export async function impersonate(email: string): Promise<any> {
  * Returns a list of emails that start with the given prefix
  * @param prefix the prefix of the requested emails
  */
+//TODO: Remove if function after PR
 export async function getEmails(prefix: string): Promise<EmailList> {
   return walkme.user.autoComplete(prefix);
 }

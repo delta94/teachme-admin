@@ -12,9 +12,11 @@ import classes from './style.module.scss';
 export default function ExportButton({
   className,
   onClick,
+  disabled,
 }: {
   className?: string;
   onClick?: () => void; // todo: make this required
+  disabled?: boolean;
 }): ReactElement {
   const appInit = useAppSkeleton();
 
@@ -25,6 +27,7 @@ export default function ExportButton({
           className={cc([classes['export-button'], className])}
           onClick={onClick}
           icon={<Icon type={IconType.FileExport} />}
+          disabled={disabled}
         />
       ) : (
         <WMSkeletonButton className={classes['skeleton']} active shape="square" />
