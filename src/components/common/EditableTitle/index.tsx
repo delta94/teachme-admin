@@ -1,4 +1,12 @@
-import React, { useState, ReactElement, useRef, ChangeEvent, MouseEvent, useEffect } from 'react';
+import React, {
+  useState,
+  ReactElement,
+  useRef,
+  ChangeEvent,
+  MouseEvent,
+  useEffect,
+  KeyboardEvent,
+} from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 
@@ -64,8 +72,11 @@ export default function EditableTitle({
     setShowInputText(false);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.key === 'Enter' && setShowInputText(false);
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onBlur(inputValue);
+      setShowInputText(false);
+    }
   };
 
   const isCourseTitle = type === EditableTitleType.Course;
@@ -99,7 +110,7 @@ export default function EditableTitle({
             onChange={onChange}
             onBlur={onInputBlur}
             onClick={(e) => e.stopPropagation()}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
             maxLength={isCourseTitle ? 50 : undefined}
           />
         </>
