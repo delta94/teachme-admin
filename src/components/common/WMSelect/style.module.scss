@@ -3,5 +3,20 @@
 
   :global(.ant-select) {
     width: 100%;
+
+    &:not(:global(.ant-select-disabled)):hover :global(.ant-select-selector) {
+      border-color: var(--neutral150);
+    }
+
+    &:global(.ant-select-focused) :global(.ant-select-selector) {
+      box-shadow: none;
+      border-color: var(--neutral150);
+
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: var(--neutral150);
+      }
+    }
   }
 }
