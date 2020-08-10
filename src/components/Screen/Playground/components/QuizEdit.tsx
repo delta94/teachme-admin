@@ -1,7 +1,9 @@
 import React, { ReactElement, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { QuizScreen } from '@walkme/types';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
+import { useAppContext } from '../../../../providers/AppContext';
 import {
   useCourseEditorContext,
   fetchItemsList,
@@ -17,10 +19,11 @@ import QuizEditForm from '../../CourseEditorScreen/QuizEditForm';
 import classes from './playground.module.scss';
 
 export default function QuizEdit(): ReactElement {
+  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ environment }, appDispatch] = useAppContext();
   const [courseId, setCourseId] = useState(0);
+  const history = useHistory();
 
-  const [state, dispatch] = useCourseEditorContext();
-  const { course } = state;
   const [quizScreenType, setQuizScreenType] = useState<QuizScreenType>(
     QuizScreenType.WelcomeScreen,
   );
@@ -28,7 +31,7 @@ export default function QuizEdit(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-    fetchCourse(dispatch, courseId);
+    fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);

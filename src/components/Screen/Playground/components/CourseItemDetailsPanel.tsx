@@ -1,8 +1,10 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { Divider } from 'antd';
-import cc from 'classcat';
+import { useHistory } from 'react-router-dom';
 import { ContentItem } from '@walkme/types';
+import cc from 'classcat';
 
+import { useAppContext } from '../../../../providers/AppContext';
 import {
   useCourseEditorContext,
   fetchItemsList,
@@ -21,9 +23,11 @@ import CourseItemDetails from '../../CourseEditorScreen/CourseItemDetails';
 import classes from './playground.module.scss';
 
 export default function CourseItemDetailsPanel(): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
+  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ environment }, appDispatch] = useAppContext();
   const [selectedItem, setSelectedItem] = useState<any>();
-  const { course } = state;
+  const history = useHistory();
+
   const [courseId, setCourseId] = useState(0);
 
   const handleItemChanged = (updatedItem: ContentItem) => {
@@ -32,7 +36,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
 
   useEffect(() => {
     fetchItemsList(dispatch);
-    fetchCourse(dispatch, courseId);
+    fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId]);
