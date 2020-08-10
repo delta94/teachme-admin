@@ -1,7 +1,9 @@
+import { UsersTableQueryFilter } from './filter';
+
 /**
  * Query options for the users list API
  */
-export type UsersListQueryOptions = {
+export type UsersListQueryOptions = UsersTableQueryFilter & {
   /**
    * Defines the index from which to search,
    * Use this option to request additional data after the first result batch
@@ -23,11 +25,6 @@ export type UsersListQueryOptions = {
    * @default UsersOrder.ASC
    */
   sort_by_order: UsersOrder;
-  /**
-   * Filter results to users starting with this string
-   * @default undefined
-   */
-  user_name?: string;
 };
 
 /**

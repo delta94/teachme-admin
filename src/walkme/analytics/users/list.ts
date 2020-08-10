@@ -1,5 +1,6 @@
 import * as endpoint from '../endpoint';
 import { UsersListQueryOptions, UsersColumn, UsersOrder } from '../../models/users';
+import { addUserTableFilters } from './filter';
 
 export type UsersResponse = {
   num_of_records: number;
@@ -49,7 +50,7 @@ export function getUsersList(
   query.append('num_of_records', `${combinedOptions.num_of_records}`);
   query.append('sort_by', combinedOptions.sort_by);
   query.append('sort_by_order', combinedOptions.sort_by_order);
-  if (combinedOptions.user_name) query.append('user_name', combinedOptions.user_name);
+  addUserTableFilters(combinedOptions, query);
 
   return endpoint.get(`users/list?${query.toString()}`);
 }
