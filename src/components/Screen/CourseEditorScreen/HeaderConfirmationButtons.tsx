@@ -18,7 +18,7 @@ import CancelDialog from './CancelDialog';
 
 export default function HeaderConfirmationButtons(): ReactElement {
   const [{ course, hasChanges }, dispatch] = useCourseEditorContext();
-  const [{ environment }, appDispatch] = useAppContext();
+  const [{ environment }] = useAppContext();
   const history = useHistory();
   const { courseId } = useParams();
   const [openCancelDialog, setOpenCancelDialog] = useState(false);

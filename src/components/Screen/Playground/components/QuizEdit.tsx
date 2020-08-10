@@ -20,21 +20,19 @@ import classes from './playground.module.scss';
 
 export default function QuizEdit(): ReactElement {
   const [{ course }, dispatch] = useCourseEditorContext();
-  const [{ environment }, appDispatch] = useAppContext();
-  const [courseId, setCourseId] = useState(0);
+  const [{ environment }] = useAppContext();
+  const [courseId] = useState(0);
   const history = useHistory();
 
-  const [quizScreenType, setQuizScreenType] = useState<QuizScreenType>(
-    QuizScreenType.WelcomeScreen,
-  );
-  const [quizScreenData, setQuizScreenData] = useState<QuizScreen | QuizQuestion>();
+  const [quizScreenType] = useState<QuizScreenType>(QuizScreenType.WelcomeScreen);
+  const [quizScreenData] = useState<QuizScreen | QuizQuestion>();
 
   useEffect(() => {
     fetchItemsList(dispatch);
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId]);
+  }, [dispatch, courseId, environment.id, history]);
 
   return (
     <div className={classes['cards-wrapper']}>

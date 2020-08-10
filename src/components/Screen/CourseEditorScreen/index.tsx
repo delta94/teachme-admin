@@ -20,8 +20,7 @@ import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
   const [{ course, isFetchingCourse, hasChanges }, dispatch] = useCourseEditorContext();
-  const [{ environment }, appDispatch] = useAppContext();
-  console.log('course', course);
+  const [{ environment }] = useAppContext();
   const { courseId } = useParams();
   const history = useHistory();
 
@@ -30,7 +29,7 @@ export default function CourseEditorScreen(): ReactElement {
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId]);
+  }, [dispatch, courseId, environment.id, history]);
 
   const onCourseTitleBlur = (courseTitle: string) => {
     if (course) {

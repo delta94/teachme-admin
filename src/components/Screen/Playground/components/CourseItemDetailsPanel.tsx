@@ -39,7 +39,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId]);
+  }, [dispatch, courseId, environment.id, history]);
 
   return (
     <div className={classes['cards-wrapper']}>

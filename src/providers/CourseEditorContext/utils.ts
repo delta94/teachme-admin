@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import { message } from 'antd';
+import { History } from 'history';
 
 import { getFlatItemsList, getCourse, getNewCourse } from '../../walkme';
 import { COURSES_ROUTE } from '../../constants/routes';
@@ -51,7 +52,7 @@ export const fetchCourse = async (
   dispatch: IDispatch,
   courseId: string | number | undefined,
   envId = 0,
-  history: any,
+  history: History,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });
   const numberCourseId = courseId ? +courseId : undefined;
