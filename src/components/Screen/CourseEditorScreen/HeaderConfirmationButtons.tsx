@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
+import { useAppContext } from '../../../providers/AppContext';
 import {
   ActionType,
   fetchCourse,
@@ -17,6 +18,7 @@ import CancelDialog from './CancelDialog';
 
 export default function HeaderConfirmationButtons(): ReactElement {
   const [{ course, hasChanges }, dispatch] = useCourseEditorContext();
+  const [{ environment }] = useAppContext();
   const history = useHistory();
   const { courseId } = useParams();
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
@@ -40,7 +42,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
   };
 
   const onCancel = () => {
-    fetchCourse(dispatch, courseId);
+    fetchCourse(dispatch, courseId, environment.id, history);
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: false });
     setOpenCancelDialog(false);
   };
