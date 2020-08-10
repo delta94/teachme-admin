@@ -1,12 +1,8 @@
 import * as data from '../data';
 import * as analytics from '../analytics';
-import {
-  UsersListQueryOptions,
-  UsersCountQueryOptions,
-  UsersCountResponse,
-  UserListUIResponse,
-} from '../models/users';
+import { UsersListQueryOptions, UsersCountResponse, UserListUIResponse } from '../models/users';
 import { saveAsCsv } from '../utils';
+import { UsersTableQueryFilter } from '../models/users/filter';
 
 /**
  * Returns a list of users and their data
@@ -35,7 +31,7 @@ export function getUsersCount(
   environment: number,
   from: string,
   to: string,
-  options?: UsersCountQueryOptions,
+  options?: UsersTableQueryFilter,
 ): Promise<UsersCountResponse> {
   return analytics.getUsersCount(environment, from, to, options);
 }
