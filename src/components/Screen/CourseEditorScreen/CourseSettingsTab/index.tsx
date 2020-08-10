@@ -1,9 +1,8 @@
 import React, { ReactElement, useEffect, useState, useCallback } from 'react';
 import cc from 'classcat';
-import { SelectValue, LabeledValue } from 'antd/lib/select';
 
 import { getSegments } from '../../../../walkme/screens/build';
-import { useAppContext, ActionType as AppActionType } from '../../../../providers/AppContext';
+import { useAppContext } from '../../../../providers/AppContext';
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 
 import FormGroup from '../../../common/FormGroup';
@@ -56,7 +55,6 @@ export default function CourseSettingsTab(): ReactElement {
 
   const onSelectedSegments = (value: number[], option: any) => {
     const lastAdded = value[value.length - 1];
-    console.log('value ', value);
 
     if (lastAdded) {
       course?.segments.add(lastAdded);
@@ -83,7 +81,6 @@ export default function CourseSettingsTab(): ReactElement {
         setCourseSegments(courseSegmentsList);
       }
     }
-    console.log('course ', course);
   }, [allSegments, course]);
 
   return (
@@ -104,14 +101,16 @@ export default function CourseSettingsTab(): ReactElement {
               onSelectedChange={onSelectedSegments}
               placeholder={!course?.segments.size ? 'No segments' : ''}
               value={courseSegments.length ? courseSegments.map(({ value }) => value) : undefined}
+              disabled={!allSegments.length}
             />
-            <sub>
-              No segments have been defined in the Editor.{' '}
-              {/* TODO: change the href to the correct link */}
-              <a target="_blank" href="www.walkme.com">
-                Learn More
-              </a>{' '}
-            </sub>
+            {!allSegments.length && (
+              <sub>
+                No segments have been defined in the Editor.{' '}
+                <a target="_blank" href="https://support.walkme.com/knowledge-base/segmentation/">
+                  Learn More
+                </a>
+              </sub>
+            )}
           </FormGroup>
           <FormGroup
             className={cc([classes['learning-path'], classes['course-settings-form-group']])}
