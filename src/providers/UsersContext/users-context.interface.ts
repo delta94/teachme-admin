@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 
-import { UserListUILineItem } from '../../walkme/models';
+import { UserListUILineItem, UsersOrder } from '../../walkme/models';
 
 import { ActionType } from './actions';
 
-export { ActionType };
+export { ActionType, UsersOrder };
 
 export interface IAction {
   type: ActionType;

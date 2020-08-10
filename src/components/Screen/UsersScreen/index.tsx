@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDebounceCallback } from '@react-hook/debounce';
 
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
@@ -8,6 +8,7 @@ import {
   fetchUsers,
   exportUsers,
   ActionType,
+  UsersOrder,
 } from '../../../providers/UsersContext';
 import { IDateRange } from '../../../utils';
 
@@ -21,7 +22,7 @@ import {
 } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 
-// import { courses, statuses, results } from './utils';
+import { sortByOptions /*, courses, statuses, results */ } from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
@@ -42,9 +43,10 @@ export default function UsersScreen(): ReactElement {
   const disableSearch = !users.length && !usersSearchValue.length;
 
   useEffect(() => {
-    const options = { ...defaultQueryOptions };
-
-    if (usersSearchValue.length) options.user_name = usersSearchValue;
+    const options = {
+      ...defaultQueryOptions,
+      user_name: usersSearchValue,
+    };
 
     if (!isUpdating) fetchUsers(dispatch, envId, from, to, options);
   }, [dispatch, isUpdating, system, envId, from, to, usersSearchValue]);
@@ -68,8 +70,29 @@ export default function UsersScreen(): ReactElement {
     dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
   };
 
-  const onHeaderCellClick = (col: ColumnType<any>) => {
-    console.log('col', col);
+  const [prevClassName, setPrevClassName] = useState<string>();
+
+  const onHeaderCellClick = ({ className, dataIndex }: ColumnType<any>) => {
+    const options = {
+      ...defaultQueryOptions,
+      user_name: usersSearchValue,
+      sort_by: sortByOptions[dataIndex as keyof typeof sortByOptions],
+    };
+
+    // Sort by descend
+    if (!className) {
+      options.sort_by_order = UsersOrder.DESC;
+    }
+
+    // Cancel sort
+    if (className === prevClassName) {
+      options.sort_by = defaultQueryOptions.sort_by;
+    }
+
+    // Keep previous className value to know which click were on
+    setPrevClassName(className);
+
+    fetchUsers(dispatch, envId, from, to, options);
   };
 
   return (
@@ -83,6 +106,7 @@ export default function UsersScreen(): ReactElement {
           className={classes['users-table']}
           data={users}
           columns={getColumns(onHeaderCellClick)}
+          sortDirections={['descend', 'ascend']}
           loading={isUpdating || isFetchingUsers}
         >
           <ShownUsersIndicator />

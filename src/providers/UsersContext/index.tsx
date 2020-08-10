@@ -1,6 +1,13 @@
 import React, { useReducer, ReactElement } from 'react';
 
-import { ActionType, IAction, IState, IDispatch, IUsersProvider } from './users-context.interface';
+import {
+  ActionType,
+  IAction,
+  IState,
+  IDispatch,
+  IUsersProvider,
+  UsersOrder,
+} from './users-context.interface';
 import {
   UsersStateContext,
   UsersDispatchContext,
@@ -21,6 +28,7 @@ export {
   reducer,
   initialState,
   ActionType,
+  UsersOrder,
 };
 
 export default function UsersProvider({ children }: IUsersProvider): ReactElement {
