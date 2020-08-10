@@ -18,7 +18,7 @@ export function getRedirectURI(): string {
     case 'localhost':
       return 'http://localhost:7000/#&';
     case 'teachme.walkme.com':
-      return 'http://teachme.walkme.com/#&';
+      return 'https://teachme.walkme.com/#&';
     case 'cdn.walkme.com':
       return 'https://cdn.walkme.com/apps/teachme-admin/index.html#&';
     default:

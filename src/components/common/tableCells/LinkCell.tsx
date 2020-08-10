@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import cc from 'classcat';
 
 import { ILinkCell } from './tableCells.interface';
 import classes from './style.module.scss';
 
-export default function LinkCell({ value, to, className, ...otherProps }: ILinkCell) {
+export default function LinkCell({ value, to, className, ...otherProps }: ILinkCell): ReactElement {
   return (
     <Link to={to} className={cc([classes['link-cell'], className])} {...otherProps}>
       {value}

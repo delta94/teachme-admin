@@ -15,6 +15,9 @@ import {
   TagCell,
   TextArrayCell,
 } from '../../common/tableCells';
+import WMPopover from '../../common/WMPopover';
+
+import classes from './style.module.scss';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
 
@@ -42,7 +45,21 @@ export const columns: ColumnsType<any> = [
   {
     title: 'Segment',
     dataIndex: 'segments',
-    render: (value: Array<string>): ReactElement => <TextArrayCell value={value} />,
+    render: (value: Array<string>): ReactElement => {
+      const content = (
+        <div className={classes['segments-popover-content']}>
+          {value.map((v) => (
+            <span key={v}>{v}</span>
+          ))}
+        </div>
+      );
+
+      return (
+        <WMPopover content={content}>
+          <TextArrayCell className={classes['segments-cell']} value={value} />
+        </WMPopover>
+      );
+    },
   },
   {
     title: 'Users Started',
