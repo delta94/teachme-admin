@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import { ITextArrayCell } from './tableCells.interface';
 
-export default function TextArrayCell({ value, className, ...otherProps }: ITextArrayCell) {
+export default function TextArrayCell({
+  value,
+  className,
+  ...otherProps
+}: ITextArrayCell): ReactElement {
   const text = value.join(', ');
 
   return (
-    <span className={className} {...otherProps}>
+    <div className={className} {...otherProps}>
       {text}
-    </span>
+    </div>
   );
 }

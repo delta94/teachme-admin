@@ -2,6 +2,7 @@
   "name": "teachme-editor",
   "version": "0.14.0",
   "private": true,
+  "homepage": "https://cdn.walkme.com/apps/teachme-admin",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

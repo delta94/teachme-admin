@@ -57,3 +57,19 @@
 :global(.ant-skeleton-element .ant-skeleton-button.ant-skeleton-button-round) {
   width: 150px;
 }
+
+.segments-cell {
+  width: 133px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.segments-popover-content {
+  display: flex;
+  flex-direction: column;
+  color: var(--neutral900);
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 2;
+}
