@@ -1,3 +1,5 @@
+@import 'src/styles/mixins';
+
 .lesson-header {
   display: flex;
   justify-content: flex-start;
@@ -117,17 +119,6 @@
   }
 }
 
-.delete-button:global(.ant-btn) {
-  background-color: var(--delete);
-  border-color: var(--delete);
-
-  &:hover {
-    background-color: var(--red);
-    border-color: var(--red);
-  }
-
-  &:focus {
-    background-color: var(--dark-red);
-    border-color: var(--dark-red);
-  }
+.delete-button {
+  @include dialog-delete-button();
 }

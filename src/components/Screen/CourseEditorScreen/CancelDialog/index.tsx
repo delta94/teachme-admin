@@ -4,14 +4,23 @@ import WMConfirmationDialog, {
   IWMConfirmationDialogWrapper,
 } from '../../../common/WMConfirmationDialog';
 
+import classes from './style.module.scss';
+
 export default function CancelDialog({
   open,
   onCancel,
   onConfirm,
 }: IWMConfirmationDialogWrapper): ReactElement {
   return (
-    <WMConfirmationDialog open={open} title="Cancel" onCancel={onCancel} onConfirm={onConfirm}>
-      <p>Canceling will revert all unsaved changes. Would you like to proceed?</p>
+    <WMConfirmationDialog
+      open={open}
+      title="Discard changes?"
+      onCancel={onCancel}
+      onConfirm={onConfirm}
+      confirmLabel="Discard"
+      confirmClass={classes['discard-button']}
+    >
+      <p>All unsaved changes will be lost</p>
     </WMConfirmationDialog>
   );
 }

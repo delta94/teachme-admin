@@ -1,0 +1,5 @@
+@import 'src/styles/mixins';
+
+.discard-button {
+  @include dialog-delete-button();
+}
