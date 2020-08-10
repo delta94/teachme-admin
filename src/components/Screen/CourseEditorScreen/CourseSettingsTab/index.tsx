@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect, useState, useCallback } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import cc from 'classcat';
 
 import { getSegments } from '../../../../walkme/screens/build';
 import { useAppContext } from '../../../../providers/AppContext';
-import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
@@ -53,13 +53,20 @@ export default function CourseSettingsTab(): ReactElement {
     }
   };
 
-  const onSelectedSegments = (value: number[], option: any) => {
-    const lastAdded = value[value.length - 1];
+  const onSelectSegment = (value: number, option: any) => {
+    setCourseSegments([...courseSegments, option]);
+    course?.segments.add(value);
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+  };
 
-    if (lastAdded) {
-      course?.segments.add(lastAdded);
-      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-    }
+  const onDeselectSegment = (value: number) => {
+    const newSegments = [...courseSegments];
+    const removalIndex = newSegments.findIndex((item) => item.value === value);
+    newSegments.splice(removalIndex, 1);
+    setCourseSegments(newSegments);
+
+    course?.segments.delete(value);
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
   useEffect(() => {
@@ -90,7 +97,7 @@ export default function CourseSettingsTab(): ReactElement {
           <FormGroup
             className={cc([classes['segmentation'], classes['course-settings-form-group']])}
             title="Segmentation"
-            label="Select the target audiance for the course"
+            label="Select the target audience for the course"
             labelHtmlFor="segmentation"
           >
             <WMSelect
@@ -98,10 +105,13 @@ export default function CourseSettingsTab(): ReactElement {
               loading={isSegmentsUpdating}
               className={classes['segmentation-selection']}
               options={allSegments}
-              onSelectedChange={onSelectedSegments}
+              optionFilterProp="label"
+              onSelect={onSelectSegment}
+              onDeselect={onDeselectSegment}
               placeholder={!course?.segments.size ? 'No segments' : ''}
               value={courseSegments.length ? courseSegments.map(({ value }) => value) : undefined}
-              disabled={!allSegments.length}
+              disabled={!allSegments.length && !isSegmentsUpdating}
+              showArrow
             />
             {!allSegments.length && (
               <sub>
