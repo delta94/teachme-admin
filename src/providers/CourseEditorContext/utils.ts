@@ -1,6 +1,9 @@
 import { createContext, useContext } from 'react';
+import { message } from 'antd';
+import { History } from 'history';
 
 import { getFlatItemsList, getCourse, getNewCourse } from '../../walkme';
+import { COURSES_ROUTE } from '../../constants/routes';
 
 import { ActionType, IState, IDispatch } from './course-editor-context.interface';
 
@@ -49,6 +52,7 @@ export const fetchCourse = async (
   dispatch: IDispatch,
   courseId: string | number | undefined,
   envId = 0,
+  history: History,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });
   const numberCourseId = courseId ? +courseId : undefined;
@@ -64,6 +68,8 @@ export const fetchCourse = async (
     }
   } catch (error) {
     console.error(error);
+    message.error(`Course '${courseId}' not found`);
+    history.push(COURSES_ROUTE.path);
     dispatch({ type: ActionType.FetchCourseError });
   }
 };

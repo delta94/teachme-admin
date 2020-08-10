@@ -38,7 +38,7 @@ export const useUsersContext = (): [IState, IDispatch] => [useUsersState(), useU
 
 export const defaultQueryOptions = {
   first_item_index: 0,
-  num_of_records: 10,
+  num_of_records: 50,
   sort_by: UsersColumn.ID,
   sort_by_order: UsersOrder.ASC,
   user_name: '',

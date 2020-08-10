@@ -14,5 +14,5 @@ export function parseEnvironments(
 }
 
 export function parseSystems(systems: SystemData[]): IWMDropdownOption | IWMDropdownOption[] {
-  return getOptions(systems.map(({ userId, name }) => ({ id: userId, value: name })));
+  return getOptions(systems.map(({ userId, displayName }) => ({ id: userId, value: displayName })));
 }

@@ -1,6 +1,9 @@
+import produce from 'immer';
 import { UserData } from '@walkme/editor-sdk/dist/user';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
+
+import { defaultDateRange } from '../../utils';
 
 import { ActionType, IState, IAction } from './app-context.interface';
 
@@ -13,59 +16,52 @@ export const initialState = {
   system: {} as SystemData,
   environment: {} as WalkMeEnvironment,
   originalUser: {} as UserData,
+  dateRange: defaultDateRange,
 };
 
-export const reducer = (state: IState, action: IAction): IState => {
-  switch (action.type) {
-    case ActionType.Updating:
-      return {
-        ...state,
-        isUpdating: true,
-        hasUpdateError: false,
-        errorMessage: '',
-      };
-    case ActionType.UpdateSuccess:
-      return {
-        ...state,
-        isUpdating: false,
-        hasUpdateError: false,
-        errorMessage: '',
-      };
-    case ActionType.UpdateError:
-      return {
-        ...state,
-        isUpdating: false,
-        hasUpdateError: true,
-        errorMessage: action.errorMessage ?? initialState.errorMessage,
-      };
-    case ActionType.SetUser:
-      return {
-        ...state,
-        user: action.user ?? initialState.user,
-      };
-    case ActionType.SetOriginalUser:
-      return {
-        ...state,
-        originalUser: action.originalUser ?? initialState.originalUser,
-      };
-    case ActionType.SetSystem:
-      return {
-        ...state,
-        system: action.system ?? initialState.system,
-      };
-    case ActionType.SetEnvironment:
-      return {
-        ...state,
-        environment: action.environment ?? initialState.environment,
-      };
-    case ActionType.CurrentScreenProvider:
-      return {
-        ...state,
-        screenProvider: action.currentScreen,
-      };
-    case ActionType.ResetAppState:
-      return { ...initialState };
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
-};
+export const reducer = produce(
+  (draft: IState, action: IAction): IState => {
+    switch (action.type) {
+      case ActionType.Updating:
+        draft.isUpdating = true;
+        draft.hasUpdateError = false;
+        draft.errorMessage = '';
+        break;
+      case ActionType.UpdateSuccess:
+        draft.isUpdating = false;
+        draft.hasUpdateError = false;
+        draft.errorMessage = '';
+        break;
+      case ActionType.UpdateError:
+        draft.isUpdating = false;
+        draft.hasUpdateError = true;
+        draft.errorMessage = action.errorMessage ?? initialState.errorMessage;
+        break;
+      case ActionType.SetUser:
+        draft.user = action.user ?? initialState.user;
+        break;
+      case ActionType.SetOriginalUser:
+        draft.originalUser = action.originalUser ?? initialState.originalUser;
+        break;
+      case ActionType.SetSystem:
+        draft.system = action.system ?? initialState.system;
+        break;
+      case ActionType.SetEnvironment:
+        draft.environment = action.environment ?? initialState.environment;
+        break;
+      case ActionType.SetDateRange:
+        draft.dateRange = action.dateRange ?? initialState.dateRange;
+        break;
+      case ActionType.CurrentScreenProvider:
+        draft.screenProvider = action.currentScreen;
+        break;
+      case ActionType.ResetAppState:
+        draft = { ...initialState };
+        break;
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`);
+    }
+
+    return draft;
+  },
+);

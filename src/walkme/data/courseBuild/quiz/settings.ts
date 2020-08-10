@@ -1,16 +1,6 @@
 import { WalkMeDataQuizSettings, BuildQuizProperties, BooleanStringOption } from '@walkme/types';
 import { convertToNumberBoolean, isTrue } from '../../../utils';
 
-export function toUIModel(settings: WalkMeDataQuizSettings, passmark: number): BuildQuizProperties {
-  return {
-    forceCourseCompletion: isTrue(settings.isLimited),
-    randQuestions: isTrue(settings.randQuestions),
-    randAnswers: isTrue(settings.randAnswers),
-    showSummary: isTrue(settings.isQuizResults),
-    passmark,
-  };
-}
-
 export function toDataModel(
   properties: BuildQuizProperties,
   dataSettings: WalkMeDataQuizSettings,
@@ -34,13 +24,15 @@ export class QuizProperties implements BuildQuizProperties {
   public randQuestions: boolean;
   public showSummary: boolean;
   public passmark: number;
+  public isEnabled: boolean;
 
-  constructor(private _settings: WalkMeDataQuizSettings, passmark: number) {
+  constructor(private _settings: WalkMeDataQuizSettings, passmark: number, isEnabled: boolean) {
     this.forceCourseCompletion = isTrue(_settings.isLimited);
     this.randQuestions = isTrue(_settings.randQuestions);
     this.randAnswers = isTrue(_settings.randAnswers);
     this.showSummary = isTrue(_settings.isQuizResults);
     this.passmark = passmark;
+    this.isEnabled = isEnabled;
   }
 
   getDataModel = () => toDataModel(this, this._settings);

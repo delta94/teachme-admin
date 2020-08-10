@@ -15,6 +15,7 @@ export interface ISearchFilter {
   placeholder?: string;
   value?: string;
   onSearch: (searchValue: string) => void;
+  disabled?: boolean;
 }
 
 export default function SearchFilter({
@@ -22,6 +23,7 @@ export default function SearchFilter({
   placeholder,
   value,
   onSearch,
+  disabled,
 }: ISearchFilter): ReactElement {
   const [searchValue, setSearchValue] = useState(value ?? '');
   const appInit = useAppSkeleton();
@@ -41,6 +43,7 @@ export default function SearchFilter({
           placeholder={placeholder}
           value={searchValue}
           onChange={onChange}
+          disabled={disabled}
         />
       ) : (
         <WMSkeletonInput className={classes['skeleton']} active size="default" />

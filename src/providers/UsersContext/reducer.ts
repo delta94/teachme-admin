@@ -1,13 +1,10 @@
 import produce from 'immer';
 
-import { defaultDateRange } from '../../utils';
-
 import { ActionType, IState, IAction } from './users-context.interface';
 
 export const initialState = {
   isFetchingUsers: false,
   isFetchingUsersError: false,
-  dateRange: defaultDateRange,
   users: [],
   totals_unique_users: 0,
   total_rows: 0,
@@ -36,9 +33,6 @@ export const reducer = produce(
         break;
       case ActionType.SetUsersSearchValue:
         draft.usersSearchValue = action.usersSearchValue ?? initialState.usersSearchValue;
-        break;
-      case ActionType.SetDateRange:
-        draft.dateRange = action.dateRange ?? initialState.dateRange;
         break;
       case ActionType.ExportUsers:
         draft.isExportingUsers = true;
