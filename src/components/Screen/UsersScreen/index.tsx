@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
+import { useDebounceCallback } from '@react-hook/debounce';
 
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
@@ -54,13 +55,15 @@ export default function UsersScreen(): ReactElement {
   const onDateRangeChange = (dateRange?: IDateRange) =>
     appDispatch({ type: AppActionType.SetDateRange, dateRange });
 
+  const debouncedFetchUsers = useDebounceCallback(fetchUsers, 400);
+
   const onSearch = (searchValue: string) => {
     const options = {
       ...defaultQueryOptions,
       user_name: searchValue,
     };
 
-    fetchUsers(dispatch, envId, from, to, options);
+    debouncedFetchUsers(dispatch, envId, from, to, options);
 
     dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
   };
