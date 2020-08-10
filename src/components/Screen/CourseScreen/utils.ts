@@ -51,8 +51,8 @@ const parseLessonData = (item: CourseOutlineUIModelLesson) => ({
   })),
 });
 
-export const parseCourseOutline = (items: CourseOutlineUIModel): ICourseOutlineItems =>
-  items.map((item: CourseOutlineUIModelItem | CourseOutlineUIModelLesson) => {
+export const parseCourseOutline = (outline: CourseOutlineUIModel): ICourseOutlineItems => {
+  return outline.items.map((item: CourseOutlineUIModelItem | CourseOutlineUIModelLesson) => {
     const itemDefault = parseDefaultItemData(item);
 
     if (item.childType !== CourseChildType.Lesson) {
@@ -67,6 +67,7 @@ export const parseCourseOutline = (items: CourseOutlineUIModel): ICourseOutlineI
       } as ICourseOutlineLesson;
     }
   });
+};
 
 const hasMatchToCourseOutlineSearchValue = (item: ICourseOutlineItem, searchValue: string) =>
   item.title.toLowerCase().includes(searchValue.toLowerCase());

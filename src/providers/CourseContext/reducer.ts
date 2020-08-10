@@ -1,7 +1,6 @@
 import produce from 'immer';
 
 import { CourseOverviewData } from '../../walkme/models';
-import { defaultDateRange } from '../../utils';
 import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
 
 import { ActionType, IState, IAction } from './course-context.interface';
@@ -9,7 +8,6 @@ import { ActionType, IState, IAction } from './course-context.interface';
 export const initialState = {
   isFetchingCourseData: false,
   isFetchingCourseDataError: false,
-  dateRange: defaultDateRange,
   overview: {} as CourseOverviewData,
   courseMetadata: {},
   courseOutline: [] as ICourseOutlineItems,
@@ -40,9 +38,6 @@ export const reducer = produce(
       case ActionType.FetchCourseDataError:
         draft.isFetchingCourseData = false;
         draft.isFetchingCourseDataError = true;
-        break;
-      case ActionType.SetDateRange:
-        draft.dateRange = action.dateRange ?? initialState.dateRange;
         break;
       case ActionType.SetCourseOutlineSearchValue:
         draft.courseOutlineSearchValue =

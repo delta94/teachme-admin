@@ -1,0 +1,16 @@
+.autocomplete-input {
+  width: 100%;
+  color: var(--neutral900);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  line-height: 20px;
+}
+
+:global(.ant-modal-content) {
+  :global(.ant-btn) {
+    font-size: 10px;
+    margin-left: 20px;
+  }
+}

@@ -1,23 +1,26 @@
-import React, { ReactElement, useState } from 'react';
+// todo: ExportToCSVDialog is commented out until export to email is implemented
 
+import React, { ReactElement /* , useState */ } from 'react';
+
+import { useAppContext } from '../../../providers/AppContext';
 import { useCoursesContext, exportCourses } from '../../../providers/CoursesContext';
 
-import { ExportToCSVDialog } from '../../common/dialogs';
+// import { ExportToCSVDialog } from '../../common/dialogs';
 import { ExportButton } from '../../common/buttons';
 
-export default function ExportCoursesButton(): ReactElement {
-  const [state, dispatch] = useCoursesContext();
+export default function ExportCoursesButton({ disabled }: { disabled?: boolean }): ReactElement {
+  const [appState] = useAppContext();
   const {
-    courses,
     dateRange: { from, to },
-  } = state;
+  } = appState;
+  const [, dispatch] = useCoursesContext();
 
-  const [showExport, setShowExport] = useState(false);
+  // const [showExport, setShowExport] = useState(false);
 
   return (
     <>
-      <ExportButton onClick={() => setShowExport(true)} />
-      <ExportToCSVDialog
+      <ExportButton onClick={() => exportCourses(dispatch, 0, from, to)} disabled={disabled} />
+      {/* <ExportToCSVDialog
         coursesCount={courses.length}
         open={showExport}
         onCancel={() => setShowExport(false)}
@@ -25,7 +28,7 @@ export default function ExportCoursesButton(): ReactElement {
           setShowExport(false);
           exportCourses(dispatch, 0, from, to);
         }}
-      />
+      /> */}
     </>
   );
 }

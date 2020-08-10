@@ -8,7 +8,7 @@ import { WMVerticalRadioGroup } from '../../../common/WMRadio';
 import classes from './style.module.scss';
 
 const completionOptions = [
-  { label: 'Item is opened', value: CourseTaskCompletionType.Completed },
+  { label: 'Item is completed', value: CourseTaskCompletionType.Completed },
   {
     label: 'Reaching item’s goal',
     value: CourseTaskCompletionType.Goal,
