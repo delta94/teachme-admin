@@ -22,7 +22,6 @@ function mapUIOutlineItem(
 ): CourseOutlineUIModelItem {
   return {
     childType: CourseChildType.Task,
-    drop_off: 0,
     title: item.title,
     users_completed: itemData?.users_complete || null,
     id: item.id,
@@ -35,7 +34,7 @@ function getCourseOutlineItem(
   id: number,
   allData: CourseOutlineData,
 ): CourseOutlineItem | undefined {
-  // need to do this in a more performant way
+  // todo: need to do this in a more performant way
   return allData.find(function (item) {
     return matchesServerType(type, item.item_type) && item.item_id == id;
   });
@@ -52,11 +51,24 @@ export async function getCourseOutline(
     getCourseOutlineData(courseId, environmentId, from, to),
   ]);
 
-  return course.items.toArray().map((item) => {
+  const outline = course.items.toArray().map((item) => {
     return item.type == TypeName.Lesson
       ? getLesson(<CourseLesson>item, outlineData)
       : getTaskItem(<CourseTask>item, outlineData);
   });
+
+  const dropOffEnabled = course.properties.enforceOrder;
+  if (dropOffEnabled) {
+    const items = outline.flatMap((item) =>
+      item.childType == CourseChildType.Lesson ? (<CourseOutlineUIModelLesson>item).items : item,
+    );
+    calculateDropOff(items);
+  }
+
+  return {
+    items: outline,
+    dropOffEnabled,
+  };
 }
 
 function getTaskItem(item: CourseTask, outlineData: CourseOutlineData) {
@@ -71,7 +83,7 @@ function getLesson(
   const items = lesson.childNodes.toArray().map((item) => getTaskItem(item, outlineData));
   return {
     childType: CourseChildType.Lesson,
-    items: calculateDropOff(items),
+    items,
     id: lesson.id,
     title: lesson.title,
   };
@@ -82,7 +94,8 @@ function calculateDropOff(items: Array<CourseOutlineUIModelItem>): Array<CourseO
     if (index == 0) return item;
     const prev = array[index - 1].users_completed ?? 0;
     const curr = array[index].users_completed ?? 0;
-    item.drop_off = prev && (100 * curr) / prev;
+    const percentage = prev && (100 * curr) / prev;
+    item.drop_off = Math.round(100 - percentage);
     return item;
   });
 }

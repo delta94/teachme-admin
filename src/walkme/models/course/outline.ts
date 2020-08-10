@@ -3,7 +3,10 @@ import { TypeName } from '@walkme/types';
 /**
  * Course outline is an array of lessons or items
  */
-export type CourseOutlineUIModel = Array<CourseOutlineUIModelItem | CourseOutlineUIModelLesson>;
+export type CourseOutlineUIModel = {
+  items: Array<CourseOutlineUIModelItem | CourseOutlineUIModelLesson>;
+  dropOffEnabled: boolean;
+};
 
 /**
  * Determines the type of the item in the outline array
@@ -35,7 +38,7 @@ export type CourseOutlineUIModelItem = {
   /** Number of users who completed or null if no data exists */
   users_completed: number | null;
   /** Percentage of users who completed this task out of users who completed the previous one */
-  drop_off: number;
+  drop_off?: number;
   /** Task type (article, video or smartwalkthru) */
   type: TypeName;
   /** Task id */

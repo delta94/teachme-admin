@@ -50,6 +50,7 @@ export async function getNewCourse(): Promise<Course> {
  *  Returns a UI instance for an existing course
  * @param id requested course id
  * @param environmentId requested environment id
+ * @throws CourseNotFoundError if the course is not found in the users account
  */
 export async function getCourse(id: number, environmentId: number): Promise<Course> {
   return courses.getCourse(id, environmentId);
@@ -62,3 +63,4 @@ export async function getCourse(id: number, environmentId: number): Promise<Cour
 export async function getSegments(environmentId: number): Promise<Array<UISegment>> {
   return segments.getSegments(environmentId);
 }
+
