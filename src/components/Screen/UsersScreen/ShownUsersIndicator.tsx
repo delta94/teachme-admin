@@ -12,8 +12,7 @@ export default function ShownUsersIndicator({
 }: {
   showResults: boolean;
 }): ReactElement {
-  const [state] = useUsersContext();
-  const { isFetchingUsers, totals_unique_users, total_rows } = state;
+  const [{ isFetchingUsers, totals_unique_users, total_rows }] = useUsersContext();
 
   return (
     <WMSkeleton

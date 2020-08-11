@@ -42,8 +42,7 @@ export default function UsersScreen(): ReactElement {
     environment: { id: envId },
     dateRange: { from, to },
   } = appState;
-  const [state, dispatch] = useUsersContext();
-  const { isFetchingUsers, users } = state;
+  const [{ isFetchingUsers, users }, dispatch] = useUsersContext();
   const queryOptionsRef = useRef<UsersListQueryOptions>({ ...defaultQueryOptions });
   const queryOptions = queryOptionsRef.current;
   const disableExport = isUpdating || isFetchingUsers || !users.length;

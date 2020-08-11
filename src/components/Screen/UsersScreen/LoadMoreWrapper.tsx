@@ -21,8 +21,7 @@ export default function LoadMoreWrapper({
     environment: { id: envId },
     dateRange: { from, to },
   } = appState;
-  const [state, dispatch] = useUsersContext();
-  const { isFetchingUsers, users, total_rows } = state;
+  const [{ isFetchingUsers, users, total_rows }, dispatch] = useUsersContext();
 
   const options = {
     ...queryOptions,
