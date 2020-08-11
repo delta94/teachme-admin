@@ -93,12 +93,12 @@ export default function CourseSummaryChart({
             {
               dataKey: 'start_users',
               stroke: '#F2B529',
-              tooltipLabel: `Users started ${courseId && 'this'} course`,
+              tooltipLabel: `Users started ${courseId ? 'this course' : 'courses'}`,
             },
             {
               dataKey: 'completed_users',
               stroke: '#8812FF',
-              tooltipLabel: `Users completed ${courseId && 'this'} course`,
+              tooltipLabel: `Users completed ${courseId ? 'this course' : 'courses'}`,
             },
           ]}
           lineKeyPrefix="course-summary"
