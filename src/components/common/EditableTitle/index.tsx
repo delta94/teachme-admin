@@ -101,7 +101,9 @@ export default function EditableTitle({
             onClick={showInput}
           >
             {inputValue}
-            {isCourseTitle && <Icon type={IconType.Pencil} className={classes['pencil-icon']} />}
+            {isCourseTitle && (
+              <Icon type={IconType.PencilLarge} className={classes['pencil-icon']} />
+            )}
           </div>
           <WMInput
             className={cc([

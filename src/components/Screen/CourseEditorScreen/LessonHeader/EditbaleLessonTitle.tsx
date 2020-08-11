@@ -47,7 +47,7 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
           onClick={setInputActive}
           className={cc([classes['title-button'], { [classes['hidden']]: showInput }])}
         >
-          <Icon type={IconType.Pencil} className={classes['title-icon']} />
+          <Icon type={IconType.PencilSmall} className={classes['title-icon']} />
         </WMButton>
         <LessonDeleteButton lesson={lesson} showInput={showInput} />
       </div>

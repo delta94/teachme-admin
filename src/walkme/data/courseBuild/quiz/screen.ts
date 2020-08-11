@@ -21,6 +21,7 @@ export function toDataModel(
   dataScreen: WalkMeDataQuizScreen,
 ): WalkMeDataQuizScreen {
   return {
+    Id: screen.id,
     ...dataScreen,
     ButtonText: screen.buttons[0].text,
     Description: screen.description,
@@ -42,11 +43,13 @@ export function newDataModel(type: QUIZ_ITEM_TYPES): WalkMeDataQuizScreen {
 }
 
 export class BuildQuizScreen implements QuizScreen {
+  public id?: number;
   public title: string;
   public description: string;
   public buttons: Array<{ text: string; id: string }>;
 
   constructor(private _screen: WalkMeDataQuizScreen) {
+    this.id = _screen.Id;
     this.title = _screen.Title;
     this.description = _screen.Description;
     this.buttons = [{ text: _screen.ButtonText, id: `${_screen.Type}-0` }];

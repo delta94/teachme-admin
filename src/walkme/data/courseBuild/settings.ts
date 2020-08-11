@@ -5,10 +5,10 @@ export class CourseProperties implements BuildCourseProperties {
   public enableIfPreviousDone: boolean;
   public enforceOrder: boolean;
   public hasQuiz: boolean;
-  constructor(settings: WalkMeDataCourseSettings) {
+  constructor(settings: WalkMeDataCourseSettings, isQuizDefault: () => boolean) {
     this.enableIfPreviousDone = isTrue(settings.onlyPreviousDone);
     this.enforceOrder = isTrue(settings.enforceOrder);
-    this.hasQuiz = settings.hasQuiz === undefined || isTrue(settings.hasQuiz);
+    this.hasQuiz = (settings.hasQuiz === undefined && !isQuizDefault()) || isTrue(settings.hasQuiz);
   }
 
   toDataModel(): WalkMeDataCourseSettings {

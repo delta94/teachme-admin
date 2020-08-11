@@ -30,7 +30,7 @@ export const columns = [
     width: '15%',
     render: (value: number): ReactElement => (
       <DashCell value={value}>
-        <NumberCell value={value} />
+        <NumberCell value={`${value}%`} />
       </DashCell>
     ),
   },

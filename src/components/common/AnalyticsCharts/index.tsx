@@ -24,7 +24,12 @@ export default function AnalyticsCharts({
   return (
     <div className={classes.analytics}>
       <div className={cc([classes.graphs, classes['left-graphs']])}>
-        <CourseSummaryChart title={summaryChartTitle} overview={overview} isLoading={isLoading} />
+        <CourseSummaryChart
+          title={summaryChartTitle}
+          overview={overview}
+          isLoading={isLoading}
+          isSingleCourse={!!courseId}
+        />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
         <CourseTimeCompletionChart
