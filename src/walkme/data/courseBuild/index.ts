@@ -11,6 +11,7 @@ export async function getNewCourse(): Promise<Course> {
 }
 
 export async function getCourseMetadata(id: number, environmentId: number): Promise<Course> {
+  await wmData.getData(TypeName.Tag, environmentId);
   const [course] = ((await wmData.getData(
     TypeName.Course,
     environmentId,

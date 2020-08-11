@@ -1,20 +1,22 @@
 import * as endpoint from '../endpoint';
-import { UsersCountQueryOptions, UsersCountResponse } from '../../models/users';
+import { UsersCountResponse } from '../../models/users';
+import { UsersTableQueryFilter } from '../../models/users/filter';
+import { addUserTableFilters } from './filter';
 
-const DEFAULT_OPTIONS: UsersCountQueryOptions = {};
+const DEFAULT_OPTIONS: UsersTableQueryFilter = {};
 
 export function getUsersCount(
   environment: number,
   from: string,
   to: string,
-  options?: UsersCountQueryOptions,
+  options?: UsersTableQueryFilter,
 ): Promise<UsersCountResponse> {
   const combinedOptions = { ...DEFAULT_OPTIONS, ...options };
   const query = new URLSearchParams();
   query.append('environment', `${environment}`);
   query.append('from', from);
   query.append('to', to);
-  if (combinedOptions.user_name) query.append('user_name', combinedOptions.user_name);
+  addUserTableFilters(combinedOptions, query);
 
   return endpoint.get(`users/count?${query.toString()}`);
 }

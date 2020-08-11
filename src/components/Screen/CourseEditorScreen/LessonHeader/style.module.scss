@@ -13,7 +13,6 @@
   flex: 1;
 
   :global(.wm-icon) {
-    width: 18px;
     margin-right: 8px;
   }
 }
@@ -74,7 +73,6 @@
     margin: 0;
     align-self: center;
     flex-grow: 1;
-
     box-sizing: border-box;
     height: 26px;
     width: 583px;
@@ -93,18 +91,17 @@
   }
 
   .title-button {
+    span {
+      width: 18px;
+      padding: 2px;
+    }
+
     &:global(.ant-btn) {
       background-color: transparent;
     }
 
     &:global(.ant-btn) > span {
       height: auto;
-    }
-
-    svg {
-      width: 26px;
-      height: 18px;
-      padding: 2px;
     }
 
     &:last-child {
