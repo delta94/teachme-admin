@@ -17,6 +17,7 @@ export interface IWMDialog extends ModalProps {
   hideHeader?: boolean;
   buttons?: Array<IWMButtonObject>;
   onClose: (e: object) => void;
+  disableCloseButton?: boolean;
 }
 
 export default function WMDialog({
@@ -27,6 +28,7 @@ export default function WMDialog({
   hideHeader = false,
   buttons,
   onClose,
+  disableCloseButton,
   ...otherProps
 }: IWMDialog): ReactElement {
   return (
@@ -34,7 +36,10 @@ export default function WMDialog({
       visible={open}
       className={cc([
         classes['wm-dialog'],
-        { [classes['wm-dialog-no-header']]: hideHeader },
+        {
+          [classes['wm-dialog-no-header']]: hideHeader,
+          [classes['disable-close-button']]: disableCloseButton,
+        },
         className,
       ])}
       title={title}

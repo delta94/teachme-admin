@@ -17,6 +17,7 @@ const environments: IWMDropdownOption[] = [
 
 export interface IPublishToEnvironmentDialog extends IWMConfirmationDialogWrapper {
   coursesCount: number;
+  isInProgess?: boolean;
 }
 
 export default function PublishToEnvironmentDialog({
@@ -24,6 +25,7 @@ export default function PublishToEnvironmentDialog({
   open,
   onCancel,
   onConfirm,
+  isInProgess,
 }: IPublishToEnvironmentDialog): ReactElement {
   const [environment, setEnvironment] = useState<IWMDropdownOption>(environments[0]);
 
@@ -37,12 +39,15 @@ export default function PublishToEnvironmentDialog({
             environments={environments}
             intialSelectedEnvironment={environment}
             onChange={(selected) => setEnvironment(selected)}
+            disabled={isInProgess}
           />
         </div>
       }
       confirmLabel={`Publish to ${environment.value}`}
       onCancel={onCancel}
       onConfirm={() => onConfirm(environment.id)}
+      loadingConfirmButton={isInProgess}
+      disableDialog={isInProgess}
     >
       <p>You are about to publish the following courses. Please review before confirmation.</p>
       <ul className={classes['publish-dialog-ul']}>

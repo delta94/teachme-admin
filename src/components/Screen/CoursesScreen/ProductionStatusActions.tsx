@@ -6,8 +6,8 @@ import {
   publishCourses,
   archiveCourses,
   fetchCoursesData,
+  ActionType,
 } from '../../../providers/CoursesContext';
-// import { PublishStatus } from '../../../walkme/data';
 
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import { PublishToEnvironmentDialog } from '../../common/dialogs';
@@ -19,7 +19,7 @@ export default function ProductionStatusActions(): ReactElement {
   const {
     dateRange: { from, to },
   } = appState;
-  const [{ selectedRows }, dispatch] = useCoursesContext();
+  const [{ selectedRows, isPublishingCourses }, dispatch] = useCoursesContext();
 
   // TODO: uncomment once sdk supports marking as draft
   // const hasPublished = selectedRows.some(
@@ -61,10 +61,12 @@ export default function ProductionStatusActions(): ReactElement {
         open={showPublish}
         onCancel={() => setShowPublish(false)}
         onConfirm={async (envId) => {
-          setShowPublish(false);
+          dispatch({ type: ActionType.PublishCourses });
           await publishCourses(dispatch, envId, selectedRows);
           fetchCoursesData(dispatch, 0, from, to);
+          setShowPublish(false);
         }}
+        isInProgess={isPublishingCourses}
       />
     </>
   );
