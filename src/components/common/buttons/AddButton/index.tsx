@@ -1,21 +1,24 @@
 import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
-import WMButton from '../../WMButton';
+import WMButton, { IWMButtonProps } from '../../WMButton';
 import Icon, { IconType } from '../../Icon';
 
 import classes from './style.module.scss';
 
-export default function AddButton({
-  className,
-  onClick,
-}: {
+interface IAddButton extends IWMButtonProps {
   className?: string;
   onClick?: () => void;
-}): ReactElement {
+  disabled?: boolean;
+}
+
+export default function AddButton({ className, onClick, disabled }: IAddButton): ReactElement {
   return (
-    <WMButton className={cc([classes['add-button'], className])} onClick={onClick}>
-      {<Icon type={IconType.Plus} />}
-    </WMButton>
+    <WMButton
+      className={cc([classes['add-button'], className])}
+      onClick={onClick}
+      icon={<Icon type={IconType.Plus} />}
+      disabled={disabled}
+    />
   );
 }
