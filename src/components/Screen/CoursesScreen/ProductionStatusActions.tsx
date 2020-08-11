@@ -32,9 +32,7 @@ export default function ProductionStatusActions(): ReactElement {
 
   const [showPublish, setShowPublish] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
-  /*
-   *
-   * */
+
   return (
     <>
       <div className={classes['production-status-actions']}>

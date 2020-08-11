@@ -2,11 +2,10 @@ import React, { ReactElement, useState } from 'react';
 
 import { EnvironmentType } from '../../../../interfaces/app.interfaces';
 import { pluralizer } from '../../../../utils';
-
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 import { IWMDropdownOption } from '../../WMDropdown';
+import EnvironmentDropdown from '../DialogEnvironmentDropdown/EnvironmentDropdown';
 
-import EnvironmentDropdown from './EnvironmentDropdown';
 import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
 
@@ -37,7 +36,7 @@ export default function PublishToEnvironmentDialog({
           <div>Publish to </div>
           <EnvironmentDropdown
             environments={environments}
-            intialSelectedEnvironment={environment}
+            initialSelectedEnvironment={environment}
             onChange={(selected) => setEnvironment(selected)}
             disabled={isInProgess}
           />

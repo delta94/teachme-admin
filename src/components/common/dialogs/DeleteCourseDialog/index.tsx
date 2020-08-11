@@ -10,7 +10,7 @@ import classes from './styles.module.scss';
 
 export interface IDeleteCourseDialog extends IWMConfirmationDialogWrapper {
   courses: Array<UICourse>;
-  isInProgess?: boolean;
+  isInProgress?: boolean;
 }
 
 export default function DeleteCourseDialog({
@@ -18,7 +18,7 @@ export default function DeleteCourseDialog({
   open,
   onCancel,
   onConfirm,
-  isInProgess,
+  isInProgress,
 }: IDeleteCourseDialog): ReactElement {
   return (
     <WMConfirmationDialog
@@ -28,8 +28,8 @@ export default function DeleteCourseDialog({
       confirmLabel="Delete"
       onCancel={onCancel}
       onConfirm={onConfirm}
-      loadingConfirmButton={isInProgess}
-      disableDialog={isInProgess}
+      loadingConfirmButton={isInProgress}
+      disableDialog={isInProgress}
     >
       <DialogContent courses={courses} />
     </WMConfirmationDialog>

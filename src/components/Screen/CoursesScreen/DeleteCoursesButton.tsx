@@ -55,7 +55,7 @@ export default function DeleteCoursesButton(): ReactElement {
           setShowDeleteCourse(false);
           fetchCoursesData(dispatch, envId, from, to);
         }}
-        isInProgess={isDeletingCourses}
+        isInProgress={isDeletingCourses}
       />
       <CantDeleteDialog
         open={showCantDeleteCourse}
