@@ -31,10 +31,12 @@ export default function LoadMoreWrapper({
 
   return (
     <>
-      {total_rows > users.length && !isFetchingUsers && (
+      {!isFetchingUsers && (
         <div className={classes['load-more-wrapper']}>
           <span>{`1-${users.length} of ${total_rows} results`}</span>
-          <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, options, users)} />
+          {total_rows > users.length && (
+            <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, options, users)} />
+          )}
         </div>
       )}
     </>
