@@ -91,7 +91,11 @@ function getLesson(
 
 function calculateDropOff(items: Array<CourseOutlineUIModelItem>): Array<CourseOutlineUIModelItem> {
   return items.map((item, index, array) => {
-    if (index == 0) return item;
+    if (index == 0) {
+      item.drop_off = 0;
+      return item;
+    }
+
     const prev = array[index - 1].users_completed ?? 0;
     const curr = array[index].users_completed ?? 0;
     const percentage = prev && (100 * curr) / prev;

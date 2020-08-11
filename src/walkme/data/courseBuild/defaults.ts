@@ -2,7 +2,8 @@ import { QuestionType } from '@walkme/types';
 
 export default {
   NEW_ITEM_ID: -1,
-  QUESTION_TEXT: 'Ask the first quiz question',
+  FIRST_QUESTION_TEXT: 'Ask the first quiz question',
+  QUESTION_TEXT: 'New quiz question',
   QUESTION_DESCRIPTION: '',
   QUESTION_TYPE: QuestionType.Single,
   CORRECT_ANSWER_TEXT: 'Correct answer',

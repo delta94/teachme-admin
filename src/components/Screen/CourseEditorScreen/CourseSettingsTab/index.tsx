@@ -8,6 +8,7 @@ import { ActionType, useCourseEditorContext } from '../../../../providers/Course
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
 import WMSelect from '../../../common/WMSelect';
+import WMSkeleton from '../../../common/WMSkeleton';
 
 import classes from './style.module.scss';
 
@@ -21,7 +22,7 @@ export default function CourseSettingsTab(): ReactElement {
     },
     appDispatch,
   ] = useAppContext();
-  const [{ course }, dispatch] = useCourseEditorContext();
+  const [{ course, isFetchingCourse }, dispatch] = useCourseEditorContext();
   const [allSegments, setAllSegments] = useState<any[]>([]);
   const [courseSegments, setCourseSegments] = useState<any[]>([]);
   const [isSegmentsUpdating, setIsSegmentsUpdating] = useState<boolean>(true);
@@ -92,55 +93,57 @@ export default function CourseSettingsTab(): ReactElement {
 
   return (
     <div className={classes['course-settings-tab']}>
-      {course?.properties && (
-        <>
-          <FormGroup
-            className={cc([classes['segmentation'], classes['course-settings-form-group']])}
-            title="Segmentation"
-            label="Select the target audience for the course"
-            labelHtmlFor="segmentation"
-          >
-            <WMSelect
-              id="segmentation"
-              loading={isSegmentsUpdating}
-              className={classes['segmentation-selection']}
-              options={allSegments}
-              optionFilterProp="label"
-              onSelect={onSelectSegment}
-              onDeselect={onDeselectSegment}
-              placeholder={!course?.segments.size ? 'No segments' : ''}
-              value={courseSegments.length ? courseSegments.map(({ value }) => value) : undefined}
-              disabled={!allSegments.length && !isSegmentsUpdating}
-              showArrow
-            />
-            {!allSegments.length && (
-              <sub>
-                No segments have been defined in the Editor.{' '}
-                <a target="_blank" href="https://support.walkme.com/knowledge-base/segmentation/">
-                  Learn More
-                </a>
-              </sub>
-            )}
-          </FormGroup>
-          <FormGroup
-            className={cc([classes['learning-path'], classes['course-settings-form-group']])}
-            title="Learning Path"
-          >
-            <WMSwitch
-              className={classes['switch-field']}
-              checked={course?.properties.enableIfPreviousDone}
-              label="Allow users to take the course only when previous one is completed"
-              onChange={(checked: boolean) => updateEnableIfPreviousDone(checked)}
-            />
-            <WMSwitch
-              className={classes['switch-field']}
-              checked={course?.properties.enforceOrder}
-              label="Enforce order for course outline"
-              onChange={(checked: boolean) => updateEnforceOrder(checked)}
-            />
-          </FormGroup>
-        </>
-      )}
+      <WMSkeleton loading={isFetchingCourse || isSegmentsUpdating} active paragraph={{ rows: 5 }}>
+        {course?.properties && (
+          <>
+            <FormGroup
+              className={cc([classes['segmentation'], classes['course-settings-form-group']])}
+              title="Segmentation"
+              label="Select the target audience for the course"
+              labelHtmlFor="segmentation"
+            >
+              <WMSelect
+                id="segmentation"
+                loading={isSegmentsUpdating}
+                className={classes['segmentation-selection']}
+                options={allSegments}
+                optionFilterProp="label"
+                onSelect={onSelectSegment}
+                onDeselect={onDeselectSegment}
+                placeholder={!course?.segments.size ? 'No segments' : ''}
+                value={courseSegments.length ? courseSegments.map(({ value }) => value) : undefined}
+                disabled={!allSegments.length && !isSegmentsUpdating}
+                showArrow
+              />
+              {!allSegments.length && (
+                <sub>
+                  No segments have been defined in the Editor.{' '}
+                  <a target="_blank" href="https://support.walkme.com/knowledge-base/segmentation/">
+                    Learn More
+                  </a>
+                </sub>
+              )}
+            </FormGroup>
+            <FormGroup
+              className={cc([classes['learning-path'], classes['course-settings-form-group']])}
+              title="Learning Path"
+            >
+              <WMSwitch
+                className={classes['switch-field']}
+                checked={course?.properties.enableIfPreviousDone}
+                label="Allow users to take the course only when previous one is completed"
+                onChange={(checked: boolean) => updateEnableIfPreviousDone(checked)}
+              />
+              <WMSwitch
+                className={classes['switch-field']}
+                checked={course?.properties.enforceOrder}
+                label="Enforce order for course outline"
+                onChange={(checked: boolean) => updateEnforceOrder(checked)}
+              />
+            </FormGroup>
+          </>
+        )}
+      </WMSkeleton>
     </div>
   );
 }

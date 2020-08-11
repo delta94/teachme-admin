@@ -58,7 +58,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         label="Title"
         value={question.title}
         errorMessage={fieldErrorMessage(question.title)}
-        onChange={(e) => {
+        onBlur={(e) => {
           question.title = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
@@ -70,7 +70,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         value={question.description}
         minRows={3}
         maxRows={5}
-        onChange={(e) => {
+        onBlur={(e) => {
           question.description = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
@@ -112,7 +112,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           placeholder="Text"
           disabled={!question.properties?.hasExplanation}
           value={question.explanation ? question.explanation : ''}
-          onChange={(e) => {
+          onBlur={(e) => {
             question.explanation = e.target.value;
             dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
           }}
