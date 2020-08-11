@@ -1,6 +1,14 @@
 import React, { useReducer, ReactElement } from 'react';
 
-import { ActionType, IAction, IState, IDispatch, IUsersProvider } from './users-context.interface';
+import {
+  ActionType,
+  IAction,
+  IState,
+  IDispatch,
+  IUsersProvider,
+  UsersOrder,
+  UsersListQueryOptions,
+} from './users-context.interface';
 import {
   UsersStateContext,
   UsersDispatchContext,
@@ -11,7 +19,7 @@ import {
 } from './utils';
 import { reducer, initialState } from './reducer';
 
-export type { IAction, IState, IDispatch, IUsersProvider };
+export type { IAction, IState, IDispatch, IUsersProvider, UsersListQueryOptions };
 
 export {
   useUsersContext,
@@ -21,6 +29,7 @@ export {
   reducer,
   initialState,
   ActionType,
+  UsersOrder,
 };
 
 export default function UsersProvider({ children }: IUsersProvider): ReactElement {

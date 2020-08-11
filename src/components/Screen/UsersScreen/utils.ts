@@ -1,4 +1,15 @@
+import { UsersColumn } from '../../../walkme/models';
 import { IWMDropdownOption } from '../../common/WMDropdown';
+
+export const sortByOptions = {
+  id: UsersColumn.ID,
+  title: UsersColumn.COURSE_ID,
+  started_date: UsersColumn.STARTED_DATE,
+  completed_date: UsersColumn.COMPLETED_DATE,
+  time_to_complete: UsersColumn.TIME_TO_COMPLETE,
+  quiz_result: UsersColumn.QUIZ_RESULT,
+  quiz_attempts: UsersColumn.QUIZ_ATTEMPTS,
+};
 
 export const courses: IWMDropdownOption[] = [
   { id: 0, value: 'All Courses' },
