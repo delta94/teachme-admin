@@ -1,4 +1,12 @@
-import React, { useState, ReactElement, useRef, ChangeEvent, MouseEvent, useEffect } from 'react';
+import React, {
+  useState,
+  ReactElement,
+  useRef,
+  ChangeEvent,
+  MouseEvent,
+  useEffect,
+  KeyboardEvent,
+} from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 
@@ -64,6 +72,17 @@ export default function EditableTitle({
     setShowInputText(false);
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onInputBlur();
+    }
+
+    if (e.key === 'Escape') {
+      setInputValue(value);
+      setShowInputText(false);
+    }
+  };
+
   const isCourseTitle = type === EditableTitleType.Course;
 
   return (
@@ -82,7 +101,9 @@ export default function EditableTitle({
             onClick={showInput}
           >
             {inputValue}
-            {isCourseTitle && <Icon type={IconType.Pencil} className={classes['pencil-icon']} />}
+            {isCourseTitle && (
+              <Icon type={IconType.PencilLarge} className={classes['pencil-icon']} />
+            )}
           </div>
           <WMInput
             className={cc([
@@ -95,6 +116,7 @@ export default function EditableTitle({
             onChange={onChange}
             onBlur={onInputBlur}
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={handleKeyDown}
             maxLength={isCourseTitle ? 50 : undefined}
           />
         </>

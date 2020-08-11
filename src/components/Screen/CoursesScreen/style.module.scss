@@ -13,7 +13,12 @@
 }
 
 .delete-courses-button:global(.ant-btn) {
-  font-size: 18px;
+  font-size: 22px;
+  color: var(--primary);
+
+  svg * {
+    fill: currentColor;
+  }
 }
 
 .separator:global(.ant-divider-vertical) {

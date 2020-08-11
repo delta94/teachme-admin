@@ -6,7 +6,8 @@ import { ReactComponent as FileExportIcon } from '../../../images/icons/file-exp
 import { ReactComponent as SearchIcon } from '../../../images/icons/search.svg';
 import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
 import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
-import { ReactComponent as PencilIcon } from '../../../images/icons/pencil.svg';
+import { ReactComponent as PencilLargeIcon } from '../../../images/icons/pencil-large.svg';
+import { ReactComponent as PencilSmallIcon } from '../../../images/icons/pencil-small.svg';
 import { ReactComponent as EventCourseIcon } from '../../../images/icons/event-course.svg';
 import { ReactComponent as SmartWalkthruIcon } from '../../../images/icons/smart-walkthru.svg';
 import { ReactComponent as SmartWalkthruSmallIcon } from '../../../images/icons/smart-walkthru-small.svg';
@@ -43,7 +44,8 @@ export const IconSVG = {
   [IconType.Search]: SearchIcon,
   [IconType.Quiz]: QuizIcon,
   [IconType.Delete]: DeleteIcon,
-  [IconType.Pencil]: PencilIcon,
+  [IconType.PencilLarge]: PencilLargeIcon,
+  [IconType.PencilSmall]: PencilSmallIcon,
   [IconType.EventCourse]: EventCourseIcon,
   [IconType.SmartWalkthru]: SmartWalkthruIcon,
   [IconType.SmartWalkthruSmall]: SmartWalkthruSmallIcon,
