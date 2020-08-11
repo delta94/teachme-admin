@@ -11,7 +11,7 @@ import {
 import walkme from '@walkme/editor-sdk';
 import * as itemsData from '../courseItems/index';
 import { getGuid } from '../../services/guid';
-import { Quiz } from '../quiz';
+import { Quiz, getDefaultQuiz } from '../quiz';
 import { CourseChildContainer, isLesson } from '../courseItems/index';
 import { CourseProperties } from '../settings';
 import { createLink } from '../../services/collection';
@@ -94,11 +94,18 @@ export class Course implements BuildCourse, ITypeIdQueriable {
 
   addQuiz(): Quiz | undefined {
     this.properties.hasQuiz = true;
+    this._quiz.properties.isEnabled = true;
     return this.quiz;
   }
 
   deleteQuiz(): void {
     this.properties.hasQuiz = false;
+    this._quiz = getDefaultQuiz({
+      quiz: this._quiz.id,
+      success: this._quiz.successScreen.id,
+      fail: this._quiz.failScreen.id,
+      welcome: this._quiz.welcomeScreen.id,
+    });
   }
 
   includes(type: TypeName, id: number): boolean {
