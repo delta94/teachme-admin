@@ -12,14 +12,19 @@ export default function ExportCoursesButton({ disabled }: { disabled?: boolean }
   const [appState] = useAppContext();
   const {
     dateRange: { from, to },
+    environment: { id: envId },
   } = appState;
-  const [, dispatch] = useCoursesContext();
+  const [{ isExportingCourses }, dispatch] = useCoursesContext();
 
   // const [showExport, setShowExport] = useState(false);
 
   return (
     <>
-      <ExportButton onClick={() => exportCourses(dispatch, 0, from, to)} disabled={disabled} />
+      <ExportButton
+        onClick={() => exportCourses(dispatch, envId, from, to)}
+        disabled={disabled}
+        loading={isExportingCourses}
+      />
       {/* <ExportToCSVDialog
         coursesCount={courses.length}
         open={showExport}
