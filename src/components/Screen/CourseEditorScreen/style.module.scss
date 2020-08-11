@@ -197,3 +197,11 @@
     }
   }
 }
+
+body.prevent-interaction {
+  pointer-events: none;
+}
+
+html.prevent-interaction {
+  cursor: not-allowed;
+}

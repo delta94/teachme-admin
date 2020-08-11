@@ -17,18 +17,32 @@ import classes from './style.module.scss';
 import CancelDialog from './CancelDialog';
 
 export default function HeaderConfirmationButtons(): ReactElement {
-  const [{ course, hasChanges }, dispatch] = useCourseEditorContext();
+  const [{ course, hasChanges, isSavingCourse }, dispatch] = useCourseEditorContext();
   const [{ environment }] = useAppContext();
   const history = useHistory();
   const { courseId } = useParams();
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
   const isValid = course ? course?.isValid() : true;
 
+  const addPreventInteractionClasses = () => {
+    document.documentElement.classList.add(classes['prevent-interaction']);
+    document.body.classList.add(classes['prevent-interaction']);
+  };
+
+  const removePreventInteractionClasses = () => {
+    document.documentElement.classList.remove(classes['prevent-interaction']);
+    document.body.classList.remove(classes['prevent-interaction']);
+  };
+
   const onSave = () => {
+    dispatch({ type: ActionType.SavingCourse });
+    addPreventInteractionClasses();
+
     course
       ?.save()
       .then((): void => {
-        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: false });
+        removePreventInteractionClasses();
+        dispatch({ type: ActionType.SavingCourseSuccess });
         wmMessage('Course saved successfully', MessageType.Success);
 
         if (!courseId) {
@@ -36,7 +50,9 @@ export default function HeaderConfirmationButtons(): ReactElement {
         }
       })
       .catch((e) => {
+        removePreventInteractionClasses();
         wmMessage('Saving course failed, please try again', MessageType.Error);
+        dispatch({ type: ActionType.SavingCourseFailure });
         console.error(e);
       });
   };
@@ -63,7 +79,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
             variant={ButtonVariantEnum.Secondary}
             shape={'round'}
             className={classes['cancel-button']}
-            disabled={!hasChanges}
+            disabled={!hasChanges || isSavingCourse}
             onClick={() => setOpenCancelDialog(true)}
           >
             Cancel
@@ -80,6 +96,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
             variant={ButtonVariantEnum.Secondary}
             shape={'round'}
             className={classes['cancel-button']}
+            disabled={isSavingCourse}
           >
             Back to course list
           </WMButton>
@@ -91,6 +108,7 @@ export default function HeaderConfirmationButtons(): ReactElement {
         shape={'round'}
         disabled={!hasChanges || !isValid}
         onClick={onSave}
+        loading={isSavingCourse}
       >
         save
       </WMButton>
