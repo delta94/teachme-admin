@@ -68,7 +68,11 @@ export default function WMConfirmationDialog({
       open={open}
       title={title}
       buttons={cancelConfirmButtons}
-      className={cc([classes['wm-confirmation-dialog'], className])}
+      className={cc([
+        classes['wm-confirmation-dialog'],
+        { [classes['no-interaction-indicator']]: disableDialog },
+        className,
+      ])}
       onClose={onCancel}
       disableCloseButton={disableDialog} // prevent clicking 'x' button
       maskClosable={!disableDialog} // prevent click outside
