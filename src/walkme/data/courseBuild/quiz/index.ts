@@ -79,3 +79,17 @@ export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDa
     IsEnabled: quiz.properties.isEnabled,
   };
 }
+
+export function getDefaultQuiz(ids: {
+  quiz: number;
+  success?: number;
+  fail?: number;
+  welcome?: number;
+}): Quiz {
+  const quiz = new Quiz(newDataModel());
+  quiz.id = ids.quiz;
+  quiz.welcomeScreen.id = ids.welcome;
+  quiz.failScreen.id = ids.fail;
+  quiz.successScreen.id = ids.success;
+  return quiz;
+}
