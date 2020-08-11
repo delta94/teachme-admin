@@ -5,6 +5,7 @@ import {
   useCoursesContext,
   fetchCoursesData,
   deleteCourses,
+  ActionType,
 } from '../../../providers/CoursesContext';
 import { PublishStatus } from '../../../walkme/models';
 
@@ -21,8 +22,9 @@ export default function DeleteCoursesButton(): ReactElement {
   const [appState] = useAppContext();
   const {
     dateRange: { from, to },
+    environment: { id: envId },
   } = appState;
-  const [{ selectedRows }, dispatch] = useCoursesContext();
+  const [{ selectedRows, isDeletingCourses }, dispatch] = useCoursesContext();
 
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
   const [showCantDeleteCourse, setShowCantDeleteCourse] = useState(false);
@@ -48,10 +50,12 @@ export default function DeleteCoursesButton(): ReactElement {
         open={showDeleteCourse}
         onCancel={() => setShowDeleteCourse(false)}
         onConfirm={async () => {
-          setShowDeleteCourse(false);
+          dispatch({ type: ActionType.DeleteCourses });
           await deleteCourses(dispatch, selectedRows);
-          fetchCoursesData(dispatch, 0, from, to);
+          setShowDeleteCourse(false);
+          fetchCoursesData(dispatch, envId, from, to);
         }}
+        isInProgess={isDeletingCourses}
       />
       <CantDeleteDialog
         open={showCantDeleteCourse}

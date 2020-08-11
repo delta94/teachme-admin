@@ -60,8 +60,8 @@ export default function ProductionStatusActions(): ReactElement {
         onConfirm={async (envId) => {
           dispatch({ type: ActionType.PublishCourses });
           await publishCourses(dispatch, envId, selectedRows);
-          fetchCoursesData(dispatch, envId, from, to);
           setShowPublish(false);
+          fetchCoursesData(dispatch, envId, from, to);
         }}
         isInProgess={isPublishingCourses}
       />
@@ -72,8 +72,8 @@ export default function ProductionStatusActions(): ReactElement {
         onConfirm={async (envId) => {
           dispatch({ type: ActionType.ArchiveCourses });
           await archiveCourses(dispatch, envId, selectedRows);
-          fetchCoursesData(dispatch, envId, from, to);
           setShowArchive(false);
+          fetchCoursesData(dispatch, envId, from, to);
         }}
         isInProgess={isArchivingCourses}
       />
