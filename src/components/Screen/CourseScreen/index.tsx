@@ -39,7 +39,11 @@ export default function CourseScreen(): ReactElement {
 
   useEffect(() => {
     if (!containerRef.current) return;
-    containerRef.current.scrollIntoView({ block: 'start', inline: 'end' });
+    containerRef.current.scrollIntoView({
+      block: 'start',
+      // not intuitive, but inline: 'end' makes sure element is scrolled to the left, rather then 'end'
+      inline: 'end',
+    });
   }, []);
 
   useEffect(() => {
