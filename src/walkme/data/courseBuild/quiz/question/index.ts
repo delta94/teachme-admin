@@ -22,7 +22,7 @@ export const getQuizQuestions = (questionsData: Array<WalkMeDataQuizQuestion>) =
 export function newDataModel(index: number, data?: NewQuestionData): WalkMeDataQuizQuestion {
   return {
     Id: -index - 1,
-    Question: defaults.QUESTION_TEXT,
+    Question: index === 0 ? defaults.FIRST_QUESTION_TEXT : defaults.QUESTION_TEXT,
     Description: defaults.QUESTION_DESCRIPTION,
     Answers: [
       answers.newDataModel(0, { text: defaults.CORRECT_ANSWER_TEXT, isCorrect: true }),
