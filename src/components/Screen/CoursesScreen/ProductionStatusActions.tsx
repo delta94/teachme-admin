@@ -10,7 +10,7 @@ import {
 } from '../../../providers/CoursesContext';
 
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
-import { PublishToEnvironmentDialog } from '../../common/dialogs';
+import { PublishToEnvironmentDialog, ArchiveFromEnvironmentDialog } from '../../common/dialogs';
 
 import classes from './style.module.scss';
 
@@ -19,7 +19,7 @@ export default function ProductionStatusActions(): ReactElement {
   const {
     dateRange: { from, to },
   } = appState;
-  const [{ selectedRows, isPublishingCourses }, dispatch] = useCoursesContext();
+  const [{ selectedRows, isPublishingCourses, isArchivingCourses }, dispatch] = useCoursesContext();
 
   // TODO: uncomment once sdk supports marking as draft
   // const hasPublished = selectedRows.some(
@@ -31,20 +31,17 @@ export default function ProductionStatusActions(): ReactElement {
   // const hasDraft = selectedRows.some((course) => course.publishStatus === PublishStatus.Draft);
 
   const [showPublish, setShowPublish] = useState(false);
-
+  const [showArchive, setShowArchive] = useState(false);
+  /*
+   *
+   * */
   return (
     <>
       <div className={classes['production-status-actions']}>
         <WMButton variant={ButtonVariantEnum.Link} onClick={() => setShowPublish(true)}>
           Publish
         </WMButton>
-        <WMButton
-          variant={ButtonVariantEnum.Link}
-          onClick={async () => {
-            await archiveCourses(dispatch, 0, selectedRows);
-            fetchCoursesData(dispatch, 0, from, to);
-          }}
-        >
+        <WMButton variant={ButtonVariantEnum.Link} onClick={() => setShowArchive(true)}>
           Archive
         </WMButton>
         {/* TODO: uncomment once sdk supports marking as draft */}
@@ -63,10 +60,22 @@ export default function ProductionStatusActions(): ReactElement {
         onConfirm={async (envId) => {
           dispatch({ type: ActionType.PublishCourses });
           await publishCourses(dispatch, envId, selectedRows);
-          fetchCoursesData(dispatch, 0, from, to);
+          fetchCoursesData(dispatch, envId, from, to);
           setShowPublish(false);
         }}
         isInProgess={isPublishingCourses}
+      />
+      <ArchiveFromEnvironmentDialog
+        coursesCount={selectedRows.length}
+        open={showArchive}
+        onCancel={() => setShowArchive(false)}
+        onConfirm={async (envId) => {
+          dispatch({ type: ActionType.ArchiveCourses });
+          await archiveCourses(dispatch, envId, selectedRows);
+          fetchCoursesData(dispatch, envId, from, to);
+          setShowArchive(false);
+        }}
+        isInProgess={isArchivingCourses}
       />
     </>
   );
