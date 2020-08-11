@@ -22,6 +22,7 @@ export async function appInitiator(): Promise<IAppStatus> {
       post_logout_redirect_uri: redirect_uri,
       redirect_uri,
     });
+    await walkme.initWalkme();
 
     appStatus.isLoading = false;
   } catch (err) {

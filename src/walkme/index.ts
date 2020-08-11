@@ -5,6 +5,8 @@ declare global {
   interface Window {
     walkme: any;
     test: any;
+    _walkmeConfig: any;
+    walkmeData: any;
   }
 }
 // For debug purposes
@@ -36,4 +38,22 @@ export async function authInit(params: {
     walkme.auth.logout();
   });
   await walkme.auth.init(params);
+}
+
+export async function initWalkme() {
+  const userData = await walkme.user.getOriginalUserData();
+  window.walkmeData = { user: userData.editorAccountName };
+  loadWalkme(); 
+}
+
+function loadWalkme() {
+  const walkme = document.createElement('script');
+  walkme.type = 'text/javascript';
+  walkme.async = true;
+  walkme.src =
+    'https://cdn.walkme.com/users/c74ffc2342d64f159535bb49632fbc58/walkme_c74ffc2342d64f159535bb49632fbc58_https.js';
+  const s = document.getElementsByTagName('script')[0];
+  //@ts-ignore
+  s.parentNode.insertBefore(walkme, s);
+  window._walkmeConfig = { smartLoad: true };
 }
