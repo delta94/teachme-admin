@@ -59,6 +59,7 @@ export interface IState {
   isDetailsPanelOpen: boolean;
   activeDetailsItem: { type: DetailsPanelSettingsType; id: number; item: any } | null;
   hasChanges: boolean;
+  isSavingCourse: boolean;
 }
 
 export interface ICourseEditorProvider {

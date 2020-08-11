@@ -13,4 +13,7 @@ export enum ActionType {
   OpenDetailsPanel = 'OPEN_DETAILS_PANEL',
   CloseDetailsPanel = 'CLOSE_DETAILS_PANEL',
   ResetCourseEditor = 'RESET_COURSE_EDITOR',
+  SavingCourse = 'SAVING_COURSE',
+  SavingCourseSuccess = 'SAVING_COURSE_SUCCESS',
+  SavingCourseFailure = 'SAVING_COURSE_FAILURE',
 }
