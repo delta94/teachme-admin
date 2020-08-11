@@ -22,10 +22,12 @@ export default function CourseSummaryChart({
   title,
   overview,
   isLoading = false,
+  courseId,
 }: {
   title: string;
   overview?: any;
   isLoading?: boolean;
+  courseId?: boolean;
 }): ReactElement {
   const [legendData, setLegendData] = useState<ICourseSummaryLegendData>();
   const [markCompletion, setMarkCompletion] = useState<CompletionGraphStats[]>([]);
@@ -91,12 +93,12 @@ export default function CourseSummaryChart({
             {
               dataKey: 'start_users',
               stroke: '#F2B529',
-              tooltipLabel: 'Users started this course',
+              tooltipLabel: `Users started ${courseId && 'this'} course`,
             },
             {
               dataKey: 'completed_users',
               stroke: '#8812FF',
-              tooltipLabel: 'Users completed this course',
+              tooltipLabel: `Users completed ${courseId && 'this'} course`,
             },
           ]}
           lineKeyPrefix="course-summary"
