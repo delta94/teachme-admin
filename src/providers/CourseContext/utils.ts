@@ -44,11 +44,14 @@ export const fetchCourseData = async (
   const id = +courseId;
 
   try {
-    const courseMetadata = await getCourseMetadata(id, envId);
-    const courseOutline = await getCourseOutline(id, envId, from, to);
-    const convertedCourseOutline = parseCourseOutline(courseOutline);
-    const quiz = await getQuizData(id, envId, from, to);
-    const overview = await getCourseOverview(id, envId, from, to);
+    const [courseMetadata, courseOutline, quiz, overview] = await Promise.all([
+      getCourseMetadata(id, envId),
+      getCourseOutline(id, envId, from, to),
+      getQuizData(id, envId, from, to),
+      getCourseOverview(id, envId, from, to),
+    ]);
+
+    const convertedCourseOutline = parseCourseOutline(courseOutline!);
 
     dispatch({
       type: ActionType.FetchCourseDataSuccess,

@@ -55,8 +55,13 @@ export const fetchUsers = async (
   dispatch({ type: ActionType.FetchUsers });
 
   try {
-    const { data } = await getUsersList(envId, from, to, options);
-    const { totals_unique_users, total_rows } = await getUsersCount(envId, from, to, options);
+    const [usersList, usersCount] = await Promise.all([
+      getUsersList(envId, from, to, options),
+      getUsersCount(envId, from, to, options),
+    ]);
+
+    const { data } = usersList;
+    const { totals_unique_users, total_rows } = usersCount;
 
     let users = [];
 
