@@ -1,17 +1,23 @@
 import { ReactNode } from 'react';
 
-import { UserListUILineItem, UsersOrder } from '../../walkme/models';
+import {
+  UsersListQueryOptions,
+  UsersColumn,
+  UsersOrder,
+  UserListUILineItem,
+} from '../../walkme/models';
 
 import { ActionType } from './actions';
 
-export { ActionType, UsersOrder };
+export { ActionType, UsersOrder, UsersColumn };
+
+export type { UserListUILineItem, UsersListQueryOptions };
 
 export interface IAction {
   type: ActionType;
   users?: Array<UserListUILineItem>;
   totals_unique_users?: number;
   total_rows?: number;
-  usersSearchValue?: string;
 }
 
 export interface IDispatch {
@@ -24,7 +30,6 @@ export interface IState {
   users: Array<UserListUILineItem>;
   totals_unique_users: number;
   total_rows: number;
-  usersSearchValue: string;
   isExportingUsers: boolean;
   isExportingUsersError: boolean;
 }

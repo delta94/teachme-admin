@@ -7,6 +7,7 @@ import {
   IDispatch,
   IUsersProvider,
   UsersOrder,
+  UsersListQueryOptions,
 } from './users-context.interface';
 import {
   UsersStateContext,
@@ -18,7 +19,7 @@ import {
 } from './utils';
 import { reducer, initialState } from './reducer';
 
-export type { IAction, IState, IDispatch, IUsersProvider };
+export type { IAction, IState, IDispatch, IUsersProvider, UsersListQueryOptions };
 
 export {
   useUsersContext,

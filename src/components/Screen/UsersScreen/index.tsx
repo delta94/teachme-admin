@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { useDebounceCallback } from '@react-hook/debounce';
+import React, { ReactElement, useEffect, useState, useRef } from 'react';
 
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
@@ -9,6 +8,7 @@ import {
   exportUsers,
   ActionType,
   UsersOrder,
+  UsersListQueryOptions,
 } from '../../../providers/UsersContext';
 import { IDateRange } from '../../../utils';
 
@@ -22,7 +22,12 @@ import {
 } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 
-import { sortByOptions /*, courses, statuses, results */ } from './utils';
+import {
+  sortByOptions,
+  // courses,
+  // statuses,
+  // results,
+} from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
@@ -38,18 +43,15 @@ export default function UsersScreen(): ReactElement {
     dateRange: { from, to },
   } = appState;
   const [state, dispatch] = useUsersContext();
-  const { isFetchingUsers, users, usersSearchValue } = state;
+  const { isFetchingUsers, users } = state;
+  const queryOptionsRef = useRef<UsersListQueryOptions>({ ...defaultQueryOptions });
+  const queryOptions = queryOptionsRef.current;
   const disableExport = isUpdating || isFetchingUsers || !users.length;
-  const disableSearch = !users.length && !usersSearchValue.length;
+  const disableSearch = !users.length && !queryOptions.user_name?.length;
 
   useEffect(() => {
-    const options = {
-      ...defaultQueryOptions,
-      user_name: usersSearchValue,
-    };
-
-    if (!isUpdating) fetchUsers(dispatch, envId, from, to, options);
-  }, [dispatch, isUpdating, system, envId, from, to, usersSearchValue]);
+    if (!isUpdating) fetchUsers(dispatch, envId, from, to, queryOptions);
+  }, [dispatch, isUpdating, system, envId, from, to, queryOptions]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
@@ -57,42 +59,34 @@ export default function UsersScreen(): ReactElement {
   const onDateRangeChange = (dateRange?: IDateRange) =>
     appDispatch({ type: AppActionType.SetDateRange, dateRange });
 
-  const debouncedFetchUsers = useDebounceCallback(fetchUsers, 400);
-
   const onSearch = (searchValue: string) => {
-    const options = {
-      ...defaultQueryOptions,
-      user_name: searchValue,
-    };
+    queryOptions.user_name = searchValue;
 
-    debouncedFetchUsers(dispatch, envId, from, to, options);
-
-    dispatch({ type: ActionType.SetUsersSearchValue, usersSearchValue: searchValue });
+    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const [prevClassName, setPrevClassName] = useState<string>();
 
   const onHeaderCellClick = ({ className, dataIndex }: ColumnType<any>) => {
-    const options = {
-      ...defaultQueryOptions,
-      user_name: usersSearchValue,
-      sort_by: sortByOptions[dataIndex as keyof typeof sortByOptions],
-    };
+    // Sort by `UsersColumn` type
+    queryOptions.sort_by = sortByOptions[dataIndex as keyof typeof sortByOptions];
 
-    // Sort by descend
+    // Sort by descending order on first click only
     if (!className) {
-      options.sort_by_order = UsersOrder.DESC;
+      queryOptions.sort_by_order = UsersOrder.DESC;
+    } else {
+      queryOptions.sort_by_order = UsersOrder.ASC;
     }
 
     // Cancel sort
-    if (className === prevClassName) {
-      options.sort_by = defaultQueryOptions.sort_by;
+    if (className && className === prevClassName) {
+      queryOptions.sort_by = defaultQueryOptions.sort_by;
     }
 
     // Keep previous className value to know which click were on
     setPrevClassName(className);
 
-    fetchUsers(dispatch, envId, from, to, options);
+    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   return (
@@ -109,7 +103,7 @@ export default function UsersScreen(): ReactElement {
           sortDirections={['descend', 'ascend']}
           loading={isUpdating || isFetchingUsers}
         >
-          <ShownUsersIndicator />
+          <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
           {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
@@ -123,13 +117,13 @@ export default function UsersScreen(): ReactElement {
             />
             <SearchFilter
               placeholder="Search users"
-              value={usersSearchValue}
+              value={queryOptions.user_name}
               onSearch={onSearch}
               disabled={disableSearch}
             />
           </ControlsWrapper>
         </WMTable>
-        <LoadMoreWrapper />
+        <LoadMoreWrapper queryOptions={queryOptions} />
       </WMCard>
     </>
   );
