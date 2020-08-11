@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { IDateRange } from '../../../utils';
@@ -18,6 +18,8 @@ import {
   ICourseOutlineItems,
 } from './courseScreen.interface';
 
+import classes from './style.module.scss';
+
 export { parseCourseOutline };
 export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
 
@@ -33,6 +35,13 @@ export default function CourseScreen(): ReactElement {
   const { isFetchingCourseData, overview, courseMetadata } = state;
   const { courseId } = useParams();
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.scrollIntoView({ block: 'start', inline: 'end' });
+  }, []);
+
   useEffect(() => {
     if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
   }, [dispatch, isUpdating, courseId, envId, from, to]);
@@ -47,6 +56,7 @@ export default function CourseScreen(): ReactElement {
 
   return (
     <>
+      <div ref={containerRef} className={classes['container-ref']} />
       <CourseScreenHeader
         courseMetadata={courseMetadata}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
