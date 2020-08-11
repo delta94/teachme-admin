@@ -74,7 +74,11 @@ export default function EditableTitle({
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onBlur(inputValue);
+      onInputBlur();
+    }
+
+    if (e.key === 'Escape') {
+      setInputValue(value);
       setShowInputText(false);
     }
   };
