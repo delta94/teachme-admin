@@ -69,20 +69,18 @@ export default function UsersScreen(): ReactElement {
   const onHeaderCellClick = ({ className, dataIndex }: ColumnType<any>) => {
     // Sort by `UsersColumn` type
     queryOptions.sort_by = sortByOptions[dataIndex as keyof typeof sortByOptions];
-
+    // Using `className` as flag to track click count
+    // Cancel sort on last click
+    if (className && className === prevClassName) {
+      queryOptions.sort_by = defaultQueryOptions.sort_by;
+    }
     // Sort by descending order on first click only
     if (!className) {
       queryOptions.sort_by_order = UsersOrder.DESC;
     } else {
       queryOptions.sort_by_order = UsersOrder.ASC;
     }
-
-    // Cancel sort
-    if (className && className === prevClassName) {
-      queryOptions.sort_by = defaultQueryOptions.sort_by;
-    }
-
-    // Keep previous className value to know which click were on
+    // Keep previous `className` value to track next click
     setPrevClassName(className);
 
     fetchUsers(dispatch, envId, from, to, queryOptions);
