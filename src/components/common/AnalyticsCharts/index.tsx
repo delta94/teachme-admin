@@ -28,7 +28,7 @@ export default function AnalyticsCharts({
           title={summaryChartTitle}
           overview={overview}
           isLoading={isLoading}
-          courseId={courseId}
+          isSingleCourse={!!courseId}
         />
       </div>
       <div className={cc([classes.graphs, classes['right-graphs']])}>
