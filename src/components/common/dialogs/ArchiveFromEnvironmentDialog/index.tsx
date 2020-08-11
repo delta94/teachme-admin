@@ -19,7 +19,7 @@ export interface IPublishToEnvironmentDialog extends IWMConfirmationDialogWrappe
   isInProgess?: boolean;
 }
 
-export default function PublishToEnvironmentDialog({
+export default function ArchiveFromEnvironmentDialog({
   coursesCount,
   open,
   onCancel,
@@ -32,8 +32,8 @@ export default function PublishToEnvironmentDialog({
     <WMConfirmationDialog
       open={open}
       title={
-        <div className={classes['publish-dialog-title']}>
-          <div>Publish to </div>
+        <div className={classes['archive-dialog-title']}>
+          <div>Archive from </div>
           <EnvironmentDropdown
             environments={environments}
             initialSelectedEnvironment={environment}
@@ -42,21 +42,17 @@ export default function PublishToEnvironmentDialog({
           />
         </div>
       }
-      confirmLabel={`Publish to ${environment.value}`}
+      confirmLabel={`Archive from ${environment.value}`}
       onCancel={onCancel}
       onConfirm={() => onConfirm(environment.id)}
       loadingConfirmButton={isInProgess}
       disableDialog={isInProgess}
     >
-      <p>You are about to publish the following courses. Please review before confirmation.</p>
-      <ul className={classes['publish-dialog-ul']}>
+      <p>You are about to archive the following courses. Please review before confirmation.</p>
+      <ul className={classes['archive-dialog-ul']}>
         <li>
           <VIcon />
           {coursesCount} {pluralizer('course', coursesCount)}
-        </li>
-        <li>
-          <VIcon />
-          Global settings
         </li>
       </ul>
     </WMConfirmationDialog>

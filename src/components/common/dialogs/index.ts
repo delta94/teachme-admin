@@ -5,6 +5,7 @@ import ExportToCSVDialog from './ExportToCSVDialog';
 import ImpersonateDialog, { IImpersonateDialog } from './ImpersonateDialog';
 import LoadingPublishingDialog from './LoadingPublishingDialog';
 import PublishToEnvironmentDialog from './PublishToEnvironmentDialog';
+import ArchiveFromEnvironmentDialog from './ArchiveFromEnvironmentDialog';
 
 export {
   CantDeleteDialog,
@@ -14,6 +15,7 @@ export {
   ImpersonateDialog,
   LoadingPublishingDialog,
   PublishToEnvironmentDialog,
+  ArchiveFromEnvironmentDialog,
 };
 
 export type { IDuplicateCourseDialog, IImpersonateDialog };

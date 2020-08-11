@@ -1,2 +1,5 @@
 .wm-confirmation-dialog {
+  &.no-interaction-indicator {
+    cursor: not-allowed;
+  }
 }
