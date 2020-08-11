@@ -17,10 +17,10 @@ export default {
   QUIZ_SUCCESS_SCREEN_TITLE: 'Well Done!',
   QUIZ_SUCCESS_SCREEN_DESCRIPTION: "Congratulations! You've passed the quiz!",
   QUIZ_SUCCESS_SCREEN_BUTTON_TEXT: 'Go Back to Courses',
-  QUIZ_FAIL_SCREEN_BUTTON_TEXT: "Sorry, you didn't pass this time",
+  QUIZ_FAIL_SCREEN_TITLE: "Sorry, you didn't pass this time",
   QUIZ_FAIL_SCREEN_DESCRIPTION:
     'Unfortunately, your score did not reach the passmark. Consider reviewing the course before you retake this quiz.',
-  QUIZ_FAIL_SCREEN_TITLE: 'View Full Quiz Results',
+  QUIZ_FAIL_SCREEN_BUTTON_TEXT: 'View Full Quiz Results',
   QUIZ_IS_ENABLED: false,
   QUIZ_PASSMARK: 100,
   QUIZ_POSITION: 8,

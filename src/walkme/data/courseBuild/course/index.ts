@@ -7,6 +7,7 @@ import {
   GroupType,
   TypeId,
   WalkMeDataCourseNewItem,
+  WalkMeDataQuiz,
 } from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
 import * as itemsData from '../courseItems/index';
@@ -16,6 +17,7 @@ import { CourseChildContainer, isLesson } from '../courseItems/index';
 import { CourseProperties } from '../settings';
 import { createLink } from '../../services/collection';
 import * as wmData from '../../services/wmData';
+import * as quiz from '../quiz';
 import { newDataModel } from './dataModel';
 import { ITypeIdQueriable } from '../itemsContainer';
 import { getCourseSegmentsSync, getLinkId } from '../../services/segments';
@@ -49,7 +51,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     this.title = course.Name;
     this.items = itemsData.getCourseChildren(options?.light ? [] : course.LinkedDeployables!);
     this._quiz = new Quiz(course.Quiz);
-    this.properties = new CourseProperties(course.Settings);
+    this.properties = new CourseProperties(course.Settings, () => this._quiz.isDefault());
     this.index = course.OrderIndex;
     const segments = getCourseSegmentsSync(this.id);
     this.segments = new Set(segments.map((s) => s.id));
@@ -100,7 +102,11 @@ export class Course implements BuildCourse, ITypeIdQueriable {
 
   deleteQuiz(): void {
     this.properties.hasQuiz = false;
-    this._quiz = getDefaultQuiz({
+    this._quiz = this.getDefaultQuiz();
+  }
+
+  private getDefaultQuiz() {
+    return quiz.getDefaultQuiz({
       quiz: this._quiz.id,
       success: this._quiz.successScreen.id,
       fail: this._quiz.failScreen.id,

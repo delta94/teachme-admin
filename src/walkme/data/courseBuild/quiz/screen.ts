@@ -21,6 +21,7 @@ export function toDataModel(
   dataScreen: WalkMeDataQuizScreen,
 ): WalkMeDataQuizScreen {
   return {
+    Id: screen.id,
     ...dataScreen,
     ButtonText: screen.buttons[0].text,
     Description: screen.description,
