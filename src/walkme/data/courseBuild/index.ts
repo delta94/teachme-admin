@@ -6,7 +6,7 @@ import { CourseNotFoundError } from '../../models/course';
 export * from './course';
 
 export async function getNewCourse(): Promise<Course> {
-  await initData(0);
+  await ensureData(0);
   return new Course();
 }
 
@@ -24,7 +24,7 @@ export async function getCourseMetadata(id: number, environmentId: number): Prom
 }
 
 export async function getCourse(id: number, environmentId: number): Promise<Course> {
-  await initData(environmentId);
+  await ensureData(environmentId);
 
   const [course] = ((await wmData.getData(TypeName.Course, environmentId, [
     id,
@@ -34,9 +34,14 @@ export async function getCourse(id: number, environmentId: number): Promise<Cour
   return new Course(course);
 }
 
-async function initData(environmentId: number) {
-  await wmData.refresh(
-    [TypeName.Course, TypeName.Lesson, TypeName.Article, TypeName.SmartWalkThru, TypeName.Tag],
-    environmentId,
+async function ensureData(environmentId: number) {
+  await Promise.all(
+    [
+      TypeName.Course,
+      TypeName.Lesson,
+      TypeName.Article,
+      TypeName.SmartWalkThru,
+      TypeName.Tag,
+    ].map((type) => wmData.getData(type, environmentId)),
   );
 }

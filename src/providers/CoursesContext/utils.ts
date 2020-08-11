@@ -52,8 +52,10 @@ export const fetchCoursesData = async (
   dispatch({ type: ActionType.FetchCoursesData });
 
   try {
-    const courses = await getCourseList(envId, from, to);
-    const overview = await getCoursesOverview(envId, from, to);
+    const [courses, overview] = await Promise.all([
+      getCourseList(envId, from, to),
+      getCoursesOverview(envId, from, to),
+    ]);
 
     dispatch({ type: ActionType.FetchCoursesDataSuccess, courses, overview });
   } catch (error) {
