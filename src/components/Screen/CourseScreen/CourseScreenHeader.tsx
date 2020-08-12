@@ -48,13 +48,6 @@ export default function CourseScreenHeader({
               >
                 <Link to={`${BASE_COURSE_EDITOR_ROUTE.path}/${courseMetadata?.id}`}>Edit</Link>
               </WMButton>
-              {Boolean(courseMetadata?.segments.length) && (
-                <div className={classes['course-details-sub-title']}>
-                  <span>
-                    This course is available to: <b>{courseMetadata?.segments.join(' ,')}</b>
-                  </span>
-                </div>
-              )}
             </>
           ) : (
             <>
@@ -62,7 +55,6 @@ export default function CourseScreenHeader({
               <WMSkeletonInput className={classes['course-name']} active />
               <WMSkeletonButton active style={{ width: 50 }} />
               <WMSkeletonButton className={classes['edit']} active />
-              <WMSkeletonInput className={classes['course-details-sub-title']} active />
             </>
           )}
         </div>
@@ -74,6 +66,14 @@ export default function CourseScreenHeader({
           </Breadcrumb.Item>
           <Breadcrumb.Item>{courseMetadata?.title}</Breadcrumb.Item>
         </Breadcrumb>
+      }
+      subTitle={
+        courseMetadata?.segments &&
+        Boolean(courseMetadata?.segments.length) && (
+          <span>
+            This course is available to: <b>{courseMetadata?.segments.join(' ,')}</b>
+          </span>
+        )
       }
       {...otherProps}
     />

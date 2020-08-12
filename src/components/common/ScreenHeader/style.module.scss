@@ -7,6 +7,14 @@
   justify-content: flex-start;
   padding: 25px 0;
 
+  &.course {
+    padding-bottom: 0;
+
+    .screen-header-title {
+      margin-bottom: 20px;
+    }
+  }
+
   .screen-header-title {
     width: 100%;
     font-family: var(--font-secondary);
@@ -27,5 +35,16 @@
   .screen-header-breadcrumbs {
     margin-bottom: 25px;
     order: -1;
+  }
+
+  .sub-title {
+    position: relative;
+    font-size: 14px;
+    color: var(--neutral500);
+    flex: 0 0 100%;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    top: -30px;
+    height: 20px;
   }
 }
