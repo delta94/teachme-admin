@@ -1,8 +1,5 @@
-import React, { ReactElement, useEffect, useState, useRef, useCallback } from 'react';
-import cc from 'classcat';
+import React, { ReactElement, useEffect, useState, useRef } from 'react';
 
-import { getCoursesMetadata } from '../../../walkme/screens/users';
-import { CourseMetadata } from '../../../walkme/models';
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
   useUsersContext,
@@ -17,24 +14,17 @@ import { IDateRange } from '../../../utils';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
-import WMSelect, { WMSelectModeType } from '../../common/WMSelect';
-import WMSkeleton from '../../common/WMSkeleton';
-import FormGroup from '../../common/FormGroup';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { SearchFilter } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 
-import { sortByOptions, statusesOptions, resultsOptions } from './utils';
+import { sortByOptions } from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
+import FiltersToolbar from './FiltersToolbar';
 import classes from './style.module.scss';
-
-const parseCoursesMetadata = (courses: CourseMetadata[]): { label: string; value: string }[] =>
-  [{ label: 'All', value: 'All' }].concat(
-    courses.map(({ title }) => ({ label: title, value: title })),
-  );
 
 // TODO: add cleanups to fetchUsers
 export default function UsersScreen(): ReactElement {
@@ -54,31 +44,6 @@ export default function UsersScreen(): ReactElement {
   useEffect(() => {
     if (!isUpdating) fetchUsers(dispatch, envId, from, to, queryOptions);
   }, [dispatch, isUpdating, system, envId, from, to, queryOptions]);
-
-  const [coursesOptions, setCoursesOptions] = useState<any[]>([]);
-  const [isFetchingOptions, setIsFetchingOptions] = useState<boolean>(true);
-
-  const getCoursesOptions = useCallback(async () => {
-    try {
-      const coursesMetadata = await getCoursesMetadata(envId);
-      const options = parseCoursesMetadata(coursesMetadata);
-
-      setCoursesOptions(options);
-      setIsFetchingOptions(false);
-    } catch (error) {
-      console.error(error);
-      setIsFetchingOptions(false);
-    }
-  }, [envId]);
-
-  useEffect(() => {
-    getCoursesOptions();
-
-    return () => {
-      setCoursesOptions([]);
-      setIsFetchingOptions(true);
-    };
-  }, [getCoursesOptions]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
@@ -142,43 +107,7 @@ export default function UsersScreen(): ReactElement {
               disabled={disableSearch}
             />
           </ControlsWrapper>
-          <ControlsWrapper className={classes['filters']}>
-            <WMSkeleton
-              loading={isUpdating || isFetchingUsers}
-              active
-              title={false}
-              paragraph={{ rows: 1 }}
-            >
-              <FormGroup className={classes['filter-wrapper']} label="Course Name:">
-                <WMSelect
-                  className={cc([classes['select-filter'], classes['multi']])}
-                  mode={WMSelectModeType.Multiple}
-                  showArrow
-                  optionFilterProp="label"
-                  defaultValue="All"
-                  options={coursesOptions}
-                  loading={isFetchingOptions}
-                  disabled={!coursesOptions.length}
-                />
-              </FormGroup>
-              <FormGroup className={classes['filter-wrapper']} label="Completed:">
-                <WMSelect
-                  className={classes['select-filter']}
-                  optionFilterProp="label"
-                  defaultValue={statusesOptions[0].value}
-                  options={statusesOptions}
-                />
-              </FormGroup>
-              <FormGroup className={classes['filter-wrapper']} label="Quiz Results:">
-                <WMSelect
-                  className={classes['select-filter']}
-                  optionFilterProp="label"
-                  defaultValue={resultsOptions[0].value}
-                  options={resultsOptions}
-                />
-              </FormGroup>
-            </WMSkeleton>
-          </ControlsWrapper>
+          <FiltersToolbar queryOptions={queryOptions} />
         </WMTable>
         <LoadMoreWrapper queryOptions={queryOptions} />
       </WMCard>

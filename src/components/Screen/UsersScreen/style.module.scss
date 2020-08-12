@@ -23,30 +23,6 @@
     margin-right: 20px;
   }
 
-  .filters {
-    width: 100%;
-
-    .filter-wrapper {
-      flex-wrap: nowrap;
-      margin-right: 40px;
-
-      label {
-        color: var(--neutral900);
-        font-family: var(--font-primary);
-        white-space: nowrap;
-        margin-right: 10px;
-      }
-
-      .select-filter {
-        width: 145px;
-
-        &.multi {
-          width: 180px;
-        }
-      }
-    }
-  }
-
   .users-table {
     :global(.ant-empty) {
       display: flex;
