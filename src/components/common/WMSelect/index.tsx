@@ -7,7 +7,7 @@ import classes from './style.module.scss';
 
 export interface IWMSelectOption {
   id?: string;
-  value: string | number;
+  value: any;
   label?: ReactNode;
   skip?: boolean;
   disabled?: boolean;

@@ -11,14 +11,14 @@ export const sortByOptions = {
   quiz_attempts: UsersColumn.QUIZ_ATTEMPTS,
 };
 
-export const statusesOptions: IWMSelectOption[] = [
-  { label: 'All', value: 0 },
-  { label: 'Completed', value: 1 },
-  { label: 'Not completed', value: 2 },
+export const completedOptions: IWMSelectOption[] = [
+  { label: 'All', value: -1 },
+  { label: 'Completed', value: true },
+  { label: 'Not completed', value: false },
 ];
 
 export const resultsOptions: IWMSelectOption[] = [
-  { label: 'All', value: 0 },
-  { label: 'Passed', value: 1 },
-  { label: 'Not Passed', value: 2 },
+  { label: 'All', value: -1 },
+  { label: 'Passed', value: true },
+  { label: 'Not Passed', value: false },
 ];

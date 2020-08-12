@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState, useCallback } from 'react';
 import cc from 'classcat';
 
 import { useAppContext } from '../../../../providers/AppContext';
-import { useUsersContext } from '../../../../providers/UsersContext';
+import { useUsersContext, fetchUsers } from '../../../../providers/UsersContext';
 import { getCoursesMetadata } from '../../../../walkme/screens/users';
 import { CourseMetadata, UsersListQueryOptions } from '../../../../walkme/models';
 
@@ -11,13 +11,13 @@ import WMSkeleton from '../../../common/WMSkeleton';
 import FormGroup from '../../../common/FormGroup';
 import ControlsWrapper from '../../../common/ControlsWrapper';
 
-import { statusesOptions, resultsOptions } from '../utils';
+import { completedOptions, resultsOptions } from '../utils';
 
 import classes from './style.module.scss';
 
-const parseCoursesMetadata = (courses: CourseMetadata[]): { label: string; value: string }[] =>
-  [{ label: 'All', value: 'All' }].concat(
-    courses.map(({ title }) => ({ label: title, value: title })),
+const parseCoursesMetadata = (courses: CourseMetadata[]): { label: string; value: number }[] =>
+  [{ label: 'All', value: -1 }].concat(
+    courses.map(({ title, id }) => ({ label: title, value: id })),
   );
 
 export default function FiltersToolbar({
@@ -29,6 +29,7 @@ export default function FiltersToolbar({
   const {
     isUpdating,
     environment: { id: envId },
+    dateRange: { from, to },
   } = appState;
   const [{ isFetchingUsers }, dispatch] = useUsersContext();
   const [coursesOptions, setCoursesOptions] = useState<any[]>([]);
@@ -48,13 +49,41 @@ export default function FiltersToolbar({
   }, [envId]);
 
   useEffect(() => {
-    getCoursesOptions();
+    if (!isUpdating) getCoursesOptions();
 
     return () => {
       setCoursesOptions([]);
       setIsFetchingOptions(true);
     };
-  }, [getCoursesOptions]);
+  }, [isUpdating, getCoursesOptions]);
+
+  const [completedValue, setCompletedValue] = useState<number | boolean>(-1);
+
+  const onSelectCompleted = (value: number | boolean) => {
+    if (typeof value !== 'number') {
+      queryOptions.course_completed = value;
+    } else {
+      queryOptions.course_completed = undefined;
+    }
+
+    setCompletedValue(value);
+    fetchUsers(dispatch, envId, from, to, queryOptions);
+  };
+
+  const [resultsValue, setResultsValue] = useState<number | boolean>(-1);
+
+  const onSelectResults = (value: number | boolean) => {
+    if (typeof value !== 'number') {
+      queryOptions.quiz_passed = value;
+    } else {
+      queryOptions.quiz_passed = undefined;
+    }
+
+    setResultsValue(value);
+    fetchUsers(dispatch, envId, from, to, queryOptions);
+  };
+
+  // console.log('queryOptions', queryOptions);
 
   return (
     <ControlsWrapper className={classes['filters-toolbar']}>
@@ -80,8 +109,10 @@ export default function FiltersToolbar({
           <WMSelect
             className={classes['select-filter']}
             optionFilterProp="label"
-            defaultValue={statusesOptions[0].value}
-            options={statusesOptions}
+            defaultValue={completedOptions[0].value}
+            options={completedOptions}
+            onSelect={onSelectCompleted}
+            value={completedValue}
           />
         </FormGroup>
         <FormGroup className={classes['filter-wrapper']} label="Quiz Results:">
@@ -90,6 +121,8 @@ export default function FiltersToolbar({
             optionFilterProp="label"
             defaultValue={resultsOptions[0].value}
             options={resultsOptions}
+            onSelect={onSelectResults}
+            value={resultsValue}
           />
         </FormGroup>
       </WMSkeleton>
