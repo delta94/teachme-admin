@@ -7,7 +7,7 @@ import { ActionType, useCourseEditorContext } from '../../../../providers/Course
 
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
-import WMSelect from '../../../common/WMSelect';
+import WMSelect, { WMSelectModeType } from '../../../common/WMSelect';
 import WMSkeleton from '../../../common/WMSkeleton';
 
 import classes from './style.module.scss';
@@ -103,6 +103,7 @@ export default function CourseSettingsTab(): ReactElement {
               labelHtmlFor="segmentation"
             >
               <WMSelect
+                mode={WMSelectModeType.Multiple}
                 id="segmentation"
                 loading={isSegmentsUpdating}
                 className={classes['segmentation-selection']}
