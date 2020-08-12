@@ -1,6 +1,8 @@
-import React, { ReactElement, useEffect, useState, useRef } from 'react';
+import React, { ReactElement, useEffect, useState, useRef, useCallback } from 'react';
 import cc from 'classcat';
 
+import { getCoursesMetadata } from '../../../walkme/screens/users';
+import { CourseMetadata } from '../../../walkme/models';
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
   useUsersContext,
@@ -22,11 +24,16 @@ import ControlsWrapper from '../../common/ControlsWrapper';
 import { SearchFilter } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 
-import { sortByOptions, courses, statuses, results } from './utils';
+import { sortByOptions, statusesOptions, resultsOptions } from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
 import classes from './style.module.scss';
+
+const parseCoursesMetadata = (courses: CourseMetadata[]): { label: string; value: string }[] =>
+  [{ label: 'All', value: 'All' }].concat(
+    courses.map(({ title }) => ({ label: title, value: title })),
+  );
 
 // TODO: add cleanups to fetchUsers
 export default function UsersScreen(): ReactElement {
@@ -46,6 +53,31 @@ export default function UsersScreen(): ReactElement {
   useEffect(() => {
     if (!isUpdating) fetchUsers(dispatch, envId, from, to, queryOptions);
   }, [dispatch, isUpdating, system, envId, from, to, queryOptions]);
+
+  const [coursesOptions, setCoursesOptions] = useState<any[]>([]);
+  const [isFetchingOptions, setIsFetchingOptions] = useState<boolean>(true);
+
+  const getCoursesOptions = useCallback(async () => {
+    try {
+      const coursesMetadata = await getCoursesMetadata(envId);
+      const options = parseCoursesMetadata(coursesMetadata);
+
+      setCoursesOptions(options);
+      setIsFetchingOptions(false);
+    } catch (error) {
+      console.error(error);
+      setIsFetchingOptions(false);
+    }
+  }, [envId]);
+
+  useEffect(() => {
+    getCoursesOptions();
+
+    return () => {
+      setCoursesOptions([]);
+      setIsFetchingOptions(true);
+    };
+  }, [getCoursesOptions]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetUsers }), [dispatch]);
@@ -116,24 +148,26 @@ export default function UsersScreen(): ReactElement {
                 mode={WMSelectModeType.Multiple}
                 showArrow
                 optionFilterProp="label"
-                defaultValue={courses[0].value}
-                options={courses}
+                defaultValue="All"
+                options={coursesOptions}
+                loading={isFetchingOptions}
+                disabled={!coursesOptions.length && !isFetchingOptions}
               />
             </FormGroup>
             <FormGroup className={classes['filter-wrapper']} label="Completed:">
               <WMSelect
                 className={classes['select-filter']}
                 optionFilterProp="label"
-                defaultValue={statuses[0].value}
-                options={statuses}
+                defaultValue={statusesOptions[0].value}
+                options={statusesOptions}
               />
             </FormGroup>
             <FormGroup className={classes['filter-wrapper']} label="Quiz Results:">
               <WMSelect
                 className={classes['select-filter']}
                 optionFilterProp="label"
-                defaultValue={results[0].value}
-                options={results}
+                defaultValue={resultsOptions[0].value}
+                options={resultsOptions}
               />
             </FormGroup>
           </ControlsWrapper>
