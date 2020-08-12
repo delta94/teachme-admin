@@ -17,6 +17,8 @@ import {
 } from '../../common/tableCells';
 import WMPopover from '../../common/WMPopover';
 
+import ActionsCell from './ActionsCell';
+
 import classes from './style.module.scss';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
@@ -104,5 +106,12 @@ export const columns: ColumnsType<any> = [
         <NumberCell value={typeof value === 'number' ? value.toFixed(1) : value} />
       </DashCell>
     ),
+  },
+  {
+    title: 'actions',
+    dataIndex: 'actions',
+    align: 'right',
+    className: classes['actions-column'],
+    render: (data: undefined, row: UICourse): ReactElement => <ActionsCell course={row} />,
   },
 ];

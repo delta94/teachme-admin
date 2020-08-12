@@ -1,12 +1,12 @@
-import React, { ReactElement, useEffect, Key } from 'react';
-import { Divider, ConfigProvider } from 'antd';
+import React, { Key, ReactElement, useEffect, useState } from 'react';
+import { ConfigProvider, Divider } from 'antd';
 
-import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
+import { ActionType as AppActionType, useAppContext } from '../../../providers/AppContext';
 import {
-  useCoursesContext,
+  ActionType,
   fetchCoursesData,
   sortTable,
-  ActionType,
+  useCoursesContext,
 } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 import { AllCoursesOverviewResponse } from '../../../walkme/models';
@@ -48,6 +48,7 @@ export default function CoursesScreen(): ReactElement {
     selectedRowKeys,
   } = state;
   const disableActions = isUpdating || isFetchingCoursesData || !courses.length;
+  const [hoverRowHeight, setHoverRowHeight] = useState(0);
 
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
@@ -104,6 +105,14 @@ export default function CoursesScreen(): ReactElement {
             columns={columns}
             onSortEnd={onSortEnd}
             loading={isUpdating || isFetchingCoursesData}
+            onRow={() => ({
+              onMouseEnter: (e: any) => {
+                setHoverRowHeight(e.target.getBoundingClientRect().height);
+              },
+            })}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            style={{ '--hover-row-height': `${hoverRowHeight}px` }}
           >
             <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
             {/* <ControlsWrapper>
