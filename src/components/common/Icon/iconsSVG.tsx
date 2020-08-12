@@ -6,6 +6,7 @@ import { ReactComponent as FileExportIcon } from '../../../images/icons/file-exp
 import { ReactComponent as SearchIcon } from '../../../images/icons/search.svg';
 import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
 import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
+import { ReactComponent as DeleteSmallIcon } from '../../../images/icons/delete-small.svg';
 import { ReactComponent as PencilLargeIcon } from '../../../images/icons/pencil-large.svg';
 import { ReactComponent as PencilSmallIcon } from '../../../images/icons/pencil-small.svg';
 import { ReactComponent as EventCourseIcon } from '../../../images/icons/event-course.svg';
@@ -44,6 +45,7 @@ export const IconSVG = {
   [IconType.Search]: SearchIcon,
   [IconType.Quiz]: QuizIcon,
   [IconType.Delete]: DeleteIcon,
+  [IconType.DeleteSmall]: DeleteSmallIcon,
   [IconType.PencilLarge]: PencilLargeIcon,
   [IconType.PencilSmall]: PencilSmallIcon,
   [IconType.EventCourse]: EventCourseIcon,
