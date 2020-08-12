@@ -8,8 +8,6 @@
   padding: 25px 0;
 
   &.course {
-    padding-bottom: 0;
-
     .screen-header-title {
       margin-bottom: 20px;
     }
@@ -30,6 +28,10 @@
     margin-bottom: 10px;
     display: flex;
     flex: 1 1 auto;
+
+    + .sub-title {
+      margin-top: -30px;
+    }
   }
 
   .screen-header-breadcrumbs {
@@ -38,13 +40,10 @@
   }
 
   .sub-title {
-    position: relative;
     font-size: 14px;
     color: var(--neutral500);
     flex: 0 0 100%;
     font-family: var(--font-primary);
     font-weight: 400;
-    top: -30px;
-    height: 20px;
   }
 }
