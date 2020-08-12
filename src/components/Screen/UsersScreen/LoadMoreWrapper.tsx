@@ -35,7 +35,7 @@ export default function LoadMoreWrapper({
           {users.length ? (
             <span>{`1-${users.length} of ${total_rows} results`}</span>
           ) : (
-            <span>No users found</span>
+            <span>No results</span>
           )}
           {total_rows > users.length && (
             <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, options, users)} />
