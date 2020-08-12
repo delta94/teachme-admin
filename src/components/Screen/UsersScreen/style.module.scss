@@ -45,22 +45,20 @@
       }
 
       .started-cell {
-        min-width: 86px;
+        min-width: 118px;
       }
 
       .completed-cell,
-      .duration-cell,
-      .attempts-cell {
-        min-width: 120px;
+      .duration-cell {
+        min-width: 151px;
       }
 
       .result-cell {
-        min-width: 105px;
+        min-width: 137px;
       }
 
-      .result-cell,
       .attempts-cell {
-        text-align: right;
+        min-width: 161px;
       }
     }
   }

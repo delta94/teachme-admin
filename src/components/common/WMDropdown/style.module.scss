@@ -3,6 +3,7 @@
     position: relative;
 
     &:global(.ant-dropdown-menu-item-disabled) {
+      pointer-events: none;
       opacity: 0.3;
     }
   }

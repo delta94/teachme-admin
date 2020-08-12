@@ -7,7 +7,6 @@ import classes from './style.module.scss';
 export default function Logo(): ReactElement {
   return (
     <div className={classes.logo}>
-      <span>TEACH</span>
       <LogoIcon />
     </div>
   );

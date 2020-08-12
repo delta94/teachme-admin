@@ -26,7 +26,7 @@ const options: IWMDropdownOption[] = [
     value: CourseItemType.Quiz,
     label: (
       <div className={classes['option']}>
-        <Icon type={IconType.LessonSmall} />
+        <Icon type={IconType.QuizSettings} />
         Add Quiz
       </div>
     ),
@@ -36,9 +36,11 @@ const options: IWMDropdownOption[] = [
 export default function ActionMenu({
   className,
   onActionSelected,
+  isLoading,
 }: {
   className?: string;
   onActionSelected?: (selected: CourseItemType, lessonId?: number) => void;
+  isLoading?: boolean;
 }): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
@@ -69,8 +71,9 @@ export default function ActionMenu({
         return option;
       })}
       onSelectedChange={onActionSelect}
+      disabled={isLoading}
     >
-      <AddButton className={className} />
+      <AddButton disabled={isLoading} className={className} />
     </WMDropdown>
   );
 }

@@ -159,47 +159,29 @@ export function getTypeName(type: number) {
   }
 }
 
+const typeToTypId = {
+  [TypeName.SmartTipSet]: TypeId.SmartTipSet,
+  [TypeName.Video]: TypeId.Content,
+  [TypeName.Article]: TypeId.Content,
+  [TypeName.Content]: TypeId.Content,
+  [TypeName.Launcher]: TypeId.Launcher,
+  [TypeName.ShoutOut]: TypeId.ShoutOut,
+  [TypeName.Shuttle]: TypeId.Shuttle,
+  [TypeName.SmartWalkThru]: TypeId.SmartWalkThru,
+  [TypeName.Survey]: TypeId.Survey,
+  [TypeName.Task]: TypeId.Task,
+  [TypeName.Course]: TypeId.Course,
+  [TypeName.Lesson]: TypeId.Lesson,
+  [TypeName.Walkthru]: TypeId.Walkthru,
+  [TypeName.Category]: TypeId.Category,
+  [TypeName.Tab]: TypeId.Collection,
+  [TypeName.SearchProviderUrl]: TypeId.SearchProviderUrl,
+  [TypeName.Tag]: TypeId.Tag,
+  [TypeName.TrackedElement]: TypeId.TrackedElement,
+  [TypeName.TrackedPage]: TypeId.TrackedPage,
+};
+
 export function getTypeId(type: string) {
-  switch (type) {
-    case TypeName.SmartTipSet:
-      return TypeId.SmartTipSet;
-    case TypeName.Video:
-      return TypeId.Content;
-    case TypeName.Article:
-      return TypeId.Content;
-    case TypeName.Content:
-      return TypeId.Content;
-    case TypeName.Launcher:
-      return TypeId.Launcher;
-    case TypeName.ShoutOut:
-      return TypeId.ShoutOut;
-    case TypeName.Shuttle:
-      return TypeId.Shuttle;
-    case TypeName.SmartWalkThru:
-      return TypeId.SmartWalkThru;
-    case TypeName.Survey:
-      return TypeId.Survey;
-    case TypeName.Task:
-      return TypeId.Task;
-    case TypeName.Course:
-      return TypeId.Course;
-    case TypeName.Lesson:
-      return TypeId.Lesson;
-    case TypeName.Walkthru:
-      return TypeId.Walkthru;
-    case TypeName.Category:
-      return TypeId.Category;
-    case TypeName.Tab:
-      return TypeId.Collection;
-    case TypeName.SearchProviderUrl:
-      return TypeId.SearchProviderUrl;
-    case TypeName.Tag:
-      return TypeId.Tag;
-    case TypeName.TrackedElement:
-      return TypeId.TrackedElement;
-    case TypeName.TrackedPage:
-      return TypeId.TrackedPage;
-    default:
-      return TypeId.Unknown;
-  }
+  //@ts-ignore
+  return typeToTypId[type] ?? TypeId.Unknown;
 }

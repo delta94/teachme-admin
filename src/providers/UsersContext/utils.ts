@@ -1,15 +1,17 @@
 import { createContext, useContext } from 'react';
 
 import { getUsersList, getUsersCount, exportUsersData } from '../../walkme';
+import { wmMessage, MessageType } from '../../utils';
+
 import {
-  UsersListQueryOptions,
+  ActionType,
+  IState,
+  IDispatch,
   UsersColumn,
   UsersOrder,
   UserListUILineItem,
-} from '../../walkme/models';
-import { wmMessage, MessageType } from '../../utils';
-
-import { ActionType, IState, IDispatch } from './users-context.interface';
+  UsersListQueryOptions,
+} from './users-context.interface';
 
 export const UsersStateContext = createContext<IState | undefined>(undefined);
 export const UsersDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -55,8 +57,13 @@ export const fetchUsers = async (
   dispatch({ type: ActionType.FetchUsers });
 
   try {
-    const { data } = await getUsersList(envId, from, to, options);
-    const { totals_unique_users, total_rows } = await getUsersCount(envId, from, to, options);
+    const [usersList, usersCount] = await Promise.all([
+      getUsersList(envId, from, to, options),
+      getUsersCount(envId, from, to, options),
+    ]);
+
+    const { data } = usersList;
+    const { totals_unique_users, total_rows } = usersCount;
 
     let users = [];
 

@@ -8,7 +8,6 @@ export const initialState = {
   users: [],
   totals_unique_users: 0,
   total_rows: 0,
-  usersSearchValue: '',
   isExportingUsers: false,
   isExportingUsersError: false,
 } as IState;
@@ -30,9 +29,6 @@ export const reducer = produce(
       case ActionType.FetchUsersError:
         draft.isFetchingUsers = false;
         draft.isFetchingUsersError = true;
-        break;
-      case ActionType.SetUsersSearchValue:
-        draft.usersSearchValue = action.usersSearchValue ?? initialState.usersSearchValue;
         break;
       case ActionType.ExportUsers:
         draft.isExportingUsers = true;

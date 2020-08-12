@@ -40,19 +40,14 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
     <div className={classes['quiz-settings-form']}>
       {quiz?.properties && (
         <>
-          {/*
-          TODO:
-          support isEnabled - missing in BuildQuizProperties
-          after getting the correct data remove this comment and uncomment the following comment
-          */}
-          {/* <FormGroup className={classes['enable-quiz']}>
+          <FormGroup className={classes['enable-quiz']}>
             <WMSwitch
               className={classes['switch-field']}
               checked={quiz?.properties.isEnabled}
               label="Enable quiz"
               onChange={(checked: boolean) => updateQuizProperties({ isEnabled: checked })}
             />
-          </FormGroup> */}
+          </FormGroup>
           <FormGroup
             className={classes['passmark']}
             title="Passmark"

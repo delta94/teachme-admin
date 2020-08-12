@@ -3,6 +3,21 @@
 
   .course-settings-form-group {
     margin-bottom: 30px;
+
+    &.segmentation {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      max-width: 500px;
+
+      label {
+        margin-top: 10px;
+      }
+
+      .segmentation-selection {
+        margin: 10px 0;
+      }
+    }
   }
 
   .learning-path {

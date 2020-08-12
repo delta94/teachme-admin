@@ -27,7 +27,7 @@ export default function QuizScreenForm({
         label="Title"
         value={screen.title}
         errorMessage={fieldErrorMessage(screen.title)}
-        onChange={(e) => {
+        onBlur={(e) => {
           screen.title = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
@@ -39,7 +39,7 @@ export default function QuizScreenForm({
         value={screen.description}
         minRows={3}
         maxRows={5}
-        onChange={(e) => {
+        onBlur={(e) => {
           screen.description = e.target.value;
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
@@ -52,7 +52,7 @@ export default function QuizScreenForm({
           label="Button"
           value={button.text}
           errorMessage={fieldErrorMessage(button.text)}
-          onChange={(e) => {
+          onBlur={(e) => {
             screen.buttons[index].text = e.target.value;
             dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
           }}

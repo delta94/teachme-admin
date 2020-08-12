@@ -62,7 +62,11 @@ export default function CourseOutlineTab(): ReactElement {
 
   return (
     <div className={classes['course-outline-tab']}>
-      <ActionMenu className={classes['add-btn']} onActionSelected={onActionSelected} />
+      <ActionMenu
+        className={classes['add-btn']}
+        onActionSelected={onActionSelected}
+        isLoading={isUpdating || isFetchingCourse}
+      />
       {/* <SearchFilter
         className={classes['search']}
         placeholder="Search"

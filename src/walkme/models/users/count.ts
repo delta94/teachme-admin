@@ -1,15 +1,4 @@
 /**
- * Query options for the users count API
- */
-export type UsersCountQueryOptions = {
-  /**
-   * Filter results to users starting with this string
-   * @default undefined
-   */
-  user_name?: string;
-};
-
-/**
  * Response object users count api
  */
 export type UsersCountResponse = {

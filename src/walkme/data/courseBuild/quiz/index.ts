@@ -65,10 +65,21 @@ export class Quiz implements BuildQuiz {
       this.questions.toArray().every((q) => q.isValid())
     );
   }
+
+  /**
+   * This function's purpose is to understand if a quiz created in the old editor is in its default state.
+   * A good heuristic for that is that the first question has the default text, since there's no chance it's used as a real question :)
+   */
+  public isDefault(): boolean {
+    return (
+      !this.properties.isEnabled && this.questions.getItem(0).title == defaults.FIRST_QUESTION_TEXT
+    );
+  }
 }
 
 export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDataQuiz {
   return {
+    Id: quiz.id,
     ...dataQuiz,
     FailSummeryPage: screen.toDataModel(quiz.failScreen, dataQuiz.FailSummeryPage),
     SuccessSummeryPage: screen.toDataModel(quiz.successScreen, dataQuiz.SuccessSummeryPage),
@@ -78,4 +89,18 @@ export function toDataModel(quiz: BuildQuiz, dataQuiz: WalkMeDataQuiz): WalkMeDa
     Questions: (quiz.questions as BuildQuizQuestions).toDataModel(),
     IsEnabled: quiz.properties.isEnabled,
   };
+}
+
+export function getDefaultQuiz(ids: {
+  quiz: number;
+  success?: number;
+  fail?: number;
+  welcome?: number;
+}): Quiz {
+  const quiz = new Quiz(newDataModel());
+  quiz.id = ids.quiz;
+  quiz.welcomeScreen.id = ids.welcome;
+  quiz.failScreen.id = ids.fail;
+  quiz.successScreen.id = ids.success;
+  return quiz;
 }

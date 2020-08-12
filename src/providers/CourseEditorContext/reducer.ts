@@ -18,6 +18,7 @@ export const initialState = {
   isDetailsPanelOpen: false,
   activeDetailsItem: null,
   hasChanges: false,
+  isSavingCourse: false,
 } as IState;
 
 export const reducer = produce(
@@ -85,6 +86,17 @@ export const reducer = produce(
         break;
       case ActionType.ResetCourseEditor:
         draft = { ...initialState };
+        break;
+      case ActionType.SavingCourse:
+        draft.isSavingCourse = true;
+        break;
+      case ActionType.SavingCourseSuccess:
+        draft.refreshCourseOutline = !draft.refreshCourseOutline;
+        draft.isSavingCourse = false;
+        draft.hasChanges = false;
+        break;
+      case ActionType.SavingCourseFailure:
+        draft.isSavingCourse = false;
         break;
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
