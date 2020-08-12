@@ -18,6 +18,7 @@ import { IDateRange } from '../../../utils';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import WMSelect, { WMSelectModeType } from '../../common/WMSelect';
+import WMSkeleton from '../../common/WMSkeleton';
 import FormGroup from '../../common/FormGroup';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
@@ -142,34 +143,41 @@ export default function UsersScreen(): ReactElement {
             />
           </ControlsWrapper>
           <ControlsWrapper className={classes['filters']}>
-            <FormGroup className={classes['filter-wrapper']} label="Course Name:">
-              <WMSelect
-                className={cc([classes['select-filter'], classes['multi']])}
-                mode={WMSelectModeType.Multiple}
-                showArrow
-                optionFilterProp="label"
-                defaultValue="All"
-                options={coursesOptions}
-                loading={isFetchingOptions}
-                disabled={!coursesOptions.length && !isFetchingOptions}
-              />
-            </FormGroup>
-            <FormGroup className={classes['filter-wrapper']} label="Completed:">
-              <WMSelect
-                className={classes['select-filter']}
-                optionFilterProp="label"
-                defaultValue={statusesOptions[0].value}
-                options={statusesOptions}
-              />
-            </FormGroup>
-            <FormGroup className={classes['filter-wrapper']} label="Quiz Results:">
-              <WMSelect
-                className={classes['select-filter']}
-                optionFilterProp="label"
-                defaultValue={resultsOptions[0].value}
-                options={resultsOptions}
-              />
-            </FormGroup>
+            <WMSkeleton
+              loading={isUpdating || isFetchingUsers}
+              active
+              title={false}
+              paragraph={{ rows: 1 }}
+            >
+              <FormGroup className={classes['filter-wrapper']} label="Course Name:">
+                <WMSelect
+                  className={cc([classes['select-filter'], classes['multi']])}
+                  mode={WMSelectModeType.Multiple}
+                  showArrow
+                  optionFilterProp="label"
+                  defaultValue="All"
+                  options={coursesOptions}
+                  loading={isFetchingOptions}
+                  disabled={!coursesOptions.length}
+                />
+              </FormGroup>
+              <FormGroup className={classes['filter-wrapper']} label="Completed:">
+                <WMSelect
+                  className={classes['select-filter']}
+                  optionFilterProp="label"
+                  defaultValue={statusesOptions[0].value}
+                  options={statusesOptions}
+                />
+              </FormGroup>
+              <FormGroup className={classes['filter-wrapper']} label="Quiz Results:">
+                <WMSelect
+                  className={classes['select-filter']}
+                  optionFilterProp="label"
+                  defaultValue={resultsOptions[0].value}
+                  options={resultsOptions}
+                />
+              </FormGroup>
+            </WMSkeleton>
           </ControlsWrapper>
         </WMTable>
         <LoadMoreWrapper queryOptions={queryOptions} />
