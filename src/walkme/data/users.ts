@@ -52,6 +52,8 @@ async function getDataItems(
 }
 
 function getDate(dateStr: string): Date | null {
+  if (!dateStr) return null;
+
   const date = new Date(dateStr);
   return isNaN(date.getDate()) ? null : date;
 }
