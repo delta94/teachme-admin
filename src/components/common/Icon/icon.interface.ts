@@ -24,6 +24,7 @@ export enum IconType {
   QuizSettings = 'quiz-settings',
   EmptyCourse = 'empty-course',
   EmptyLesson = 'empty-lesson',
+  EmptySearch = 'empty-search',
   Check = 'check',
   QuizWelcomeScreen = 'quiz-welcome-screen',
   QuizFailScreen = 'quiz-fail-screen',

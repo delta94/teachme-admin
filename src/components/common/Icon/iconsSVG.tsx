@@ -22,6 +22,7 @@ import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 import { ReactComponent as QuizSettingsIcon } from '../../../images/icons/quiz-settings.svg';
 import { ReactComponent as EmptyCourseIcon } from '../../../images/icons/empty-course.svg';
 import { ReactComponent as EmptyLessonIcon } from '../../../images/icons/empty-lesson.svg';
+import { ReactComponent as EmptySearchIcon } from '../../../images/icons/empty-search.svg';
 import { ReactComponent as CheckIcon } from '../../../images/icons/check.svg';
 import { ReactComponent as QuizWelcomeScreenIcon } from '../../../images/icons/quiz-welcome-screen.svg';
 import { ReactComponent as QuizFailScreenIcon } from '../../../images/icons/quiz-fail-screen.svg';
@@ -60,6 +61,7 @@ export const IconSVG = {
   [IconType.QuizSettings]: QuizSettingsIcon,
   [IconType.EmptyCourse]: EmptyCourseIcon,
   [IconType.EmptyLesson]: EmptyLessonIcon,
+  [IconType.EmptySearch]: EmptySearchIcon,
   [IconType.Check]: CheckIcon,
   [IconType.QuizWelcomeScreen]: QuizWelcomeScreenIcon,
   [IconType.QuizFailScreen]: QuizFailScreenIcon,

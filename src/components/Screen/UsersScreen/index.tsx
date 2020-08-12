@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
+import { ConfigProvider } from 'antd';
 
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
@@ -16,6 +17,9 @@ import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
+import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
+import DataEmptyState from '../../common/WMEmpty/DataEmptyState';
+
 import {
   // DropdownFilter,
   SearchFilter,
@@ -93,33 +97,35 @@ export default function UsersScreen(): ReactElement {
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <WMCard className={classes['table-wrapper']}>
-        <WMTable
-          className={classes['users-table']}
-          data={users}
-          columns={getColumns(onHeaderCellClick)}
-          sortDirections={['descend', 'ascend']}
-          loading={isUpdating || isFetchingUsers}
-        >
-          <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
-          {/* <ControlsWrapper>
+        <ConfigProvider renderEmpty={disableSearch ? DataEmptyState : SearchEmptyState}>
+          <WMTable
+            className={classes['users-table']}
+            data={users}
+            columns={getColumns(onHeaderCellClick)}
+            sortDirections={['descend', 'ascend']}
+            loading={isUpdating || isFetchingUsers}
+          >
+            <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
+            {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
             <DropdownFilter label="Quiz Results" options={results} />
           </ControlsWrapper> */}
-          <ControlsWrapper>
-            <ExportButton
-              className={classes['export-btn']}
-              onClick={() => exportUsers(dispatch, envId, from, to)}
-              disabled={disableExport}
-            />
-            <SearchFilter
-              placeholder="Search users"
-              value={queryOptions.user_name}
-              onSearch={onSearch}
-              disabled={disableSearch}
-            />
-          </ControlsWrapper>
-        </WMTable>
+            <ControlsWrapper>
+              <ExportButton
+                className={classes['export-btn']}
+                onClick={() => exportUsers(dispatch, envId, from, to)}
+                disabled={disableExport}
+              />
+              <SearchFilter
+                placeholder="Search users"
+                value={queryOptions.user_name}
+                onSearch={onSearch}
+                disabled={disableSearch}
+              />
+            </ControlsWrapper>
+          </WMTable>
+        </ConfigProvider>
         <LoadMoreWrapper queryOptions={queryOptions} />
       </WMCard>
     </>
