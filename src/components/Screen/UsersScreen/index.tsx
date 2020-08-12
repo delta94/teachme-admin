@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
+import cc from 'classcat';
 
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
@@ -14,20 +15,14 @@ import { IDateRange } from '../../../utils';
 
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
+import WMSelect, { WMSelectModeType } from '../../common/WMSelect';
+import FormGroup from '../../common/FormGroup';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import {
-  // DropdownFilter,
-  SearchFilter,
-} from '../../common/filters';
+import { SearchFilter } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 
-import {
-  sortByOptions,
-  // courses,
-  // statuses,
-  // results,
-} from './utils';
+import { sortByOptions, courses, statuses, results } from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
@@ -101,11 +96,6 @@ export default function UsersScreen(): ReactElement {
           loading={isUpdating || isFetchingUsers}
         >
           <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
-          {/* <ControlsWrapper>
-            <DropdownFilter label="Course Name" options={courses} />
-            <DropdownFilter label="Completed" options={statuses} />
-            <DropdownFilter label="Quiz Results" options={results} />
-          </ControlsWrapper> */}
           <ControlsWrapper>
             <ExportButton
               className={classes['export-btn']}
@@ -118,6 +108,34 @@ export default function UsersScreen(): ReactElement {
               onSearch={onSearch}
               disabled={disableSearch}
             />
+          </ControlsWrapper>
+          <ControlsWrapper className={classes['filters']}>
+            <FormGroup className={classes['filter-wrapper']} label="Course Name:">
+              <WMSelect
+                className={cc([classes['select-filter'], classes['multi']])}
+                mode={WMSelectModeType.Multiple}
+                showArrow
+                optionFilterProp="label"
+                defaultValue={courses[0].value}
+                options={courses}
+              />
+            </FormGroup>
+            <FormGroup className={classes['filter-wrapper']} label="Completed:">
+              <WMSelect
+                className={classes['select-filter']}
+                optionFilterProp="label"
+                defaultValue={statuses[0].value}
+                options={statuses}
+              />
+            </FormGroup>
+            <FormGroup className={classes['filter-wrapper']} label="Quiz Results:">
+              <WMSelect
+                className={classes['select-filter']}
+                optionFilterProp="label"
+                defaultValue={results[0].value}
+                options={results}
+              />
+            </FormGroup>
           </ControlsWrapper>
         </WMTable>
         <LoadMoreWrapper queryOptions={queryOptions} />
