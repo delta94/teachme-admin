@@ -12,7 +12,7 @@ export async function getData(
   light?: boolean,
 ): Promise<Array<WalkMeDataItem>> {
   if (!data[type]) {
-    data[type] = walkme.data.getContent(type, environmentId, light);
+    data[type] = walkme.data.geContentMetadata(type, environmentId);
   }
   const items = (await data[type]) as Array<WalkMeDataItem>;
   syncData[getTypeId(type)] = items;
