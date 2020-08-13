@@ -38,6 +38,7 @@
     "react-smooth-dnd": "^0.11.1",
     "react-sortable-hoc": "^1.11.0",
     "recharts": "^1.8.5",
+    "timeago-react": "^3.0.0",
     "typescript": "^3.7.5"
   },
   "browserslist": {

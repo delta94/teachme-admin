@@ -1,20 +1,22 @@
 import React, { ReactNode, ReactElement } from 'react';
+import { useParams } from 'react-router-dom';
 import cc from 'classcat';
 
 import { IDateRange } from '../../../utils/date';
 import { useAppSkeleton } from '../../../hooks/skeleton';
 import { WMSkeletonInput } from '../WMSkeleton';
 
+import LastUpdateTime from '../LastUpdateTime';
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
 
 import classes from './style.module.scss';
-import { useParams } from 'react-router-dom';
 
 export interface IScreenHeader {
   title: ReactNode;
   className?: string;
   children?: ReactNode;
+  datetime?: string;
   breadcrumbs?: ReactNode;
   timeFilterProps?: {
     dateRange: IDateRange;
@@ -30,6 +32,7 @@ export default function ScreenHeader({
   isLoading,
   className,
   children,
+  datetime,
   hideTimeFilter,
   timeFilterProps,
   breadcrumbs,
@@ -61,6 +64,7 @@ export default function ScreenHeader({
             />
           ))}
         {children}
+        <LastUpdateTime datetime={datetime} />
         {!hideTimeFilter && timeFilterProps && (
           <TimeFilter
             className={classes['screen-header-time-filter']}

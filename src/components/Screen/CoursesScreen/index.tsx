@@ -83,6 +83,7 @@ export default function CoursesScreen(): ReactElement {
     <>
       <ScreenHeader
         title="Courses"
+        datetime={'12-08-2020'}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <AnalyticsCharts
