@@ -89,6 +89,7 @@
 :global(.ant-table-row):hover .actions-column:global(.ant-table-cell) {
   opacity: 1;
   display: table-cell;
+  border-bottom: none;
 }
 
 .actions-cell {
