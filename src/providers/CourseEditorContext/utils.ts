@@ -37,7 +37,7 @@ export const useCourseEditorContext = (): [IState, IDispatch] => [
 
 export const fetchItemsList = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   options?: { refresh?: boolean },
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchItems });
@@ -55,7 +55,7 @@ export const fetchItemsList = async (
 export const fetchCourse = async (
   dispatch: IDispatch,
   courseId: string | number | undefined,
-  envId = 0,
+  envId: number,
   history: History,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });

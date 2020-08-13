@@ -84,7 +84,7 @@ export const sortTable = async (
 
 export const exportCourses = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   from: string,
   to: string,
 ): Promise<void> => {
@@ -129,7 +129,7 @@ const envNames = {
 
 export const publishCourses = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   courses: Array<UICourse>,
 ): Promise<void> => {
   dispatch({ type: ActionType.PublishCourses });
@@ -153,7 +153,7 @@ export const publishCourses = async (
 
 export const archiveCourses = async (
   dispatch: IDispatch,
-  envId = 0,
+  envId: number,
   courses: Array<UICourse>,
 ): Promise<void> => {
   dispatch({ type: ActionType.ArchiveCourses });
