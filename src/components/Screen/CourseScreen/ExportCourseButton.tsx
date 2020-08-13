@@ -15,7 +15,7 @@ export default function ExportCoursesButton({ disabled }: { disabled?: boolean }
   const {
     dateRange: { from, to },
   } = appState;
-  const [{ courseMetadata }, dispatch] = useCourseContext();
+  const [{ courseMetadata, isExportingCourse }, dispatch] = useCourseContext();
 
   /* const [showExport, setShowExport] = useState(false); */
 
@@ -25,6 +25,7 @@ export default function ExportCoursesButton({ disabled }: { disabled?: boolean }
         className={classes['export']}
         onClick={() => exportCourse(dispatch, courseMetadata?.id ?? 0, 0, from, to)}
         disabled={disabled}
+        loading={isExportingCourse}
       />
       {/* <ExportToCSVDialog
             coursesCount={1}

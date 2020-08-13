@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
+import { ConfigProvider } from 'antd';
 
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import {
@@ -18,6 +19,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { SearchFilter } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
+import { DataEmptyState, SearchEmptyState } from '../../common/WMEmpty';
 
 import { sortByOptions } from './utils';
 import { getColumns, ColumnType } from './tableData';
@@ -35,7 +37,7 @@ export default function UsersScreen(): ReactElement {
     environment: { id: envId },
     dateRange: { from, to },
   } = appState;
-  const [{ isFetchingUsers, users }, dispatch] = useUsersContext();
+  const [{ isFetchingUsers, users, isExportingUsers }, dispatch] = useUsersContext();
   const queryOptionsRef = useRef<UsersListQueryOptions>({ ...defaultQueryOptions });
   const queryOptions = queryOptionsRef.current;
   const disableExport = isUpdating || isFetchingUsers || !users.length;
@@ -86,30 +88,33 @@ export default function UsersScreen(): ReactElement {
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
       />
       <WMCard className={classes['table-wrapper']}>
-        <WMTable
-          className={classes['users-table']}
-          data={users}
-          columns={getColumns(onHeaderCellClick)}
-          sortDirections={['descend', 'ascend']}
-          loading={isUpdating || isFetchingUsers}
-          isStickyToolbarAndHeader
-        >
-          <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
-          <ControlsWrapper>
-            <ExportButton
-              className={classes['export-btn']}
-              onClick={() => exportUsers(dispatch, envId, from, to)}
-              disabled={disableExport}
-            />
-            <SearchFilter
-              placeholder="Search users"
-              value={queryOptions.user_name}
-              onSearch={onSearch}
-              disabled={disableSearch}
-            />
-          </ControlsWrapper>
-          <FiltersToolbar queryOptions={queryOptions} />
-        </WMTable>
+        <ConfigProvider renderEmpty={disableSearch ? DataEmptyState : SearchEmptyState}>
+          <WMTable
+            className={classes['users-table']}
+            data={users}
+            columns={getColumns(onHeaderCellClick)}
+            sortDirections={['descend', 'ascend']}
+            loading={isUpdating || isFetchingUsers}
+            isStickyToolbarAndHeader
+          >
+            <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
+            <ControlsWrapper>
+              <ExportButton
+                className={classes['export-btn']}
+                onClick={() => exportUsers(dispatch, envId, from, to)}
+                disabled={disableExport}
+                loading={isExportingUsers}
+              />
+              <SearchFilter
+                placeholder="Search users"
+                value={queryOptions.user_name}
+                onSearch={onSearch}
+                disabled={disableSearch}
+              />
+            </ControlsWrapper>
+            <FiltersToolbar queryOptions={queryOptions} />
+          </WMTable>
+        </ConfigProvider>
         <LoadMoreWrapper queryOptions={queryOptions} />
       </WMCard>
     </>

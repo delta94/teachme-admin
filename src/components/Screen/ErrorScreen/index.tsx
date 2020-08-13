@@ -1,5 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 
+import Icon, { IconType } from '../../common/Icon';
+
 import classes from './style.module.scss';
 
 export default function ErrorScreen({ error }: { error?: string }): ReactElement {
@@ -9,7 +11,9 @@ export default function ErrorScreen({ error }: { error?: string }): ReactElement
 
   return (
     <div className={classes['error-screen']}>
-      <p>{errorMessage}</p>
+      <Icon type={IconType.EmptyError} />
+      <h1>{errorMessage}</h1>
+      <p>Please try again later</p>
     </div>
   );
 }

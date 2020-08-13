@@ -1,8 +1,24 @@
+@import 'src/styles/mixins';
+
 .course-details {
   &-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    .segments-subtitle {
+      display: flex;
+      max-width: 500px;
+
+      .bold {
+        margin-left: 5px;
+        font-weight: bold;
+
+        @include ellipsis;
+
+        width: 300px;
+      }
+    }
   }
 
   &-title-section {
