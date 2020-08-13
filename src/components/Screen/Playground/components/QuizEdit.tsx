@@ -28,7 +28,7 @@ export default function QuizEdit(): ReactElement {
   const [quizScreenData] = useState<QuizScreen | QuizQuestion>();
 
   useEffect(() => {
-    fetchItemsList(dispatch);
+    fetchItemsList(dispatch, environment.id);
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
