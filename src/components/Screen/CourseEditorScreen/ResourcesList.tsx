@@ -18,7 +18,12 @@ import ResourcesListEmptyState from './ResourcesListEmptyState';
 import classes from './style.module.scss';
 
 export default function ResourcesList(): ReactElement {
-  const [{ isUpdating }] = useAppContext();
+  const [
+    {
+      isUpdating,
+      environment: { id: envId },
+    },
+  ] = useAppContext();
   const [state, dispatch] = useCourseEditorContext();
   const { isFetchingItems, courseItems, filteredCourseItems, courseItemsSearchValue } = state;
 
@@ -35,7 +40,7 @@ export default function ResourcesList(): ReactElement {
   };
 
   const onRefresh = async () => {
-    await fetchItemsList(dispatch);
+    await fetchItemsList(dispatch, envId, { refresh: true });
     onSearch(courseItemsSearchValue);
   };
 
