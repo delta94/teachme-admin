@@ -25,7 +25,7 @@ export default function CourseEditorScreen(): ReactElement {
   const history = useHistory();
 
   useEffect(() => {
-    fetchItemsList(dispatch);
+    fetchItemsList(dispatch, environment.id);
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
