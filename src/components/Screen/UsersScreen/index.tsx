@@ -17,14 +17,13 @@ import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
-import DataEmptyState from '../../common/WMEmpty/DataEmptyState';
 
 import {
   // DropdownFilter,
   SearchFilter,
 } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
+import { DataEmptyState, SearchEmptyState } from '../../common/WMEmpty';
 
 import {
   sortByOptions,

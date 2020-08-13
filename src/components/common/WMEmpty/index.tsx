@@ -1,9 +1,15 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { Empty } from 'antd';
 import { EmptyProps } from 'antd/lib/empty';
 import cc from 'classcat';
 
+import DataEmptyState from './DataEmptyState';
+import SearchEmptyState from './SearchEmptyState';
+
 import classes from './style.module.scss';
+
+export { DataEmptyState };
+export { SearchEmptyState };
 
 export interface IWMEmpty extends EmptyProps {
   containerClassName?: string;
