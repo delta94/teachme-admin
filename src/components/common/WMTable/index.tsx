@@ -1,4 +1,5 @@
 import React, { ReactNode, ReactElement, Key } from 'react';
+import cc from 'classcat';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
@@ -30,6 +31,7 @@ interface IWMTable extends TableProps<any> {
     updatedSelectedRowKeys?: Array<Key>,
   ) => void;
   onSortStart?: SortStartHandler;
+  isStickyToolbarAndHeader?: boolean;
 }
 
 export default function WMTable({
@@ -39,6 +41,7 @@ export default function WMTable({
   rowSelection,
   onSortEnd,
   onSortStart,
+  isStickyToolbarAndHeader,
   ...otherProps
 }: IWMTable): ReactElement {
   const onSortStartCallback = (sort: SortStart, event: SortEvent) => {
@@ -104,7 +107,12 @@ export default function WMTable({
   const componentsProps = isSortable ? sortableComponentProps : {};
 
   return (
-    <div className={classes['wm-table']}>
+    <div
+      className={cc([
+        classes['wm-table'],
+        { [classes['sticky-headings']]: isStickyToolbarAndHeader },
+      ])}
+    >
       {children && <div className={classes['toolbar']}>{children}</div>}
       <Table
         rowSelection={rowSelection}

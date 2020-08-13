@@ -105,6 +105,7 @@ export default function CoursesScreen(): ReactElement {
             columns={columns}
             onSortEnd={onSortEnd}
             loading={isUpdating || isFetchingCoursesData}
+            isStickyToolbarAndHeader
             onRow={() => ({
               onMouseEnter: (e: any) => {
                 setHoverRowHeight(e.target.getBoundingClientRect().height);

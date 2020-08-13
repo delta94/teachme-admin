@@ -1,10 +1,35 @@
+:root {
+  --toolbarHeight: 52px;
+}
+
 .wm-table,
 .wm-table-expanded {
+  &.sticky-headings {
+    .toolbar,
+    :global(.ant-table-thead .ant-table-cell) {
+      position: sticky;
+      top: 0;
+      background-color: var(--white);
+      z-index: 10;
+    }
+
+    :global(.ant-table-thead .ant-table-cell) {
+      top: var(--toolbarHeight);
+    }
+
+    :global(.ant-spin-container.ant-spin-blur) {
+      :global(.ant-table-thead .ant-table-cell) {
+        top: 0;
+      }
+    }
+  }
+
   .toolbar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    height: var(--toolbarHeight);
   }
 
   th:global(.ant-table-cell) {

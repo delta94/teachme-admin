@@ -99,6 +99,7 @@ export default function UsersScreen(): ReactElement {
           columns={getColumns(onHeaderCellClick)}
           sortDirections={['descend', 'ascend']}
           loading={isUpdating || isFetchingUsers}
+          isStickyToolbarAndHeader
         >
           <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
           {/* <ControlsWrapper>

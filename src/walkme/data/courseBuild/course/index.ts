@@ -75,7 +75,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     );
     const savedCourse = await walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
     await this.saveTags(savedCourse.Id);
-    await wmData.refresh([TypeName.Course, TypeName.Lesson, TypeName.Tag]);
+    wmData.refresh([TypeName.Course, TypeName.Lesson, TypeName.Tag]);
     this.map(savedCourse);
   }
 
