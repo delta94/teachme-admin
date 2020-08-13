@@ -39,3 +39,8 @@ export async function refresh(types: Array<TypeName>, environmentId: number = 0)
     }),
   );
 }
+
+export function clear() {
+  data = {};
+  syncData = {};
+}
