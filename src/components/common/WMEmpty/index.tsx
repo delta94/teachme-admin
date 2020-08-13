@@ -8,8 +8,7 @@ import SearchEmptyState from './SearchEmptyState';
 
 import classes from './style.module.scss';
 
-export { DataEmptyState };
-export { SearchEmptyState };
+export { DataEmptyState, SearchEmptyState };
 
 export interface IWMEmpty extends EmptyProps {
   containerClassName?: string;
