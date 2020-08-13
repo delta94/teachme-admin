@@ -48,8 +48,6 @@ export default function CoursesScreen(): ReactElement {
     selectedRowKeys,
   } = state;
   const disableActions = isUpdating || isFetchingCoursesData || !courses.length;
-  const [hoverRowHeight, setHoverRowHeight] = useState(0);
-
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
   }, [dispatch, isUpdating, envId, from, to]);
@@ -106,14 +104,6 @@ export default function CoursesScreen(): ReactElement {
             onSortEnd={onSortEnd}
             loading={isUpdating || isFetchingCoursesData}
             isStickyToolbarAndHeader
-            onRow={() => ({
-              onMouseEnter: (e: any) => {
-                setHoverRowHeight(e.target.getBoundingClientRect().height);
-              },
-            })}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            style={{ '--hover-row-height': `${hoverRowHeight}px` }}
           >
             <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
             {/* <ControlsWrapper>
