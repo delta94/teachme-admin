@@ -8,7 +8,7 @@ export type UsersTableQueryFilter = {
    * Filter results to specific courses
    * @default undefined
    */
-  course_id?: Array<string>;
+  course_id?: Array<number>;
   /**
    * Filter results according to course completion
    * @default undefined

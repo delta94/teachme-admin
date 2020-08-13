@@ -107,6 +107,16 @@ export default function UsersScreen(): ReactElement {
           >
             <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
             {/* <ControlsWrapper>
+        <WMTable
+          className={classes['users-table']}
+          data={users}
+          columns={getColumns(onHeaderCellClick)}
+          sortDirections={['descend', 'ascend']}
+          loading={isUpdating || isFetchingUsers}
+          isStickyToolbarAndHeader
+        >
+          <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
+          {/* <ControlsWrapper>
             <DropdownFilter label="Course Name" options={courses} />
             <DropdownFilter label="Completed" options={statuses} />
             <DropdownFilter label="Quiz Results" options={results} />

@@ -38,21 +38,6 @@
         }
       }
     }
-
-    .course-details-sub-title {
-      margin-top: 10px;
-      font-size: 14px;
-      color: var(--neutral500);
-      flex: 0 0 100%;
-      font-family: var(--font-primary);
-      font-weight: 400;
-
-      &:global(.ant-skeleton) {
-        .course-details-sub-title {
-          width: 300px;
-        }
-      }
-    }
   }
 }
 
