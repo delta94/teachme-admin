@@ -17,6 +17,12 @@
 
       &.multi {
         width: 180px;
+
+        :global(.ant-select-selector) {
+          max-height: 62px;
+          padding-right: 30px;
+          overflow: auto;
+        }
       }
     }
   }

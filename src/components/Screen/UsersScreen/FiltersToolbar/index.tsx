@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState, useCallback } from 'react';
+import React, { ReactElement, useEffect, useState, useCallback, SetStateAction } from 'react';
 import cc from 'classcat';
 
 import { useAppContext } from '../../../../providers/AppContext';
@@ -32,8 +32,9 @@ export default function FiltersToolbar({
     dateRange: { from, to },
   } = appState;
   const [{ isFetchingUsers }, dispatch] = useUsersContext();
-  const [coursesOptions, setCoursesOptions] = useState<any[]>([]);
   const [isFetchingOptions, setIsFetchingOptions] = useState<boolean>(true);
+  const [coursesOptions, setCoursesOptions] = useState<any[]>([]);
+  const [coursesValues, setCoursesValues] = useState<number[]>([]);
 
   const getCoursesOptions = useCallback(async () => {
     try {
@@ -41,6 +42,7 @@ export default function FiltersToolbar({
       const options = parseCoursesMetadata(coursesMetadata);
 
       setCoursesOptions(options);
+      setCoursesValues([options[0].value]);
       setIsFetchingOptions(false);
     } catch (error) {
       console.error(error);
@@ -56,6 +58,40 @@ export default function FiltersToolbar({
       setIsFetchingOptions(true);
     };
   }, [isUpdating, getCoursesOptions]);
+
+  const onSelectCourses = (value: number) => {
+    let newCoursesValues: SetStateAction<number[]> = [];
+
+    if (value < 0) {
+      // Select 'All' and deselect any specific courses
+      newCoursesValues = [value];
+      queryOptions.course_id = undefined;
+    } else if (coursesValues.includes(-1)) {
+      // Select a specific course and deselect 'All'
+      newCoursesValues = [value];
+      queryOptions.course_id = newCoursesValues;
+    } else {
+      // Select any specific course
+      newCoursesValues = [...coursesValues, value];
+      queryOptions.course_id = newCoursesValues;
+    }
+
+    setCoursesValues(newCoursesValues);
+    fetchUsers(dispatch, envId, from, to, queryOptions);
+  };
+
+  const onDeselectCourses = (value: number) => {
+    // Can't deselect default 'All'
+    if (value < 0) return;
+
+    const newCoursesValues = [...coursesValues];
+    const removalIndex = newCoursesValues.findIndex((item) => item === value);
+    newCoursesValues.splice(removalIndex, 1);
+    queryOptions.course_id = newCoursesValues;
+
+    setCoursesValues(newCoursesValues);
+    fetchUsers(dispatch, envId, from, to, queryOptions);
+  };
 
   const [completedValue, setCompletedValue] = useState<number | boolean>(-1);
 
@@ -83,8 +119,6 @@ export default function FiltersToolbar({
     fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
-  // console.log('queryOptions', queryOptions);
-
   return (
     <ControlsWrapper className={classes['filters-toolbar']}>
       <WMSkeleton
@@ -99,8 +133,10 @@ export default function FiltersToolbar({
             mode={WMSelectModeType.Multiple}
             showArrow
             optionFilterProp="label"
-            defaultValue="All"
             options={coursesOptions}
+            onSelect={onSelectCourses}
+            onDeselect={onDeselectCourses}
+            value={coursesValues}
             loading={isFetchingOptions}
             disabled={!coursesOptions.length}
           />
