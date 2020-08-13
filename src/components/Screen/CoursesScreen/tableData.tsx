@@ -46,7 +46,7 @@ export const columns: ColumnsType<any> = [
     title: 'Segment',
     dataIndex: 'segments',
     render: (value: Array<string>): ReactElement => {
-      const segmentsStr = value.join(' ,');
+      const segmentsStr = value.join(', ');
       // detecting string length, or the length of segments array.
       const showPopover = segmentsStr.length > 30 || value.length > 2;
       const popoverContent = (

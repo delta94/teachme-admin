@@ -45,5 +45,10 @@
     flex: 0 0 100%;
     font-family: var(--font-primary);
     font-weight: 400;
+    // ellipsis
+    width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
