@@ -84,10 +84,17 @@ export default function FiltersToolbar({
     // Can't deselect default 'All'
     if (value < 0) return;
 
-    const newCoursesValues = [...coursesValues];
+    let newCoursesValues = [...coursesValues];
     const removalIndex = newCoursesValues.findIndex((item) => item === value);
     newCoursesValues.splice(removalIndex, 1);
-    queryOptions.course_id = newCoursesValues;
+
+    if (newCoursesValues.length) {
+      queryOptions.course_id = newCoursesValues;
+    } else {
+      // Select default 'All' when deselecting last specific course
+      newCoursesValues = [-1];
+      queryOptions.course_id = undefined;
+    }
 
     setCoursesValues(newCoursesValues);
     fetchUsers(dispatch, envId, from, to, queryOptions);
