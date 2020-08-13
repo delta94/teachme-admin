@@ -95,6 +95,10 @@
   float: right;
 }
 
+.actions-placeholder:global(.ant-table-cell) {
+  min-width: 100px;
+}
+
 .actions-cell {
   display: flex;
   justify-content: flex-end;
