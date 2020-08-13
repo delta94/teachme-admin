@@ -77,4 +77,7 @@
   font-family: var(--font-primary);
   font-size: 14px;
   line-height: 2;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
 }
