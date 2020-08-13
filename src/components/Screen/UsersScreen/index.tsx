@@ -44,7 +44,7 @@ export default function UsersScreen(): ReactElement {
     environment: { id: envId },
     dateRange: { from, to },
   } = appState;
-  const [{ isFetchingUsers, users }, dispatch] = useUsersContext();
+  const [{ isFetchingUsers, users, isExportingUsers }, dispatch] = useUsersContext();
   const queryOptionsRef = useRef<UsersListQueryOptions>({ ...defaultQueryOptions });
   const queryOptions = queryOptionsRef.current;
   const disableExport = isUpdating || isFetchingUsers || !users.length;
@@ -124,6 +124,7 @@ export default function UsersScreen(): ReactElement {
                 className={classes['export-btn']}
                 onClick={() => exportUsers(dispatch, envId, from, to)}
                 disabled={disableExport}
+                loading={isExportingUsers}
               />
               <SearchFilter
                 placeholder="Search users"
