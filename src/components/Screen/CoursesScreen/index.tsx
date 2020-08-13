@@ -104,6 +104,7 @@ export default function CoursesScreen(): ReactElement {
             columns={columns}
             onSortEnd={onSortEnd}
             loading={isUpdating || isFetchingCoursesData}
+            isStickyToolbarAndHeader
           >
             <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
             {/* <ControlsWrapper>
