@@ -35,11 +35,15 @@ export const useCourseEditorContext = (): [IState, IDispatch] => [
   useCourseEditorDispatch(),
 ];
 
-export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<void> => {
+export const fetchItemsList = async (
+  dispatch: IDispatch,
+  envId: number,
+  options?: { refresh?: boolean },
+): Promise<void> => {
   dispatch({ type: ActionType.FetchItems });
 
   try {
-    const courseItems = await getFlatItemsList(envId, true);
+    const courseItems = await getFlatItemsList(envId, options?.refresh);
 
     dispatch({ type: ActionType.FetchItemsSuccess, courseItems });
   } catch (error) {
@@ -51,7 +55,7 @@ export const fetchItemsList = async (dispatch: IDispatch, envId = 0): Promise<vo
 export const fetchCourse = async (
   dispatch: IDispatch,
   courseId: string | number | undefined,
-  envId = 0,
+  envId: number,
   history: History,
 ): Promise<void> => {
   dispatch({ type: ActionType.FetchCourse });

@@ -48,6 +48,7 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
               onChange={(checked: boolean) => updateQuizProperties({ isEnabled: checked })}
             />
           </FormGroup>
+          <Divider />
           <FormGroup
             className={classes['passmark']}
             title="Passmark"

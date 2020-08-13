@@ -11,6 +11,7 @@ import ScreenHeader, { IScreenHeader } from '../../common/ScreenHeader';
 import Icon from '../../common/Icon';
 import { IconType } from '../../common/Icon/icon.interface';
 import WMTag from '../../common/WMTag';
+import WMPopover from '../../common/WMPopover';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 
 import classes from './style.module.scss';
@@ -24,6 +25,20 @@ export default function CourseScreenHeader({
   ...otherProps
 }: ICourseScreenHeader): ReactElement {
   const hasCourseData = courseMetadata && Object.keys(courseMetadata).length !== 0;
+  const courseSegments = courseMetadata?.segments;
+
+  const getSegments = (segments: string[]) => {
+    const segmentsStr = segments.join(', ');
+    const segmentsContent = (
+      <span className={classes['segments-subtitle']}>
+        This course is available to: <span className={classes['bold']}>{segmentsStr}</span>
+      </span>
+    );
+
+    const popoverContent = <div className={classes['segments-popover-content']}>{segmentsStr}</div>;
+
+    return <WMPopover content={popoverContent}>{segmentsContent}</WMPopover>;
+  };
 
   return (
     <ScreenHeader
@@ -48,13 +63,6 @@ export default function CourseScreenHeader({
               >
                 <Link to={`${BASE_COURSE_EDITOR_ROUTE.path}/${courseMetadata?.id}`}>Edit</Link>
               </WMButton>
-              {Boolean(courseMetadata?.segments.length) && (
-                <div className={classes['course-details-sub-title']}>
-                  <span>
-                    This course is available to: <b>{courseMetadata?.segments.join(' ,')}</b>
-                  </span>
-                </div>
-              )}
             </>
           ) : (
             <>
@@ -62,7 +70,6 @@ export default function CourseScreenHeader({
               <WMSkeletonInput className={classes['course-name']} active />
               <WMSkeletonButton active style={{ width: 50 }} />
               <WMSkeletonButton className={classes['edit']} active />
-              <WMSkeletonInput className={classes['course-details-sub-title']} active />
             </>
           )}
         </div>
@@ -75,6 +82,7 @@ export default function CourseScreenHeader({
           <Breadcrumb.Item>{courseMetadata?.title}</Breadcrumb.Item>
         </Breadcrumb>
       }
+      subTitle={courseSegments && Boolean(courseSegments.length) && getSegments(courseSegments)}
       {...otherProps}
     />
   );

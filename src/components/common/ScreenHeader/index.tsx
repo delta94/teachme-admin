@@ -9,6 +9,7 @@ import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
 
 import classes from './style.module.scss';
+import { useParams } from 'react-router-dom';
 
 export interface IScreenHeader {
   title: ReactNode;
@@ -21,6 +22,7 @@ export interface IScreenHeader {
   };
   hideTimeFilter?: boolean;
   isLoading?: boolean;
+  subTitle?: ReactNode;
 }
 
 export default function ScreenHeader({
@@ -31,14 +33,20 @@ export default function ScreenHeader({
   hideTimeFilter,
   timeFilterProps,
   breadcrumbs,
+  subTitle,
 }: IScreenHeader): ReactElement {
+  const { courseId } = useParams();
   const appInit = useAppSkeleton();
   const loading = (!appInit && isLoading) || !appInit;
 
   return (
     <>
       <Header
-        className={cc([classes['screen-header'], className, { [classes['skeleton']]: loading }])}
+        className={cc([
+          classes['screen-header'],
+          className,
+          { [classes['skeleton']]: loading, [classes['course']]: Boolean(courseId) },
+        ])}
         titleClassName={classes['screen-header-title']}
         title={title}
       >
@@ -60,6 +68,7 @@ export default function ScreenHeader({
             {...timeFilterProps}
           />
         )}
+        {subTitle && <div className={classes['sub-title']}>{subTitle}</div>}
       </Header>
     </>
   );

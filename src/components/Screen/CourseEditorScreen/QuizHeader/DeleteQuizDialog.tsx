@@ -5,7 +5,7 @@ import WMConfirmationDialog, {
 
 import classes from './style.module.scss';
 
-export default function DeleteLessonDialog({
+export default function DeleteQuizDialog({
   open,
   onCancel,
   onConfirm,
@@ -13,16 +13,14 @@ export default function DeleteLessonDialog({
   return (
     <WMConfirmationDialog
       open={open}
-      title="Delete lesson?"
+      title="Delete quiz?"
       onCancel={onCancel}
       confirmLabel="Delete"
       onConfirm={onConfirm}
       confirmClass={classes['delete-button']}
     >
       <p>
-        This lesson contains items.
-        <br />
-        Are you sure you want to delete it?
+        Are you sure you want to delete this quiz?
         <br />
         Note, this cannot be undone.
       </p>

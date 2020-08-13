@@ -1,3 +1,5 @@
+@import 'src/styles/mixins';
+
 .shown-courses-indicator {
   font-family: var(--font-secondary);
   color: var(--neutral900);
@@ -64,17 +66,7 @@
 }
 
 .segments-cell {
-  width: 133px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  @include ellipsis;
 
-.segments-popover-content {
-  display: flex;
-  flex-direction: column;
-  color: var(--neutral900);
-  font-family: var(--font-primary);
-  font-size: 14px;
-  line-height: 2;
+  width: 133px;
 }
