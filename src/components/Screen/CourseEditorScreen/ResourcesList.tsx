@@ -50,7 +50,7 @@ export default function ResourcesList(): ReactElement {
       title={
         <div className={classes['title']}>
           <span>Items</span>
-          <RefreshButton onClick={onRefresh} />
+          <RefreshButton onClick={onRefresh} loading={isFetchingItems} />
         </div>
       }
     >
