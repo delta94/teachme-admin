@@ -92,11 +92,12 @@
 :global(.ant-table-row):hover .actions-placeholder:global(.ant-table-cell) {
   opacity: 0;
   display: none;
+  float: right;
 }
 
 .actions-cell {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
 
   a.action-button,
   .action-button:global(.ant-btn) {
