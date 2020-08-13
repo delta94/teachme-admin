@@ -1,3 +1,5 @@
+@import 'src/styles/mixins';
+
 .course-details {
   &-header {
     display: flex;
@@ -11,10 +13,10 @@
       .bold {
         margin-left: 5px;
         font-weight: bold;
+
+        @include ellipsis;
+
         width: 300px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
     }
   }
