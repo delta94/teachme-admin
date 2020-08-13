@@ -81,15 +81,17 @@
 
 .actions-column:global(.ant-table-cell) {
   opacity: 0;
-  position: absolute;
-  right: 0;
   display: none;
 }
 
 :global(.ant-table-row):hover .actions-column:global(.ant-table-cell) {
   opacity: 1;
   display: table-cell;
-  border-bottom: none;
+}
+
+:global(.ant-table-row):hover .actions-placeholder:global(.ant-table-cell) {
+  opacity: 0;
+  display: none;
 }
 
 .actions-cell {

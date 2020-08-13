@@ -101,6 +101,7 @@ export const columns: ColumnsType<any> = [
     title: 'Avg. Quiz attempts',
     dataIndex: 'avg_quiz_attempts',
     align: 'right',
+    className: classes['actions-placeholder'],
     render: (value: number): ReactElement => (
       <DashCell value={value}>
         <NumberCell value={typeof value === 'number' ? value.toFixed(1) : value} />
