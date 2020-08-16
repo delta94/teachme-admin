@@ -11,7 +11,7 @@ import classes from './style.module.scss';
 
 const environments: IWMDropdownOption[] = [
   { id: EnvironmentType.Production, value: 'Production' },
-  { id: EnvironmentType.Test, value: 'test' },
+  { id: EnvironmentType.Test, value: 'Test' },
 ];
 
 export interface IPublishToEnvironmentDialog extends IWMConfirmationDialogWrapper {
