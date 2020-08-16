@@ -8,7 +8,7 @@ import ControlsWrapper from '../../common/ControlsWrapper';
 import { SearchFilter } from '../../common/filters';
 
 import ExportCoursesButton from './ExportCourseButton';
-import { columns } from './tableData';
+import { getColumns } from './tableData';
 import { getFilteredCourseOutline } from './utils';
 
 import classes from './style.module.scss';
@@ -22,10 +22,11 @@ export default function CourseOutlineTable(): ReactElement {
     filteredCourseOutline,
     courseOutlineSearchValue,
   } = state;
-  const disableActions = isUpdating || isFetchingCourseData || !courseOutline.length;
+  const hasItems = courseOutline?.items?.length ?? 0;
+  const disableActions = isUpdating || isFetchingCourseData || !hasItems;
 
   const onSearch = (searchValue: string) => {
-    const filtered = getFilteredCourseOutline(courseOutline, searchValue);
+    const filtered = getFilteredCourseOutline(courseOutline.items, searchValue);
 
     dispatch({
       type: ActionType.SetCourseOutlineSearchValue,
@@ -51,7 +52,7 @@ export default function CourseOutlineTable(): ReactElement {
         <WMTableExpanded
           loading={isUpdating || isFetchingCourseData}
           data={filteredCourseOutline}
-          columns={columns}
+          columns={getColumns()}
           rowClassName={(record) => record.className}
           className={classes['course-table']}
         />
@@ -59,7 +60,7 @@ export default function CourseOutlineTable(): ReactElement {
         <WMTable
           loading={isUpdating || isFetchingCourseData}
           data={[]}
-          columns={columns}
+          columns={getColumns()}
           className={classes['course-table']}
         />
       )}

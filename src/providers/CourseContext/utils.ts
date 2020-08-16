@@ -57,7 +57,10 @@ export const fetchCourseData = async (
       type: ActionType.FetchCourseDataSuccess,
       courseMetadata,
       overview,
-      courseOutline: convertedCourseOutline,
+      courseOutline: {
+        dropOffEnabled: courseOutline.dropOffEnabled,
+        items: convertedCourseOutline,
+      },
       filteredCourseOutline: convertedCourseOutline,
       quiz,
     });
