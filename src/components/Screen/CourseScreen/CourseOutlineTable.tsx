@@ -52,7 +52,7 @@ export default function CourseOutlineTable(): ReactElement {
         <WMTableExpanded
           loading={isUpdating || isFetchingCourseData}
           data={filteredCourseOutline}
-          columns={getColumns()}
+          columns={getColumns(courseOutline?.dropOffEnabled)}
           rowClassName={(record) => record.className}
           className={classes['course-table']}
         />
@@ -60,7 +60,7 @@ export default function CourseOutlineTable(): ReactElement {
         <WMTable
           loading={isUpdating || isFetchingCourseData}
           data={[]}
-          columns={getColumns()}
+          columns={getColumns(courseOutline?.dropOffEnabled)}
           className={classes['course-table']}
         />
       )}

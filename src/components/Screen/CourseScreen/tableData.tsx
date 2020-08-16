@@ -1,7 +1,11 @@
 /* eslint-disable react/display-name */
 import React, { ReactElement, ReactNode } from 'react';
+import { InfoCircleOutlined } from '@ant-design/icons';
+
 import { IconTextCell, DashCell, NumberCell } from '../../common/tableCells';
 import Icon from '../../common/Icon';
+import WMPopover from '../../common/WMPopover';
+import classes from './style.module.scss';
 
 interface IColumn {
   title: ReactNode;
@@ -12,7 +16,15 @@ interface IColumn {
 }
 
 export const getColumns = (dropOffEnabled?: boolean): IColumn[] => {
-  const dropOffTitle = dropOffEnabled ? 'Drop-off' : 'Drop-off (?)';
+  const notEnabledDropOfTitle = (
+    <WMPopover content="Drop-off is only calculated for courses with an enforced outline">
+      <span className={classes['drop-off-col']}>
+        Drop-off <InfoCircleOutlined className={classes['drop-off-info']} />
+      </span>
+    </WMPopover>
+  );
+  const dropOffTitle = dropOffEnabled ? 'Drop-off' : notEnabledDropOfTitle;
+
   return [
     {
       title: 'Item Name',
