@@ -78,7 +78,11 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       className: classes['duration-cell'],
     }),
     render: (value: string): ReactElement =>
-      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
+      value ? (
+        <NumberCell value={moment.duration(value, 'milliseconds').humanize()} />
+      ) : (
+        <WarningCell value="Did not complete" />
+      ),
   },
   {
     title: 'Quiz Result',

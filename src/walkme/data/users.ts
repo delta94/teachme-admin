@@ -37,11 +37,16 @@ async function getDataItems(
   return data
     .map<UserListUILineItem | null>((item) => {
       const course = indexed[item.course_id];
+      const started_date = getDate(item.started_date);
+      const completed_date = getDate(item.completed_date);
+      const time_to_complete =
+        started_date && completed_date && completed_date.getTime() - started_date.getTime();
       return course
         ? {
             id: item.id,
-            completed_date: getDate(item.completed_date),
-            started_date: getDate(item.started_date),
+            completed_date,
+            started_date,
+            time_to_complete,
             quiz_attempts: item.quiz_attempts,
             quiz_passed: item.quiz_passed,
             quiz_result: item.quiz_result,
