@@ -23,7 +23,10 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     title: 'User',
     dataIndex: UsersColumn.ID,
     sorter: true,
-    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
+    onHeaderCell: (col) => ({
+      onClick: () => onClick(col),
+      className: classes['header-cell'],
+    }),
     render: (value: string): ReactElement => (
       <TextCell className={classes['user-cell']} value={value} />
     ),
@@ -32,7 +35,10 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     title: 'Course Name',
     dataIndex: 'title',
     sorter: true,
-    onHeaderCell: (col) => ({ onClick: () => onClick(col) }),
+    onHeaderCell: (col) => ({
+      onClick: () => onClick(col),
+      className: classes['header-cell'],
+    }),
     render: (value: string): ReactElement => <TextCell value={value} />,
   },
   {
