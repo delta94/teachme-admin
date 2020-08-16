@@ -21,7 +21,7 @@ export default function CourseTabs(): ReactElement {
     {
       id: TabId.Outline,
       title: 'Outline',
-      itemsLength: courseOutline.length,
+      itemsLength: courseOutline?.items?.length ?? 0,
       icon: <Icon type={IconType.SidebarCourses} />,
       content: <CourseOutlineTable />,
     },

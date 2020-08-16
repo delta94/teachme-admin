@@ -16,12 +16,13 @@ import {
   ICourseOutlineItem,
   ICourseOutlineLesson,
   ICourseOutlineItems,
+  ICourseOutline,
 } from './courseScreen.interface';
 
 import classes from './style.module.scss';
 
 export { parseCourseOutline };
-export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems };
+export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems, ICourseOutline };
 
 // TODO: add cleanups to fetchCourseData
 export default function CourseScreen(): ReactElement {
