@@ -35,7 +35,7 @@ export default function CourseItemDetailsPanel(): ReactElement {
   };
 
   useEffect(() => {
-    fetchItemsList(dispatch);
+    fetchItemsList(dispatch, environment.id);
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });

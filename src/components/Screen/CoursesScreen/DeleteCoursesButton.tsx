@@ -30,7 +30,9 @@ export default function DeleteCoursesButton(): ReactElement {
   const [showCantDeleteCourse, setShowCantDeleteCourse] = useState(false);
 
   const cannotDelete = selectedRows.some(
-    (course) => course.publishStatus === PublishStatus.Published,
+    (course) =>
+      course.publishStatus === PublishStatus.Published ||
+      course.publishStatus === PublishStatus.Modified,
   );
 
   const onDeleteCourse = () => {

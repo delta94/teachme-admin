@@ -19,6 +19,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 // import { DropdownFilter } from '../../common/filters';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
+import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
 
 import ShownCoursesIndicator from './ShownCoursesIndicator';
 import ProductionStatusActions from './ProductionStatusActions';
@@ -93,7 +94,7 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <ConfigProvider renderEmpty={CoursesEmptyState}>
+        <ConfigProvider renderEmpty={disableActions ? CoursesEmptyState : SearchEmptyState}>
           <WMTable
             rowSelection={{
               selectedRowKeys,

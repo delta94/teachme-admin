@@ -13,7 +13,7 @@ import {
   NumberCell,
   StatusDotCell,
   TagCell,
-  TextArrayCell,
+  TextCell,
 } from '../../common/tableCells';
 import WMPopover from '../../common/WMPopover';
 
@@ -48,18 +48,23 @@ export const columns: ColumnsType<any> = [
     title: 'Segment',
     dataIndex: 'segments',
     render: (value: Array<string>): ReactElement => {
-      const content = (
+      const segmentsStr = value.join(', ');
+      // detecting string length, or the length of segments array.
+      const showPopover = segmentsStr.length > 30 || value.length > 2;
+      const popoverContent = (
         <div className={classes['segments-popover-content']}>
-          {value.map((v) => (
-            <span key={v}>{v}</span>
-          ))}
+          <span>{segmentsStr}</span>
         </div>
       );
 
-      return (
-        <WMPopover content={content}>
-          <TextArrayCell className={classes['segments-cell']} value={value} />
-        </WMPopover>
+      const SegmentsTextCell = (
+        <TextCell className={classes['segments-cell']} value={segmentsStr} />
+      );
+
+      return showPopover ? (
+        <WMPopover content={popoverContent}>{SegmentsTextCell}</WMPopover>
+      ) : (
+        SegmentsTextCell
       );
     },
   },

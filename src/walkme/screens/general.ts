@@ -1,4 +1,5 @@
 import walkme, { EmailList } from '@walkme/editor-sdk';
+import * as wmData from '../data/services/wmData';
 
 /**
  * Returns Data for logged-in user
@@ -42,6 +43,7 @@ export async function getSystemData() {
  * @param id the id of the requested system - use getSystems to get all possible values
  */
 export async function switchSystem(id: number) {
+  wmData.clear();
   return walkme.system.switchSystem(id);
 }
 

@@ -1,5 +1,5 @@
 import { UsersColumn } from '../../../walkme/models';
-import { IWMDropdownOption } from '../../common/WMDropdown';
+import { IWMSelectOption } from '../../common/WMSelect';
 
 export const sortByOptions = {
   id: UsersColumn.ID,
@@ -11,25 +11,14 @@ export const sortByOptions = {
   quiz_attempts: UsersColumn.QUIZ_ATTEMPTS,
 };
 
-export const courses: IWMDropdownOption[] = [
-  { id: 0, value: 'All Courses' },
-  { id: 1, value: 'Course 1' },
-  { id: 2, value: 'Course 2' },
-  { id: 3, value: 'Course 3' },
-  { id: 4, value: 'Course 4' },
-  { id: 5, value: 'Course 5' },
+export const completedOptions: IWMSelectOption[] = [
+  { label: 'All', value: -1 },
+  { label: 'Completed', value: true },
+  { label: 'Not completed', value: false },
 ];
 
-export const statuses: IWMDropdownOption[] = [
-  { id: 0, value: 'All' },
-  { id: 1, value: 'Completed' },
-  { id: 2, value: 'Did not complete' },
-];
-
-export const results: IWMDropdownOption[] = [
-  { id: 0, value: 'All Results' },
-  { id: 1, value: 'Passed' },
-  { id: 2, value: 'Failed' },
-  { id: 3, value: 'Did not submit' },
-  { id: 4, value: 'No quiz' },
+export const resultsOptions: IWMSelectOption[] = [
+  { label: 'All', value: -1 },
+  { label: 'Passed', value: true },
+  { label: 'Not Passed', value: false },
 ];
