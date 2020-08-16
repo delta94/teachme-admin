@@ -40,7 +40,7 @@ export default function CourseEditorScreen(): ReactElement {
   };
 
   return (
-    <>
+    <div className={classes['course-editor-screen']}>
       <ScreenHeader
         title={
           <EditableTitle
@@ -59,6 +59,6 @@ export default function CourseEditorScreen(): ReactElement {
         <CourseOutline />
       </div>
       <UnloadDialog when={hasChanges} />
-    </>
+    </div>
   );
 }
