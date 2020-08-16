@@ -2,8 +2,8 @@ import { WalkMeDataItem, TypeName } from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
 import { getTypeId } from './item';
 
-const data: { [key in TypeName]?: Promise<Array<WalkMeDataItem>> } = {};
-const syncData: { [type: number]: Array<WalkMeDataItem> } = {};
+let data: { [key in TypeName]?: Promise<Array<WalkMeDataItem>> } = {};
+let syncData: { [type: number]: Array<WalkMeDataItem> } = {};
 
 export async function getData(
   type: TypeName,
@@ -38,4 +38,9 @@ export async function refresh(types: Array<TypeName>, environmentId: number = 0)
       return getData(type, environmentId);
     }),
   );
+}
+
+export function clear() {
+  data = {};
+  syncData = {};
 }
