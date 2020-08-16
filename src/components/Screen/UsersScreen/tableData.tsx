@@ -25,7 +25,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     sorter: true,
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
-      className: classes['header-cell'],
+      className: classes['user-cell'],
     }),
     render: (value: string): ReactElement => (
       <TextCell className={classes['user-cell']} value={value} />
@@ -37,9 +37,11 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     sorter: true,
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
-      className: classes['header-cell'],
+      className: classes['course-name-cell'],
     }),
-    render: (value: string): ReactElement => <TextCell value={value} />,
+    render: (value: string): ReactElement => (
+      <TextCell className={classes['course-name-cell']} value={value} />
+    ),
   },
   {
     title: 'Started',
@@ -53,7 +55,9 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       const range = moment(value).fromNow();
       const formattedDate = moment(value).format(tableDateFormat);
 
-      return <SubtextCell value={range} subtext={formattedDate} />;
+      return (
+        <SubtextCell className={classes['started-cell']} value={range} subtext={formattedDate} />
+      );
     },
   },
   {
@@ -69,9 +73,9 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       const formattedDate = moment(value).format(tableDateFormat);
 
       return value ? (
-        <SubtextCell value={range} subtext={formattedDate} />
+        <SubtextCell className={classes['completed-cell']} value={range} subtext={formattedDate} />
       ) : (
-        <WarningCell value="Did not complete" />
+        <WarningCell className={classes['completed-cell']} value="Did not complete" />
       );
     },
   },
@@ -84,7 +88,11 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       className: classes['duration-cell'],
     }),
     render: (value: string): ReactElement =>
-      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
+      value ? (
+        <NumberCell className={classes['duration-cell']} value={value} />
+      ) : (
+        <WarningCell className={classes['duration-cell']} value="Did not complete" />
+      ),
   },
   {
     title: 'Quiz Result',
@@ -97,9 +105,9 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     }),
     render: (value: number): ReactElement =>
       value ? (
-        <StatusDotCell value={value} passingValue={66} />
+        <StatusDotCell className={classes['result-cell']} value={value} passingValue={66} />
       ) : (
-        <WarningCell value="Did not submit" />
+        <WarningCell className={classes['result-cell']} value="Did not submit" />
       ),
   },
   {
@@ -112,6 +120,10 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       className: classes['attempts-cell'],
     }),
     render: (value: string): ReactElement =>
-      value ? <NumberCell value={value} /> : <WarningCell value="Did not complete" />,
+      value ? (
+        <NumberCell className={classes['attempts-cell']} value={value} />
+      ) : (
+        <WarningCell className={classes['attempts-cell']} value="Did not complete" />
+      ),
   },
 ];
