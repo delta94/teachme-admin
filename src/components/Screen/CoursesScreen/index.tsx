@@ -1,12 +1,12 @@
-import React, { ReactElement, useEffect, Key } from 'react';
-import { Divider, ConfigProvider } from 'antd';
+import React, { Key, ReactElement, useEffect, useState } from 'react';
+import { ConfigProvider, Divider } from 'antd';
 
-import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
+import { ActionType as AppActionType, useAppContext } from '../../../providers/AppContext';
 import {
-  useCoursesContext,
+  ActionType,
   fetchCoursesData,
   sortTable,
-  ActionType,
+  useCoursesContext,
 } from '../../../providers/CoursesContext';
 import { UICourse } from '../../../walkme/data';
 import { AllCoursesOverviewResponse } from '../../../walkme/models';
@@ -49,7 +49,6 @@ export default function CoursesScreen(): ReactElement {
     selectedRowKeys,
   } = state;
   const disableActions = isUpdating || isFetchingCoursesData || !courses.length;
-
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
   }, [dispatch, isUpdating, envId, from, to]);

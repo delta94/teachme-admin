@@ -70,3 +70,36 @@
 
   width: 133px;
 }
+
+.actions-column:global(.ant-table-cell) {
+  display: none;
+}
+
+:global(.ant-table-row):hover .actions-column:global(.ant-table-cell) {
+  display: table-cell;
+}
+
+:global(.ant-table-row):hover .actions-placeholder:global(.ant-table-cell) {
+  display: none;
+}
+
+.actions-placeholder:global(.ant-table-cell) {
+  min-width: 100px;
+}
+
+.actions-cell {
+  display: flex;
+  justify-content: flex-end;
+
+  a.action-button,
+  .action-button:global(.ant-btn) {
+    height: 22px;
+    padding: 0 10px 0 10px;
+    display: flex;
+    background-color: transparent;
+  }
+
+  .action-button:disabled svg {
+    opacity: 0.7;
+  }
+}
