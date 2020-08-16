@@ -4,7 +4,7 @@ import { QuizOutlineUI } from '../../walkme/models/course/quiz';
 import { CourseOverviewData } from '../../walkme/models';
 import { CourseMetadata } from '../../walkme/data/courseMetadata';
 
-import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
+import { ICourseOutlineItems, ICourseOutline } from '../../components/Screen/CourseScreen';
 import { ActionType } from './actions';
 
 export { ActionType };
@@ -13,7 +13,7 @@ export interface IAction {
   type: ActionType;
   overview?: CourseOverviewData;
   courseMetadata?: CourseMetadata;
-  courseOutline?: ICourseOutlineItems;
+  courseOutline?: ICourseOutline;
   filteredCourseOutline?: ICourseOutlineItems;
   courseOutlineSearchValue?: string;
   quiz?: QuizOutlineUI;
@@ -28,7 +28,7 @@ export interface IState {
   isFetchingCourseDataError: boolean;
   overview: CourseOverviewData;
   courseMetadata?: CourseMetadata;
-  courseOutline: ICourseOutlineItems;
+  courseOutline: ICourseOutline;
   filteredCourseOutline: ICourseOutlineItems;
   courseOutlineSearchValue: string;
   quiz: QuizOutlineUI;

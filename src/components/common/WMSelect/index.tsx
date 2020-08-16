@@ -6,8 +6,8 @@ import { SelectProps, SelectValue } from 'antd/lib/select';
 import classes from './style.module.scss';
 
 export interface IWMSelectOption {
-  id: string;
-  value: string | number;
+  id?: string;
+  value: any;
   label?: ReactNode;
   skip?: boolean;
   disabled?: boolean;
@@ -26,7 +26,7 @@ export interface IWMSelect<VT> extends Omit<SelectProps<VT>, 'mode'> {
 
 export default function WMSelect<VT extends SelectValue>({
   className,
-  mode = WMSelectModeType.Multiple,
+  mode,
   onSelectedChange,
   ...otherProps
 }: IWMSelect<VT>): ReactElement {

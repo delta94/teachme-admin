@@ -43,7 +43,6 @@ export const defaultQueryOptions = {
   num_of_records: 50,
   sort_by: UsersColumn.ID,
   sort_by_order: UsersOrder.ASC,
-  user_name: '',
 };
 
 export const fetchUsers = async (
