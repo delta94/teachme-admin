@@ -4,10 +4,22 @@ import Icon, { IconType } from '../../common/Icon';
 
 import classes from './style.module.scss';
 
+const getErrorMessage = (error: any) => {
+  if (error) {
+    if (typeof error === 'string') {
+      return error;
+    }
+
+    if (typeof error.message === 'string') {
+      return error.message;
+    }
+  }
+
+  return 'Something went wrong';
+};
+
 export default function ErrorScreen({ error }: { error?: string }): ReactElement {
-  const [errorMessage, setErrorMessage] = useState(
-    error && Boolean(error) ? error : 'Something went wrong',
-  );
+  const errorMessage = getErrorMessage(error);
 
   return (
     <div className={classes['error-screen']}>
