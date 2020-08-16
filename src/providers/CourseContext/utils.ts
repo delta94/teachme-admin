@@ -7,6 +7,7 @@ import { getCourseOutline } from '../../walkme/data/courseOutline';
 import { getCourseMetadata } from '../../walkme/data/courseMetadata';
 
 import { ActionType, IState, IDispatch } from './course-context.interface';
+import { CourseNotFoundError, TypeNotSupportedError } from '../../walkme/models';
 
 export const CourseStateContext = createContext<IState | undefined>(undefined);
 export const CourseDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -67,6 +68,8 @@ export const fetchCourseData = async (
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.FetchCourseDataError });
+    const errorMessage = getCourseErrorMessage(error, courseId);
+    throw new Error(errorMessage);
   }
 };
 
@@ -90,3 +93,14 @@ export const exportCourse = async (
     wmMessage('Export failed', MessageType.Error);
   }
 };
+
+function getCourseErrorMessage(error: Error, courseId: number): string {
+  switch (true) {
+    case error instanceof CourseNotFoundError:
+      return `Cannot find course with id ${courseId}`;
+    case error instanceof TypeNotSupportedError:
+      return `This course contains unsupported items`;
+    default:
+      return 'Unable to get course';
+  }
+}
