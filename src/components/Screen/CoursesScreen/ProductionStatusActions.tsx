@@ -18,6 +18,7 @@ export default function ProductionStatusActions(): ReactElement {
   const [appState] = useAppContext();
   const {
     dateRange: { from, to },
+    environment: { id: currentEnvId },
   } = appState;
   const [{ selectedRows, isPublishingCourses, isArchivingCourses }, dispatch] = useCoursesContext();
 
@@ -55,11 +56,11 @@ export default function ProductionStatusActions(): ReactElement {
         coursesCount={selectedRows.length}
         open={showPublish}
         onCancel={() => setShowPublish(false)}
-        onConfirm={async (envId) => {
+        onConfirm={async ({ envId, envName }: { envId: number; envName: string }) => {
           dispatch({ type: ActionType.PublishCourses });
-          await publishCourses(dispatch, envId, selectedRows);
+          await publishCourses(dispatch, envId, envName, selectedRows);
           setShowPublish(false);
-          fetchCoursesData(dispatch, envId, from, to);
+          fetchCoursesData(dispatch, currentEnvId, from, to);
         }}
         isInProgess={isPublishingCourses}
       />
@@ -67,11 +68,11 @@ export default function ProductionStatusActions(): ReactElement {
         coursesCount={selectedRows.length}
         open={showArchive}
         onCancel={() => setShowArchive(false)}
-        onConfirm={async (envId) => {
+        onConfirm={async ({ envId, envName }: { envId: number; envName: string }) => {
           dispatch({ type: ActionType.ArchiveCourses });
-          await archiveCourses(dispatch, envId, selectedRows);
+          await archiveCourses(dispatch, envId, envName, selectedRows);
           setShowArchive(false);
-          fetchCoursesData(dispatch, envId, from, to);
+          fetchCoursesData(dispatch, currentEnvId, from, to);
         }}
         isInProgess={isArchivingCourses}
       />

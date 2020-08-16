@@ -1,18 +1,14 @@
 import React, { ReactElement, useState } from 'react';
 
-import { EnvironmentType } from '../../../../interfaces/app.interfaces';
 import { pluralizer } from '../../../../utils';
+import { useAppContext } from '../../../../providers/AppContext';
+import { EnvironmentType } from '../../../../interfaces/app.interfaces';
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 import { IWMDropdownOption } from '../../WMDropdown';
 import EnvironmentDropdown from '../DialogEnvironmentDropdown/EnvironmentDropdown';
 
 import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
-
-const environments: IWMDropdownOption[] = [
-  { id: EnvironmentType.Production, value: 'Production' },
-  { id: EnvironmentType.Test, value: 'Test' },
-];
 
 export interface IPublishToEnvironmentDialog extends IWMConfirmationDialogWrapper {
   coursesCount: number;
@@ -26,7 +22,10 @@ export default function PublishToEnvironmentDialog({
   onConfirm,
   isInProgess,
 }: IPublishToEnvironmentDialog): ReactElement {
-  const [environment, setEnvironment] = useState<IWMDropdownOption>(environments[0]);
+  const [{ parsedEnvironments }] = useAppContext();
+  const [environment, setEnvironment] = useState<IWMDropdownOption>(
+    parsedEnvironments.find((env) => env.id === EnvironmentType.Test) ?? parsedEnvironments[0],
+  );
 
   return (
     <WMConfirmationDialog
@@ -35,7 +34,7 @@ export default function PublishToEnvironmentDialog({
         <div className={classes['publish-dialog-title']}>
           <div>Publish to </div>
           <EnvironmentDropdown
-            environments={environments}
+            environments={parsedEnvironments}
             initialSelectedEnvironment={environment}
             onChange={(selected) => setEnvironment(selected)}
             disabled={isInProgess}
@@ -44,7 +43,9 @@ export default function PublishToEnvironmentDialog({
       }
       confirmLabel={`Publish to ${environment.value}`}
       onCancel={onCancel}
-      onConfirm={() => onConfirm(environment.id)}
+      onConfirm={() =>
+        onConfirm({ envId: environment.id, envName: environment.label ?? environment.value })
+      }
       loadingConfirmButton={isInProgess}
       disableDialog={isInProgess}
     >
