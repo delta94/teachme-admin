@@ -17,22 +17,15 @@ import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import ScreenHeader from '../../common/ScreenHeader';
 import ControlsWrapper from '../../common/ControlsWrapper';
-import {
-  // DropdownFilter,
-  SearchFilter,
-} from '../../common/filters';
+import { SearchFilter } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 import { DataEmptyState, SearchEmptyState } from '../../common/WMEmpty';
 
-import {
-  sortByOptions,
-  // courses,
-  // statuses,
-  // results,
-} from './utils';
+import { sortByOptions } from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
 import LoadMoreWrapper from './LoadMoreWrapper';
+import FiltersToolbar from './FiltersToolbar';
 import classes from './style.module.scss';
 
 // TODO: add cleanups to fetchUsers
@@ -102,23 +95,9 @@ export default function UsersScreen(): ReactElement {
             columns={getColumns(onHeaderCellClick)}
             sortDirections={['descend', 'ascend']}
             loading={isUpdating || isFetchingUsers}
+            isStickyToolbarAndHeader
           >
             <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
-            {/* <ControlsWrapper>
-        <WMTable
-          className={classes['users-table']}
-          data={users}
-          columns={getColumns(onHeaderCellClick)}
-          sortDirections={['descend', 'ascend']}
-          loading={isUpdating || isFetchingUsers}
-          isStickyToolbarAndHeader
-        >
-          <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
-          {/* <ControlsWrapper>
-            <DropdownFilter label="Course Name" options={courses} />
-            <DropdownFilter label="Completed" options={statuses} />
-            <DropdownFilter label="Quiz Results" options={results} />
-          </ControlsWrapper> */}
             <ControlsWrapper>
               <ExportButton
                 className={classes['export-btn']}
@@ -133,6 +112,7 @@ export default function UsersScreen(): ReactElement {
                 disabled={disableSearch}
               />
             </ControlsWrapper>
+            <FiltersToolbar queryOptions={queryOptions} />
           </WMTable>
         </ConfigProvider>
         <LoadMoreWrapper queryOptions={queryOptions} />

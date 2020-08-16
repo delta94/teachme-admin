@@ -32,7 +32,11 @@ export default function LoadMoreWrapper({
     <>
       {!isFetchingUsers && (
         <div className={classes['load-more-wrapper']}>
-          <span>{`1-${users.length} of ${total_rows} results`}</span>
+          {users.length ? (
+            <span>{`1-${users.length} of ${total_rows} results`}</span>
+          ) : (
+            <span>No results</span>
+          )}
           {total_rows > users.length && (
             <LoadMoreButton onClick={() => fetchUsers(dispatch, envId, from, to, options, users)} />
           )}

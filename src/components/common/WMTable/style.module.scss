@@ -29,7 +29,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    height: var(--toolbarHeight);
+    min-height: var(--toolbarHeight);
   }
 
   th:global(.ant-table-cell) {
