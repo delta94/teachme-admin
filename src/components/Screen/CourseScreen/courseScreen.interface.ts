@@ -3,6 +3,11 @@ import { QuizOutlineUI } from '../../../walkme/models/course/quiz';
 
 export type ICourseOutlineItems = (ICourseOutlineItem | ICourseOutlineLesson)[];
 
+export interface ICourseOutline {
+  dropOffEnabled: boolean;
+  items: ICourseOutlineItems;
+}
+
 export interface ICourseOutlineLesson {
   children?: ICourseOutlineItem[];
 }
@@ -26,7 +31,7 @@ export interface ICourseTabs {
 }
 
 export interface ICourseOutlineTable {
-  courseOutline: ICourseOutlineItems;
+  courseOutline: ICourseOutline;
   filteredCourseOutline: ICourseOutlineItems;
   onSearchCourseOutline: (
     courseOutlineSearchValue: string,

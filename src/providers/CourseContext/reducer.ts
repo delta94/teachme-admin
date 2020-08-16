@@ -1,7 +1,7 @@
 import produce from 'immer';
 
 import { CourseOverviewData } from '../../walkme/models';
-import { ICourseOutlineItems } from '../../components/Screen/CourseScreen';
+import { ICourseOutlineItems, ICourseOutline } from '../../components/Screen/CourseScreen';
 
 import { ActionType, IState, IAction } from './course-context.interface';
 
@@ -10,7 +10,7 @@ export const initialState = {
   isFetchingCourseDataError: false,
   overview: {} as CourseOverviewData,
   courseMetadata: {},
-  courseOutline: [] as ICourseOutlineItems,
+  courseOutline: {} as ICourseOutline,
   filteredCourseOutline: [] as ICourseOutlineItems,
   courseOutlineSearchValue: '',
   quiz: {},
