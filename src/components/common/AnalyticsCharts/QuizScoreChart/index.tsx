@@ -13,7 +13,8 @@ export default function QuizScoreChart({
   isEmpty,
   isLoading = false,
 }: IQuizScoreData): ReactElement {
-  const { avg_quiz_score: average = 0, passmark = 0 } = overview;
+  const passmark = overview.passmark ?? 0;
+  const average = Math.round(overview.avg_quiz_score) || 0;
 
   return (
     <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
