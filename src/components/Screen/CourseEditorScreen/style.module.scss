@@ -1,7 +1,16 @@
-.cards-wrapper {
+:root {
+  --screen-max-width: 1196px; // outline with should be 846px + resource width 350px
   --build-page-header-height: 132px;
   --distance-from-bottom-of-screen: 30px;
+}
 
+.course-editor-screen {
+  width: 100%;
+  max-width: var(--screen-max-width);
+  margin: 0 auto;
+}
+
+.cards-wrapper {
   flex-grow: 1;
   display: flex;
   font-family: var(--font-primary);
