@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import { isValidNumber } from '../../../../utils';
+
 import WMCard from '../../WMCard';
 import WMSkeleton from '../../WMSkeleton';
 import { WMProgress, ProgressType, ProgressStatus } from '../../charts';
@@ -10,10 +12,10 @@ import classes from './style.module.scss';
 
 export default function QuizScoreChart({
   overview,
-  isEmpty,
   isLoading = false,
 }: IQuizScoreData): ReactElement {
-  const { avg_quiz_score: average = 0, passmark = 0 } = overview;
+  const { avg_quiz_score: average, passmark } = overview;
+  const isEmpty = !isValidNumber(average) || !isValidNumber(passmark);
 
   return (
     <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
@@ -21,12 +23,16 @@ export default function QuizScoreChart({
         <div className={classes['course-average-content']}>
           <WMProgress
             className={classes['course-average-chart']}
-            percent={!isEmpty && average ? average : 0}
+            percent={average ?? undefined}
             type={ProgressType.Circle}
-            format={() => (isEmpty ? '- -' : average)}
+            format={() => (!isEmpty ? parseInt(average.toFixed(0)) : '- -')}
             width={80}
             strokeWidth={10}
-            status={average > passmark ? ProgressStatus.Success : ProgressStatus.Exception}
+            status={
+              !isEmpty && passmark && average > passmark
+                ? ProgressStatus.Success
+                : ProgressStatus.Exception
+            }
           />
           {
             <span className={classes['passmark']}>
