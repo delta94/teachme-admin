@@ -146,6 +146,7 @@ export default function FiltersToolbar({
             value={coursesValues}
             loading={isFetchingOptions}
             disabled={!coursesOptions.length}
+            dropdownClassName={classes['course-name-select']}
           />
         </FormGroup>
         <FormGroup className={classes['filter-wrapper']} label="Completed:">
