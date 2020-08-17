@@ -31,7 +31,10 @@ export const getColumns = (dropOffEnabled?: boolean): IColumn[] => {
       dataIndex: 'itemName',
       key: 'item-name',
       render: ({ value, icon }: { value: string; icon?: string }): ReactElement => (
-        <IconTextCell value={value} icon={icon && <Icon type={icon} />} />
+        <IconTextCell
+          value={value}
+          icon={icon && <Icon className={classes['task-icon']} type={icon} />}
+        />
       ),
     },
     {

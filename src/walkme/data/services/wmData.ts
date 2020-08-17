@@ -1,6 +1,7 @@
-import { WalkMeDataItem, TypeName } from '@walkme/types';
+import { WalkMeDataItem, TypeName, TypeId } from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
 import { getTypeId } from './item';
+import { TypeNotSupportedError } from '../../models';
 
 let data: { [key in TypeName]?: Promise<Array<WalkMeDataItem>> } = {};
 let syncData: { [type: number]: Array<WalkMeDataItem> } = {};
@@ -20,9 +21,14 @@ export async function getData(
 }
 
 export function getDataSync(type: number, ids?: Array<number>): Array<WalkMeDataItem> {
+  if (type == TypeId.Walkthru) {
+    throw new TypeNotSupportedError(`TeachMe does not support type ${type}`);
+  }
   const items = syncData[type];
   if (!items) {
-    throw `unable to get data synchronously - call getData first to get it in a sync manner`;
+    throw new Error(
+      `unable to get data synchronously - call getData first to get it in a sync manner`,
+    );
   }
   return filter(items, ids);
 }
