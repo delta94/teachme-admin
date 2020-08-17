@@ -1,7 +1,7 @@
 import * as wm from '@walkme/types';
 import { getCourseSegments } from './services/segments';
 import { TypeName, WalkMeDataCourse } from '@walkme/types';
-import { CourseMetadata, PublishStatus } from '../models';
+import { CourseMetadata, PublishStatus, CourseNotFoundError } from '../models';
 import { getData } from './services/wmData';
 
 export type { CourseMetadata };
@@ -31,6 +31,8 @@ async function getCourse(
   if (typeof courseOrId !== 'number') return courseOrId;
 
   const [course] = await getData(TypeName.Course, environmentId, [courseOrId]);
+  if (!course) throw new CourseNotFoundError(`Unable to find course with id: ${courseOrId}`);
+
   return course as WalkMeDataCourse;
 }
 

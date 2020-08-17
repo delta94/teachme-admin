@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { IDateRange } from '../../../utils';
 import { useRedirectToMain } from '../../../hooks';
@@ -33,10 +33,11 @@ export default function CourseScreen(): ReactElement {
   const [state, dispatch] = useCourseContext();
   const { isFetchingCourseData, overview, courseMetadata } = state;
   const { courseId } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
-    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
-  }, [dispatch, isUpdating, courseId, envId, from, to]);
+    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to, history);
+  }, [dispatch, isUpdating, courseId, envId, from, to, history]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);

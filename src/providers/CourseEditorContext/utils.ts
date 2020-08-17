@@ -72,7 +72,7 @@ export const fetchCourse = async (
     }
   } catch (error) {
     console.error(error);
-    message.error(`Course '${courseId}' not found`);
+    message.error(`Cannot find course with id ${courseId}`);
     history.push(COURSES_ROUTE.path);
     dispatch({ type: ActionType.FetchCourseError });
   }
