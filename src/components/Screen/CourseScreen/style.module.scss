@@ -72,6 +72,21 @@
     :global(.ant-table-placeholder) {
       height: 500px;
     }
+
+    .drop-off-col {
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        .drop-off-info {
+          color: var(--primary);
+        }
+      }
+
+      .drop-off-info {
+        margin-left: 3px;
+      }
+    }
   }
 }
 

@@ -46,10 +46,6 @@ export function getUsersList(
   query.append('environment', `${environment}`);
   query.append('from', from);
   query.append('to', to);
-  query.append('first_item_index', `${combinedOptions.first_item_index}`);
-  query.append('num_of_records', `${combinedOptions.num_of_records}`);
-  query.append('sort_by', combinedOptions.sort_by);
-  query.append('sort_by_order', combinedOptions.sort_by_order);
   addUserTableFilters(combinedOptions, query);
 
   return endpoint.get(`users/list?${query.toString()}`);

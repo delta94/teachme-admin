@@ -89,7 +89,10 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     }),
     render: (value: string): ReactElement =>
       value ? (
-        <NumberCell className={classes['duration-cell']} value={value} />
+        <NumberCell
+          className={classes['duration-cell']}
+          value={moment.duration(value, 'milliseconds').humanize()}
+        />
       ) : (
         <WarningCell className={classes['duration-cell']} value="Did not complete" />
       ),

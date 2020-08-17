@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import { isValidNumber } from '../../../../utils';
+
 import classes from './style.module.scss';
 
 export default function PieBarSummary({
@@ -7,13 +9,13 @@ export default function PieBarSummary({
   unit,
   text,
 }: {
-  value: string | number;
+  value?: number;
   unit?: string;
   text?: string;
 }): ReactElement {
   return (
     <div className={classes['pie-bar-summary']}>
-      {value ? (
+      {isValidNumber(value) ? (
         <>
           <span className={classes['value']}>{value}</span>
           {unit && <span className={classes['unit']}>{unit}</span>}
