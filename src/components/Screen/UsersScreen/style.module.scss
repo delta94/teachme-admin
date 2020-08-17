@@ -1,80 +1,106 @@
-.table-wrapper:global(.ant-card) {
+.users-screen {
   min-width: min-content;
-  min-height: 720px;
 
-  .shown-users-indicator {
-    font-family: var(--font-secondary);
-    font-size: 15px;
-    font-weight: 600;
+  .table-wrapper:global(.ant-card) {
+    min-width: min-content;
 
-    .search-result {
-      font-size: 13px;
-      font-weight: 400;
-      font-style: italic;
-      margin-left: 13px;
-    }
-  }
+    .shown-users-indicator {
+      font-family: var(--font-secondary);
+      font-size: 15px;
+      font-weight: 600;
 
-  .shown-users-skeleton {
-    width: 180px;
-  }
-
-  .export-btn:global(.ant-btn) {
-    margin-right: 20px;
-  }
-
-  .users-table {
-    :global(.ant-empty) {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 550px;
-      margin: 0;
+      .search-result {
+        font-size: 13px;
+        font-weight: 400;
+        font-style: italic;
+        margin-left: 13px;
+      }
     }
 
-    :global(.ant-table) {
-      font-family: var(--font-primary);
+    .shown-users-skeleton {
+      width: 180px;
+    }
+
+    .export-btn:global(.ant-btn) {
+      margin-right: 20px;
+    }
+
+    .users-table {
+      :global(.ant-empty) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 30vh;
+        margin: 0;
+      }
+
+      :global(.ant-table) {
+        font-family: var(--font-primary);
+        color: var(--neutral900);
+
+        :global(.ant-table-body) {
+          --screen-header-height: 85px;
+          --screen-bottom-padding: 30px;
+          --table-toolbar-height: 105px;
+          --table-header-height: 53px;
+          --table-footer-height: 43px;
+          --table-padding: 40px;
+          --table-body-height: calc(
+            100vh - var(--header-toolbar-height) - var(--screen-header-height) -
+              var(--screen-bottom-padding) - var(--table-toolbar-height) -
+              var(--table-header-height) - var(--table-footer-height) - var(--table-padding)
+          );
+
+          // Needed in order to control table body height
+          max-height: var(--table-body-height) !important;
+
+          > table {
+            // Needed in order to control table columns width
+            table-layout: auto !important;
+          }
+        }
+
+        .user-cell {
+          font-weight: 600;
+          min-width: 290px;
+        }
+
+        .course-name-cell {
+          min-width: 280px;
+        }
+
+        .started-cell {
+          min-width: 118px;
+        }
+
+        .completed-cell,
+        .duration-cell {
+          min-width: 153px;
+        }
+
+        .result-cell {
+          min-width: 137px;
+        }
+
+        .attempts-cell {
+          min-width: 161px;
+        }
+      }
+    }
+
+    .load-more-wrapper {
+      position: relative;
       color: var(--neutral900);
+      font-family: var(--font-primary);
+      margin-top: 20px;
 
-      .user-cell {
-        width: 150px;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
-
-      .started-cell {
-        min-width: 118px;
-      }
-
-      .completed-cell,
-      .duration-cell {
-        min-width: 151px;
-      }
-
-      .result-cell {
-        min-width: 137px;
-      }
-
-      .attempts-cell {
-        min-width: 161px;
-      }
-    }
-  }
-
-  .load-more-wrapper {
-    position: relative;
-    color: var(--neutral900);
-    font-family: var(--font-primary);
-    margin-top: 20px;
-
-    button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
     }
   }
 }

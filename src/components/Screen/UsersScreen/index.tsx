@@ -82,7 +82,7 @@ export default function UsersScreen(): ReactElement {
   };
 
   return (
-    <>
+    <div className={classes['users-screen']}>
       <ScreenHeader
         title="Users"
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
@@ -94,8 +94,9 @@ export default function UsersScreen(): ReactElement {
             data={users}
             columns={getColumns(onHeaderCellClick)}
             sortDirections={['descend', 'ascend']}
+            showSorterTooltip={false}
+            scroll={{ y: 500 }} // Just an arbitrary value to enable scrolling and is overwritten by css
             loading={isUpdating || isFetchingUsers}
-            isStickyToolbarAndHeader
           >
             <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
             <ControlsWrapper>
@@ -117,6 +118,6 @@ export default function UsersScreen(): ReactElement {
         </ConfigProvider>
         <LoadMoreWrapper queryOptions={queryOptions} />
       </WMCard>
-    </>
+    </div>
   );
 }
