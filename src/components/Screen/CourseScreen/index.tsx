@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { IDateRange } from '../../../utils';
 import { useRedirectToMain } from '../../../hooks';
@@ -37,6 +37,7 @@ export default function CourseScreen(): ReactElement {
   const { courseId } = useParams();
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const history = useHistory();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -44,7 +45,7 @@ export default function CourseScreen(): ReactElement {
   }, []);
 
   useEffect(() => {
-    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
+    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to, history);
   }, [dispatch, isUpdating, courseId, envId, from, to]);
 
   // Unmount only

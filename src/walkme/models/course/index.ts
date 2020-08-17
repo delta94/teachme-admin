@@ -20,3 +20,9 @@ export class CourseNotFoundError extends Error {
     super(message);
   }
 }
+
+export class TypeNotSupportedError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
