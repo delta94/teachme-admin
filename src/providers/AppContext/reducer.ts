@@ -3,6 +3,8 @@ import { UserData } from '@walkme/editor-sdk/dist/user';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
+import { parseEnvironments } from '../../components/Layout/HeaderToolbar/utils';
+import { IWMDropdownOption } from '../../components/common/WMDropdown';
 import { defaultDateRange } from '../../utils';
 
 import { ActionType, IState, IAction } from './app-context.interface';
@@ -15,6 +17,8 @@ export const initialState = {
   user: {} as UserData,
   system: {} as SystemData,
   environment: {} as WalkMeEnvironment,
+  environments: {} as WalkMeEnvironment[],
+  parsedEnvironments: [] as IWMDropdownOption[],
   originalUser: {} as UserData,
   dateRange: defaultDateRange,
 };
@@ -45,6 +49,10 @@ export const reducer = produce(
         break;
       case ActionType.SetSystem:
         draft.system = action.system ?? initialState.system;
+        break;
+      case ActionType.SetEnvironments:
+        draft.environments = action.environments ?? [];
+        draft.parsedEnvironments = parseEnvironments(action.environments ?? []);
         break;
       case ActionType.SetEnvironment:
         draft.environment = action.environment ?? initialState.environment;

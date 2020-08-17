@@ -57,6 +57,7 @@ export default function ImpersonateDialog({
       onConfirm={() => onConfirmHandle(localValue)}
       disableConfirmButton={invalid}
       confirmLabel="impersonate"
+      className={classes['impersonate-dialog']}
     >
       <AutoComplete
         className={classes['autocomplete-input']}

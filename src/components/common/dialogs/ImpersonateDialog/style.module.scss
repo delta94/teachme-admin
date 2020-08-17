@@ -1,4 +1,5 @@
-.autocomplete-input {
+.impersonate-dialog {
+  .autocomplete-input {
   width: 100%;
   color: var(--neutral900);
   font-family: var(--font-primary);
@@ -13,9 +14,13 @@
   }
 }
 
-:global(.ant-modal-content) {
-  :global(.ant-btn) {
-    font-size: 10px;
-    margin-left: 20px;
+  :global(.ant-modal-content) {
+    :global(.ant-btn) {
+      font-size: 10px;
+
+      &:not(:first-of-type) {
+        margin-left: 20px;
+      }
+    }
   }
 }
