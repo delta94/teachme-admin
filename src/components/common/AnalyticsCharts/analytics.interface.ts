@@ -28,7 +28,6 @@ export interface IQuizCompletionRateChart {
 
 export interface IQuizScoreData {
   overview: CourseOverviewData;
-  isEmpty?: boolean;
   isLoading?: boolean;
 }
 

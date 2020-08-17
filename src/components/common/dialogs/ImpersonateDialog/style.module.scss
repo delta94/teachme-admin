@@ -6,6 +6,11 @@
   font-weight: 500;
   letter-spacing: 0.4px;
   line-height: 20px;
+
+  :global(.ant-select-selection-search-input),
+  :global(.ant-select-selection-search-input::placeholder) {
+    font-size: 14px;
+  }
 }
 
 :global(.ant-modal-content) {

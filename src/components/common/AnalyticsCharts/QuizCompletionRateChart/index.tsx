@@ -16,7 +16,7 @@ export default function QuizCompletionRateChart({
   overview,
   isLoading = false,
 }: IQuizCompletionRateChart): ReactElement {
-  const [totalPercentages, setTotalPercentages] = useState<number>(0);
+  const [totalPercentages, setTotalPercentages] = useState<number>();
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {

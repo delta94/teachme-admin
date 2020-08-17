@@ -30,7 +30,7 @@ export default function PieBarChart({
     <div className={classes['pie-bar-chart']} {...otherProps}>
       <div className={classes['pie-bar']} style={{ height, width }} {...otherProps}>
         {bars.map((bar, index) => {
-          const barValue = `${(bar.value / totalValue) * 100}%`;
+          const barValue = bars.length ? `${(bar.value / totalValue) * 100}%` : '0%';
           const barLegend = bar.legend;
           const barColor = bar.color ?? generatedColors[index];
           const legendContent = (

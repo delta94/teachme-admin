@@ -16,14 +16,16 @@ export default function CoursesTimeCompletionChart({
   overview,
   isLoading = false,
 }: ICoursesTimeCompletionChart): ReactElement {
-  const [completionTimeAvg, setCompletionTimeAvg] = useState<number>(0);
+  const [completionTimeAvg, setCompletionTimeAvg] = useState<number>();
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {
     if (overview?.completion_time) {
       const { completion_time } = overview;
 
-      setCompletionTimeAvg(completion_time.avg ? parseInt(completion_time.avg.toFixed(0)) : 0);
+      setCompletionTimeAvg(
+        completion_time.avg ? parseInt(completion_time.avg.toFixed(0)) : undefined,
+      );
 
       if (completion_time.buckets.length)
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
@@ -43,7 +45,7 @@ export default function CoursesTimeCompletionChart({
     <WMCard title={title}>
       <WMSkeleton loading={isLoading} active paragraph={{ rows: 2 }}>
         <div className={className}>
-          <PieBarSummary value={completionTimeAvg as number} unit=" hours" />
+          <PieBarSummary value={completionTimeAvg} unit=" hours" />
           <PieBarChart bars={bars} legendContent={AvgCompletionTimeLegend} />
         </div>
       </WMSkeleton>

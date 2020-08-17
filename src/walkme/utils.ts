@@ -63,7 +63,7 @@ export function saveAsCsv(
 function convertToCSV(data: Array<any>, headers: Array<string>) {
   const csvArray: Array<string> = [headers.join()];
   for (let item of data) {
-    const itemCsv = headers.map((header) => item[header]).join();
+    const itemCsv = headers.map((header) => `"${item[header]}"`).join();
     csvArray.push(itemCsv);
   }
   return csvArray.join('\r\n');
