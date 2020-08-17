@@ -95,3 +95,43 @@
   top: 0;
   left: 0;
 }
+
+.quiz-tab-icon {
+  width: 30px;
+  height: 30px;
+
+  @include fullSizeIcon();
+}
+
+.course-quiz-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+
+  &.quiz-outline {
+    .title-wrapper {
+      flex-direction: column;
+
+      .title {
+        margin: 10px auto;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .title-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .default-quiz-icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+
+    @include fullSizeIcon();
+  }
+}

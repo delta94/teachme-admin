@@ -38,4 +38,5 @@ export enum IconType {
   V = 'v',
   ValidationError = 'validation-error',
   VCircle = 'v-circle',
+  QuizOutlineEmpty = 'quiz-outline-empty',
 }

@@ -5,9 +5,12 @@ import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
 import Icon from '../../common/Icon';
 import { IconType } from '../../common/Icon/icon.interface';
-import CourseQuizTabCharts from '../../common/CourseQuizTabCharts';
 import WMCard from '../../common/WMCard';
+
+import CourseQuizTabCharts from './CourseQuizTabCharts';
 import CourseOutlineTable from './CourseOutlineTable';
+
+import classes from './style.module.scss';
 
 enum TabId {
   Outline = 'outline',
@@ -29,8 +32,7 @@ export default function CourseTabs(): ReactElement {
       id: TabId.Quiz,
       title: 'Quiz',
       itemsLength: quiz?.questions?.length ?? 0,
-      icon: <Icon type={IconType.Quiz} />,
-      isDisabled: !quiz || (quiz && Object.keys(quiz).length === 0),
+      icon: <Icon className={classes['quiz-tab-icon']} type={IconType.Quiz} />,
       content: quiz && <CourseQuizTabCharts quiz={quiz} />,
     },
   ];
@@ -39,7 +41,7 @@ export default function CourseTabs(): ReactElement {
     <WMCard>
       <WMTabs defaultActiveKey={TabId.Outline}>
         {courseTabs.map((tab) => {
-          const { id, title, itemsLength, icon, content, isDisabled } = tab;
+          const { id, title, itemsLength, icon, content } = tab;
 
           return (
             <WMTabPanel
@@ -52,7 +54,6 @@ export default function CourseTabs(): ReactElement {
                 </>
               }
               key={id}
-              disabled={isDisabled}
             >
               {content}
             </WMTabPanel>
