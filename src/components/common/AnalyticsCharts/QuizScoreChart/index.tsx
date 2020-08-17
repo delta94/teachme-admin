@@ -15,7 +15,7 @@ export default function QuizScoreChart({
   isLoading = false,
 }: IQuizScoreData): ReactElement {
   const { avg_quiz_score: average, passmark } = overview;
-  const isEmpty = !isValidNumber(average) || !isValidNumber(passmark);
+  const hasValue = isValidNumber(average) || isValidNumber(passmark);
 
   return (
     <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
@@ -25,18 +25,18 @@ export default function QuizScoreChart({
             className={classes['course-average-chart']}
             percent={average ?? undefined}
             type={ProgressType.Circle}
-            format={() => (!isEmpty ? parseInt(average.toFixed(0)) : '- -')}
+            format={() => (hasValue ? parseInt(average.toFixed(0)) : '- -')}
             width={80}
             strokeWidth={10}
             status={
-              !isEmpty && passmark && average > passmark
+              hasValue && passmark && average > passmark
                 ? ProgressStatus.Success
                 : ProgressStatus.Exception
             }
           />
           {
             <span className={classes['passmark']}>
-              Passmark: <b>{!isEmpty ? passmark : '- -'}</b>
+              Passmark: <b>{hasValue ? passmark : '- -'}</b>
             </span>
           }
         </div>
