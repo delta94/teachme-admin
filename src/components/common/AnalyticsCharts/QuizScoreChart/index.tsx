@@ -16,7 +16,7 @@ export default function QuizScoreChart({
 }: IQuizScoreData): ReactElement {
   const { avg_quiz_score, passmark } = overview;
 
-  // avg_quiz_score is required in type CourseOverviewData, and returns null when the data is missing
+  // `avg_quiz_score` is required in type `CourseOverviewData`, and returns `null` when data is missing
   const average = avg_quiz_score ? Math.round(avg_quiz_score) : undefined;
   const hasValue = isValidNumber(average) || isValidNumber(passmark);
 
