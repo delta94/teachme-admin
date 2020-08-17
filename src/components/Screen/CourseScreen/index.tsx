@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { IDateRange, wmMessage, MessageType } from '../../../utils';
+import { IDateRange } from '../../../utils';
 import { useRedirectToMain } from '../../../hooks';
 import { useAppContext, ActionType as AppActionType } from '../../../providers/AppContext';
 import { useCourseContext, fetchCourseData, ActionType } from '../../../providers/CourseContext';
@@ -20,7 +20,6 @@ import {
 } from './courseScreen.interface';
 
 import classes from './style.module.scss';
-import { COURSES_ROUTE } from '../../../constants/routes';
 
 export { parseCourseOutline };
 export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems, ICourseOutline };
@@ -46,14 +45,7 @@ export default function CourseScreen(): ReactElement {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (!isUpdating) await fetchCourseData(dispatch, courseId, envId, from, to);
-      } catch (error) {
-        wmMessage(error.message, MessageType.Error);
-        history.replace(`${COURSES_ROUTE.path}`);
-      }
-    })();
+    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to, history);
   }, [dispatch, isUpdating, courseId, envId, from, to]);
 
   // Unmount only
