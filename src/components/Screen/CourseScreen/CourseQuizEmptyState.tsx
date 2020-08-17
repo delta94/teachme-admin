@@ -6,13 +6,11 @@ import Icon, { IconType } from '../../common/Icon';
 import classes from './style.module.scss';
 
 interface ICourseQuizEmptyState {
-  icon?: ReactNode;
   message?: string;
   isQuizOutline?: boolean;
 }
 
 export default function CourseQuizEmptyState({
-  icon,
   message,
   isQuizOutline,
 }: ICourseQuizEmptyState): ReactElement {

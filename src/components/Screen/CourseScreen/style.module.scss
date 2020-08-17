@@ -104,11 +104,13 @@
 }
 
 .course-quiz-empty {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 14px;
+  color: var(--neutral400);
 
   &.quiz-outline {
     .title-wrapper {
@@ -131,6 +133,7 @@
     width: 35px;
     height: 35px;
     margin-right: 10px;
+    color: var(--neutral400);
 
     @include fullSizeIcon();
   }
