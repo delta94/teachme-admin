@@ -13,6 +13,7 @@ import CourseEditorProvider from '../../providers/CourseEditorContext';
 import CoursesProvider from '../../providers/CoursesContext';
 import CourseProvider from '../../providers/CourseContext';
 import UsersProvider from '../../providers/UsersContext';
+import ScrollToTopOnMount from '../common/ScrollToTopOnMount';
 
 import SplashScreen from './SplashScreen';
 import ErrorScreen from './ErrorScreen';
@@ -35,6 +36,7 @@ export default function Screen(): ReactElement {
         </Route>
         <Route path={COURSE_ROUTE.path}>
           <CourseProvider>
+            <ScrollToTopOnMount />
             <CourseScreen />
           </CourseProvider>
         </Route>
