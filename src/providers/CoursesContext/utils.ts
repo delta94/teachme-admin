@@ -11,7 +11,6 @@ import {
 } from '../../walkme';
 import { UICourse } from '../../walkme/data';
 import { wmMessage, MessageType, pluralizer } from '../../utils';
-import { EnvironmentType } from '../../interfaces/app.interfaces';
 
 import { ActionType, IState, IDispatch } from './courses-context.interface';
 
@@ -122,14 +121,10 @@ export const deleteCourses = async (
   }
 };
 
-const envNames = {
-  [EnvironmentType.Production]: 'production',
-  [EnvironmentType.Test]: 'test',
-};
-
 export const publishCourses = async (
   dispatch: IDispatch,
   envId: number,
+  envName: string,
   courses: Array<UICourse>,
 ): Promise<void> => {
   dispatch({ type: ActionType.PublishCourses });
@@ -139,11 +134,7 @@ export const publishCourses = async (
     await _publishCourses(envId, coursesIds);
 
     dispatch({ type: ActionType.PublishCoursesSuccess });
-    wmMessage(
-      `${courses.length} ${pluralizer('course', courses.length)} published to ${
-        envNames[envId as keyof typeof envNames]
-      }`,
-    );
+    wmMessage(`${courses.length} ${pluralizer('course', courses.length)} published to ${envName}`);
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.PublishCoursesError });
@@ -154,6 +145,7 @@ export const publishCourses = async (
 export const archiveCourses = async (
   dispatch: IDispatch,
   envId: number,
+  envName: string,
   courses: Array<UICourse>,
 ): Promise<void> => {
   dispatch({ type: ActionType.ArchiveCourses });
@@ -163,11 +155,7 @@ export const archiveCourses = async (
     await _archiveCourses(envId, coursesIds);
 
     dispatch({ type: ActionType.ArchiveCoursesSuccess });
-    wmMessage(
-      `${courses.length} ${pluralizer('course', courses.length)} archived to ${
-        envNames[envId as keyof typeof envNames]
-      }`,
-    );
+    wmMessage(`${courses.length} ${pluralizer('course', courses.length)} published to ${envName}`);
   } catch (error) {
     console.error(error);
     dispatch({ type: ActionType.ArchiveCoursesError });
