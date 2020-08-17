@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import Icon, { IconType } from '../../common/Icon';
