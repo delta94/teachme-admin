@@ -41,11 +41,12 @@ export default function PublishToEnvironmentDialog({
           />
         </div>
       }
+      confirmClass={classes['confirmation-button']}
       confirmLabel={`Publish to ${environment.value}`}
-      onCancel={onCancel}
       onConfirm={() =>
         onConfirm({ envId: environment.id, envName: environment.label ?? environment.value })
       }
+      onCancel={onCancel}
       loadingConfirmButton={isInProgess}
       disableDialog={isInProgess}
     >
