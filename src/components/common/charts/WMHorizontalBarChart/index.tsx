@@ -79,6 +79,7 @@ const BarLabel = ({
   height,
   value,
   totalValue,
+  totalResponses,
 }: {
   x: number;
   y: number;
@@ -87,8 +88,9 @@ const BarLabel = ({
   value: any;
   name: any;
   totalValue: number;
+  totalResponses: number;
 }) => {
-  const percent = totalValue ? ((value / totalValue) * 100).toFixed(1) : 0;
+  const percent = totalResponses ? totalValue * (value / totalResponses) : 0;
 
   return (
     <text
@@ -106,11 +108,13 @@ const BarLabel = ({
 export interface IWMHorizontalBarChart {
   readonly totalValue: number;
   readonly bars: Array<IQuizAnswers>;
+  readonly totalResponses: number;
 }
 
 export default function WMHorizontalBarChart({
   bars,
   totalValue,
+  totalResponses,
 }: IWMHorizontalBarChart): ReactElement {
   const appInit = useAppSkeleton();
 
@@ -137,13 +141,20 @@ export default function WMHorizontalBarChart({
             <Bar
               dataKey="value"
               radius={[0, 16, 16, 0]}
-              label={(props: any) => <BarLabel {...props} totalValue={totalValue} />}
+              label={(props: any) => (
+                <BarLabel {...props} totalValue={totalValue} totalResponses={totalResponses} />
+              )}
             >
               {bars.map((entry, index) =>
-                totalValue ? (
+                entry.value ? (
                   <Cell key={`cell-${index}`} fill={colors[index]} />
                 ) : (
-                  <Cell key={`cell-${index}`} fill="#ccc" width={500} />
+                  <Cell
+                    className={classes['empty-bar-cell']}
+                    key={`cell-${index}`}
+                    fill="#ccc"
+                    width={10}
+                  />
                 ),
               )}
             </Bar>

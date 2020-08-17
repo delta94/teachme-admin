@@ -8,9 +8,6 @@ import { WMHorizontalBarChart } from '../charts';
 
 import classes from './style.module.scss';
 
-const reduceTotalResponses = (accumulator: any, { total_responses }: { total_responses: number }) =>
-  accumulator + total_responses;
-
 export default function CourseQuizTabCharts({ quiz }: { quiz: QuizOutlineUI }): ReactElement {
   return (
     <div className={classes['course-quiz-tab-charts']}>
@@ -29,7 +26,8 @@ export default function CourseQuizTabCharts({ quiz }: { quiz: QuizOutlineUI }): 
                 isCorrect,
                 value: countAnswers,
               }))}
-              totalValue={quiz.questions.reduce(reduceTotalResponses, 0)}
+              totalValue={100}
+              totalResponses={question.total_responses}
             />
             {!isLast && <Divider className={classes['question-divider']} />}
           </div>
