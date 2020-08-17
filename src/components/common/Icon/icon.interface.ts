@@ -37,4 +37,5 @@ export enum IconType {
   X = 'x',
   V = 'v',
   ValidationError = 'validation-error',
+  VCircle = 'v-circle',
 }

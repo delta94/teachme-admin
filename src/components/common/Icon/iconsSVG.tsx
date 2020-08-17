@@ -35,6 +35,7 @@ import { ReactComponent as SettingsIcon } from '../../../images/icons/settings.s
 import { ReactComponent as VIcon } from '../../../images/icons/v.svg';
 import { ReactComponent as XIcon } from '../../../images/icons/x.svg';
 import { ReactComponent as ValidationErrorIcon } from '../../../images/icons/validation-error.svg';
+import { ReactComponent as VCircleIcon } from '../../../images/icons/v-circle.svg';
 
 import { IconType } from './icon.interface';
 
@@ -76,4 +77,5 @@ export const IconSVG = {
   [IconType.V]: VIcon,
   [IconType.X]: XIcon,
   [IconType.ValidationError]: ValidationErrorIcon,
+  [IconType.VCircle]: VCircleIcon,
 };

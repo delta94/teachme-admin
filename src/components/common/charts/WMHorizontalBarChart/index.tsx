@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts
 import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
 import { useAppSkeleton } from '../../../../hooks/skeleton';
 
+import Icon, { IconType } from '../../Icon';
 import WMSkeleton from '../../WMSkeleton';
 
 import classes from './style.module.scss';
@@ -48,15 +49,15 @@ const YAxisTick = ({
 
   return (
     <g>
-      <text
+      <foreignObject
         className={classes['answer-option']}
-        x={x}
-        y={y}
-        dominantBaseline="middle"
-        textAnchor="end"
+        x={x - 30}
+        y={y - 10}
+        width="20"
+        height="20"
       >
-        {isCorrect && <tspan className={classes['check-mark']}>✔ </tspan>}
-      </text>
+        {isCorrect && <Icon className={classes['check-mark']} type={IconType.VCircle} />}
+      </foreignObject>
       <foreignObject
         className={classes['answer-option-wrapper']}
         x={-150}
