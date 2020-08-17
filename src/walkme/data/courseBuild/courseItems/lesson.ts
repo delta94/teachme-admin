@@ -37,6 +37,7 @@ export class CourseLesson implements BuildLesson, ITypeIdQueriable {
   toDataModel(): WalkMeDataNewLesson {
     return {
       ...this._lesson,
+      Id: this._lesson.Id < 0 ? -this._lesson.OrderIndex : this._lesson.Id,
       Description: this.description,
       Name: this.title,
       LinkedDeployables: this.childNodes.toArray().map((item, index) => createLink(item, index)),
