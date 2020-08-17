@@ -95,7 +95,7 @@ export default function UsersScreen(): ReactElement {
             columns={getColumns(onHeaderCellClick)}
             sortDirections={['descend', 'ascend']}
             showSorterTooltip={false}
-            scroll={{ y: 500 }} // Just an arbitrary value that's overwritten by css
+            scroll={{ y: 500 }} // Just an arbitrary value to enable scrolling and is overwritten by css
             loading={isUpdating || isFetchingUsers}
           >
             <ShownUsersIndicator showResults={Boolean(queryOptions.user_name)} />
