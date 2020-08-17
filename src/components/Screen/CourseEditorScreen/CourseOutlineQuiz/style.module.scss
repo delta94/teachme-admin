@@ -130,3 +130,8 @@
     background-color: var(--hover-color);
   }
 }
+
+.is-active {
+  background-color: var(--hover-color);
+  border-radius: 3px 3px 0 0;
+}
