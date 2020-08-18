@@ -5,6 +5,7 @@ export interface IRadioButton {
   value: any;
   label: ReactNode;
   disabled?: boolean;
+  helpText?: string;
 }
 
 export interface IWMRadio extends RadioProps {
@@ -15,4 +16,5 @@ export interface IWMRadio extends RadioProps {
 
 export interface IWMRadioGroup extends Omit<IWMRadio, 'label'> {
   options: Array<IRadioButton>;
+  showTooltipHelpText?: boolean;
 }
