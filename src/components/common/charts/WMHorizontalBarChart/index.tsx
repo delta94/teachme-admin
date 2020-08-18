@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts
 import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
 import { useAppSkeleton } from '../../../../hooks/skeleton';
 
+import Icon, { IconType } from '../../Icon';
 import WMSkeleton from '../../WMSkeleton';
 
 import classes from './style.module.scss';
@@ -48,15 +49,15 @@ const YAxisTick = ({
 
   return (
     <g>
-      <text
+      <foreignObject
         className={classes['answer-option']}
-        x={x}
-        y={y}
-        dominantBaseline="middle"
-        textAnchor="end"
+        x={x - 30}
+        y={y - 10}
+        width="20"
+        height="20"
       >
-        {isCorrect && <tspan className={classes['check-mark']}>✔ </tspan>}
-      </text>
+        {isCorrect && <Icon className={classes['check-mark']} type={IconType.VCircle} />}
+      </foreignObject>
       <foreignObject
         className={classes['answer-option-wrapper']}
         x={-150}
@@ -79,6 +80,7 @@ const BarLabel = ({
   height,
   value,
   totalValue,
+  totalResponses,
 }: {
   x: number;
   y: number;
@@ -87,8 +89,9 @@ const BarLabel = ({
   value: any;
   name: any;
   totalValue: number;
+  totalResponses: number;
 }) => {
-  const percent = totalValue ? ((value / totalValue) * 100).toFixed(1) : 0;
+  const percent = totalResponses ? totalValue * (value / totalResponses) : 0;
 
   return (
     <text
@@ -106,11 +109,13 @@ const BarLabel = ({
 export interface IWMHorizontalBarChart {
   readonly totalValue: number;
   readonly bars: Array<IQuizAnswers>;
+  readonly totalResponses: number;
 }
 
 export default function WMHorizontalBarChart({
   bars,
   totalValue,
+  totalResponses,
 }: IWMHorizontalBarChart): ReactElement {
   const appInit = useAppSkeleton();
 
@@ -137,13 +142,20 @@ export default function WMHorizontalBarChart({
             <Bar
               dataKey="value"
               radius={[0, 16, 16, 0]}
-              label={(props: any) => <BarLabel {...props} totalValue={totalValue} />}
+              label={(props: any) => (
+                <BarLabel {...props} totalValue={totalValue} totalResponses={totalResponses} />
+              )}
             >
               {bars.map((entry, index) =>
-                totalValue ? (
+                entry.value ? (
                   <Cell key={`cell-${index}`} fill={colors[index]} />
                 ) : (
-                  <Cell key={`cell-${index}`} fill="#ccc" width={500} />
+                  <Cell
+                    className={classes['empty-bar-cell']}
+                    key={`cell-${index}`}
+                    fill="#ccc"
+                    width={10}
+                  />
                 ),
               )}
             </Bar>
