@@ -84,11 +84,12 @@ export const exportUsers = async (
   envId: number,
   from: string,
   to: string,
+  queryOptions: UsersListQueryOptions,
 ): Promise<void> => {
   dispatch({ type: ActionType.ExportUsers });
 
   try {
-    await exportUsersData(envId, from, to, defaultQueryOptions);
+    await exportUsersData(envId, from, to, queryOptions);
 
     dispatch({ type: ActionType.ExportUsersSuccess });
     wmMessage('Export completed');
