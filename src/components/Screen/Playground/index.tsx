@@ -12,9 +12,7 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 import Empty from './components/Empty';
 import Checkboxes from './components/Checkboxes';
-import QuizSettings from './components/QuizSettings';
-import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
-import QuizEdit from './components/QuizEdit';
+import AddNewResource from './components/AddNewResource';
 import Toaster from './components/Toaster';
 import Skeleton from './components/Skeleton';
 
@@ -52,32 +50,6 @@ const tabs = [
     content: <Checkboxes />,
   },
   {
-    id: 'course-item-details-panel',
-    title: 'Course Item Details Panel',
-    icon: undefined,
-    content: (
-      <CourseEditorProvider>
-        <CourseItemDetailsPanel />
-      </CourseEditorProvider>
-    ),
-  },
-  {
-    id: 'quiz-settings',
-    title: 'Quiz Settings',
-    icon: undefined,
-    content: <QuizSettings />,
-  },
-  {
-    id: 'quiz-edit',
-    title: 'Quiz Edit',
-    icon: undefined,
-    content: (
-      <CourseEditorProvider>
-        <QuizEdit />
-      </CourseEditorProvider>
-    ),
-  },
-  {
     id: 'toaster',
     title: 'Toaster',
     icon: undefined,
@@ -88,6 +60,16 @@ const tabs = [
     title: 'Skeleton',
     icon: undefined,
     content: <Skeleton />,
+  },
+  {
+    id: 'course-item-details-panel',
+    title: 'Course Item Details Panel',
+    icon: undefined,
+    content: (
+      <CourseEditorProvider>
+        <AddNewResource />
+      </CourseEditorProvider>
+    ),
   },
 ];
 
