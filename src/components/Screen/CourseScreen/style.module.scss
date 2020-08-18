@@ -104,7 +104,7 @@
   width: 30px;
   height: 30px;
 
-  @include fullSizeIcon();
+  @include fullSizeIcon;
 }
 
 .course-quiz-empty {
@@ -139,6 +139,6 @@
     margin-right: 10px;
     color: var(--neutral400);
 
-    @include fullSizeIcon();
+    @include fullSizeIcon;
   }
 }
