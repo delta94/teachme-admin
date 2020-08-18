@@ -7,19 +7,22 @@ import classes from './style.module.scss';
 
 interface ICourseQuizEmptyState {
   message?: string;
-  isQuizOutline?: boolean;
+  isQuizOutlineTab?: boolean;
 }
 
 export default function CourseQuizEmptyState({
   message,
-  isQuizOutline,
+  isQuizOutlineTab,
 }: ICourseQuizEmptyState): ReactElement {
   return (
     <div
-      className={cc([classes['course-quiz-empty'], { [classes['quiz-outline']]: isQuizOutline }])}
+      className={cc([
+        classes['course-quiz-empty'],
+        { [classes['quiz-outline']]: isQuizOutlineTab },
+      ])}
     >
       <span className={classes['title-wrapper']}>
-        {isQuizOutline ? (
+        {isQuizOutlineTab ? (
           <Icon className={classes['quiz-outline-empty-icon']} type={IconType.QuizOutlineEmpty} />
         ) : (
           <Icon className={classes['default-quiz-icon']} type={IconType.Quiz} />

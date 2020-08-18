@@ -40,7 +40,7 @@ export default function CourseQuizTabCharts({
           );
         })
       ) : (
-        <CourseQuizEmptyState message="This Course does not have a quiz" isQuizOutline />
+        <CourseQuizEmptyState message="This Course does not have a quiz" isQuizOutlineTab />
       )}
     </div>
   );
