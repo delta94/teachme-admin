@@ -5,6 +5,7 @@ import { PLAYGROUND_ROUTE } from '../../constants/routes';
 
 import WMButton, { ButtonVariantEnum } from '../common/WMButton';
 import WMDialog from '../common/WMDialog';
+import ScrollToTop from '../common/ScrollToTop';
 import Screen from '../Screen';
 
 import Sidebar from './Sidebar';
@@ -38,6 +39,7 @@ export default function Layout(): ReactElement {
       <section className={classes['app']}>
         <Sidebar />
         <HeaderToolbar />
+        <ScrollToTop />
         <Screen />
       </section>
     </HashRouter>
