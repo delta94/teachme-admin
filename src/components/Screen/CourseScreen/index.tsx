@@ -19,6 +19,8 @@ import {
   ICourseOutline,
 } from './courseScreen.interface';
 
+import classes from './style.module.scss';
+
 export { parseCourseOutline };
 export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems, ICourseOutline };
 
@@ -48,7 +50,7 @@ export default function CourseScreen(): ReactElement {
   useRedirectToMain();
 
   return (
-    <>
+    <div className={classes['course-screen']}>
       <CourseScreenHeader
         courseMetadata={courseMetadata}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
@@ -59,6 +61,6 @@ export default function CourseScreen(): ReactElement {
         isLoading={isUpdating || isFetchingCourseData}
       />
       <CourseTabs />
-    </>
+    </div>
   );
 }
