@@ -1,13 +1,18 @@
 import React, { ReactElement } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts';
 
-import { IQuizAnswers } from '../../../../constants/mocks/quizBarChart-mock';
 import { useAppSkeleton } from '../../../../hooks/skeleton';
 
 import Icon, { IconType } from '../../Icon';
 import WMSkeleton from '../../WMSkeleton';
 
 import classes from './style.module.scss';
+
+export interface IQuizAnswers {
+  readonly title: string;
+  readonly value: number;
+  readonly isCorrect: boolean;
+}
 
 const colors = [
   '#006AF7',
