@@ -69,7 +69,10 @@ export default function CourseOutlineQuiz({
   return (
     <WMCollapse
       className={classes['quiz']}
-      headerClassName={classes['quiz-header']}
+      headerClassName={cc([
+        classes['quiz-header'],
+        { [classes['is-active']]: activeDetailsItem?.type === DetailsPanelSettingsType.Quiz },
+      ])}
       header={<QuizHeader className={classes['item-with-settings']} />}
       ref={quizRef}
     >
