@@ -40,11 +40,9 @@ export default function QuizScoreChart({
                     : ProgressStatus.Exception
                 }
               />
-              {
-                <span className={classes['passmark']}>
-                  Passmark: <b>{passmark}</b>
-                </span>
-              }
+              <span className={classes['passmark']}>
+                Passmark: <b>{passmark}</b>
+              </span>
             </>
           ) : (
             <CourseQuizEmptyState />
