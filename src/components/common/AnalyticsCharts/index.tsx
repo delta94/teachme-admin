@@ -46,11 +46,7 @@ export default function AnalyticsCharts({
             isLoading={isLoading}
           />
           {Boolean(courseId) && (
-            <QuizScoreChart
-              isEmpty={overview && !Object.keys(overview).length}
-              overview={overview as CourseOverviewData}
-              isLoading={isLoading}
-            />
+            <QuizScoreChart overview={overview as CourseOverviewData} isLoading={isLoading} />
           )}
         </div>
       </div>

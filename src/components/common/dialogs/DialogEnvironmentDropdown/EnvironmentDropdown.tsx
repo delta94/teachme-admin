@@ -15,11 +15,13 @@ export default function EnvironmentDropdown({
 }: {
   className?: string;
   onChange: (selected: IWMDropdownOption) => void;
-  initialSelectedEnvironment: IWMDropdownOption;
+  initialSelectedEnvironment?: IWMDropdownOption;
   environments: IWMDropdownOption[];
   disabled?: boolean;
 }): ReactElement {
-  const [selectedEnvironment, setSelectedEnvironment] = useState(initialSelectedEnvironment);
+  const [selectedEnvironment, setSelectedEnvironment] = useState(
+    initialSelectedEnvironment ?? environments[0],
+  );
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
     setSelectedEnvironment(selected);

@@ -4,7 +4,7 @@ import { ReactComponent as HeaderAvatarIcon } from '../../../images/icons/user-a
 import { ReactComponent as HelpCircleIcon } from '../../../images/icons/help-circle.svg';
 import { ReactComponent as FileExportIcon } from '../../../images/icons/file-export.svg';
 import { ReactComponent as SearchIcon } from '../../../images/icons/search.svg';
-import { ReactComponent as QuizIcon } from '../../../images/icons/quiz-tab.svg';
+import { ReactComponent as QuizIcon } from '../../../images/icons/quiz.svg';
 import { ReactComponent as DeleteIcon } from '../../../images/icons/delete.svg';
 import { ReactComponent as DeleteSmallIcon } from '../../../images/icons/delete-small.svg';
 import { ReactComponent as PencilLargeIcon } from '../../../images/icons/pencil-large.svg';
@@ -35,6 +35,8 @@ import { ReactComponent as SettingsIcon } from '../../../images/icons/settings.s
 import { ReactComponent as VIcon } from '../../../images/icons/v.svg';
 import { ReactComponent as XIcon } from '../../../images/icons/x.svg';
 import { ReactComponent as ValidationErrorIcon } from '../../../images/icons/validation-error.svg';
+import { ReactComponent as VCircleIcon } from '../../../images/icons/v-circle.svg';
+import { ReactComponent as QuizOutlineEmptyIcon } from '../../../images/icons/quiz-outline-empty.svg';
 
 import { IconType } from './icon.interface';
 
@@ -76,4 +78,6 @@ export const IconSVG = {
   [IconType.V]: VIcon,
   [IconType.X]: XIcon,
   [IconType.ValidationError]: ValidationErrorIcon,
+  [IconType.VCircle]: VCircleIcon,
+  [IconType.QuizOutlineEmpty]: QuizOutlineEmptyIcon,
 };

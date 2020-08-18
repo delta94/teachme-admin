@@ -1,3 +1,5 @@
+@import 'src/styles/mixins';
+
 .publish-dialog-title {
   display: flex;
   align-items: baseline;
@@ -15,5 +17,13 @@ ul.publish-dialog-ul {
     svg {
       margin-right: 5px;
     }
+  }
+}
+
+.confirmation-button {
+  max-width: 240px;
+
+  > span:last-child {
+    @include ellipsis();
   }
 }

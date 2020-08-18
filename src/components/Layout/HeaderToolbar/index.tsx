@@ -20,18 +20,19 @@ import classes from './style.module.scss';
 export default function HeaderToolbar(): ReactElement {
   const menuClassName = classes['header-toolbar-menu'];
   const [appState] = useAppContext();
-  const { user } = appState;
-  const { originalUser } = appState;
+  const { user, originalUser } = appState;
   const appInit = useAppSkeleton();
 
   const userId = user.userID;
   const originalUserId = originalUser.userID;
-  const isImpersonate = userId !== originalUserId;
+  const isImpersonate = userId !== originalUserId && user.editorAccountName;
 
   return (
     <>
       <Header className={classes['header-toolbar']}>
-        {isImpersonate && <span className={classes['impersonate']}>impersonate</span>}
+        {isImpersonate && (
+          <span className={classes['impersonate']}>{user.editorAccountName} - impersonated</span>
+        )}
         {appInit ? (
           <>
             <SystemMenu className={menuClassName} />

@@ -1,7 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 
-import { EnvironmentType } from '../../../../interfaces/app.interfaces';
 import { pluralizer } from '../../../../utils';
+import { useAppContext } from '../../../../providers/AppContext';
+import { EnvironmentType } from '../../../../interfaces/app.interfaces';
 import WMConfirmationDialog, { IWMConfirmationDialogWrapper } from '../../WMConfirmationDialog';
 import { IWMDropdownOption } from '../../WMDropdown';
 import EnvironmentDropdown from '../DialogEnvironmentDropdown/EnvironmentDropdown';
@@ -9,12 +10,7 @@ import EnvironmentDropdown from '../DialogEnvironmentDropdown/EnvironmentDropdow
 import { ReactComponent as VIcon } from './v.svg';
 import classes from './style.module.scss';
 
-const environments: IWMDropdownOption[] = [
-  { id: EnvironmentType.Production, value: 'Production' },
-  { id: EnvironmentType.Test, value: 'Test' },
-];
-
-export interface IPublishToEnvironmentDialog extends IWMConfirmationDialogWrapper {
+export interface IArchiveFromEnvironmentDialog extends IWMConfirmationDialogWrapper {
   coursesCount: number;
   isInProgess?: boolean;
 }
@@ -25,8 +21,11 @@ export default function ArchiveFromEnvironmentDialog({
   onCancel,
   onConfirm,
   isInProgess,
-}: IPublishToEnvironmentDialog): ReactElement {
-  const [environment, setEnvironment] = useState<IWMDropdownOption>(environments[0]);
+}: IArchiveFromEnvironmentDialog): ReactElement {
+  const [{ parsedEnvironments }] = useAppContext();
+  const [environment, setEnvironment] = useState<IWMDropdownOption>(
+    parsedEnvironments.find((env) => env.id === EnvironmentType.Test) ?? parsedEnvironments[0],
+  );
 
   return (
     <WMConfirmationDialog
@@ -35,16 +34,19 @@ export default function ArchiveFromEnvironmentDialog({
         <div className={classes['archive-dialog-title']}>
           <div>Archive from </div>
           <EnvironmentDropdown
-            environments={environments}
+            environments={parsedEnvironments}
             initialSelectedEnvironment={environment}
             onChange={(selected) => setEnvironment(selected)}
             disabled={isInProgess}
           />
         </div>
       }
-      confirmLabel={`Archive from ${environment.value}`}
+      confirmClass={classes['confirmation-button']}
+      confirmLabel={`Archive from ${environment?.value}`}
+      onConfirm={() =>
+        onConfirm({ envId: environment.id, envName: environment.label ?? environment.value })
+      }
       onCancel={onCancel}
-      onConfirm={() => onConfirm(environment.id)}
       loadingConfirmButton={isInProgess}
       disableDialog={isInProgess}
     >

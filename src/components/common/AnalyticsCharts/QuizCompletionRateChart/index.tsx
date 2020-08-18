@@ -1,5 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
+import CourseQuizEmptyState from '../../../Screen/CourseScreen/CourseQuizEmptyState';
+
 import { PieBarChart, PieBarSummary } from '../../charts';
 import { IBar } from '../../charts/PieBarChart/pieBarChart.interface';
 import WMCard from '../../WMCard';
@@ -16,7 +18,7 @@ export default function QuizCompletionRateChart({
   overview,
   isLoading = false,
 }: IQuizCompletionRateChart): ReactElement {
-  const [totalPercentages, setTotalPercentages] = useState<number>(0);
+  const [totalPercentages, setTotalPercentages] = useState<number>();
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {
@@ -51,12 +53,20 @@ export default function QuizCompletionRateChart({
     <WMCard title={title}>
       <WMSkeleton loading={isLoading} active paragraph={{ rows: 2 }}>
         <div className={className}>
-          <PieBarSummary
-            value={totalPercentages as number}
-            unit="%"
-            text={` (${overview?.users_passed ?? 0} of ${overview?.users_submitted ?? 0} users)`}
-          />
-          <PieBarChart bars={bars} legendContent={QuizCompletionRateLegend} />
+          {totalPercentages ? (
+            <>
+              <PieBarSummary
+                value={totalPercentages as number}
+                unit="%"
+                text={` (${overview?.users_passed ?? 0} of ${
+                  overview?.users_submitted ?? 0
+                } users)`}
+              />
+              <PieBarChart bars={bars} legendContent={QuizCompletionRateLegend} />
+            </>
+          ) : (
+            <CourseQuizEmptyState />
+          )}
         </div>
       </WMSkeleton>
     </WMCard>

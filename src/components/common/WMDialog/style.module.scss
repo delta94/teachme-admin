@@ -28,7 +28,7 @@
   :global(.ant-modal-content) {
     border: 1px solid rgba(216, 219, 227, 0.61);
     border-radius: 3px;
-    background-color: var(--wm-background-color);
+    background-color: var(--white);
     box-shadow: 6px 5px 12px 0 rgba(155, 161, 176, 0.73);
   }
 
@@ -45,6 +45,9 @@
   :global(.ant-modal-footer) {
     padding: 18px 24px 24px 24px;
     border: none;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
   }
 
   &.disable-close-button :global(.ant-modal-close) {

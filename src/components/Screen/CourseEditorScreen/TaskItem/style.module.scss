@@ -1,7 +1,7 @@
 .task-item {
   border-bottom: var(--wm-border);
 
-  &.active-item {
+  &.active-item .item {
     background-color: var(--hover-color);
   }
 

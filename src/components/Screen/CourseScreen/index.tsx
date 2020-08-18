@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { ReactElement, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { IDateRange } from '../../../utils';
 import { useRedirectToMain } from '../../../hooks';
@@ -19,8 +19,6 @@ import {
   ICourseOutline,
 } from './courseScreen.interface';
 
-import classes from './style.module.scss';
-
 export { parseCourseOutline };
 export type { ICourseOutlineItem, ICourseOutlineLesson, ICourseOutlineItems, ICourseOutline };
 
@@ -35,17 +33,11 @@ export default function CourseScreen(): ReactElement {
   const [state, dispatch] = useCourseContext();
   const { isFetchingCourseData, overview, courseMetadata } = state;
   const { courseId } = useParams();
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    containerRef.current.scrollIntoView({ block: 'start' });
-  }, []);
+  const history = useHistory();
 
   useEffect(() => {
-    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to);
-  }, [dispatch, isUpdating, courseId, envId, from, to]);
+    if (!isUpdating) fetchCourseData(dispatch, courseId, envId, from, to, history);
+  }, [dispatch, isUpdating, courseId, envId, from, to, history]);
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);
@@ -57,7 +49,6 @@ export default function CourseScreen(): ReactElement {
 
   return (
     <>
-      <div ref={containerRef} className={classes['container-ref']} />
       <CourseScreenHeader
         courseMetadata={courseMetadata}
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}

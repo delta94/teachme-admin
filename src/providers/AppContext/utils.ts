@@ -35,10 +35,13 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
   dispatch({ type: ActionType.Updating });
 
   try {
-    const user = await walkme.getUserData();
-    const originalUser = await walkme.getOriginalUserData();
-    const system = await walkme.getSystemData();
-    const environments = await walkme.getEnvironments();
+    const [user, originalUser, system, environments] = await Promise.all([
+      walkme.getUserData(),
+      walkme.getOriginalUserData(),
+      walkme.getSystemData(),
+      walkme.getEnvironments(),
+    ]);
+
     const defaultEnv = environments.find(
       (env: WalkMeEnvironment) => env.id === EnvironmentType.Production,
     );
@@ -46,6 +49,7 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
     dispatch({ type: ActionType.SetUser, user });
     dispatch({ type: ActionType.SetOriginalUser, originalUser });
     dispatch({ type: ActionType.SetSystem, system });
+    dispatch({ type: ActionType.SetEnvironments, environments });
     dispatch({ type: ActionType.SetEnvironment, environment: defaultEnv });
 
     dispatch({ type: ActionType.UpdateSuccess });

@@ -1,7 +1,9 @@
 import * as users from '../analytics/users';
 import { index, notEmpty } from '../utils';
 import { getCourseMetadata } from './courseBuild';
+import * as wmData from './services/wmData';
 import { UsersListQueryOptions, UserListUIResponse, UserListUILineItem } from '../models/users';
+import { TypeName } from '@walkme/types';
 
 /**
  *
@@ -29,22 +31,26 @@ async function getDataItems(
   data: Array<users.UsersResponseData>,
   environment: number,
 ): Promise<Array<UserListUILineItem>> {
-  const courses = await Promise.all(
-    data.map((item) => item.course_id).map((id) => getCourseMetadata(id, environment)),
-  );
-  const indexed = index(courses, 'id');
+  const courses = await wmData.getData(TypeName.Course, environment);
+
+  const indexed = index(courses, 'Id');
   return data
     .map<UserListUILineItem | null>((item) => {
       const course = indexed[item.course_id];
+      const started_date = getDate(item.started_date);
+      const completed_date = getDate(item.completed_date);
+      const time_to_complete =
+        started_date && completed_date && completed_date.getTime() - started_date.getTime();
       return course
         ? {
             id: item.id,
-            completed_date: getDate(item.completed_date),
-            started_date: getDate(item.started_date),
+            completed_date,
+            started_date,
+            time_to_complete,
             quiz_attempts: item.quiz_attempts,
             quiz_passed: item.quiz_passed,
             quiz_result: item.quiz_result,
-            title: course.title,
+            title: course.Name,
           }
         : null;
     })

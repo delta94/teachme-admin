@@ -27,3 +27,8 @@
     }
   }
 }
+
+.course-name-select :global(.ant-select-item-empty) > div {
+  transform: scale(0.5);
+  min-height: unset;
+}
