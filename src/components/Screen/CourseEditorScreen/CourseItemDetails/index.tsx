@@ -17,7 +17,7 @@ const completionOptions = [
   {
     label: 'Reaching item’s goal',
     value: CourseTaskCompletionType.Goal,
-    // helpText: 'You need to set a main goal before choosing this option',
+    helpText: 'You need to set a main goal before choosing this option',
   },
 ];
 
