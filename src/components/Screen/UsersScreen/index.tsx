@@ -102,7 +102,7 @@ export default function UsersScreen(): ReactElement {
             <ControlsWrapper>
               <ExportButton
                 className={classes['export-btn']}
-                onClick={() => exportUsers(dispatch, envId, from, to)}
+                onClick={() => exportUsers(dispatch, envId, from, to, queryOptions)}
                 disabled={disableExport}
                 loading={isExportingUsers}
               />
