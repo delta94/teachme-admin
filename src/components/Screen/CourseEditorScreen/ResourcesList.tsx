@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-
+import React, { ReactElement, ReactNode } from 'react';
+import cc from 'classcat';
 import { ContentItem, TypeName } from '@walkme/types';
 import {
   useCourseEditorContext,
@@ -17,7 +17,15 @@ import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
 import classes from './style.module.scss';
 
-export default function ResourcesList(): ReactElement {
+//TODO: Remove props - temporary additional props for rendering in playground
+
+export default function ResourcesList({
+  actionMenu,
+  className,
+}: {
+  actionMenu?: ReactNode;
+  className?: string;
+}): ReactElement {
   const [
     {
       isUpdating,
@@ -46,11 +54,12 @@ export default function ResourcesList(): ReactElement {
 
   return (
     <WMCard
-      className={classes['resources-list']}
+      className={cc([classes['resources-list'], className])}
       title={
         <div className={classes['title']}>
           <span>Items</span>
           <RefreshButton onClick={onRefresh} loading={isFetchingItems} />
+          {actionMenu}
         </div>
       }
     >

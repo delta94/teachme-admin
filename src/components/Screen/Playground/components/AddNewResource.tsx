@@ -13,8 +13,8 @@ import {
 
 import DetailsPanel from '../../../common/DetailsPanel';
 
-import WMCard from '../../../common/WMCard';
 import Icon, { IconType } from '../../../common/Icon';
+import ResourcesActionMenu from '../../CourseEditorScreen/ResourcesActionMenu';
 import ResourcesList from '../../CourseEditorScreen/ResourcesList';
 
 import classes from './playground.module.scss';
@@ -39,9 +39,10 @@ export default function AddNewResource(): ReactElement {
 
   return (
     <div className={classes['cards-wrapper']}>
-      <WMCard className={cc([classes['buttons'], classes['grow']])}>
-        <ResourcesList />
-      </WMCard>
+      <ResourcesList
+        className={classes['resources-list-playground']}
+        actionMenu={<ResourcesActionMenu className={classes['resources-action-menu']} />}
+      />
       <DetailsPanel
         title="New Resource"
         titleIcon={<Icon type={IconType.Article} />}

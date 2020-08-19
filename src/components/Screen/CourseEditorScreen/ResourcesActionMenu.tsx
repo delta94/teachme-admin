@@ -13,27 +13,27 @@ import classes from './style.module.scss';
 const options: IWMDropdownOption[] = [
   {
     id: 0,
-    value: CourseItemType.Lesson,
+    value: CourseItemType.Article,
     label: (
       <div className={classes['option']}>
         <Icon type={IconType.LessonSmall} />
-        Add Lesson
+        Create Article
       </div>
     ),
   },
   {
     id: 1,
-    value: CourseItemType.Quiz,
+    value: CourseItemType.Video,
     label: (
       <div className={classes['option']}>
         <Icon type={IconType.QuizSettings} />
-        Add Quiz
+        Create Video
       </div>
     ),
   },
 ];
 
-export default function ActionMenu({
+export default function CourseResourcesActionMenu({
   className,
   onActionSelected,
   isLoading,
@@ -45,21 +45,7 @@ export default function ActionMenu({
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
   const onActionSelect = (selected: IWMDropdownOption) => {
-    if (selected.value === CourseItemType.Lesson) {
-      // Add new lesson
-      const newLesson = course?.items.addNewItem();
-      if (newLesson) {
-        const lessonId = getRandomNegativeNumber();
-        newLesson.id = lessonId;
-        onActionSelected && onActionSelected(CourseItemType.Lesson, lessonId);
-      }
-    } else {
-      // Add new quiz
-      dispatch({ type: ActionType.AddQuiz });
-      onActionSelected && onActionSelected(CourseItemType.Quiz);
-    }
-
-    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    onActionSelected && onActionSelected(selected.value as CourseItemType);
   };
 
   return (

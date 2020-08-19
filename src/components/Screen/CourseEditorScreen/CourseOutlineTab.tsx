@@ -10,7 +10,7 @@ import WMSkeleton from '../../common/WMSkeleton';
 
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
-import ActionMenu from './ActionMenu';
+import CourseOutlineActionMenu from './CourseOutlineActionMenu';
 import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
 import classes from './style.module.scss';
 
@@ -62,7 +62,7 @@ export default function CourseOutlineTab(): ReactElement {
 
   return (
     <div className={classes['course-outline-tab']}>
-      <ActionMenu
+      <CourseOutlineActionMenu
         className={classes['add-btn']}
         onActionSelected={onActionSelected}
         isLoading={isUpdating || isFetchingCourse}
