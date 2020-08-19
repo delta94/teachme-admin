@@ -23,7 +23,7 @@ export default function App(): ReactElement {
   return isLoading ? (
     <SplashScreen />
   ) : hasError ? (
-    <ErrorScreen error={errorMessage} />
+    <ErrorScreen />
   ) : (
     <AppProvider>
       <Layout />

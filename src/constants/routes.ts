@@ -1,6 +1,4 @@
 import { IconType } from '../components/common/Icon/icon.interface';
-import { coursesMockData } from './mocks/courses-screen';
-import { usersMockData } from './mocks/users-mock';
 
 export interface IRoute {
   id: string;
@@ -16,7 +14,7 @@ export const COURSES_ROUTE = {
   iconType: IconType.SidebarCourses,
   matches: ['courses', 'course'],
   path: '/courses',
-  title: coursesMockData.title,
+  title: 'Courses',
 };
 
 export const COURSE_ROUTE = {
@@ -30,7 +28,7 @@ export const USERS_ROUTE = {
   iconType: IconType.SidebarUsers,
   path: '/users',
   matches: ['users'],
-  title: usersMockData.title,
+  title: 'Users',
 };
 
 export const BASE_COURSE_EDITOR_ROUTE = {

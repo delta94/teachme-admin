@@ -32,7 +32,7 @@ export default function QuizHeader({ className }: { className?: string }): React
     });
   };
 
-  const addQuestion = () => {
+  const addQuestion = (e: any) => {
     quiz?.questions.addNewItem();
     const questions = quiz?.questions.toArray();
     const newQuestion = questions && questions[questions.length - 1];
@@ -45,6 +45,7 @@ export default function QuizHeader({ className }: { className?: string }): React
         item: newQuestion,
       },
     });
+    e.target.blur();
   };
 
   const showDeleteDialog = (e: any) => {

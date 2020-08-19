@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import { Radio } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Radio, Tooltip } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 
 import cc from 'classcat';
@@ -13,6 +14,7 @@ export default function WMVerticalRadioGroup({
   value,
   options,
   className,
+  showTooltipHelpText,
   ...otherProps
 }: IWMRadioGroup): ReactElement {
   const [localValue, setLocalValue] = useState(value);
@@ -36,14 +38,20 @@ export default function WMVerticalRadioGroup({
       {...otherProps}
     >
       {options.map((option) => (
-        <Radio
-          key={option.value}
-          value={option.value}
-          disabled={option.disabled}
-          className={classes['wm-radio-button']}
-        >
-          {option.label}
-        </Radio>
+        <>
+          <Radio className={classes['wm-radio-button']} {...option}>
+            {option.label}
+            {showTooltipHelpText && option.helpText && (
+              <Tooltip key={option.value} title={option.helpText}>
+                <InfoCircleOutlined className={classes['option-help-icon']} />
+              </Tooltip>
+            )}
+          </Radio>
+          {/* an option to render the help text below the radio button */}
+          {!showTooltipHelpText && option.helpText && (
+            <p className={classes['help-text']}>{option.helpText}</p>
+          )}
+        </>
       ))}
     </Radio.Group>
   );
