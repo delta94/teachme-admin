@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import Icon, { IconType } from '../../common/Icon';
 
@@ -15,16 +15,14 @@ const getErrorMessage = (error: any) => {
     }
   }
 
-  return 'Something went wrong';
+  return 'Unable to load TeachMe';
 };
 
-export default function ErrorScreen({ error }: { error?: string }): ReactElement {
-  const errorMessage = getErrorMessage(error);
-
+export default function ErrorScreen({ error }: { error?: any }): ReactElement {
   return (
     <div className={classes['error-screen']}>
       <Icon type={IconType.EmptyError} />
-      <h1>{errorMessage}</h1>
+      <h1>{getErrorMessage(error)}</h1>
       <p>Please try again later</p>
     </div>
   );
