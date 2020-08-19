@@ -22,7 +22,7 @@ export interface INumberCell extends ITableCell {
 export interface IStatusDotCell extends ITableCell {
   value: string | number;
   passingValue?: number;
-  passed?: boolean;
+  passed?: boolean | null;
 }
 
 export interface ISubtextCell extends ITableCell {

@@ -3,7 +3,8 @@ import { ColumnsType, ColumnType } from 'antd/lib/table';
 import React, { ReactElement } from 'react';
 import moment from 'moment';
 
-import { UsersColumn } from '../../../walkme/models';
+import { isValidNumber } from '../../../utils';
+import { UsersColumn, UserListUILineItem } from '../../../walkme/models';
 import {
   TextCell,
   WarningCell,
@@ -106,9 +107,9 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       onClick: () => onClick(col),
       className: classes['result-cell'],
     }),
-    render: (value: number): ReactElement =>
-      value ? (
-        <StatusDotCell className={classes['result-cell']} value={value} passingValue={66} />
+    render: (value: number, { quiz_passed }: UserListUILineItem): ReactElement =>
+      isValidNumber(value) ? (
+        <StatusDotCell className={classes['result-cell']} value={value} passed={quiz_passed} />
       ) : (
         <WarningCell className={classes['result-cell']} value="Did not submit" />
       ),
