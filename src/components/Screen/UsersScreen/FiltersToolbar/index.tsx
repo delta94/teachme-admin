@@ -9,6 +9,7 @@ import { CourseMetadata, UsersListQueryOptions } from '../../../../walkme/models
 import WMSelect, { WMSelectModeType } from '../../../common/WMSelect';
 import WMSkeleton from '../../../common/WMSkeleton';
 import FormGroup from '../../../common/FormGroup';
+import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import ControlsWrapper from '../../../common/ControlsWrapper';
 
 import { completedOptions, resultsOptions } from '../utils';
@@ -77,7 +78,6 @@ export default function FiltersToolbar({
     }
 
     setCoursesValues(newCoursesValues);
-    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const onDeselectCourses = (value: number) => {
@@ -97,7 +97,6 @@ export default function FiltersToolbar({
     }
 
     setCoursesValues(newCoursesValues);
-    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const [completedValue, setCompletedValue] = useState<number | boolean>(-1);
@@ -110,7 +109,6 @@ export default function FiltersToolbar({
     }
 
     setCompletedValue(value);
-    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const [resultsValue, setResultsValue] = useState<number | boolean>(-1);
@@ -123,6 +121,9 @@ export default function FiltersToolbar({
     }
 
     setResultsValue(value);
+  };
+
+  const onApplyFilters = () => {
     fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
@@ -169,6 +170,13 @@ export default function FiltersToolbar({
             value={resultsValue}
           />
         </FormGroup>
+        <WMButton
+          className={classes['apply-btn']}
+          variant={ButtonVariantEnum.Primary}
+          onClick={onApplyFilters}
+        >
+          Apply
+        </WMButton>
       </WMSkeleton>
     </ControlsWrapper>
   );
