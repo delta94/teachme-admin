@@ -71,3 +71,8 @@ export async function getEmails(prefix: string): Promise<EmailList> {
 export function logout() {
   walkme.auth.logout();
 }
+
+/*
+ * Emits data events, e.g. last_update_time
+ */
+export { DataEvents } from '../analytics';
