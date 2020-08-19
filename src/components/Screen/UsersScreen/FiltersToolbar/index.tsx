@@ -163,6 +163,7 @@ export default function FiltersToolbar({
             className={cc([classes['select-filter'], classes['multi']])}
             mode={WMSelectModeType.Multiple}
             showArrow
+            removeIcon={null}
             optionFilterProp="label"
             options={coursesOptions}
             onSelect={onSelectCourses}
