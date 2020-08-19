@@ -28,6 +28,12 @@
     }
   }
 
+  .answer-option-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
   .answer-option {
     color: var(--neutral900);
     font-family: var(--font-primary);
@@ -40,8 +46,9 @@
     text-overflow: ellipsis;
     text-align: end;
   }
-}
 
-.check-mark {
-  color: var(--green);
+  .check-mark {
+    color: var(--green);
+    margin-right: 10px;
+  }
 }

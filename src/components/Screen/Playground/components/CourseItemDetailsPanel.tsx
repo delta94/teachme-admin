@@ -30,10 +30,6 @@ export default function CourseItemDetailsPanel(): ReactElement {
 
   const [courseId, setCourseId] = useState(0);
 
-  const handleItemChanged = (updatedItem: ContentItem) => {
-    setSelectedItem(updatedItem);
-  };
-
   useEffect(() => {
     fetchItemsList(dispatch, environment.id);
     fetchCourse(dispatch, courseId, environment.id, history);
