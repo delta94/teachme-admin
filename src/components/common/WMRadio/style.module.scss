@@ -1,8 +1,9 @@
 .wm-radio-button {
   &:global(.ant-radio-wrapper) {
-    display: block;
+    display: flex;
     height: 30px;
     line-height: 30px;
+    align-items: center;
   }
 
   :global(.ant-radio):hover,
@@ -31,4 +32,25 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.help-text {
+  opacity: 0.7;
+  color: var(--neutral900);
+  font-family: var(--font-primary);
+  font-size: 12px;
+  line-height: 18px;
+  margin: 5px auto 5px 23px;
+}
+
+.option-help-icon {
+  margin-left: 5px;
+
+  &:global(.anticon) {
+    color: var(--neutral400);
+  }
+
+  &:hover {
+    color: var(--primary);
+  }
 }
