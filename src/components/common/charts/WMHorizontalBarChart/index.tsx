@@ -54,25 +54,13 @@ const YAxisTick = ({
 
   return (
     <g>
-      <foreignObject
-        className={classes['answer-option']}
-        x={x - 30}
-        y={y - 10}
-        width="20"
-        height="20"
-      >
-        {isCorrect && <Icon className={classes['check-mark']} type={IconType.VCircle} />}
-      </foreignObject>
-      <foreignObject
-        className={classes['answer-option-wrapper']}
-        x={-150}
-        y={y - 10}
-        width="300"
-        height="15"
-      >
-        <p title={value} className={classes['answer-option']}>
-          {value}
-        </p>
+      <foreignObject x={-110} y={y - 10} width="300" height="25">
+        <div className={classes['answer-option-wrapper']}>
+          {isCorrect && <Icon className={classes['check-mark']} type={IconType.VCircle} />}
+          <span title={value} className={classes['answer-option']}>
+            {value}
+          </span>
+        </div>
       </foreignObject>
     </g>
   );
