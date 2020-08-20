@@ -11,7 +11,7 @@ export const get = async (path: string): Promise<any> => {
   if (!responseBody.last_update_time) return responseBody as AnalyticsResponse;
 
   DataEvents.emit(AnalyticsEvents.DATA_UPDATE_CHANGED, {
-    last_update_time: responseBody.last_update_time,
+    last_update_time: new Date(responseBody.last_update_time),
   });
   return responseBody.data;
 };
