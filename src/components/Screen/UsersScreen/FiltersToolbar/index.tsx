@@ -190,6 +190,11 @@ export default function FiltersToolbar({
             mode={WMSelectModeType.Multiple}
             showArrow
             removeIcon={null}
+            tagRender={({ label }) => (
+              <span className={classes['tag']}>
+                {coursesValues.length > 1 ? `${coursesValues.length} courses selected` : label}
+              </span>
+            )}
             optionFilterProp="label"
             options={sortedCoursesOptions}
             onBlur={onBlurCourses}

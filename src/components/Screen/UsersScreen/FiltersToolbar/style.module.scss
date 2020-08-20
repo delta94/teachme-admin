@@ -19,9 +19,35 @@
         width: 245px;
 
         :global(.ant-select-selector) {
+          flex-wrap: nowrap;
           max-height: 32px;
-          padding-right: 30px;
-          overflow: hidden;
+          padding: 0 30px 0 4px;
+
+          > span {
+            display: inline-flex;
+            max-width: 90%;
+            pointer-events: none;
+
+            > .tag {
+              font-size: 13px;
+              color: var(--neutral900);
+              background-color: var(--multiselect-tag-bg-color);
+              height: 24px;
+              border: var(--multiselect-tag-border);
+              border-radius: 1px;
+              padding: 0 6px;
+              margin: 4px;
+              margin-left: 0;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            // Hides the extra tags
+            &:not(:first-of-type) > .tag {
+              display: none;
+            }
+          }
         }
       }
     }
