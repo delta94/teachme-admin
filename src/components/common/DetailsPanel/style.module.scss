@@ -29,6 +29,10 @@
     // additional styles to support animation
     opacity: 1;
     visibility: visible;
+
+    &.fade-in-down {
+      animation: fadeInDown 0.3s linear both;
+    }
   }
 }
 
@@ -71,4 +75,14 @@
   padding: 20px;
   flex-grow: 1;
   overflow: auto;
+}
+
+@keyframes fadeInDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }

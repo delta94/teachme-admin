@@ -57,6 +57,7 @@
   .resources-list {
     --resources-list-width: 340px;
 
+    overflow-y: hidden;
     position: relative;
     min-width: var(--resources-list-width);
     width: var(--resources-list-width);
@@ -238,14 +239,4 @@ body.prevent-interaction {
 
 html.prevent-interaction {
   cursor: not-allowed;
-}
-
-@keyframes fadeInDown {
-  0% {
-    transform: translateY(-100%);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
 }

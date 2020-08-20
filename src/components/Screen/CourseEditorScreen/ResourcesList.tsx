@@ -104,6 +104,7 @@ export default function ResourcesList(): ReactElement {
           titleIcon={newResourceType && <Icon type={newResourceType} />}
           isOpen={Boolean(newResourceType)}
           onClose={() => setNewResourceType(undefined)}
+          animationType="fade-in-down"
         >
           New Resource
         </DetailsPanel>

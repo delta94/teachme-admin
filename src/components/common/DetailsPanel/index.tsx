@@ -14,6 +14,7 @@ export default function DetailsPanel({
   titleIcon,
   titleIsEllipsis,
   className,
+  animationType,
 }: {
   isOpen: boolean;
   title: ReactNode;
@@ -22,6 +23,7 @@ export default function DetailsPanel({
   titleIcon?: ReactNode;
   titleIsEllipsis?: boolean;
   className?: string;
+  animationType?: 'fade-in-down'; // TODO: create enum AnimationType
 }): ReactElement {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -41,7 +43,11 @@ export default function DetailsPanel({
 
   return (
     <WMCard
-      className={cc([classes['details-panel'], className, { [classes['open']]: isOpen }])}
+      className={cc([
+        classes['details-panel'],
+        className,
+        { [classes['open']]: isOpen, [classes['fade-in-down']]: animationType === 'fade-in-down' },
+      ])}
       title={
         isVisible && (
           <DetailsPanelHeader
