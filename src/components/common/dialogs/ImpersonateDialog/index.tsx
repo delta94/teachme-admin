@@ -25,7 +25,7 @@ export default function ImpersonateDialog({
     if (!value) return;
 
     const { emails } = await getEmails(value);
-    const emailList = emails.map((email: string) => ({ value: email }));
+    const emailList = emails && emails.map((email: string) => ({ value: email }));
     setOptions(emailList);
   };
 
@@ -68,6 +68,7 @@ export default function ImpersonateDialog({
         filterOption={(inputValue, option) =>
           option?.value.toUpperCase().includes(inputValue.toUpperCase())
         }
+        onSelect={onConfirmHandle}
       />
     </WMConfirmationDialog>
   );
