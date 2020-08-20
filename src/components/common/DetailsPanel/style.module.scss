@@ -1,6 +1,8 @@
 @import 'src/styles/mixins';
 
 .details-panel {
+  opacity: 0;
+  visibility: hidden;
   color: inherit;
   min-width: 0;
   width: 0;
@@ -23,6 +25,10 @@
     min-width: 350px;
     width: 350px;
     border-width: 1px;
+
+    // additional styles to support animation
+    opacity: 1;
+    visibility: visible;
   }
 }
 

@@ -55,8 +55,11 @@
   }
 
   .resources-list {
-    min-width: 340px;
-    width: 340px;
+    --resources-list-width: 340px;
+
+    position: relative;
+    min-width: var(--resources-list-width);
+    width: var(--resources-list-width);
     margin-right: 10px;
     background-color: var(--secondary200);
 
@@ -84,6 +87,17 @@
 
     .resources-action-menu {
       margin-left: 10px;
+    }
+
+    .new-resource-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      min-width: var(--resources-list-width);
+      width: var(--resources-list-width);
+      border-width: 0;
     }
   }
 
@@ -170,8 +184,9 @@
   color: var(--neutral900);
   height: 30px;
 
-  > span {
+  :global(.wm-icon) {
     margin-right: 10px;
+    color: var(--neutral400);
   }
 }
 
@@ -223,4 +238,14 @@ body.prevent-interaction {
 
 html.prevent-interaction {
   cursor: not-allowed;
+}
+
+@keyframes fadeInDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }

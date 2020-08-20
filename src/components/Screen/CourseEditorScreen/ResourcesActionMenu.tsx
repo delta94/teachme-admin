@@ -15,7 +15,7 @@ const options: IWMDropdownOption[] = [
     value: CourseItemType.Article,
     label: (
       <div className={classes['option']}>
-        <Icon type={IconType.LessonSmall} />
+        <Icon type={IconType.ArticleSmall} />
         Create Article
       </div>
     ),
@@ -25,7 +25,7 @@ const options: IWMDropdownOption[] = [
     value: CourseItemType.Video,
     label: (
       <div className={classes['option']}>
-        <Icon type={IconType.QuizSettings} />
+        <Icon type={IconType.VideoSmall} />
         Create Video
       </div>
     ),

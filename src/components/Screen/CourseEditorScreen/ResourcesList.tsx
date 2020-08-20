@@ -1,5 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
-import cc from 'classcat';
+import React, { ReactElement, ReactNode, useState } from 'react';
 import { ContentItem, TypeName } from '@walkme/types';
 import {
   useCourseEditorContext,
@@ -7,11 +6,14 @@ import {
   ActionType,
 } from '../../../providers/CourseEditorContext';
 import { useAppContext } from '../../../providers/AppContext';
+import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import WMCard from '../../common/WMCard';
 import WMSkeleton from '../../common/WMSkeleton';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
+import DetailsPanel from '../../common/DetailsPanel';
+import Icon from '../../common/Icon';
 
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
@@ -19,15 +21,7 @@ import ResourcesActionMenu from './ResourcesActionMenu';
 
 import classes from './style.module.scss';
 
-//TODO: Remove props - temporary additional props for rendering in playground
-
-export default function ResourcesList({
-  actionMenu,
-  className,
-}: {
-  actionMenu?: ReactNode;
-  className?: string;
-}): ReactElement {
+export default function ResourcesList(): ReactElement {
   const [
     {
       isUpdating,
@@ -36,6 +30,7 @@ export default function ResourcesList({
   ] = useAppContext();
   const [state, dispatch] = useCourseEditorContext();
   const { isFetchingItems, courseItems, filteredCourseItems, courseItemsSearchValue } = state;
+  const [newResourceType, setNewResourceType] = useState<CourseItemType>();
 
   const onSearch = (searchValue: string) => {
     const newCourseItems = courseItems.filter(({ title, description }) =>
@@ -54,9 +49,14 @@ export default function ResourcesList({
     onSearch(courseItemsSearchValue);
   };
 
+  const onActionSelected = (selectedType: CourseItemType) => {
+    console.log('selectedType ', selectedType);
+    setNewResourceType(selectedType);
+  };
+
   return (
     <WMCard
-      className={cc([classes['resources-list'], className])}
+      className={classes['resources-list']}
       title={
         <div className={classes['title-container']}>
           <span className={classes['title']}>Items</span>
@@ -64,6 +64,7 @@ export default function ResourcesList({
           <ResourcesActionMenu
             className={classes['resources-action-menu']}
             isLoading={isUpdating || isFetchingItems}
+            onActionSelected={onActionSelected}
           />
         </div>
       }
@@ -94,6 +95,18 @@ export default function ResourcesList({
         ) : (
           <ResourcesListEmptyState />
         )}
+        <DetailsPanel
+          className={classes['new-resource-panel']}
+          title={
+            newResourceType &&
+            `New ${newResourceType.charAt(0).toUpperCase() + newResourceType.slice(1)}`
+          }
+          titleIcon={newResourceType && <Icon type={newResourceType} />}
+          isOpen={Boolean(newResourceType)}
+          onClose={() => setNewResourceType(undefined)}
+        >
+          New Resource
+        </DetailsPanel>
       </WMSkeleton>
     </WMCard>
   );
