@@ -20,16 +20,18 @@ import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
   const [{ course, isFetchingCourse, hasChanges }, dispatch] = useCourseEditorContext();
-  const [{ environment }] = useAppContext();
+  const [{ isUpdating, environment }] = useAppContext();
   const { courseId } = useParams();
   const history = useHistory();
 
   useEffect(() => {
+    if (isUpdating) return;
+    
     fetchItemsList(dispatch, environment.id);
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId, environment.id, history]);
+  }, [dispatch, courseId, environment.id, history, isUpdating]);
 
   const onCourseTitleBlur = (courseTitle: string) => {
     if (course) {
