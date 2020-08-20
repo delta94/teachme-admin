@@ -1,10 +1,15 @@
 import React, { ReactElement } from 'react';
-import { SortableElement } from 'react-sortable-hoc';
-
-const SortableItem = SortableElement((props: any) => <tr {...props} />);
+import { Draggable } from 'react-smooth-dnd';
 
 export default function SortableRow({ ...restProps }): ReactElement {
   const index = restProps['data-row-key'] as number;
 
-  return <SortableItem index={index ?? 0} {...restProps} />;
+  return (
+    <Draggable
+      key={index}
+      render={() => (
+        <tr {...restProps} data-class={restProps.className} style={{ display: 'table-row' }} />
+      )}
+    />
+  );
 }

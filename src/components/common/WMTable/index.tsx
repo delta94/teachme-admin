@@ -1,16 +1,9 @@
 import React, { ReactNode, ReactElement, Key } from 'react';
-import cc from 'classcat';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
-import {
-  SortEnd,
-  SortEvent,
-  SortStart,
-  SortStartHandler,
-  SortableContainerProps,
-} from 'react-sortable-hoc';
 import produce from 'immer';
+import cc from 'classcat';
 
 import WMTableExpanded from './WMTableExpanded';
 import SortableTableBody from './SortableTableBody';
@@ -30,7 +23,15 @@ interface IWMTable extends TableProps<any> {
     updatedData: Array<any>,
     updatedSelectedRowKeys?: Array<Key>,
   ) => void;
-  onSortStart?: SortStartHandler;
+  onSortStart?: ({
+    isSource,
+    payload,
+    willAcceptDrop,
+  }: {
+    isSource: boolean;
+    payload: number;
+    willAcceptDrop: boolean;
+  }) => void;
   isStickyToolbarAndHeader?: boolean;
 }
 
@@ -44,53 +45,71 @@ export default function WMTable({
   isStickyToolbarAndHeader,
   ...otherProps
 }: IWMTable): ReactElement {
-  const onSortStartCallback = (sort: SortStart, event: SortEvent) => {
-    const { node } = sort;
-    const tds = document.getElementsByClassName('dragged-row')[0].childNodes as NodeListOf<
-      HTMLElement
-    >;
+  function onSortStartCallback({
+    isSource,
+    payload,
+    willAcceptDrop,
+  }: {
+    isSource: boolean;
+    payload: number;
+    willAcceptDrop: boolean;
+  }) {
+    // the dragged table row looses cell widths because when it is dragged it looses the context of the table
 
-    node.childNodes.forEach((node: ChildNode, idx: number) => {
-      tds[idx].style.width = `${(node as HTMLElement).offsetWidth}px`;
-      tds[idx].style.height = `${(node as HTMLElement).offsetHeight}px`;
+    // source row for cell widths
+    const tableHeader = document.querySelector('thead tr');
+    let tableHeaderCells: NodeListOf<HTMLElement> | undefined;
+    if (tableHeader) {
+      tableHeaderCells = tableHeader.childNodes as NodeListOf<HTMLElement>;
+    }
+
+    // update draggedRow cell sizes from source
+    requestAnimationFrame(() => {
+      // get the second result, since the first row still exists and were looking for the copy
+      const draggedRow = document.querySelectorAll(`tr[data-row-key="${payload}"]`)[1];
+      if (draggedRow) {
+        draggedRow.childNodes.forEach((node: ChildNode, idx: number) => {
+          if (tableHeaderCells) {
+            (node as HTMLElement).style.width = `${tableHeaderCells[idx].offsetWidth}px`;
+            (node as HTMLElement).style.height = `${tableHeaderCells[idx].offsetHeight}px`;
+          }
+        });
+      }
     });
 
     if (onSortStart) {
-      onSortStart(sort, event);
+      onSortStart({ isSource, payload, willAcceptDrop });
     }
-  };
+  }
 
-  const onSortEndCallback = ({ oldIndex, newIndex }: SortEnd): void => {
-    if (oldIndex === newIndex || !onSortEnd) return;
+  const onSortEndCallback = ({
+    removedIndex,
+    addedIndex,
+  }: {
+    addedIndex: number | undefined | null;
+    removedIndex: number | undefined | null;
+    destinationItemID: string | undefined;
+    payload: any;
+  }) => {
+    const isAdd = addedIndex !== undefined && addedIndex !== null;
+    const isRemove = removedIndex !== undefined && removedIndex !== null;
+    const isReorder = isAdd && isRemove;
 
-    const updatedData = produce(data, (draft) => {
-      // Remove moved row and store it
-      const moved = draft.splice(oldIndex, 1);
-      // Insert stored row into new position
-      draft.splice(newIndex, 0, moved[0]);
-    });
-
-    const updatedSelectedRowKeys = produce(rowSelection?.selectedRowKeys, (draft) => {
-      draft?.forEach((rowKey, index) => {
-        const key = Number(rowKey);
-
-        if (key < oldIndex && key >= newIndex) {
-          // Row moved to before selected row
-          draft[index] = key + 1;
-        } else if (key > oldIndex && key <= newIndex) {
-          // Row moved to after selected row
-          draft[index] = key - 1;
-        } else if (key === oldIndex && key !== newIndex) {
-          // Row moved is same as selected row
-          draft[index] = newIndex;
-        }
+    let updatedData = data;
+    if (isReorder) {
+      updatedData = produce(data, (draft) => {
+        // Remove moved row and store it
+        const moved = draft.splice(removedIndex ?? 0, 1);
+        // Insert stored row into new position
+        draft.splice(addedIndex ?? 0, 0, moved[0]);
       });
-    });
+    }
 
-    onSortEnd({ oldIndex, newIndex }, updatedData, updatedSelectedRowKeys);
+    if (onSortEnd)
+      onSortEnd({ newIndex: addedIndex ?? 0, oldIndex: removedIndex ?? 0 }, updatedData, []);
   };
 
-  const SortableWrapper = (props: SortableContainerProps) => (
+  const SortableWrapper = (props: any) => (
     <SortableTableBody onSortEnd={onSortEndCallback} onSortStart={onSortStartCallback} {...props} />
   );
   SortableWrapper.displayName = 'SortableWrapper';
