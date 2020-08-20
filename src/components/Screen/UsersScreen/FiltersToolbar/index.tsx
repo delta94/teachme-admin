@@ -48,6 +48,7 @@ export default function FiltersToolbar({
   const [{ isFetchingUsers }, dispatch] = useUsersContext();
   const [isFetchingOptions, setIsFetchingOptions] = useState<boolean>(true);
   const [coursesOptions, setCoursesOptions] = useState<IWMSelectOption[]>([]);
+  const [sortedCoursesOptions, setSortedCoursesOptions] = useState<IWMSelectOption[]>([]);
   const [coursesValues, setCoursesValues] = useState<number[]>([]);
 
   const getCoursesOptions = useCallback(async () => {
@@ -56,6 +57,7 @@ export default function FiltersToolbar({
       const options = parseCoursesMetadata(coursesMetadata);
 
       setCoursesOptions(options);
+      setSortedCoursesOptions(options);
       setCoursesValues([options[0].value]);
       setIsFetchingOptions(false);
     } catch (error) {
@@ -72,6 +74,30 @@ export default function FiltersToolbar({
       setIsFetchingOptions(true);
     };
   }, [isUpdating, getCoursesOptions]);
+
+  const onBlurCourses = () => {
+    // Reset to original options order when 'All' is selected
+    if (coursesValues.includes(-1)) {
+      setSortedCoursesOptions(coursesOptions);
+      return;
+    }
+
+    const sortedOptions = [...coursesOptions];
+
+    coursesValues.forEach((value) => {
+      const option = coursesOptions.find((item) => item.value === value);
+
+      if (option) {
+        const removalIndex = sortedOptions.findIndex((item) => item.value === value);
+        // Remove selected option
+        sortedOptions.splice(removalIndex, 1);
+        // Insert selected option as the second option (after 'All')
+        sortedOptions.splice(1, 0, option);
+      }
+    });
+
+    setSortedCoursesOptions(sortedOptions);
+  };
 
   const queryFiltersRef = useRef<UsersTableQueryFilter>({ ...defaultQueryFilters });
   const queryFilters = queryFiltersRef.current;
@@ -165,7 +191,8 @@ export default function FiltersToolbar({
             showArrow
             removeIcon={null}
             optionFilterProp="label"
-            options={coursesOptions}
+            options={sortedCoursesOptions}
+            onBlur={onBlurCourses}
             onSelect={onSelectCourses}
             onDeselect={onDeselectCourses}
             value={coursesValues}
