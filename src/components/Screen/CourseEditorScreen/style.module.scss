@@ -90,14 +90,14 @@
       margin-left: 10px;
     }
 
-    .new-resource-panel {
+    .resource-panel {
       position: absolute;
       top: 0;
       right: 0;
       left: 0;
       bottom: 0;
-      min-width: var(--resources-list-width);
-      width: var(--resources-list-width);
+      min-width: 0;
+      width: var(--resources-list-width - 2); // prevent overflow-x to show scroll-bar
       border-width: 0;
     }
   }

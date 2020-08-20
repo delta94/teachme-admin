@@ -13,6 +13,7 @@ import WMSkeleton from '../../common/WMSkeleton';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
 import DetailsPanel from '../../common/DetailsPanel';
+import TextCounter from '../../common/TextCounterInput';
 import Icon from '../../common/Icon';
 
 import ResourceItemsList from './ResourceItemList';
@@ -20,6 +21,8 @@ import ResourcesListEmptyState from './ResourcesListEmptyState';
 import ResourcesActionMenu from './ResourcesActionMenu';
 
 import classes from './style.module.scss';
+import { WMVerticalRadioGroup } from '../../common/WMRadio';
+import NewResourcePanel from './NewResourcePanel';
 
 export default function ResourcesList(): ReactElement {
   const [
@@ -95,19 +98,11 @@ export default function ResourcesList(): ReactElement {
         ) : (
           <ResourcesListEmptyState />
         )}
-        <DetailsPanel
-          className={classes['new-resource-panel']}
-          title={
-            newResourceType &&
-            `New ${newResourceType.charAt(0).toUpperCase() + newResourceType.slice(1)}`
-          }
-          titleIcon={newResourceType && <Icon type={newResourceType} />}
-          isOpen={Boolean(newResourceType)}
+        <NewResourcePanel
+          className={classes['resource-panel']}
+          newResourceType={newResourceType}
           onClose={() => setNewResourceType(undefined)}
-          animationType="fade-in-down"
-        >
-          New Resource
-        </DetailsPanel>
+        />
       </WMSkeleton>
     </WMCard>
   );
