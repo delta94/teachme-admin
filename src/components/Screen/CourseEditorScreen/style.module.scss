@@ -206,6 +206,7 @@
     justify-content: flex-start;
     align-items: center;
     color: var(--red);
+    min-width: 320px;
 
     :global(.wm-icon) {
       margin-right: 10px;
