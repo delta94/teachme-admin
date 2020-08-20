@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 
-import CourseEditorProvider from '../../../providers/CourseEditorContext';
-
 import ScreenHeader from '../../common/ScreenHeader';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
@@ -12,7 +10,6 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 import Empty from './components/Empty';
 import Checkboxes from './components/Checkboxes';
-import AddNewResource from './components/AddNewResource';
 import Toaster from './components/Toaster';
 import Skeleton from './components/Skeleton';
 
@@ -60,16 +57,6 @@ const tabs = [
     title: 'Skeleton',
     icon: undefined,
     content: <Skeleton />,
-  },
-  {
-    id: 'course-item-details-panel',
-    title: 'Course Item Details Panel',
-    icon: undefined,
-    content: (
-      <CourseEditorProvider>
-        <AddNewResource />
-      </CourseEditorProvider>
-    ),
   },
 ];
 

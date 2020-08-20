@@ -26,7 +26,7 @@ export default function CourseEditorScreen(): ReactElement {
 
   useEffect(() => {
     if (isUpdating) return;
-    
+
     fetchItemsList(dispatch, environment.id);
     fetchCourse(dispatch, courseId, environment.id, history);
 

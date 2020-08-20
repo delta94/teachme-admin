@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 
-import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
+import { useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
-import { getRandomNegativeNumber } from '../../../utils';
 
 import Icon, { IconType } from '../../common/Icon';
 import { AddButton } from '../../common/buttons';
@@ -33,7 +32,7 @@ const options: IWMDropdownOption[] = [
   },
 ];
 
-export default function CourseResourcesActionMenu({
+export default function ResourcesActionMenu({
   className,
   onActionSelected,
   isLoading,

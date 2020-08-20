@@ -15,6 +15,8 @@ import { SearchFilter } from '../../common/filters';
 
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
+import ResourcesActionMenu from './ResourcesActionMenu';
+
 import classes from './style.module.scss';
 
 //TODO: Remove props - temporary additional props for rendering in playground
@@ -56,10 +58,13 @@ export default function ResourcesList({
     <WMCard
       className={cc([classes['resources-list'], className])}
       title={
-        <div className={classes['title']}>
-          <span>Items</span>
+        <div className={classes['title-container']}>
+          <span className={classes['title']}>Items</span>
           <RefreshButton onClick={onRefresh} loading={isFetchingItems} />
-          {actionMenu}
+          <ResourcesActionMenu
+            className={classes['resources-action-menu']}
+            isLoading={isUpdating || isFetchingItems}
+          />
         </div>
       }
     >

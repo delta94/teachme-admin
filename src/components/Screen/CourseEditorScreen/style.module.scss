@@ -43,7 +43,7 @@
 
   .resources-list,
   .details-panel {
-    .title {
+    .title-container {
       display: flex;
       justify-content: space-between;
       font-family: var(--font-secondary);
@@ -60,8 +60,14 @@
     margin-right: 10px;
     background-color: var(--secondary200);
 
-    .title {
+    .title-container {
       border-bottom: var(--wm-border);
+      justify-content: flex-end;
+      align-items: center;
+
+      .title {
+        margin-right: auto;
+      }
     }
 
     .filters-bar {
@@ -74,6 +80,10 @@
 
       height: calc(100% - var(--items-list-height) - var(--search-filter-height));
       overflow: auto;
+    }
+
+    .resources-action-menu {
+      margin-left: 10px;
     }
   }
 
