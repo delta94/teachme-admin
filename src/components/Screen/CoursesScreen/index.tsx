@@ -20,6 +20,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
+import LastUpdated from '../../common/LastUpdated/LastUpdated';
 
 import ShownCoursesIndicator from './ShownCoursesIndicator';
 import ProductionStatusActions from './ProductionStatusActions';
@@ -84,6 +85,7 @@ export default function CoursesScreen(): ReactElement {
       <ScreenHeader
         title="Courses"
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
+        subTitle={<LastUpdated />}
       />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"
