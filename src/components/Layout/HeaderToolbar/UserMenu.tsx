@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from 'react';
 
 import { useAppContext } from '../../../providers/AppContext';
 import { logout } from '../../../walkme';
+import { dateRangeLocalStorageKey } from '../../../utils';
 
 import { IconType } from '../../common/Icon/icon.interface';
 import Icon from '../../common/Icon';
@@ -29,7 +30,15 @@ export default function UserMenu({
       onClick: () => setShowImpersonate(true),
       skip: !originalUser.userIsBackOffice,
     },
-    { id: 'log-out', value: 'Log Out', onClick: () => logout() },
+    {
+      id: 'log-out',
+      value: 'Log Out',
+      onClick: () => {
+        // Remove `dateRange` from `localStorage` on manual logout
+        localStorage.removeItem(dateRangeLocalStorageKey);
+        logout();
+      },
+    },
   ];
 
   const handleImpersonate = () => {
