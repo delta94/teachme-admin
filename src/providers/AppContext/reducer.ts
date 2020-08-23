@@ -5,7 +5,7 @@ import { SystemData } from '@walkme/editor-sdk/dist/system';
 
 import { parseEnvironments } from '../../components/Layout/HeaderToolbar/utils';
 import { IWMDropdownOption } from '../../components/common/WMDropdown';
-import { defaultDateRange } from '../../utils';
+import { defaultDateRange, dateRangeLocalStorageKey } from '../../utils';
 
 import { ActionType, IState, IAction } from './app-context.interface';
 
@@ -59,6 +59,9 @@ export const reducer = produce(
         break;
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
+        // Persist `dateRange` to `localStorage` on change
+        if (action.dateRange)
+          localStorage.setItem(dateRangeLocalStorageKey, JSON.stringify(action.dateRange));
         break;
       case ActionType.CurrentScreenProvider:
         draft.screenProvider = action.currentScreen;

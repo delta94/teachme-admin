@@ -3,6 +3,7 @@ import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
 import * as walkme from '../../walkme';
+import { defaultDateRange, dateRangeLocalStorageKey } from '../../utils';
 
 import { EnvironmentType, ActionType, IState, IDispatch } from './app-context.interface';
 
@@ -51,6 +52,13 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
     dispatch({ type: ActionType.SetSystem, system });
     dispatch({ type: ActionType.SetEnvironments, environments });
     dispatch({ type: ActionType.SetEnvironment, environment: defaultEnv });
+
+    let dateRange = defaultDateRange;
+    const storedDateRange = localStorage.getItem(dateRangeLocalStorageKey);
+    // Get `dateRange` from `localStorage` when available
+    if (storedDateRange) dateRange = JSON.parse(storedDateRange);
+
+    dispatch({ type: ActionType.SetDateRange, dateRange });
 
     dispatch({ type: ActionType.UpdateSuccess });
   } catch (error) {

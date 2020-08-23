@@ -15,3 +15,5 @@ export const getValidDateRange = (dateStrings: string[]): IDateRange | undefined
 
   return Boolean(fromDate) && Boolean(toDate) ? { from: fromDate, to: toDate } : undefined;
 };
+
+export const dateRangeLocalStorageKey = 'wm-date-range';
