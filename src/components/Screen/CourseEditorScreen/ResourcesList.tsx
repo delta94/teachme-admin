@@ -7,7 +7,6 @@ import {
   ActionType,
 } from '../../../providers/CourseEditorContext';
 import { useAppContext } from '../../../providers/AppContext';
-import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import WMCard from '../../common/WMCard';
 import WMSkeleton from '../../common/WMSkeleton';
@@ -19,7 +18,7 @@ import ResourcesListEmptyState from './ResourcesListEmptyState';
 import ResourcesActionMenu from './ResourcesActionMenu';
 
 import classes from './style.module.scss';
-import NewResourcePanel from './NewResourcePanel';
+import NewResourcePanel, { NewResourceType } from './NewResourcePanel';
 
 export default function ResourcesList(): ReactElement {
   const [
@@ -30,7 +29,7 @@ export default function ResourcesList(): ReactElement {
   ] = useAppContext();
   const [state, dispatch] = useCourseEditorContext();
   const { isFetchingItems, courseItems, filteredCourseItems, courseItemsSearchValue } = state;
-  const [newResourceType, setNewResourceType] = useState<CourseItemType>();
+  const [newResourceType, setNewResourceType] = useState<NewResourceType>();
 
   const onSearch = (searchValue: string) => {
     const newCourseItems = courseItems.filter(({ title, description }) =>
@@ -49,7 +48,7 @@ export default function ResourcesList(): ReactElement {
     onSearch(courseItemsSearchValue);
   };
 
-  const onActionSelected = (selectedType: CourseItemType) => {
+  const onActionSelected = (selectedType: NewResourceType) => {
     console.log('selectedType ', selectedType);
     setNewResourceType(selectedType);
   };

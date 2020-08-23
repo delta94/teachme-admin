@@ -7,6 +7,8 @@ import Icon, { IconType } from '../../common/Icon';
 import { AddButton } from '../../common/buttons';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 
+import { NewResourceType } from './NewResourcePanel';
+
 import classes from './style.module.scss';
 
 const options: IWMDropdownOption[] = [
@@ -38,13 +40,13 @@ export default function ResourcesActionMenu({
   isLoading,
 }: {
   className?: string;
-  onActionSelected?: (selected: CourseItemType, lessonId?: number) => void;
+  onActionSelected?: (selected: NewResourceType, lessonId?: number) => void;
   isLoading?: boolean;
 }): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
   const onActionSelect = (selected: IWMDropdownOption) => {
-    onActionSelected && onActionSelected(selected.value as CourseItemType);
+    onActionSelected && onActionSelected(selected.value as NewResourceType);
   };
 
   return (
