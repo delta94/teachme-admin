@@ -83,7 +83,7 @@ export const setAppSystem = async ({
 }): Promise<void> => {
   dispatch({ type: ActionType.Updating });
   const system = systems.find(({ userId }: { userId: number }) => systemId === userId);
-  
+
   try {
     await walkme.switchSystem(systemId);
     dispatch({ type: ActionType.SetSystem, system });

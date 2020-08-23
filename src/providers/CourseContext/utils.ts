@@ -11,6 +11,7 @@ import { CourseNotFoundError, TypeNotSupportedError } from '../../walkme/models'
 
 import { History } from 'history';
 import { COURSES_ROUTE } from '../../constants/routes';
+import { getCourseErrorMessage } from '../../utils/app-utils';
 
 export const CourseStateContext = createContext<IState | undefined>(undefined);
 export const CourseDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -98,14 +99,3 @@ export const exportCourse = async (
     wmMessage('Export failed', MessageType.Error);
   }
 };
-
-function getCourseErrorMessage(error: Error, courseId: number): string {
-  switch (true) {
-    case error instanceof CourseNotFoundError:
-      return `Cannot find course with id ${courseId}`;
-    case error instanceof TypeNotSupportedError:
-      return `This course contains unsupported items`;
-    default:
-      return 'Unable to get course';
-  }
-}
