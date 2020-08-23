@@ -1,21 +1,35 @@
-import React, { ReactElement, useEffect, useState, useCallback, SetStateAction } from 'react';
+import React, {
+  ReactElement,
+  useEffect,
+  useState,
+  useCallback,
+  SetStateAction,
+  useRef,
+} from 'react';
 import cc from 'classcat';
+import _isEqual from 'lodash/isEqual';
 
 import { useAppContext } from '../../../../providers/AppContext';
-import { useUsersContext, fetchUsers } from '../../../../providers/UsersContext';
+import {
+  useUsersContext,
+  defaultQueryFilters,
+  fetchUsers,
+} from '../../../../providers/UsersContext';
 import { getCoursesMetadata } from '../../../../walkme/screens/users';
 import { CourseMetadata, UsersListQueryOptions } from '../../../../walkme/models';
+import { UsersTableQueryFilter } from '../../../../walkme/models/users/filter';
 
-import WMSelect, { WMSelectModeType } from '../../../common/WMSelect';
+import WMSelect, { WMSelectModeType, IWMSelectOption } from '../../../common/WMSelect';
 import WMSkeleton from '../../../common/WMSkeleton';
 import FormGroup from '../../../common/FormGroup';
+import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import ControlsWrapper from '../../../common/ControlsWrapper';
 
 import { completedOptions, resultsOptions } from '../utils';
 
 import classes from './style.module.scss';
 
-const parseCoursesMetadata = (courses: CourseMetadata[]): { label: string; value: number }[] =>
+const parseCoursesMetadata = (courses: CourseMetadata[]): IWMSelectOption[] =>
   [{ label: 'All', value: -1 }].concat(
     courses.map(({ title, id }) => ({ label: title, value: id })),
   );
@@ -33,7 +47,8 @@ export default function FiltersToolbar({
   } = appState;
   const [{ isFetchingUsers }, dispatch] = useUsersContext();
   const [isFetchingOptions, setIsFetchingOptions] = useState<boolean>(true);
-  const [coursesOptions, setCoursesOptions] = useState<any[]>([]);
+  const [coursesOptions, setCoursesOptions] = useState<IWMSelectOption[]>([]);
+  const [sortedCoursesOptions, setSortedCoursesOptions] = useState<IWMSelectOption[]>([]);
   const [coursesValues, setCoursesValues] = useState<number[]>([]);
 
   const getCoursesOptions = useCallback(async () => {
@@ -42,6 +57,7 @@ export default function FiltersToolbar({
       const options = parseCoursesMetadata(coursesMetadata);
 
       setCoursesOptions(options);
+      setSortedCoursesOptions(options);
       setCoursesValues([options[0].value]);
       setIsFetchingOptions(false);
     } catch (error) {
@@ -59,25 +75,51 @@ export default function FiltersToolbar({
     };
   }, [isUpdating, getCoursesOptions]);
 
+  const onBlurCourses = () => {
+    // Reset to original options order when 'All' is selected
+    if (coursesValues.includes(-1)) {
+      setSortedCoursesOptions(coursesOptions);
+      return;
+    }
+
+    const sortedOptions = [...coursesOptions];
+
+    coursesValues.forEach((value) => {
+      const option = coursesOptions.find((item) => item.value === value);
+
+      if (option) {
+        const removalIndex = sortedOptions.findIndex((item) => item.value === value);
+        // Remove selected option
+        sortedOptions.splice(removalIndex, 1);
+        // Insert selected option as the second option (after 'All')
+        sortedOptions.splice(1, 0, option);
+      }
+    });
+
+    setSortedCoursesOptions(sortedOptions);
+  };
+
+  const queryFiltersRef = useRef<UsersTableQueryFilter>({ ...defaultQueryFilters });
+  const queryFilters = queryFiltersRef.current;
+
   const onSelectCourses = (value: number) => {
     let newCoursesValues: SetStateAction<number[]> = [];
 
     if (value < 0) {
       // Select 'All' and deselect any specific courses
       newCoursesValues = [value];
-      queryOptions.course_id = undefined;
+      queryFilters.course_id = undefined;
     } else if (coursesValues.includes(-1)) {
       // Select a specific course and deselect 'All'
       newCoursesValues = [value];
-      queryOptions.course_id = newCoursesValues;
+      queryFilters.course_id = newCoursesValues;
     } else {
       // Select any specific course
       newCoursesValues = [...coursesValues, value];
-      queryOptions.course_id = newCoursesValues;
+      queryFilters.course_id = newCoursesValues;
     }
 
     setCoursesValues(newCoursesValues);
-    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const onDeselectCourses = (value: number) => {
@@ -89,41 +131,49 @@ export default function FiltersToolbar({
     newCoursesValues.splice(removalIndex, 1);
 
     if (newCoursesValues.length) {
-      queryOptions.course_id = newCoursesValues;
+      queryFilters.course_id = newCoursesValues;
     } else {
       // Select default 'All' when deselecting last specific course
       newCoursesValues = [-1];
-      queryOptions.course_id = undefined;
+      queryFilters.course_id = undefined;
     }
 
     setCoursesValues(newCoursesValues);
-    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const [completedValue, setCompletedValue] = useState<number | boolean>(-1);
 
   const onSelectCompleted = (value: number | boolean) => {
     if (typeof value !== 'number') {
-      queryOptions.course_completed = value;
+      queryFilters.course_completed = value;
     } else {
-      queryOptions.course_completed = undefined;
+      queryFilters.course_completed = undefined;
     }
 
     setCompletedValue(value);
-    fetchUsers(dispatch, envId, from, to, queryOptions);
   };
 
   const [resultsValue, setResultsValue] = useState<number | boolean>(-1);
 
   const onSelectResults = (value: number | boolean) => {
     if (typeof value !== 'number') {
-      queryOptions.quiz_passed = value;
+      queryFilters.quiz_passed = value;
     } else {
-      queryOptions.quiz_passed = undefined;
+      queryFilters.quiz_passed = undefined;
     }
 
     setResultsValue(value);
+  };
+
+  const [prevQueryFilters, setPrevQueryFilters] = useState({ ...queryFilters });
+
+  const onApplyFilters = () => {
+    queryOptions.course_id = queryFilters.course_id;
+    queryOptions.course_completed = queryFilters.course_completed;
+    queryOptions.quiz_passed = queryFilters.quiz_passed;
+
     fetchUsers(dispatch, envId, from, to, queryOptions);
+    setPrevQueryFilters({ ...queryFilters });
   };
 
   return (
@@ -139,8 +189,15 @@ export default function FiltersToolbar({
             className={cc([classes['select-filter'], classes['multi']])}
             mode={WMSelectModeType.Multiple}
             showArrow
+            removeIcon={null}
+            tagRender={({ label }) => (
+              <span className={classes['tag']}>
+                {coursesValues.length > 1 ? `${coursesValues.length} courses selected` : label}
+              </span>
+            )}
             optionFilterProp="label"
-            options={coursesOptions}
+            options={sortedCoursesOptions}
+            onBlur={onBlurCourses}
             onSelect={onSelectCourses}
             onDeselect={onDeselectCourses}
             value={coursesValues}
@@ -169,6 +226,14 @@ export default function FiltersToolbar({
             value={resultsValue}
           />
         </FormGroup>
+        <WMButton
+          className={classes['apply-btn']}
+          variant={ButtonVariantEnum.Primary}
+          onClick={onApplyFilters}
+          disabled={_isEqual(queryFilters, prevQueryFilters)}
+        >
+          Apply
+        </WMButton>
       </WMSkeleton>
     </ControlsWrapper>
   );
