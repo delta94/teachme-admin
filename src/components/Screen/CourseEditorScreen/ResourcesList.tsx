@@ -1,4 +1,5 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
+import cc from 'classcat';
 import { ContentItem, TypeName } from '@walkme/types';
 import {
   useCourseEditorContext,
@@ -12,16 +13,12 @@ import WMCard from '../../common/WMCard';
 import WMSkeleton from '../../common/WMSkeleton';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
-import DetailsPanel from '../../common/DetailsPanel';
-import TextCounter from '../../common/TextCounterInput';
-import Icon from '../../common/Icon';
 
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
 import ResourcesActionMenu from './ResourcesActionMenu';
 
 import classes from './style.module.scss';
-import { WMVerticalRadioGroup } from '../../common/WMRadio';
 import NewResourcePanel from './NewResourcePanel';
 
 export default function ResourcesList(): ReactElement {
@@ -99,7 +96,10 @@ export default function ResourcesList(): ReactElement {
           <ResourcesListEmptyState />
         )}
         <NewResourcePanel
-          className={classes['resource-panel']}
+          className={cc([
+            classes['resource-panel'],
+            { [classes['resource-panel-is-open']]: Boolean(newResourceType) },
+          ])}
           newResourceType={newResourceType}
           onClose={() => setNewResourceType(undefined)}
         />

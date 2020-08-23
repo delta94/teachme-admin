@@ -65,11 +65,14 @@
     width: calc(var(--resources-list-width) - var(--resources-list-margin-size));
     margin-right: var(--resources-list-margin-size);
     background-color: var(--secondary200);
+    overflow-y: hidden;
 
     .title-container {
-      border-bottom: var(--wm-border);
+      display: flex;
       justify-content: flex-end;
       align-items: center;
+      border-bottom: var(--wm-border);
+      padding-right: 20px;
 
       .title {
         margin-right: auto;
@@ -97,10 +100,14 @@
       top: 0;
       right: 0;
       left: 0;
-      bottom: 0;
       min-width: 0;
       width: var(--resources-list-width - 2); // prevent overflow-x to show scroll-bar
+      height: 0;
       border-width: 0;
+
+      &.resource-panel-is-open {
+        height: 100%;
+      }
     }
   }
 

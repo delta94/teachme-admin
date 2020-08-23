@@ -26,7 +26,6 @@ export default function NewResourcePanel({
       titleIcon={newResourceType && <Icon type={newResourceType} />}
       isOpen={Boolean(newResourceType)}
       onClose={onClose}
-      animationType="fade-in-down"
     >
       {newResourceType === CourseItemType.Article ? (
         <div className={classes['new-article-form']}>
