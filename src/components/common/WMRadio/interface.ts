@@ -6,6 +6,7 @@ export interface IRadioButton {
   label: ReactNode;
   disabled?: boolean;
   helpText?: string;
+  content?: ReactNode;
 }
 
 export interface IWMRadio extends RadioProps {

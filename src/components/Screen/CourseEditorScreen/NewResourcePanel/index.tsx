@@ -2,8 +2,10 @@ import React, { ReactElement } from 'react';
 
 import { CourseItemType } from '../../../../interfaces/course.interfaces';
 import DetailsPanel from '../../../common/DetailsPanel';
-import TextCounterInput from '../../../common/TextCounterInput';
 import Icon from '../../../common/Icon';
+
+import NewVideoForm from './NewVideoForm';
+import NewArticleForm from './NewArticleForm';
 
 import classes from './style.module.scss';
 
@@ -25,51 +27,13 @@ export default function NewResourcePanel({
       id: 'Video',
       title: 'New Video',
       titleIcon: resourceIcon,
-      content: (
-        <div className={classes['new-article-form']}>
-          <TextCounterInput
-            maxLength={80}
-            placeholder="Read this"
-            label="Name"
-            onBlur={(e) => {
-              console.log('URL onBlur e => ', e);
-            }}
-          />
-          <TextCounterInput
-            maxLength={80}
-            placeholder="http://"
-            label="URL"
-            onBlur={(e) => {
-              console.log('URL onBlur e => ', e);
-            }}
-          />
-        </div>
-      ),
+      content: <NewVideoForm />,
     },
     [CourseItemType.Article]: {
       id: 'Article',
       title: 'New Article',
       titleIcon: resourceIcon,
-      content: (
-        <div className={classes['new-video-form']}>
-          <TextCounterInput
-            maxLength={80}
-            placeholder="Read this"
-            label="Name"
-            onBlur={(e) => {
-              console.log('URL onBlur e => ', e);
-            }}
-          />
-          <TextCounterInput
-            maxLength={80}
-            placeholder="http://"
-            label="URL"
-            onBlur={(e) => {
-              console.log('URL onBlur e => ', e);
-            }}
-          />
-        </div>
-      ),
+      content: <NewArticleForm />,
     },
   };
 
