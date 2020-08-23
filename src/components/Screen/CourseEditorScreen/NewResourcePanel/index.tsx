@@ -4,8 +4,7 @@ import { CourseItemType } from '../../../../interfaces/course.interfaces';
 import DetailsPanel from '../../../common/DetailsPanel';
 import Icon from '../../../common/Icon';
 
-import NewVideoForm from './NewVideoForm';
-import NewArticleForm from './NewArticleForm';
+import NewResourceForm from './NewResourceForm';
 
 import classes from './style.module.scss';
 
@@ -27,13 +26,13 @@ export default function NewResourcePanel({
       id: 'Video',
       title: 'New Video',
       titleIcon: resourceIcon,
-      content: <NewVideoForm />,
+      content: <NewResourceForm />,
     },
     [CourseItemType.Article]: {
       id: 'Article',
       title: 'New Article',
       titleIcon: resourceIcon,
-      content: <NewArticleForm />,
+      content: <NewResourceForm />,
     },
   };
 

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, ReactNode } from 'react';
 import cc from 'classcat';
 
 import TextCounterInput from '../../../common/TextCounterInput';
@@ -20,10 +20,10 @@ const openInOptions = [
   },
 ];
 
-export default function NewArticleForm(): ReactElement {
+export default function NewResourceForm({ children }: { children?: ReactNode }): ReactElement {
   const [activeOpenInOption, setActiveOpenInOption] = useState<IRadioButton>(openInOptions[0]);
   return (
-    <div className={classes['new-article-form']}>
+    <div className={classes['resource-form']}>
       <TextCounterInput
         maxLength={80}
         placeholder="Read this"
@@ -75,6 +75,7 @@ export default function NewArticleForm(): ReactElement {
           }}
         />
       </div>
+      {children}
     </div>
   );
 }

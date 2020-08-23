@@ -1,20 +1,19 @@
 .resource-form {
-}
+  .lightbox {
+    display: flex;
+    align-items: center;
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.3s linear;
 
-.lightbox {
-  display: flex;
-  align-items: center;
-  opacity: 0.3;
-  pointer-events: none;
-  transition: opacity 0.3s linear;
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
 
-  &.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .lightbox-field {
-    margin: 0 5px;
-    width: 50px;
+    .lightbox-field {
+      margin: 0 5px;
+      width: 50px;
+    }
   }
 }
