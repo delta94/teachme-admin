@@ -62,12 +62,7 @@ export default function CourseOutline(): ReactElement {
           ))}
         </WMTabs>
       </WMCard>
-      <CourseOutlineDetailsPanel
-        className={cc([
-          classes['course-details-panel'],
-          { [classes['is-open']]: isDetailsPanelOpen },
-        ])}
-      />
+      <CourseOutlineDetailsPanel />
     </>
   );
 }
