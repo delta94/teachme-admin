@@ -45,6 +45,7 @@
   .question-item {
     border: none;
     padding: 0;
+    width: 95%; // support ellipsis
 
     .delete-button {
       opacity: 0;
