@@ -64,7 +64,7 @@ export const fetchCourseData = async (
       courseMetadata,
       overview,
       courseOutline: {
-        dropOffEnabled: courseOutline.dropOffEnabled,
+        dropOffEnabled: courseOutline!.dropOffEnabled,
         items: convertedCourseOutline,
       },
       filteredCourseOutline: convertedCourseOutline,

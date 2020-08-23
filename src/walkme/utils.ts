@@ -49,21 +49,33 @@ export function index<T>(arr: T[], prop: string): { [key: string]: T } {
   return ret;
 }
 
+const idop = (x: any) => x;
+
 export function saveAsCsv(
   data: Array<any>,
   headers: Array<string>,
   filename: string,
-  lables?: Array<string>,
+  options?: {
+    lables?: Array<string>;
+    mappers: { [key: string]: (value: any) => any };
+  },
 ): Promise<void> {
-  const str = convertToCSV(data, headers);
+  const str = convertToCSV(data, headers, options?.mappers);
   const blob = new Blob([str], { type: 'application/csv' });
   return saveCsv(blob, filename);
 }
 
-function convertToCSV(data: Array<any>, headers: Array<string>) {
+function convertToCSV(
+  data: Array<any>,
+  headers: Array<string>,
+  mappers: { [key: string]: (value: any) => any } = {},
+) {
   const csvArray: Array<string> = [headers.join()];
   for (let item of data) {
-    const itemCsv = headers.map((header) => `"${item[header]}"`).join();
+    const itemCsv = headers
+      .map((header) => (mappers[header] ?? idop)(item[header]))
+      .map((item) => `"${item}"`)
+      .join();
     csvArray.push(itemCsv);
   }
   return csvArray.join('\r\n');
