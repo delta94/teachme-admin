@@ -53,12 +53,13 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
     dispatch({ type: ActionType.SetEnvironments, environments });
     dispatch({ type: ActionType.SetEnvironment, environment: defaultEnv });
 
-    let dateRange = defaultDateRange;
-    const storedDateRange = localStorage.getItem(dateRangeLocalStorageKey);
     // Get `dateRange` from `localStorage` when available
-    if (storedDateRange) dateRange = JSON.parse(storedDateRange);
+    const storedDateRange = localStorage.getItem(dateRangeLocalStorageKey);
 
-    dispatch({ type: ActionType.SetDateRange, dateRange });
+    dispatch({
+      type: ActionType.SetDateRange,
+      dateRange: storedDateRange ? JSON.parse(storedDateRange) : defaultDateRange,
+    });
 
     dispatch({ type: ActionType.UpdateSuccess });
   } catch (error) {
