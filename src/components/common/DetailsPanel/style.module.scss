@@ -22,17 +22,7 @@
   }
 
   &.open {
-    min-width: 350px;
-    width: 350px;
-    border-width: 1px;
-
-    // additional styles to support animation
-    opacity: 1;
-    visibility: visible;
-
-    &.fade-in-down {
-      animation: fadeInDown 0.3s linear both;
-    }
+    width: auto;
   }
 }
 

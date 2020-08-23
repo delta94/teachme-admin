@@ -6,6 +6,8 @@ import { getFlatItemsList, getCourse, getNewCourse } from '../../walkme';
 import { COURSES_ROUTE } from '../../constants/routes';
 
 import { ActionType, IState, IDispatch } from './course-editor-context.interface';
+import { getCourseErrorMessage } from '../../utils/app-utils';
+import { wmMessage, MessageType } from '../../utils';
 
 export const CourseEditorStateContext = createContext<IState | undefined>(undefined);
 export const CourseEditorDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -72,7 +74,9 @@ export const fetchCourse = async (
     }
   } catch (error) {
     console.error(error);
-    message.error(`Cannot find course with id ${courseId}`);
+    const errorMessage = getCourseErrorMessage(error, courseId as number);
+    wmMessage(errorMessage, MessageType.Error);
+
     history.push(COURSES_ROUTE.path);
     dispatch({ type: ActionType.FetchCourseError });
   }

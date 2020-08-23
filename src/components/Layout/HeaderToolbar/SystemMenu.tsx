@@ -15,11 +15,9 @@ import { parseSystems } from './utils';
 import classes from './style.module.scss';
 
 export default function SystemMenu({ className }: { className?: string }): ReactElement {
-  const [{ system }, dispatch] = useAppContext();
+  const [{ system, parsedSystems, systems }, dispatch] = useAppContext();
   const [selectedSystem, setSelectedSystem] = useState<IWMDropdownOption>();
-  const [systems, setSystems] = useState<SystemData[]>([]);
   const [options, setOptions] = useState<IWMDropdownOption[]>([]);
-  const [initiated, setInitiated] = useState(false);
   const systemIsValid = system !== '' && (system as SystemData)?.userId;
 
   const handleMenuClick = (selected: IWMDropdownOption) => {
@@ -32,41 +30,17 @@ export default function SystemMenu({ className }: { className?: string }): React
     message.info(`System changed to ${selected.value}`);
   };
 
-  const getSystemsOptions = useCallback(async () => {
-    if (systemIsValid) {
-      dispatch({ type: ActionType.Updating });
-
-      try {
-        const systemsOptions = await getSystems();
-        const options = parseSystems(systemsOptions);
-
-        setSystems(systemsOptions);
-        setOptions(options as IWMDropdownOption[]);
-        dispatch({ type: ActionType.UpdateSuccess });
-      } catch (error) {
-        console.error(error);
-        dispatch({ type: ActionType.UpdateError, errorMessage: error });
-      }
-    }
-  }, [systemIsValid, dispatch]);
-
-  useEffect(() => {
-    if (!initiated) {
-      getSystemsOptions();
-      setInitiated(true);
-    }
-  }, [getSystemsOptions, initiated]);
-
   useEffect(() => {
     if (systemIsValid) setSelectedSystem(parseSystems([system as SystemData]) as IWMDropdownOption);
   }, [system, systemIsValid]);
 
+  useEffect(() => {
+    setOptions(parsedSystems as IWMDropdownOption[]);
+  }, [parsedSystems, setOptions]);
   // unmount only
   useEffect(
     () => () => {
-      setSystems([]);
       setOptions([]);
-      setInitiated(false);
     },
     [],
   );

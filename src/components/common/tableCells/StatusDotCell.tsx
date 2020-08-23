@@ -10,7 +10,6 @@ import classes from './style.module.scss';
 export default function StatusDotCell({
   value,
   passed,
-  passingValue = 51,
   className,
   ...otherProps
 }: IStatusDotCell): ReactElement {
@@ -19,7 +18,7 @@ export default function StatusDotCell({
       {typeof value === 'number' ? (
         <>
           <StatusDot
-            type={value >= passingValue || passed ? DotType.Success : DotType.Failure}
+            type={passed ? DotType.Success : DotType.Failure}
             className={classes['table-cell-dot']}
           />
           <NumberCell value={Math.round(value)} className={classes.bold} />

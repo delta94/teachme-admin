@@ -21,6 +21,7 @@ export interface IAction {
   environments?: WalkMeEnvironment[];
   environment?: WalkMeEnvironment;
   dateRange?: IDateRange;
+  systems?: SystemData[];
 }
 
 export interface IDispatch {
@@ -39,6 +40,8 @@ export interface IState {
   environments: WalkMeEnvironment[];
   parsedEnvironments: IWMDropdownOption[];
   dateRange: IDateRange;
+  systems: SystemData[];
+  parsedSystems: IWMDropdownOption | IWMDropdownOption[];
 }
 
 export interface IAppProvider {
