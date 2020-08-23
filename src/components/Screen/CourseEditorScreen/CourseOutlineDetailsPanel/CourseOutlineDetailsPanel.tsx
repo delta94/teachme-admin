@@ -19,7 +19,11 @@ export const taksItemIconType = {
   [CourseItemType.Video]: 'VideoSmall',
 };
 
-export default function CourseOutlineDetailsPanel(): ReactElement {
+export default function CourseOutlineDetailsPanel({
+  className,
+}: {
+  className?: string;
+}): ReactElement {
   const [{ course, isDetailsPanelOpen, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
   const onClosePanel = () => {
@@ -91,6 +95,7 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
     <>
       {activeType && (
         <DetailsPanel
+          className={className}
           title={detailsPanelContent[activeType].title}
           titleIcon={
             <Icon
