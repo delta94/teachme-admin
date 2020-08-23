@@ -7,7 +7,7 @@ import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import CourseOutlineTab from './CourseOutlineTab';
 import CourseSettingsTab from './CourseSettingsTab';
-import CourseOutlineDetailsPanel from './CourseOutlineDetailsPanel/CourseOutlineDetailsPanel';
+import CourseOutlineDetailsPanel from './CourseOutlineDetailsPanel';
 
 import classes from './style.module.scss';
 

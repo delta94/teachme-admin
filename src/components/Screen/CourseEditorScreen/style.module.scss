@@ -90,8 +90,10 @@
   .course-structure {
     --course-structure-max-width: 70%;
 
+    overflow: hidden;
     flex-grow: 1;
     max-width: var(--course-structure-max-width);
+    transition: max-width 0.3s ease-in-out;
 
     &.details-panel-is-open {
       max-width: calc(var(--course-structure-max-width) - var(--details-panel-width));
@@ -152,6 +154,12 @@
   }
 
   .course-details-panel {
+    border-width: 0;
+
+    .details-panel-title-icon {
+      color: var(--secondary500);
+    }
+
     &.is-open {
       min-width: var(--details-panel-width);
       width: var(--details-panel-width);

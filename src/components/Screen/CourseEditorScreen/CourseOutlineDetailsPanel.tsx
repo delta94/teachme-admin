@@ -1,14 +1,14 @@
 import React, { ReactElement } from 'react';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
-import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
-import { CourseItemType } from '../../../../interfaces/course.interfaces';
-import DetailsPanel from '../../../common/DetailsPanel';
-import Icon, { IconType } from '../../../common/Icon';
-import QuizEditForm from '../QuizEditForm';
-import QuizSettingsForm from '../QuizSettingsForm';
-import { QuizScreenType } from '../QuizEditForm/interface';
-import CourseItemDetails from '../CourseItemDetails';
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
+import { CourseItemType } from '../../../interfaces/course.interfaces';
+import DetailsPanel from '../../common/DetailsPanel';
+import Icon, { IconType } from '../../common/Icon';
+import QuizEditForm from './QuizEditForm';
+import QuizSettingsForm from './QuizSettingsForm';
+import { QuizScreenType } from './QuizEditForm/interface';
+import CourseItemDetails from './CourseItemDetails';
 
 import classes from './style.module.scss';
 
@@ -92,24 +92,22 @@ export default function CourseOutlineDetailsPanel({
   const activeType = activeDetailsItem?.type ?? null;
 
   return (
-    <>
-      {activeType && (
-        <DetailsPanel
-          className={className}
-          title={detailsPanelContent[activeType].title}
-          titleIcon={
-            <Icon
-              type={IconType[detailsPanelContent[activeType].iconType as keyof typeof IconType]}
-              className={classes['details-panel-title-icon']}
-            />
-          }
-          isOpen={isDetailsPanelOpen}
-          onClose={onClosePanel}
-          titleIsEllipsis
-        >
-          {detailsPanelContent[activeType].content}
-        </DetailsPanel>
-      )}
-    </>
+    <DetailsPanel
+      className={className}
+      title={activeType && detailsPanelContent[activeType].title}
+      titleIcon={
+        activeType && (
+          <Icon
+            type={IconType[detailsPanelContent[activeType].iconType as keyof typeof IconType]}
+            className={classes['details-panel-title-icon']}
+          />
+        )
+      }
+      isOpen={isDetailsPanelOpen}
+      onClose={onClosePanel}
+      titleIsEllipsis
+    >
+      {activeType && detailsPanelContent[activeType].content}
+    </DetailsPanel>
   );
 }
