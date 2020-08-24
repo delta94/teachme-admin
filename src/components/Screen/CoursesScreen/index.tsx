@@ -1,4 +1,4 @@
-import React, { Key, ReactElement, useEffect, useState } from 'react';
+import React, { Key, ReactElement, useEffect, useState, useCallback } from 'react';
 import { ConfigProvider, Divider } from 'antd';
 
 import { ActionType as AppActionType, useAppContext } from '../../../providers/AppContext';
@@ -56,26 +56,32 @@ export default function CoursesScreen(): ReactElement {
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
 
-  const onMultiSelectChange = (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
-    dispatch({
-      type: ActionType.SetSelectedRows,
-      courses: selectedRows,
-      selectedRowKeys,
-    });
+  const onMultiSelectChange = useCallback(
+    (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
+      dispatch({
+        type: ActionType.SetSelectedRows,
+        courses: selectedRows,
+        selectedRowKeys,
+      }),
+    [dispatch],
+  );
 
   const onDateRangeChange = (dateRange?: IDateRange) =>
     appDispatch({ type: AppActionType.SetDateRange, dateRange });
 
-  const onSortEnd = (
-    { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
-    courses: Array<UICourse>,
-    selectedRowKeys?: Array<Key>,
-  ) => {
-    dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowKeys });
+  const onSortEnd = useCallback(
+    (
+      { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
+      courses: Array<UICourse>,
+      selectedRowKeys?: Array<Key>,
+    ) => {
+      dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowKeys });
 
-    const courseId = courses[newIndex].id;
-    sortTable(dispatch, courseId, oldIndex, newIndex);
-  };
+      const courseId = courses[newIndex].id;
+      sortTable(dispatch, courseId, oldIndex, newIndex);
+    },
+    [dispatch],
+  );
 
   const selectedRowsCount = selectedRows.length;
 

@@ -29,6 +29,7 @@ export const columns: ColumnsType<any> = [
     dataIndex: 'sort',
     className: 'drag-visible',
     render: (): ReactElement => <DragHandle />,
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Name',
@@ -36,6 +37,7 @@ export const columns: ColumnsType<any> = [
     render: (value: string, { title, id }: UICourse): ReactElement => (
       <LinkCell value={title} to={`/course/${id}`} />
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Production Status',
@@ -43,6 +45,7 @@ export const columns: ColumnsType<any> = [
     render: (value: PublishStatus): ReactElement => (
       <TagCell value={getPublishStatusLabel(value)} color={getPublishStatusColor(value)} />
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Segment',
@@ -67,6 +70,7 @@ export const columns: ColumnsType<any> = [
         SegmentsTextCell
       );
     },
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Users Started',
@@ -77,6 +81,7 @@ export const columns: ColumnsType<any> = [
         <NumberCell value={value} />
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Users Completed',
@@ -91,6 +96,7 @@ export const columns: ColumnsType<any> = [
         )}
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Avg. Quiz Score',
@@ -101,6 +107,7 @@ export const columns: ColumnsType<any> = [
         {avg_quiz_score && <StatusDotCell value={avg_quiz_score} passed={quiz_passed} />}
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Avg. Quiz attempts',
@@ -112,12 +119,17 @@ export const columns: ColumnsType<any> = [
         <NumberCell value={typeof value === 'number' ? value.toFixed(1) : value} />
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'actions',
     dataIndex: 'actions',
     align: 'right',
     className: classes['actions-column'],
-    render: (data: undefined, row: UICourse): ReactElement => <ActionsCell course={row} />,
+    render: (data: undefined, row: UICourse): ReactElement => {
+      console.log('rerendering table');
+      return <ActionsCell course={row} />;
+    },
+    shouldCellUpdate: () => false,
   },
 ];
