@@ -5,10 +5,11 @@ import DetailsPanel from '../../../common/DetailsPanel';
 import Icon from '../../../common/Icon';
 
 import NewResourceForm from './NewResourceForm';
+import { NewResourceType } from './interface';
 
 import classes from './style.module.scss';
 
-export type NewResourceType = CourseItemType.Article | CourseItemType.Video;
+export type { NewResourceType };
 
 export default function NewResourcePanel({
   newResourceType,

@@ -2,12 +2,14 @@ import React, { ReactElement, useState, ReactNode, ChangeEvent } from 'react';
 import cc from 'classcat';
 import { DownOutlined } from '@ant-design/icons';
 
+import { isNumericValue, getValidRangeNumber } from '../../../../utils';
+
 import FormGroup from '../../../common/FormGroup';
 import TextCounterInput from '../../../common/TextCounterInput';
 import { WMVerticalRadioGroup } from '../../../common/WMRadio';
 import WMInput from '../../../common/WMInput';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
-import WMButton from '../../../common/WMButton';
+import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
 import classes from './style.module.scss';
 
@@ -49,14 +51,10 @@ export default function NewResourceForm({ children }: { children?: ReactNode }):
   const onUnitSize = (event: ChangeEvent<HTMLInputElement>, type: 'width' | 'height') => {
     const { value } = event.target;
 
-    const reg = /^-?\d*(\.\d*)?$/;
-    if ((!isNaN(parseInt(value)) && reg.test(value)) || value === '' || value === '-') {
-      const size =
-        value === '' || value === '-' ? 0 : parseInt(value) > 100 ? 100 : parseInt(value);
-
+    if (isNumericValue(value)) {
       setLightbox((prev) => ({
         ...prev,
-        [type]: size,
+        [type]: getValidRangeNumber(value),
       }));
     }
   };
@@ -122,7 +120,24 @@ export default function NewResourceForm({ children }: { children?: ReactNode }):
         {selectedSizeUnit.value}
       </div>
       {children}
-      <footer className={classes['resource-form-footer']}>save</footer>
+      <footer className={classes['resource-form-actions']}>
+        <WMButton
+          variant={ButtonVariantEnum.Secondary}
+          shape={'round'}
+          className={classes['cancel-button']}
+          onClick={() => console.log('Cancel')}
+        >
+          Cancel
+        </WMButton>
+        <WMButton
+          variant={ButtonVariantEnum.Primary}
+          shape={'round'}
+          // disabled={!hasChanges }
+          onClick={() => console.log('Save')}
+        >
+          save
+        </WMButton>
+      </footer>
     </div>
   );
 }
