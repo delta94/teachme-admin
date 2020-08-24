@@ -60,11 +60,11 @@ export default function ResourcesList(): ReactElement {
           <span className={classes['title']}>Items</span>
           <RefreshButton onClick={onRefresh} loading={isFetchingItems} />
           {/* TODO: uncomment the following component when ResourcesActionMenu is ready */}
-          <ResourcesActionMenu
+          {/* <ResourcesActionMenu
             className={classes['resources-action-menu']}
             isLoading={isUpdating || isFetchingItems}
             onActionSelected={onActionSelected}
-          />
+          /> */}
         </div>
       }
     >
