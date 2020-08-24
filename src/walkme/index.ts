@@ -41,6 +41,8 @@ export async function authInit(params: {
 }
 
 export async function initWalkme() {
+  if (!walkme.auth.isLoggedIn()) return;
+
   const userData = await walkme.user.getOriginalUserData();
   window.walkmeData = { account: userData.editorAccountName, user: userData.userName };
   loadWalkme();
