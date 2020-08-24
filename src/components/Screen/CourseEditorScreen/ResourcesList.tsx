@@ -49,7 +49,6 @@ export default function ResourcesList(): ReactElement {
   };
 
   const onActionSelected = (selectedType: NewResourceType) => {
-    console.log('selectedType ', selectedType);
     setNewResourceType(selectedType);
   };
 

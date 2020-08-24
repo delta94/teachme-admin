@@ -20,4 +20,23 @@
       margin: 0 10px 0 0;
     }
   }
+
+  .resource-field {
+    margin: 10px auto;
+  }
+}
+
+.new-resource {
+  .actions {
+    margin: 25px auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    :global(.ant-btn) {
+      &:last-child {
+        margin-left: 20px;
+      }
+    }
+  }
 }

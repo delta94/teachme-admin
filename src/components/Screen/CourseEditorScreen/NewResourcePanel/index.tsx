@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
 
 import { CourseItemType } from '../../../../interfaces/course.interfaces';
 import DetailsPanel from '../../../common/DetailsPanel';
 import Icon from '../../../common/Icon';
+import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 
 import NewResourceForm from './NewResourceForm';
 import { NewResourceType } from './interface';
@@ -27,13 +29,25 @@ export default function NewResourcePanel({
       id: 'Video',
       title: 'New Video',
       titleIcon: resourceIcon,
-      content: <NewResourceForm />,
+      content: (
+        <NewResourceForm
+          onDataChange={(data) => {
+            console.log('NewResourceForm onDataChange', data);
+          }}
+        />
+      ),
     },
     [CourseItemType.Article]: {
       id: 'Article',
       title: 'New Article',
       titleIcon: resourceIcon,
-      content: <NewResourceForm />,
+      content: (
+        <NewResourceForm
+          onDataChange={(data) => {
+            console.log('NewResourceForm onDataChange', data);
+          }}
+        />
+      ),
     },
   };
 
@@ -41,13 +55,33 @@ export default function NewResourcePanel({
 
   return (
     <DetailsPanel
-      className={className}
+      className={cc([classes['new-resource'], className])}
       title={activeResource?.title}
       titleIcon={activeResource?.titleIcon}
       isOpen={Boolean(activeResource)}
       onClose={onClose}
     >
       {activeResource?.content}
+      {activeResource && (
+        <footer className={classes['actions']}>
+          <WMButton
+            variant={ButtonVariantEnum.Secondary}
+            shape={'round'}
+            className={classes['cancel-button']}
+            onClick={() => console.log('Cancel')}
+          >
+            Cancel
+          </WMButton>
+          <WMButton
+            variant={ButtonVariantEnum.Primary}
+            shape={'round'}
+            // disabled={!hasChanges }
+            onClick={() => console.log('Save')}
+          >
+            save
+          </WMButton>
+        </footer>
+      )}
     </DetailsPanel>
   );
 }
