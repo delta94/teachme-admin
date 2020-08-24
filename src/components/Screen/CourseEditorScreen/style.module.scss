@@ -259,3 +259,10 @@ body.prevent-interaction {
 html.prevent-interaction {
   cursor: not-allowed;
 }
+
+.resource-list-empty-state {
+  :global(.ant-empty-description) {
+    display: flex;
+    flex-direction: column;
+  }
+}
