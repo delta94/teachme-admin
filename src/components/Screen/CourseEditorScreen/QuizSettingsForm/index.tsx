@@ -36,6 +36,8 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
     }
   };
 
+  console.log('quiz ', quiz);
+
   return (
     <div className={classes['quiz-settings-form']}>
       {quiz?.properties && (
