@@ -31,5 +31,5 @@ export const initialNewResourceBaseData: IResourceBaseData = {
 export const initialNewVideoData: IResourceVideoData = {
   ...initialNewResourceBaseData,
   autoplay: true,
-  videoPlayerParameters: ['autopaly="1"'],
+  videoPlayerParameters: 'autoplay="1"',
 };

@@ -27,5 +27,5 @@ export interface IResourceBaseData {
 
 export interface IResourceVideoData extends IResourceBaseData {
   autoplay: boolean;
-  videoPlayerParameters: string[];
+  videoPlayerParameters: string;
 }

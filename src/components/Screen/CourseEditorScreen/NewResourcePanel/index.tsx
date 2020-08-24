@@ -7,6 +7,7 @@ import Icon from '../../../common/Icon';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
 import WMSwitch from '../../../common/WMSwitch';
 import WMInput from '../../../common/WMInput';
+import FormGroup from '../../../common/FormGroup';
 
 import NewResourceForm from './NewResourceForm';
 import { NewResourceType, IResourceBaseData, IResourceVideoData } from './interface';
@@ -56,24 +57,23 @@ export default function NewResourcePanel({
           <NewResourceForm onDataChange={onDataChange} initialNewResource={initialNewVideoData}>
             <WMSwitch
               className={classes['switch-field']}
-              checked={
-                (newResourceData as IResourceVideoData)?.autoplay ?? initialNewVideoData.autoplay
-              }
+              defaultChecked={initialNewVideoData.autoplay}
+              checked={(newResourceData as IResourceVideoData)?.autoplay}
               label="Autoplay"
               onChange={(checked: boolean) => onVideoDataChange({ autoplay: checked })}
             />
           </NewResourceForm>
-          <WMInput
-            id="video-parameters-field"
-            className={classes['video-parameters-field']}
-            value={
-              (newResourceData as IResourceVideoData)?.videoPlayerParameters ??
-              initialNewVideoData.videoPlayerParameters.join(' ,')
-            }
-            onChange={(e) =>
-              onVideoDataChange({ videoPlayerParameters: e.target.value.split(',') })
-            }
-          />
+          <FormGroup
+            className={cc([classes['resource-field'], classes['video-parameters-field']])}
+            title="Video Player Parameters"
+          >
+            <WMInput
+              id="video-parameters-field"
+              defaultValue={initialNewVideoData.videoPlayerParameters}
+              value={(newResourceData as IResourceVideoData)?.videoPlayerParameters}
+              onChange={(e) => onVideoDataChange({ videoPlayerParameters: e.target.value })}
+            />
+          </FormGroup>
         </>
       ),
     },
