@@ -3,8 +3,11 @@ import { SystemData } from '@walkme/editor-sdk/dist/system';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
 import * as walkme from '../../walkme';
+import { defaultDateRange, dateRangeLocalStorageKey } from '../../utils';
 
 import { EnvironmentType, ActionType, IState, IDispatch } from './app-context.interface';
+import { getSystems as fetchSystems } from '../../walkme';
+import { parseSystems } from '../../components/Layout/HeaderToolbar/utils';
 
 export const AppStateContext = createContext<IState | undefined>(undefined);
 export const AppDispatchContext = createContext<IDispatch | undefined>(undefined);
@@ -35,11 +38,12 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
   dispatch({ type: ActionType.Updating });
 
   try {
-    const [user, originalUser, system, environments] = await Promise.all([
+    const [user, originalUser, system, environments, systems] = await Promise.all([
       walkme.getUserData(),
       walkme.getOriginalUserData(),
       walkme.getSystemData(),
       walkme.getEnvironments(),
+      getSystems(),
     ]);
 
     const defaultEnv = environments.find(
@@ -49,8 +53,17 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
     dispatch({ type: ActionType.SetUser, user });
     dispatch({ type: ActionType.SetOriginalUser, originalUser });
     dispatch({ type: ActionType.SetSystem, system });
+    dispatch({ type: ActionType.SetSystems, systems });
     dispatch({ type: ActionType.SetEnvironments, environments });
     dispatch({ type: ActionType.SetEnvironment, environment: defaultEnv });
+
+    // Get `dateRange` from `localStorage` when available
+    const storedDateRange = localStorage.getItem(dateRangeLocalStorageKey);
+
+    dispatch({
+      type: ActionType.SetDateRange,
+      dateRange: storedDateRange ? JSON.parse(storedDateRange) : defaultDateRange,
+    });
 
     dispatch({ type: ActionType.UpdateSuccess });
   } catch (error) {
@@ -58,6 +71,15 @@ export const setInitialGlobals = async (dispatch: IDispatch): Promise<void> => {
     dispatch({ type: ActionType.UpdateError, errorMessage: error });
   }
 };
+
+async function getSystems(): Promise<SystemData[]> {
+  try {
+    return await fetchSystems();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
 
 export const setAppSystem = async ({
   dispatch,

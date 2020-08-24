@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import * as data from '../data';
 import * as analytics from '../analytics';
 import { UsersListQueryOptions, UsersCountResponse, UserListUIResponse } from '../models/users';
@@ -64,11 +66,19 @@ export async function exportUsersData(
       'title',
       'started_date',
       'completed_date',
+      'time_to_complete',
       'quiz_result',
       'quiz_passed',
       'quiz_attempts',
     ],
     `teachme-users-data-${Date.now()}`,
+    {
+      mappers: {
+        time_to_complete(ts: number) {
+          return ts && moment.duration(ts, 'millisecond').humanize();
+        },
+      },
+    },
   );
 }
 

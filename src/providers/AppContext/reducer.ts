@@ -3,9 +3,9 @@ import { UserData } from '@walkme/editor-sdk/dist/user';
 import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 import { SystemData } from '@walkme/editor-sdk/dist/system';
 
-import { parseEnvironments } from '../../components/Layout/HeaderToolbar/utils';
+import { parseEnvironments, parseSystems } from '../../components/Layout/HeaderToolbar/utils';
 import { IWMDropdownOption } from '../../components/common/WMDropdown';
-import { defaultDateRange } from '../../utils';
+import { defaultDateRange, dateRangeLocalStorageKey } from '../../utils';
 
 import { ActionType, IState, IAction } from './app-context.interface';
 
@@ -21,6 +21,8 @@ export const initialState = {
   parsedEnvironments: [] as IWMDropdownOption[],
   originalUser: {} as UserData,
   dateRange: defaultDateRange,
+  systems: [] as SystemData[],
+  parsedSystems: [] as IWMDropdownOption[],
 };
 
 export const reducer = produce(
@@ -50,6 +52,10 @@ export const reducer = produce(
       case ActionType.SetSystem:
         draft.system = action.system ?? initialState.system;
         break;
+      case ActionType.SetSystems:
+        draft.systems = action.systems ?? initialState.systems;
+        draft.parsedSystems = parseSystems(action.systems ?? []) ?? initialState.systems;
+        break;
       case ActionType.SetEnvironments:
         draft.environments = action.environments ?? [];
         draft.parsedEnvironments = parseEnvironments(action.environments ?? []);
@@ -59,6 +65,9 @@ export const reducer = produce(
         break;
       case ActionType.SetDateRange:
         draft.dateRange = action.dateRange ?? initialState.dateRange;
+        // Persist `dateRange` to `localStorage` on change
+        if (action.dateRange)
+          localStorage.setItem(dateRangeLocalStorageKey, JSON.stringify(action.dateRange));
         break;
       case ActionType.CurrentScreenProvider:
         draft.screenProvider = action.currentScreen;

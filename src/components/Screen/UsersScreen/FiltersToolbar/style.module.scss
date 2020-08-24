@@ -3,7 +3,7 @@
 
   .filter-wrapper {
     flex-wrap: nowrap;
-    margin-right: 40px;
+    margin-right: 20px;
 
     label {
       color: var(--neutral900);
@@ -16,15 +16,46 @@
       width: 145px;
 
       &.multi {
-        width: 180px;
+        width: 245px;
 
         :global(.ant-select-selector) {
-          max-height: 62px;
-          padding-right: 30px;
-          overflow: auto;
+          flex-wrap: nowrap;
+          max-height: 32px;
+          padding: 0 30px 0 4px;
+
+          > span {
+            display: inline-flex;
+            max-width: 90%;
+            pointer-events: none;
+
+            > .tag {
+              font-size: 13px;
+              color: var(--neutral900);
+              background-color: var(--multiselect-tag-bg-color);
+              height: 24px;
+              border: var(--multiselect-tag-border);
+              border-radius: 1px;
+              padding: 0 6px;
+              margin: 4px;
+              margin-left: 0;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            // Hides the extra tags
+            &:not(:first-of-type) > .tag {
+              display: none;
+            }
+          }
         }
       }
     }
+  }
+
+  .apply-btn {
+    padding: 0 18px;
+    border-radius: 20px;
   }
 }
 
