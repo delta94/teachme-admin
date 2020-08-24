@@ -12,11 +12,12 @@ export const useRedirectToMain = (): void => {
   const { push } = useHistory();
 
   useEffect(() => {
-    const isValidSystem =
+    const changedSystem =
       prevSystem &&
       prevSystem !== '' &&
+      !!Object.keys(prevSystem).length &&
       (prevSystem as SystemData)?.userId !== (system as SystemData)?.userId;
 
-    if (isValidSystem) push(COURSES_ROUTE.path);
+    if (changedSystem) push(COURSES_ROUTE.path);
   }, [prevSystem, system, push]);
 };
