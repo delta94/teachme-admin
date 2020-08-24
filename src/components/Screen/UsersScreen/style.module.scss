@@ -1,6 +1,11 @@
 .users-screen {
   min-width: min-content;
 
+  .users-title {
+    display: flex;
+    align-items: baseline;
+  }
+
   .table-wrapper:global(.ant-card) {
     min-width: min-content;
 

@@ -138,3 +138,8 @@
     @include fullSizeIcon;
   }
 }
+
+.course-details-title-left {
+  display: flex;
+  align-items: center;
+}

@@ -83,9 +83,12 @@ export default function CoursesScreen(): ReactElement {
   return (
     <>
       <ScreenHeader
-        title="Courses"
+        title={
+          <div className={classes['courses-title']}>
+            Courses <LastUpdated />
+          </div>
+        }
         timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
-        subTitle={<LastUpdated />}
       />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"

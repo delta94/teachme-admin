@@ -1,14 +1,17 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
+import cc from 'classcat';
 
 import { DataEvents } from '../../../walkme/screens/general';
 import { AnalyticsEvents } from '../../../walkme/models/analytics';
 
-export default function LastUpdated(): ReactElement {
-  const [lastUpdateTime, setLastUpdateTime] = useState<Date | null>(null);
+import classes from './style.module.scss';
+
+export default function LastUpdated({ className }: { className?: string }): ReactElement {
+  const [lastUpdateTime, setLastUpdateTime] = useState<Moment | null>(null);
 
   const updateTime = ({ last_update_time }: { last_update_time: Date }) => {
-    setLastUpdateTime(last_update_time);
+    setLastUpdateTime(moment(last_update_time));
   };
 
   useEffect(() => {
@@ -19,5 +22,12 @@ export default function LastUpdated(): ReactElement {
     };
   }, []);
 
-  return <div>Last data update at {moment(lastUpdateTime).format('hh:mm')}</div>;
+  const hasValidDate = lastUpdateTime?.isValid();
+  return hasValidDate ? (
+    <div className={cc([classes['last-updated'], className])}>
+      Last data update at {moment(lastUpdateTime).format('hh:mm')}
+    </div>
+  ) : (
+    <></>
+  );
 }
