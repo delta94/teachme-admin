@@ -22,8 +22,7 @@ export const wmMessage = (content: ReactNode, type = MessageType.Success): void 
     case MessageType.Success:
       message.success({
         content,
-        className: classes['wm-message-success'],
-        icon: <Icon type={IconType.Check} className={classes['icon-message']} />,
+        icon: <Icon type={IconType.Check} className={classes['icon']} />,
       });
       break;
     default:
