@@ -34,7 +34,7 @@ export default function ImpersonateDialog({
   const onEmailChange = (value: string) => {
     debouncedFetchEmails(value);
     setLocalValue(value);
-    const valid = options.some((item) => item.value === value);
+    const valid = options && options.some((item) => item.value === value);
     setInvalid(!valid);
   };
 
