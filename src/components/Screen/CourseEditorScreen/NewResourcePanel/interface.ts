@@ -18,9 +18,14 @@ export interface ILightbox {
   sizeUnit: IWMDropdownOption;
 }
 
-export interface IResourceData {
+export interface IResourceBaseData {
   title: string;
   url: string;
   openTarget: ResourceOpenType;
   lightbox: ILightbox;
+}
+
+export interface IResourceVideoData extends IResourceBaseData {
+  autoplay: boolean;
+  videoPlayerParameters: string[];
 }

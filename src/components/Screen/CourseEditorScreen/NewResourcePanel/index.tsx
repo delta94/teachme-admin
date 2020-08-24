@@ -1,15 +1,18 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 
 import { CourseItemType } from '../../../../interfaces/course.interfaces';
 import DetailsPanel from '../../../common/DetailsPanel';
 import Icon from '../../../common/Icon';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
+import WMSwitch from '../../../common/WMSwitch';
+import WMInput from '../../../common/WMInput';
 
 import NewResourceForm from './NewResourceForm';
-import { NewResourceType } from './interface';
+import { NewResourceType, IResourceBaseData, IResourceVideoData } from './interface';
 
 import classes from './style.module.scss';
+import { initialNewResourceBaseData, initialNewVideoData } from './utils';
 
 export type { NewResourceType };
 
@@ -22,7 +25,26 @@ export default function NewResourcePanel({
   className: string;
   onClose: () => void;
 }): ReactElement {
+  const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
   const resourceIcon = newResourceType && <Icon type={newResourceType} />;
+
+  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
+    setNewResourceData(data);
+  };
+
+  const onVideoDataChange = (updated: Partial<IResourceVideoData>) => {
+    if (newResourceData) {
+      onDataChange({
+        ...newResourceData,
+        ...updated,
+      });
+    } else {
+      onDataChange({
+        ...initialNewVideoData,
+        ...updated,
+      });
+    }
+  };
 
   const resource = {
     [CourseItemType.Video]: {
@@ -30,11 +52,29 @@ export default function NewResourcePanel({
       title: 'New Video',
       titleIcon: resourceIcon,
       content: (
-        <NewResourceForm
-          onDataChange={(data) => {
-            console.log('NewResourceForm onDataChange', data);
-          }}
-        />
+        <>
+          <NewResourceForm onDataChange={onDataChange} initialNewResource={initialNewVideoData}>
+            <WMSwitch
+              className={classes['switch-field']}
+              checked={
+                (newResourceData as IResourceVideoData)?.autoplay ?? initialNewVideoData.autoplay
+              }
+              label="Autoplay"
+              onChange={(checked: boolean) => onVideoDataChange({ autoplay: checked })}
+            />
+          </NewResourceForm>
+          <WMInput
+            id="video-parameters-field"
+            className={classes['video-parameters-field']}
+            value={
+              (newResourceData as IResourceVideoData)?.videoPlayerParameters ??
+              initialNewVideoData.videoPlayerParameters.join(' ,')
+            }
+            onChange={(e) =>
+              onVideoDataChange({ videoPlayerParameters: e.target.value.split(',') })
+            }
+          />
+        </>
       ),
     },
     [CourseItemType.Article]: {
@@ -43,9 +83,8 @@ export default function NewResourcePanel({
       titleIcon: resourceIcon,
       content: (
         <NewResourceForm
-          onDataChange={(data) => {
-            console.log('NewResourceForm onDataChange', data);
-          }}
+          onDataChange={onDataChange}
+          initialNewResource={initialNewResourceBaseData}
         />
       ),
     },
@@ -53,13 +92,25 @@ export default function NewResourcePanel({
 
   const activeResource = (newResourceType && resource[newResourceType]) ?? null;
 
+  const closePanel = () => {
+    setNewResourceData(undefined);
+
+    onClose();
+  };
+
+  const onSave = () => {
+    // send resourceData to SDK
+    console.log('onSave newResourceData => ', newResourceData);
+    closePanel();
+  };
+
   return (
     <DetailsPanel
       className={cc([classes['new-resource'], className])}
       title={activeResource?.title}
       titleIcon={activeResource?.titleIcon}
       isOpen={Boolean(activeResource)}
-      onClose={onClose}
+      onClose={closePanel}
     >
       {activeResource?.content}
       {activeResource && (
@@ -68,15 +119,15 @@ export default function NewResourcePanel({
             variant={ButtonVariantEnum.Secondary}
             shape={'round'}
             className={classes['cancel-button']}
-            onClick={() => console.log('Cancel')}
+            onClick={closePanel}
           >
             Cancel
           </WMButton>
           <WMButton
             variant={ButtonVariantEnum.Primary}
             shape={'round'}
-            // disabled={!hasChanges }
-            onClick={() => console.log('Save')}
+            disabled={!newResourceData}
+            onClick={onSave}
           >
             save
           </WMButton>

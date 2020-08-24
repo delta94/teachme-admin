@@ -12,48 +12,27 @@ import WMInput from '../../../common/WMInput';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
-import { ResourceOpenType, SizeUnit, IResourceData } from './interface';
+import { ResourceOpenType, IResourceBaseData, IResourceVideoData } from './interface';
 
 import classes from './style.module.scss';
+import { resourceOpenOptions, sizeUnitOptions } from './utils';
 
-const resourceOpenOptions = [
-  {
-    label: 'New Tab',
-    value: ResourceOpenType.NewTab,
-  },
-  {
-    label: 'Lightbox',
-    value: ResourceOpenType.Lightbox,
-  },
-];
-
-const sizeUnitOptions: IWMDropdownOption[] = [
-  { id: SizeUnit.Percentages, value: '%' },
-  { id: SizeUnit.Pixels, value: 'px' },
-];
-
-const initialResourceData: IResourceData = {
-  title: '',
-  url: '',
-  openTarget: ResourceOpenType.NewTab,
-  lightbox: {
-    size: { width: 60, height: 60 },
-    sizeUnit: sizeUnitOptions[0],
-  },
-};
+export interface INewResourceForm {
+  children?: ReactNode;
+  onDataChange: (data: IResourceBaseData) => void;
+  initialNewResource: IResourceBaseData | IResourceVideoData;
+}
 
 export default function NewResourceForm({
   children,
   onDataChange,
-}: {
-  children?: ReactNode;
-  onDataChange: (data: IResourceData) => void;
-}): ReactElement {
-  const [resourceData, setResourceData] = useState<IResourceData>(initialResourceData);
+  initialNewResource,
+}: INewResourceForm): ReactElement {
+  const [resourceData, setResourceData] = useState<IResourceBaseData>(initialNewResource);
   const { title, url, openTarget, lightbox } = resourceData;
 
-  const resourceDataChange = (updated: Partial<IResourceData>) =>
-    setResourceData((prev: IResourceData) => ({
+  const resourceDataChange = (updated: Partial<IResourceBaseData>) =>
+    setResourceData((prev: IResourceBaseData) => ({
       ...prev,
       ...updated,
     }));
@@ -62,7 +41,7 @@ export default function NewResourceForm({
     const { value } = event.target;
 
     if (isNumericValue(value)) {
-      setResourceData((prev: IResourceData) => ({
+      setResourceData((prev: IResourceBaseData) => ({
         ...prev,
         lightbox: {
           ...prev.lightbox,
@@ -73,7 +52,7 @@ export default function NewResourceForm({
   };
 
   const onSizeUnitChange = (selected: IWMDropdownOption) =>
-    setResourceData((prev: IResourceData) => ({
+    setResourceData((prev: IResourceBaseData) => ({
       ...prev,
       lightbox: {
         ...prev.lightbox,
@@ -82,15 +61,10 @@ export default function NewResourceForm({
     }));
 
   useEffect(() => {
-    setResourceData(initialResourceData);
-    return () => setResourceData(initialResourceData);
-  }, []);
-
-  useEffect(() => {
-    if (!_isEqual(initialResourceData, resourceData)) {
+    if (!_isEqual(initialNewResource, resourceData)) {
       onDataChange(resourceData);
     }
-  }, [resourceData, onDataChange]);
+  }, [resourceData, initialNewResource, onDataChange]);
 
   return (
     <div className={classes['resource-form']}>
@@ -100,7 +74,9 @@ export default function NewResourceForm({
         placeholder="Read this"
         label="Name"
         value={title}
-        onBlur={(e) => resourceDataChange({ title: e.target.value })}
+        onChange={(e) => {
+          resourceDataChange({ title: e.target.value });
+        }}
       />
       <TextCounterInput
         counterClassName={classes['resource-field']}
@@ -108,7 +84,9 @@ export default function NewResourceForm({
         placeholder="http://"
         label="URL"
         value={url}
-        onBlur={(e) => resourceDataChange({ url: e.target.value })}
+        onChange={(e) => {
+          resourceDataChange({ url: e.target.value });
+        }}
       />
       <FormGroup
         className={cc([classes['resource-field'], classes['resource-open-options']])}

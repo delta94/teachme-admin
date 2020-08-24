@@ -4,6 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounterInput from '../../../common/TextCounterInput';
 
@@ -17,7 +18,6 @@ import WMSwitch from '../../../common/WMSwitch';
 import Answers from './Answers';
 
 import classes from './style.module.scss';
-import { fieldErrorMessage } from './utils';
 
 const questionTypes: IWMDropdownOption[] = [
   { id: QuestionType.Single, value: 'Single Selection' },
