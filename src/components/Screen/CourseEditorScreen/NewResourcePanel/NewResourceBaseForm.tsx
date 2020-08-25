@@ -3,7 +3,7 @@ import cc from 'classcat';
 import { DownOutlined } from '@ant-design/icons';
 import _isEqual from 'lodash/isEqual';
 
-import { isNumericValue, getValidRangeNumber } from '../../../../utils';
+import { isNumericValue, getValidRangeNumber, fieldErrorMessage } from '../../../../utils';
 
 import FormGroup from '../../../common/FormGroup';
 import TextCounterInput from '../../../common/TextCounterInput';
@@ -73,6 +73,7 @@ export default function NewResourceBaseForm({
         placeholder="Read this"
         label="Name"
         value={title}
+        errorMessage={fieldErrorMessage(title)}
         onChange={(e) => {
           resourceDataChange({ title: e.target.value });
         }}
@@ -83,6 +84,7 @@ export default function NewResourceBaseForm({
         placeholder="http://"
         label="URL"
         value={url}
+        errorMessage={fieldErrorMessage(url)}
         onChange={(e) => {
           resourceDataChange({ url: e.target.value });
         }}

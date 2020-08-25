@@ -25,9 +25,21 @@ export default function NewResourcePanel({
   onClose: () => void;
 }): ReactElement {
   const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
+  const [hasValidationError, setHasValidationError] = useState<boolean>(false);
+
   const resourceIcon = newResourceType && <Icon type={newResourceType} />;
 
-  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => setNewResourceData(data);
+  const isValidData = (data: IResourceBaseData | IResourceVideoData) => {
+    const isEmptyStr = (val?: string) => val === '';
+
+    return isEmptyStr(data.title) || isEmptyStr(data.url);
+  };
+
+  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
+    setHasValidationError(isValidData(data));
+
+    setNewResourceData(data);
+  };
 
   const resource = {
     [CourseItemType.Video]: {
@@ -55,6 +67,7 @@ export default function NewResourcePanel({
 
   const closePanel = () => {
     setNewResourceData(undefined);
+    setHasValidationError(false);
 
     onClose();
   };
@@ -87,7 +100,7 @@ export default function NewResourcePanel({
           <WMButton
             variant={ButtonVariantEnum.Primary}
             shape={'round'}
-            disabled={!newResourceData}
+            disabled={hasValidationError || !newResourceData}
             onClick={onSave}
           >
             save

@@ -19,8 +19,8 @@ export const sizeUnitOptions: IWMDropdownOption[] = [
 ];
 
 export const initialNewResourceBaseData: IResourceBaseData = {
-  title: '',
-  url: '',
+  title: 'Untitled Article',
+  url: 'http://',
   openTarget: ResourceOpenType.NewTab,
   lightbox: {
     size: { width: 60, height: 60 },
@@ -30,6 +30,7 @@ export const initialNewResourceBaseData: IResourceBaseData = {
 
 export const initialNewVideoData: IResourceVideoData = {
   ...initialNewResourceBaseData,
+  title: 'Untitled video',
   autoplay: true,
   videoPlayerParameters: 'autoplay="1"',
 };
