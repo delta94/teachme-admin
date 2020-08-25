@@ -33,3 +33,14 @@ export const initialNewVideoData: IResourceVideoData = {
   autoplay: true,
   videoPlayerParameters: 'autoplay="1"',
 };
+
+export const setVideoAutoplayParameter = ({
+  parameters,
+  autoplay,
+}: {
+  parameters: string;
+  autoplay: boolean;
+}): string => {
+  const strToReplace = autoplay ? 'autoplay="0"' : 'autoplay="1"';
+  return parameters.replace(strToReplace, `autoplay="${+autoplay}"`);
+};

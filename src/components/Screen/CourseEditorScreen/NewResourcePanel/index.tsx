@@ -5,15 +5,13 @@ import { CourseItemType } from '../../../../interfaces/course.interfaces';
 import DetailsPanel from '../../../common/DetailsPanel';
 import Icon from '../../../common/Icon';
 import WMButton, { ButtonVariantEnum } from '../../../common/WMButton';
-import WMSwitch from '../../../common/WMSwitch';
-import WMInput from '../../../common/WMInput';
-import FormGroup from '../../../common/FormGroup';
 
-import NewResourceForm from './NewResourceForm';
+import NewResourceBaseForm from './NewResourceBaseForm';
+import NewVideoForm from './NewVideoForm';
 import { NewResourceType, IResourceBaseData, IResourceVideoData } from './interface';
+import { initialNewResourceBaseData, initialNewVideoData } from './utils';
 
 import classes from './style.module.scss';
-import { initialNewResourceBaseData, initialNewVideoData } from './utils';
 
 export type { NewResourceType };
 
@@ -29,23 +27,7 @@ export default function NewResourcePanel({
   const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
   const resourceIcon = newResourceType && <Icon type={newResourceType} />;
 
-  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
-    setNewResourceData(data);
-  };
-
-  const onVideoDataChange = (updated: Partial<IResourceVideoData>) => {
-    if (newResourceData) {
-      onDataChange({
-        ...newResourceData,
-        ...updated,
-      });
-    } else {
-      onDataChange({
-        ...initialNewVideoData,
-        ...updated,
-      });
-    }
-  };
+  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => setNewResourceData(data);
 
   const resource = {
     [CourseItemType.Video]: {
@@ -53,28 +35,7 @@ export default function NewResourcePanel({
       title: 'New Video',
       titleIcon: resourceIcon,
       content: (
-        <>
-          <NewResourceForm onDataChange={onDataChange} initialNewResource={initialNewVideoData}>
-            <WMSwitch
-              className={classes['switch-field']}
-              defaultChecked={initialNewVideoData.autoplay}
-              checked={(newResourceData as IResourceVideoData)?.autoplay}
-              label="Autoplay"
-              onChange={(checked: boolean) => onVideoDataChange({ autoplay: checked })}
-            />
-          </NewResourceForm>
-          <FormGroup
-            className={cc([classes['resource-field'], classes['video-parameters-field']])}
-            title="Video Player Parameters"
-          >
-            <WMInput
-              id="video-parameters-field"
-              defaultValue={initialNewVideoData.videoPlayerParameters}
-              value={(newResourceData as IResourceVideoData)?.videoPlayerParameters}
-              onChange={(e) => onVideoDataChange({ videoPlayerParameters: e.target.value })}
-            />
-          </FormGroup>
-        </>
+        <NewVideoForm onDataChange={onDataChange} initialNewResource={initialNewVideoData} />
       ),
     },
     [CourseItemType.Article]: {
@@ -82,7 +43,7 @@ export default function NewResourcePanel({
       title: 'New Article',
       titleIcon: resourceIcon,
       content: (
-        <NewResourceForm
+        <NewResourceBaseForm
           onDataChange={onDataChange}
           initialNewResource={initialNewResourceBaseData}
         />

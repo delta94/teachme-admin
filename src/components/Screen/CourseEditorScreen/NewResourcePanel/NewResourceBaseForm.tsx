@@ -12,19 +12,18 @@ import WMInput from '../../../common/WMInput';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
 import WMButton from '../../../common/WMButton';
 
-import { ResourceOpenType, IResourceBaseData, IResourceVideoData } from './interface';
+import { ResourceOpenType, IResourceBaseData } from './interface';
+import { resourceOpenOptions, sizeUnitOptions } from './utils';
 
 import classes from './style.module.scss';
-import { resourceOpenOptions, sizeUnitOptions } from './utils';
 
 export interface INewResourceForm {
   children?: ReactNode;
   onDataChange: (data: IResourceBaseData) => void;
-  initialNewResource: IResourceBaseData | IResourceVideoData;
+  initialNewResource: IResourceBaseData;
 }
 
-export default function NewResourceForm({
-  children,
+export default function NewResourceBaseForm({
   onDataChange,
   initialNewResource,
 }: INewResourceForm): ReactElement {
@@ -67,7 +66,7 @@ export default function NewResourceForm({
   }, [resourceData, initialNewResource, onDataChange]);
 
   return (
-    <div className={classes['resource-form']}>
+    <>
       <TextCounterInput
         counterClassName={classes['resource-field']}
         maxLength={80}
@@ -131,7 +130,6 @@ export default function NewResourceForm({
         />
         {lightbox.sizeUnit.value}
       </div>
-      {children}
-    </div>
+    </>
   );
 }

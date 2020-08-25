@@ -38,11 +38,11 @@ export default function WMVerticalRadioGroup({
       {...otherProps}
     >
       {options.map((option) => (
-        <>
-          <Radio key={option.value} className={classes['wm-radio-button']} {...option}>
+        <div key={option.value}>
+          <Radio className={classes['wm-radio-button']} {...option}>
             {option.label}
             {showTooltipHelpText && option.helpText && (
-              <Tooltip key={option.value} title={option.helpText}>
+              <Tooltip title={option.helpText}>
                 <InfoCircleOutlined className={classes['option-help-icon']} />
               </Tooltip>
             )}
@@ -51,7 +51,7 @@ export default function WMVerticalRadioGroup({
           {!showTooltipHelpText && option.helpText && (
             <p className={classes['help-text']}>{option.helpText}</p>
           )}
-        </>
+        </div>
       ))}
     </Radio.Group>
   );
