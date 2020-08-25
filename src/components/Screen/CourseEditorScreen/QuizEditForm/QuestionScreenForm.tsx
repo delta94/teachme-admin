@@ -6,7 +6,6 @@ import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question'
 import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
 import TextCounterInput from '../../../common/TextCounterInput';
-
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
 import FormGroup from '../../../common/FormGroup';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
@@ -15,9 +14,9 @@ import { AddButton } from '../../../common/buttons';
 import WMSwitch from '../../../common/WMSwitch';
 
 import Answers from './Answers';
+import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
-import { fieldErrorMessage } from './utils';
 
 const questionTypes: IWMDropdownOption[] = [
   { id: QuestionType.Single, value: 'Single Selection' },
@@ -53,7 +52,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         </WMDropdown>
       </FormGroup>
       <TextCounterInput
-        maxLength={80}
+        maxLength={200}
         placeholder="Text"
         label="Title"
         value={question.title}
@@ -64,7 +63,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         }}
       />
       <TextCounterTextarea
-        maxLength={210}
+        maxLength={400}
         placeholder="Text"
         label="Description (Optional)"
         value={question.description}
@@ -108,7 +107,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         />
         <TextCounterInput
           counterClassName={classes['explanation-field']}
-          maxLength={200}
+          maxLength={400}
           placeholder="Text"
           disabled={!question.properties?.hasExplanation}
           value={question.explanation ? question.explanation : ''}
