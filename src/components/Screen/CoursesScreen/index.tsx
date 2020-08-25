@@ -1,5 +1,6 @@
-import React, { Key, ReactElement, useEffect, useState, useCallback } from 'react';
+import React, { Key, useEffect, useCallback, MemoExoticComponent, useMemo, Dispatch } from 'react';
 import { ConfigProvider, Divider } from 'antd';
+import isEqual from 'lodash/isEqual';
 
 import { ActionType as AppActionType, useAppContext } from '../../../providers/AppContext';
 import {
@@ -16,7 +17,6 @@ import AnalyticsCharts from '../../common/AnalyticsCharts';
 import ControlsWrapper from '../../common/ControlsWrapper';
 import { CreateButton } from '../../common/buttons';
 import ScreenHeader from '../../common/ScreenHeader';
-// import { DropdownFilter } from '../../common/filters';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
@@ -27,28 +27,45 @@ import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
 import CoursesEmptyState from './CoursesEmptyState';
-// import { statuses, segments } from './utils';
 import { columns } from './tableData';
+
 import classes from './style.module.scss';
 
+interface ICoursesScreenProps {
+  isUpdating: boolean;
+  envId: number;
+  from: string;
+  to: string;
+  isFetchingCoursesData: boolean;
+  overview: AllCoursesOverviewResponse;
+  filteredCourses: Array<UICourse>;
+  courses: Array<UICourse>;
+  selectedRows: Array<UICourse>;
+  selectedRowKeys: Array<Key>;
+  appDispatch: Dispatch<any>;
+  dispatch: Dispatch<any>;
+}
+
 // TODO: add cleanups to fetchCoursesData
-export default function CoursesScreen(): ReactElement {
-  const [appState, appDispatch] = useAppContext();
-  const {
+function CoursesScreen({
+  isUpdating,
+  envId,
+  from,
+  to,
+  isFetchingCoursesData,
+  overview,
+  filteredCourses,
+  courses,
+  selectedRows,
+  selectedRowKeys,
+  appDispatch,
+  dispatch,
+}: ICoursesScreenProps) {
+  const disableActions = useMemo(() => isUpdating || isFetchingCoursesData || !courses.length, [
     isUpdating,
-    environment: { id: envId },
-    dateRange: { from, to },
-  } = appState;
-  const [state, dispatch] = useCoursesContext();
-  const {
     isFetchingCoursesData,
-    overview,
-    filteredCourses,
-    courses,
-    selectedRows,
-    selectedRowKeys,
-  } = state;
-  const disableActions = isUpdating || isFetchingCoursesData || !courses.length;
+    courses.length,
+  ]);
   useEffect(() => {
     if (!isUpdating) fetchCoursesData(dispatch, envId, from, to);
   }, [dispatch, isUpdating, envId, from, to]);
@@ -66,8 +83,10 @@ export default function CoursesScreen(): ReactElement {
     [dispatch],
   );
 
-  const onDateRangeChange = (dateRange?: IDateRange) =>
-    appDispatch({ type: AppActionType.SetDateRange, dateRange });
+  const onDateRangeChange = useCallback(
+    (dateRange?: IDateRange) => appDispatch({ type: AppActionType.SetDateRange, dateRange }),
+    [appDispatch],
+  );
 
   const onSortEnd = useCallback(
     (
@@ -83,14 +102,32 @@ export default function CoursesScreen(): ReactElement {
     [dispatch],
   );
 
-  const selectedRowsCount = selectedRows.length;
+  const dateRange = useMemo(
+    () => ({
+      from,
+      to,
+    }),
+    [from, to],
+  );
+  const selectedRowsCount = useMemo(() => selectedRows.length, [selectedRows.length]);
+  const renderEmpty = useMemo(() => (disableActions ? CoursesEmptyState : SearchEmptyState), [
+    disableActions,
+  ]);
+  const rowSelection = useMemo(
+    () => ({
+      selectedRowKeys,
+      onChange: onMultiSelectChange,
+    }),
+    [selectedRowKeys, onMultiSelectChange],
+  );
+  const loading = useMemo(() => isUpdating || isFetchingCoursesData, [
+    isUpdating,
+    isFetchingCoursesData,
+  ]);
 
   return (
     <>
-      <ScreenHeader
-        title="Courses"
-        timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
-      />
+      <ScreenHeader title="Courses" timeFilterProps={{ onDateRangeChange, dateRange }} />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"
         overview={overview as AllCoursesOverviewResponse}
@@ -100,38 +137,89 @@ export default function CoursesScreen(): ReactElement {
         title="Courses"
         subTitle="Courses will appear to your users in the order below. Drag & Drop items to change their order."
       >
-        <ConfigProvider renderEmpty={disableActions ? CoursesEmptyState : SearchEmptyState}>
-          <WMTable
-            rowSelection={{
-              selectedRowKeys,
-              onChange: onMultiSelectChange,
-            }}
-            data={filteredCourses}
-            columns={columns}
-            onSortEnd={onSortEnd}
-            loading={isUpdating || isFetchingCoursesData}
-            isStickyToolbarAndHeader
-          >
-            <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
-            {/* <ControlsWrapper>
-              <DropdownFilter label="Status" options={statuses} />
-              <DropdownFilter label="Segments" options={segments} />
-            </ControlsWrapper> */}
-            <ControlsWrapper>
-              {Boolean(selectedRowsCount) && (
-                <>
-                  <ProductionStatusActions />
-                  <DeleteCoursesButton />
-                  <Divider className={classes['separator']} type="vertical" />
-                </>
-              )}
-              <ExportCoursesButton disabled={disableActions} />
-              <SearchCoursesFilter disabled={disableActions} />
-              <CreateButton />
-            </ControlsWrapper>
-          </WMTable>
-        </ConfigProvider>
+        {
+          <ConfigProvider renderEmpty={renderEmpty}>
+            <WMTable
+              rowSelection={rowSelection}
+              data={filteredCourses}
+              columns={columns}
+              onSortEnd={onSortEnd}
+              loading={loading}
+              isStickyToolbarAndHeader
+            >
+              <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
+              {/* <ControlsWrapper>
+                <DropdownFilter label="Status" options={statuses} />
+                <DropdownFilter label="Segments" options={segments} />
+              </ControlsWrapper> */}
+              <ControlsWrapper>
+                {Boolean(selectedRowsCount) && (
+                  <>
+                    <ProductionStatusActions />
+                    <DeleteCoursesButton />
+                    <Divider className={classes['separator']} type="vertical" />
+                  </>
+                )}
+                <ExportCoursesButton disabled={disableActions} />
+                <SearchCoursesFilter disabled={disableActions} />
+                <CreateButton />
+              </ControlsWrapper>
+            </WMTable>
+          </ConfigProvider>
+        }
       </WMCard>
     </>
   );
 }
+
+const MemoizedComponent = React.memo(CoursesScreen, (oldProps, newProps) =>
+  isEqual(oldProps, newProps),
+);
+
+function select(): ICoursesScreenProps {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [appState, appDispatch] = useAppContext();
+  const {
+    isUpdating,
+    environment: { id: envId },
+    dateRange: { from, to },
+  } = appState;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [state, dispatch] = useCoursesContext();
+  const {
+    isFetchingCoursesData,
+    overview,
+    filteredCourses,
+    courses,
+    selectedRows,
+    selectedRowKeys,
+  } = state;
+
+  return {
+    isUpdating,
+    envId,
+    from,
+    to,
+    isFetchingCoursesData,
+    overview,
+    filteredCourses,
+    courses,
+    selectedRows,
+    selectedRowKeys,
+    appDispatch,
+    dispatch,
+  };
+}
+
+function connectToContext(
+  WrappedComponent: MemoExoticComponent<any>,
+  select: () => ICoursesScreenProps,
+) {
+  // eslint-disable-next-line react/display-name
+  return (props: any) => {
+    const selectors = select();
+    return <WrappedComponent {...selectors} {...props} />;
+  };
+}
+
+export default connectToContext(MemoizedComponent, select);
