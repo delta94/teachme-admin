@@ -1,4 +1,12 @@
-import React, { Key, useEffect, useCallback, MemoExoticComponent, useMemo, Dispatch } from 'react';
+import React, {
+  Key,
+  useEffect,
+  useCallback,
+  MemoExoticComponent,
+  useMemo,
+  Dispatch,
+  useState,
+} from 'react';
 import { ConfigProvider, Divider } from 'antd';
 import isEqual from 'lodash/isEqual';
 
@@ -61,6 +69,7 @@ function CoursesScreen({
   appDispatch,
   dispatch,
 }: ICoursesScreenProps) {
+  const [selectedRowIdList, setSelectedRowIdList] = useState<number[]>([]);
   const disableActions = useMemo(() => isUpdating || isFetchingCoursesData || !courses.length, [
     isUpdating,
     isFetchingCoursesData,
@@ -125,6 +134,15 @@ function CoursesScreen({
     isFetchingCoursesData,
   ]);
 
+  const handleRowClick = (id: number) => {
+    const isExist = selectedRowIdList.includes(id);
+
+    setSelectedRowIdList((prev) =>
+      isExist ? prev.filter((prevId) => prevId !== id) : [...prev, id],
+    );
+  };
+
+  console.log('selectedRowIdList ', selectedRowIdList);
   return (
     <>
       <ScreenHeader title="Courses" timeFilterProps={{ onDateRangeChange, dateRange }} />
@@ -146,6 +164,12 @@ function CoursesScreen({
               onSortEnd={onSortEnd}
               loading={loading}
               isStickyToolbarAndHeader
+              rowClassName={(record) =>
+                selectedRowIdList.includes(record.id) ? classes['selected-row'] : ''
+              }
+              onRow={(record, index) => ({
+                onClick: () => handleRowClick(record.id),
+              })}
             >
               <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
               {/* <ControlsWrapper>

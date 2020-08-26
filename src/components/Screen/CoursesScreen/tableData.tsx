@@ -29,15 +29,13 @@ export const getColumns = (dispatch: IDispatch, selectedRows: Key[]): ColumnsTyp
   {
     title: '',
     dataIndex: 'checkbox',
-    className: 'checkbox-cell',
+    className: classes['checkbox-cell'],
     render: (value: boolean, course: UICourse, index: number): ReactElement => {
-      const isSelected = selectedRows.includes(index);
-
+      console.log('isRender');
       return (
-        <CheckboxCell
-          checked={isSelected}
-          onChange={(checked: boolean) => onSelectedRow(dispatch, course, index, checked)}
-        />
+        <div className={classes['checkbox']}>
+          <span className={classes['fake']} />
+        </div>
       );
     },
     shouldCellUpdate: () => false,
