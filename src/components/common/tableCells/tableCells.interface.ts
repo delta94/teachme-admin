@@ -47,3 +47,11 @@ export interface IIconTextCell extends ITableCell {
   value: string;
   icon?: ReactNode;
 }
+
+export interface ICheckboxCell {
+  checked: boolean;
+  indeterminate?: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+  hideSelectAllCheckbox?: boolean;
+}

@@ -27,7 +27,7 @@ import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
 import CoursesEmptyState from './CoursesEmptyState';
-import { columns } from './tableData';
+import { getColumns } from './tableData';
 
 import classes from './style.module.scss';
 
@@ -142,7 +142,7 @@ function CoursesScreen({
             <WMTable
               rowSelection={rowSelection}
               data={filteredCourses}
-              columns={columns}
+              columns={getColumns(dispatch, selectedRowKeys)}
               onSortEnd={onSortEnd}
               loading={loading}
               isStickyToolbarAndHeader

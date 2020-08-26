@@ -162,3 +162,18 @@ export const archiveCourses = async (
     wmMessage('Archive process failed', MessageType.Error);
   }
 };
+
+export const onSelectedRow = (
+  dispatch: IDispatch,
+  course: UICourse,
+  index: number,
+  checked: boolean,
+): void => {
+  console.log(`onSelectedRow ${course}, ${index}, ${checked}`);
+
+  dispatch({
+    type: ActionType.SetSelectedRows,
+    courses: [course],
+    selectedRowKeys: [index],
+  });
+};
