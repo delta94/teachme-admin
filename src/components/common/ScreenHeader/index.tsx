@@ -1,15 +1,14 @@
 import React, { ReactNode, ReactElement } from 'react';
 import cc from 'classcat';
+import { useParams } from 'react-router-dom';
 
-import { IDateRange } from '../../../utils/date';
+import { IDateRange } from '../../../utils';
 import { useAppSkeleton } from '../../../hooks/skeleton';
 import { WMSkeletonInput } from '../WMSkeleton';
-
 import TimeFilter from '../filters/TimeFilter';
 import Header from '../Header';
 
 import classes from './style.module.scss';
-import { useParams } from 'react-router-dom';
 
 export interface IScreenHeader {
   title: ReactNode;
@@ -25,7 +24,7 @@ export interface IScreenHeader {
   subTitle?: ReactNode;
 }
 
-export default function ScreenHeader({
+function ScreenHeader({
   title,
   isLoading,
   className,
@@ -73,3 +72,7 @@ export default function ScreenHeader({
     </>
   );
 }
+
+const memoizedComponent = React.memo(ScreenHeader);
+
+export default memoizedComponent;

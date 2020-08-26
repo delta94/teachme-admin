@@ -28,7 +28,7 @@ const titleType = {
   quiz: EditableTitleType.Quiz,
 };
 
-export default function EditableTitle({
+function EditableTitle({
   type = EditableTitleType.Course,
   isNew,
   isLoading,
@@ -124,3 +124,7 @@ export default function EditableTitle({
     </div>
   );
 }
+
+const memoizedComponent = React.memo(EditableTitle);
+
+export default memoizedComponent;

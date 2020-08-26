@@ -1,24 +1,33 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { WalkMeEnvironment } from '@walkme/editor-sdk/dist/environment';
 
-import { useAppContext } from '../../../providers/AppContext';
-import {
-  ActionType,
-  fetchCourse,
-  useCourseEditorContext,
-} from '../../../providers/CourseEditorContext';
+import { ActionType, fetchCourse } from '../../../providers/CourseEditorContext';
 import { BASE_COURSE_EDITOR_ROUTE, COURSES_ROUTE } from '../../../constants/routes';
 import { MessageType, wmMessage } from '../../../utils/wmMessage';
-
+import { Course } from '../../../walkme/data/courseBuild/course';
 import Icon, { IconType } from '../../common/Icon';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 
-import classes from './style.module.scss';
 import CancelDialog from './CancelDialog';
 
-export default function HeaderConfirmationButtons(): ReactElement {
-  const [{ course, hasChanges, isSavingCourse }, dispatch] = useCourseEditorContext();
-  const [{ environment }] = useAppContext();
+import classes from './style.module.scss';
+
+interface IHeaderConfirmationButtonsProps {
+  course: Course;
+  hasChanges: boolean;
+  isSavingCourse: boolean;
+  environment: WalkMeEnvironment;
+  dispatch: Dispatch<any>;
+}
+
+export default function HeaderConfirmationButtons({
+  course,
+  hasChanges,
+  isSavingCourse,
+  environment,
+  dispatch,
+}: IHeaderConfirmationButtonsProps): ReactElement {
   const history = useHistory();
   const { courseId } = useParams();
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
