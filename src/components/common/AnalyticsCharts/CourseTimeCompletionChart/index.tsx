@@ -20,7 +20,7 @@ export default function CoursesTimeCompletionChart({
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {
-    if (overview?.completion_time) {
+    if (overview?.completion_time?.avg) {
       const { completion_time } = overview;
 
       setCompletionTimeAvg(
@@ -29,6 +29,9 @@ export default function CoursesTimeCompletionChart({
 
       if (completion_time.buckets.length)
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
+    } else {
+      setBars([]);
+      setCompletionTimeAvg(undefined);
     }
   }, [overview]);
 

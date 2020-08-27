@@ -34,13 +34,16 @@ export default function QuizCompletionRateChart({
   }, [overview]);
 
   useEffect(() => {
-    if (totalPercentages)
+    if (totalPercentages) {
       setBars([
         {
           value: totalPercentages,
           legend: 'Users who completed a course',
         },
       ]);
+    } else {
+      setBars([]);
+    }
   }, [totalPercentages]);
 
   // unmount only
