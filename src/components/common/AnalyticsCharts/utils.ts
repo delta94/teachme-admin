@@ -6,8 +6,8 @@ import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
 
 import { ICourseSummaryLegendData } from './analytics.interface';
 
-export const calculatePercentages = (first: number, second: number): number =>
-  Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : 0;
+export const calculatePercentages = (first: number, second: number): number | undefined =>
+  Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : undefined;
 
 export const parseCourseSummaryLegendData = ({
   total_completion,

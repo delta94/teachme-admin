@@ -1,4 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { CourseOverviewData } from '../../../../walkme/models';
 
 import CourseQuizEmptyState from '../../../Screen/CourseScreen/CourseQuizEmptyState';
 
@@ -18,15 +21,15 @@ export default function QuizCompletionRateChart({
   overview,
   isLoading = false,
 }: IQuizCompletionRateChart): ReactElement {
+  const { courseId } = useParams();
   const [totalPercentages, setTotalPercentages] = useState<number>();
   const [bars, setBars] = useState<IBar[]>([]);
+  const singleCourseHasQuiz = courseId && (overview as CourseOverviewData).hasQuiz;
 
   useEffect(() => {
     if (overview) {
       const { users_passed, users_submitted } = overview;
-
-      if (users_passed && users_submitted)
-        setTotalPercentages(calculatePercentages(users_passed, users_submitted));
+      setTotalPercentages(calculatePercentages(users_passed, users_submitted));
     }
   }, [overview]);
 
@@ -43,7 +46,7 @@ export default function QuizCompletionRateChart({
   // unmount only
   useEffect(
     () => () => {
-      setTotalPercentages(0);
+      setTotalPercentages(undefined);
       setBars([]);
     },
     [],
@@ -53,7 +56,7 @@ export default function QuizCompletionRateChart({
     <WMCard title={title}>
       <WMSkeleton loading={isLoading} active paragraph={{ rows: 2 }}>
         <div className={className}>
-          {totalPercentages ? (
+          {!courseId || singleCourseHasQuiz ? (
             <>
               <PieBarSummary
                 value={totalPercentages as number}
