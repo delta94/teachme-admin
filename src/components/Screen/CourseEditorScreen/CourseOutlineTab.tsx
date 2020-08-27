@@ -92,7 +92,10 @@ export default function CourseOutlineTab(): ReactElement {
         paragraph={{ rows: 15 }}
       >
         {!quiz && !course?.items.toArray().length && (
-          <CourseOutlineListEmptyState containerClassName={classes['course-outline-empty-state']} />
+          <CourseOutlineListEmptyState
+            containerClassName={classes['course-outline-empty-state']}
+            onActionSelected={onActionSelected}
+          />
         )}
         {course && (
           <CourseOutlineList

@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import { CourseItemType } from '../../../interfaces/course.interfaces';
+
 import WMEmpty from '../../common/WMEmpty';
 import Icon, { IconType } from '../../common/Icon';
 
@@ -8,9 +10,11 @@ import ActionMenu from './ActionMenu';
 export default function CourseOutlineListEmptyState({
   className,
   containerClassName,
+  onActionSelected,
 }: {
   className?: string;
   containerClassName?: string;
+  onActionSelected?: (selected: CourseItemType, lessonId?: number | undefined) => void;
 }): ReactElement {
   return (
     <WMEmpty
@@ -19,7 +23,7 @@ export default function CourseOutlineListEmptyState({
       className={className}
       containerClassName={containerClassName}
     >
-      <ActionMenu />
+      <ActionMenu onActionSelected={onActionSelected} />
     </WMEmpty>
   );
 }
