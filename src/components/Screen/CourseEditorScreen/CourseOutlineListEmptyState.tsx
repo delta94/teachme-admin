@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import WMEmpty from '../../common/WMEmpty';
 import Icon, { IconType } from '../../common/Icon';
 
-import CourseOutlineActionMenu from './CourseOutlineActionMenu';
+import ActionMenu from './ActionMenu';
 
 export default function CourseOutlineListEmptyState({
   className,
@@ -19,7 +19,7 @@ export default function CourseOutlineListEmptyState({
       className={className}
       containerClassName={containerClassName}
     >
-      <CourseOutlineActionMenu />
+      <ActionMenu />
     </WMEmpty>
   );
 }

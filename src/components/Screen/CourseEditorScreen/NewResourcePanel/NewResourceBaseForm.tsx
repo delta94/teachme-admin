@@ -19,7 +19,7 @@ import classes from './style.module.scss';
 
 export interface INewResourceForm {
   children?: ReactNode;
-  onDataChange: (data: IResourceBaseData) => void;
+  onDataChange?: (data: IResourceBaseData) => void;
   initialNewResource: IResourceBaseData;
 }
 
@@ -60,7 +60,7 @@ export default function NewResourceBaseForm({
     }));
 
   useEffect(() => {
-    if (!_isEqual(initialNewResource, resourceData)) {
+    if (onDataChange && !_isEqual(initialNewResource, resourceData)) {
       onDataChange(resourceData);
     }
   }, [resourceData, initialNewResource, onDataChange]);

@@ -10,9 +10,10 @@ import WMSkeleton from '../../common/WMSkeleton';
 
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
-import CourseOutlineActionMenu from './CourseOutlineActionMenu';
+import ActionMenu from './ActionMenu';
 import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
 import classes from './style.module.scss';
+import { NewResourceType } from './NewResourcePanel';
 
 export interface IProperties {
   isAvailable?: boolean;
@@ -43,11 +44,20 @@ export default function CourseOutlineTab(): ReactElement {
 
       // reset newQuizAdded
       setTimeout(() => setNewQuizAdded(false), 200);
-    } else {
+    } else if (selectedType === CourseItemType.Lesson) {
       lessonId && setNewLessonId(lessonId);
 
       // reset newLessonId
       setTimeout(() => setNewLessonId(undefined), 200);
+    } else {
+      const type =
+        selectedType === CourseItemType.Article
+          ? DetailsPanelSettingsType.Article
+          : DetailsPanelSettingsType.Video;
+      dispatch({
+        type: ActionType.OpenDetailsPanel,
+        activeDetailsItem: { type, id: -1, item: {} },
+      });
     }
   };
 
@@ -62,7 +72,7 @@ export default function CourseOutlineTab(): ReactElement {
 
   return (
     <div className={classes['course-outline-tab']}>
-      <CourseOutlineActionMenu
+      <ActionMenu
         className={classes['add-btn']}
         onActionSelected={onActionSelected}
         isLoading={isUpdating || isFetchingCourse}

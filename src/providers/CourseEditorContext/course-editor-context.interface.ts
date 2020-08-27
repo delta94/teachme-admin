@@ -39,6 +39,8 @@ export enum DetailsPanelSettingsType {
   QuizWelcome = 'welcome',
   QuizFail = 'fail',
   QuizSuccess = 'success',
+  Article = 'article',
+  Video = 'video',
 }
 
 export interface IState {

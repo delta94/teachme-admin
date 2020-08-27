@@ -23,6 +23,26 @@ const options: IWMDropdownOption[] = [
   },
   {
     id: 1,
+    value: CourseItemType.Article,
+    label: (
+      <div className={classes['option']}>
+        <Icon type={IconType.ArticleSmall} />
+        Create Article
+      </div>
+    ),
+  },
+  {
+    id: 2,
+    value: CourseItemType.Video,
+    label: (
+      <div className={classes['option']}>
+        <Icon type={IconType.VideoSmall} />
+        Create Video
+      </div>
+    ),
+  },
+  {
+    id: 3,
     value: CourseItemType.Quiz,
     label: (
       <div className={classes['option']}>
@@ -33,7 +53,7 @@ const options: IWMDropdownOption[] = [
   },
 ];
 
-export default function CourseOutlineActionMenu({
+export default function ActionMenu({
   className,
   onActionSelected,
   isLoading,
@@ -45,7 +65,9 @@ export default function CourseOutlineActionMenu({
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
   const onActionSelect = (selected: IWMDropdownOption) => {
-    if (selected.value === CourseItemType.Lesson) {
+    const { value } = selected;
+
+    if (value === CourseItemType.Lesson) {
       // Add new lesson
       const newLesson = course?.items.addNewItem();
       if (newLesson) {
@@ -53,10 +75,12 @@ export default function CourseOutlineActionMenu({
         newLesson.id = lessonId;
         onActionSelected && onActionSelected(CourseItemType.Lesson, lessonId);
       }
-    } else {
+    } else if (value === CourseItemType.Quiz) {
       // Add new quiz
       dispatch({ type: ActionType.AddQuiz });
       onActionSelected && onActionSelected(CourseItemType.Quiz);
+    } else {
+      onActionSelected && onActionSelected(value as CourseItemType);
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });

@@ -1,12 +1,11 @@
 import React, { ReactElement, useState, ReactNode, useEffect } from 'react';
 import cc from 'classcat';
-import _isEqual from 'lodash/isEqual';
 
 import FormGroup from '../../../common/FormGroup';
 import WMInput from '../../../common/WMInput';
 import WMSwitch from '../../../common/WMSwitch';
 
-import { IResourceBaseData, IResourceVideoData } from './interface';
+import { IResourceVideoData } from './interface';
 import NewResourceBaseForm from './NewResourceBaseForm';
 
 import classes from './style.module.scss';
@@ -14,14 +13,10 @@ import { setVideoAutoplayParameter } from './utils';
 
 export interface INewResourceForm {
   children?: ReactNode;
-  onDataChange: (data: IResourceBaseData) => void;
   initialNewResource: IResourceVideoData;
 }
 
-export default function NewVideoForm({
-  onDataChange,
-  initialNewResource,
-}: INewResourceForm): ReactElement {
+export default function NewVideoForm({ initialNewResource }: INewResourceForm): ReactElement {
   const [resourceData, setResourceData] = useState<IResourceVideoData>(initialNewResource);
   const { autoplay, videoPlayerParameters, ...baseData } = resourceData;
 
@@ -30,12 +25,6 @@ export default function NewVideoForm({
       ...resourceData,
       ...updated,
     });
-
-  useEffect(() => {
-    if (!_isEqual(initialNewResource, resourceData)) {
-      onDataChange(resourceData);
-    }
-  }, [resourceData, initialNewResource, onDataChange]);
 
   return (
     <>

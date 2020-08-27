@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
@@ -13,6 +13,8 @@ import QuizSettingsForm from './QuizSettingsForm';
 import { QuizScreenType } from './QuizEditForm/interface';
 import CourseItemDetails from './CourseItemDetails';
 
+import NewResourcePanel, { IResourceBaseData, IResourceVideoData } from './NewResourcePanel';
+
 import classes from './style.module.scss';
 
 export const TaskItemIconType = {
@@ -24,6 +26,22 @@ export const TaskItemIconType = {
 
 export default function CourseOutlineDetailsPanel(): ReactElement {
   const [{ course, isDetailsPanelOpen, activeDetailsItem }, dispatch] = useCourseEditorContext();
+  const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
+  const [hasValidationError, setHasValidationError] = useState<boolean>(false);
+
+  const resourceIcon = activeDetailsItem && <Icon type={activeDetailsItem.type} />;
+
+  const isValidData = (data: IResourceBaseData | IResourceVideoData) => {
+    const isEmptyStr = (val?: string) => val === '';
+
+    return isEmptyStr(data.title) || isEmptyStr(data.url);
+  };
+
+  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
+    setHasValidationError(isValidData(data));
+
+    setNewResourceData(data);
+  };
 
   const onClosePanel = () => {
     dispatch({ type: ActionType.CloseDetailsPanel });
@@ -85,6 +103,18 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
           quizScreenData={activeDetailsItem?.item}
         />
       ),
+    },
+    [CourseItemType.Video]: {
+      id: 'Video',
+      title: 'New Video',
+      iconType: TaskItemIconType[CourseItemType.Video as keyof typeof TaskItemIconType],
+      content: <NewResourcePanel newResourceType={CourseItemType.Video} />,
+    },
+    [CourseItemType.Article]: {
+      id: 'Article',
+      title: 'New Article',
+      iconType: TaskItemIconType[CourseItemType.Article as keyof typeof TaskItemIconType],
+      content: <NewResourcePanel newResourceType={CourseItemType.Article} />,
     },
   };
 

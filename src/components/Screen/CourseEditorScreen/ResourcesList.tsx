@@ -1,5 +1,4 @@
-import React, { ReactElement, useState } from 'react';
-import cc from 'classcat';
+import React, { ReactElement } from 'react';
 import { ContentItem, TypeName } from '@walkme/types';
 import {
   useCourseEditorContext,
@@ -15,10 +14,8 @@ import { SearchFilter } from '../../common/filters';
 
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
-import ResourcesActionMenu from './ResourcesActionMenu';
 
 import classes from './style.module.scss';
-import NewResourcePanel, { NewResourceType } from './NewResourcePanel';
 
 export default function ResourcesList(): ReactElement {
   const [
@@ -29,7 +26,6 @@ export default function ResourcesList(): ReactElement {
   ] = useAppContext();
   const [state, dispatch] = useCourseEditorContext();
   const { isFetchingItems, courseItems, filteredCourseItems, courseItemsSearchValue } = state;
-  const [newResourceType, setNewResourceType] = useState<NewResourceType>();
 
   const onSearch = (searchValue: string) => {
     const newCourseItems = courseItems.filter(({ title, description }) =>
@@ -48,10 +44,6 @@ export default function ResourcesList(): ReactElement {
     onSearch(courseItemsSearchValue);
   };
 
-  const onActionSelected = (selectedType: NewResourceType) => {
-    setNewResourceType(selectedType);
-  };
-
   return (
     <WMCard
       className={classes['resources-list']}
@@ -59,12 +51,6 @@ export default function ResourcesList(): ReactElement {
         <div className={classes['title-container']}>
           <span className={classes['title']}>Items</span>
           <RefreshButton onClick={onRefresh} loading={isFetchingItems} />
-          {/* TODO: uncomment the following component when ResourcesActionMenu is ready */}
-          {/* <ResourcesActionMenu
-            className={classes['resources-action-menu']}
-            isLoading={isUpdating || isFetchingItems}
-            onActionSelected={onActionSelected}
-          /> */}
         </div>
       }
     >
@@ -94,14 +80,6 @@ export default function ResourcesList(): ReactElement {
         ) : (
           <ResourcesListEmptyState />
         )}
-        <NewResourcePanel
-          className={cc([
-            classes['resource-panel'],
-            { [classes['resource-panel-is-open']]: Boolean(newResourceType) },
-          ])}
-          newResourceType={newResourceType}
-          onClose={() => setNewResourceType(undefined)}
-        />
       </WMSkeleton>
     </WMCard>
   );
