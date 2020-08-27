@@ -7,7 +7,6 @@ import { ActionType, useCourseEditorContext } from '../../../../providers/Course
 import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounterInput from '../../../common/TextCounterInput';
-
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
 import FormGroup from '../../../common/FormGroup';
 import WMDropdown, { IWMDropdownOption } from '../../../common/WMDropdown';
@@ -53,7 +52,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         </WMDropdown>
       </FormGroup>
       <TextCounterInput
-        maxLength={80}
+        maxLength={200}
         placeholder="Text"
         label="Title"
         value={question.title}
@@ -64,7 +63,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         }}
       />
       <TextCounterTextarea
-        maxLength={210}
+        maxLength={400}
         placeholder="Text"
         label="Description (Optional)"
         value={question.description}
@@ -108,7 +107,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         />
         <TextCounterInput
           counterClassName={classes['explanation-field']}
-          maxLength={200}
+          maxLength={400}
           placeholder="Text"
           disabled={!question.properties?.hasExplanation}
           value={question.explanation ? question.explanation : ''}
