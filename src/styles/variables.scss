@@ -1,4 +1,5 @@
 :root {
+  --desktop-min-width: 1280px;
   --sidebar-width: 110px;
   --header-toolbar-height: 60px;
   --divider-color: #f0f0f0;
@@ -71,6 +72,7 @@
   --delete: #ed1010;
   --dark-red: #d40e0e;
   --green: #41c378;
+  --green-check-icon: #44bc67;
   --greenVeryTransparent: rgba(65, 195, 120, 0.08);
   --orange: #e9a11c;
   --gray: #a7b3ba;
@@ -95,6 +97,10 @@
 
   // switch
   --switch-off: #9ba1b0;
+
+  // multiselect tag
+  --multiselect-tag-bg-color: #f3f3f3;
+  --multiselect-tag-border: solid 1px #ececec;
 
   //disabled
   --disable-dot: #aabed2;

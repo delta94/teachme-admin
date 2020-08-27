@@ -77,6 +77,8 @@ export type UserListUILineItem = {
   started_date: Date | null;
   /** Course completed date or null if not in range */
   completed_date: Date | null;
+  /** Total course time in milliseconds  */
+  time_to_complete?: number | null;
   /** Last quiz result or null if not in range */
   quiz_result: number | null;
   /** Indication on quiz pass or null if not in range */

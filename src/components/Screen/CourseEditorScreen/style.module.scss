@@ -1,7 +1,11 @@
+@import 'src/styles/mixins';
+
 :root {
   --screen-max-width: 1196px; // outline with should be 846px + resource width 350px
+  --screen-padding-size: 30px;
   --build-page-header-height: 132px;
-  --distance-from-bottom-of-screen: 30px;
+  --resources-list-width: 30%;
+  --details-panel-width: 30%;
 }
 
 .course-editor-screen {
@@ -17,12 +21,12 @@
   color: var(--neutral900);
   height: calc(
     100vh - var(--header-toolbar-height) - var(--build-page-header-height) -
-      var(--distance-from-bottom-of-screen)
+      var(--screen-padding-size)
   );
 
   .resources-list,
   .course-structure,
-  .details-panel {
+  .course-details-panel {
     color: inherit;
 
     :global(.ant-card-body) {
@@ -42,7 +46,7 @@
   }
 
   .resources-list,
-  .details-panel {
+  .course-details-panel {
     .title {
       display: flex;
       justify-content: space-between;
@@ -55,9 +59,11 @@
   }
 
   .resources-list {
-    min-width: 340px;
-    width: 340px;
-    margin-right: 10px;
+    --resources-list-margin-size: 10px;
+
+    min-width: calc(var(--resources-list-width) - var(--resources-list-margin-size));
+    width: calc(var(--resources-list-width) - var(--resources-list-margin-size));
+    margin-right: var(--resources-list-margin-size);
     background-color: var(--secondary200);
 
     .title {
@@ -82,7 +88,16 @@
   }
 
   .course-structure {
+    --course-structure-max-width: 70%;
+
+    overflow: hidden;
     flex-grow: 1;
+    max-width: var(--course-structure-max-width);
+    transition: max-width 0.3s ease-in-out;
+
+    &.details-panel-is-open {
+      max-width: calc(var(--course-structure-max-width) - var(--details-panel-width));
+    }
 
     .tabs {
       height: inherit;
@@ -138,16 +153,16 @@
     }
   }
 
-  .details-panel {
-    min-width: 0;
-    width: 0;
+  .course-details-panel {
     border-width: 0;
-    overflow: hidden;
-    transition: all 0.3s ease-in-out;
 
-    &.open {
-      min-width: 340px;
-      width: 340px;
+    .details-panel-title-icon {
+      color: var(--secondary500);
+    }
+
+    &.is-open {
+      min-width: var(--details-panel-width);
+      width: var(--details-panel-width);
       border-width: 1px;
     }
   }

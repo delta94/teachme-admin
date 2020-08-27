@@ -14,6 +14,7 @@ import {
   UsersDispatchContext,
   useUsersContext,
   defaultQueryOptions,
+  defaultQueryFilters,
   fetchUsers,
   exportUsers,
 } from './utils';
@@ -24,6 +25,7 @@ export type { IAction, IState, IDispatch, IUsersProvider, UsersListQueryOptions 
 export {
   useUsersContext,
   defaultQueryOptions,
+  defaultQueryFilters,
   fetchUsers,
   exportUsers,
   reducer,

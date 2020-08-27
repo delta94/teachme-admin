@@ -1,4 +1,5 @@
 import * as walkme from '../walkme';
+import { CourseNotFoundError, TypeNotSupportedError } from '../walkme/models';
 
 export interface IAppStatus {
   isLoading: boolean;
@@ -33,4 +34,15 @@ export async function appInitiator(): Promise<IAppStatus> {
   }
 
   return appStatus;
+}
+
+export function getCourseErrorMessage(error: Error, courseId?: number): string {
+  switch (true) {
+    case error instanceof CourseNotFoundError:
+      return `Cannot find course with id ${courseId ?? ''}`;
+    case error instanceof TypeNotSupportedError:
+      return `This course contains unsupported items`;
+    default:
+      return 'Unable to get course';
+  }
 }

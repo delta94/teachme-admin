@@ -6,5 +6,4 @@ export * from './publish-status';
 export const pluralizer = (word: string, count: number): string =>
   count === 1 ? word : `${word}s`;
 
-export const isValidNumber = (value?: number): boolean =>
-  value !== undefined && typeof value === 'number' && isFinite(value);
+export const isValidNumber = (value: any): boolean => typeof value === 'number' && isFinite(value);

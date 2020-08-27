@@ -1,18 +1,21 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
-import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
-import { CourseItemType } from '../../../../interfaces/course.interfaces';
-import DetailsPanel from '../../../common/DetailsPanel';
-import Icon, { IconType } from '../../../common/Icon';
-import QuizEditForm from '../QuizEditForm';
-import QuizSettingsForm from '../QuizSettingsForm';
-import { QuizScreenType } from '../QuizEditForm/interface';
-import CourseItemDetails from '../CourseItemDetails';
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
+import { CourseItemType } from '../../../interfaces/course.interfaces';
+
+import DetailsPanel from '../../common/DetailsPanel';
+import Icon, { IconType } from '../../common/Icon';
+
+import QuizEditForm from './QuizEditForm';
+import QuizSettingsForm from './QuizSettingsForm';
+import { QuizScreenType } from './QuizEditForm/interface';
+import CourseItemDetails from './CourseItemDetails';
 
 import classes from './style.module.scss';
 
-export const taksItemIconType = {
+export const TaskItemIconType = {
   [CourseItemType.Lesson]: 'LessonSmall',
   [CourseItemType.SmartWalkThru]: 'SmartWalkthruSmall',
   [CourseItemType.Article]: 'ArticleSmall',
@@ -29,7 +32,7 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
   const detailsPanelContent = {
     [DetailsPanelSettingsType.Item]: {
       id: 'Item',
-      iconType: taksItemIconType[activeDetailsItem?.item.type as keyof typeof taksItemIconType],
+      iconType: TaskItemIconType[activeDetailsItem?.item.type as keyof typeof TaskItemIconType],
       title: activeDetailsItem?.item.title ?? 'Item Settings',
       content: <CourseItemDetails courseItem={activeDetailsItem?.item} />,
     },
@@ -88,23 +91,25 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
   const activeType = activeDetailsItem?.type ?? null;
 
   return (
-    <>
-      {activeType && (
-        <DetailsPanel
-          title={detailsPanelContent[activeType].title}
-          titleIcon={
-            <Icon
-              type={IconType[detailsPanelContent[activeType].iconType as keyof typeof IconType]}
-              className={classes['details-panel-title-icon']}
-            />
-          }
-          isOpen={isDetailsPanelOpen}
-          onClose={onClosePanel}
-          titleIsEllipsis
-        >
-          {detailsPanelContent[activeType].content}
-        </DetailsPanel>
-      )}
-    </>
+    <DetailsPanel
+      className={cc([
+        classes['course-details-panel'],
+        { [classes['is-open']]: isDetailsPanelOpen },
+      ])}
+      title={activeType && detailsPanelContent[activeType].title}
+      titleIcon={
+        activeType && (
+          <Icon
+            type={IconType[detailsPanelContent[activeType].iconType as keyof typeof IconType]}
+            className={classes['details-panel-title-icon']}
+          />
+        )
+      }
+      isOpen={isDetailsPanelOpen}
+      onClose={onClosePanel}
+      titleIsEllipsis
+    >
+      {activeType && detailsPanelContent[activeType].content}
+    </DetailsPanel>
   );
 }

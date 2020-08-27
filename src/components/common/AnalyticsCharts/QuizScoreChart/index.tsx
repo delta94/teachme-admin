@@ -31,7 +31,7 @@ export default function QuizScoreChart({
                 className={classes['course-average-chart']}
                 percent={average}
                 type={ProgressType.Circle}
-                format={() => average}
+                format={() => average ?? 0}
                 width={80}
                 strokeWidth={10}
                 status={

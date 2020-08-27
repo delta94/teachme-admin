@@ -38,11 +38,19 @@ const useUsersDispatch = () => {
 
 export const useUsersContext = (): [IState, IDispatch] => [useUsersState(), useUsersDispatch()];
 
+export const defaultQueryFilters = {
+  course_id: undefined,
+  course_completed: undefined,
+  quiz_passed: undefined,
+};
+
 export const defaultQueryOptions = {
   first_item_index: 0,
   num_of_records: 50,
   sort_by: UsersColumn.ID,
   sort_by_order: UsersOrder.ASC,
+  user_name: undefined,
+  ...defaultQueryFilters,
 };
 
 export const fetchUsers = async (
