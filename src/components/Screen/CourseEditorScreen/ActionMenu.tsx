@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { getRandomNegativeNumber } from '../../../utils';
@@ -69,6 +70,10 @@ export default function ActionMenu({
     if (value === CourseItemType.Quiz) {
       // Add new quiz
       dispatch({ type: ActionType.AddQuiz });
+      dispatch({
+        type: ActionType.OpenDetailsPanel,
+        activeDetailsItem: { type: DetailsPanelSettingsType.Quiz, id: quiz?.id ?? 0, item: quiz },
+      });
       onActionSelected && onActionSelected(CourseItemType.Quiz);
     } else {
       // Add new lesson | article | video

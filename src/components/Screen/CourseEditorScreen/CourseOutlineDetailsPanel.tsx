@@ -50,8 +50,8 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
   const detailsPanelContent = {
     [DetailsPanelSettingsType.Item]: {
       id: 'Item',
-      iconType: TaskItemIconType[activeDetailsItem?.item.type as keyof typeof TaskItemIconType],
-      title: activeDetailsItem?.item.title ?? 'Item Settings',
+      iconType: TaskItemIconType[activeDetailsItem?.item?.type as keyof typeof TaskItemIconType],
+      title: activeDetailsItem?.item?.title ?? 'Item Settings',
       content: <CourseItemDetails courseItem={activeDetailsItem?.item} />,
     },
     [DetailsPanelSettingsType.Quiz]: {
@@ -63,7 +63,7 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
     [DetailsPanelSettingsType.Question]: {
       id: 'Question',
       iconType: `QuizQuestionScreen`,
-      title: activeDetailsItem?.item.title ?? 'Question Settings',
+      title: activeDetailsItem?.item?.title ?? 'Question Settings',
       content: (
         <QuizEditForm
           quizScreenType={QuizScreenType.QuestionScreen}

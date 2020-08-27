@@ -13,7 +13,6 @@ import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
 import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
 import classes from './style.module.scss';
-import { NewResourceType } from './NewResourcePanel';
 
 export interface IProperties {
   isAvailable?: boolean;
