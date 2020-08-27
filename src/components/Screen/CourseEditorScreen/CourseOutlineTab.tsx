@@ -38,14 +38,14 @@ export default function CourseOutlineTab(): ReactElement {
     });
   };
 
-  const onActionSelected = (selectedType: CourseItemType, lessonId?: number) => {
+  const onActionSelected = (selectedType: CourseItemType, id?: number) => {
     if (selectedType === CourseItemType.Quiz) {
       setNewQuizAdded(true);
 
       // reset newQuizAdded
       setTimeout(() => setNewQuizAdded(false), 200);
     } else if (selectedType === CourseItemType.Lesson) {
-      lessonId && setNewLessonId(lessonId);
+      id && setNewLessonId(id);
 
       // reset newLessonId
       setTimeout(() => setNewLessonId(undefined), 200);
@@ -54,10 +54,13 @@ export default function CourseOutlineTab(): ReactElement {
         selectedType === CourseItemType.Article
           ? DetailsPanelSettingsType.Article
           : DetailsPanelSettingsType.Video;
-      dispatch({
-        type: ActionType.OpenDetailsPanel,
-        activeDetailsItem: { type, id: -1, item: {} },
-      });
+
+      if (id) {
+        dispatch({
+          type: ActionType.OpenDetailsPanel,
+          activeDetailsItem: { type, id, item: {} },
+        });
+      }
     }
   };
 

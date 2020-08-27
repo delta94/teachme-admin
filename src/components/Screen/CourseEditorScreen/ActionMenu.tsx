@@ -59,28 +59,25 @@ export default function ActionMenu({
   isLoading,
 }: {
   className?: string;
-  onActionSelected?: (selected: CourseItemType, lessonId?: number) => void;
+  onActionSelected?: (selected: CourseItemType, id?: number) => void;
   isLoading?: boolean;
 }): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
 
   const onActionSelect = (selected: IWMDropdownOption) => {
     const { value } = selected;
-
-    if (value === CourseItemType.Lesson) {
-      // Add new lesson
-      const newLesson = course?.items.addNewItem();
-      if (newLesson) {
-        const lessonId = getRandomNegativeNumber();
-        newLesson.id = lessonId;
-        onActionSelected && onActionSelected(CourseItemType.Lesson, lessonId);
-      }
-    } else if (value === CourseItemType.Quiz) {
+    if (value === CourseItemType.Quiz) {
       // Add new quiz
       dispatch({ type: ActionType.AddQuiz });
       onActionSelected && onActionSelected(CourseItemType.Quiz);
     } else {
-      onActionSelected && onActionSelected(value as CourseItemType);
+      // Add new lesson | article | video
+      const newResource = course?.items.addNewItem();
+      if (newResource) {
+        const newResourceId = getRandomNegativeNumber();
+        newResource.id = newResourceId;
+        onActionSelected && onActionSelected(value as CourseItemType, newResourceId);
+      }
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
