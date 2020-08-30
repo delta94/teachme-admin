@@ -8,7 +8,7 @@ import WMSwitch from '../../../common/WMSwitch';
 import { IResourceVideoData } from './interface';
 import NewResourceBaseForm from './NewResourceBaseForm';
 
-import { setVideoAutoplayParameter } from './utils';
+import { generateVideoParameter, autoplayActiveStr } from './utils';
 import classes from './style.module.scss';
 
 export interface INewVideoForm {
@@ -35,7 +35,7 @@ export default function NewVideoForm({ initialNewResource }: INewVideoForm): Rea
         onChange={(checked: boolean) =>
           onResourceDataChange({
             autoplay: checked,
-            videoPlayerParameters: setVideoAutoplayParameter({
+            videoPlayerParameters: generateVideoParameter({
               parameters: resourceData.videoPlayerParameters,
               autoplay: checked,
             }),
@@ -49,7 +49,13 @@ export default function NewVideoForm({ initialNewResource }: INewVideoForm): Rea
         <WMInput
           id="video-parameters-field"
           value={resourceData.videoPlayerParameters}
-          onChange={(e) => onResourceDataChange({ videoPlayerParameters: e.target.value })}
+          onChange={(e) => {
+            const { value } = e.target;
+            onResourceDataChange({
+              autoplay: value.includes(autoplayActiveStr),
+              videoPlayerParameters: value,
+            });
+          }}
         />
       </FormGroup>
     </>
