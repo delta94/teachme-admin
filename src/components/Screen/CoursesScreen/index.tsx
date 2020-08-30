@@ -1,4 +1,13 @@
-import React, { Key, useEffect, useCallback, MemoExoticComponent, useMemo, Dispatch } from 'react';
+import React, {
+  Key,
+  useEffect,
+  useCallback,
+  MemoExoticComponent,
+  useMemo,
+  Dispatch,
+  useState,
+} from 'react';
+import cc from 'classcat';
 import { ConfigProvider, Divider } from 'antd';
 import isEqual from 'lodash/isEqual';
 
@@ -27,7 +36,7 @@ import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
 import CoursesEmptyState from './CoursesEmptyState';
-import { columns } from './tableData';
+import { getColumns } from './tableData';
 
 import classes from './style.module.scss';
 
@@ -61,6 +70,8 @@ function CoursesScreen({
   appDispatch,
   dispatch,
 }: ICoursesScreenProps) {
+  const [isAllRowsSelected, setIsAllRowsSelected] = useState<boolean>(false);
+
   const disableActions = useMemo(() => isUpdating || isFetchingCoursesData || !courses.length, [
     isUpdating,
     isFetchingCoursesData,
@@ -99,7 +110,9 @@ function CoursesScreen({
     }),
     [from, to],
   );
+
   const selectedRowsCount = useMemo(() => selectedRows.length, [selectedRows.length]);
+
   const renderEmpty = useMemo(() => (disableActions ? CoursesEmptyState : SearchEmptyState), [
     disableActions,
   ]);
@@ -126,6 +139,18 @@ function CoursesScreen({
     [selectedRows, selectedRowIds, dispatch],
   );
 
+  const onSelectAllRows = useCallback(() => setIsAllRowsSelected((prev) => !prev), []);
+
+  useEffect(() => {
+    dispatch({
+      type: ActionType.SetSelectedRows,
+      courses: isAllRowsSelected ? filteredCourses : [],
+      selectedRowIds: filteredCourses
+        .map((course) => (isAllRowsSelected ? course.id : null))
+        .filter((c) => Boolean(c)),
+    });
+  }, [isAllRowsSelected, filteredCourses, dispatch]);
+
   return (
     <>
       <ScreenHeader title="Courses" timeFilterProps={{ onDateRangeChange, dateRange }} />
@@ -141,8 +166,15 @@ function CoursesScreen({
         {
           <ConfigProvider renderEmpty={renderEmpty}>
             <WMTable
+              className={cc([
+                classes['courses-table'],
+                {
+                  [classes['all-selected']]:
+                    selectedRowsCount && selectedRowsCount === filteredCourses.length,
+                },
+              ])}
               data={filteredCourses}
-              columns={columns}
+              columns={getColumns(onSelectAllRows)}
               onSortEnd={onSortEnd}
               loading={loading}
               isStickyToolbarAndHeader

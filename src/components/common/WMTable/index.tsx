@@ -21,6 +21,7 @@ import classes from './style.module.scss';
 export { WMTableExpanded };
 
 interface IWMTable extends TableProps<any> {
+  className?: string;
   children?: ReactNode;
   columns?: ColumnsType<any>;
   data: Array<any>;
@@ -35,6 +36,7 @@ interface IWMTable extends TableProps<any> {
 }
 
 function WMTable({
+  className,
   children,
   columns,
   data,
@@ -118,10 +120,12 @@ function WMTable({
   const isSortable = typeof onSortEnd === 'function';
   const componentsProps = isSortable ? sortableComponentProps : {};
   const rowKey = useCallback((record: any, index?: number) => index as Key, []);
+
   return (
     <div
       className={cc([
         classes['wm-table'],
+        className,
         { [classes['sticky-headings']]: isStickyToolbarAndHeader },
       ])}
     >
