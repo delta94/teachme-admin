@@ -9,7 +9,7 @@ const { TextArea } = Input;
 
 export interface IWMTextareaProps extends TextAreaProps {
   className?: string;
-  autosize?: boolean | any;
+  autosize?: boolean | { minRows?: number; maxRows?: number };
   hasResize?: boolean;
 }
 
