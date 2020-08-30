@@ -72,7 +72,6 @@ const BarLabel = ({
   width,
   height,
   value,
-  totalValue,
   totalResponses,
 }: {
   x: number;
@@ -81,10 +80,9 @@ const BarLabel = ({
   height: number;
   value: any;
   name: any;
-  totalValue: number;
   totalResponses: number;
 }) => {
-  const percent = totalResponses ? totalValue * (value / totalResponses) : 0;
+  const percent = totalResponses ? Math.round(100 * (value / totalResponses)) : '0';
 
   return (
     <text
@@ -93,21 +91,19 @@ const BarLabel = ({
       y={y + height - 1.75}
       dominantBaseline="bottom"
     >
-      <tspan>{percent}%</tspan>
-      {` (${value})`}
+      <tspan>{value && !percent ? '< 1' : percent}</tspan>
+      {`% (${value})`}
     </text>
   );
 };
 
 export interface IWMHorizontalBarChart {
-  readonly totalValue: number;
   readonly bars: Array<IQuizAnswers>;
   readonly totalResponses: number;
 }
 
 export default function WMHorizontalBarChart({
   bars,
-  totalValue,
   totalResponses,
 }: IWMHorizontalBarChart): ReactElement {
   const appInit = useAppSkeleton();
@@ -135,9 +131,7 @@ export default function WMHorizontalBarChart({
             <Bar
               dataKey="value"
               radius={[0, 16, 16, 0]}
-              label={(props: any) => (
-                <BarLabel {...props} totalValue={totalValue} totalResponses={totalResponses} />
-              )}
+              label={(props: any) => <BarLabel {...props} totalResponses={totalResponses} />}
             >
               {bars.map((entry, index) =>
                 entry.value ? (

@@ -32,7 +32,6 @@ export default function CourseQuizTabCharts({
                   isCorrect,
                   value: countAnswers,
                 }))}
-                totalValue={100}
                 totalResponses={question.total_responses}
               />
               {!isLast && <Divider className={classes['question-divider']} />}
