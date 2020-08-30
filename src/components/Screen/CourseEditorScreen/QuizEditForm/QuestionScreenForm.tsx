@@ -92,6 +92,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           question.answers.addNewItem();
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
+        tooltipTitle="Add Answer"
       />
       <FormGroup className={classes['explanation']}>
         <WMSwitch

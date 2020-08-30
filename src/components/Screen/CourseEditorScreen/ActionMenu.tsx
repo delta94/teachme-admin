@@ -8,6 +8,7 @@ import { getRandomNegativeNumber } from '../../../utils';
 import Icon, { IconType } from '../../common/Icon';
 import { AddButton } from '../../common/buttons';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
+import { ButtonVariantEnum } from '../../common/WMButton';
 
 import classes from './style.module.scss';
 
@@ -24,6 +25,7 @@ const options: IWMDropdownOption[] = [
   },
   {
     id: 1,
+    skip: true, // TODO: remove this property when the feature is ready
     value: CourseItemType.Article,
     label: (
       <div className={classes['option']}>
@@ -34,6 +36,7 @@ const options: IWMDropdownOption[] = [
   },
   {
     id: 2,
+    skip: true, // TODO: remove this property when the feature is ready
     value: CourseItemType.Video,
     label: (
       <div className={classes['option']}>
@@ -99,7 +102,14 @@ export default function ActionMenu({
       onSelectedChange={onActionSelect}
       disabled={isLoading}
     >
-      <AddButton disabled={isLoading} className={className} />
+      <AddButton
+        disabled={isLoading}
+        className={className}
+        variant={ButtonVariantEnum.Create}
+        tooltipTitle="Add Item"
+      >
+        Add
+      </AddButton>
     </WMDropdown>
   );
 }
