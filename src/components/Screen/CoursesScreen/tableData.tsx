@@ -86,7 +86,7 @@ export const columns: ColumnsType<any> = [
       <DashCell value={users_completed}>
         {users_completed && users_started && (
           <NumberCell
-            value={`${users_completed} (${Math.round((users_completed / users_started) * 100)})%`}
+            value={`${users_completed} (${Math.round((users_completed / users_started) * 100)}%)`}
           />
         )}
       </DashCell>
