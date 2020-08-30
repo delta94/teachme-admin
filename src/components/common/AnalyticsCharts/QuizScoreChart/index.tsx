@@ -27,7 +27,7 @@ const QuizScoreChart = React.memo(
               <>
                 <WMProgress
                   className={classes['course-average-chart']}
-                  percent={average}
+                  percent={average ?? 0}
                   type={ProgressType.Circle}
                   format={() => average}
                   width={80}

@@ -12,9 +12,11 @@ import classes from './style.module.scss';
 
 export default function QuizScreenForm({
   screen,
+  isWelcomeScreen,
   renderExtra,
 }: {
   screen: QuizScreen;
+  isWelcomeScreen: boolean;
   renderExtra?: ReactNode;
 }): ReactElement {
   const [state, dispatch] = useCourseEditorContext();
@@ -33,7 +35,7 @@ export default function QuizScreenForm({
         }}
       />
       <TextCounterTextarea
-        maxLength={210}
+        maxLength={isWelcomeScreen ? 210 : 400}
         placeholder="Text"
         label="Description"
         value={screen.description}
@@ -47,7 +49,7 @@ export default function QuizScreenForm({
       {screen.buttons.map((button: any, index: number) => (
         <TextCounter
           key={`quiz-form-button-${index}`}
-          maxLength={80}
+          maxLength={25}
           placeholder="Text"
           label="Button"
           value={button.text}
