@@ -89,25 +89,6 @@
       height: calc(100% - var(--items-list-height) - var(--search-filter-height));
       overflow: auto;
     }
-
-    .resources-action-menu {
-      margin-left: 10px;
-    }
-
-    .resource-panel {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      min-width: 0;
-      width: var(--resources-list-width - 2); // prevent overflow-x to show scroll-bar
-      height: 0;
-      border-width: 0;
-
-      &.resource-panel-is-open {
-        height: 100%;
-      }
-    }
   }
 
   .resources-list-skeleton {
