@@ -55,7 +55,7 @@ export default function NewResourceBaseForm({
       ...prev,
       lightbox: {
         ...prev.lightbox,
-        sizeUnit: selected,
+        unit: selected,
       },
     }));
 
@@ -115,11 +115,11 @@ export default function NewResourceBaseForm({
         />
         <WMDropdown
           options={sizeUnitOptions}
-          selected={lightbox.sizeUnit}
+          selected={lightbox.unit}
           onSelectedChange={onLightboxUnitChange}
         >
           <WMButton className={classes['unit-size-field']}>
-            {lightbox.sizeUnit.value}
+            {lightbox.unit.value}
             <DownOutlined />
           </WMButton>
         </WMDropdown>
@@ -130,7 +130,7 @@ export default function NewResourceBaseForm({
           value={lightbox.size.height}
           onChange={(e) => onLightboxSizeChange(e, 'height')}
         />
-        {lightbox.sizeUnit.value}
+        {lightbox.unit.value}
       </div>
     </>
   );

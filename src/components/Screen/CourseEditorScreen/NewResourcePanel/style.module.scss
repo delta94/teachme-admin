@@ -24,17 +24,4 @@
   .resource-field {
     margin: 10px auto;
   }
-
-  .actions {
-    margin: 25px auto;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    :global(.ant-btn) {
-      &:last-child {
-        margin-left: 20px;
-      }
-    }
-  }
 }

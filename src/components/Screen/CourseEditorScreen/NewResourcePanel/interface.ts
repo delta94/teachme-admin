@@ -8,14 +8,9 @@ export enum ResourceOpenType {
   Lightbox = 'lightbox',
 }
 
-export enum SizeUnit {
-  Percentages = 'percentages',
-  Pixels = 'pixels',
-}
-
 export interface ILightbox {
   size: { width: number; height: number };
-  sizeUnit: IWMDropdownOption;
+  unit: IWMDropdownOption;
 }
 
 export interface IResourceBaseData {

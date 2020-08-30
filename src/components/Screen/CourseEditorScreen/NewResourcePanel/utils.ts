@@ -1,6 +1,7 @@
+import { Unit } from '../../../../interfaces';
 import { IWMDropdownOption } from '../../../common/WMDropdown';
 
-import { ResourceOpenType, SizeUnit, IResourceBaseData, IResourceVideoData } from './interface';
+import { ResourceOpenType, IResourceBaseData, IResourceVideoData } from './interface';
 
 export const resourceOpenOptions = [
   {
@@ -14,8 +15,8 @@ export const resourceOpenOptions = [
 ];
 
 export const sizeUnitOptions: IWMDropdownOption[] = [
-  { id: SizeUnit.Percentages, value: '%' },
-  { id: SizeUnit.Pixels, value: 'px' },
+  { id: Unit.Percentages, value: '%' },
+  { id: Unit.Pixels, value: 'px' },
 ];
 
 export const initialNewResourceBaseData: IResourceBaseData = {
@@ -24,7 +25,7 @@ export const initialNewResourceBaseData: IResourceBaseData = {
   openTarget: ResourceOpenType.NewTab,
   lightbox: {
     size: { width: 60, height: 60 },
-    sizeUnit: sizeUnitOptions[0],
+    unit: sizeUnitOptions[0],
   },
 };
 
