@@ -8,7 +8,6 @@ import WMSwitch from '../../../common/WMSwitch';
 import { IResourceVideoData } from './interface';
 import NewResourceBaseForm from './NewResourceBaseForm';
 
-import { generateVideoParameters, parametersIncludesAutoplay } from './utils';
 import classes from './style.module.scss';
 
 export interface INewVideoForm {
@@ -25,22 +24,6 @@ export default function NewVideoForm({ data }: INewVideoForm): ReactElement {
       ...updated,
     });
 
-  const onAutoplayChange = (checked: boolean) =>
-    onResourceDataChange({
-      autoplay: checked,
-      videoPlayerParameters: generateVideoParameters({
-        parameters: resourceData.videoPlayerParameters,
-        autoplay: checked,
-      }),
-    });
-
-  const onVideoParametersChange = (parameters: string) =>
-    onResourceDataChange({
-      // autoplay effects according to parameters value
-      autoplay: parametersIncludesAutoplay(parameters),
-      videoPlayerParameters: parameters,
-    });
-
   return (
     <>
       <NewResourceBaseForm data={baseData} onDataChange={onResourceDataChange} />
@@ -48,7 +31,11 @@ export default function NewVideoForm({ data }: INewVideoForm): ReactElement {
         className={classes['switch-field']}
         checked={resourceData.autoplay}
         label="Autoplay"
-        onChange={onAutoplayChange}
+        onChange={(checked: boolean) =>
+          onResourceDataChange({
+            autoplay: checked,
+          })
+        }
       />
       <FormGroup
         className={cc([classes['resource-field'], classes['video-parameters-field']])}
@@ -57,7 +44,7 @@ export default function NewVideoForm({ data }: INewVideoForm): ReactElement {
         <WMInput
           id="video-parameters-field"
           value={resourceData.videoPlayerParameters}
-          onChange={(e) => onVideoParametersChange(e.target.value)}
+          onChange={(e) => onResourceDataChange({ videoPlayerParameters: e.target.value })}
         />
       </FormGroup>
     </>

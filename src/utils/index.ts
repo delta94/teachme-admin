@@ -20,11 +20,3 @@ export const fieldErrorMessage = (
   fieldValue: string,
   error = 'This field cannot be empty',
 ): string | undefined => (fieldValue === '' ? error : undefined);
-
-export const stringIncludesValue = ({
-  string,
-  value,
-}: {
-  string: string;
-  value: string;
-}): boolean => string.includes(value);

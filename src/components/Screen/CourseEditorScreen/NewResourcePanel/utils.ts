@@ -1,7 +1,6 @@
 import { Unit } from '../../../../interfaces';
 
 import { IWMDropdownOption } from '../../../common/WMDropdown';
-import { stringIncludesValue } from '../../../../utils';
 
 import { ResourceOpenType, IResourceBaseData, IResourceVideoData } from './interface';
 
@@ -35,16 +34,15 @@ export const initialNewVideoData: IResourceVideoData = {
   ...initialNewResourceBaseData,
   title: 'Untitled video',
   autoplay: true,
-  videoPlayerParameters: 'autoplay="1"',
+  videoPlayerParameters: '',
 };
+
+// TODO: if the following variables / methods not unnecessary remove them
 
 export const autoplayActiveStr = 'autoplay="1"';
 
-export const parametersIncludesAutoplay = (parameters: string): boolean =>
-  stringIncludesValue({ string: parameters, value: autoplayActiveStr });
-
 /**
- * video parameters effects according to autoplay value
+ * video parameters should effects according to autoplay value
  */
 export const generateVideoParameters = ({
   parameters,
@@ -55,4 +53,4 @@ export const generateVideoParameters = ({
 }): string => (autoplay ? `autoplay="1" ${parameters}` : replaceAutoplayVideoParameter(parameters));
 
 export const replaceAutoplayVideoParameter = (parameters: string): string =>
-  parametersIncludesAutoplay(parameters) ? parameters.replace(autoplayActiveStr, '') : parameters;
+  parameters.includes(autoplayActiveStr) ? parameters.replace(autoplayActiveStr, '') : parameters;
