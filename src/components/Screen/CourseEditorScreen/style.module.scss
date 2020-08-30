@@ -65,7 +65,6 @@
     width: calc(var(--resources-list-width) - var(--resources-list-margin-size));
     margin-right: var(--resources-list-margin-size);
     background-color: var(--secondary200);
-    overflow-y: hidden;
 
     .title-container {
       display: flex;

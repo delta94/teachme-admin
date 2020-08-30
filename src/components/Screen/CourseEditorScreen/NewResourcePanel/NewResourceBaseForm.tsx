@@ -30,13 +30,13 @@ export default function NewResourceBaseForm({
   const [resourceData, setResourceData] = useState<IResourceBaseData>(initialNewResource);
   const { title, url, openTarget, lightbox } = resourceData;
 
-  const resourceDataChange = (updated: Partial<IResourceBaseData>) =>
+  const onResourceDataChange = (updated: Partial<IResourceBaseData>) =>
     setResourceData((prev: IResourceBaseData) => ({
       ...prev,
       ...updated,
     }));
 
-  const onUnitSize = (event: ChangeEvent<HTMLInputElement>, type: 'width' | 'height') => {
+  const onLightboxSizeChange = (event: ChangeEvent<HTMLInputElement>, type: 'width' | 'height') => {
     const { value } = event.target;
 
     if (isNumericValue(value)) {
@@ -50,7 +50,7 @@ export default function NewResourceBaseForm({
     }
   };
 
-  const onSizeUnitChange = (selected: IWMDropdownOption) =>
+  const onLightboxUnitChange = (selected: IWMDropdownOption) =>
     setResourceData((prev: IResourceBaseData) => ({
       ...prev,
       lightbox: {
@@ -75,7 +75,7 @@ export default function NewResourceBaseForm({
         value={title}
         errorMessage={fieldErrorMessage(title)}
         onChange={(e) => {
-          resourceDataChange({ title: e.target.value });
+          onResourceDataChange({ title: e.target.value });
         }}
       />
       <TextCounterInput
@@ -86,7 +86,7 @@ export default function NewResourceBaseForm({
         value={url}
         errorMessage={fieldErrorMessage(url)}
         onChange={(e) => {
-          resourceDataChange({ url: e.target.value });
+          onResourceDataChange({ url: e.target.value });
         }}
       />
       <FormGroup
@@ -95,7 +95,7 @@ export default function NewResourceBaseForm({
       >
         <WMVerticalRadioGroup
           options={resourceOpenOptions}
-          onChange={(e: any) => resourceDataChange({ openTarget: e.target.value })}
+          onChange={(e: any) => onResourceDataChange({ openTarget: e.target.value })}
           value={openTarget}
         />
       </FormGroup>
@@ -111,12 +111,12 @@ export default function NewResourceBaseForm({
           id="lightbox-width"
           className={classes['lightbox-field']}
           value={lightbox.size.width}
-          onChange={(e) => onUnitSize(e, 'width')}
+          onChange={(e) => onLightboxSizeChange(e, 'width')}
         />
         <WMDropdown
           options={sizeUnitOptions}
           selected={lightbox.sizeUnit}
-          onSelectedChange={onSizeUnitChange}
+          onSelectedChange={onLightboxUnitChange}
         >
           <WMButton className={classes['unit-size-field']}>
             {lightbox.sizeUnit.value}
@@ -128,7 +128,7 @@ export default function NewResourceBaseForm({
           id="lightbox-height"
           className={classes['lightbox-field']}
           value={lightbox.size.height}
-          onChange={(e) => onUnitSize(e, 'height')}
+          onChange={(e) => onLightboxSizeChange(e, 'height')}
         />
         {lightbox.sizeUnit.value}
       </div>
