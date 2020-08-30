@@ -1,12 +1,4 @@
-import React, {
-  Key,
-  useEffect,
-  useCallback,
-  MemoExoticComponent,
-  useMemo,
-  Dispatch,
-  useState,
-} from 'react';
+import React, { Key, useEffect, useCallback, MemoExoticComponent, useMemo, Dispatch } from 'react';
 import { ConfigProvider, Divider } from 'antd';
 import isEqual from 'lodash/isEqual';
 
@@ -35,7 +27,7 @@ import DeleteCoursesButton from './DeleteCoursesButton';
 import ExportCoursesButton from './ExportCoursesButton';
 import SearchCoursesFilter from './SearchCoursesFilter';
 import CoursesEmptyState from './CoursesEmptyState';
-import { getColumns } from './tableData';
+import { columns } from './tableData';
 
 import classes from './style.module.scss';
 
@@ -49,7 +41,7 @@ interface ICoursesScreenProps {
   filteredCourses: Array<UICourse>;
   courses: Array<UICourse>;
   selectedRows: Array<UICourse>;
-  selectedRowKeys: Array<Key>;
+  selectedRowIds: Array<number>;
   appDispatch: Dispatch<any>;
   dispatch: Dispatch<any>;
 }
@@ -65,11 +57,10 @@ function CoursesScreen({
   filteredCourses,
   courses,
   selectedRows,
-  selectedRowKeys,
+  selectedRowIds,
   appDispatch,
   dispatch,
 }: ICoursesScreenProps) {
-  const [selectedRowIdList, setSelectedRowIdList] = useState<number[]>([]);
   const disableActions = useMemo(() => isUpdating || isFetchingCoursesData || !courses.length, [
     isUpdating,
     isFetchingCoursesData,
@@ -81,16 +72,6 @@ function CoursesScreen({
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
-
-  const onMultiSelectChange = useCallback(
-    (selectedRowKeys: Array<Key>, selectedRows: Array<UICourse>) =>
-      dispatch({
-        type: ActionType.SetSelectedRows,
-        courses: selectedRows,
-        selectedRowKeys,
-      }),
-    [dispatch],
-  );
 
   const onDateRangeChange = useCallback(
     (dateRange?: IDateRange) => appDispatch({ type: AppActionType.SetDateRange, dateRange }),
@@ -122,27 +103,29 @@ function CoursesScreen({
   const renderEmpty = useMemo(() => (disableActions ? CoursesEmptyState : SearchEmptyState), [
     disableActions,
   ]);
-  const rowSelection = useMemo(
-    () => ({
-      selectedRowKeys,
-      onChange: onMultiSelectChange,
-    }),
-    [selectedRowKeys, onMultiSelectChange],
-  );
+
   const loading = useMemo(() => isUpdating || isFetchingCoursesData, [
     isUpdating,
     isFetchingCoursesData,
   ]);
 
-  const handleRowClick = (id: number) => {
-    const isExist = selectedRowIdList.includes(id);
+  const handleRowSelection = useCallback(
+    (record: UICourse) => {
+      const isExist = selectedRowIds.includes(record.id);
 
-    setSelectedRowIdList((prev) =>
-      isExist ? prev.filter((prevId) => prevId !== id) : [...prev, id],
-    );
-  };
+      dispatch({
+        type: ActionType.SetSelectedRows,
+        courses: isExist
+          ? selectedRows.filter(({ id }) => id !== record.id)
+          : [...selectedRows, record],
+        selectedRowIds: isExist
+          ? selectedRowIds.filter((id) => id !== record.id)
+          : [...selectedRowIds, record.id],
+      });
+    },
+    [selectedRows, selectedRowIds, dispatch],
+  );
 
-  console.log('selectedRowIdList ', selectedRowIdList);
   return (
     <>
       <ScreenHeader title="Courses" timeFilterProps={{ onDateRangeChange, dateRange }} />
@@ -158,17 +141,16 @@ function CoursesScreen({
         {
           <ConfigProvider renderEmpty={renderEmpty}>
             <WMTable
-              rowSelection={rowSelection}
               data={filteredCourses}
-              columns={getColumns(dispatch, selectedRowKeys)}
+              columns={columns}
               onSortEnd={onSortEnd}
               loading={loading}
               isStickyToolbarAndHeader
               rowClassName={(record) =>
-                selectedRowIdList.includes(record.id) ? classes['selected-row'] : ''
+                selectedRowIds.includes(record.id) ? classes['selected-row'] : ''
               }
-              onRow={(record, index) => ({
-                onClick: () => handleRowClick(record.id),
+              onRow={(record) => ({
+                onClick: () => handleRowSelection(record),
               })}
             >
               <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
@@ -216,7 +198,7 @@ function select(): ICoursesScreenProps {
     filteredCourses,
     courses,
     selectedRows,
-    selectedRowKeys,
+    selectedRowIds,
   } = state;
 
   return {
@@ -229,7 +211,7 @@ function select(): ICoursesScreenProps {
     filteredCourses,
     courses,
     selectedRows,
-    selectedRowKeys,
+    selectedRowIds,
     appDispatch,
     dispatch,
   };

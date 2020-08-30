@@ -163,17 +163,21 @@ export const archiveCourses = async (
   }
 };
 
-export const onSelectedRow = (
+export const setSelectedRows = (
   dispatch: IDispatch,
-  course: UICourse,
-  index: number,
-  checked: boolean,
+  selectedRows: UICourse[],
+  selectedRowIds: number[],
+  record: UICourse,
 ): void => {
-  console.log(`onSelectedRow ${course}, ${index}, ${checked}`);
+  const isExist = selectedRowIds.includes(record.id);
 
   dispatch({
     type: ActionType.SetSelectedRows,
-    courses: [course],
-    selectedRowKeys: [index],
+    courses: isExist
+      ? selectedRows.filter(({ id }) => id !== record.id)
+      : [...selectedRows, record],
+    selectedRowIds: isExist
+      ? selectedRowIds.filter((id) => id !== record.id)
+      : [...selectedRowIds, record.id],
   });
 };

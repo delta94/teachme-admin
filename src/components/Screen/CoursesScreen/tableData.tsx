@@ -1,11 +1,10 @@
 /* eslint-disable react/display-name */
-import React, { ReactElement, Key } from 'react';
+import React, { ReactElement } from 'react';
 import { ColumnsType } from 'antd/lib/table';
 import { SortableHandle } from 'react-sortable-hoc';
 
 import { UICourse, PublishStatus } from '../../../walkme/data';
 import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
-import { IDispatch, onSelectedRow } from '../../../providers/CoursesContext';
 
 import {
   DashCell,
@@ -17,24 +16,21 @@ import {
   TextCell,
 } from '../../common/tableCells';
 import WMPopover from '../../common/WMPopover';
-import CheckboxCell from '../../common/tableCells/CheckboxCell';
-
 import ActionsCell from './ActionsCell';
 
 import classes from './style.module.scss';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
 
-export const getColumns = (dispatch: IDispatch, selectedRows: Key[]): ColumnsType<any> => [
+export const columns: ColumnsType<any> = [
   {
     title: '',
     dataIndex: 'checkbox',
     className: classes['checkbox-cell'],
-    render: (value: boolean, course: UICourse, index: number): ReactElement => {
-      console.log('isRender');
+    render: (): ReactElement => {
       return (
-        <div className={classes['checkbox']}>
-          <span className={classes['fake']} />
+        <div className={classes['checkbox-container']}>
+          <span className={classes['checkbox']} />
         </div>
       );
     },
