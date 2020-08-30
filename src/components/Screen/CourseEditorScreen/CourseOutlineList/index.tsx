@@ -9,6 +9,7 @@ import { useCourseEditorContext, ActionType } from '../../../../providers/Course
 import { IWMList } from '../../../common/WMList';
 import TaskItem from '../TaskItem';
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
+import { INewResource } from '../NewResourcePanel';
 
 import classes from './style.module.scss';
 
@@ -24,6 +25,7 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   hasQuiz: boolean;
   handleItemClick?: (item: any) => void;
   newLessonId?: number;
+  newResource?: INewResource;
 }
 
 export default function CourseOutlineList<T>({
@@ -32,6 +34,7 @@ export default function CourseOutlineList<T>({
   handleItemClick,
   hasQuiz,
   newLessonId,
+  newResource,
 }: ICourseOutlineList<T>): ReactElement {
   const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
 

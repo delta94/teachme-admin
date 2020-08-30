@@ -8,15 +8,15 @@ import WMSwitch from '../../../common/WMSwitch';
 import { IResourceVideoData } from './interface';
 import NewResourceBaseForm from './NewResourceBaseForm';
 
-import { generateVideoParameter, autoplayActiveStr } from './utils';
+import { generateVideoParameters, parametersIncludesAutoplay } from './utils';
 import classes from './style.module.scss';
 
 export interface INewVideoForm {
-  initialNewResource: IResourceVideoData;
+  data: IResourceVideoData;
 }
 
-export default function NewVideoForm({ initialNewResource }: INewVideoForm): ReactElement {
-  const [resourceData, setResourceData] = useState<IResourceVideoData>(initialNewResource);
+export default function NewVideoForm({ data }: INewVideoForm): ReactElement {
+  const [resourceData, setResourceData] = useState<IResourceVideoData>(data);
   const { autoplay, videoPlayerParameters, ...baseData } = resourceData;
 
   const onResourceDataChange = (updated: Partial<IResourceVideoData>) =>
@@ -25,22 +25,30 @@ export default function NewVideoForm({ initialNewResource }: INewVideoForm): Rea
       ...updated,
     });
 
+  const onAutoplayChange = (checked: boolean) =>
+    onResourceDataChange({
+      autoplay: checked,
+      videoPlayerParameters: generateVideoParameters({
+        parameters: resourceData.videoPlayerParameters,
+        autoplay: checked,
+      }),
+    });
+
+  const onVideoParametersChange = (parameters: string) =>
+    onResourceDataChange({
+      // autoplay effects according to parameters value
+      autoplay: parametersIncludesAutoplay(parameters),
+      videoPlayerParameters: parameters,
+    });
+
   return (
     <>
-      <NewResourceBaseForm initialNewResource={baseData} onDataChange={onResourceDataChange} />
+      <NewResourceBaseForm data={baseData} onDataChange={onResourceDataChange} />
       <WMSwitch
         className={classes['switch-field']}
         checked={resourceData.autoplay}
         label="Autoplay"
-        onChange={(checked: boolean) =>
-          onResourceDataChange({
-            autoplay: checked,
-            videoPlayerParameters: generateVideoParameter({
-              parameters: resourceData.videoPlayerParameters,
-              autoplay: checked,
-            }),
-          })
-        }
+        onChange={onAutoplayChange}
       />
       <FormGroup
         className={cc([classes['resource-field'], classes['video-parameters-field']])}
@@ -49,13 +57,7 @@ export default function NewVideoForm({ initialNewResource }: INewVideoForm): Rea
         <WMInput
           id="video-parameters-field"
           value={resourceData.videoPlayerParameters}
-          onChange={(e) => {
-            const { value } = e.target;
-            onResourceDataChange({
-              autoplay: value.includes(autoplayActiveStr),
-              videoPlayerParameters: value,
-            });
-          }}
+          onChange={(e) => onVideoParametersChange(e.target.value)}
         />
       </FormGroup>
     </>

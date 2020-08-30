@@ -20,14 +20,14 @@ import classes from './style.module.scss';
 export interface INewResourceBaseForm {
   children?: ReactNode;
   onDataChange?: (data: IResourceBaseData) => void;
-  initialNewResource: IResourceBaseData;
+  data: IResourceBaseData;
 }
 
 export default function NewResourceBaseForm({
   onDataChange,
-  initialNewResource,
+  data,
 }: INewResourceBaseForm): ReactElement {
-  const [resourceData, setResourceData] = useState<IResourceBaseData>(initialNewResource);
+  const [resourceData, setResourceData] = useState<IResourceBaseData>(data);
   const { title, url, openTarget, lightbox } = resourceData;
 
   const onResourceDataChange = (updated: Partial<IResourceBaseData>) =>
@@ -60,10 +60,10 @@ export default function NewResourceBaseForm({
     }));
 
   useEffect(() => {
-    if (onDataChange && !_isEqual(initialNewResource, resourceData)) {
+    if (onDataChange && !_isEqual(data, resourceData)) {
       onDataChange(resourceData);
     }
-  }, [resourceData, initialNewResource, onDataChange]);
+  }, [resourceData, data, onDataChange]);
 
   return (
     <>

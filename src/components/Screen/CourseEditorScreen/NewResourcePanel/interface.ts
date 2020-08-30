@@ -3,6 +3,12 @@ import { IWMDropdownOption } from '../../../common/WMDropdown';
 
 export type NewResourceType = CourseItemType.Article | CourseItemType.Video;
 
+export interface INewResource {
+  type: NewResourceType;
+  id: number;
+  item: IResourceBaseData | IResourceVideoData;
+}
+
 export enum ResourceOpenType {
   NewTab = 'new tab',
   Lightbox = 'lightbox',

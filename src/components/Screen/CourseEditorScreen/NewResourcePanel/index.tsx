@@ -5,28 +5,30 @@ import { CourseItemType } from '../../../../interfaces/course.interfaces';
 
 import NewResourceBaseForm from './NewResourceBaseForm';
 import NewVideoForm from './NewVideoForm';
-import { NewResourceType, IResourceBaseData, IResourceVideoData } from './interface';
+import { NewResourceType, IResourceBaseData, IResourceVideoData, INewResource } from './interface';
 import { initialNewResourceBaseData, initialNewVideoData } from './utils';
 
 import classes from './style.module.scss';
 
 export { initialNewResourceBaseData, initialNewVideoData };
 
-export type { IResourceBaseData, IResourceVideoData, NewResourceType };
+export type { IResourceBaseData, IResourceVideoData, NewResourceType, INewResource };
 
 export default function NewResourcePanel({
   newResourceType,
+  newResourceData,
   className,
 }: {
-  newResourceType?: NewResourceType;
+  newResourceType: NewResourceType;
+  newResourceData: IResourceBaseData | IResourceVideoData;
   className?: string;
 }): ReactElement {
   const resource = {
     [CourseItemType.Video]: {
-      content: <NewVideoForm initialNewResource={initialNewVideoData} />,
+      content: <NewVideoForm data={newResourceData as IResourceVideoData} />,
     },
     [CourseItemType.Article]: {
-      content: <NewResourceBaseForm initialNewResource={initialNewResourceBaseData} />,
+      content: <NewResourceBaseForm data={newResourceData as IResourceBaseData} />,
     },
   };
 

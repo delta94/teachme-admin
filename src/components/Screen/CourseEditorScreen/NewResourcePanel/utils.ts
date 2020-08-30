@@ -1,5 +1,7 @@
 import { Unit } from '../../../../interfaces';
+
 import { IWMDropdownOption } from '../../../common/WMDropdown';
+import { stringIncludesValue } from '../../../../utils';
 
 import { ResourceOpenType, IResourceBaseData, IResourceVideoData } from './interface';
 
@@ -38,7 +40,13 @@ export const initialNewVideoData: IResourceVideoData = {
 
 export const autoplayActiveStr = 'autoplay="1"';
 
-export const generateVideoParameter = ({
+export const parametersIncludesAutoplay = (parameters: string): boolean =>
+  stringIncludesValue({ string: parameters, value: autoplayActiveStr });
+
+/**
+ * video parameters effects according to autoplay value
+ */
+export const generateVideoParameters = ({
   parameters,
   autoplay,
 }: {
@@ -47,4 +55,4 @@ export const generateVideoParameter = ({
 }): string => (autoplay ? `autoplay="1" ${parameters}` : replaceAutoplayVideoParameter(parameters));
 
 export const replaceAutoplayVideoParameter = (parameters: string): string =>
-  parameters.includes(autoplayActiveStr) ? parameters.replace(autoplayActiveStr, '') : parameters;
+  parametersIncludesAutoplay(parameters) ? parameters.replace(autoplayActiveStr, '') : parameters;

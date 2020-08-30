@@ -108,13 +108,23 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
       id: 'Video',
       title: 'New Video',
       iconType: TaskItemIconType[CourseItemType.Video as keyof typeof TaskItemIconType],
-      content: <NewResourcePanel newResourceType={CourseItemType.Video} />,
+      content: (
+        <NewResourcePanel
+          newResourceType={CourseItemType.Video}
+          newResourceData={activeDetailsItem?.item}
+        />
+      ),
     },
     [CourseItemType.Article]: {
       id: 'Article',
       title: 'New Article',
       iconType: TaskItemIconType[CourseItemType.Article as keyof typeof TaskItemIconType],
-      content: <NewResourcePanel newResourceType={CourseItemType.Article} />,
+      content: (
+        <NewResourcePanel
+          newResourceType={CourseItemType.Article}
+          newResourceData={activeDetailsItem?.item}
+        />
+      ),
     },
   };
 

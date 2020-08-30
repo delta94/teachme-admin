@@ -12,6 +12,13 @@ import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
 import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
+import {
+  INewResource,
+  initialNewResourceBaseData,
+  initialNewVideoData,
+  NewResourceType,
+} from './NewResourcePanel';
+
 import classes from './style.module.scss';
 
 export interface IProperties {
@@ -29,6 +36,7 @@ export default function CourseOutlineTab(): ReactElement {
   const { isFetchingCourse, course, quiz /* , courseOutlineSearchValue */ } = state;
   const [newQuizAdded, setNewQuizAdded] = useState(false);
   const [newLessonId, setNewLessonId] = useState<number>();
+  const [newResource, setNewResource] = useState<INewResource>();
 
   const onItemClick = (item: any) => {
     dispatch({
@@ -49,15 +57,27 @@ export default function CourseOutlineTab(): ReactElement {
       // reset newLessonId
       setTimeout(() => setNewLessonId(undefined), 200);
     } else {
-      const type =
-        selectedType === CourseItemType.Article
-          ? DetailsPanelSettingsType.Article
-          : DetailsPanelSettingsType.Video;
+      const isBaseResource = selectedType === CourseItemType.Article;
+
+      const panelType = isBaseResource
+        ? DetailsPanelSettingsType.Article
+        : DetailsPanelSettingsType.Video;
 
       if (id) {
+        const newResourceData = {
+          type: panelType,
+          id,
+          item: isBaseResource ? initialNewResourceBaseData : initialNewVideoData,
+        };
+
+        setNewResource({ ...newResourceData, type: selectedType as NewResourceType });
+
+        // reset newLessonId
+        setTimeout(() => setNewLessonId(undefined), 200);
+
         dispatch({
           type: ActionType.OpenDetailsPanel,
-          activeDetailsItem: { type, id, item: {} },
+          activeDetailsItem: newResourceData,
         });
       }
     }
@@ -106,6 +126,7 @@ export default function CourseOutlineTab(): ReactElement {
             hasQuiz={!!quiz}
             handleItemClick={onItemClick}
             newLessonId={newLessonId}
+            newResource={newResource}
           />
         )}
         {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}
