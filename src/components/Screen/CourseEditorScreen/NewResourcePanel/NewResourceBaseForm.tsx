@@ -17,7 +17,7 @@ import { resourceOpenOptions, sizeUnitOptions } from './utils';
 
 import classes from './style.module.scss';
 
-export interface INewResourceForm {
+export interface INewResourceBaseForm {
   children?: ReactNode;
   onDataChange?: (data: IResourceBaseData) => void;
   initialNewResource: IResourceBaseData;
@@ -26,7 +26,7 @@ export interface INewResourceForm {
 export default function NewResourceBaseForm({
   onDataChange,
   initialNewResource,
-}: INewResourceForm): ReactElement {
+}: INewResourceBaseForm): ReactElement {
   const [resourceData, setResourceData] = useState<IResourceBaseData>(initialNewResource);
   const { title, url, openTarget, lightbox } = resourceData;
 

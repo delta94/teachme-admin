@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, ReactNode } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 
 import FormGroup from '../../../common/FormGroup';
@@ -11,12 +11,11 @@ import NewResourceBaseForm from './NewResourceBaseForm';
 import { setVideoAutoplayParameter } from './utils';
 import classes from './style.module.scss';
 
-export interface INewResourceForm {
-  children?: ReactNode;
+export interface INewVideoForm {
   initialNewResource: IResourceVideoData;
 }
 
-export default function NewVideoForm({ initialNewResource }: INewResourceForm): ReactElement {
+export default function NewVideoForm({ initialNewResource }: INewVideoForm): ReactElement {
   const [resourceData, setResourceData] = useState<IResourceVideoData>(initialNewResource);
   const { autoplay, videoPlayerParameters, ...baseData } = resourceData;
 
