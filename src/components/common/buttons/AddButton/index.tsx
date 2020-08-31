@@ -1,27 +1,42 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
+import { Tooltip } from 'antd';
 import cc from 'classcat';
 
-import WMButton, { IWMButtonProps } from '../../WMButton';
+import WMButton, { IWMButtonProps, ButtonVariantEnum } from '../../WMButton';
 import Icon, { IconType } from '../../Icon';
 
 import classes from './style.module.scss';
 
-interface IAddButton extends IWMButtonProps {
+interface IAddButton extends Omit<IWMButtonProps, 'children'> {
   className?: string;
   disabled?: boolean;
+  children?: ReactNode;
+  tooltipTitle?: string;
 }
 
 export default function AddButton({
   className,
   disabled,
+  children,
+  tooltipTitle,
   ...otherProps
 }: IAddButton): ReactElement {
   return (
-    <WMButton
-      className={cc([classes['add-button'], className])}
-      icon={<Icon type={IconType.Plus} />}
-      disabled={disabled}
-      {...otherProps}
-    />
+    <Tooltip title={tooltipTitle}>
+      <WMButton
+        className={cc([
+          classes['add-button'],
+          className,
+          {
+            [classes['create-label']]: children && otherProps.variant === ButtonVariantEnum.Create,
+          },
+        ])}
+        icon={<Icon type={IconType.Plus} />}
+        disabled={disabled}
+        {...otherProps}
+      >
+        {children}
+      </WMButton>
+    </Tooltip>
   );
 }

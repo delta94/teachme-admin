@@ -66,8 +66,16 @@
     margin-right: var(--resources-list-margin-size);
     background-color: var(--secondary200);
 
-    .title {
+    .title-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       border-bottom: var(--wm-border);
+      padding-right: 20px;
+
+      .title {
+        margin-right: auto;
+      }
     }
 
     .filters-bar {
@@ -175,8 +183,9 @@
   color: var(--neutral900);
   height: 30px;
 
-  > span {
+  :global(.wm-icon) {
     margin-right: 10px;
+    color: var(--neutral400);
   }
 }
 
@@ -195,6 +204,7 @@
     justify-content: flex-start;
     align-items: center;
     color: var(--red);
+    min-width: 320px;
 
     :global(.wm-icon) {
       margin-right: 10px;
@@ -228,4 +238,11 @@ body.prevent-interaction {
 
 html.prevent-interaction {
   cursor: not-allowed;
+}
+
+.resource-list-empty-state {
+  :global(.ant-empty-description) {
+    display: flex;
+    flex-direction: column;
+  }
 }

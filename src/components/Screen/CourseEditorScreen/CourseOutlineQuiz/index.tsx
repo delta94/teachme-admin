@@ -61,7 +61,7 @@ export default function CourseOutlineQuiz({
 
   useEffect(() => {
     // detecting new quiz added and scroll to element
-    if (quiz.id === undefined && isNew) {
+    if (isNew) {
       quizRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [quiz, isNew]);

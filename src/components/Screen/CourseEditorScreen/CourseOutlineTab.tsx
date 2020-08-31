@@ -12,6 +12,13 @@ import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
 import CourseOutlineListEmptyState from './CourseOutlineListEmptyState';
+import {
+  INewResource,
+  initialNewResourceBaseData,
+  initialNewVideoData,
+  NewResourceType,
+} from './NewResourcePanel';
+
 import classes from './style.module.scss';
 
 export interface IProperties {
@@ -29,6 +36,7 @@ export default function CourseOutlineTab(): ReactElement {
   const { isFetchingCourse, course, quiz /* , courseOutlineSearchValue */ } = state;
   const [newQuizAdded, setNewQuizAdded] = useState(false);
   const [newLessonId, setNewLessonId] = useState<number>();
+  const [newResource, setNewResource] = useState<INewResource>();
 
   const onItemClick = (item: any) => {
     dispatch({
@@ -37,17 +45,41 @@ export default function CourseOutlineTab(): ReactElement {
     });
   };
 
-  const onActionSelected = (selectedType: CourseItemType, lessonId?: number) => {
+  const onActionSelected = (selectedType: CourseItemType, id?: number) => {
     if (selectedType === CourseItemType.Quiz) {
       setNewQuizAdded(true);
 
       // reset newQuizAdded
       setTimeout(() => setNewQuizAdded(false), 200);
-    } else {
-      lessonId && setNewLessonId(lessonId);
+    } else if (selectedType === CourseItemType.Lesson) {
+      id && setNewLessonId(id);
 
       // reset newLessonId
       setTimeout(() => setNewLessonId(undefined), 200);
+    } else {
+      const isBaseResource = selectedType === CourseItemType.Article;
+
+      const panelType = isBaseResource
+        ? DetailsPanelSettingsType.Article
+        : DetailsPanelSettingsType.Video;
+
+      if (id) {
+        const newResourceData = {
+          type: panelType,
+          id,
+          item: isBaseResource ? initialNewResourceBaseData : initialNewVideoData,
+        };
+
+        setNewResource({ ...newResourceData, type: selectedType as NewResourceType });
+
+        // reset newLessonId
+        setTimeout(() => setNewLessonId(undefined), 200);
+
+        dispatch({
+          type: ActionType.OpenDetailsPanel,
+          activeDetailsItem: newResourceData,
+        });
+      }
     }
   };
 
@@ -82,7 +114,10 @@ export default function CourseOutlineTab(): ReactElement {
         paragraph={{ rows: 15 }}
       >
         {!quiz && !course?.items.toArray().length && (
-          <CourseOutlineListEmptyState containerClassName={classes['course-outline-empty-state']} />
+          <CourseOutlineListEmptyState
+            containerClassName={classes['course-outline-empty-state']}
+            onActionSelected={onActionSelected}
+          />
         )}
         {course && (
           <CourseOutlineList
@@ -91,6 +126,7 @@ export default function CourseOutlineTab(): ReactElement {
             hasQuiz={!!quiz}
             handleItemClick={onItemClick}
             newLessonId={newLessonId}
+            newResource={newResource}
           />
         )}
         {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}

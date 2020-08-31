@@ -66,7 +66,11 @@ export default function QuizHeader({ className }: { className?: string }): React
             <WMButton className={classes['title-button']} onClick={showDeleteDialog}>
               <Icon type={IconType.Delete} className={classes['title-icon']} />
             </WMButton>
-            <AddButton className={cc([classes['add-question']])} onClick={addQuestion} />
+            <AddButton
+              className={cc([classes['add-question']])}
+              onClick={addQuestion}
+              tooltipTitle="Add Question"
+            />
           </div>
         </div>
       </Header>

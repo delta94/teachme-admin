@@ -8,6 +8,7 @@ import { useCourseEditorContext, ActionType } from '../../../../providers/Course
 import WMInput from '../../../common/WMInput';
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
+import { getValidRangeNumber, isNumericValue } from '../../../../utils';
 
 import classes from './style.module.scss';
 
@@ -24,15 +25,9 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
   const onPassmarkChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    const reg = /^-?\d*(\.\d*)?$/;
-    if ((!isNaN(parseInt(value, 10)) && reg.test(value)) || value === '' || value === '-') {
-      const quizPassmark =
-        value === '' || value === '-' ? 0 : parseInt(value, 10) > 100 ? 100 : parseInt(value, 10);
-
-      if (quiz) {
-        quiz.properties = { ...quiz.properties, ...{ passmark: quizPassmark } };
-        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-      }
+    if (isNumericValue(value) && quiz) {
+      quiz.properties = { ...quiz.properties, ...{ passmark: getValidRangeNumber(value) } };
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     }
   };
 

@@ -1,27 +1,7 @@
 .purple-switch {
   :global(.ant-switch-handle) {
     &::before {
-      background: rebeccapurple;
+      background-color: rebeccapurple;
     }
-  }
-}
-
-.cards-wrapper {
-  display: flex;
-  font-family: var(--font-primary);
-  color: var(--neutral900);
-
-  .outline-demo {
-    min-width: 700px;
-    padding: 0 20px;
-  }
-
-  .buttons {
-    width: 500px;
-  }
-
-  .buttons.grow,
-  .outline-demo {
-    flex-grow: 1;
   }
 }

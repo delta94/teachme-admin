@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
@@ -13,6 +13,8 @@ import QuizSettingsForm from './QuizSettingsForm';
 import { QuizScreenType } from './QuizEditForm/interface';
 import CourseItemDetails from './CourseItemDetails';
 
+import NewResourcePanel, { IResourceBaseData, IResourceVideoData } from './NewResourcePanel';
+
 import classes from './style.module.scss';
 
 export const TaskItemIconType = {
@@ -25,6 +27,27 @@ export const TaskItemIconType = {
 export default function CourseOutlineDetailsPanel(): ReactElement {
   const [{ course, isDetailsPanelOpen, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
+  /**
+   * TODO: uncomment the following lines when SDK is ready if necessary
+   */
+
+  // const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
+  // const [hasValidationError, setHasValidationError] = useState<boolean>(false);
+
+  // const resourceIcon = activeDetailsItem && <Icon type={activeDetailsItem.type} />;
+
+  // const isValidData = (data: IResourceBaseData | IResourceVideoData) => {
+  //   const isEmptyStr = (val?: string) => val === '';
+
+  //   return isEmptyStr(data.title) || isEmptyStr(data.url); // or check this option: !data.title.length
+  // };
+
+  // const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
+  //   setHasValidationError(isValidData(data));
+
+  //   setNewResourceData(data);
+  // };
+
   const onClosePanel = () => {
     dispatch({ type: ActionType.CloseDetailsPanel });
   };
@@ -32,8 +55,8 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
   const detailsPanelContent = {
     [DetailsPanelSettingsType.Item]: {
       id: 'Item',
-      iconType: TaskItemIconType[activeDetailsItem?.item.type as keyof typeof TaskItemIconType],
-      title: activeDetailsItem?.item.title ?? 'Item Settings',
+      iconType: TaskItemIconType[activeDetailsItem?.item?.type as keyof typeof TaskItemIconType],
+      title: activeDetailsItem?.item?.title ?? 'Item Settings',
       content: <CourseItemDetails courseItem={activeDetailsItem?.item} />,
     },
     [DetailsPanelSettingsType.Quiz]: {
@@ -45,7 +68,7 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
     [DetailsPanelSettingsType.Question]: {
       id: 'Question',
       iconType: `QuizQuestionScreen`,
-      title: activeDetailsItem?.item.title ?? 'Question Settings',
+      title: activeDetailsItem?.item?.title ?? 'Question Settings',
       content: (
         <QuizEditForm
           quizScreenType={QuizScreenType.QuestionScreen}
@@ -83,6 +106,28 @@ export default function CourseOutlineDetailsPanel(): ReactElement {
         <QuizEditForm
           quizScreenType={QuizScreenType.SuccessScreen}
           quizScreenData={activeDetailsItem?.item}
+        />
+      ),
+    },
+    [CourseItemType.Video]: {
+      id: 'Video',
+      title: 'New Video',
+      iconType: TaskItemIconType[CourseItemType.Video as keyof typeof TaskItemIconType],
+      content: (
+        <NewResourcePanel
+          newResourceType={CourseItemType.Video}
+          newResourceData={activeDetailsItem?.item}
+        />
+      ),
+    },
+    [CourseItemType.Article]: {
+      id: 'Article',
+      title: 'New Article',
+      iconType: TaskItemIconType[CourseItemType.Article as keyof typeof TaskItemIconType],
+      content: (
+        <NewResourcePanel
+          newResourceType={CourseItemType.Article}
+          newResourceData={activeDetailsItem?.item}
         />
       ),
     },

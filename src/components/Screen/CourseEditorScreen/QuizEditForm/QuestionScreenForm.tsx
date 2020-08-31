@@ -4,6 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
 import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounterInput from '../../../common/TextCounterInput';
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
@@ -14,7 +15,6 @@ import { AddButton } from '../../../common/buttons';
 import WMSwitch from '../../../common/WMSwitch';
 
 import Answers from './Answers';
-import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
 
@@ -92,6 +92,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
           question.answers.addNewItem();
           dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
         }}
+        tooltipTitle="Add Answer"
       />
       <FormGroup className={classes['explanation']}>
         <WMSwitch

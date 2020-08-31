@@ -2,11 +2,10 @@ import React, { ReactElement, ReactNode } from 'react';
 import { QuizScreen } from '@walkme/types';
 
 import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounter from '../../../common/TextCounterInput';
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
-
-import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
 

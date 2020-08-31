@@ -2,14 +2,13 @@ import React, { ReactElement } from 'react';
 import { QuestionType, QuizAnswer } from '@walkme/types';
 
 import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounterInput from '../../../common/TextCounterInput';
 import WMCheckbox from '../../../common/WMCheckbox';
 import WMRadio from '../../../common/WMRadio';
 import WMButton from '../../../common/WMButton';
 import Icon, { IconType } from '../../../common/Icon';
-
-import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
 

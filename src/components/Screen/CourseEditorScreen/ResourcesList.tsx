@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-
 import { ContentItem, TypeName } from '@walkme/types';
 import {
   useCourseEditorContext,
@@ -15,6 +14,7 @@ import { SearchFilter } from '../../common/filters';
 
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
+
 import classes from './style.module.scss';
 
 export default function ResourcesList(): ReactElement {
@@ -48,8 +48,8 @@ export default function ResourcesList(): ReactElement {
     <WMCard
       className={classes['resources-list']}
       title={
-        <div className={classes['title']}>
-          <span>Items</span>
+        <div className={classes['title-container']}>
+          <span className={classes['title']}>Items</span>
           <RefreshButton onClick={onRefresh} loading={isFetchingItems} />
         </div>
       }
