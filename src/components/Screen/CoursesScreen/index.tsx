@@ -70,7 +70,7 @@ function CoursesScreen({
   appDispatch,
   dispatch,
 }: ICoursesScreenProps) {
-  const [areAllRowsSelected, setAreAllRowsSelected] = useState<boolean>(false);
+  const [areAllRowsSelected, setAreAllRowsSelected] = useState(false);
 
   const disableActions = useMemo(() => isUpdating || isFetchingCoursesData || !courses.length, [
     isUpdating,
@@ -83,6 +83,7 @@ function CoursesScreen({
 
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
+  useEffect(() => () => setAreAllRowsSelected(false), []);
 
   const onDateRangeChange = useCallback(
     (dateRange?: IDateRange) => appDispatch({ type: AppActionType.SetDateRange, dateRange }),
@@ -125,16 +126,14 @@ function CoursesScreen({
   const handleRowSelection = useCallback(
     (record: UICourse) => {
       const doesExist = selectedRowIds.includes(record.id);
+      const courses = doesExist
+        ? selectedRows.filter(({ id }) => id !== record.id)
+        : [...selectedRows, record];
+      const rowIds = doesExist
+        ? selectedRowIds.filter((id) => id !== record.id)
+        : [...selectedRowIds, record.id];
 
-      dispatch({
-        type: ActionType.SetSelectedRows,
-        courses: doesExist
-          ? selectedRows.filter(({ id }) => id !== record.id)
-          : [...selectedRows, record],
-        selectedRowIds: doesExist
-          ? selectedRowIds.filter((id) => id !== record.id)
-          : [...selectedRowIds, record.id],
-      });
+      dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds: rowIds });
     },
     [selectedRows, selectedRowIds, dispatch],
   );
@@ -142,13 +141,12 @@ function CoursesScreen({
   const onSelectAllRows = useCallback(() => setAreAllRowsSelected((prev) => !prev), []);
 
   useEffect(() => {
-    dispatch({
-      type: ActionType.SetSelectedRows,
-      courses: areAllRowsSelected ? filteredCourses : [],
-      selectedRowIds: filteredCourses
-        .map((course) => (areAllRowsSelected ? course.id : null))
-        .filter((c) => Boolean(c)),
-    });
+    const courses = areAllRowsSelected ? filteredCourses : [];
+    const selectedRowIds = filteredCourses
+      .map((course) => (areAllRowsSelected ? course.id : null))
+      .filter((c) => Boolean(c));
+
+    dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds });
   }, [areAllRowsSelected, filteredCourses, dispatch]);
 
   return (
