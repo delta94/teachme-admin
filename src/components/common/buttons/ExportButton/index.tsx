@@ -9,7 +9,7 @@ import WMButton from '../../WMButton';
 
 import classes from './style.module.scss';
 
-export default function ExportButton({
+function ExportButton({
   className,
   onClick,
   disabled,
@@ -38,3 +38,5 @@ export default function ExportButton({
     </>
   );
 }
+
+export default React.memo(ExportButton);
