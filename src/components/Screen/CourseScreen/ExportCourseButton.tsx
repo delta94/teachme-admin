@@ -1,29 +1,44 @@
 // todo: ExportToCSVDialog is commented out until export to email is implemented
 
-import React, { ReactElement /* , useState */ } from 'react';
+import React, { Dispatch, ReactElement, useCallback } from 'react';
 
-import { useAppContext } from '../../../providers/AppContext';
-import { useCourseContext, exportCourse } from '../../../providers/CourseContext';
+import { exportCourse } from '../../../providers/CourseContext';
+import { CourseMetadata } from '../../../walkme/models/course';
 
 /* import { ExportToCSVDialog } from '../../common/dialogs'; */
 import { ExportButton } from '../../common/buttons';
 
 import classes from './style.module.scss';
 
-export default function ExportCoursesButton({ disabled }: { disabled?: boolean }): ReactElement {
-  const [appState] = useAppContext();
-  const {
-    dateRange: { from, to },
-  } = appState;
-  const [{ courseMetadata, isExportingCourse }, dispatch] = useCourseContext();
+interface IExportCoursesButtonProps {
+  disabled?: boolean;
+  courseMetadata?: CourseMetadata;
+  isExportingCourse: boolean;
+  envId: number;
+  from: string;
+  to: string;
+  dispatch: Dispatch<any>;
+}
 
+function ExportCoursesButton({
+  disabled,
+  courseMetadata,
+  isExportingCourse,
+  envId,
+  from,
+  to,
+  dispatch,
+}: IExportCoursesButtonProps): ReactElement {
   /* const [showExport, setShowExport] = useState(false); */
-
+  const exportCoursesOnClick = useCallback(
+    () => exportCourse(dispatch, courseMetadata?.id ?? 0, envId, from, to),
+    [dispatch, courseMetadata?.id, envId, from, to],
+  );
   return (
     <>
       <ExportButton
         className={classes['export']}
-        onClick={() => exportCourse(dispatch, courseMetadata?.id ?? 0, 0, from, to)}
+        onClick={exportCoursesOnClick}
         disabled={disabled}
         loading={isExportingCourse}
       />
@@ -39,3 +54,5 @@ export default function ExportCoursesButton({ disabled }: { disabled?: boolean }
     </>
   );
 }
+
+export default React.memo(ExportCoursesButton);
