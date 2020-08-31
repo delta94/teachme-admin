@@ -37,12 +37,12 @@ export const initialNewVideoData: IResourceVideoData = {
   videoPlayerParameters: '',
 };
 
-// TODO: if the following variables / methods not unnecessary remove them
+// TODO: if the following variables / methods are unnecessary remove them
 
 export const autoplayActiveStr = 'autoplay="1"';
 
 /**
- * video parameters should effects according to autoplay value
+ * Video parameters would be affected by the autoplay value
  */
 export const generateVideoParameters = ({
   parameters,

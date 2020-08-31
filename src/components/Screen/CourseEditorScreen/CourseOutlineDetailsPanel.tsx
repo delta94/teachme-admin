@@ -26,22 +26,27 @@ export const TaskItemIconType = {
 
 export default function CourseOutlineDetailsPanel(): ReactElement {
   const [{ course, isDetailsPanelOpen, activeDetailsItem }, dispatch] = useCourseEditorContext();
-  const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
-  const [hasValidationError, setHasValidationError] = useState<boolean>(false);
 
-  const resourceIcon = activeDetailsItem && <Icon type={activeDetailsItem.type} />;
+  /**
+   * TODO: uncomment the following lines when SDK is ready if necessary
+   */
 
-  const isValidData = (data: IResourceBaseData | IResourceVideoData) => {
-    const isEmptyStr = (val?: string) => val === '';
+  // const [newResourceData, setNewResourceData] = useState<IResourceBaseData | IResourceVideoData>();
+  // const [hasValidationError, setHasValidationError] = useState<boolean>(false);
 
-    return isEmptyStr(data.title) || isEmptyStr(data.url);
-  };
+  // const resourceIcon = activeDetailsItem && <Icon type={activeDetailsItem.type} />;
 
-  const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
-    setHasValidationError(isValidData(data));
+  // const isValidData = (data: IResourceBaseData | IResourceVideoData) => {
+  //   const isEmptyStr = (val?: string) => val === '';
 
-    setNewResourceData(data);
-  };
+  //   return isEmptyStr(data.title) || isEmptyStr(data.url); // or check this option: !data.title.length
+  // };
+
+  // const onDataChange = (data: IResourceBaseData | IResourceVideoData) => {
+  //   setHasValidationError(isValidData(data));
+
+  //   setNewResourceData(data);
+  // };
 
   const onClosePanel = () => {
     dispatch({ type: ActionType.CloseDetailsPanel });
