@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement, Key, useCallback } from 'react';
+import React, { ReactNode, ReactElement, Key, useMemo, useCallback } from 'react';
 import cc from 'classcat';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
@@ -12,6 +12,7 @@ import {
 } from 'react-sortable-hoc';
 import produce from 'immer';
 import isEqual from 'lodash/isEqual';
+
 import WMTableExpanded from './WMTableExpanded';
 import SortableTableBody from './SortableTableBody';
 import SortableRow from './SortableRow';
@@ -109,14 +110,17 @@ function WMTable({
     [onSortEndCallback, onSortStartCallback],
   );
 
-  const sortableComponentProps = {
-    components: {
-      body: {
-        wrapper: SortableWrapper,
-        row: SortableRow,
+  const sortableComponentProps = useMemo(
+    () => ({
+      components: {
+        body: {
+          wrapper: SortableWrapper,
+          row: SortableRow,
+        },
       },
-    },
-  };
+    }),
+    [SortableWrapper],
+  );
   const isSortable = typeof onSortEnd === 'function';
   const componentsProps = isSortable ? sortableComponentProps : {};
   const rowKey = useCallback((record: any, index?: number) => index as Key, []);
