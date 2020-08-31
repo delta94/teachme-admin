@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect, useRef } from 'react';
+import React, { Dispatch, ReactElement, useEffect, useRef } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import cc from 'classcat';
 
 import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
-import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMCollapse from '../../../common/WMCollapse';
 import Icon, { IconType } from '../../../common/Icon';
@@ -12,6 +12,8 @@ import WMEmpty from '../../../common/WMEmpty';
 import CourseItemsList from '../CourseItemsList';
 import LessonHeader from '../LessonHeader';
 
+import { ActiveDetailsItem } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
+import { Course } from '../../../../walkme/data/courseBuild/course';
 import classes from './style.module.scss';
 
 export interface INewLesson extends CourseLesson {
@@ -24,14 +26,19 @@ export default function CourseOutlineLessonItem({
   className,
   innerClassName,
   newLessonId,
+  course,
+  activeDetailsItem,
+  dispatch,
 }: {
   item: INewLesson;
   index: number;
   className?: string;
   innerClassName?: string;
   newLessonId?: number;
+  course: Course | null;
+  activeDetailsItem: ActiveDetailsItem | null;
+  dispatch: Dispatch<any>;
 }): ReactElement {
-  const [{ course, activeDetailsItem }, dispatch] = useCourseEditorContext();
   const lessonRef = useRef<HTMLDivElement>(null);
 
   const onInnerDrop = (e: any, destinationItemID: string | undefined, element: any) => {
@@ -78,7 +85,9 @@ export default function CourseOutlineLessonItem({
         className={cc([classes['lesson'], innerClassName])}
         contentClassName={cc({ [classes['is-empty']]: isEmpty })}
         headerClassName={classes['lesson-header']}
-        header={<LessonHeader lesson={item} type={IconType.Lesson} />}
+        header={
+          <LessonHeader lesson={item} course={course} type={IconType.Lesson} dispatch={dispatch} />
+        }
         hasDragHandle
         ref={lessonRef}
       >
@@ -109,6 +118,7 @@ export default function CourseOutlineLessonItem({
             className: classes['task-with-settings'],
           }}
           isActive={(item: any) => item.id === activeDetailsItem?.id}
+          dispatch={dispatch}
         />
       </WMCollapse>
     </Draggable>

@@ -1,7 +1,8 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 import cc from 'classcat';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { Course } from '../../../../walkme/data/courseBuild/course';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 import WMButton from '../../../common/WMButton';
 
 import Icon, { IconType } from '../../../common/Icon';
@@ -11,11 +12,14 @@ import DeleteLessonDialog from './DeleteLessonDialog';
 export default function LessonDeleteButton({
   lesson,
   showInput,
+  course,
+  dispatch,
 }: {
   lesson?: any;
   showInput: boolean;
+  course: Course | null;
+  dispatch: Dispatch<any>;
 }): ReactElement {
-  const [{ course }, dispatch] = useCourseEditorContext();
   const [openDialog, setOpenDialog] = useState(false);
 
   const deleteLesson = () => {

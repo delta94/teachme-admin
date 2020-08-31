@@ -1,13 +1,17 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, Dispatch } from 'react';
 
-import { useAppContext } from '../../../providers/AppContext';
-import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
-import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
+import { ActionType } from '../../../providers/CourseEditorContext';
+import {
+  ActiveDetailsItem,
+  DetailsPanelSettingsType,
+} from '../../../providers/CourseEditorContext/course-editor-context.interface';
 
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import WMSkeleton from '../../common/WMSkeleton';
 
+import { Course } from '../../../walkme/data/courseBuild/course';
+import { Quiz } from '../../../walkme/data/courseBuild/quiz';
 import CourseOutlineQuiz from './CourseOutlineQuiz';
 import CourseOutlineList from './CourseOutlineList';
 import ActionMenu from './ActionMenu';
@@ -30,10 +34,25 @@ export interface IProperties {
   isCompleted?: boolean;
 }
 
-export default function CourseOutlineTab(): ReactElement {
-  const [{ isUpdating }] = useAppContext();
-  const [state, dispatch] = useCourseEditorContext();
-  const { isFetchingCourse, course, quiz /* , courseOutlineSearchValue */ } = state;
+export interface ICourseOutlineTabProps {
+  isFetchingCourse: boolean;
+  course: Course | null;
+  quiz: Quiz | null;
+  isUpdating: boolean;
+  activeDetailsItem: ActiveDetailsItem | null;
+  isDetailsPanelOpen: boolean;
+  dispatch: Dispatch<any>;
+}
+
+export default function CourseOutlineTab({
+  isFetchingCourse,
+  course,
+  quiz,
+  isUpdating,
+  activeDetailsItem,
+  isDetailsPanelOpen,
+  dispatch,
+}: ICourseOutlineTabProps): ReactElement {
   const [newQuizAdded, setNewQuizAdded] = useState(false);
   const [newLessonId, setNewLessonId] = useState<number>();
   const [newResource, setNewResource] = useState<INewResource>();
@@ -98,6 +117,9 @@ export default function CourseOutlineTab(): ReactElement {
         className={classes['add-btn']}
         onActionSelected={onActionSelected}
         isLoading={isUpdating || isFetchingCourse}
+        course={course}
+        quiz={quiz}
+        dispatch={dispatch}
       />
       {/* <SearchFilter
         className={classes['search']}
@@ -117,6 +139,9 @@ export default function CourseOutlineTab(): ReactElement {
           <CourseOutlineListEmptyState
             containerClassName={classes['course-outline-empty-state']}
             onActionSelected={onActionSelected}
+            course={course}
+            quiz={quiz}
+            dispatch={dispatch}
           />
         )}
         {course && (
@@ -126,10 +151,20 @@ export default function CourseOutlineTab(): ReactElement {
             hasQuiz={!!quiz}
             handleItemClick={onItemClick}
             newLessonId={newLessonId}
-            newResource={newResource}
+            activeDetailsItem={activeDetailsItem}
+            dispatch={dispatch}
           />
         )}
-        {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}
+        {quiz && (
+          <CourseOutlineQuiz
+            course={course}
+            quiz={quiz}
+            isNew={newQuizAdded}
+            activeDetailsItem={activeDetailsItem}
+            isDetailsPanelOpen={isDetailsPanelOpen}
+            dispatch={dispatch}
+          />
+        )}
       </WMSkeleton>
     </div>
   );

@@ -1,9 +1,9 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, Dispatch } from 'react';
 import { QuestionType } from '@walkme/types';
 import { DownOutlined } from '@ant-design/icons';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounterInput from '../../../common/TextCounterInput';
@@ -23,9 +23,13 @@ const questionTypes: IWMDropdownOption[] = [
   { id: QuestionType.Multiple, value: 'Multiple Selection' },
 ];
 
-export default function QuestionScreenForm({ question }: { question: QuizQuestion }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-
+export default function QuestionScreenForm({
+  question,
+  dispatch,
+}: {
+  question: QuizQuestion;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const [selectedQuestionType, setSelectedQuestionType] = useState(
     questionTypes[question.type as QuestionType],
   );
@@ -85,6 +89,7 @@ export default function QuestionScreenForm({ question }: { question: QuizQuestio
         errorMessage={
           !question.isSelectionValid() ? 'You must select at least 1 correct answer' : undefined
         }
+        dispatch={dispatch}
       />
       <AddButton
         className={classes['add-answer']}

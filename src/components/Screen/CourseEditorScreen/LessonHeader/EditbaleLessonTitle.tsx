@@ -1,18 +1,27 @@
-import React, { ChangeEvent, MouseEvent, ReactElement, useRef, useState } from 'react';
+import React, { ChangeEvent, Dispatch, MouseEvent, ReactElement, useRef, useState } from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { Course } from '../../../../walkme/data/courseBuild/course';
+import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 import WMInput from '../../../common/WMInput';
 import WMButton from '../../../common/WMButton';
-
 import Icon, { IconType } from '../../../common/Icon';
-import classes from './style.module.scss';
+
 import LessonDeleteButton from './LessonDeleteButton';
 
-export default function LessonEditableTitle({ lesson }: { lesson?: any }): ReactElement {
-  const [{ course }, dispatch] = useCourseEditorContext();
+import classes from './style.module.scss';
 
+export default function LessonEditableTitle({
+  lesson,
+  course,
+  dispatch,
+}: {
+  lesson?: CourseLesson;
+  course: Course | null;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const inputTitle = useRef<Input>(null);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState(lesson?.title ?? '');
@@ -49,7 +58,12 @@ export default function LessonEditableTitle({ lesson }: { lesson?: any }): React
         >
           <Icon type={IconType.PencilSmall} className={classes['title-icon']} />
         </WMButton>
-        <LessonDeleteButton lesson={lesson} showInput={showInput} />
+        <LessonDeleteButton
+          lesson={lesson}
+          showInput={showInput}
+          course={course}
+          dispatch={dispatch}
+        />
       </div>
       <div className={cc([classes['input-wrapper'], { [classes['hidden']]: !showInput }])}>
         <WMInput

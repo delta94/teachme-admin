@@ -19,8 +19,29 @@ import HeaderConfirmationButtons from './HeaderConfirmationButtons';
 import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
-  const [{ course, isFetchingCourse, hasChanges }, dispatch] = useCourseEditorContext();
-  const [{ isUpdating, environment }] = useAppContext();
+  const [
+    {
+      course,
+      isFetchingCourse,
+      hasChanges,
+      isDetailsPanelOpen,
+      activeDetailsItem,
+      quiz,
+      isSavingCourse,
+      isFetchingItems,
+      courseItems,
+      filteredCourseItems,
+      courseItemsSearchValue,
+    },
+    dispatch,
+  ] = useCourseEditorContext();
+  const [
+    {
+      isUpdating,
+      environment,
+      environment: { id: envId },
+    },
+  ] = useAppContext();
   const { courseId } = useParams();
   const history = useHistory();
 
@@ -54,11 +75,35 @@ export default function CourseEditorScreen(): ReactElement {
         }
         hideTimeFilter={true}
       >
-        <HeaderConfirmationButtons />
+        <HeaderConfirmationButtons
+          course={course}
+          hasChanges={hasChanges}
+          isSavingCourse={isSavingCourse}
+          dispatch={dispatch}
+          environment={environment}
+        />
       </ScreenHeader>
       <div className={classes['cards-wrapper']}>
-        <ResourcesList />
-        <CourseOutline />
+        <ResourcesList
+          course={course}
+          isFetchingItems={isFetchingItems}
+          courseItems={courseItems}
+          filteredCourseItems={filteredCourseItems}
+          courseItemsSearchValue={courseItemsSearchValue}
+          isUpdating={isUpdating}
+          envId={envId}
+          dispatch={dispatch}
+        />
+        <CourseOutline
+          isDetailsPanelOpen={isDetailsPanelOpen}
+          course={course}
+          activeDetailsItem={activeDetailsItem}
+          isFetchingCourse={isFetchingCourse}
+          quiz={quiz}
+          isUpdating={isUpdating}
+          envId={envId}
+          dispatch={dispatch}
+        />
       </div>
       <UnloadDialog when={hasChanges} />
     </div>

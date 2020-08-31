@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement } from 'react';
 import { QuestionType, QuizAnswer } from '@walkme/types';
 
-import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounterInput from '../../../common/TextCounterInput';
@@ -17,14 +17,14 @@ export default function Answers({
   type,
   errorMessage,
   onDeleteAnswer,
+  dispatch,
 }: {
   answers: QuizAnswer[];
   type: QuestionType;
   errorMessage?: string;
   onDeleteAnswer: (answerIndex: number) => void;
+  dispatch: Dispatch<any>;
 }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-
   const AnswerField = ({ answer, index }: { answer: QuizAnswer; index: number }) => (
     <div className={classes['answer-container']}>
       <TextCounterInput

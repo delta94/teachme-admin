@@ -1,35 +1,43 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement } from 'react';
 import { ContentItem, TypeName } from '@walkme/types';
-import {
-  useCourseEditorContext,
-  fetchItemsList,
-  ActionType,
-} from '../../../providers/CourseEditorContext';
-import { useAppContext } from '../../../providers/AppContext';
+import { fetchItemsList, ActionType } from '../../../providers/CourseEditorContext';
 
 import WMCard from '../../common/WMCard';
 import WMSkeleton from '../../common/WMSkeleton';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
 
+import { Course } from '../../../walkme/data/courseBuild/course';
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
 
 import classes from './style.module.scss';
 
-export default function ResourcesList(): ReactElement {
-  const [
-    {
-      isUpdating,
-      environment: { id: envId },
-    },
-  ] = useAppContext();
-  const [state, dispatch] = useCourseEditorContext();
-  const { isFetchingItems, courseItems, filteredCourseItems, courseItemsSearchValue } = state;
+export interface IResourcesListProps {
+  course: Course | null;
+  isFetchingItems: boolean;
+  courseItems: Array<ContentItem>;
+  filteredCourseItems: Array<ContentItem>;
+  courseItemsSearchValue: string;
+  isUpdating: boolean;
+  envId: string;
+  dispatch: Dispatch<any>;
+}
 
+export default function ResourcesList({
+  course,
+  isFetchingItems,
+  courseItems,
+  filteredCourseItems,
+  courseItemsSearchValue,
+  isUpdating,
+  envId,
+  dispatch,
+}: any): ReactElement {
   const onSearch = (searchValue: string) => {
-    const newCourseItems = courseItems.filter(({ title, description }) =>
-      `${title} ${description}`.toLowerCase().includes(searchValue.toLowerCase()),
+    const newCourseItems = courseItems.filter(
+      ({ title, description }: { title: string; description: string }) =>
+        `${title} ${description}`.toLowerCase().includes(searchValue.toLowerCase()),
     );
 
     dispatch({
@@ -74,7 +82,7 @@ export default function ResourcesList(): ReactElement {
             items={filteredCourseItems}
             className={classes['resource-item-list']}
             isDisabled={(item: ContentItem) =>
-              state.course?.includes(item.type as TypeName, item.id as number)
+              course?.includes(item.type as TypeName, item.id as number)
             }
           />
         ) : (

@@ -1,10 +1,13 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement } from 'react';
 import cc from 'classcat';
 
 import WMCard from '../../common/WMCard';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 
-import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { ActionType } from '../../../providers/CourseEditorContext';
+import { Course } from '../../../walkme/data/courseBuild/course';
+import { ActiveDetailsItem } from '../../../providers/CourseEditorContext/course-editor-context.interface';
+import { Quiz } from '../../../walkme/data/courseBuild/quiz';
 import CourseOutlineTab from './CourseOutlineTab';
 import CourseSettingsTab from './CourseSettingsTab';
 import CourseOutlineDetailsPanel from './CourseOutlineDetailsPanel';
@@ -16,19 +19,52 @@ enum TabId {
   Settings = 'settings',
 }
 
-export default function CourseOutline(): ReactElement {
-  const [{ isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
-
+export default function CourseOutline({
+  isDetailsPanelOpen,
+  course,
+  activeDetailsItem,
+  isFetchingCourse,
+  quiz,
+  isUpdating,
+  envId,
+  dispatch,
+}: {
+  isDetailsPanelOpen: boolean;
+  course: Course | null;
+  activeDetailsItem: ActiveDetailsItem | null;
+  isFetchingCourse: boolean;
+  quiz: Quiz | null;
+  isUpdating: boolean;
+  envId: number;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const tabs = [
     {
       id: TabId.CourseOutline,
       title: 'Course Outline',
-      content: <CourseOutlineTab />,
+      content: (
+        <CourseOutlineTab
+          isFetchingCourse={isFetchingCourse}
+          course={course}
+          quiz={quiz}
+          isUpdating={isUpdating}
+          activeDetailsItem={activeDetailsItem}
+          isDetailsPanelOpen={isDetailsPanelOpen}
+          dispatch={dispatch}
+        />
+      ),
     },
     {
       id: TabId.Settings,
       title: 'Settings',
-      content: <CourseSettingsTab />,
+      content: (
+        <CourseSettingsTab
+          course={course}
+          isFetchingCourse={isFetchingCourse}
+          envId={envId}
+          dispatch={dispatch}
+        />
+      ),
       onClick: () => {
         dispatch({ type: ActionType.CloseDetailsPanel });
       },
@@ -62,7 +98,13 @@ export default function CourseOutline(): ReactElement {
           ))}
         </WMTabs>
       </WMCard>
-      <CourseOutlineDetailsPanel />
+      <CourseOutlineDetailsPanel
+        course={course}
+        quiz={quiz}
+        isDetailsPanelOpen={isDetailsPanelOpen}
+        activeDetailsItem={activeDetailsItem}
+        dispatch={dispatch}
+      />
     </>
   );
 }
