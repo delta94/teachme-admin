@@ -29,10 +29,12 @@ export default function CoursesTimeCompletionChart({
 
       if (completion_time.buckets.length)
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
-    } else {
+    }
+
+    return () => {
       setBars([]);
       setCompletionTimeAvg(undefined);
-    }
+    };
   }, [overview]);
 
   // unmount only

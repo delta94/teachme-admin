@@ -41,9 +41,9 @@ export default function QuizCompletionRateChart({
           legend: 'Users who completed a course',
         },
       ]);
-    } else {
-      setBars([]);
     }
+
+    return () => setBars([]);
   }, [totalPercentages]);
 
   // unmount only
