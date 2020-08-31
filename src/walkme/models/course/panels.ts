@@ -9,4 +9,6 @@ export type CourseOverviewData = AllCoursesOverviewResponse & {
   avg_quiz_score: number;
   /** Passmark score for the quiz of this score */
   passmark?: number;
+  /** true if the course includes quiz */
+  hasQuiz?: boolean;
 };
