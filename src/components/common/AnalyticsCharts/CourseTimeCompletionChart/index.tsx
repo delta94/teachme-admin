@@ -10,7 +10,7 @@ import { parseBucketsToPieBarSummary } from '../utils';
 
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 
-export default function CoursesTimeCompletionChart({
+function CoursesTimeCompletionChart({
   className,
   title,
   overview,
@@ -57,3 +57,5 @@ export default function CoursesTimeCompletionChart({
     </WMCard>
   );
 }
+
+export default React.memo(CoursesTimeCompletionChart);

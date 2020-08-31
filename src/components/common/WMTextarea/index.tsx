@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 import { TextAreaProps } from 'antd/lib/input';
-import { AutoSizeType } from 'antd/lib/input/ResizableTextArea';
 
 import classes from './style.module.scss';
 
@@ -10,7 +9,7 @@ const { TextArea } = Input;
 
 export interface IWMTextareaProps extends TextAreaProps {
   className?: string;
-  autosize?: boolean | AutoSizeType;
+  autosize?: boolean | { minRows?: number; maxRows?: number };
   hasResize?: boolean;
 }
 

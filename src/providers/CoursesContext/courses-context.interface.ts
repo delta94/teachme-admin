@@ -1,4 +1,4 @@
-import { ReactNode, Key } from 'react';
+import { ReactNode } from 'react';
 
 import { AllCoursesOverviewResponse } from '../../walkme/models/overview';
 import { UICourse } from '../../walkme/data';
@@ -12,7 +12,7 @@ export interface IAction {
   overview?: AllCoursesOverviewResponse;
   courses?: Array<UICourse>;
   coursesSearchValue?: string;
-  selectedRowKeys?: Array<Key>;
+  selectedRowIds?: Array<number>;
 }
 
 export interface IDispatch {
@@ -27,7 +27,7 @@ export interface IState {
   filteredCourses: Array<UICourse>;
   coursesSearchValue: string;
   selectedRows: Array<UICourse>;
-  selectedRowKeys: Array<Key>;
+  selectedRowIds: Array<number>;
   isSortingCourses: boolean;
   isSortingCoursesError: boolean;
   isExportingCourses: boolean;

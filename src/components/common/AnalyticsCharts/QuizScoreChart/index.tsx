@@ -11,11 +11,8 @@ import { IQuizScoreData } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
-export default function QuizScoreChart({
-  overview,
-  isLoading = false,
-}: IQuizScoreData): ReactElement {
-  const { hasQuiz, avg_quiz_score, passmark } = overview;
+function QuizScoreChart({ overview, isLoading = false }: IQuizScoreData): ReactElement {
+  const { avg_quiz_score, passmark, hasQuiz } = overview;
 
   // `avg_quiz_score` is required in type `CourseOverviewData`, and returns `null` when data is missing
   const average = avg_quiz_score ? Math.round(avg_quiz_score) : undefined;
@@ -51,3 +48,5 @@ export default function QuizScoreChart({
     </WMCard>
   );
 }
+
+export default React.memo(QuizScoreChart);
