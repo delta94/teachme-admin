@@ -21,7 +21,7 @@ export default function EnvironmentMenu({ className }: { className?: string }): 
     setAppEnvironment({
       dispatch,
       environments,
-      envId: parseInt(selected.id as string),
+      envId: parseInt(selected.id as string, 10),
     });
     setSelectedEnv(selected);
 
