@@ -24,7 +24,7 @@ export default function SystemMenu({ className }: { className?: string }): React
     setAppSystem({
       dispatch,
       systems,
-      systemId: parseInt(selected.id as string),
+      systemId: parseInt(selected.id as string, 10),
     });
 
     message.info(`System changed to ${selected.value}`);

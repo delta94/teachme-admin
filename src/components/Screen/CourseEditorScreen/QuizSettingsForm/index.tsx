@@ -25,11 +25,9 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
   const onPassmarkChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    if (isNumericValue(value)) {
-      if (quiz) {
-        quiz.properties = { ...quiz.properties, ...{ passmark: getValidRangeNumber(value) } };
-        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-      }
+    if (isNumericValue(value) && quiz) {
+      quiz.properties = { ...quiz.properties, ...{ passmark: getValidRangeNumber(value) } };
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     }
   };
 

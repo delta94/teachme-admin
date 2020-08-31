@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import cc from 'classcat';
 
 import StatusDot, { DotType } from '../StatusDot';
 
@@ -14,7 +15,7 @@ export default function StatusDotCell({
   ...otherProps
 }: IStatusDotCell): ReactElement {
   return (
-    <span className={className} {...otherProps}>
+    <div className={cc([classes['status-dot-cell'], className])} {...otherProps}>
       {typeof value === 'number' ? (
         <>
           <StatusDot
@@ -26,6 +27,6 @@ export default function StatusDotCell({
       ) : (
         <WarningCell value={value} />
       )}
-    </span>
+    </div>
   );
 }
