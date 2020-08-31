@@ -1,13 +1,9 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 
 import { useAppContext } from '../../../providers/AppContext';
-import {
-  useCoursesContext,
-  fetchCoursesData,
-  deleteCourses,
-  ActionType,
-} from '../../../providers/CoursesContext';
+import { fetchCoursesData, deleteCourses, ActionType } from '../../../providers/CoursesContext';
 import { PublishStatus } from '../../../walkme/models';
+import { UICourse } from '../../../walkme/data';
 
 import Icon, { IconType } from '../../common/Icon';
 import WMButton from '../../common/WMButton';
@@ -18,19 +14,26 @@ import {
 
 import classes from './style.module.scss';
 
-export default function DeleteCoursesButton(): ReactElement {
+function DeleteCoursesButton({
+  selectedRows,
+  isDeletingCourses,
+  dispatch,
+}: {
+  selectedRows: Array<UICourse>;
+  isDeletingCourses: boolean;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const [appState] = useAppContext();
   const {
     dateRange: { from, to },
     environment: { id: envId },
   } = appState;
-  const [{ selectedRows, isDeletingCourses }, dispatch] = useCoursesContext();
 
   const [showDeleteCourse, setShowDeleteCourse] = useState(false);
   const [showCantDeleteCourse, setShowCantDeleteCourse] = useState(false);
 
   const cannotDelete = selectedRows.some(
-    (course) =>
+    (course: any) =>
       course.publishStatus === PublishStatus.Published ||
       course.publishStatus === PublishStatus.Modified,
   );
@@ -67,3 +70,5 @@ export default function DeleteCoursesButton(): ReactElement {
     </>
   );
 }
+
+export default React.memo(DeleteCoursesButton);

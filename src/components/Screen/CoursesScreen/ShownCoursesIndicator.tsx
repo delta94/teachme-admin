@@ -1,19 +1,23 @@
 import React, { ReactElement } from 'react';
 
-import { useCoursesContext } from '../../../providers/CoursesContext';
 import { pluralizer } from '../../../utils';
+import { UICourse } from '../../../walkme/data';
 
 import WMSkeleton from '../../common/WMSkeleton';
 
 import classes from './style.module.scss';
 
-export default function ShownCoursesIndicator({
+function ShownCoursesIndicator({
   isLoading = false,
+  courses,
+  filteredCourses,
+  selectedRows,
 }: {
-  isLoading?: boolean;
+  isLoading: boolean;
+  courses: Array<UICourse>;
+  filteredCourses: Array<UICourse>;
+  selectedRows: Array<UICourse>;
 }): ReactElement {
-  const [{ courses, filteredCourses, selectedRows }] = useCoursesContext();
-
   const selectedRowsCount = selectedRows.length;
   const shownCoursesCount = filteredCourses.length;
 
@@ -31,3 +35,5 @@ export default function ShownCoursesIndicator({
     </div>
   );
 }
+
+export default React.memo(ShownCoursesIndicator);

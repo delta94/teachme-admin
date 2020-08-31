@@ -51,6 +51,10 @@ interface ICoursesScreenProps {
   courses: Array<UICourse>;
   selectedRows: Array<UICourse>;
   selectedRowIds: Array<number>;
+  isPublishingCourses: boolean;
+  isArchivingCourses: boolean;
+  isDeletingCourses: boolean;
+  isExportingCourses: boolean;
   appDispatch: Dispatch<any>;
   dispatch: Dispatch<any>;
 }
@@ -67,6 +71,10 @@ function CoursesScreen({
   courses,
   selectedRows,
   selectedRowIds,
+  isPublishingCourses,
+  isArchivingCourses,
+  isDeletingCourses,
+  isExportingCourses,
   appDispatch,
   dispatch,
 }: ICoursesScreenProps) {
@@ -102,14 +110,6 @@ function CoursesScreen({
       sortTable(dispatch, courseId, oldIndex, newIndex);
     },
     [dispatch],
-  );
-
-  const dateRange = useMemo(
-    () => ({
-      from,
-      to,
-    }),
-    [from, to],
   );
 
   const selectedRowsCount = useMemo(() => selectedRows.length, [selectedRows.length]);
@@ -149,9 +149,15 @@ function CoursesScreen({
     dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds });
   }, [areAllRowsSelected, filteredCourses, dispatch]);
 
+  const timeFilterProps = useMemo(() => ({ onDateRangeChange, dateRange: { from, to } }), [
+    onDateRangeChange,
+    from,
+    to,
+  ]);
+
   return (
     <>
-      <ScreenHeader title="Courses" timeFilterProps={{ onDateRangeChange, dateRange }} />
+      <ScreenHeader title="Courses" timeFilterProps={timeFilterProps} />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"
         overview={overview as AllCoursesOverviewResponse}
@@ -183,7 +189,12 @@ function CoursesScreen({
                 onClick: () => handleRowSelection(record),
               })}
             >
-              <ShownCoursesIndicator isLoading={isUpdating || isFetchingCoursesData} />
+              <ShownCoursesIndicator
+                isLoading={isUpdating || isFetchingCoursesData}
+                courses={courses}
+                filteredCourses={filteredCourses}
+                selectedRows={selectedRows}
+              />
               {/* <ControlsWrapper>
                 <DropdownFilter label="Status" options={statuses} />
                 <DropdownFilter label="Segments" options={segments} />
@@ -191,13 +202,30 @@ function CoursesScreen({
               <ControlsWrapper>
                 {Boolean(selectedRowsCount) && (
                   <>
-                    <ProductionStatusActions />
-                    <DeleteCoursesButton />
+                    <ProductionStatusActions
+                      selectedRows={selectedRows}
+                      isPublishingCourses={isPublishingCourses}
+                      isArchivingCourses={isArchivingCourses}
+                      dispatch={dispatch}
+                    />
+                    <DeleteCoursesButton
+                      selectedRows={selectedRows}
+                      isDeletingCourses={isDeletingCourses}
+                      dispatch={dispatch}
+                    />
                     <Divider className={classes['separator']} type="vertical" />
                   </>
                 )}
-                <ExportCoursesButton disabled={disableActions} />
-                <SearchCoursesFilter disabled={disableActions} />
+                <ExportCoursesButton
+                  disabled={disableActions}
+                  isExportingCourses={isExportingCourses}
+                  dispatch={dispatch}
+                />
+                <SearchCoursesFilter
+                  disabled={disableActions}
+                  courses={courses}
+                  dispatch={dispatch}
+                />
                 <CreateButton />
               </ControlsWrapper>
             </WMTable>
@@ -229,6 +257,10 @@ function select(): ICoursesScreenProps {
     courses,
     selectedRows,
     selectedRowIds,
+    isPublishingCourses,
+    isArchivingCourses,
+    isDeletingCourses,
+    isExportingCourses,
   } = state;
 
   return {
@@ -242,6 +274,10 @@ function select(): ICoursesScreenProps {
     courses,
     selectedRows,
     selectedRowIds,
+    isPublishingCourses,
+    isArchivingCourses,
+    isDeletingCourses,
+    isExportingCourses,
     appDispatch,
     dispatch,
   };
