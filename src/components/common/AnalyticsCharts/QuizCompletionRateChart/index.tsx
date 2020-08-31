@@ -12,7 +12,7 @@ import { calculatePercentages } from '../utils';
 
 import QuizCompletionRateLegend from './QuizCompletionRateLegend';
 
-export default function QuizCompletionRateChart({
+function QuizCompletionRateChart({
   className,
   title,
   overview,
@@ -72,3 +72,5 @@ export default function QuizCompletionRateChart({
     </WMCard>
   );
 }
+
+export default React.memo(QuizCompletionRateChart);
