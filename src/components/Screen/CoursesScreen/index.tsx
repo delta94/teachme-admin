@@ -70,7 +70,7 @@ function CoursesScreen({
   appDispatch,
   dispatch,
 }: ICoursesScreenProps) {
-  const [isAllRowsSelected, setIsAllRowsSelected] = useState<boolean>(false);
+  const [areAllRowsSelected, setAreAllRowsSelected] = useState<boolean>(false);
 
   const disableActions = useMemo(() => isUpdating || isFetchingCoursesData || !courses.length, [
     isUpdating,
@@ -124,14 +124,14 @@ function CoursesScreen({
 
   const handleRowSelection = useCallback(
     (record: UICourse) => {
-      const isExist = selectedRowIds.includes(record.id);
+      const doesExist = selectedRowIds.includes(record.id);
 
       dispatch({
         type: ActionType.SetSelectedRows,
-        courses: isExist
+        courses: doesExist
           ? selectedRows.filter(({ id }) => id !== record.id)
           : [...selectedRows, record],
-        selectedRowIds: isExist
+        selectedRowIds: doesExist
           ? selectedRowIds.filter((id) => id !== record.id)
           : [...selectedRowIds, record.id],
       });
@@ -139,17 +139,17 @@ function CoursesScreen({
     [selectedRows, selectedRowIds, dispatch],
   );
 
-  const onSelectAllRows = useCallback(() => setIsAllRowsSelected((prev) => !prev), []);
+  const onSelectAllRows = useCallback(() => setAreAllRowsSelected((prev) => !prev), []);
 
   useEffect(() => {
     dispatch({
       type: ActionType.SetSelectedRows,
-      courses: isAllRowsSelected ? filteredCourses : [],
+      courses: areAllRowsSelected ? filteredCourses : [],
       selectedRowIds: filteredCourses
-        .map((course) => (isAllRowsSelected ? course.id : null))
+        .map((course) => (areAllRowsSelected ? course.id : null))
         .filter((c) => Boolean(c)),
     });
-  }, [isAllRowsSelected, filteredCourses, dispatch]);
+  }, [areAllRowsSelected, filteredCourses, dispatch]);
 
   return (
     <>

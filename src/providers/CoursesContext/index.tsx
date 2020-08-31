@@ -17,7 +17,6 @@ import {
   deleteCourses,
   publishCourses,
   archiveCourses,
-  setSelectedRows,
 } from './utils';
 import { reducer, initialState } from './reducer';
 
@@ -31,7 +30,6 @@ export {
   deleteCourses,
   publishCourses,
   archiveCourses,
-  setSelectedRows,
   reducer,
   initialState,
   ActionType,

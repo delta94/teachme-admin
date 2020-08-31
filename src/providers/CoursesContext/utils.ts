@@ -162,22 +162,3 @@ export const archiveCourses = async (
     wmMessage('Archive process failed', MessageType.Error);
   }
 };
-
-export const setSelectedRows = (
-  dispatch: IDispatch,
-  selectedRows: UICourse[],
-  selectedRowIds: number[],
-  record: UICourse,
-): void => {
-  const isExist = selectedRowIds.includes(record.id);
-
-  dispatch({
-    type: ActionType.SetSelectedRows,
-    courses: isExist
-      ? selectedRows.filter(({ id }) => id !== record.id)
-      : [...selectedRows, record],
-    selectedRowIds: isExist
-      ? selectedRowIds.filter((id) => id !== record.id)
-      : [...selectedRowIds, record.id],
-  });
-};
