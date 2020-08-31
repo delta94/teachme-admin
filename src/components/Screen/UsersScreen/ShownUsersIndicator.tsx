@@ -1,18 +1,24 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 
-import { useUsersContext } from '../../../providers/UsersContext';
 import { pluralizer } from '../../../utils';
 
 import WMSkeleton from '../../common/WMSkeleton';
 
 import classes from './style.module.scss';
 
-export default function ShownUsersIndicator({
+function ShownUsersIndicator({
   showResults,
+  isFetchingUsers,
+  totals_unique_users,
+  total_rows,
 }: {
   showResults: boolean;
+  isFetchingUsers: boolean;
+  total_rows: number;
+  totals_unique_users: number;
 }): ReactElement {
-  const [{ isFetchingUsers, totals_unique_users, total_rows }] = useUsersContext();
+  const results = useMemo(() => pluralizer('Result', total_rows), [total_rows]);
+  const users = useMemo(() => pluralizer('User', totals_unique_users), [totals_unique_users]);
 
   return (
     <WMSkeleton
@@ -25,15 +31,14 @@ export default function ShownUsersIndicator({
         {showResults ? (
           <>
             Search
-            <span className={classes['search-result']}>{`${total_rows} ${pluralizer(
-              'Result',
-              total_rows,
-            )} found`}</span>
+            <span className={classes['search-result']}>{`${total_rows} ${results} found`}</span>
           </>
         ) : (
-          `${totals_unique_users} ${pluralizer('User', totals_unique_users)}`
+          `${totals_unique_users} ${users}`
         )}
       </div>
     </WMSkeleton>
   );
 }
+
+export default React.memo(ShownUsersIndicator);

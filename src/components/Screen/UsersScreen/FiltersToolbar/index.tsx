@@ -5,16 +5,12 @@ import React, {
   useCallback,
   SetStateAction,
   useRef,
+  Dispatch,
 } from 'react';
 import cc from 'classcat';
 import _isEqual from 'lodash/isEqual';
 
-import { useAppContext } from '../../../../providers/AppContext';
-import {
-  useUsersContext,
-  defaultQueryFilters,
-  fetchUsers,
-} from '../../../../providers/UsersContext';
+import { defaultQueryFilters, fetchUsers } from '../../../../providers/UsersContext';
 import { getCoursesMetadata } from '../../../../walkme/screens/users';
 import { CourseMetadata, UsersListQueryOptions } from '../../../../walkme/models';
 import { UsersTableQueryFilter } from '../../../../walkme/models/users/filter';
@@ -34,18 +30,23 @@ const parseCoursesMetadata = (courses: CourseMetadata[]): IWMSelectOption[] =>
     courses.map(({ title, id }) => ({ label: title, value: id })),
   );
 
-export default function FiltersToolbar({
+function FiltersToolbar({
   queryOptions,
+  isFetchingUsers,
+  dispatch,
+  isUpdating,
+  envId,
+  from,
+  to,
 }: {
   queryOptions: UsersListQueryOptions;
+  isFetchingUsers: boolean;
+  isUpdating: boolean;
+  envId: number;
+  from: string;
+  to: string;
+  dispatch: Dispatch<any>;
 }): ReactElement {
-  const [appState] = useAppContext();
-  const {
-    isUpdating,
-    environment: { id: envId },
-    dateRange: { from, to },
-  } = appState;
-  const [{ isFetchingUsers }, dispatch] = useUsersContext();
   const [isFetchingOptions, setIsFetchingOptions] = useState<boolean>(true);
   const [coursesOptions, setCoursesOptions] = useState<IWMSelectOption[]>([]);
   const [sortedCoursesOptions, setSortedCoursesOptions] = useState<IWMSelectOption[]>([]);
@@ -238,3 +239,5 @@ export default function FiltersToolbar({
     </ControlsWrapper>
   );
 }
+
+export default React.memo(FiltersToolbar);
