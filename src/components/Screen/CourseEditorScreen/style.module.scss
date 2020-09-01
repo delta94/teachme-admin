@@ -115,7 +115,7 @@
         font-family: var(--font-secondary);
         margin: 0 20px 15px 0;
 
-        :global(button.ant-tabs-tab) {
+        :global(.ant-tabs-tab) {
           justify-content: center;
           font-family: inherit;
           color: inherit;
