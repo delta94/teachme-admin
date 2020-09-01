@@ -72,7 +72,7 @@ export default function CourseTabs(): ReactElement {
 
   return (
     <WMCard>
-      <WMTabs defaultActiveKey={TabId.Outline}>
+      <WMTabs defaultActiveKey={TabId.Outline} className={classes['course-tabs']}>
         {courseTabs.map((tab) => {
           const { id, title, itemsLength, icon, content } = tab;
 
