@@ -1,20 +1,28 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement } from 'react';
 
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import WMEmpty from '../../common/WMEmpty';
 import Icon, { IconType } from '../../common/Icon';
 
+import { Course } from '../../../walkme/data/courseBuild/course';
+import { Quiz } from '../../../walkme/data/courseBuild/quiz';
 import ActionMenu from './ActionMenu';
 
 export default function CourseOutlineListEmptyState({
   className,
   containerClassName,
   onActionSelected,
+  course,
+  quiz,
+  dispatch,
 }: {
   className?: string;
   containerClassName?: string;
   onActionSelected?: (selected: CourseItemType, lessonId?: number | undefined) => void;
+  course: Course | null;
+  quiz: Quiz | null;
+  dispatch: Dispatch<any>;
 }): ReactElement {
   return (
     <WMEmpty
@@ -23,7 +31,12 @@ export default function CourseOutlineListEmptyState({
       className={className}
       containerClassName={containerClassName}
     >
-      <ActionMenu onActionSelected={onActionSelected} />
+      <ActionMenu
+        onActionSelected={onActionSelected}
+        course={course}
+        quiz={quiz}
+        dispatch={dispatch}
+      />
     </WMEmpty>
   );
 }

@@ -1,15 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement, useCallback, useMemo } from 'react';
 import { Container } from 'react-smooth-dnd';
 import cc from 'classcat';
 
+import { ContentItem } from '@walkme/types';
+import { ActiveDetailsItem } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
 import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
 import { CourseChild } from '../../../../walkme/data/courseBuild/courseItems';
 import { Course } from '../../../../walkme/data/courseBuild';
-import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 import { IWMList } from '../../../common/WMList';
 import TaskItem from '../TaskItem';
 import CourseOutlineLessonItem from '../CourseOutlineLessonItem';
-import { INewResource } from '../NewResourcePanel';
 
 import classes from './style.module.scss';
 
@@ -25,7 +26,8 @@ export interface ICourseOutlineList<T> extends IWMList<T> {
   hasQuiz: boolean;
   handleItemClick?: (item: any) => void;
   newLessonId?: number;
-  newResource?: INewResource;
+  activeDetailsItem: ActiveDetailsItem | null;
+  dispatch: Dispatch<any>;
 }
 
 export default function CourseOutlineList<T>({
@@ -34,10 +36,9 @@ export default function CourseOutlineList<T>({
   handleItemClick,
   hasQuiz,
   newLessonId,
-  newResource,
+  activeDetailsItem,
+  dispatch,
 }: ICourseOutlineList<T>): ReactElement {
-  const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
-
   const onDrop = (
     addedIndex: number | undefined | null,
     removedIndex: number | undefined | null,
@@ -64,14 +65,36 @@ export default function CourseOutlineList<T>({
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
   };
 
-  const onDeleteTaskItem = (item: any) => {
-    const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
-    course?.items.removeItem(item);
-    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+  const onDeleteTaskItem = useCallback(
+    (item: any) => {
+      const shouldResetActiveDetailsPanel = activeDetailsItem?.id === item.id;
+      course?.items.removeItem(item);
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
 
-    // on delete activeDetailsItem should close the details pane
-    if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
-  };
+      // on delete activeDetailsItem should close the details pane
+      if (shouldResetActiveDetailsPanel) dispatch({ type: ActionType.CloseDetailsPanel });
+    },
+    [activeDetailsItem?.id, course?.items?.removeItem, dispatch],
+  );
+
+  const shouldAcceptDrop = useCallback((e: any, payload: any) => !payload.answers, []);
+  const getChildPayload = useCallback((index) => items[index], [items]);
+  const onClick = useCallback(
+    (e: any, item: ContentItem) => handleItemClick && handleItemClick(item),
+    [handleItemClick],
+  );
+  const onDropItem = useCallback(
+    (e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload),
+    [onDrop],
+  );
+  const dropPlaceholder = useMemo(
+    () => ({
+      animationDuration: 150,
+      showOnTop: true,
+      className: classes['drop-preview'],
+    }),
+    [],
+  );
 
   return (
     <div
@@ -81,15 +104,11 @@ export default function CourseOutlineList<T>({
       ])}
     >
       <Container
-        onDrop={(e) => onDrop(e.addedIndex, e.removedIndex, undefined, e.payload)}
-        getChildPayload={(index) => items[index]}
+        onDrop={onDropItem}
+        getChildPayload={getChildPayload}
         dragClass={classes['card-ghost']}
-        dropPlaceholder={{
-          animationDuration: 150,
-          showOnTop: true,
-          className: classes['drop-preview'],
-        }}
-        shouldAcceptDrop={(e: any, payload: any) => !payload.answers}
+        dropPlaceholder={dropPlaceholder}
+        shouldAcceptDrop={shouldAcceptDrop}
       >
         {(items as any[]).map((item, i) =>
           item.type === 'lesson' ? (
@@ -99,15 +118,18 @@ export default function CourseOutlineList<T>({
               index={i}
               innerClassName={classes['outline-lesson']}
               newLessonId={newLessonId}
+              course={course}
+              activeDetailsItem={activeDetailsItem}
+              dispatch={dispatch}
             />
           ) : (
             <TaskItem
-              key={i}
+              key={item.id}
               index={i}
               item={item}
               className={classes['remove-item-border']}
               innerClassName={cc([classes['outline-task'], classes['task-with-settings']])}
-              onClick={(e: any) => handleItemClick && handleItemClick(item)}
+              onClick={onClick}
               deletable
               onDelete={onDeleteTaskItem}
               active={activeDetailsItem?.id === item.id}
