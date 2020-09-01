@@ -99,17 +99,13 @@ function CoursesScreen({
   );
 
   const onSortEnd = useCallback(
-    (
-      { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
-      courses: Array<UICourse>,
-      selectedRowKeys?: Array<Key>,
-    ) => {
-      dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowKeys });
+    ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }, courses: Array<UICourse>) => {
+      dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowIds });
 
       const courseId = courses[newIndex].id;
       sortTable(dispatch, courseId, oldIndex, newIndex);
     },
-    [dispatch],
+    [selectedRowIds, dispatch],
   );
 
   const selectedRowsCount = useMemo(() => selectedRows.length, [selectedRows.length]);
