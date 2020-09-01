@@ -123,9 +123,23 @@ function CoursesScreen({
     isFetchingCoursesData,
   ]);
 
+  const onSelectAllRows = useCallback(() => {
+    const shouldSelectAll = !areAllRowsSelected;
+
+    const courses = shouldSelectAll ? filteredCourses : [];
+    const selectedRowIds = filteredCourses
+      .map((course) => (shouldSelectAll ? course.id : null))
+      .filter((c) => Boolean(c));
+
+    dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds });
+
+    setAreAllRowsSelected(shouldSelectAll);
+  }, [areAllRowsSelected, filteredCourses, dispatch]);
+
   const handleRowSelection = useCallback(
     (record: UICourse) => {
       const doesExist = selectedRowIds.includes(record.id);
+
       const courses = doesExist
         ? selectedRows.filter(({ id }) => id !== record.id)
         : [...selectedRows, record];
@@ -134,26 +148,21 @@ function CoursesScreen({
         : [...selectedRowIds, record.id];
 
       dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds: rowIds });
+
+      // onSelectAllRows behave as toggle therefor we set areAllRowsSelected to false
+      // while areAllRowsSelected is true and the user deselect row
+      areAllRowsSelected && setAreAllRowsSelected(false);
     },
-    [selectedRows, selectedRowIds, dispatch],
+    [areAllRowsSelected, selectedRows, selectedRowIds, dispatch],
   );
-
-  const onSelectAllRows = useCallback(() => setAreAllRowsSelected((prev) => !prev), []);
-
-  useEffect(() => {
-    const courses = areAllRowsSelected ? filteredCourses : [];
-    const selectedRowIds = filteredCourses
-      .map((course) => (areAllRowsSelected ? course.id : null))
-      .filter((c) => Boolean(c));
-
-    dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds });
-  }, [areAllRowsSelected, filteredCourses, dispatch]);
 
   const timeFilterProps = useMemo(() => ({ onDateRangeChange, dateRange: { from, to } }), [
     onDateRangeChange,
     from,
     to,
   ]);
+
+  const columns = useMemo(() => getColumns(onSelectAllRows), [onSelectAllRows]);
 
   return (
     <>
@@ -174,11 +183,14 @@ function CoursesScreen({
                 classes['courses-table'],
                 {
                   [classes['all-selected']]:
-                    selectedRowsCount && selectedRowsCount === filteredCourses.length,
+                    areAllRowsSelected &&
+                    selectedRowsCount &&
+                    selectedRowsCount === filteredCourses.length,
+                  [classes['partial-selected']]: selectedRowsCount,
                 },
               ])}
               data={filteredCourses}
-              columns={getColumns(onSelectAllRows)}
+              columns={columns}
               onSortEnd={onSortEnd}
               loading={loading}
               isStickyToolbarAndHeader
