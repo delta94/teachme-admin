@@ -99,17 +99,13 @@ function CoursesScreen({
   );
 
   const onSortEnd = useCallback(
-    (
-      { oldIndex, newIndex }: { oldIndex: number; newIndex: number },
-      courses: Array<UICourse>,
-      selectedRowKeys?: Array<Key>,
-    ) => {
-      dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowKeys });
+    ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }, courses: Array<UICourse>) => {
+      dispatch({ type: ActionType.UpdateCoursesTable, courses, selectedRowIds });
 
       const courseId = courses[newIndex].id;
       sortTable(dispatch, courseId, oldIndex, newIndex);
     },
-    [dispatch],
+    [selectedRowIds, dispatch],
   );
 
   const selectedRowsCount = useMemo(() => selectedRows.length, [selectedRows.length]);
@@ -134,19 +130,25 @@ function CoursesScreen({
         : [...selectedRowIds, record.id];
 
       dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds: rowIds });
+
+      // onSelectAllRows behave as toggle therefor we set areAllRowsSelected to false
+      // while areAllRowsSelected is true and the user deselect row
+      areAllRowsSelected && setAreAllRowsSelected(false);
     },
-    [selectedRows, selectedRowIds, dispatch],
+    [areAllRowsSelected, selectedRows, selectedRowIds, dispatch],
   );
 
-  const onSelectAllRows = useCallback(() => setAreAllRowsSelected((prev) => !prev), []);
+  const onSelectAllRows = useCallback(() => {
+    const shouldSelectAll = !areAllRowsSelected;
 
-  useEffect(() => {
-    const courses = areAllRowsSelected ? filteredCourses : [];
+    const courses = shouldSelectAll ? filteredCourses : [];
     const selectedRowIds = filteredCourses
-      .map((course) => (areAllRowsSelected ? course.id : null))
+      .map((course) => (shouldSelectAll ? course.id : null))
       .filter((c) => Boolean(c));
 
     dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds });
+
+    setAreAllRowsSelected(shouldSelectAll);
   }, [areAllRowsSelected, filteredCourses, dispatch]);
 
   const timeFilterProps = useMemo(() => ({ onDateRangeChange, dateRange: { from, to } }), [
@@ -154,6 +156,8 @@ function CoursesScreen({
     from,
     to,
   ]);
+
+  const columns = useMemo(() => getColumns(onSelectAllRows), [onSelectAllRows]);
 
   return (
     <>
@@ -174,11 +178,14 @@ function CoursesScreen({
                 classes['courses-table'],
                 {
                   [classes['all-selected']]:
-                    selectedRowsCount && selectedRowsCount === filteredCourses.length,
+                    areAllRowsSelected &&
+                    selectedRowsCount &&
+                    selectedRowsCount === filteredCourses.length,
+                  [classes['partial-selected']]: selectedRowsCount,
                 },
               ])}
               data={filteredCourses}
-              columns={getColumns(onSelectAllRows)}
+              columns={columns}
               onSortEnd={onSortEnd}
               loading={loading}
               isStickyToolbarAndHeader
