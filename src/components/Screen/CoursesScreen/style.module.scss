@@ -252,16 +252,4 @@
   .actions-placeholder:global(.ant-table-cell) {
     display: table-cell;
   }
-
-  :global(.ant-table-row):hover .actions-column:global(.ant-table-cell) {
-    display: none;
-  }
-
-  & ~ * {
-    .courses-table {
-      :global(.ant-table-row) {
-        background-color: red;
-      }
-    }
-  }
 }
