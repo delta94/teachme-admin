@@ -1,4 +1,5 @@
-import React, { ReactElement, useState, useEffect, Dispatch } from 'react';
+import React, { ReactElement, useState, useEffect, Dispatch, useCallback, useMemo } from 'react';
+import isEqual from 'lodash/isEqual';
 
 import { ActionType } from '../../../providers/CourseEditorContext';
 import {
@@ -57,50 +58,60 @@ export default function CourseOutlineTab({
   const [newLessonId, setNewLessonId] = useState<number>();
   const [newResource, setNewResource] = useState<INewResource>();
 
-  const onItemClick = (item: any) => {
-    dispatch({
-      type: ActionType.OpenDetailsPanel,
-      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id, item },
-    });
-  };
+  const onItemClick = useCallback(
+    (item: any) => {
+      dispatch({
+        type: ActionType.OpenDetailsPanel,
+        activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id, item },
+      });
+    },
+    [dispatch],
+  );
 
-  const onActionSelected = (selectedType: CourseItemType, id?: number) => {
-    if (selectedType === CourseItemType.Quiz) {
-      setNewQuizAdded(true);
+  const onActionSelected = useCallback(
+    (selectedType: CourseItemType, id?: number) => {
+      if (selectedType === CourseItemType.Quiz) {
+        setNewQuizAdded(true);
 
-      // reset newQuizAdded
-      setTimeout(() => setNewQuizAdded(false), 200);
-    } else if (selectedType === CourseItemType.Lesson) {
-      id && setNewLessonId(id);
-
-      // reset newLessonId
-      setTimeout(() => setNewLessonId(undefined), 200);
-    } else {
-      const isBaseResource = selectedType === CourseItemType.Article;
-
-      const panelType = isBaseResource
-        ? DetailsPanelSettingsType.Article
-        : DetailsPanelSettingsType.Video;
-
-      if (id) {
-        const newResourceData = {
-          type: panelType,
-          id,
-          item: isBaseResource ? initialNewResourceBaseData : initialNewVideoData,
-        };
-
-        setNewResource({ ...newResourceData, type: selectedType as NewResourceType });
+        // reset newQuizAdded
+        setTimeout(() => setNewQuizAdded(false), 200);
+      } else if (selectedType === CourseItemType.Lesson) {
+        id && setNewLessonId(id);
 
         // reset newLessonId
         setTimeout(() => setNewLessonId(undefined), 200);
+      } else {
+        const isBaseResource = selectedType === CourseItemType.Article;
 
-        dispatch({
-          type: ActionType.OpenDetailsPanel,
-          activeDetailsItem: newResourceData,
-        });
+        const panelType = isBaseResource
+          ? DetailsPanelSettingsType.Article
+          : DetailsPanelSettingsType.Video;
+
+        if (id) {
+          const newResourceData = {
+            type: panelType,
+            id,
+            item: isBaseResource ? initialNewResourceBaseData : initialNewVideoData,
+          };
+
+          setNewResource({ ...newResourceData, type: selectedType as NewResourceType });
+
+          // reset newLessonId
+          setTimeout(() => setNewLessonId(undefined), 200);
+
+          dispatch({
+            type: ActionType.OpenDetailsPanel,
+            activeDetailsItem: newResourceData,
+          });
+        }
       }
-    }
-  };
+    },
+    [dispatch],
+  );
+
+  const courseItems = course?.items.toArray();
+  const paragraph = useMemo(() => ({ rows: 15 }), []);
+  const items = useMemo(() => courseItems ?? [], [courseItems]);
 
   // unmount only
   useEffect(
@@ -133,7 +144,7 @@ export default function CourseOutlineTab({
         loading={isUpdating || isFetchingCourse}
         active
         title={false}
-        paragraph={{ rows: 15 }}
+        paragraph={paragraph}
       >
         {!quiz && !course?.items.toArray().length && (
           <CourseOutlineListEmptyState
@@ -146,7 +157,7 @@ export default function CourseOutlineTab({
         )}
         {course && (
           <CourseOutlineList
-            items={course?.items.toArray() ?? []}
+            items={items}
             course={course}
             hasQuiz={!!quiz}
             handleItemClick={onItemClick}

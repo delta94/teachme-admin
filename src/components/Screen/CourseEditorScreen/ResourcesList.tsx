@@ -1,13 +1,14 @@
-import React, { Dispatch, ReactElement } from 'react';
+import React, { Dispatch, ReactElement, useCallback, useMemo } from 'react';
 import { ContentItem, TypeName } from '@walkme/types';
+
 import { fetchItemsList, ActionType } from '../../../providers/CourseEditorContext';
+import { Course } from '../../../walkme/data/courseBuild/course';
 
 import WMCard from '../../common/WMCard';
 import WMSkeleton from '../../common/WMSkeleton';
 import { RefreshButton } from '../../common/buttons';
 import { SearchFilter } from '../../common/filters';
 
-import { Course } from '../../../walkme/data/courseBuild/course';
 import ResourceItemsList from './ResourceItemList';
 import ResourcesListEmptyState from './ResourcesListEmptyState';
 
@@ -19,38 +20,50 @@ export interface IResourcesListProps {
   courseItems: Array<ContentItem>;
   filteredCourseItems: Array<ContentItem>;
   courseItemsSearchValue: string;
+  courseItemsLength: number | undefined;
   isUpdating: boolean;
-  envId: string;
+  envId: number;
   dispatch: Dispatch<any>;
 }
 
-export default function ResourcesList({
+function ResourcesList({
   course,
   isFetchingItems,
   courseItems,
   filteredCourseItems,
+  courseItemsLength, // this is used to render or prevent render using React.memo
   courseItemsSearchValue,
   isUpdating,
   envId,
   dispatch,
-}: any): ReactElement {
-  const onSearch = (searchValue: string) => {
-    const newCourseItems = courseItems.filter(
-      ({ title, description }: { title: string; description: string }) =>
-        `${title} ${description}`.toLowerCase().includes(searchValue.toLowerCase()),
-    );
+}: IResourcesListProps): ReactElement {
+  const onSearch = useCallback(
+    (searchValue: string) => {
+      const newCourseItems = courseItems.filter(
+        ({ title, description }: { title: string; description: string }) =>
+          `${title} ${description}`.toLowerCase().includes(searchValue.toLowerCase()),
+      );
 
-    dispatch({
-      type: ActionType.SetCourseItemsSearchValue,
-      courseItemsSearchValue: searchValue,
-      courseItems: newCourseItems,
-    });
-  };
+      dispatch({
+        type: ActionType.SetCourseItemsSearchValue,
+        courseItemsSearchValue: searchValue,
+        courseItems: newCourseItems,
+      });
+    },
+    [courseItems, dispatch],
+  );
 
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     await fetchItemsList(dispatch, envId, { refresh: true });
     onSearch(courseItemsSearchValue);
-  };
+  }, [courseItemsSearchValue, dispatch, envId, onSearch]);
+
+  const isItemDisabled = useCallback(
+    (item: ContentItem) => course?.includes(item.type as TypeName, item.id as number),
+    [course?.includes],
+  );
+
+  const paragraph = useMemo(() => ({ rows: 15 }), []);
 
   return (
     <WMCard
@@ -75,15 +88,13 @@ export default function ResourcesList({
         loading={isUpdating || isFetchingItems}
         active
         title={false}
-        paragraph={{ rows: 15 }}
+        paragraph={paragraph}
       >
         {courseItems.length ? (
           <ResourceItemsList
             items={filteredCourseItems}
             className={classes['resource-item-list']}
-            isDisabled={(item: ContentItem) =>
-              course?.includes(item.type as TypeName, item.id as number)
-            }
+            isDisabled={isItemDisabled}
           />
         ) : (
           <ResourcesListEmptyState />
@@ -92,3 +103,5 @@ export default function ResourcesList({
     </WMCard>
   );
 }
+
+export default React.memo(ResourcesList);

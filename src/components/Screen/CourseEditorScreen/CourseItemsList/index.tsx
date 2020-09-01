@@ -19,7 +19,7 @@ export interface ICourseItemsList {
   [key: string]: any;
 }
 
-export default function CourseItemsList({
+function CourseItemsList({
   items,
   onDrop,
   className,
@@ -65,3 +65,5 @@ export default function CourseItemsList({
     </div>
   );
 }
+
+export default React.memo(CourseItemsList);

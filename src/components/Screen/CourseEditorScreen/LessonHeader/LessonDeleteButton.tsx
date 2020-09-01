@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useCallback, useState } from 'react';
 import cc from 'classcat';
 
 import { Course } from '../../../../walkme/data/courseBuild/course';
@@ -22,19 +22,21 @@ export default function LessonDeleteButton({
 }): ReactElement {
   const [openDialog, setOpenDialog] = useState(false);
 
-  const deleteLesson = () => {
+  const deleteLesson = useCallback(() => {
     course?.items.removeItem(lesson);
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     setOpenDialog(false);
-  };
+  }, [course?.items?.removeItem, dispatch, lesson]);
 
-  const onClickDelete = () => {
+  const onClickDelete = useCallback(() => {
     if (lesson.childNodes.toArray().length > 0) {
       setOpenDialog(true);
     } else {
       deleteLesson();
     }
-  };
+  }, [deleteLesson, lesson.childNodes]);
+
+  const onClickCancel = useCallback(() => setOpenDialog(false), []);
 
   return (
     <>
@@ -44,11 +46,7 @@ export default function LessonDeleteButton({
       >
         <Icon type={IconType.Delete} className={classes['title-icon']} />
       </WMButton>
-      <DeleteLessonDialog
-        open={openDialog}
-        onCancel={() => setOpenDialog(false)}
-        onConfirm={deleteLesson}
-      />
+      <DeleteLessonDialog open={openDialog} onCancel={onClickCancel} onConfirm={deleteLesson} />
     </>
   );
 }

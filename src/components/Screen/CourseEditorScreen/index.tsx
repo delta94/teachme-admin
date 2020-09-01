@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import { useAppContext } from '../../../providers/AppContext';
@@ -9,13 +9,12 @@ import {
   ActionType,
 } from '../../../providers/CourseEditorContext';
 
-import EditableTitle from '../../common/EditableTitle';
-import ScreenHeader from '../../common/ScreenHeader';
 import UnloadDialog from '../../common/UnloadDialog';
 
 import ResourcesList from './ResourcesList';
 import CourseOutline from './CourseOutline';
-import HeaderConfirmationButtons from './HeaderConfirmationButtons';
+import CourseEditorHeader from './CourseEditorHeader';
+
 import classes from './style.module.scss';
 
 export default function CourseEditorScreen(): ReactElement {
@@ -54,35 +53,29 @@ export default function CourseEditorScreen(): ReactElement {
     return () => dispatch({ type: ActionType.ResetCourseEditor });
   }, [dispatch, courseId, environment.id, history, isUpdating]);
 
-  const onCourseTitleBlur = (courseTitle: string) => {
-    if (course) {
-      course.title = courseTitle;
-    }
+  const onCourseTitleBlur = useCallback(
+    (courseTitle: string) => {
+      if (course) {
+        course.title = courseTitle;
+      }
 
-    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-  };
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    },
+    [course, dispatch],
+  );
 
   return (
     <div className={classes['course-editor-screen']}>
-      <ScreenHeader
-        title={
-          <EditableTitle
-            isNew={!courseId}
-            isLoading={isFetchingCourse}
-            value={course?.title ?? ''}
-            onBlur={onCourseTitleBlur}
-          />
-        }
-        hideTimeFilter={true}
-      >
-        <HeaderConfirmationButtons
-          course={course}
-          hasChanges={hasChanges}
-          isSavingCourse={isSavingCourse}
-          dispatch={dispatch}
-          environment={environment}
-        />
-      </ScreenHeader>
+      <CourseEditorHeader
+        course={course}
+        courseId={courseId}
+        isFetchingCourse={isFetchingCourse}
+        hasChanges={hasChanges}
+        isSavingCourse={isSavingCourse}
+        environment={environment}
+        onCourseTitleBlur={onCourseTitleBlur}
+        dispatch={dispatch}
+      />
       <div className={classes['cards-wrapper']}>
         <ResourcesList
           course={course}
@@ -92,6 +85,7 @@ export default function CourseEditorScreen(): ReactElement {
           courseItemsSearchValue={courseItemsSearchValue}
           isUpdating={isUpdating}
           envId={envId}
+          courseItemsLength={course?.items.toArray().length}
           dispatch={dispatch}
         />
         <CourseOutline

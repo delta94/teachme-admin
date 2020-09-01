@@ -1,4 +1,12 @@
-import React, { ChangeEvent, Dispatch, MouseEvent, ReactElement, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 
@@ -26,27 +34,36 @@ export default function LessonEditableTitle({
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState(lesson?.title ?? '');
 
-  const setInputActive = (e: MouseEvent<HTMLDivElement>) => {
-    if (!inputTitle.current) return;
+  const setInputActive = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      if (!inputTitle.current) return;
 
-    setInputValue(lesson?.title ?? '');
-    inputTitle.current.focus();
-    setShowInput(true);
-  };
+      setInputValue(lesson?.title ?? '');
+      inputTitle.current.focus();
+      setShowInput(true);
+    },
+    [lesson?.title],
+  );
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value),
+    [],
+  );
 
-  const onBlur = (e: any) => {
+  const onBlur = useCallback((e: any) => {
     inputTitle?.current?.blur();
     setShowInput(false);
-  };
+  }, []);
 
-  const onApprove = (e: any) => {
-    if (lesson) {
-      lesson.title = inputValue;
-    }
-    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-  };
+  const onApprove = useCallback(
+    (e: any) => {
+      if (lesson) {
+        lesson.title = inputValue;
+      }
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+    },
+    [dispatch, inputValue, lesson],
+  );
 
   return (
     <div className={cc([classes['editable-lesson-title']])}>
