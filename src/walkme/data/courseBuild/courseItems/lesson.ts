@@ -34,10 +34,10 @@ export class CourseLesson implements BuildLesson, ITypeIdQueriable {
     this.childNodes = getCourseItems(_lesson.LinkedDeployables);
   }
 
-  toDataModel(): WalkMeDataNewLesson {
+  toDataModel(index: number): WalkMeDataNewLesson {
     return {
       ...this._lesson,
-      Id: this._lesson.Id < 0 ? -this._lesson.OrderIndex : this._lesson.Id,
+      Id: this._lesson.Id < 0 ? -index - 1 : this._lesson.Id,
       Description: this.description,
       Name: this.title,
       LinkedDeployables: this.childNodes.toArray().map((item, index) => createLink(item, index)),
