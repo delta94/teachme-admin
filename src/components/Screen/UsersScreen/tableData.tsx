@@ -83,11 +83,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
   {
     title: 'Time to Complete',
     dataIndex: UsersColumn.TIME_TO_COMPLETE,
-    sorter: true,
-    onHeaderCell: (col) => ({
-      onClick: () => onClick(col),
-      className: classes['duration-cell'],
-    }),
+    onHeaderCell: () => ({ className: classes['duration-cell'] }),
     render: (value: string): ReactElement =>
       value ? (
         <NumberCell
