@@ -30,7 +30,6 @@ export const getColumns = (onSelectAllRows: () => void): ColumnsType<any> => {
       title: (): ReactElement => <FakeCheckboxCell />,
       dataIndex: 'checkbox',
       className: classes['checkbox-cell'],
-      width: 35,
       render: (): ReactElement => <FakeCheckboxCell />,
       shouldCellUpdate: () => false,
       onHeaderCell: () => ({
