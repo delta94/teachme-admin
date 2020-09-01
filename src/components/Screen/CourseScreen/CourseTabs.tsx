@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
 
 import { useCourseContext } from '../../../providers/CourseContext';
+import { useAppContext } from '../../../providers/AppContext';
+
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
-import Icon from '../../common/Icon';
-import { IconType } from '../../common/Icon/icon.interface';
+import Icon, { IconType } from '../../common/Icon';
 import WMCard from '../../common/WMCard';
 
 import CourseQuizTabCharts from './CourseQuizTabCharts';
@@ -18,7 +19,25 @@ enum TabId {
 }
 
 export default function CourseTabs(): ReactElement {
-  const [{ quiz, courseOutline }] = useCourseContext();
+  const [
+    {
+      isUpdating,
+      environment: { id: envId },
+      dateRange: { from, to },
+    },
+  ] = useAppContext();
+  const [
+    {
+      quiz,
+      courseOutline,
+      isFetchingCourseData,
+      filteredCourseOutline,
+      courseOutlineSearchValue,
+      courseMetadata,
+      isExportingCourse,
+    },
+    dispatch,
+  ] = useCourseContext();
 
   const courseTabs = [
     {
@@ -26,7 +45,21 @@ export default function CourseTabs(): ReactElement {
       title: 'Outline',
       itemsLength: courseOutline?.items?.length ?? 0,
       icon: <Icon type={IconType.SidebarCourses} />,
-      content: <CourseOutlineTable />,
+      content: (
+        <CourseOutlineTable
+          courseOutline={courseOutline}
+          isFetchingCourseData={isFetchingCourseData}
+          filteredCourseOutline={filteredCourseOutline}
+          courseOutlineSearchValue={courseOutlineSearchValue}
+          courseMetadata={courseMetadata}
+          isExportingCourse={isExportingCourse}
+          envId={envId}
+          from={from}
+          to={to}
+          isUpdating={isUpdating}
+          dispatch={dispatch}
+        />
+      ),
     },
     {
       id: TabId.Quiz,
@@ -39,7 +72,7 @@ export default function CourseTabs(): ReactElement {
 
   return (
     <WMCard>
-      <WMTabs defaultActiveKey={TabId.Outline}>
+      <WMTabs defaultActiveKey={TabId.Outline} className={classes['course-tabs']}>
         {courseTabs.map((tab) => {
           const { id, title, itemsLength, icon, content } = tab;
 

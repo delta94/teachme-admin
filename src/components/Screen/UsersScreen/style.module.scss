@@ -70,21 +70,18 @@
           min-width: 280px;
         }
 
-        .started-cell {
-          min-width: 118px;
-        }
-
+        .started-cell,
         .completed-cell,
         .duration-cell {
-          min-width: 153px;
+          min-width: 120px;
         }
 
         .result-cell {
-          min-width: 137px;
+          min-width: 90px;
         }
 
         .attempts-cell {
-          min-width: 161px;
+          min-width: 130px;
         }
       }
     }

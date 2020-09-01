@@ -13,5 +13,6 @@ export async function getCourseOverview(
   return {
     ...overviewData,
     passmark: course.quiz?.properties.passmark,
+    hasQuiz: !!course.quiz,
   };
 }

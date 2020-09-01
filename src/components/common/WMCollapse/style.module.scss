@@ -11,6 +11,10 @@
     height: 37px;
     overflow: hidden;
 
+    &:not(.has-drag-handle) {
+      padding-left: 10px; // align the arrow with lesson's collapsible arrow
+    }
+
     &:hover {
       background-color: var(--hover-color);
     }

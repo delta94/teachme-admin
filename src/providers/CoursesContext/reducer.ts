@@ -12,7 +12,7 @@ export const initialState = {
   filteredCourses: [],
   coursesSearchValue: '',
   selectedRows: [],
-  selectedRowKeys: [],
+  selectedRowIds: [],
   isSortingCourses: false,
   isSortingCoursesError: false,
   isExportingCourses: false,
@@ -49,12 +49,12 @@ export const reducer = produce(
         break;
       case ActionType.SetSelectedRows:
         draft.selectedRows = action.courses ?? initialState.selectedRows;
-        draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
+        draft.selectedRowIds = action.selectedRowIds ?? initialState.selectedRowIds;
         break;
       case ActionType.UpdateCoursesTable:
         draft.courses = action.courses ?? initialState.courses;
         draft.filteredCourses = action.courses ?? initialState.filteredCourses;
-        draft.selectedRowKeys = action.selectedRowKeys ?? initialState.selectedRowKeys;
+        draft.selectedRowIds = action.selectedRowIds ?? initialState.selectedRowIds;
         break;
       case ActionType.SortTable:
         draft.isSortingCourses = true;

@@ -1,5 +1,63 @@
 @import 'src/styles/mixins';
 
+@mixin getCheckboxWrapperStyles() {
+  margin-top: 3px;
+  position: relative;
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  border: var(--wm-border);
+  background-color: var(--white);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+@mixin getCheckboxInnerStyles() {
+  position: absolute;
+  top: 50%;
+  left: 22%;
+  display: table;
+  width: 5.71428571px;
+  height: 9.14285714px;
+  border: 2px solid #fff;
+  border-top: 0;
+  border-left: 0;
+  content: ' ';
+  opacity: 0;
+  transform: rotate(45deg) scale(0) translate(-50%, -50%);
+}
+
+@mixin getSelectedCheckboxInnerStyles() {
+  opacity: 1;
+  transform: rotate(45deg) scale(1) translate(-50%, -50%);
+
+  // reset partial styles
+  box-shadow: none;
+  bottom: auto;
+  right: auto;
+}
+
+@mixin getPartialCheckboxInnerStyles() {
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 0 3px var(--white);
+  border: none;
+  background-color: var(--primary);
+  border-top: 0;
+  border-left: 0;
+  transform: none;
+  opacity: 1;
+}
+
 .shown-courses-indicator {
   font-family: var(--font-secondary);
   color: var(--neutral900);
@@ -65,13 +123,8 @@
   width: 150px;
 }
 
-.segments-cell {
-  @include ellipsis;
-
-  width: 133px;
-}
-
-.actions-column:global(.ant-table-cell) {
+.actions-column:global(.ant-table-cell),
+:global(.ant-table-row):hover .actions-placeholder:global(.ant-table-cell) {
   display: none;
 }
 
@@ -79,12 +132,14 @@
   display: table-cell;
 }
 
-:global(.ant-table-row):hover .actions-placeholder:global(.ant-table-cell) {
-  display: none;
-}
-
 .actions-placeholder:global(.ant-table-cell) {
   min-width: 100px;
+}
+
+.segments-cell {
+  @include ellipsis;
+
+  width: 133px;
 }
 
 .actions-cell {
@@ -101,5 +156,100 @@
 
   .action-button:disabled svg {
     opacity: 0.7;
+  }
+}
+
+.courses-table {
+  // prevent click on all cell
+  :global(.ant-table-thead) {
+    .checkbox-cell {
+      pointer-events: none;
+
+      .checkbox {
+        pointer-events: all;
+      }
+    }
+  }
+
+  .selected-row {
+    background-color: var(--table-row-hover-color);
+
+    .checkbox-cell {
+      .checkbox {
+        background-color: var(--primary);
+        border-color: var(--primary);
+
+        &::after {
+          @include getSelectedCheckboxInnerStyles;
+        }
+      }
+    }
+  }
+
+  &.partial-selected {
+    :global(.ant-table-thead) {
+      .checkbox-cell {
+        .checkbox {
+          &::after {
+            @include getPartialCheckboxInnerStyles;
+          }
+        }
+      }
+    }
+  }
+
+  &.partial-selected.all-selected {
+    :global(.ant-table-thead) {
+      .checkbox-cell {
+        .checkbox {
+          background-color: var(--primary);
+          border-color: var(--primary);
+
+          &::after {
+            @include getCheckboxInnerStyles;
+            @include getSelectedCheckboxInnerStyles;
+          }
+        }
+      }
+    }
+  }
+
+  .checkbox-cell {
+    .checkbox {
+      @include getCheckboxWrapperStyles;
+
+      &::after {
+        @include getCheckboxInnerStyles;
+      }
+    }
+  }
+}
+
+:global(.dragged-row) {
+  .checkbox-cell {
+    .checkbox {
+      @include getCheckboxWrapperStyles;
+
+      &::after {
+        @include getCheckboxInnerStyles;
+      }
+    }
+  }
+
+  &.selected-row {
+    .checkbox-cell {
+      .checkbox {
+        background-color: var(--primary);
+        border-color: var(--primary);
+
+        &::after {
+          @include getSelectedCheckboxInnerStyles;
+        }
+      }
+    }
+  }
+
+  .actions-placeholder:global(.ant-table-cell) {
+    display: table-cell;
   }
 }

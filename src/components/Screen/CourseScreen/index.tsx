@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useCallback, useEffect, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import { IDateRange } from '../../../utils';
@@ -32,8 +32,7 @@ export default function CourseScreen(): ReactElement {
     environment: { id: envId },
     dateRange: { from, to },
   } = appState;
-  const [state, dispatch] = useCourseContext();
-  const { isFetchingCourseData, overview, courseMetadata } = state;
+  const [{ isFetchingCourseData, overview, courseMetadata }, dispatch] = useCourseContext();
   const { courseId } = useParams();
   const history = useHistory();
 
@@ -44,17 +43,22 @@ export default function CourseScreen(): ReactElement {
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourse }), [dispatch]);
 
-  const onDateRangeChange = (dateRange?: IDateRange) =>
-    appDispatch({ type: AppActionType.SetDateRange, dateRange });
+  const onDateRangeChange = useCallback(
+    (dateRange?: IDateRange) => appDispatch({ type: AppActionType.SetDateRange, dateRange }),
+    [appDispatch],
+  );
+
+  const timeFilterProps = useMemo(() => ({ onDateRangeChange, dateRange: { from, to } }), [
+    onDateRangeChange,
+    from,
+    to,
+  ]);
 
   useRedirectToMain();
 
   return (
     <div className={classes['course-screen']}>
-      <CourseScreenHeader
-        courseMetadata={courseMetadata}
-        timeFilterProps={{ onDateRangeChange, dateRange: { from, to } }}
-      />
+      <CourseScreenHeader courseMetadata={courseMetadata} timeFilterProps={timeFilterProps} />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Course"
         overview={overview as CourseOverviewData}

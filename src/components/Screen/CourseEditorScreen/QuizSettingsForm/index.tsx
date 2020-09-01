@@ -1,20 +1,25 @@
-import React, { ReactElement, ChangeEvent } from 'react';
+import React, { ReactElement, ChangeEvent, Dispatch } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
-import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 
 import WMInput from '../../../common/WMInput';
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
+import { getValidRangeNumber, isNumericValue } from '../../../../utils';
 
+import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 import classes from './style.module.scss';
 
-export default function QuizSettingsForm({ courseId }: { courseId: number }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-  const { quiz } = state;
-
+export default function QuizSettingsForm({
+  quiz,
+  dispatch,
+}: {
+  quiz: Quiz | null;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
     if (quiz?.properties) {
       quiz.properties = { ...quiz.properties, ...updatedData };
@@ -24,15 +29,9 @@ export default function QuizSettingsForm({ courseId }: { courseId: number }): Re
 
   const onPassmarkChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    const reg = /^-?\d*(\.\d*)?$/;
-    if ((!isNaN(parseInt(value)) && reg.test(value)) || value === '' || value === '-') {
-      const quizPassmark =
-        value === '' || value === '-' ? 0 : parseInt(value) > 100 ? 100 : parseInt(value);
-
-      if (quiz) {
-        quiz.properties = { ...quiz.properties, ...{ passmark: quizPassmark } };
-        dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-      }
+    if (isNumericValue(value) && quiz) {
+      quiz.properties = { ...quiz.properties, ...{ passmark: getValidRangeNumber(value) } };
+      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     }
   };
 

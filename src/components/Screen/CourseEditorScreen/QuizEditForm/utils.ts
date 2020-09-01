@@ -14,8 +14,3 @@ export const screenTitle = (type: QuizScreenType, title?: string): string => {
       throw new Error(`Unknown quiz screen type ${type}`);
   }
 };
-
-export const fieldErrorMessage = (
-  fieldValue: string,
-  error = 'This field cannot be empty',
-): string | undefined => (fieldValue === '' ? error : undefined);

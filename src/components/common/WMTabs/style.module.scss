@@ -7,7 +7,7 @@
     background: var(--primary);
   }
 
-  :global(button.ant-tabs-tab) {
+  :global(.ant-tabs-tab) {
     color: var(--neutral700);
 
     &:global(.ant-tabs-tab-active) {

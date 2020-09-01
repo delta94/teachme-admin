@@ -1,20 +1,26 @@
 // todo: ExportToCSVDialog is commented out until export to email is implemented
 
-import React, { ReactElement /* , useState */ } from 'react';
+import React, { Dispatch, ReactElement } from 'react';
 
 import { useAppContext } from '../../../providers/AppContext';
-import { useCoursesContext, exportCourses } from '../../../providers/CoursesContext';
+import { exportCourses } from '../../../providers/CoursesContext';
 
-// import { ExportToCSVDialog } from '../../common/dialogs';
 import { ExportButton } from '../../common/buttons';
 
-export default function ExportCoursesButton({ disabled }: { disabled?: boolean }): ReactElement {
+function ExportCoursesButton({
+  disabled,
+  isExportingCourses,
+  dispatch,
+}: {
+  disabled?: boolean;
+  isExportingCourses: boolean;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const [appState] = useAppContext();
   const {
     dateRange: { from, to },
     environment: { id: envId },
   } = appState;
-  const [{ isExportingCourses }, dispatch] = useCoursesContext();
 
   // const [showExport, setShowExport] = useState(false);
 
@@ -37,3 +43,5 @@ export default function ExportCoursesButton({ disabled }: { disabled?: boolean }
     </>
   );
 }
+
+export default React.memo(ExportCoursesButton);

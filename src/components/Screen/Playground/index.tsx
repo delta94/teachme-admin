@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 
-import CourseEditorProvider from '../../../providers/CourseEditorContext';
-
 import ScreenHeader from '../../common/ScreenHeader';
 import WMTabs from '../../common/WMTabs';
 import WMTabPanel from '../../common/WMTabs/WMTabPanel';
@@ -12,9 +10,6 @@ import Counter from './components/Counter';
 import Switches from './components/Switches';
 import Empty from './components/Empty';
 import Checkboxes from './components/Checkboxes';
-import QuizSettings from './components/QuizSettings';
-import CourseItemDetailsPanel from './components/CourseItemDetailsPanel';
-import QuizEdit from './components/QuizEdit';
 import Toaster from './components/Toaster';
 import Skeleton from './components/Skeleton';
 
@@ -50,32 +45,6 @@ const tabs = [
     title: 'Checkboxes',
     icon: undefined,
     content: <Checkboxes />,
-  },
-  {
-    id: 'course-item-details-panel',
-    title: 'Course Item Details Panel',
-    icon: undefined,
-    content: (
-      <CourseEditorProvider>
-        <CourseItemDetailsPanel />
-      </CourseEditorProvider>
-    ),
-  },
-  {
-    id: 'quiz-settings',
-    title: 'Quiz Settings',
-    icon: undefined,
-    content: <QuizSettings />,
-  },
-  {
-    id: 'quiz-edit',
-    title: 'Quiz Edit',
-    icon: undefined,
-    content: (
-      <CourseEditorProvider>
-        <QuizEdit />
-      </CourseEditorProvider>
-    ),
   },
   {
     id: 'toaster',
