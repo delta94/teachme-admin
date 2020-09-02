@@ -53,10 +53,10 @@ export class BuildQuizAnswer implements QuizAnswer {
 
   public toDataModel(index: number): WalkMeDataQuizAnswer {
     return {
-      Id: this.id > 0 ? -(index + 1) : this.id,
-      IsCorrect: this.isCorrect,
-      OrderIndex: index,
-      Text: this.text,
+        Id: this.id > 0 ? -(index + 1) : this.id,
+        IsCorrect: this.isCorrect,
+        OrderIndex: index,
+        Text: this.text,
     };
   }
 

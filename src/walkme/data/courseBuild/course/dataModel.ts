@@ -1,12 +1,15 @@
-import { getUniqueCourseName } from './uniqueName';
 import { WalkMeDataNewCourse, GroupType, TypeId, BooleanStringOption } from '@walkme/types';
-import { getGuid } from '../../services/guid';
+
 import * as quiz from '../quiz';
+import defaults from '../defaults';
+
+import { getUniqueItemName } from '../../services/uniqueName';
+import { getGuid } from '../../services/guid';
 
 export function newDataModel(index: number): WalkMeDataNewCourse {
   return {
     Id: -1,
-    Name: getUniqueCourseName(),
+    Name: getUniqueItemName(TypeId.Course, defaults.COURSE_NAME),
     OrderIndex: index,
     PublishStatus: 0,
     IsModified: false,
