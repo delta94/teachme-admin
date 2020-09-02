@@ -1,5 +1,7 @@
 import React, { useReducer, ReactElement, useEffect } from 'react';
 
+import useLastUpdated from '../../hooks/useLastUpdated';
+
 import { ActionType, IAction, IState, IDispatch, IAppProvider } from './app-context.interface';
 import {
   AppStateContext,
@@ -24,7 +26,9 @@ export {
 };
 
 export default function AppProvider({ children }: IAppProvider): ReactElement {
-  const [state, dispatch] = useReducer(reducer, initialState as IState);
+  const [state, dispatch]: [IState, IDispatch] = useReducer(reducer, initialState as IState);
+
+  useLastUpdated(dispatch);
 
   useEffect(() => {
     setInitialGlobals(dispatch);

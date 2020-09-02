@@ -11,4 +11,5 @@ export enum ActionType {
   ResetAppState = 'RESET_APP_STATE',
   SetOriginalUser = 'SET_ORIGINAL_USER',
   SetSystems = 'SET_SYSTEMS',
+  UpdateLastUpdated = 'UPDATE_LAST_UPDATED',
 }

@@ -22,6 +22,7 @@ export interface IAction {
   environment?: WalkMeEnvironment;
   dateRange?: IDateRange;
   systems?: SystemData[];
+  lastUpdateTime?: Date;
 }
 
 export interface IDispatch {
@@ -42,6 +43,7 @@ export interface IState {
   dateRange: IDateRange;
   systems: SystemData[];
   parsedSystems: IWMDropdownOption | IWMDropdownOption[];
+  lastUpdateTime?: Date | null;
 }
 
 export interface IAppProvider {
