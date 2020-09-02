@@ -35,7 +35,7 @@ export default function PieBarChart({
           const barColor = bar.color ?? generatedColors[index];
           const legendContent = (
             <LegendContent
-              barValue={Math.round(parseInt(barValue, 10))}
+              barValue={Math.round(parseFloat(barValue))}
               barLegend={barLegend}
               totalValue={totalValue}
               barColor={barColor}
