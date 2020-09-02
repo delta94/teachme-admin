@@ -1,5 +1,4 @@
 import React, {
-  Key,
   useEffect,
   useCallback,
   MemoExoticComponent,
@@ -29,7 +28,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
-import LastUpdated from '../../common/LastUpdated/LastUpdated';
+import LastUpdated from '../../common/LastUpdated';
 
 import ShownCoursesIndicator from './ShownCoursesIndicator';
 import ProductionStatusActions from './ProductionStatusActions';
@@ -162,11 +161,14 @@ function CoursesScreen({
 
   return (
     <>
-      <ScreenHeader title={
+      <ScreenHeader
+        title={
           <div className={classes['courses-title']}>
             Courses <LastUpdated />
           </div>
-        } timeFilterProps={timeFilterProps} />
+        }
+        timeFilterProps={timeFilterProps}
+      />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"
         overview={overview as AllCoursesOverviewResponse}

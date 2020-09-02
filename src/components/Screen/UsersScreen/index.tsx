@@ -20,8 +20,8 @@ import ControlsWrapper from '../../common/ControlsWrapper';
 import { SearchFilter } from '../../common/filters';
 import { ExportButton } from '../../common/buttons';
 import { DataEmptyState, SearchEmptyState } from '../../common/WMEmpty';
+import LastUpdated from '../../common/LastUpdated';
 
-import LastUpdated from '../../common/LastUpdated/LastUpdated';
 import { sortByOptions } from './utils';
 import { getColumns, ColumnType } from './tableData';
 import ShownUsersIndicator from './ShownUsersIndicator';
@@ -107,11 +107,14 @@ export default function UsersScreen(): ReactElement {
 
   return (
     <div className={classes['users-screen']}>
-      <ScreenHeader title={
+      <ScreenHeader
+        title={
           <div className={classes['users-title']}>
             Users <LastUpdated />
           </div>
-        } timeFilterProps={timeFilterProps} />
+        }
+        timeFilterProps={timeFilterProps}
+      />
       <WMCard className={classes['table-wrapper']}>
         <ConfigProvider renderEmpty={disableSearch ? DataEmptyState : SearchEmptyState}>
           <WMTable

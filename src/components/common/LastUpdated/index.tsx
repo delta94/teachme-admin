@@ -10,11 +10,13 @@ export default function LastUpdated({ className }: { className?: string }): Reac
   const lastUpdated: Moment = moment(lastUpdateTime);
   const hasValidDate = lastUpdated?.isValid();
 
-  return hasValidDate ? (
-    <div className={cc([classes['last-updated'], className])}>
-      Last data update at {lastUpdated.format('hh:mm')}
-    </div>
-  ) : (
-    <></>
+  return (
+    <>
+      {hasValidDate && (
+        <div className={cc([classes['last-updated'], className])}>
+          Last data update at {lastUpdated.format('hh:mm')}
+        </div>
+      )}
+    </>
   );
 }

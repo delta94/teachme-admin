@@ -10,7 +10,7 @@ import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
 import { WMSkeletonInput, WMSkeletonButton, WMSkeletonAvatar } from '../../common/WMSkeleton';
 import ScreenHeader, { IScreenHeader } from '../../common/ScreenHeader';
 import Icon, { IconType } from '../../common/Icon';
-import LastUpdated from '../../common/LastUpdated/LastUpdated';
+import LastUpdated from '../../common/LastUpdated';
 
 import WMTag from '../../common/WMTag';
 import WMPopover from '../../common/WMPopover';
