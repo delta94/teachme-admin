@@ -15,15 +15,16 @@ export const initialState = {
   hasUpdateError: false,
   errorMessage: '',
   user: {} as UserData,
+  originalUser: {} as UserData,
   system: {} as SystemData,
   environment: {} as WalkMeEnvironment,
   environments: {} as WalkMeEnvironment[],
   parsedEnvironments: [] as IWMDropdownOption[],
-  originalUser: {} as UserData,
   dateRange: defaultDateRange,
   systems: [] as SystemData[],
   parsedSystems: [] as IWMDropdownOption[],
-};
+  lastUpdateTime: null,
+} as IState;
 
 export const reducer = produce(
   (draft: IState, action: IAction): IState => {
@@ -74,6 +75,9 @@ export const reducer = produce(
         break;
       case ActionType.ResetAppState:
         draft = { ...initialState };
+        break;
+      case ActionType.UpdateLastUpdated:
+        draft.lastUpdateTime = action.lastUpdateTime;
         break;
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
