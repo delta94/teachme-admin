@@ -18,7 +18,7 @@ export interface ISearchFilter {
   disabled?: boolean;
 }
 
-export default function SearchFilter({
+function SearchFilter({
   className,
   placeholder,
   value,
@@ -51,3 +51,5 @@ export default function SearchFilter({
     </>
   );
 }
+
+export default React.memo(SearchFilter);

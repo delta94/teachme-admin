@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import cc from 'classcat';
 
-import { CourseOverviewData } from '../../../walkme/models/course/panels';
+import { CourseOverviewData } from '../../../walkme/models/course';
 
 import { IAnalyticsCharts } from './analytics.interface';
 import CourseSummaryChart from './CourseSummaryChart';
@@ -12,7 +12,7 @@ import QuizScoreChart from './QuizScoreChart';
 
 import classes from './style.module.scss';
 
-export default function AnalyticsCharts({
+function AnalyticsCharts({
   summaryChartTitle,
   timeCompletionTitle = 'Avg. Completion Time',
   quizCompletionTitle = 'Quiz Completion Rate',
@@ -53,3 +53,5 @@ export default function AnalyticsCharts({
     </div>
   );
 }
+
+export default React.memo(AnalyticsCharts);

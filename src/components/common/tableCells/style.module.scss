@@ -28,8 +28,14 @@ a.link-cell {
   }
 }
 
-.table-cell-dot {
-  margin-right: 4px;
+.status-dot-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .table-cell-dot {
+    margin-right: 4px;
+  }
 }
 
 .bold {

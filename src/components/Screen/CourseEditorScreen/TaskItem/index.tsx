@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import { Draggable } from 'react-smooth-dnd';
 import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
@@ -23,13 +23,13 @@ export interface ITaskItem {
   index: number;
   className?: string;
   innerClassName?: string;
-  onClick?: (e: any) => void;
+  onClick?: (e: any, item: ContentItem) => void;
   deletable?: boolean;
   onDelete?: (item: any, index: number) => void;
   [key: string]: any;
 }
 
-export default function TaskItem({
+function TaskItem({
   item,
   item: { title, type },
   index,
@@ -41,13 +41,25 @@ export default function TaskItem({
   onDelete,
   ...otherProps
 }: ITaskItem): ReactElement {
-  const deleteTask = (e: any) => {
-    e.stopPropagation();
+  const deleteTask = useCallback(
+    (e: any) => {
+      e.stopPropagation();
 
-    if (onDelete) {
-      onDelete(item, index);
-    }
-  };
+      if (onDelete) {
+        onDelete(item, index);
+      }
+    },
+    [index, item, onDelete],
+  );
+
+  const onClickItem = useCallback(
+    (e: any) => {
+      if (onClick) {
+        onClick(e, item);
+      }
+    },
+    [item, onClick],
+  );
 
   return (
     <Draggable
@@ -55,7 +67,7 @@ export default function TaskItem({
       className={cc([classes['task-item'], className, { [classes['active-item']]: active }])}
       {...otherProps}
     >
-      <div key={index} className={cc([classes['item'], innerClassName])} onClick={onClick}>
+      <div key={index} className={cc([classes['item'], innerClassName])} onClick={onClickItem}>
         <DragHandle className={classes['task-item-drag-handle']} />
         <Icon type={iconType[type as keyof typeof iconType]} className={classes['icon']} />
         <span className={classes['title']}>{title}</span>
@@ -68,3 +80,5 @@ export default function TaskItem({
     </Draggable>
   );
 }
+
+export default React.memo(TaskItem);

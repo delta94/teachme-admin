@@ -1,0 +1,28 @@
+.new-resource {
+  .resource-field {
+    margin: 10px auto;
+  }
+
+  .lightbox {
+    display: flex;
+    align-items: center;
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.3s linear;
+    margin-left: 25px;
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-field {
+      margin: 0 5px;
+      width: 50px;
+    }
+
+    .unit-size-field {
+      margin: 0 10px 0 0;
+    }
+  }
+}

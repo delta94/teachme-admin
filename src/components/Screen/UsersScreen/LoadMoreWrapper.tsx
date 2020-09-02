@@ -1,32 +1,39 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement, useMemo } from 'react';
 
-import { useAppContext } from '../../../providers/AppContext';
-import {
-  useUsersContext,
-  fetchUsers,
-  UsersListQueryOptions,
-} from '../../../providers/UsersContext';
+import { fetchUsers, UsersListQueryOptions } from '../../../providers/UsersContext';
 
 import { LoadMoreButton } from '../../common/buttons';
 
+import { UserListUILineItem } from '../../../walkme/models/users';
 import classes from './style.module.scss';
 
-export default function LoadMoreWrapper({
+function LoadMoreWrapper({
   queryOptions,
+  isFetchingUsers,
+  users,
+  total_rows,
+  dispatch,
+  envId,
+  from,
+  to,
 }: {
   queryOptions: UsersListQueryOptions;
+  isFetchingUsers: boolean;
+  users: Array<UserListUILineItem>;
+  total_rows: number;
+  dispatch: Dispatch<any>;
+  envId: number;
+  from: string;
+  to: string;
 }): ReactElement {
-  const [appState] = useAppContext();
-  const {
-    environment: { id: envId },
-    dateRange: { from, to },
-  } = appState;
-  const [{ isFetchingUsers, users, total_rows }, dispatch] = useUsersContext();
+  const options = useMemo(
+    () => ({
+      ...queryOptions,
+      first_item_index: users.length,
+    }),
 
-  const options = {
-    ...queryOptions,
-    first_item_index: users.length,
-  };
+    [queryOptions, users.length],
+  );
 
   return (
     <>
@@ -45,3 +52,5 @@ export default function LoadMoreWrapper({
     </>
   );
 }
+
+export default React.memo(LoadMoreWrapper);

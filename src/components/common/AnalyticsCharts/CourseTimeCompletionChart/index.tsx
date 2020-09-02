@@ -10,7 +10,7 @@ import { parseBucketsToPieBarSummary } from '../utils';
 
 import AvgCompletionTimeLegend from './CourseTimeCompletionLegend';
 
-export default function CoursesTimeCompletionChart({
+function CoursesTimeCompletionChart({
   className,
   title,
   overview,
@@ -20,16 +20,21 @@ export default function CoursesTimeCompletionChart({
   const [bars, setBars] = useState<IBar[]>([]);
 
   useEffect(() => {
-    if (overview?.completion_time) {
+    if (overview?.completion_time?.avg) {
       const { completion_time } = overview;
 
       setCompletionTimeAvg(
-        completion_time.avg ? parseInt(completion_time.avg.toFixed(0)) : undefined,
+        completion_time.avg ? parseInt(completion_time.avg.toFixed(0), 10) : undefined,
       );
 
       if (completion_time.buckets.length)
         setBars(parseBucketsToPieBarSummary(completion_time.buckets));
     }
+
+    return () => {
+      setBars([]);
+      setCompletionTimeAvg(undefined);
+    };
   }, [overview]);
 
   // unmount only
@@ -52,3 +57,5 @@ export default function CoursesTimeCompletionChart({
     </WMCard>
   );
 }
+
+export default React.memo(CoursesTimeCompletionChart);

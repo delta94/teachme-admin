@@ -1,8 +1,7 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 
 import { useAppContext } from '../../../providers/AppContext';
 import {
-  useCoursesContext,
   publishCourses,
   archiveCourses,
   fetchCoursesData,
@@ -12,15 +11,26 @@ import {
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
 import { PublishToEnvironmentDialog, ArchiveFromEnvironmentDialog } from '../../common/dialogs';
 
+import { UICourse } from '../../../walkme/data';
+
 import classes from './style.module.scss';
 
-export default function ProductionStatusActions(): ReactElement {
+function ProductionStatusActions({
+  selectedRows,
+  isPublishingCourses,
+  isArchivingCourses,
+  dispatch,
+}: {
+  selectedRows: Array<UICourse>;
+  isPublishingCourses: boolean;
+  isArchivingCourses: boolean;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const [appState] = useAppContext();
   const {
     dateRange: { from, to },
     environment: { id: currentEnvId },
   } = appState;
-  const [{ selectedRows, isPublishingCourses, isArchivingCourses }, dispatch] = useCoursesContext();
 
   // TODO: uncomment once sdk supports marking as draft
   // const hasPublished = selectedRows.some(
@@ -79,3 +89,5 @@ export default function ProductionStatusActions(): ReactElement {
     </>
   );
 }
+
+export default React.memo(ProductionStatusActions);

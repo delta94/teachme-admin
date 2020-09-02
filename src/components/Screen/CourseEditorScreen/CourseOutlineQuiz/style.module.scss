@@ -1,9 +1,6 @@
-.quiz-wrapper {
-  margin-bottom: 25px;
-}
-
 .quiz {
   margin-top: 7px;
+  margin-bottom: 25px;
 }
 
 .course-question-list {
@@ -46,6 +43,7 @@
     border: none;
     padding: 0;
     width: 95%; // support ellipsis
+    padding-left: 6px; // align the icons with the list items icons
 
     .delete-button {
       opacity: 0;
@@ -90,6 +88,7 @@
   color: var(--neutral800);
   padding: 0 22px;
   border-bottom: var(--wm-border);
+  padding-left: 28px; // align the icons with the list items icons
 
   .icon {
     // just a placeholder for now

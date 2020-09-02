@@ -39,6 +39,14 @@ export enum DetailsPanelSettingsType {
   QuizWelcome = 'welcome',
   QuizFail = 'fail',
   QuizSuccess = 'success',
+  Article = 'article',
+  Video = 'video',
+}
+
+export interface ActiveDetailsItem {
+  type: DetailsPanelSettingsType;
+  id: number;
+  item: any;
 }
 
 export interface IState {
@@ -57,7 +65,7 @@ export interface IState {
   refreshCourseOutline: boolean;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
-  activeDetailsItem: { type: DetailsPanelSettingsType; id: number; item: any } | null;
+  activeDetailsItem: ActiveDetailsItem | null;
   hasChanges: boolean;
   isSavingCourse: boolean;
 }

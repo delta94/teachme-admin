@@ -1,17 +1,25 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement } from 'react';
 
-import { useCoursesContext, ActionType } from '../../../providers/CoursesContext';
+import { ActionType } from '../../../providers/CoursesContext';
+import { UICourse } from '../../../walkme/data';
 
 import { SearchFilter } from '../../common/filters';
 
 import classes from './style.module.scss';
 
-export default function SearchCoursesFilter({ disabled }: { disabled?: boolean }): ReactElement {
-  const [state, dispatch] = useCoursesContext();
-  const { courses, coursesSearchValue } = state;
-
+function SearchCoursesFilter({
+  disabled,
+  courses,
+  coursesSearchValue,
+  dispatch,
+}: {
+  disabled?: boolean;
+  courses: Array<UICourse>;
+  coursesSearchValue?: string;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const onSearch = (searchValue: string) => {
-    const newCourseList = courses.filter(({ title }) =>
+    const newCourseList = courses.filter(({ title }: { title: string }) =>
       title.toLowerCase().includes(searchValue.toLowerCase()),
     );
 
@@ -32,3 +40,5 @@ export default function SearchCoursesFilter({ disabled }: { disabled?: boolean }
     />
   );
 }
+
+export default React.memo(SearchCoursesFilter);

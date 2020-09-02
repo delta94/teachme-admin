@@ -11,11 +11,8 @@ import { IQuizScoreData } from '../analytics.interface';
 
 import classes from './style.module.scss';
 
-export default function QuizScoreChart({
-  overview,
-  isLoading = false,
-}: IQuizScoreData): ReactElement {
-  const { avg_quiz_score, passmark } = overview;
+function QuizScoreChart({ overview, isLoading = false }: IQuizScoreData): ReactElement {
+  const { avg_quiz_score, passmark, hasQuiz } = overview;
 
   // `avg_quiz_score` is required in type `CourseOverviewData`, and returns `null` when data is missing
   const average = avg_quiz_score ? Math.round(avg_quiz_score) : undefined;
@@ -25,19 +22,18 @@ export default function QuizScoreChart({
     <WMCard title="Avg. Quiz Score" className={classes['course-average']}>
       <WMSkeleton loading={isLoading} active paragraph={{ rows: 1 }}>
         <div className={classes['course-average-content']}>
-          {hasValue ? (
+          {hasQuiz && hasValue ? (
             <>
               <WMProgress
                 className={classes['course-average-chart']}
                 percent={average}
                 type={ProgressType.Circle}
-                format={() => average}
+                format={() => average ?? '--'}
                 width={80}
                 strokeWidth={10}
                 status={
-                  passmark && average! > passmark
-                    ? ProgressStatus.Success
-                    : ProgressStatus.Exception
+                  // using `hasQuiz && hasValue` to verify if average or passmark is not undefined, therefor using ! operator
+                  average! > passmark! ? ProgressStatus.Success : ProgressStatus.Exception
                 }
               />
               <span className={classes['passmark']}>
@@ -52,3 +48,5 @@ export default function QuizScoreChart({
     </WMCard>
   );
 }
+
+export default React.memo(QuizScoreChart);

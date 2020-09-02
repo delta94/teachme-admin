@@ -1,16 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback, useMemo } from 'react';
 import { Breadcrumb } from 'antd';
 import { Link } from 'react-router-dom';
+import isEmpty from 'lodash/isEmpty';
 
-import { CourseMetadata } from '../../../walkme/data/courseMetadata';
+import { CourseMetadata } from '../../../walkme/models/course';
 import { COURSES_ROUTE, BASE_COURSE_EDITOR_ROUTE } from '../../../constants/routes';
 import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
 
 import { WMSkeletonInput, WMSkeletonButton, WMSkeletonAvatar } from '../../common/WMSkeleton';
 import ScreenHeader, { IScreenHeader } from '../../common/ScreenHeader';
-import Icon from '../../common/Icon';
-import { IconType } from '../../common/Icon/icon.interface';
+import Icon, { IconType } from '../../common/Icon';
 import LastUpdated from '../../common/LastUpdated/LastUpdated';
+
 import WMTag from '../../common/WMTag';
 import WMPopover from '../../common/WMPopover';
 import WMButton, { ButtonVariantEnum } from '../../common/WMButton';
@@ -21,14 +22,11 @@ interface ICourseScreenHeader extends Omit<IScreenHeader, 'title'> {
   courseMetadata?: CourseMetadata;
 }
 
-export default function CourseScreenHeader({
-  courseMetadata,
-  ...otherProps
-}: ICourseScreenHeader): ReactElement {
-  const hasCourseData = courseMetadata && Object.keys(courseMetadata).length !== 0;
+function CourseScreenHeader({ courseMetadata, ...otherProps }: ICourseScreenHeader): ReactElement {
+  const hasCourseData = !isEmpty(courseMetadata);
   const courseSegments = courseMetadata?.segments;
 
-  const getSegments = (segments: string[]) => {
+  const getSegments = useCallback((segments: string[]) => {
     const segmentsStr = segments.join(', ');
     const segmentsContent = (
       <span className={classes['segments-subtitle']}>
@@ -39,7 +37,18 @@ export default function CourseScreenHeader({
     const popoverContent = <div className={classes['segments-popover-content']}>{segmentsStr}</div>;
 
     return <WMPopover content={popoverContent}>{segmentsContent}</WMPopover>;
-  };
+  }, []);
+
+  const subTitle = useMemo(
+    () => courseSegments && Boolean(courseSegments.length) && getSegments(courseSegments),
+    [courseSegments, getSegments],
+  );
+
+  const skeletonButtonStyle = useMemo(() => ({ width: 50 }), []);
+
+  const editButtonPath = useMemo(() => `${BASE_COURSE_EDITOR_ROUTE.path}/${courseMetadata?.id}`, [
+    courseMetadata?.id,
+  ]);
 
   return (
     <ScreenHeader
@@ -65,14 +74,14 @@ export default function CourseScreenHeader({
                 variant={ButtonVariantEnum.Secondary}
                 className={classes['edit']}
               >
-                <Link to={`${BASE_COURSE_EDITOR_ROUTE.path}/${courseMetadata?.id}`}>Edit</Link>
+                <Link to={editButtonPath}>Edit</Link>
               </WMButton>
             </>
           ) : (
             <>
               <WMSkeletonAvatar className={classes['course-details-icon']} active />
               <WMSkeletonInput className={classes['course-name']} active />
-              <WMSkeletonButton active style={{ width: 50 }} />
+              <WMSkeletonButton active style={skeletonButtonStyle} />
               <WMSkeletonButton className={classes['edit']} active />
             </>
           )}
@@ -86,8 +95,10 @@ export default function CourseScreenHeader({
           <Breadcrumb.Item>{courseMetadata?.title}</Breadcrumb.Item>
         </Breadcrumb>
       }
-      subTitle={courseSegments && Boolean(courseSegments.length) && getSegments(courseSegments)}
+      subTitle={subTitle}
       {...otherProps}
     />
   );
 }
+
+export default React.memo(CourseScreenHeader);

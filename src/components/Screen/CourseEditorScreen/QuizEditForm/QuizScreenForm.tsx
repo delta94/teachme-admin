@@ -1,24 +1,25 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { Dispatch, ReactElement, ReactNode } from 'react';
 import { QuizScreen } from '@walkme/types';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
+import { fieldErrorMessage } from '../../../../utils';
 
 import TextCounter from '../../../common/TextCounterInput';
 import TextCounterTextarea from '../../../common/TextCounterTextarea';
-
-import { fieldErrorMessage } from './utils';
 
 import classes from './style.module.scss';
 
 export default function QuizScreenForm({
   screen,
+  isWelcomeScreen,
   renderExtra,
+  dispatch,
 }: {
   screen: QuizScreen;
+  isWelcomeScreen: boolean;
   renderExtra?: ReactNode;
+  dispatch: Dispatch<any>;
 }): ReactElement {
-  const [state, dispatch] = useCourseEditorContext();
-
   return (
     <div className={classes['quiz-screen-form']}>
       <TextCounter
@@ -33,7 +34,7 @@ export default function QuizScreenForm({
         }}
       />
       <TextCounterTextarea
-        maxLength={210}
+        maxLength={isWelcomeScreen ? 210 : 400}
         placeholder="Text"
         label="Description"
         value={screen.description}
@@ -47,7 +48,7 @@ export default function QuizScreenForm({
       {screen.buttons.map((button: any, index: number) => (
         <TextCounter
           key={`quiz-form-button-${index}`}
-          maxLength={80}
+          maxLength={25}
           placeholder="Text"
           label="Button"
           value={button.text}

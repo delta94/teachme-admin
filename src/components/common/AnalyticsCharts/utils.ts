@@ -6,8 +6,8 @@ import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
 
 import { ICourseSummaryLegendData } from './analytics.interface';
 
-export const calculatePercentages = (first: number, second: number): number =>
-  Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : 0;
+export const calculatePercentages = (first: number, second: number): number | undefined =>
+  Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : undefined;
 
 export const parseCourseSummaryLegendData = ({
   total_completion,
@@ -36,5 +36,5 @@ export const formatMarkCompletionDate = (
 export const parseBucketsToPieBarSummary = (buckets: any[]): IBar[] =>
   buckets.map(({ users_percentages, from, to }) => ({
     value: users_percentages.toFixed(2),
-    legend: to ? `${parseInt(from) + parseInt(to)}` : '12', // TODO: verify with Eli if is correct data
+    legend: to ? `${parseInt(from, 10) + parseInt(to, 10)}` : '12', // TODO: verify with Eli if is correct data
   }));

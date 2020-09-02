@@ -96,11 +96,17 @@
   }
 }
 
-.quiz-tab-icon {
-  width: 30px;
-  height: 30px;
+.course-tabs {
+  :global(.ant-tabs-tab-btn) {
+    display: flex;
+  }
 
-  @include fullSizeIcon;
+  .quiz-tab-icon {
+    width: 30px;
+    height: 30px;
+
+    @include fullSizeIcon;
+  }
 }
 
 .course-quiz-empty {

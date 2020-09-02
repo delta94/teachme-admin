@@ -9,8 +9,8 @@ export default function ResourcesListEmptyState(): ReactElement {
     <WMEmpty
       description={
         <>
-          <div>There are no items available.</div>
-          <div>Create Walk-thrus and resources from the WalkMe Editor.</div>
+          <span>There are no items available.</span>
+          <span>Create Walk-thrus and resources from the WalkMe Editor.</span>
         </>
       }
       className={classes['resource-list-empty-state']}

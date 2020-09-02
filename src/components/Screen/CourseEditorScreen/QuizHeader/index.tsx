@@ -1,18 +1,33 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState } from 'react';
 import cc from 'classcat';
 
-import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
+import { ActionType } from '../../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
+import { Course } from '../../../../walkme/data/courseBuild/course';
+import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
+
 import WMButton from '../../../common/WMButton';
 import Header from '../../../common/Header';
 import Icon, { IconType } from '../../../common/Icon';
 import { AddButton } from '../../../common/buttons';
 
-import classes from './style.module.scss';
 import DeleteQuizDialog from './DeleteQuizDialog';
 
-export default function QuizHeader({ className }: { className?: string }): ReactElement {
-  const [{ course, quiz, isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
+import classes from './style.module.scss';
+
+export default function QuizHeader({
+  className,
+  course,
+  quiz,
+  isDetailsPanelOpen,
+  dispatch,
+}: {
+  className?: string;
+  course: Course | null;
+  quiz: Quiz | null;
+  isDetailsPanelOpen: boolean;
+  dispatch: Dispatch<any>;
+}): ReactElement {
   const [showDeleteQuizDialog, setShowDeleteQuizDialog] = useState(false);
 
   const deleteQuiz = () => {
@@ -66,7 +81,11 @@ export default function QuizHeader({ className }: { className?: string }): React
             <WMButton className={classes['title-button']} onClick={showDeleteDialog}>
               <Icon type={IconType.Delete} className={classes['title-icon']} />
             </WMButton>
-            <AddButton className={cc([classes['add-question']])} onClick={addQuestion} />
+            <AddButton
+              className={cc([classes['add-question']])}
+              onClick={addQuestion}
+              tooltipTitle="Add Question"
+            />
           </div>
         </div>
       </Header>

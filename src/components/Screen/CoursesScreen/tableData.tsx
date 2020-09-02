@@ -16,19 +16,33 @@ import {
   TextCell,
 } from '../../common/tableCells';
 import WMPopover from '../../common/WMPopover';
-
 import ActionsCell from './ActionsCell';
 
 import classes from './style.module.scss';
 
 const DragHandle = SortableHandle(() => <DragHandleCell />);
 
-export const columns: ColumnsType<any> = [
+const FakeCheckboxCell = () => <span className={classes['checkbox']} />;
+
+export const getColumns = (onSelectAllRows: () => void): ColumnsType<any> => [
   {
     title: '',
     dataIndex: 'sort',
     className: 'drag-visible',
+    width: 35,
     render: (): ReactElement => <DragHandle />,
+    shouldCellUpdate: () => false,
+  },
+  {
+    title: (): ReactElement => <FakeCheckboxCell />,
+    dataIndex: 'checkbox',
+    className: classes['checkbox-cell'],
+    width: 35,
+    render: (): ReactElement => <FakeCheckboxCell />,
+    shouldCellUpdate: () => false,
+    onHeaderCell: () => ({
+      onClick: onSelectAllRows,
+    }),
   },
   {
     title: 'Name',
@@ -36,6 +50,7 @@ export const columns: ColumnsType<any> = [
     render: (value: string, { title, id }: UICourse): ReactElement => (
       <LinkCell value={title} to={`/course/${id}`} />
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Production Status',
@@ -43,6 +58,7 @@ export const columns: ColumnsType<any> = [
     render: (value: PublishStatus): ReactElement => (
       <TagCell value={getPublishStatusLabel(value)} color={getPublishStatusColor(value)} />
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Segment',
@@ -67,6 +83,7 @@ export const columns: ColumnsType<any> = [
         SegmentsTextCell
       );
     },
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Users Started',
@@ -77,6 +94,7 @@ export const columns: ColumnsType<any> = [
         <NumberCell value={value} />
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Users Completed',
@@ -86,11 +104,12 @@ export const columns: ColumnsType<any> = [
       <DashCell value={users_completed}>
         {users_completed && users_started && (
           <NumberCell
-            value={`${users_completed} (${Math.round((users_completed / users_started) * 100)})%`}
+            value={`${users_completed} (${Math.round((users_completed / users_started) * 100)}%)`}
           />
         )}
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Avg. Quiz Score',
@@ -101,6 +120,7 @@ export const columns: ColumnsType<any> = [
         {avg_quiz_score && <StatusDotCell value={avg_quiz_score} passed={quiz_passed} />}
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'Avg. Quiz attempts',
@@ -112,6 +132,7 @@ export const columns: ColumnsType<any> = [
         <NumberCell value={typeof value === 'number' ? value.toFixed(1) : value} />
       </DashCell>
     ),
+    shouldCellUpdate: () => false,
   },
   {
     title: 'actions',
@@ -119,5 +140,6 @@ export const columns: ColumnsType<any> = [
     align: 'right',
     className: classes['actions-column'],
     render: (data: undefined, row: UICourse): ReactElement => <ActionsCell course={row} />,
+    shouldCellUpdate: () => false,
   },
 ];
