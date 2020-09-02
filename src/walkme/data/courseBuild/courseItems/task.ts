@@ -8,10 +8,13 @@ import {
   TypeName,
   WalkMeDataItem,
   ResourceDataItem,
+  ResourceType,
+  ResourceNewDataItem,
 } from '@walkme/types';
 import { Container, DeployableContainer } from '../itemsContainer';
 import { getDataSync } from '../../services/wmData';
 import { getTypeId, getTypeName, getResourceType } from '../../services/item';
+import { Resource } from '../resource';
 
 export const getCourseItems = (itemsData: Array<WalkMeDataNewCourseTask>) =>
   new DeployableContainer(itemsData, (data) => new CourseTask(data), newDataModel);
@@ -23,15 +26,30 @@ export class CourseTask implements BuildCourseTask {
   public properties: BuildCourseTaskProperties;
   public title: string;
   public type: string;
+  public linkedItem?: Resource;
+
   constructor(private _data: WalkMeDataNewCourseTask) {
-    const [item] = getDataSync(_data.DeployableType, [_data.DeployableID]);
+    this.type = getTypeName(_data.DeployableType);
+
+    if (_data.DeployableID < 0) {
+      this.linkedItem = new Resource(this.type as TypeName.Video | TypeName.Article);
+    }
+
+    const [item] =
+      [this.linkedItem?.toDataModel(_data.OrderIndex)] ??
+      getDataSync(_data.DeployableType, [_data.DeployableID]);
+
+    if (!item)
+      throw new Error(
+        `Unable to find item with type ${_data.DeployableType} and id ${_data.DeployableID}`,
+      );
+
     this.description = item.Description || '';
     this.id = (item?.Id as number) ?? -1;
     this.keywords = [];
     this.title = item.Name;
-    this.type = getTypeName(_data.DeployableType);
     if (this.type == TypeName.Content) {
-      this.type = getResourceType((item as ResourceDataItem).Type);
+      this.type = getResourceType((item as ResourceNewDataItem).Type);
     }
     this.properties = {
       completionType: _data?.Settings?.cmplType ?? CourseTaskCompletionType.Completed,
@@ -39,8 +57,10 @@ export class CourseTask implements BuildCourseTask {
   }
 
   toDataModel(index: number): WalkMeDataNewCourseTask {
+    const id = this.linkedItem ? this.linkedItem.id : this._data.DeployableID;
     return {
       ...this._data,
+      DeployableID: id,
       Settings: {
         cmplType: this.properties.completionType,
       },

@@ -21,6 +21,7 @@ import * as quiz from '../quiz';
 import { newDataModel } from './dataModel';
 import { ITypeIdQueriable } from '../itemsContainer';
 import { getCourseSegmentsSync, getLinkId } from '../../services/segments';
+import { Resource } from '../resource';
 
 export type CourseOptions = {
   light: boolean;
@@ -58,6 +59,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
   }
 
   async save(): Promise<void> {
+    await Resource.saveAll();
     const lessonsData = this.items.toDataModel().filter(isLesson) as Array<WalkMeDataNewLesson>;
     const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
       TypeName.Lesson,
@@ -67,7 +69,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     const courseData = this.toDataModel();
     courseData.LinkedDeployables = this.items
       .toArray()
-      .map((item, index) => createLink(item, index));
+      .map((item, index) => (isLesson(item) ? createLink(item, index) : item.toDataModel(index)));
     courseData.LinkedDeployables.filter((item) => item.DeployableType == TypeId.Lesson).forEach(
       (item) => {
         item.DeployableID = lessons[item.DeployableID]?.Id ?? item.DeployableID;
@@ -75,7 +77,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     );
     const savedCourse = await walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
     await this.saveTags(savedCourse.Id);
-    await wmData.refresh([TypeName.Course, TypeName.Lesson]);
+    await wmData.refresh([TypeName.Course, TypeName.Lesson, TypeName.Content]);
     wmData.refresh([TypeName.Tag]);
     this.map(savedCourse);
   }

@@ -4,7 +4,10 @@ import {
   LightBoxSizeType,
   TypeId,
   ResourcePlayMode,
+  TypeName,
 } from '@walkme/types';
+import walkme from '@walkme/editor-sdk';
+
 import { INewResource, ILightbox } from '../../../models/resource';
 import { getGuid } from '../../services/guid';
 import defaults from '../defaults';
@@ -20,10 +23,13 @@ export class Resource implements INewResource {
   public openTarget: ResourcePlayMode;
   public autoplay?: boolean;
   public videoPlaerParameters?: string;
+  public saved = false;
 
-  constructor(type: ResourceType) {
+  public static newResources: Resource[] = [];
+
+  constructor(type: TypeName.Video | TypeName.Article) {
     this.id = -1;
-    this.type = type;
+    this.type = type == TypeName.Video ? ResourceType.Video : ResourceType.Article;
     const baseName =
       this.type == ResourceType.Video ? defaults.NEW_VIDEO_NAME : defaults.NEW_ARTICLE_NAME;
     this.title = getUniqueItemName(TypeId.Content, baseName);
@@ -37,7 +43,11 @@ export class Resource implements INewResource {
       unit: defaults.NEW_RESOURCE_SIZE_UNIT,
     };
     this.openTarget = defaults.NEW_RESOURCE_OPEN_TARGET;
+
+    Resource.newResources.push(this);
   }
+
+  map(data: ResourceNewDataItem) {}
 
   public toDataModel(index: number): ResourceNewDataItem {
     return {
@@ -62,6 +72,23 @@ export class Resource implements INewResource {
     };
   }
 
+  public static async saveAll(): Promise<void> {
+    const saved = await walkme.data.saveContent(
+      TypeName.Content,
+      Resource.newResources.map((r, i) => r.toDataModel(i)),
+      TypeId.Content,
+    );
+    Resource.newResources.forEach((resource) => {
+      resource.id = saved[resource.id].Id;
+      resource.saved = true;
+    });
+    Resource.resetNewResources();
+  }
+
+  public static resetNewResources(): void {
+    Resource.newResources.length = 0;
+  }
+
   public isValid(): boolean {
     return false;
   }
@@ -71,3 +98,37 @@ export interface ILightboxSettings {
   size: { width: number; height: number };
   unit: LightBoxSizeType;
 }
+
+// function newDataModel(index: number, type: ResourceType): ResourceNewDataItem {
+//   const baseName = type == ResourceType.Video ? defaults.NEW_VIDEO_NAME : defaults.NEW_ARTICLE_NAME;
+//   this.description = defaults.NEW_RESOURCE_DESCRIPTION;
+//   this.url = defaults.NEW_RESOURCE_URL;
+//   this.lightbox = {
+//     size: {
+//       height: defaults.NEW_RESOURCE_HEIGHT,
+//       width: defaults.NEW_RESOURCE_WIDTH,
+//     },
+//     unit: defaults.NEW_RESOURCE_SIZE_UNIT,
+//   };
+//   this.openTarget = defaults.NEW_RESOURCE_OPEN_TARGET;
+//   return {
+//     Id: -1,
+//     Description: defaults.NEW_RESOURCE_DESCRIPTION,
+//     Name: getUniqueItemName(TypeId.Content, baseName),
+//     OrderIndex: index,
+//     Type: type,
+//     Settings: {
+//       ContentPlayMode: defaults.NEW_RESOURCE_OPEN_TARGET,
+//       LightboxWidth: defaults.NEW_RESOURCE_WIDTH,
+//       widthUnit: this.lightbox.unit,
+//       LightboxHeight: this.lightbox.size.width,
+//       heightUnit: this.lightbox.unit,
+//     },
+//     Guid: null,
+//     IsModified: false,
+//     PublishStatus: 0,
+//     ResourceId: getGuid(),
+//     Url: this.url,
+//     deployableType: TypeId.Content,
+//   };
+// }
