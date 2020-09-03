@@ -163,7 +163,7 @@
 
 .courses-table {
   :global(.ant-table-thead) {
-    // prevent click around the ''select-all' checkbox
+    // prevent click around the 'select-all' checkbox
     .checkbox-cell {
       pointer-events: none;
       user-select: none;
@@ -177,7 +177,6 @@
   // prevent user-select while dragging
   &:global(.is-dragging) {
     user-select: none;
-    cursor: grabbing;
   }
 
   .selected-row {
