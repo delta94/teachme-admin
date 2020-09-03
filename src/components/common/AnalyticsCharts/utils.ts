@@ -21,17 +21,10 @@ export const fixedNumber = (value: number): string => {
 
 /**
  * calculateFixedPercentages
- * should return natural number or fixed number
+ * should return natural number or fixed number as string
  */
-export const calculateFixedPercentages = (first: number, second: number): string | undefined => {
-  if (Boolean(first) && Boolean(second)) {
-    const value = (first / second) * 100;
-
-    return fixedNumber(value);
-  } else {
-    return undefined;
-  }
-};
+export const calculateFixedPercentages = (first: number, second: number): string | undefined =>
+  Boolean(first) && Boolean(second) ? fixedNumber((first / second) * 100) : undefined;
 
 export const parseCourseSummaryLegendData = ({
   total_completion,
