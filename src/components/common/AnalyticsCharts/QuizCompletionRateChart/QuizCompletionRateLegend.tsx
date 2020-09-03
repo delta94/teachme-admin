@@ -7,7 +7,7 @@ export default function QuizCompletionRateLegend({
 }: IPieBarLegendContent): React.ReactElement {
   return (
     <>
-      <b>{barValue}</b> of users completed a course
+      <b>{barValue}%</b> of users completed a course
     </>
   );
 }
