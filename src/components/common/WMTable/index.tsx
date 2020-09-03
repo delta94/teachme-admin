@@ -53,6 +53,7 @@ function WMTable({
 
   const onSortStartCallback = useCallback(
     (sort: SortStart, event: SortEvent) => {
+      // Classes are added in a non-react way to prevent rerenderd and to make the change happen immediately
       ref.current?.classList.add(IS_DRAGGING);
 
       const { node } = sort;
@@ -76,6 +77,7 @@ function WMTable({
     ({ oldIndex, newIndex }: SortEnd): void => {
       if (oldIndex === newIndex || !onSortEnd) return;
 
+      // Classes are added in a non-react way to prevent rerenderd and to make the change happen immediately
       ref.current?.classList.remove(IS_DRAGGING);
 
       const updatedData = produce(data, (draft) => {
