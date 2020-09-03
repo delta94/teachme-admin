@@ -16,6 +16,7 @@ import classes from './style.module.scss';
 
 export interface IHeaderConfirmationButtonsProps {
   course: Course | null;
+  isValid: boolean;
   hasChanges: boolean;
   isSavingCourse: boolean;
   environment: WalkMeEnvironment;
@@ -24,6 +25,7 @@ export interface IHeaderConfirmationButtonsProps {
 
 export default function HeaderConfirmationButtons({
   course,
+  isValid,
   hasChanges,
   isSavingCourse,
   dispatch,
@@ -32,7 +34,6 @@ export default function HeaderConfirmationButtons({
   const history = useHistory();
   const { courseId } = useParams();
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
-  const isValid = course ? course?.isValid() : true;
 
   const addPreventInteractionClasses = () => {
     document.documentElement.classList.add(classes['prevent-interaction']);

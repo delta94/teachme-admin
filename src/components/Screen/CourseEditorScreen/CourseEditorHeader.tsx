@@ -11,6 +11,7 @@ import HeaderConfirmationButtons from './HeaderConfirmationButtons';
 export interface ICourseEditorHeaderProps {
   course: Course | null;
   courseId: number;
+  isValid: boolean;
   isFetchingCourse: boolean;
   hasChanges: boolean;
   isSavingCourse: boolean;
@@ -22,6 +23,7 @@ export interface ICourseEditorHeaderProps {
 function CourseEditorHeader({
   course,
   courseId,
+  isValid,
   isFetchingCourse,
   hasChanges,
   isSavingCourse,
@@ -43,6 +45,7 @@ function CourseEditorHeader({
     >
       <HeaderConfirmationButtons
         course={course}
+        isValid={isValid}
         hasChanges={hasChanges}
         isSavingCourse={isSavingCourse}
         dispatch={dispatch}
