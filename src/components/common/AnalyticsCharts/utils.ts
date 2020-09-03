@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 import { CompletionGraphStats } from '../../../walkme/models';
-
 import { isNaturalNumber } from '../../../utils';
+
 import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
 
 import { ICourseSummaryLegendData } from './analytics.interface';
