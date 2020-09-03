@@ -16,7 +16,7 @@ import classes from './style.module.scss';
 
 export interface IHeaderConfirmationButtonsProps {
   course: Course | null;
-  isValid?: boolean;
+  isValid: boolean;
   hasChanges: boolean;
   isSavingCourse: boolean;
   environment: WalkMeEnvironment;
