@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 import { CompletionGraphStats } from '../../../walkme/models';
+import { isNaturalNumber } from '../../../utils';
 
 import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
 
@@ -8,6 +9,22 @@ import { ICourseSummaryLegendData } from './analytics.interface';
 
 export const calculatePercentages = (first: number, second: number): number | undefined =>
   Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : undefined;
+
+/**
+ * fixedNumber
+ * prevents display of 0 after the decimal point if it's a natural number
+ */
+export const fixedNumber = (value: number): string => {
+  const converted = +value.toFixed(2);
+  return isNaturalNumber(converted) ? converted.toString() : converted.toFixed(2);
+};
+
+/**
+ * calculateFixedPercentages
+ * should return natural number or fixed number as string
+ */
+export const calculateFixedPercentages = (first: number, second: number): string | undefined =>
+  Boolean(first) && Boolean(second) ? fixedNumber((first / second) * 100) : undefined;
 
 export const parseCourseSummaryLegendData = ({
   total_completion,
