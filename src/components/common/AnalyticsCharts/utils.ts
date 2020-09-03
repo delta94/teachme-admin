@@ -2,12 +2,26 @@ import moment from 'moment';
 
 import { CompletionGraphStats } from '../../../walkme/models';
 
+import { isNaturalNumber } from '../../../utils';
 import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
 
 import { ICourseSummaryLegendData } from './analytics.interface';
 
+export const fixedNumber = (value: number): number | string =>
+  isNaturalNumber(value) ? value : value.toFixed(2);
+
 export const calculatePercentages = (first: number, second: number): number | undefined =>
   Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : undefined;
+
+export const calculateFixedPercentages = (first: number, second: number): number | undefined => {
+  if (Boolean(first) && Boolean(second)) {
+    const value = (first / second) * 100;
+
+    return +fixedNumber(value);
+  } else {
+    return undefined;
+  }
+};
 
 export const parseCourseSummaryLegendData = ({
   total_completion,

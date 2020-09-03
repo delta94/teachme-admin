@@ -2,6 +2,8 @@ import React from 'react';
 // @ts-ignore
 import mix from 'mix-css-color';
 
+import { calculateFixedPercentages } from '../../AnalyticsCharts/utils';
+
 import PieBarChartLegend from './Legend';
 import { IPieBarChart } from './pieBarChart.interface';
 
@@ -30,12 +32,14 @@ export default function PieBarChart({
     <div className={classes['pie-bar-chart']} {...otherProps}>
       <div className={classes['pie-bar']} style={{ height, width }} {...otherProps}>
         {bars.map((bar, index) => {
-          const barValue = bars.length ? `${(bar.value / totalValue) * 100}%` : '0%';
+          const barValue = bars.length
+            ? `${calculateFixedPercentages(bar.value, totalValue)}%`
+            : '0%';
           const barLegend = bar.legend;
           const barColor = bar.color ?? generatedColors[index];
           const legendContent = (
             <LegendContent
-              barValue={Math.round(parseFloat(barValue))}
+              barValue={barValue}
               barLegend={barLegend}
               totalValue={totalValue}
               barColor={barColor}
