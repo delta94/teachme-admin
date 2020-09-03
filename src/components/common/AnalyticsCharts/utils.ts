@@ -7,17 +7,27 @@ import { IBar } from '../charts/PieBarChart/pieBarChart.interface';
 
 import { ICourseSummaryLegendData } from './analytics.interface';
 
-export const fixedNumber = (value: number): number | string =>
-  isNaturalNumber(value) ? value : value.toFixed(2);
-
 export const calculatePercentages = (first: number, second: number): number | undefined =>
   Boolean(first) && Boolean(second) ? parseInt(((first / second) * 100).toFixed(2)) : undefined;
 
-export const calculateFixedPercentages = (first: number, second: number): number | undefined => {
+/**
+ * fixedNumber
+ * prevents display of 0 after the decimal point if it's a natural number
+ */
+export const fixedNumber = (value: number): string => {
+  const converted = +value.toFixed(2);
+  return isNaturalNumber(converted) ? converted.toString() : converted.toFixed(2);
+};
+
+/**
+ * calculateFixedPercentages
+ * should return natural number or fixed number
+ */
+export const calculateFixedPercentages = (first: number, second: number): string | undefined => {
   if (Boolean(first) && Boolean(second)) {
     const value = (first / second) * 100;
 
-    return +fixedNumber(value);
+    return fixedNumber(value);
   } else {
     return undefined;
   }

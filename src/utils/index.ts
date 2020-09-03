@@ -9,6 +9,17 @@ export const pluralizer = (word: string, count: number): string =>
 
 export const isValidNumber = (value: any): boolean => typeof value === 'number' && isFinite(value);
 
+/**
+ * isNaturalNumber
+ *
+ * for example
+ * '0' // ok
+ * '1' // ok
+ * '-1' // not ok
+ * '-1.1' // not ok
+ * '1.1' // not ok
+ * 'abc' // not ok
+ */
 export const isNaturalNumber = (n: any): boolean => {
   n = n.toString(); // force the value incase it is not
   const n1 = Math.abs(n),
