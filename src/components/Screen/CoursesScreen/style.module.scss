@@ -123,11 +123,13 @@
   width: 150px;
 }
 
+:global(.is-dragging .ant-table-row):hover .actions-column:global(.ant-table-cell),
 .actions-column:global(.ant-table-cell),
 :global(.ant-table-row):hover .actions-placeholder:global(.ant-table-cell) {
   display: none;
 }
 
+:global(.is-dragging .ant-table-row):hover .actions-placeholder:global(.ant-table-cell),
 :global(.ant-table-row):hover .actions-column:global(.ant-table-cell) {
   display: table-cell;
 }
@@ -160,15 +162,22 @@
 }
 
 .courses-table {
-  // prevent click on all cell
   :global(.ant-table-thead) {
+    // prevent click around the ''select-all' checkbox
     .checkbox-cell {
       pointer-events: none;
+      user-select: none;
 
       .checkbox {
         pointer-events: all;
       }
     }
+  }
+
+  // prevent user-select while dragging
+  &:global(.is-dragging) {
+    user-select: none;
+    cursor: grabbing;
   }
 
   .selected-row {
@@ -215,6 +224,8 @@
   }
 
   .checkbox-cell {
+    user-select: none;
+
     .checkbox {
       @include getCheckboxWrapperStyles;
 

@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement, Key, useMemo, useCallback } from 'react';
+import React, { ReactNode, ReactElement, Key, useMemo, useCallback, useRef } from 'react';
 import cc from 'classcat';
 import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
@@ -20,6 +20,8 @@ import SortableRow from './SortableRow';
 import classes from './style.module.scss';
 
 export { WMTableExpanded };
+
+const IS_DRAGGING = 'is-dragging';
 
 interface IWMTable extends TableProps<any> {
   className?: string;
@@ -47,8 +49,12 @@ function WMTable({
   isStickyToolbarAndHeader,
   ...otherProps
 }: IWMTable): ReactElement {
+  const ref = useRef<HTMLDivElement>(null);
+
   const onSortStartCallback = useCallback(
     (sort: SortStart, event: SortEvent) => {
+      ref.current?.classList.add(IS_DRAGGING);
+
       const { node } = sort;
       const tds = document.getElementsByClassName('dragged-row')[0].childNodes as NodeListOf<
         HTMLElement
@@ -69,6 +75,8 @@ function WMTable({
   const onSortEndCallback = useCallback(
     ({ oldIndex, newIndex }: SortEnd): void => {
       if (oldIndex === newIndex || !onSortEnd) return;
+
+      ref.current?.classList.remove(IS_DRAGGING);
 
       const updatedData = produce(data, (draft) => {
         // Remove moved row and store it
@@ -127,6 +135,7 @@ function WMTable({
 
   return (
     <div
+      ref={ref}
       className={cc([
         classes['wm-table'],
         className,
