@@ -53,5 +53,7 @@ export const formatMarkCompletionDate = (
 export const parseBucketsToPieBarSummary = (buckets: any[]): IBar[] =>
   buckets.map(({ users_percentages, from, to }) => ({
     value: users_percentages.toFixed(2),
-    legend: to ? `${parseInt(from, 10) + parseInt(to, 10)}` : '12', // TODO: verify with Eli if is correct data
+    legend: ` of the users completed the courses within ${moment
+      .duration(parseInt(to, 10), 'hours')
+      .humanize()}`,
   }));
