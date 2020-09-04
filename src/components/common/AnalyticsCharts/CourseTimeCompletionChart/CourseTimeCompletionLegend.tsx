@@ -8,7 +8,7 @@ export default function AvgCompletionTimeLegend({
 }: IPieBarLegendContent): ReactElement {
   return (
     <>
-      <b>{barValue}</b> of the users completed the courses within {barLegend} hours
+      <b>{barValue}%</b> {barLegend}
     </>
   );
 }
