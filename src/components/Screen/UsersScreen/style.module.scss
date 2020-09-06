@@ -1,3 +1,5 @@
+@import 'src/styles/mixins';
+
 .users-screen {
   min-width: min-content;
 
@@ -7,7 +9,7 @@
   }
 
   .table-wrapper:global(.ant-card) {
-    min-width: min-content;
+    min-width: 1060px;
 
     .shown-users-indicator {
       font-family: var(--font-secondary);
@@ -59,34 +61,15 @@
 
           // Needed in order to control table body height
           max-height: var(--table-body-height) !important;
-
-          > table {
-            // Needed in order to control table columns width
-            table-layout: auto !important;
-          }
         }
 
         .user-cell {
           font-weight: 600;
-          min-width: 290px;
         }
 
+        .user-cell,
         .course-name-cell {
-          min-width: 280px;
-        }
-
-        .started-cell,
-        .completed-cell,
-        .duration-cell {
-          min-width: 120px;
-        }
-
-        .result-cell {
-          min-width: 90px;
-        }
-
-        .attempts-cell {
-          min-width: 130px;
+          @include ellipsis;
         }
       }
     }
