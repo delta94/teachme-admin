@@ -4,12 +4,9 @@ import {
   BuildCourseTaskProperties,
   CourseTaskCompletionType,
   NewCourseItemData,
-  TypeId,
   TypeName,
-  WalkMeDataItem,
-  ResourceDataItem,
-  ResourceType,
   ResourceNewDataItem,
+  BuildLesson,
 } from '@walkme/types';
 import { Container, DeployableContainer } from '../itemsContainer';
 import { getDataSync } from '../../services/wmData';
@@ -19,6 +16,9 @@ import { Resource } from '../resource';
 export const getCourseItems = (itemsData: Array<WalkMeDataNewCourseTask>) =>
   new DeployableContainer(itemsData, (data) => new CourseTask(data), newDataModel);
 
+export function isUITask(value: BuildLesson | CourseTask): value is CourseTask {
+  return value.type !== TypeName.Lesson;
+}
 export class CourseTask implements BuildCourseTask {
   public description: string;
   public id: number;

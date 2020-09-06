@@ -8,6 +8,7 @@ import {
   TypeId,
   WalkMeDataCourseNewItem,
   WalkMeDataQuiz,
+  WalkMeNewLink,
 } from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
 import * as itemsData from '../courseItems/index';
@@ -22,6 +23,7 @@ import { newDataModel } from './dataModel';
 import { ITypeIdQueriable } from '../itemsContainer';
 import { getCourseSegmentsSync, getLinkId } from '../../services/segments';
 import { Resource } from '../resource';
+import { isUITask } from '../courseItems/task';
 
 export type CourseOptions = {
   light: boolean;
@@ -67,9 +69,9 @@ export class Course implements BuildCourse, ITypeIdQueriable {
       TypeId.Lesson,
     );
     const courseData = this.toDataModel();
-    courseData.LinkedDeployables = this.items
-      .toArray()
-      .map((item, index) => (isLesson(item) ? createLink(item, index) : item.toDataModel(index)));
+    courseData.LinkedDeployables = this.items.toArray().map<WalkMeNewLink>((item, index) => {
+      return isUITask(item) ? item.toDataModel(index) : createLink(item, index);
+    });
     courseData.LinkedDeployables.filter((item) => item.DeployableType == TypeId.Lesson).forEach(
       (item) => {
         item.DeployableID = lessons[item.DeployableID]?.Id ?? item.DeployableID;
