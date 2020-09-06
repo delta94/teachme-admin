@@ -1,25 +1,21 @@
-import React, { ReactElement, ChangeEvent, Dispatch } from 'react';
+import React, { ReactElement, ChangeEvent } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 import { BuildQuizProperties } from '@walkme/types';
 
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
+import { getValidRangeNumber, isNumericValue } from '../../../../utils';
 
 import WMInput from '../../../common/WMInput';
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
-import { getValidRangeNumber, isNumericValue } from '../../../../utils';
 
-import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 import classes from './style.module.scss';
 
-export default function QuizSettingsForm({
-  quiz,
-  dispatch,
-}: {
-  quiz: Quiz | null;
-  dispatch: Dispatch<any>;
-}): ReactElement {
+export default function QuizSettingsForm({ courseId }: { courseId: number }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+  const { quiz } = state;
+
   const updateQuizProperties = (updatedData: Partial<BuildQuizProperties>) => {
     if (quiz?.properties) {
       quiz.properties = { ...quiz.properties, ...updatedData };

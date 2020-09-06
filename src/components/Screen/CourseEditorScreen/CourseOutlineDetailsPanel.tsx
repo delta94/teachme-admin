@@ -1,18 +1,13 @@
-import React, { Dispatch, ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
-import { ActionType } from '../../../providers/CourseEditorContext';
-import {
-  ActiveDetailsItem,
-  DetailsPanelSettingsType,
-} from '../../../providers/CourseEditorContext/course-editor-context.interface';
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
+import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 
 import DetailsPanel from '../../common/DetailsPanel';
 import Icon, { IconType } from '../../common/Icon';
 
-import { Course } from '../../../walkme/data/courseBuild/course';
-import { Quiz } from '../../../walkme/data/courseBuild/quiz';
 import QuizEditForm from './QuizEditForm';
 import QuizSettingsForm from './QuizSettingsForm';
 import { QuizScreenType } from './QuizEditForm/interface';
@@ -29,21 +24,9 @@ export const TaskItemIconType = {
   [CourseItemType.Video]: 'VideoSmall',
 };
 
-interface ICourseOutlineDetailsPanelProp {
-  course: Course | null;
-  quiz: Quiz | null;
-  isDetailsPanelOpen: boolean;
-  activeDetailsItem: ActiveDetailsItem | null;
-  dispatch: Dispatch<any>;
-}
+export default function CourseOutlineDetailsPanel(): ReactElement {
+  const [{ course, isDetailsPanelOpen, activeDetailsItem }, dispatch] = useCourseEditorContext();
 
-export default function CourseOutlineDetailsPanel({
-  course,
-  quiz,
-  isDetailsPanelOpen,
-  activeDetailsItem,
-  dispatch,
-}: ICourseOutlineDetailsPanelProp): ReactElement {
   /**
    * TODO: uncomment the following lines when SDK is ready if necessary
    */
@@ -74,13 +57,13 @@ export default function CourseOutlineDetailsPanel({
       id: 'Item',
       iconType: TaskItemIconType[activeDetailsItem?.item?.type as keyof typeof TaskItemIconType],
       title: activeDetailsItem?.item?.title ?? 'Item Settings',
-      content: <CourseItemDetails courseItem={activeDetailsItem?.item} dispatch={dispatch} />,
+      content: <CourseItemDetails courseItem={activeDetailsItem?.item} />,
     },
     [DetailsPanelSettingsType.Quiz]: {
       id: 'Quiz',
       iconType: 'QuizSettings',
       title: 'Quiz Settings',
-      content: <QuizSettingsForm quiz={quiz} dispatch={dispatch} />,
+      content: <QuizSettingsForm courseId={course?.id ?? 0} />,
     },
     [DetailsPanelSettingsType.Question]: {
       id: 'Question',
@@ -90,7 +73,6 @@ export default function CourseOutlineDetailsPanel({
         <QuizEditForm
           quizScreenType={QuizScreenType.QuestionScreen}
           quizScreenData={activeDetailsItem?.item}
-          dispatch={dispatch}
         />
       ),
     },
@@ -102,7 +84,6 @@ export default function CourseOutlineDetailsPanel({
         <QuizEditForm
           quizScreenType={QuizScreenType.WelcomeScreen}
           quizScreenData={activeDetailsItem?.item}
-          dispatch={dispatch}
         />
       ),
     },
@@ -114,7 +95,6 @@ export default function CourseOutlineDetailsPanel({
         <QuizEditForm
           quizScreenType={QuizScreenType.FailScreen}
           quizScreenData={activeDetailsItem?.item}
-          dispatch={dispatch}
         />
       ),
     },
@@ -126,7 +106,6 @@ export default function CourseOutlineDetailsPanel({
         <QuizEditForm
           quizScreenType={QuizScreenType.SuccessScreen}
           quizScreenData={activeDetailsItem?.item}
-          dispatch={dispatch}
         />
       ),
     },

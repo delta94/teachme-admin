@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { QuizScreen } from '@walkme/types';
 
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
@@ -12,11 +12,9 @@ import classes from './style.module.scss';
 export default function QuizEditForm({
   quizScreenType,
   quizScreenData,
-  dispatch,
 }: {
   quizScreenType: QuizScreenType;
   quizScreenData: QuizScreen | QuizQuestion; // TODO: change to QuizQuestion type
-  dispatch: Dispatch<any>;
 }): ReactElement {
   const isWelcomeScreen = quizScreenType === QuizScreenType.WelcomeScreen;
 
@@ -34,10 +32,9 @@ export default function QuizEditForm({
               </p>
             )
           }
-          dispatch={dispatch}
         />
       ) : (
-        <QuestionScreenForm question={quizScreenData as QuizQuestion} dispatch={dispatch} />
+        <QuestionScreenForm question={quizScreenData as QuizQuestion} />
       )}
     </div>
   );

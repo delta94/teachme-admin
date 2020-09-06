@@ -1,7 +1,7 @@
-import React, { Dispatch, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { ContentItem, CourseTaskCompletionType } from '@walkme/types';
 
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
 import { WMVerticalRadioGroup } from '../../../common/WMRadio';
 
@@ -23,11 +23,11 @@ const completionOptions = [
 
 export default function CourseItemDetails({
   courseItem,
-  dispatch,
 }: {
   courseItem: ContentItem;
-  dispatch: Dispatch<any>;
 }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   return (
     <div className={classes['course-item-details']}>
       {courseItem && (

@@ -1,11 +1,8 @@
-import React, { Dispatch, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
-import { Course } from '../../../../walkme/data/courseBuild/course';
-import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
-
 import WMButton from '../../../common/WMButton';
 import Header from '../../../common/Header';
 import Icon, { IconType } from '../../../common/Icon';
@@ -15,19 +12,8 @@ import DeleteQuizDialog from './DeleteQuizDialog';
 
 import classes from './style.module.scss';
 
-export default function QuizHeader({
-  className,
-  course,
-  quiz,
-  isDetailsPanelOpen,
-  dispatch,
-}: {
-  className?: string;
-  course: Course | null;
-  quiz: Quiz | null;
-  isDetailsPanelOpen: boolean;
-  dispatch: Dispatch<any>;
-}): ReactElement {
+export default function QuizHeader({ className }: { className?: string }): ReactElement {
+  const [{ course, quiz, isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
   const [showDeleteQuizDialog, setShowDeleteQuizDialog] = useState(false);
 
   const deleteQuiz = () => {

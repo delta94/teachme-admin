@@ -19,7 +19,7 @@ import QuizEditForm from '../../CourseEditorScreen/QuizEditForm';
 import classes from './playground.module.scss';
 
 export default function QuizEdit(): ReactElement {
-  const [{ course, activeDetailsItem, isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
+  const [{ course }, dispatch] = useCourseEditorContext();
   const [{ environment }] = useAppContext();
   const [courseId] = useState(0);
   const history = useHistory();
@@ -40,10 +40,6 @@ export default function QuizEdit(): ReactElement {
         <div className={classes['outline-demo']}>
           <CourseOutlineQuiz
             quiz={course?.quiz}
-            activeDetailsItem={activeDetailsItem}
-            isDetailsPanelOpen={isDetailsPanelOpen}
-            dispatch={dispatch}
-            course={course}
             // quizItemClick={({ type, data }) => {
             //   setQuizScreenType(type);
             //   setQuizScreenData(data);
@@ -52,11 +48,7 @@ export default function QuizEdit(): ReactElement {
         </div>
       )}
       {course?.quiz && Boolean(quizScreenType) && quizScreenData && (
-        <QuizEditForm
-          quizScreenData={quizScreenData}
-          quizScreenType={quizScreenType}
-          dispatch={dispatch}
-        />
+        <QuizEditForm quizScreenData={quizScreenData} quizScreenType={quizScreenType} />
       )}
     </div>
   );

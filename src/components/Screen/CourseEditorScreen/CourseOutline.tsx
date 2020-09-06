@@ -1,13 +1,10 @@
-import React, { Dispatch, ReactElement, useCallback, useMemo } from 'react';
+import React, { ReactElement } from 'react';
 import cc from 'classcat';
 
 import WMCard from '../../common/WMCard';
 import WMTabs, { WMTabPanel } from '../../common/WMTabs';
 
-import { ActionType } from '../../../providers/CourseEditorContext';
-import { Course } from '../../../walkme/data/courseBuild/course';
-import { ActiveDetailsItem } from '../../../providers/CourseEditorContext/course-editor-context.interface';
-import { Quiz } from '../../../walkme/data/courseBuild/quiz';
+import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import CourseOutlineTab from './CourseOutlineTab';
 import CourseSettingsTab from './CourseSettingsTab';
 import CourseOutlineDetailsPanel from './CourseOutlineDetailsPanel';
@@ -19,55 +16,31 @@ enum TabId {
   Settings = 'settings',
 }
 
-export default function CourseOutline({
-  isDetailsPanelOpen,
-  course,
-  activeDetailsItem,
-  isFetchingCourse,
-  quiz,
-  isUpdating,
-  envId,
-  dispatch,
-}: {
-  isDetailsPanelOpen: boolean;
-  course: Course | null;
-  activeDetailsItem: ActiveDetailsItem | null;
-  isFetchingCourse: boolean;
-  quiz: Quiz | null;
-  isUpdating: boolean;
-  envId: number;
-  dispatch: Dispatch<any>;
-}): ReactElement {
-  const closeDetailsPanel = useCallback(() => {
-    dispatch({ type: ActionType.CloseDetailsPanel });
-  }, [dispatch]);
+export default function CourseOutline(): ReactElement {
+  const [{ isDetailsPanelOpen }, dispatch] = useCourseEditorContext();
 
-  const tabs = useMemo(
-    () => [
-      {
-        id: TabId.CourseOutline,
-        title: 'Course Outline',
-        component: CourseOutlineTab,
-      },
-      {
-        id: TabId.Settings,
-        title: 'Settings',
-        component: CourseSettingsTab,
-        onClick: closeDetailsPanel,
-      },
-    ],
-    [closeDetailsPanel],
-  );
-
-  const onTabClick = useCallback(
-    (key: string) => {
-      const tabItem = tabs.find((tab) => tab.id === key);
-      if (tabItem && tabItem.onClick) {
-        tabItem.onClick();
-      }
+  const tabs = [
+    {
+      id: TabId.CourseOutline,
+      title: 'Course Outline',
+      content: <CourseOutlineTab />,
     },
-    [tabs],
-  );
+    {
+      id: TabId.Settings,
+      title: 'Settings',
+      content: <CourseSettingsTab />,
+      onClick: () => {
+        dispatch({ type: ActionType.CloseDetailsPanel });
+      },
+    },
+  ];
+
+  const onTabClick = (key: string) => {
+    const tabItem = tabs.find((tab) => tab.id === key);
+    if (tabItem && tabItem.onClick) {
+      tabItem.onClick();
+    }
+  };
 
   return (
     <>
@@ -82,29 +55,14 @@ export default function CourseOutline({
           defaultActiveKey={TabId.CourseOutline}
           onTabClick={onTabClick}
         >
-          {tabs.map(({ id, title, component: Component }) => (
+          {tabs.map(({ id, title, content }) => (
             <WMTabPanel tab={title} key={id}>
-              <Component
-                course={course}
-                isFetchingCourse={isFetchingCourse}
-                envId={envId}
-                quiz={quiz}
-                isUpdating={isUpdating}
-                activeDetailsItem={activeDetailsItem}
-                isDetailsPanelOpen={isDetailsPanelOpen}
-                dispatch={dispatch}
-              />
+              {content}
             </WMTabPanel>
           ))}
         </WMTabs>
       </WMCard>
-      <CourseOutlineDetailsPanel
-        course={course}
-        quiz={quiz}
-        isDetailsPanelOpen={isDetailsPanelOpen}
-        activeDetailsItem={activeDetailsItem}
-        dispatch={dispatch}
-      />
+      <CourseOutlineDetailsPanel />
     </>
   );
 }

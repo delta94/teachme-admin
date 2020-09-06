@@ -1,37 +1,26 @@
-import React, { Dispatch, ReactElement, useEffect, useRef } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 import cc from 'classcat';
 
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { useCourseEditorContext, ActionType } from '../../../../providers/CourseEditorContext';
 import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 import { QuizQuestion } from '../../../../walkme/data/courseBuild/quiz/question';
-import {
-  ActiveDetailsItem,
-  DetailsPanelSettingsType,
-} from '../../../../providers/CourseEditorContext/course-editor-context.interface';
+import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
 import WMCollapse from '../../../common/WMCollapse';
 import { QuizScreenType } from '../QuizEditForm/interface';
 import QuizHeader from '../QuizHeader';
 
-import { Course } from '../../../../walkme/data/courseBuild/course';
 import CourseQuestionList from './CourseQuestionList';
 import QuestionItem from './QuestionItem';
 import classes from './style.module.scss';
 
 export default function CourseOutlineQuiz({
-  course,
   quiz,
   isNew,
-  activeDetailsItem,
-  isDetailsPanelOpen,
-  dispatch,
 }: {
-  course: Course | null;
   quiz: Quiz;
   isNew?: boolean;
-  activeDetailsItem: ActiveDetailsItem | null;
-  isDetailsPanelOpen: boolean;
-  dispatch: Dispatch<any>;
 }): ReactElement {
+  const [{ activeDetailsItem }, dispatch] = useCourseEditorContext();
   const quizRef = useRef<HTMLDivElement>(null);
 
   const onInnerDrop = (e: any) => {
@@ -84,15 +73,7 @@ export default function CourseOutlineQuiz({
         classes['quiz-header'],
         { [classes['is-active']]: activeDetailsItem?.type === DetailsPanelSettingsType.Quiz },
       ])}
-      header={
-        <QuizHeader
-          className={classes['item-with-settings']}
-          course={course}
-          quiz={quiz}
-          isDetailsPanelOpen={isDetailsPanelOpen}
-          dispatch={dispatch}
-        />
-      }
+      header={<QuizHeader className={classes['item-with-settings']} />}
       ref={quizRef}
     >
       <QuestionItem

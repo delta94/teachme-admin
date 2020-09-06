@@ -1,9 +1,9 @@
-import React, { Dispatch, ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { Container } from 'react-smooth-dnd';
 import { ContentItem } from '@walkme/types';
 import cc from 'classcat';
 
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../../providers/CourseEditorContext/course-editor-context.interface';
 
 import TaskItem from '../TaskItem';
@@ -15,20 +15,20 @@ export interface ICourseItemsList {
   className?: string;
   onDrop?: any;
   taskItemProps?: any;
-  dispatch: Dispatch<any>;
   [key: string]: any;
 }
 
-function CourseItemsList({
+export default function CourseItemsList({
   items,
   onDrop,
   className,
   taskItemProps = {},
   isDisabled,
   isActive,
-  dispatch,
   ...otherProps
 }: ICourseItemsList): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
+
   const onOpenDetailsPanel = (item: ContentItem) => {
     dispatch({
       type: ActionType.OpenDetailsPanel,
@@ -65,5 +65,3 @@ function CourseItemsList({
     </div>
   );
 }
-
-export default React.memo(CourseItemsList);

@@ -1,31 +1,28 @@
-import React, { Dispatch, ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import cc from 'classcat';
 
 import { getSegments } from '../../../../walkme/screens';
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { useAppContext } from '../../../../providers/AppContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 
 import FormGroup from '../../../common/FormGroup';
 import WMSwitch from '../../../common/WMSwitch';
 import WMSelect, { WMSelectModeType } from '../../../common/WMSelect';
 import WMSkeleton from '../../../common/WMSkeleton';
 
-import { Course } from '../../../../walkme/data/courseBuild/course';
 import classes from './style.module.scss';
 
 const parseSegments = (segments: any[]): { label: string; value: number }[] =>
   segments.map(({ name, id }) => ({ label: name, value: id }));
 
-export default function CourseSettingsTab({
-  course,
-  isFetchingCourse,
-  envId,
-  dispatch,
-}: {
-  course: Course | null;
-  isFetchingCourse: boolean;
-  envId: number;
-  dispatch: Dispatch<any>;
-}): ReactElement {
+export default function CourseSettingsTab(): ReactElement {
+  const [
+    {
+      environment: { id: envId },
+    },
+    appDispatch,
+  ] = useAppContext();
+  const [{ course, isFetchingCourse }, dispatch] = useCourseEditorContext();
   const [allSegments, setAllSegments] = useState<any[]>([]);
   const [courseSegments, setCourseSegments] = useState<any[]>([]);
   const [isSegmentsUpdating, setIsSegmentsUpdating] = useState<boolean>(true);
