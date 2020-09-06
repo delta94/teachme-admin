@@ -131,11 +131,14 @@ function CoursesScreen({
 
       dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds: rowIds });
 
-      // onSelectAllRows behave as toggle therefor we set areAllRowsSelected to false
-      // while areAllRowsSelected is true and the user deselect row
-      areAllRowsSelected && setAreAllRowsSelected(false);
+      // onSelectAllRows behaves as a toggle, therefore when a user deselects a row we set areAllRowsSelected to false
+      // when a user selects a row we check to see if all rows are selected and if they are we set areAllRowsSelected to true
+      // returns prev state as default
+      setAreAllRowsSelected((prev) =>
+        prev ? false : rowIds.length === filteredCourses.length ?? prev,
+      );
     },
-    [areAllRowsSelected, selectedRows, selectedRowIds, dispatch],
+    [selectedRows, selectedRowIds, filteredCourses, dispatch],
   );
 
   const onSelectAllRows = useCallback(() => {
