@@ -43,6 +43,7 @@ async function ensureData(environmentId: number) {
       TypeName.Article,
       TypeName.SmartWalkThru,
       TypeName.Tag,
+      TypeName.Folder,
     ].map((type) => wmData.getData(type, environmentId)),
   );
   Resource.resetNewResources();

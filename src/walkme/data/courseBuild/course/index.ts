@@ -130,11 +130,11 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     const tagsToAdd = Array.from(this.segments).filter((tag) => !originalTags.includes(tag));
     const tagsToRemove = originalTags.filter((tag) => !this.segments.has(tag));
     await Promise.all([
-      ...tagsToAdd.map((tag) => walkme.data.tagItem(TypeName.Course, courseId, TypeId.Course, tag)),
+      ...tagsToAdd.map((tag) => walkme.data.tagItem(tag, TypeName.Course, courseId, TypeId.Course)),
       ...tagsToRemove.map(async (tag) => {
         const linkId = await getLinkId(TypeId.Course, courseId, tag);
         return (
-          linkId && walkme.data.removeTag(TypeName.Course, courseId, TypeId.Course, tag, linkId)
+          linkId && walkme.data.removeTag(tag, TypeName.Course, courseId, TypeId.Course, linkId)
         );
       }),
     ]);

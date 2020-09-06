@@ -29,7 +29,7 @@ export default {
   NEW_VIDEO_NAME: 'New Video',
   NEW_ARTICLE_NAME: 'New Article',
   NEW_RESOURCE_DESCRIPTION: '',
-  NEW_RESOURCE_URL: '',
+  NEW_RESOURCE_URL: 'https://example.com/',
   NEW_RESOURCE_HEIGHT: 60,
   NEW_RESOURCE_WIDTH: 60,
   NEW_RESOURCE_SIZE_UNIT: LightBoxSizeType.Percentage,

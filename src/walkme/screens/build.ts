@@ -18,7 +18,7 @@ export async function getItemsList(
   if (refresh) {
     wmData.refresh(consts.TEACHME_TYPES, environmentId);
   }
-  const nestedItems: Array<WalkMeDataItem> = await walkme.data.getFolders(environmentId);
+  const nestedItems: Array<WalkMeDataItem> = await wmData.getData(TypeName.Folder, environmentId);
   const items = await Promise.all(
     nestedItems.map((item) =>
       mapItem(item, TypeName.Folder, environmentId, { types: consts.TEACHME_TYPES }),
@@ -63,4 +63,3 @@ export async function getCourse(id: number, environmentId: number): Promise<Cour
 export async function getSegments(environmentId: number): Promise<Array<UISegment>> {
   return segments.getSegments(environmentId);
 }
-

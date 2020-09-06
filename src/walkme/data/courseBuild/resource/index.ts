@@ -12,6 +12,7 @@ import { INewResource, ILightbox } from '../../../models/resource';
 import { getGuid } from '../../services/guid';
 import defaults from '../defaults';
 import { getUniqueItemName } from '../../services/uniqueName';
+import { getDefaultFolder } from '../../services/wmData';
 
 export class Resource implements INewResource {
   public id: number;
@@ -78,10 +79,25 @@ export class Resource implements INewResource {
       Resource.newResources.map((r, i) => r.toDataModel(i)),
       TypeId.Content,
     );
+    const links: Promise<any>[] = [];
+    const defaultFolder = await getDefaultFolder(0);
+
     Resource.newResources.forEach((resource) => {
       resource.id = saved[resource.id].Id;
       resource.saved = true;
+
+      const linkPromise = walkme.data.addToFolder(
+        defaultFolder.Id,
+        TypeName.Content,
+        resource.id,
+        TypeId.Content,
+        -1,
+        { calculateOrderIndex: true },
+      );
+      links.push(linkPromise);
     });
+
+    await Promise.all(links);
     Resource.resetNewResources();
   }
 

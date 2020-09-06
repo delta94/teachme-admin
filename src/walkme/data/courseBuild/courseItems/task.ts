@@ -35,9 +35,9 @@ export class CourseTask implements BuildCourseTask {
       this.linkedItem = new Resource(this.type as TypeName.Video | TypeName.Article);
     }
 
-    const [item] =
-      [this.linkedItem?.toDataModel(_data.OrderIndex)] ??
-      getDataSync(_data.DeployableType, [_data.DeployableID]);
+    const [item] = this.linkedItem
+      ? [this.linkedItem.toDataModel(_data.OrderIndex)]
+      : getDataSync(_data.DeployableType, [_data.DeployableID]);
 
     if (!item)
       throw new Error(
