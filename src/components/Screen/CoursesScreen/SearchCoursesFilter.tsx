@@ -12,11 +12,13 @@ function SearchCoursesFilter({
   courses,
   coursesSearchValue,
   dispatch,
+  onSearchCourses,
 }: {
   disabled?: boolean;
   courses: Array<UICourse>;
   coursesSearchValue?: string;
   dispatch: Dispatch<any>;
+  onSearchCourses: (filteredCourseList: UICourse[]) => void;
 }): ReactElement {
   const onSearch = (searchValue: string) => {
     const newCourseList = courses.filter(({ title }: { title: string }) =>
@@ -28,6 +30,8 @@ function SearchCoursesFilter({
       coursesSearchValue: searchValue,
       courses: newCourseList,
     });
+
+    onSearchCourses(newCourseList);
   };
 
   return (
