@@ -1,7 +1,7 @@
-import React, { Dispatch, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
-import { ActionType } from '../../../providers/CourseEditorContext';
+import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
 import { getRandomNegativeNumber } from '../../../utils';
 
@@ -10,8 +10,6 @@ import { AddButton } from '../../common/buttons';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import { ButtonVariantEnum } from '../../common/WMButton';
 
-import { Course } from '../../../walkme/data/courseBuild/course';
-import { Quiz } from '../../../walkme/data/courseBuild/quiz';
 import classes from './style.module.scss';
 
 const options: IWMDropdownOption[] = [
@@ -59,21 +57,17 @@ const options: IWMDropdownOption[] = [
   },
 ];
 
-function ActionMenu({
+export default function ActionMenu({
   className,
   onActionSelected,
   isLoading,
-  course,
-  quiz,
-  dispatch,
 }: {
   className?: string;
   onActionSelected?: (selected: CourseItemType, id?: number) => void;
   isLoading?: boolean;
-  course: Course | null;
-  quiz: Quiz | null;
-  dispatch: Dispatch<any>;
 }): ReactElement {
+  const [{ course, quiz }, dispatch] = useCourseEditorContext();
+
   const onActionSelect = (selected: IWMDropdownOption) => {
     const { value } = selected;
     if (value === CourseItemType.Quiz) {
@@ -119,5 +113,3 @@ function ActionMenu({
     </WMDropdown>
   );
 }
-
-export default React.memo(ActionMenu);

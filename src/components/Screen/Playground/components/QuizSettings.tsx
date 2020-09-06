@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Divider } from 'antd';
 import cc from 'classcat';
 
@@ -9,16 +9,9 @@ import DetailsPanel from '../../../common/DetailsPanel';
 import Icon, { IconType } from '../../../common/Icon';
 import QuizSettingsForm from '../../CourseEditorScreen/QuizSettingsForm';
 
-import { Quiz } from '../../../../walkme/data/courseBuild/quiz';
 import classes from './playground.module.scss';
 
-export default function QuizSettings({
-  quiz,
-  dispatch,
-}: {
-  quiz: Quiz | null;
-  dispatch: Dispatch<any>;
-}): ReactElement {
+export default function QuizSettings(): ReactElement {
   const [courseId, setCourseId] = useState(0);
 
   return (
@@ -36,7 +29,7 @@ export default function QuizSettings({
           isOpen={Boolean(courseId)}
           onClose={() => setCourseId(0)}
         >
-          <QuizSettingsForm quiz={quiz} dispatch={dispatch} />
+          <QuizSettingsForm courseId={courseId} />
         </DetailsPanel>
       </div>
     </CourseEditorProvider>

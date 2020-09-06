@@ -43,12 +43,6 @@ export enum DetailsPanelSettingsType {
   Video = 'video',
 }
 
-export interface ActiveDetailsItem {
-  type: DetailsPanelSettingsType;
-  id: number;
-  item: any;
-}
-
 export interface IState {
   isFetchingItems: boolean;
   isFetchingItemsError: boolean;
@@ -65,7 +59,7 @@ export interface IState {
   refreshCourseOutline: boolean;
   courseOutlineSearchValue: string;
   isDetailsPanelOpen: boolean;
-  activeDetailsItem: ActiveDetailsItem | null;
+  activeDetailsItem: { type: DetailsPanelSettingsType; id: number; item: any } | null;
   hasChanges: boolean;
   isSavingCourse: boolean;
 }

@@ -1,69 +1,43 @@
-import React, {
-  ChangeEvent,
-  Dispatch,
-  MouseEvent,
-  ReactElement,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, MouseEvent, ReactElement, useRef, useState } from 'react';
 import cc from 'classcat';
 import { Input } from 'antd';
 
-import { Course } from '../../../../walkme/data/courseBuild/course';
-import { CourseLesson } from '../../../../walkme/data/courseBuild/courseItems/lesson';
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 import WMInput from '../../../common/WMInput';
 import WMButton from '../../../common/WMButton';
-import Icon, { IconType } from '../../../common/Icon';
 
+import Icon, { IconType } from '../../../common/Icon';
+import classes from './style.module.scss';
 import LessonDeleteButton from './LessonDeleteButton';
 
-import classes from './style.module.scss';
+export default function LessonEditableTitle({ lesson }: { lesson?: any }): ReactElement {
+  const [state, dispatch] = useCourseEditorContext();
 
-export default function LessonEditableTitle({
-  lesson,
-  course,
-  dispatch,
-}: {
-  lesson?: CourseLesson;
-  course: Course | null;
-  dispatch: Dispatch<any>;
-}): ReactElement {
   const inputTitle = useRef<Input>(null);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState(lesson?.title ?? '');
 
-  const setInputActive = useCallback(
-    (e: MouseEvent<HTMLDivElement>) => {
-      if (!inputTitle.current) return;
+  const setInputActive = (e: MouseEvent<HTMLDivElement>) => {
+    if (!inputTitle.current) return;
 
-      setInputValue(lesson?.title ?? '');
-      inputTitle.current.focus();
-      setShowInput(true);
-    },
-    [lesson?.title],
-  );
+    setInputValue(lesson?.title ?? '');
+    inputTitle.current.focus();
+    setShowInput(true);
+  };
 
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value),
-    [],
-  );
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
-  const onBlur = useCallback((e: any) => {
+  const onBlur = (e: any) => {
     inputTitle?.current?.blur();
     setShowInput(false);
-  }, []);
+  };
 
-  const onApprove = useCallback(
-    (e: any) => {
-      if (lesson) {
-        lesson.title = inputValue;
-      }
-      dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
-    },
-    [dispatch, inputValue, lesson],
-  );
+  const onApprove = (e: any) => {
+    if (lesson) {
+      lesson.title = inputValue;
+    }
+    dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
+  };
 
   return (
     <div className={cc([classes['editable-lesson-title']])}>
@@ -75,12 +49,7 @@ export default function LessonEditableTitle({
         >
           <Icon type={IconType.PencilSmall} className={classes['title-icon']} />
         </WMButton>
-        <LessonDeleteButton
-          lesson={lesson}
-          showInput={showInput}
-          course={course}
-          dispatch={dispatch}
-        />
+        <LessonDeleteButton lesson={lesson} showInput={showInput} />
       </div>
       <div className={cc([classes['input-wrapper'], { [classes['hidden']]: !showInput }])}>
         <WMInput

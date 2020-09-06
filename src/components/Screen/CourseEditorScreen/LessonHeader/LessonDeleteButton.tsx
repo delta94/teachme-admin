@@ -1,8 +1,7 @@
-import React, { Dispatch, ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import cc from 'classcat';
 
-import { Course } from '../../../../walkme/data/courseBuild/course';
-import { ActionType } from '../../../../providers/CourseEditorContext';
+import { ActionType, useCourseEditorContext } from '../../../../providers/CourseEditorContext';
 import WMButton from '../../../common/WMButton';
 
 import Icon, { IconType } from '../../../common/Icon';
@@ -12,31 +11,26 @@ import DeleteLessonDialog from './DeleteLessonDialog';
 export default function LessonDeleteButton({
   lesson,
   showInput,
-  course,
-  dispatch,
 }: {
   lesson?: any;
   showInput: boolean;
-  course: Course | null;
-  dispatch: Dispatch<any>;
 }): ReactElement {
+  const [{ course }, dispatch] = useCourseEditorContext();
   const [openDialog, setOpenDialog] = useState(false);
 
-  const deleteLesson = useCallback(() => {
+  const deleteLesson = () => {
     course?.items.removeItem(lesson);
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });
     setOpenDialog(false);
-  }, [course?.items?.removeItem, dispatch, lesson]);
+  };
 
-  const onClickDelete = useCallback(() => {
+  const onClickDelete = () => {
     if (lesson.childNodes.toArray().length > 0) {
       setOpenDialog(true);
     } else {
       deleteLesson();
     }
-  }, [deleteLesson, lesson.childNodes]);
-
-  const onClickCancel = useCallback(() => setOpenDialog(false), []);
+  };
 
   return (
     <>
@@ -46,7 +40,11 @@ export default function LessonDeleteButton({
       >
         <Icon type={IconType.Delete} className={classes['title-icon']} />
       </WMButton>
-      <DeleteLessonDialog open={openDialog} onCancel={onClickCancel} onConfirm={deleteLesson} />
+      <DeleteLessonDialog
+        open={openDialog}
+        onCancel={() => setOpenDialog(false)}
+        onConfirm={deleteLesson}
+      />
     </>
   );
 }
