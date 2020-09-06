@@ -10,6 +10,7 @@ import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
 import { WMSkeletonInput, WMSkeletonButton, WMSkeletonAvatar } from '../../common/WMSkeleton';
 import ScreenHeader, { IScreenHeader } from '../../common/ScreenHeader';
 import Icon, { IconType } from '../../common/Icon';
+import LastUpdated from '../../common/LastUpdated';
 
 import WMTag from '../../common/WMTag';
 import WMPopover from '../../common/WMPopover';
@@ -57,14 +58,17 @@ function CourseScreenHeader({ courseMetadata, ...otherProps }: ICourseScreenHead
         <div className={classes['course-details-title-section']}>
           {hasCourseData ? (
             <>
-              <Icon className={classes['course-details-icon']} type={IconType.SidebarCourses} />
-              <span className={classes['course-name']}>{courseMetadata?.title}</span>
-              {courseMetadata?.publishStatus !== undefined && (
-                <WMTag
-                  value={getPublishStatusLabel(courseMetadata.publishStatus)}
-                  color={getPublishStatusColor(courseMetadata.publishStatus)}
-                />
-              )}
+              <div className={classes['course-details-title-left']}>
+                <Icon className={classes['course-details-icon']} type={IconType.SidebarCourses} />
+                <span className={classes['course-name']}>{courseMetadata?.title}</span>
+                {courseMetadata?.publishStatus !== undefined && (
+                  <WMTag
+                    value={getPublishStatusLabel(courseMetadata.publishStatus)}
+                    color={getPublishStatusColor(courseMetadata.publishStatus)}
+                  />
+                )}
+                <LastUpdated />
+              </div>
               <WMButton
                 shape="round"
                 variant={ButtonVariantEnum.Secondary}

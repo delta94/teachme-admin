@@ -1,5 +1,4 @@
 import React, {
-  Key,
   useEffect,
   useCallback,
   MemoExoticComponent,
@@ -29,6 +28,7 @@ import ScreenHeader from '../../common/ScreenHeader';
 import WMCard from '../../common/WMCard';
 import WMTable from '../../common/WMTable';
 import SearchEmptyState from '../../common/WMEmpty/SearchEmptyState';
+import LastUpdated from '../../common/LastUpdated';
 
 import ShownCoursesIndicator from './ShownCoursesIndicator';
 import ProductionStatusActions from './ProductionStatusActions';
@@ -131,11 +131,12 @@ function CoursesScreen({
 
       dispatch({ type: ActionType.SetSelectedRows, courses, selectedRowIds: rowIds });
 
-      // onSelectAllRows behave as toggle therefor we set areAllRowsSelected to false
-      // while areAllRowsSelected is true and the user deselect row
-      areAllRowsSelected && setAreAllRowsSelected(false);
+      // onSelectAllRows behaves as a toggle, therefore when a user deselects a row we set areAllRowsSelected to false
+      // when a user selects a row we check to see if all rows are selected and if they are we set areAllRowsSelected to true
+      // returns prev state as default
+      setAreAllRowsSelected((prev) => (prev ? false : rowIds.length === filteredCourses.length));
     },
-    [areAllRowsSelected, selectedRows, selectedRowIds, dispatch],
+    [selectedRows, selectedRowIds, filteredCourses, dispatch],
   );
 
   const onSelectAllRows = useCallback(() => {
@@ -151,6 +152,25 @@ function CoursesScreen({
     setAreAllRowsSelected(shouldSelectAll);
   }, [areAllRowsSelected, filteredCourses, dispatch]);
 
+  // Using onSearchCourses to update the selectedRowIds according to filteredCourseList
+  const onSearchCourses = useCallback(
+    (filteredCourseList: UICourse[]) => {
+      const selectedCourses = areAllRowsSelected
+        ? filteredCourseList
+        : filteredCourseList.filter(({ id }) => selectedRowIds.includes(id));
+      const rowIds = filteredCourseList
+        .map(({ id }) => (areAllRowsSelected ? id : selectedRowIds.includes(id) ? id : null))
+        .filter((c) => Boolean(c));
+
+      dispatch({
+        type: ActionType.SetSelectedRows,
+        courses: selectedCourses,
+        selectedRowIds: rowIds,
+      });
+    },
+    [areAllRowsSelected, selectedRowIds, dispatch],
+  );
+
   const timeFilterProps = useMemo(() => ({ onDateRangeChange, dateRange: { from, to } }), [
     onDateRangeChange,
     from,
@@ -161,7 +181,14 @@ function CoursesScreen({
 
   return (
     <>
-      <ScreenHeader title="Courses" timeFilterProps={timeFilterProps} />
+      <ScreenHeader
+        title={
+          <div className={classes['courses-title']}>
+            Courses <LastUpdated />
+          </div>
+        }
+        timeFilterProps={timeFilterProps}
+      />
       <AnalyticsCharts
         summaryChartTitle="Users Started / Completed Courses"
         overview={overview as AllCoursesOverviewResponse}
@@ -232,6 +259,7 @@ function CoursesScreen({
                   disabled={disableActions}
                   courses={courses}
                   dispatch={dispatch}
+                  onSearchCourses={onSearchCourses}
                 />
                 <CreateButton />
               </ControlsWrapper>

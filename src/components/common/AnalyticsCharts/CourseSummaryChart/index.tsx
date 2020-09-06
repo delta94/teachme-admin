@@ -73,7 +73,7 @@ const CourseSummaryChart = React.memo(
               {legendData && (
                 <LegendContent
                   number={legendData.start_users}
-                  description={`${legendData.start_percentages}% of users with TeachMe access`}
+                  description={`${legendData.start_percentages ?? 0}% of users with TeachMe access`}
                 />
               )}
             </WMLegend>
@@ -86,7 +86,9 @@ const CourseSummaryChart = React.memo(
               {legendData && (
                 <LegendContent
                   number={legendData.completed_users}
-                  description={`${legendData.completed_percentages}% of users who started courses`}
+                  description={`${
+                    legendData.completed_percentages ?? 0
+                  }% of users who started courses`}
                 />
               )}
             </WMLegend>

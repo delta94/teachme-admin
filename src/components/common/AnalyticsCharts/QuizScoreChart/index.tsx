@@ -28,7 +28,7 @@ function QuizScoreChart({ overview, isLoading = false }: IQuizScoreData): ReactE
                 className={classes['course-average-chart']}
                 percent={average}
                 type={ProgressType.Circle}
-                format={() => average ?? '--'}
+                format={() => (isValidNumber(average) ? average : '--')}
                 width={80}
                 strokeWidth={10}
                 status={

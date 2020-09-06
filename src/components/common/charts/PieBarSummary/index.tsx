@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import moment from 'moment';
 
 import { isValidNumber } from '../../../../utils';
 
@@ -17,8 +18,8 @@ export default function PieBarSummary({
     <div className={classes['pie-bar-summary']}>
       {isValidNumber(value) ? (
         <>
-          <span className={classes['value']}>{value}</span>
-          {unit && <span className={classes['unit']}>{unit}</span>}
+          <span className={classes['value']}>{moment.duration(value, 'hours').humanize()}</span>
+          {/* {unit && <span className={classes['unit']}>{unit}</span>} */}
           {text && <span className={classes['text']}>{text}</span>}
         </>
       ) : (

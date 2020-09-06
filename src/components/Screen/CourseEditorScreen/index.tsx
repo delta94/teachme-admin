@@ -69,6 +69,7 @@ export default function CourseEditorScreen(): ReactElement {
       <CourseEditorHeader
         course={course}
         courseId={courseId}
+        isValid={course ? course?.isValid() : true}
         isFetchingCourse={isFetchingCourse}
         hasChanges={hasChanges}
         isSavingCourse={isSavingCourse}

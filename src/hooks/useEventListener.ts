@@ -6,6 +6,7 @@ export default function useEventListener(
   eventName: string,
   handler: (e: Event) => void,
   element = window,
+  capture?: boolean,
 ) {
   // Create a ref that stores handler
   const savedHandler = useRef<any>(null);
@@ -29,12 +30,12 @@ export default function useEventListener(
       const eventListener = (event: Event) => savedHandler.current(event);
 
       // Add event listener
-      element.addEventListener(eventName, eventListener);
+      element.addEventListener(eventName, eventListener, capture);
 
       // Remove event listener on cleanup
       // eslint-disable-next-line consistent-return
       return () => {
-        element.removeEventListener(eventName, eventListener);
+        element.removeEventListener(eventName, eventListener, capture);
       };
     },
     [eventName, element], // Re-run if eventName or element changes

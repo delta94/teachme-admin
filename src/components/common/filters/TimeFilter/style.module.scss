@@ -31,4 +31,8 @@
       }
     }
   }
+
+  &.closed-by-scroll {
+    display: none;
+  }
 }
