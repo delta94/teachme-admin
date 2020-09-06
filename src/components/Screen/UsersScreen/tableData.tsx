@@ -12,6 +12,7 @@ import {
   StatusDotCell,
   SubtextCell,
 } from '../../common/tableCells';
+import WMPopover from '../../common/WMPopover';
 
 import classes from './style.module.scss';
 
@@ -28,7 +29,9 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       onClick: () => onClick(col),
     }),
     render: (value: string): ReactElement => (
-      <TextCell className={classes['user-cell']} value={value} />
+      <WMPopover content={value}>
+        <TextCell className={classes['user-cell']} value={value} />
+      </WMPopover>
     ),
   },
   {
@@ -39,7 +42,9 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       onClick: () => onClick(col),
     }),
     render: (value: string): ReactElement => (
-      <TextCell className={classes['course-name-cell']} value={value} />
+      <WMPopover content={value}>
+        <TextCell className={classes['course-name-cell']} value={value} />
+      </WMPopover>
     ),
   },
   {
