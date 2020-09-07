@@ -1,5 +1,3 @@
-@import 'src/styles/mixins';
-
 .users-screen {
   min-width: min-content;
 
@@ -63,13 +61,36 @@
           max-height: var(--table-body-height) !important;
         }
 
-        .user-cell {
-          font-weight: 600;
+        // Hides `thead` scrollbar
+        :global(.ant-table-cell-scrollbar) {
+          box-shadow: none;
         }
 
-        .user-cell,
-        .course-name-cell {
-          @include ellipsis;
+        // Resets relevant 'antd' `table` columns width
+        colgroup col:not(:first-child):not(:nth-child(2)):not(:last-child) {
+          width: unset !important;
+          min-width: 0 !important;
+        }
+
+        .started-cell,
+        .result-cell {
+          min-width: 13%;
+          width: 13%;
+        }
+
+        .completed-cell,
+        .duration-cell {
+          min-width: 14.5%;
+          width: 14.5%;
+        }
+
+        .attempts-cell {
+          min-width: 15.5%;
+          width: 15.5%;
+        }
+
+        .user-cell {
+          font-weight: 600;
         }
       }
     }

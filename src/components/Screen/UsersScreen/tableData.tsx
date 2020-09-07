@@ -12,7 +12,6 @@ import {
   StatusDotCell,
   SubtextCell,
 } from '../../common/tableCells';
-import WMPopover from '../../common/WMPopover';
 
 import classes from './style.module.scss';
 
@@ -29,9 +28,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
       onClick: () => onClick(col),
     }),
     render: (value: string): ReactElement => (
-      <WMPopover content={value}>
-        <TextCell className={classes['user-cell']} value={value} />
-      </WMPopover>
+      <TextCell className={classes['user-cell']} value={value} hasPopover />
     ),
   },
   {
@@ -41,17 +38,13 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
     }),
-    render: (value: string): ReactElement => (
-      <WMPopover content={value}>
-        <TextCell className={classes['course-name-cell']} value={value} />
-      </WMPopover>
-    ),
+    render: (value: string): ReactElement => <TextCell value={value} hasPopover />,
   },
   {
     title: 'Started',
     dataIndex: UsersColumn.STARTED_DATE,
     sorter: true,
-    width: '13%',
+    className: classes['started-cell'],
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
     }),
@@ -66,7 +59,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     title: 'Completed',
     dataIndex: UsersColumn.COMPLETED_DATE,
     sorter: true,
-    width: '14.5%',
+    className: classes['completed-cell'],
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
     }),
@@ -84,7 +77,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
   {
     title: 'Time to Complete',
     dataIndex: UsersColumn.TIME_TO_COMPLETE,
-    width: '14.5%',
+    className: classes['duration-cell'],
     render: (value: string): ReactElement =>
       value ? (
         <NumberCell value={moment.duration(value, 'milliseconds').humanize()} />
@@ -97,7 +90,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     dataIndex: UsersColumn.QUIZ_RESULT,
     align: 'right',
     sorter: true,
-    width: '11%',
+    className: classes['result-cell'],
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
     }),
@@ -113,7 +106,7 @@ export const getColumns = (onClick: (col: ColumnType<any>) => void): ColumnsType
     dataIndex: UsersColumn.QUIZ_ATTEMPTS,
     align: 'right',
     sorter: true,
-    width: '15.5%',
+    className: classes['attempts-cell'],
     onHeaderCell: (col) => ({
       onClick: () => onClick(col),
     }),
