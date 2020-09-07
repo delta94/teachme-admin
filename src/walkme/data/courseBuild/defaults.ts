@@ -1,4 +1,4 @@
-import { QuestionType } from '@walkme/types';
+import { QuestionType, LightBoxSizeType, ResourcePlayMode } from '@walkme/types';
 
 export default {
   NEW_ITEM_ID: -1,
@@ -26,4 +26,12 @@ export default {
   QUIZ_POSITION: 8,
   COURSE_NAME: 'Untitled Course',
   NEW_LESSON_NAME: 'New Lesson',
+  NEW_VIDEO_NAME: 'New Video',
+  NEW_ARTICLE_NAME: 'New Article',
+  NEW_RESOURCE_DESCRIPTION: '',
+  NEW_RESOURCE_URL: 'https://example.com/',
+  NEW_RESOURCE_HEIGHT: 60,
+  NEW_RESOURCE_WIDTH: 60,
+  NEW_RESOURCE_SIZE_UNIT: LightBoxSizeType.Percentage,
+  NEW_RESOURCE_OPEN_TARGET: ResourcePlayMode.LightBox,
 };

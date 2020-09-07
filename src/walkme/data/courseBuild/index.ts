@@ -2,6 +2,7 @@ import { Course } from './course';
 import { WalkMeDataNewCourse, TypeName } from '@walkme/types';
 import * as wmData from '../services/wmData';
 import { CourseNotFoundError } from '../../models/course';
+import { Resource } from './resource';
 
 export * from './course';
 
@@ -42,6 +43,8 @@ async function ensureData(environmentId: number) {
       TypeName.Article,
       TypeName.SmartWalkThru,
       TypeName.Tag,
+      TypeName.Folder,
     ].map((type) => wmData.getData(type, environmentId)),
   );
+  Resource.resetNewResources();
 }
