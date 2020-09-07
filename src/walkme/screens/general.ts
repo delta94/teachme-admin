@@ -72,6 +72,10 @@ export function logout() {
   walkme.auth.logout();
 }
 
+export function setImpersonatePWCallback(callback: () => Promise<string>) {
+  walkme.auth.setImpersonatePWCallback(callback);
+}
+
 /*
  * Emits data events, e.g. last_update_time
  */
