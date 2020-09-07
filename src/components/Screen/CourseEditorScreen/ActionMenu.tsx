@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react';
+import { TypeName } from '@walkme/types';
 
+import { CourseLesson } from '../../../walkme/data/courseBuild/courseItems/lesson';
+import { CourseTask } from '../../../walkme/data/courseBuild/courseItems/task';
 import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
 import { useCourseEditorContext, ActionType } from '../../../providers/CourseEditorContext';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
@@ -25,7 +28,7 @@ const options: IWMDropdownOption[] = [
   },
   {
     id: 1,
-    skip: true, // TODO: remove this property when the feature is ready
+    //skip: true, // TODO: remove this property when the feature is ready
     value: CourseItemType.Article,
     label: (
       <div className={classes['option']}>
@@ -36,7 +39,7 @@ const options: IWMDropdownOption[] = [
   },
   {
     id: 2,
-    skip: true, // TODO: remove this property when the feature is ready
+    //skip: true, // TODO: remove this property when the feature is ready
     value: CourseItemType.Video,
     label: (
       <div className={classes['option']}>
@@ -63,7 +66,7 @@ export default function ActionMenu({
   isLoading,
 }: {
   className?: string;
-  onActionSelected?: (selected: CourseItemType, id?: number) => void;
+  onActionSelected?: ({ selectedType, item }: { selectedType: CourseItemType; item?: any }) => void;
   isLoading?: boolean;
 }): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
@@ -77,15 +80,24 @@ export default function ActionMenu({
         type: ActionType.OpenDetailsPanel,
         activeDetailsItem: { type: DetailsPanelSettingsType.Quiz, id: quiz?.id ?? 0, item: quiz },
       });
-      onActionSelected && onActionSelected(CourseItemType.Quiz);
+      onActionSelected && onActionSelected({ selectedType: CourseItemType.Quiz });
     } else {
       // Add new lesson | article | video
-      const newResource = course?.items.addNewItem();
-      if (newResource) {
-        const newResourceId = getRandomNegativeNumber();
-        newResource.id = newResourceId;
-        onActionSelected && onActionSelected(value as CourseItemType, newResourceId);
+      const newResourceId = getRandomNegativeNumber();
+      let newResource: CourseLesson | CourseTask | undefined;
+
+      if (value === CourseItemType.Lesson) {
+        newResource = course?.items.addNewItem() as CourseLesson;
+      } else {
+        newResource = course?.items.addNewItem(0, {
+          type: value as TypeName,
+          id: newResourceId,
+        }) as CourseTask;
       }
+
+      newResource &&
+        onActionSelected &&
+        onActionSelected({ selectedType: value as CourseItemType, item: newResource });
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });

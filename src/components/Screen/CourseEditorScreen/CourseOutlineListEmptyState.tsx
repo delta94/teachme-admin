@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 
+import { CourseLesson } from '../../../walkme/data/courseBuild/courseItems/lesson';
 import { CourseItemType } from '../../../interfaces/course.interfaces';
+import { CourseTask } from '../../../walkme/data/courseBuild/courseItems/task';
 
 import WMEmpty from '../../common/WMEmpty';
 import Icon, { IconType } from '../../common/Icon';
@@ -14,7 +16,13 @@ export default function CourseOutlineListEmptyState({
 }: {
   className?: string;
   containerClassName?: string;
-  onActionSelected?: (selected: CourseItemType, lessonId?: number | undefined) => void;
+  onActionSelected?: ({
+    selectedType,
+    item,
+  }: {
+    selectedType: CourseItemType;
+    item?: CourseLesson | CourseTask;
+  }) => void;
 }): ReactElement {
   return (
     <WMEmpty

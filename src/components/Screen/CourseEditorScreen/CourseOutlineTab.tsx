@@ -1,10 +1,13 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 
+import { Resource } from '../../../walkme/data/courseBuild/resource';
+import { CourseLesson } from '../../../walkme/data/courseBuild/courseItems/lesson';
 import { useAppContext } from '../../../providers/AppContext';
 import { ActionType, useCourseEditorContext } from '../../../providers/CourseEditorContext';
 import { DetailsPanelSettingsType } from '../../../providers/CourseEditorContext/course-editor-context.interface';
 
 import { CourseItemType } from '../../../interfaces/course.interfaces';
+import { CourseTask } from '../../../walkme/data/courseBuild/courseItems/task';
 
 import WMSkeleton from '../../common/WMSkeleton';
 
@@ -36,23 +39,37 @@ export default function CourseOutlineTab(): ReactElement {
   const { isFetchingCourse, course, quiz /* , courseOutlineSearchValue */ } = state;
   const [newQuizAdded, setNewQuizAdded] = useState(false);
   const [newLessonId, setNewLessonId] = useState<number>();
-  const [newResource, setNewResource] = useState<INewResource>();
+  const [newResource, setNewResource] = useState<Resource>();
 
   const onItemClick = (item: any) => {
+    console.log(item);
+    const type =
+      item.id > 0
+        ? DetailsPanelSettingsType.Item
+        : item.type === CourseItemType.Article
+        ? DetailsPanelSettingsType.Article
+        : DetailsPanelSettingsType.Video;
+
     dispatch({
       type: ActionType.OpenDetailsPanel,
-      activeDetailsItem: { type: DetailsPanelSettingsType.Item, id: item.id, item },
+      activeDetailsItem: { type, id: item.id, item },
     });
   };
 
-  const onActionSelected = (selectedType: CourseItemType, id?: number) => {
+  const onActionSelected = ({
+    selectedType,
+    item,
+  }: {
+    selectedType: CourseItemType;
+    item?: any;
+  }) => {
     if (selectedType === CourseItemType.Quiz) {
       setNewQuizAdded(true);
 
       // reset newQuizAdded
       setTimeout(() => setNewQuizAdded(false), 200);
     } else if (selectedType === CourseItemType.Lesson) {
-      id && setNewLessonId(id);
+      item?.id && setNewLessonId(item.id);
 
       // reset newLessonId
       setTimeout(() => setNewLessonId(undefined), 200);
@@ -63,21 +80,21 @@ export default function CourseOutlineTab(): ReactElement {
         ? DetailsPanelSettingsType.Article
         : DetailsPanelSettingsType.Video;
 
-      if (id) {
+      if (item?.id) {
         const newResourceData = {
           type: panelType,
-          id,
-          item: isBaseResource ? initialNewResourceBaseData : initialNewVideoData,
+          id: item.id,
+          item: (item as CourseTask).linkedItem,
         };
 
-        setNewResource({ ...newResourceData, type: selectedType as NewResourceType });
+        setNewResource((item as CourseTask).linkedItem);
 
         // reset newLessonId
         setTimeout(() => setNewLessonId(undefined), 200);
 
         dispatch({
           type: ActionType.OpenDetailsPanel,
-          activeDetailsItem: newResourceData,
+          activeDetailsItem: { ...newResourceData, type: panelType },
         });
       }
     }

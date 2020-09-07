@@ -23,7 +23,7 @@ export class Resource implements INewResource {
   public type: ResourceType;
   public openTarget: ResourcePlayMode;
   public autoplay?: boolean;
-  public videoPlaerParameters?: string;
+  public videoPlayerParameters?: string;
   public saved = false;
 
   public static newResources: Resource[] = [];
