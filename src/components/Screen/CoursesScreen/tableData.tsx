@@ -4,7 +4,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { SortableHandle } from 'react-sortable-hoc';
 
 import { UICourse, PublishStatus } from '../../../walkme/data';
-import { getPublishStatusColor, getPublishStatusLabel } from '../../../utils';
+import { getPublishStatusColor, getPublishStatusLabel, isValidNumber } from '../../../utils';
 
 import {
   DashCell,
@@ -116,8 +116,10 @@ export const getColumns = (onSelectAllRows: () => void): ColumnsType<any> => [
     dataIndex: 'avg_quiz_score',
     align: 'right',
     render: (value: number, { avg_quiz_score, quiz_passed }: UICourse): ReactElement => (
-      <DashCell value={avg_quiz_score === 0 ? undefined : avg_quiz_score}>
-        {avg_quiz_score && <StatusDotCell value={avg_quiz_score} passed={quiz_passed} />}
+      <DashCell value={isValidNumber(avg_quiz_score) ? 5 : undefined}>
+        {isValidNumber(avg_quiz_score) && (
+          <StatusDotCell value={avg_quiz_score ?? 0} passed={quiz_passed} />
+        )}
       </DashCell>
     ),
     shouldCellUpdate: () => false,
