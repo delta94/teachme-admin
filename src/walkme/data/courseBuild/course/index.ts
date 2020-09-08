@@ -8,6 +8,7 @@ import {
   TypeId,
   WalkMeDataCourseNewItem,
   WalkMeDataQuiz,
+  WalkMeNewLink,
 } from '@walkme/types';
 import walkme from '@walkme/editor-sdk';
 import * as itemsData from '../courseItems/index';
@@ -21,6 +22,8 @@ import * as quiz from '../quiz';
 import { newDataModel } from './dataModel';
 import { ITypeIdQueriable } from '../itemsContainer';
 import { getCourseSegmentsSync, getLinkId } from '../../services/segments';
+import { Resource } from '../resource';
+import { isUITask } from '../courseItems/task';
 
 export type CourseOptions = {
   light: boolean;
@@ -58,6 +61,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
   }
 
   async save(): Promise<void> {
+    await Resource.saveAll();
     const lessonsData = this.items.toDataModel().filter(isLesson) as Array<WalkMeDataNewLesson>;
     const lessons: Array<WalkMeDataLesson> = await walkme.data.saveContent(
       TypeName.Lesson,
@@ -65,9 +69,9 @@ export class Course implements BuildCourse, ITypeIdQueriable {
       TypeId.Lesson,
     );
     const courseData = this.toDataModel();
-    courseData.LinkedDeployables = this.items
-      .toArray()
-      .map((item, index) => createLink(item, index));
+    courseData.LinkedDeployables = this.items.toArray().map<WalkMeNewLink>((item, index) => {
+      return isUITask(item) ? item.toDataModel(index) : createLink(item, index);
+    });
     courseData.LinkedDeployables.filter((item) => item.DeployableType == TypeId.Lesson).forEach(
       (item) => {
         item.DeployableID = lessons[item.DeployableID]?.Id ?? item.DeployableID;
@@ -75,7 +79,7 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     );
     const savedCourse = await walkme.data.saveContent(TypeName.Course, courseData, TypeId.Course);
     await this.saveTags(savedCourse.Id);
-    await wmData.refresh([TypeName.Course, TypeName.Lesson]);
+    await wmData.refresh([TypeName.Course, TypeName.Lesson, TypeName.Content]);
     wmData.refresh([TypeName.Tag]);
     this.map(savedCourse);
   }
@@ -128,11 +132,11 @@ export class Course implements BuildCourse, ITypeIdQueriable {
     const tagsToAdd = Array.from(this.segments).filter((tag) => !originalTags.includes(tag));
     const tagsToRemove = originalTags.filter((tag) => !this.segments.has(tag));
     await Promise.all([
-      ...tagsToAdd.map((tag) => walkme.data.tagItem(TypeName.Course, courseId, TypeId.Course, tag)),
+      ...tagsToAdd.map((tag) => walkme.data.tagItem(tag, TypeName.Course, courseId, TypeId.Course)),
       ...tagsToRemove.map(async (tag) => {
         const linkId = await getLinkId(TypeId.Course, courseId, tag);
         return (
-          linkId && walkme.data.removeTag(TypeName.Course, courseId, TypeId.Course, tag, linkId)
+          linkId && walkme.data.removeTag(tag, TypeName.Course, courseId, TypeId.Course, linkId)
         );
       }),
     ]);

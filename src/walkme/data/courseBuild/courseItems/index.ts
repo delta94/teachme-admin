@@ -19,7 +19,7 @@ function isLessonData<TValue>(value: TValue): value is TValue {
   return !value || !(value as any).type;
 }
 
-export function isLesson<TValue>(value: TValue): value is TValue {
+export function isLesson(value: CourseChild | CourseChildData): value is CourseLesson {
   return (value as any).LinkedDeployables != null;
 }
 
@@ -38,7 +38,7 @@ function getCourseChildItem(data: CourseChildData): CourseChild {
   if (isLesson(data)) {
     return new CourseLesson(data as WalkMeDataNewLesson);
   }
-  return new CourseTask(data);
+  return new CourseTask(data as WalkMeDataNewCourseTask);
 }
 
 function getNewCourseItem(index: number, newItemData?: CourseChildNewItemData): CourseChildData {

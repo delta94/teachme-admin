@@ -13,7 +13,7 @@ export async function getData(
   light?: boolean,
 ): Promise<Array<WalkMeDataItem>> {
   if (!data[type]) {
-    data[type] = walkme.data.geContentMetadata(type, environmentId);
+    data[type] = getByType(type, environmentId);
   }
   const items = (await data[type]) as Array<WalkMeDataItem>;
   syncData[getTypeId(type)] = items;
@@ -49,4 +49,21 @@ export async function refresh(types: Array<TypeName>, environmentId: number = 0)
 export function clear() {
   data = {};
   syncData = {};
+}
+
+function getByType(type: TypeName, environmentId: number) {
+  switch (type) {
+    case TypeName.Folder:
+      return walkme.data.getFolders(environmentId);
+    default:
+      return walkme.data.geContentMetadata(type, environmentId);
+  }
+}
+
+export async function getDefaultFolder(environmentId: number): Promise<WalkMeDataItem> {
+  const folders = await getData(TypeName.Folder, environmentId);
+  const defaultFolder = folders.find((folder) => folder.Settings.isDefaultFolder);
+  if (!defaultFolder) throw new Error('Unable to find users default folder');
+
+  return defaultFolder;
 }
