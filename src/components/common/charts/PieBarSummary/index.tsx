@@ -9,13 +9,13 @@ export default function PieBarSummary({
   unit,
   text,
 }: {
-  value?: number;
+  value?: number | string;
   unit?: string;
   text?: string;
 }): ReactElement {
   return (
     <div className={classes['pie-bar-summary']}>
-      {isValidNumber(value) ? (
+      {isValidNumber(value) || typeof value === 'string' ? (
         <>
           <span className={classes['value']}>{value}</span>
           {unit && <span className={classes['unit']}>{unit}</span>}

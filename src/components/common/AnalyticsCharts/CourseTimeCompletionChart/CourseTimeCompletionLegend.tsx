@@ -8,7 +8,7 @@ export default function AvgCompletionTimeLegend({
 }: IPieBarLegendContent): ReactElement {
   return (
     <>
-      <b>{barValue}%</b> {barLegend}
+      <b>{barValue}</b> {barLegend}
     </>
   );
 }
