@@ -24,3 +24,4 @@ async function getResponseBody(res: Response): Promise<any> {
     return await res.clone().text();
   }
 }
+
