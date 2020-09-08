@@ -18,7 +18,7 @@ export default function PieBarSummary({
     <div className={classes['pie-bar-summary']}>
       {isValidNumber(value) ? (
         <>
-          <span className={classes['value']}>{moment.duration(value, 'hours').humanize()}</span>
+          <span className={classes['value']}>{moment.duration(value, 'hours')}</span>
           {/* {unit && <span className={classes['unit']}>{unit}</span>} */}
           {text && <span className={classes['text']}>{text}</span>}
         </>
