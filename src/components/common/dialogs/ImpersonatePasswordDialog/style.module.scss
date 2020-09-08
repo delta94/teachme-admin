@@ -1,0 +1,16 @@
+.impersonate-password-dialog {
+  .impersonate-password-input {
+    width: 100%;
+    color: var(--neutral900);
+    font-family: var(--font-primary);
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    line-height: 20px;
+    font-size: 14px;
+
+    ::placeholder {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
