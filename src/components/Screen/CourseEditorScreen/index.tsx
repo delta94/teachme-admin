@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 
 import { useAppContext } from '../../../providers/AppContext';
 import {
@@ -25,6 +25,9 @@ export default function CourseEditorScreen(): ReactElement {
   const [{ isUpdating, environment }] = useAppContext();
   const { courseId } = useParams();
   const history = useHistory();
+  // key (locationKey) is used to reload this page when the user is already on this page
+  // and they click on the 'new course' button
+  const { key: locationKey } = useLocation();
 
   useEffect(() => {
     if (isUpdating) return;
@@ -33,7 +36,7 @@ export default function CourseEditorScreen(): ReactElement {
     fetchCourse(dispatch, courseId, environment.id, history);
 
     return () => dispatch({ type: ActionType.ResetCourseEditor });
-  }, [dispatch, courseId, environment.id, history, isUpdating]);
+  }, [dispatch, courseId, environment.id, history, isUpdating, locationKey]);
 
   const onCourseTitleBlur = (courseTitle: string) => {
     if (course) {
