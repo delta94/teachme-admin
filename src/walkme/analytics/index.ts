@@ -3,4 +3,4 @@ export * from './courseOutline';
 export * from './users';
 export * from './courseOverviewPanels';
 
-export { DataEvents, setSystemGuid } from './endpoint';
+export { DataEvents, setSystemId } from './endpoint';

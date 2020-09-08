@@ -39,8 +39,8 @@ export async function getSystemData() {
   return walkme.system.getSystemData();
 }
 
-export function setSystemGuid(guid: string) {
-  analytics.setSystemGuid(guid);
+export function setSystemId(id: number) {
+  analytics.setSystemId(id);
 }
 
 /**
