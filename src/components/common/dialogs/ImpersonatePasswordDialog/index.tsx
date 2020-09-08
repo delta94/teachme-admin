@@ -9,6 +9,7 @@ import classes from './style.module.scss';
 
 export interface IImpersonatePasswordDialog extends IWMConfirmationDialogWrapper {
   value?: string;
+  afterClose: () => void;
 }
 
 export default function ImpersonatePasswordDialog({
@@ -16,6 +17,7 @@ export default function ImpersonatePasswordDialog({
   onCancel,
   onConfirm,
   value,
+  afterClose,
 }: IImpersonatePasswordDialog): ReactElement {
   const [localValue, setLocalValue] = useState(value);
 
@@ -41,7 +43,8 @@ export default function ImpersonatePasswordDialog({
       onConfirm={() => onConfirmHandle(localValue)}
       confirmLabel="OK"
       className={classes['impersonate-password-dialog']}
-      zIndex={1000}
+      destroyOnClose={true}
+      afterClose={afterClose}
     >
       <Input
         className={classes['impersonate-password-input']}

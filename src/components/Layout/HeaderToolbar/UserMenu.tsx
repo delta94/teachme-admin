@@ -19,11 +19,13 @@ export default function UserMenu({
   buttonClassName?: string;
 }): ReactElement {
   const [showImpersonate, setShowImpersonate] = useState(false);
+  const [renderImpersonate, setRenderImpersonate] = useState(false);
   const [showImpersonatePassword, setShowImpersonatePassword] = useState(false);
-  const [impersonatePasswordPromise, setImpersonatePasswordPromise] = useState({
-    resolve(value?: string) {},
-    reject() {},
-  });
+  const [impersonatePasswordPromise, setImpersonatePasswordPromise] = useState<{
+    resolve(value?: string): void;
+    reject(): void;
+  }>();
+
   const [appState] = useAppContext();
   const { user } = appState;
   const { originalUser } = appState;
@@ -53,6 +55,7 @@ export default function UserMenu({
   };
 
   const getImpersonatePassword = async (): Promise<string> => {
+    setRenderImpersonate(true);
     setShowImpersonatePassword(true);
     return await new Promise((resolve, reject) => {
       setImpersonatePasswordPromise({ resolve, reject });
@@ -73,17 +76,20 @@ export default function UserMenu({
         onCancel={() => setShowImpersonate(false)}
         onConfirm={handleImpersonate}
       />
-      <ImpersonatePasswordDialog
-        open={showImpersonatePassword}
-        onCancel={() => {
-          setShowImpersonatePassword(false);
-          impersonatePasswordPromise.reject();
-        }}
-        onConfirm={(password) => {
-          setShowImpersonatePassword(false);
-          impersonatePasswordPromise.resolve(password);
-        }}
-      ></ImpersonatePasswordDialog>
+      {renderImpersonate && (
+        <ImpersonatePasswordDialog
+          open={showImpersonatePassword}
+          onCancel={() => {
+            setShowImpersonatePassword(false);
+            impersonatePasswordPromise?.reject();
+          }}
+          onConfirm={(password) => {
+            setShowImpersonatePassword(false);
+            impersonatePasswordPromise?.resolve(password);
+          }}
+          afterClose={() => setRenderImpersonate(false)}
+        />
+      )}
     </>
   );
 }
