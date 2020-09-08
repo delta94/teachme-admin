@@ -8,6 +8,7 @@ import { IWMDropdownOption } from '../../components/common/WMDropdown';
 import { defaultDateRange, dateRangeLocalStorageKey } from '../../utils';
 
 import { ActionType, IState, IAction } from './app-context.interface';
+import { setSystemGuid } from '../../walkme';
 
 export const initialState = {
   screenProvider: null,
@@ -52,6 +53,8 @@ export const reducer = produce(
         break;
       case ActionType.SetSystem:
         draft.system = action.system ?? initialState.system;
+        // @ts-ignore
+        setSystemGuid((draft.system as SystemData).systemGuid);
         break;
       case ActionType.SetSystems:
         draft.systems = action.systems ?? initialState.systems;

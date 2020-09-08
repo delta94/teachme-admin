@@ -21,3 +21,5 @@ export interface AnalyticsResponse {
   data: any;
   error?: string;
 }
+
+export const { setSystemGuid } = endpoint;

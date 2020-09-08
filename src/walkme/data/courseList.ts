@@ -7,6 +7,7 @@ import { join } from '../utils';
 import { notEmpty } from '../utils';
 import { PublishStatus } from '../models/course';
 import { getPublishStatus } from './courseMetadata';
+import * as wmData from './services/wmData';
 
 export { PublishStatus };
 export interface UICourse {
@@ -27,7 +28,7 @@ export async function getCourseList(
   to: string,
 ): Promise<Array<UICourse>> {
   const [coursesMetadata, coursesData] = await Promise.all([
-    walkme.data.getContent(TypeName.Course, environmentId),
+    wmData.getData(TypeName.Course, environmentId),
     getCourseListData(environmentId, from, to),
   ]);
   const mergedData = join(coursesMetadata as WalkMeDataCourse[], coursesData, 'Id', 'course_id');
