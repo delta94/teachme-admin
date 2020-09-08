@@ -61,6 +61,7 @@ export class CourseTask implements BuildCourseTask {
     return {
       ...this._data,
       DeployableID: id,
+      DeployableType: Math.abs(this._data.DeployableType),
       Settings: {
         cmplType: this.properties.completionType,
       },

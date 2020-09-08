@@ -128,6 +128,8 @@ export function getTypeName(type: number) {
       return TypeName.Survey;
     case TypeId.Category:
       return TypeName.Category;
+    case -TypeId.Content:
+      return TypeName.Video;
     case TypeId.Content:
       return TypeName.Content;
     case TypeId.Shuttle:
@@ -161,7 +163,7 @@ export function getTypeName(type: number) {
 
 const typeToTypId = {
   [TypeName.SmartTipSet]: TypeId.SmartTipSet,
-  [TypeName.Video]: TypeId.Content,
+  [TypeName.Video]: -TypeId.Content,
   [TypeName.Article]: TypeId.Content,
   [TypeName.Content]: TypeId.Content,
   [TypeName.Launcher]: TypeId.Launcher,
