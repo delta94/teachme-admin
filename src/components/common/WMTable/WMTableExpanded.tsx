@@ -25,7 +25,6 @@ export default function WMTableExpanded({
         dataSource={data}
         columns={columns}
         expandable={{ defaultExpandAllRows: true }}
-        rowKey={(record: any, index?: number) => index as React.Key}
         {...otherProps}
       />
     </div>

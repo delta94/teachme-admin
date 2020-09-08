@@ -87,26 +87,26 @@ function WMTable({
         draft.splice(newIndex, 0, moved[0]);
       });
 
-      const updatedSelectedRowKeys = produce(rowSelection?.selectedRowKeys, (draft) => {
-        draft?.forEach((rowKey, index) => {
-          const key = Number(rowKey);
+      // const updatedSelectedRowKeys = produce(rowSelection?.selectedRowKeys, (draft) => {
+      //   draft?.forEach((rowKey, index) => {
+      //     const key = Number(rowKey);
 
-          if (key < oldIndex && key >= newIndex) {
-            // Row moved to before selected row
-            draft[index] = key + 1;
-          } else if (key > oldIndex && key <= newIndex) {
-            // Row moved to after selected row
-            draft[index] = key - 1;
-          } else if (key === oldIndex && key !== newIndex) {
-            // Row moved is same as selected row
-            draft[index] = newIndex;
-          }
-        });
-      });
+      //     if (key < oldIndex && key >= newIndex) {
+      //       // Row moved to before selected row
+      //       draft[index] = key + 1;
+      //     } else if (key > oldIndex && key <= newIndex) {
+      //       // Row moved to after selected row
+      //       draft[index] = key - 1;
+      //     } else if (key === oldIndex && key !== newIndex) {
+      //       // Row moved is same as selected row
+      //       draft[index] = newIndex;
+      //     }
+      //   });
+      // });
 
-      onSortEnd({ oldIndex, newIndex }, updatedData, updatedSelectedRowKeys);
+      onSortEnd({ oldIndex, newIndex }, updatedData);
     },
-    [data, rowSelection, onSortEnd],
+    [data, onSortEnd],
   );
 
   const SortableWrapper = useCallback(
@@ -133,7 +133,8 @@ function WMTable({
   );
   const isSortable = typeof onSortEnd === 'function';
   const componentsProps = isSortable ? sortableComponentProps : {};
-  const rowKey = useCallback((record: any, index?: number) => index as Key, []);
+
+  const rowKey = useCallback((record) => data.findIndex(({ id }) => record.id === id), [data]);
 
   return (
     <div
