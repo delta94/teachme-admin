@@ -1,5 +1,6 @@
 import walkme, { EmailList } from '@walkme/editor-sdk';
 import * as wmData from '../data/services/wmData';
+import * as analytics from '../analytics';
 
 /**
  * Returns Data for logged-in user
@@ -36,6 +37,10 @@ export async function getSystems() {
  */
 export async function getSystemData() {
   return walkme.system.getSystemData();
+}
+
+export function setSystemId(id: number) {
+  analytics.setSystemId(id);
 }
 
 /**

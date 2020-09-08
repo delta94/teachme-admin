@@ -9,6 +9,7 @@ import React, {
 import cc from 'classcat';
 import { ConfigProvider, Divider } from 'antd';
 import isEqual from 'lodash/isEqual';
+import { SystemData } from '@walkme/editor-sdk/dist/system';
 
 import { ActionType as AppActionType, useAppContext } from '../../../providers/AppContext';
 import {
@@ -45,6 +46,7 @@ interface ICoursesScreenProps {
   envId: number;
   from: string;
   to: string;
+  system: string | SystemData;
   isFetchingCoursesData: boolean;
   overview: AllCoursesOverviewResponse;
   filteredCourses: Array<UICourse>;
@@ -65,6 +67,7 @@ function CoursesScreen({
   envId,
   from,
   to,
+  system,
   isFetchingCoursesData,
   overview,
   filteredCourses,
@@ -92,6 +95,17 @@ function CoursesScreen({
   // Unmount only
   useEffect(() => () => dispatch({ type: ActionType.ResetCourses }), [dispatch]);
   useEffect(() => () => setAreAllRowsSelected(false), []);
+
+  // reset row selection when the user change the system
+  useEffect(
+    () =>
+      dispatch({
+        type: ActionType.SetSelectedRows,
+        courses: [],
+        selectedRowIds: [],
+      }),
+    [system, dispatch],
+  );
 
   const onDateRangeChange = useCallback(
     (dateRange?: IDateRange) => appDispatch({ type: AppActionType.SetDateRange, dateRange }),
@@ -282,6 +296,7 @@ function select(): ICoursesScreenProps {
     isUpdating,
     environment: { id: envId },
     dateRange: { from, to },
+    system,
   } = appState;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [state, dispatch] = useCoursesContext();
@@ -303,6 +318,7 @@ function select(): ICoursesScreenProps {
     envId,
     from,
     to,
+    system,
     isFetchingCoursesData,
     overview,
     filteredCourses,
