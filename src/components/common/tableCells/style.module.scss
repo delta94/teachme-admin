@@ -16,6 +16,16 @@ a.link-cell {
   }
 }
 
+.text-cell {
+  overflow: auto;
+  white-space: nowrap;
+
+  &.has-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .subtext-cell {
   .text {
     font-weight: 500;

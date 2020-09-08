@@ -41,6 +41,7 @@ export interface ITextArrayCell extends ITableCell {
 
 export interface ITextCell extends ITableCell {
   value: ReactNode;
+  hasPopover?: boolean;
 }
 
 export interface IIconTextCell extends ITableCell {
