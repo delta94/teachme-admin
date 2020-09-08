@@ -116,7 +116,7 @@ export const getColumns = (onSelectAllRows: () => void): ColumnsType<any> => [
     dataIndex: 'avg_quiz_score',
     align: 'right',
     render: (value: number, { avg_quiz_score, quiz_passed }: UICourse): ReactElement => (
-      <DashCell value={isValidNumber(avg_quiz_score) ? 5 : undefined}>
+      <DashCell value={isValidNumber(avg_quiz_score) ? avg_quiz_score : undefined}>
         {isValidNumber(avg_quiz_score) && (
           <StatusDotCell value={avg_quiz_score ?? 0} passed={quiz_passed} />
         )}
