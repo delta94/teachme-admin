@@ -1,7 +1,7 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 
 import { useAppContext } from '../../../providers/AppContext';
-import { logout } from '../../../walkme';
+import { logout, setImpersonatePWCallback } from '../../../walkme';
 import { dateRangeLocalStorageKey } from '../../../utils';
 
 import { IconType } from '../../common/Icon/icon.interface';
@@ -9,6 +9,7 @@ import Icon from '../../common/Icon';
 import WMDropdown, { IWMDropdownOption } from '../../common/WMDropdown';
 import WMButton from '../../common/WMButton';
 import { ImpersonateDialog } from '../../common/dialogs';
+import ImpersonatePasswordDialog from '../../common/dialogs/ImpersonatePasswordDialog';
 
 export default function UserMenu({
   className,
@@ -18,6 +19,13 @@ export default function UserMenu({
   buttonClassName?: string;
 }): ReactElement {
   const [showImpersonate, setShowImpersonate] = useState(false);
+  const [renderImpersonate, setRenderImpersonate] = useState(false);
+  const [showImpersonatePassword, setShowImpersonatePassword] = useState(false);
+  const [impersonatePasswordPromise, setImpersonatePasswordPromise] = useState<{
+    resolve(value?: string): void;
+    reject(): void;
+  }>();
+
   const [appState] = useAppContext();
   const { user } = appState;
   const { originalUser } = appState;
@@ -46,6 +54,18 @@ export default function UserMenu({
     window.location.reload();
   };
 
+  const getImpersonatePassword = async (): Promise<string> => {
+    setRenderImpersonate(true);
+    setShowImpersonatePassword(true);
+    return await new Promise((resolve, reject) => {
+      setImpersonatePasswordPromise({ resolve, reject });
+    });
+  };
+
+  useEffect(() => {
+    setImpersonatePWCallback(getImpersonatePassword);
+  }, []);
+
   return (
     <>
       <WMDropdown className={className} options={options}>
@@ -56,6 +76,20 @@ export default function UserMenu({
         onCancel={() => setShowImpersonate(false)}
         onConfirm={handleImpersonate}
       />
+      {renderImpersonate && (
+        <ImpersonatePasswordDialog
+          open={showImpersonatePassword}
+          onCancel={() => {
+            setShowImpersonatePassword(false);
+            impersonatePasswordPromise?.reject();
+          }}
+          onConfirm={(password) => {
+            setShowImpersonatePassword(false);
+            impersonatePasswordPromise?.resolve(password);
+          }}
+          afterClose={() => setRenderImpersonate(false)}
+        />
+      )}
     </>
   );
 }
