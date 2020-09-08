@@ -3,11 +3,17 @@ import { EventEmitter } from 'events';
 import * as endpoint from './endpoint';
 
 import { AnalyticsEvents } from '../../models/analytics';
+import { getLastUpdateTime } from './lastUpdate';
 
 export const DataEvents = new EventEmitter();
+let _systemId = -1;
 
 export const get = async (path: string): Promise<any> => {
-  const responseBody = await endpoint.get(path);
+  const lastUpdate = getLastUpdateTime();
+  const responseBody = await endpoint.get(
+    `${path}&last_update=${lastUpdate}&systemId=${_systemId}`,
+  );
+
   if (!responseBody.last_update_time) return responseBody as AnalyticsResponse;
 
   DataEvents.emit(AnalyticsEvents.DATA_UPDATE_CHANGED, {
@@ -22,4 +28,6 @@ export interface AnalyticsResponse {
   error?: string;
 }
 
-export const { setSystemId } = endpoint;
+export function setSystemId(id: number) {
+  _systemId = id;
+}

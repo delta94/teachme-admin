@@ -1,10 +1,9 @@
 import walkme from '@walkme/editor-sdk';
 
 const serviceDomain = 'https://api.walkme.com/teachmeservice';
-let _systemId = -1;
 
 export const get = async (path: string): Promise<any> => {
-  const res = await fetch(`${serviceDomain}/${path}&systemId=${_systemId}`, {
+  const res = await fetch(`${serviceDomain}/${path}`, {
     headers: {
       authorization: walkme.auth.oidcAPI.getAuthorizationHeaderValue(),
     },
@@ -26,6 +25,3 @@ async function getResponseBody(res: Response): Promise<any> {
   }
 }
 
-export function setSystemId(id: number) {
-  _systemId = id;
-}
