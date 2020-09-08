@@ -32,7 +32,7 @@ export type UsersListQueryOptions = UsersTableQueryFilter & {
  */
 export enum UsersColumn {
   ID = 'id',
-  COURSE_ID = 'course_id',
+  COURSE_NAME = 'course_name',
   COMPLETED_DATE = 'completed_date',
   QUIZ_RESULT = 'quiz_result',
   QUIZ_ATTEMPTS = 'quiz_attempts',

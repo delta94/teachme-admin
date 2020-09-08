@@ -3,7 +3,7 @@ import { IWMSelectOption } from '../../common/WMSelect';
 
 export const sortByOptions = {
   id: UsersColumn.ID,
-  title: UsersColumn.COURSE_ID,
+  title: UsersColumn.COURSE_NAME,
   started_date: UsersColumn.STARTED_DATE,
   completed_date: UsersColumn.COMPLETED_DATE,
   time_to_complete: UsersColumn.TIME_TO_COMPLETE,
