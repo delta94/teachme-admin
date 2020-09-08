@@ -66,7 +66,13 @@ export default function ActionMenu({
   isLoading,
 }: {
   className?: string;
-  onActionSelected?: ({ selectedType, item }: { selectedType: CourseItemType; item?: any }) => void;
+  onActionSelected?: ({
+    selectedType,
+    item,
+  }: {
+    selectedType: CourseItemType;
+    item?: CourseLesson | CourseTask;
+  }) => void;
   isLoading?: boolean;
 }): ReactElement {
   const [{ course, quiz }, dispatch] = useCourseEditorContext();
@@ -84,7 +90,7 @@ export default function ActionMenu({
     } else {
       // Add new lesson | article | video
       const newResourceId = getRandomNegativeNumber();
-      let newResource: CourseLesson | CourseTask | undefined;
+      let newResource: CourseLesson | CourseTask;
 
       if (value === CourseItemType.Lesson) {
         newResource = course?.items.addNewItem() as CourseLesson;
@@ -95,9 +101,11 @@ export default function ActionMenu({
         }) as CourseTask;
       }
 
-      newResource &&
+      if (newResource) {
+        newResource.id = newResourceId;
         onActionSelected &&
-        onActionSelected({ selectedType: value as CourseItemType, item: newResource });
+          onActionSelected({ selectedType: value as CourseItemType, item: newResource });
+      }
     }
 
     dispatch({ type: ActionType.UpdateCourseOutline, updateHasChange: true });

@@ -23,6 +23,7 @@ import {
 } from './NewResourcePanel';
 
 import classes from './style.module.scss';
+import { newResourcePanelType, isNewResource } from './utils';
 
 export interface IProperties {
   isAvailable?: boolean;
@@ -39,20 +40,16 @@ export default function CourseOutlineTab(): ReactElement {
   const { isFetchingCourse, course, quiz /* , courseOutlineSearchValue */ } = state;
   const [newQuizAdded, setNewQuizAdded] = useState(false);
   const [newLessonId, setNewLessonId] = useState<number>();
-  const [newResource, setNewResource] = useState<Resource>();
+  const [newResourceId, setNewResourceId] = useState<number>();
 
-  const onItemClick = (item: any) => {
-    console.log(item);
-    const type =
-      item.id > 0
-        ? DetailsPanelSettingsType.Item
-        : item.type === CourseItemType.Article
-        ? DetailsPanelSettingsType.Article
-        : DetailsPanelSettingsType.Video;
+  const onItemClick = (item: CourseLesson | CourseTask) => {
+    const type = !isNewResource(item as CourseTask)
+      ? DetailsPanelSettingsType.Item
+      : newResourcePanelType(item.type);
 
     dispatch({
       type: ActionType.OpenDetailsPanel,
-      activeDetailsItem: { type, id: item.id, item },
+      activeDetailsItem: { type, id: item.id, item: (item as CourseTask).linkedItem ?? item },
     });
   };
 
@@ -61,7 +58,7 @@ export default function CourseOutlineTab(): ReactElement {
     item,
   }: {
     selectedType: CourseItemType;
-    item?: any;
+    item?: CourseLesson | CourseTask;
   }) => {
     if (selectedType === CourseItemType.Quiz) {
       setNewQuizAdded(true);
@@ -69,34 +66,24 @@ export default function CourseOutlineTab(): ReactElement {
       // reset newQuizAdded
       setTimeout(() => setNewQuizAdded(false), 200);
     } else if (selectedType === CourseItemType.Lesson) {
-      item?.id && setNewLessonId(item.id);
+      setNewLessonId(item?.id);
 
       // reset newLessonId
       setTimeout(() => setNewLessonId(undefined), 200);
-    } else {
-      const isBaseResource = selectedType === CourseItemType.Article;
-
-      const panelType = isBaseResource
-        ? DetailsPanelSettingsType.Article
-        : DetailsPanelSettingsType.Video;
-
-      if (item?.id) {
-        const newResourceData = {
-          type: panelType,
+    } else if (item) {
+      dispatch({
+        type: ActionType.OpenDetailsPanel,
+        activeDetailsItem: {
+          type: newResourcePanelType(item.type),
           id: item.id,
           item: (item as CourseTask).linkedItem,
-        };
+        },
+      });
 
-        setNewResource((item as CourseTask).linkedItem);
+      setNewResourceId(item?.id);
 
-        // reset newLessonId
-        setTimeout(() => setNewLessonId(undefined), 200);
-
-        dispatch({
-          type: ActionType.OpenDetailsPanel,
-          activeDetailsItem: { ...newResourceData, type: panelType },
-        });
-      }
+      // reset newResourceId
+      setTimeout(() => setNewResourceId(undefined), 200);
     }
   };
 
@@ -143,7 +130,7 @@ export default function CourseOutlineTab(): ReactElement {
             hasQuiz={!!quiz}
             handleItemClick={onItemClick}
             newLessonId={newLessonId}
-            newResource={newResource}
+            newResourceId={newResourceId}
           />
         )}
         {quiz && <CourseOutlineQuiz quiz={quiz} isNew={newQuizAdded} />}
